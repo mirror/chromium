@@ -1,0 +1,929 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "730750a5_d89c21ee",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/__init__.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Can we remove this, too?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f437fa4d_0fd4bc86",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "nit: Better describe the summary or what Collection is.\n\nInternal data structures are implementation details and shouldn\u0027t affect the call sites.  It\u0027s something we\u0027d like to hide in a class.\n\nIf you\u0027re talking about \"in what data structure each API returns a return value\", then it should be described on each API (e.g. this method returns blah blah), not in a class description.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd045ecc_0d1c1d29",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "\"data\" is a plural form.  datum \u003d\u003e data.",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520c02e1_006bb700",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Why these are exposed to public?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b48a0f_6b7a3f8d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "I\u0027d recommend \"find_non_partial_definition\".\nThis is not a simple getter, this only looks for a non-partial definition.\n\nAlso I\u0027m suspicious about the word \"definition\", which is unclear.  Is this \"definition\"?  I thought that these objects are a kind of intermediate representation.  I know we\u0027ve historically used that term, though.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c0e135_8a254f58",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "\"find_filepath\"?\n\nMostly the same reason.  Plus, I imagine that this function returns a path rather than a filename.",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d9be33_ef7785b0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "We may want to detect doubly registeration of the same definition.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7749d585_4dbadd64",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "_SCRIPTS_PATH",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b5716b_2f4640fd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "filepaths?",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c85a4977_2b6872cb",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "This function seems doing much more things than what \"load\" implies?\n\nI\u0027d expect \"load_file(s)\" returns the file contents.  Also this function has side effect.\n  x \u003d c.load_idl_files([\"foo\", \"bar\"])\n  y \u003d c.load_idl_files([\"foo\", \"bar\"])\nmay return different results (x !\u003d y).",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509c2aa0_19bd303b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "node?",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fcc86a_4c2cbc53",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "We should prefer encapsulation.  You\u0027re using |collection| as if it\u0027s a simple struct in C.\n\nI\u0027d combine register_definition and register_metadata into one, and write:\n    collection.register(ir_object, filepath)\nwhere ir_object implements the following pseudo code:\n    class IRObject(object):\n      enum Kind { ... }\n      def __init__(self, kind):\n        self.kind \u003d kind\n\n    class Interface(IRObject):\n      def __init__(self):\n         IRObject.__init__(self, kKindInterface)\n\nIt\u0027s unusual that the super class IRObject knows all its subclasses (i.e. kind), but I\u0027m okay with this way.  This is similar to node.GetClass().\n\nYou can use \"isinstance\" builtin function instead.",
+      "range": {
+        "startLine": 57,
+        "startChar": 51,
+        "endLine": 57,
+        "endChar": 72
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6860fb2d_68bb942a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "nit: I think it will be useful to add a link to the part of the spec and also a short note that \"Web IDL prohibits use of the following names as constant identifiers\".\n\nhttps://heycam.github.io/webidl/#idl-constants\n\nIt\u0027s not clear whether Web IDL or Blink prohibits these names.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dd1e7c3_7d03dc94",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Seems inconsistent that other classes use \"identifier\u003dNone\", etc.\n\nHaving said that, I misunderstood keyword arguments in Python.  My previous comments may be misleading.\n\nWhat I wanted to do here is\n1) Make all parameters be keyword arguments.  i.e. Call sites always need to use keyword arguments.\n2) Make required parameters mandatory.  i.e. Missing arguments cause error.  (In my previous comments, it was \"assert param\".)\n\nI\u0027ve read this article and found it interesting.  If possible, I\u0027m happy with Python 3, of course.\nhttps://stackoverflow.com/questions/44284230/forcing-keyword-arguments-in-python-2-7",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d2be968_554c6c4e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "This filename is \"extended_attribute.py\", but I don\u0027t see it.\nInstead, I see \"Constructor\" and \"Exposure\".",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8c6133_c930269e",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "This looks super weird to me.  Is it possible that a Constructor be not a constructor?\n\n1) I\u0027d like to remove this hack.  As we\u0027re reconstructing the codebase, it should be possible, I guess?\n\n2) Even if we needed this hack, I\u0027d prefer placing at another place.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5255473_b0131a79",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "I\u0027d recommend \"is_custom\" so that we can say \"something.is_custom\".",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438efa20_80727ce2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Ditto.  I\u0027d recommend that __init__ takes |is_custom| argument.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c609e0_708c9858",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Ditto.  __init__ should take |is_named_constructor|.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ac5b9e_7fd2e21d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/extended_attribute.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Question: Is Exposure something special?\n\nAt least Attribute has extended_attributes, then it\u0027s not clear to me whether [Exposed] should be in |extended_attributes| or not.  If you\u0027re trying to make a simple 1:1 map between parsed IDL nodes and Python objects, it\u0027s not trivial why \"Exposed\" is so special.\n\nAlso there seem no class named ExtendedAttribute.  Don\u0027t we want it?\n\nOne more comment: [Exposed] itself is not directly related to Constructor.  Why these two classes are written in the same file?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c48d17_2bcb9087",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "We may want this kind of links in each file, e.g. attribute.py doesn\u0027t have any link.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df205b6e_08d79102",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me what |reference| should be in terms of its type.  We may want a pydoc comment for each parameter.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17896e4c_302f9e53",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Don\u0027t we want a super class like \"Type\"?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd729cf_81180a79",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Better use enums.\n\nThere are a lot of ways to represent enums even in Python 2.7.\nhttps://stackoverflow.com/questions/36932/how-can-i-represent-an-enum-in-python",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0591301_1ee969d0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Date is not a primitive type, neither.\n\nDo we want to include them in PrimitiveType?  Why should we change the definition of PrimitiveType because of later possible optimizations?  Optimizers should take care of things, shouldn\u0027t them?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f027398_4fe4a8d3",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "The spec says \"member types\".",
+      "range": {
+        "startLine": 133,
+        "startChar": 23,
+        "endLine": 133,
+        "endChar": 34
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26234cef_c25a8953",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "I don\u0027t find the exact term in the specs, though...  This is not a return type.  Maybe \"resolved type\" or \"result type\", otherwise something else.",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 19
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da03bf05_94791522",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "The spec doesn\u0027t name this, but I\u0027d say that it\u0027s \"element type\".  In general, \"inner type\" means a different thing such as \"nested type\" in Java and C++.",
+      "range": {
+        "startLine": 180,
+        "startChar": 23,
+        "endLine": 180,
+        "endChar": 33
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88a7053_4aa6fd36",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Better to say \"element_type\".  \"type\" is confusing.",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 12
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f1a2c5_1bf9a191",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 195,
+        "startChar": 23,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9e21ce_4db82a78",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "\"refer to\"?\n\nYou seem talking about restrictions, but there are a lot more restrictions in the spec.  We don\u0027t need to explain (all of) this kind of restrictions.",
+      "range": {
+        "startLine": 10,
+        "startChar": 26,
+        "endLine": 10,
+        "endChar": 32
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c6bc42_58c03286",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/implements.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Please stop confusing naming or meaningless naming.  In this context, copying the spec doesn\u0027t make sense for code readers.\n\n\"implementing_interface `implements\u0027 implemented_interface\" makes some sense at least.",
+      "range": {
+        "startLine": 13,
+        "startChar": 23,
+        "endLine": 13,
+        "endChar": 49
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02685aec_482fe845",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "s/can/must/",
+      "range": {
+        "startLine": 11,
+        "startChar": 81,
+        "endLine": 11,
+        "endChar": 84
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414ca75c_b629bab7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Just FYI: The spec names this the \"inherited interface\".\n\nI\u0027m already accustomed to \"parent\", but it could be an ambiguous name.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30620b7f_771f1227",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Curious, why don\u0027t we have _constructors?\n\nOr are you planning to store constructors as extended attributes?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa20ddcb_a674f49d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "As I highly recommend keyword arguments, this ordering of parameters looks funny.  ;)  I\u0027d recommend to avoid sorting parameters just because some of them should be required.  I\u0027d write key_type, value_type.\n\nIt\u0027s different from Maplike!",
+      "range": {
+        "startLine": 78,
+        "startChar": 23,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643cf395_5dc69aa5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "key_type?",
+      "range": {
+        "startLine": 80,
+        "startChar": 25,
+        "endLine": 80,
+        "endChar": 34
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65bc232a_22ba6ea2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Usually the repeated same article is omitted, I think.",
+      "range": {
+        "startLine": 137,
+        "startChar": 72,
+        "endLine": 137,
+        "endChar": 75
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df495d93_d50eae51",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/interface.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "s/can/must/",
+      "range": {
+        "startLine": 137,
+        "startChar": 41,
+        "endLine": 137,
+        "endChar": 44
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8518a75_29a4e8e5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/literal.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Can we return a Type rather than a type name (\u003d string)?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08257419_9dd4461d",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/operation.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Does this return a Type or just name of Type (i.e. a string)?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7892d5b6_7368765a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/operation.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Special keywords should be enum values, I think.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bc8a49_546cf726",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/typedef.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "I think s/actual_type/type/ is already crystal clear.\nOtherwise, (identifier, definition) or (identifier, definition_type)?",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 46
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5e1f4e_64ff84b0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "We\u0027re not building \"Web IDL\", seriously.",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a2cff4_fef503f4",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Please, please use keyword arguments.  Otherwise, it\u0027s going to hell...",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995281da_0cbd4d3c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "Do we want to expose this function to public?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84abc367_ea419379",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/web_idl_builder.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-03T14:20:42Z",
+      "side": 1,
+      "message": "This is a good idea.  Why some other create_xxx don\u0027t have this assertion?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
