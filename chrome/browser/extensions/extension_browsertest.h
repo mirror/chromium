@@ -11,6 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/test/scoped_path_override.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/chrome_extension_test_notification_observer.h"
@@ -21,6 +22,7 @@
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/extension_protocols.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/scoped_ignore_content_verifier_for_test.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/feature_switch.h"
 #include "extensions/common/features/feature_channel.h"
@@ -72,6 +74,12 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
 
   // Get the profile to use.
   virtual Profile* profile();
+
+  // Extensions used in tests are typically not from the web store and will have
+  // missing content verification hashes. The default implementation disables
+  // content verification by default; this should be overriden by derived tests
+  // which care about content verification.
+  virtual bool ShouldEnableContentVerification();
 
   static const extensions::Extension* GetExtensionByPath(
       const extensions::ExtensionSet& extensions,
@@ -392,6 +400,10 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // An override so that chrome-extensions://<extension_id>/_test_resources/foo
   // maps to chrome/test/data/extensions/foo.
   extensions::ExtensionProtocolTestHandler test_protocol_handler_;
+
+  // Conditionally disable content verification.
+  base::Optional<extensions::ScopedIgnoreContentVerifierForTest>
+      ignore_content_verification_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionBrowserTest);
 };
