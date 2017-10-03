@@ -118,14 +118,12 @@ TaskQueueImpl::Task WorkQueue::TakeTaskFromWorkQueue() {
   // Skip over canceled tasks, except for the last one since we always return
   // something.
   while (work_queue_.size() > 1u) {
-    if (!work_queue_.front().task) {
-      base::debug::SetCrashKeyValue(
-          kBlinkSchedulerTaskFunctionNameKey,
-          work_queue_.front().posted_from.function_name());
-      base::debug::SetCrashKeyValue(
-          kBlinkSchedulerTaskFileNameKey,
-          work_queue_.front().posted_from.file_name());
-    }
+    // TODO(altimin): Remove this by 10.10.2017 due to performance overhead.
+    base::debug::SetCrashKeyValue(
+        kBlinkSchedulerTaskFunctionNameKey,
+        work_queue_.front().posted_from.function_name());
+    base::debug::SetCrashKeyValue(kBlinkSchedulerTaskFileNameKey,
+                                  work_queue_.front().posted_from.file_name());
     CHECK(work_queue_.front().task);
 
     if (work_queue_.front().task.IsCancelled()) {
