@@ -73,7 +73,7 @@ TEST(SelectorQueryTest, NotMatchingPseudoElement) {
                                CSSParserContext::kStaticProfile),
       nullptr, "span::before");
   std::unique_ptr<SelectorQuery> query =
-      SelectorQuery::Adopt(std::move(selector_list));
+      SelectorQuery::Adopt(*document, std::move(selector_list));
   Element* elm = query->QueryFirst(*document);
   EXPECT_EQ(nullptr, elm);
 
@@ -82,7 +82,7 @@ TEST(SelectorQueryTest, NotMatchingPseudoElement) {
                                WTF::TextEncoding(),
                                CSSParserContext::kStaticProfile),
       nullptr, "span");
-  query = SelectorQuery::Adopt(std::move(selector_list));
+  query = SelectorQuery::Adopt(*document, std::move(selector_list));
   elm = query->QueryFirst(*document);
   EXPECT_NE(nullptr, elm);
 }
@@ -102,7 +102,7 @@ TEST(SelectorQueryTest, LastOfTypeNotFinishedParsing) {
                                CSSParserContext::kStaticProfile),
       nullptr, "p:last-of-type");
   std::unique_ptr<SelectorQuery> query =
-      SelectorQuery::Adopt(std::move(selector_list));
+      SelectorQuery::Adopt(*document, std::move(selector_list));
   Element* elm = query->QueryFirst(*document);
   ASSERT_TRUE(elm);
   EXPECT_EQ("last", elm->IdForStyleResolution());
