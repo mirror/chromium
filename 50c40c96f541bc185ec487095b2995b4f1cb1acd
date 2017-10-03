@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b73b088c_01122abf",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-10-03T03:17:15Z",
+      "side": 1,
+      "message": "Could you add a test case that finishComposingText is not called when string is \"com.sec.android.inputmethod\"?",
+      "revId": "50c40c96f541bc185ec487095b2995b4f1cb1acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
