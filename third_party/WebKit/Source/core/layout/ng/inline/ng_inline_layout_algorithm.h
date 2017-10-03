@@ -57,6 +57,10 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                                       const NGLineInfo&,
                                       LayoutUnit position,
                                       NGLineBoxFragmentBuilder*);
+  void PlaceListMarker(const NGInlineItem&,
+                       NGInlineItemResult*,
+                       const NGLineInfo&,
+                       NGLineBoxFragmentBuilder*);
 
   void ApplyTextAlign(const NGLineInfo&,
                       ETextAlign,
