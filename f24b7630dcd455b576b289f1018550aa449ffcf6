@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933a2efc_391b41d8",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T16:49:49Z",
+      "side": 1,
+      "message": "How about removing the member entirely? That slightly simplifies some of the code.",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "f24b7630dcd455b576b289f1018550aa449ffcf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
