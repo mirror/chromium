@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "43b859c8_36c27e1f",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-03T18:48:38Z",
+      "side": 1,
+      "message": "Yes, it does appear to work (tried setting breakpoints, single stepping and printing some variables including structs whose definitions were only in the .dwo files).\n\nMy understanding is that no explicit support for fission is required in the linker; .o files will contain the path to the .dwo file which will get included in the executable or DSO via the regular linking process, and the debugger reads the .dwo paths out of the executable/DSO.",
+      "parentUuid": "d6d249d1_38f04d95",
+      "revId": "0ad8d82a30d801e8de2703d9c22db5374095a980",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12e9a2ea_281657d2",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 1
