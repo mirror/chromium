@@ -14,7 +14,6 @@ import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
-import org.chromium.base.PathUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -33,9 +32,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class WebappDataStorage {
     private static final String TAG = "WebappDataStorage";
-
-    /** Path of subdirectory within cache directory which contains data for pending updates. */
-    static final String UPDATE_DIRECTORY_PATH = "webapk/update";
 
     static final String SHARED_PREFS_FILE_PREFIX = "webapp_";
     static final String KEY_SPLASH_ICON = "splash_icon";
@@ -425,7 +421,7 @@ public class WebappDataStorage {
      * Returns the completion time of the last check for whether the WebAPK's Web Manifest was
      * updated. This time needs to be set when the WebAPK is registered.
      */
-    private long getLastCheckForWebManifestUpdateTime() {
+    long getLastCheckForWebManifestUpdateTime() {
         return mPreferences.getLong(KEY_LAST_CHECK_WEB_MANIFEST_UPDATE_TIME, TIMESTAMP_INVALID);
     }
 
@@ -526,9 +522,7 @@ public class WebappDataStorage {
      * SharedPreferences.
      */
     String createAndSetUpdateRequestFilePath(WebApkInfo info) {
-        String filePath =
-                new File(new File(PathUtils.getCacheDirectory(), UPDATE_DIRECTORY_PATH), info.id())
-                        .getPath();
+        String filePath = WebappDirectoryManager.getWebApkUpdateFilePathForStorage(this).getPath();
         mPreferences.edit().putString(KEY_PENDING_UPDATE_FILE_PATH, filePath).apply();
         return filePath;
     }
