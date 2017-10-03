@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5b3696b9_c7ed4e53",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-03T15:48:59Z",
+      "side": 1,
+      "message": "nit: remove this and make the test inherit from ScopedFeaturePolicyForTest (like PaintLayerTest does for ScopedSlimmingPaintV2ForTest).",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a22ca2_bf6778df",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaCustomControlsFullscreenDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-03T15:48:59Z",
+      "side": 1,
+      "message": "nit: same approach here: just inherit from ScopedVideoFullscreenDetetionForTest.",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "282c95ac_020f5a08",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
         "patchSetId": 2
@@ -19,6 +53,40 @@
         "endLine": 252,
         "endChar": 36
       },
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6571e24a_82eea183",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-03T15:48:59Z",
+      "side": 1,
+      "message": "nit: same here, just make ScrollAnchorTest inherit from ScopedScrollAnchoringForTest. (Similarly for all other tests in the remainder of the patch)",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0556396_bc889d68",
+        "filename": "third_party/WebKit/Source/platform/testing/RuntimeEnabledFeaturesTestHelpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-10-03T15:48:59Z",
+      "side": 1,
+      "message": "For a future patch, not this one. What do you think about using a template to reduce this boilerplate? I genuinely don\u0027t know if it would be better so I\u0027m curious what you think.",
       "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
