@@ -131,7 +131,7 @@ cr.define('cr.ui', function() {
           e.preventDefault();
           break;
         case 'Escape': // Maybe this is remote desktop playing a prank?
-          this.hideMenu();
+          this.hideMenu(true);
           break;
       }
     },

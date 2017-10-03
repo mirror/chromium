@@ -129,6 +129,8 @@ function MainWindowComponent(
       'pathclick', this.onBreadcrumbClick_.bind(this));
   ui.toggleViewButton.addEventListener(
       'click', this.onToggleViewButtonClick_.bind(this));
+  ui.sortButton.addEventListener(
+      'finished', this.onSortButtonClick_.bind(this));
   directoryModel.addEventListener(
       'directory-changed', this.onDirectoryChanged_.bind(this));
   volumeManager.addEventListener(
@@ -300,6 +302,15 @@ MainWindowComponent.prototype.onToggleViewButtonClick_ = function(event) {
   this.ui_.setCurrentListType(listType);
   this.appStateController_.saveViewOptions();
 
+  this.ui_.listContainer.focus();
+};
+
+/**
+ * Handles click event on the toggle-view button.
+ * @param {Event} event Click event.
+ * @private
+ */
+MainWindowComponent.prototype.onSortButtonClick_ = function(event) {
   this.ui_.listContainer.focus();
 };
 
