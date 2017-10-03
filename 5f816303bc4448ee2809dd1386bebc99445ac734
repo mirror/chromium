@@ -16,6 +16,24 @@
       "revId": "5f816303bc4448ee2809dd1386bebc99445ac734",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99570712_701de138",
+        "filename": "base/android/javatests/src/org/chromium/base/CommandLineInitUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-03T18:37:04Z",
+      "side": 1,
+      "message": "In JUnit3, this call (initCommandLine) does not do anything because commandline is already initialized with the right file (\"chrome-command-line\" argument was incorrect but was never used). In JUnit4 with AndroidJUnit4 runner, this is not the case, so using the wrong file name would cause error.",
+      "parentUuid": "40da90a1_bfd59190",
+      "revId": "5f816303bc4448ee2809dd1386bebc99445ac734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
