@@ -33,6 +33,7 @@ class BASE_EXPORT FileDescriptorWatcher {
 
    private:
     friend class FileDescriptorWatcher;
+    class CancellationFlag;
     class Watcher;
 
     // Registers |callback| to be invoked when |fd| is readable or writable
@@ -63,6 +64,9 @@ class BASE_EXPORT FileDescriptorWatcher {
     // deleted while it is being used by the MessageLoopForIO.
     std::unique_ptr<Watcher> watcher_;
 
+    // Allows |watcher_| to know when this Controller was deleted.
+    const scoped_refptr<CancellationFlag> cancellation_flag_;
+
     // Validates that the Controller is used on the sequence on which it was
     // instantiated.
     SequenceChecker sequence_checker_;
@@ -82,9 +86,9 @@ class BASE_EXPORT FileDescriptorWatcher {
   // Registers |callback| to be invoked on the current sequence when |fd| is
   // readable or writable without blocking. |callback| is unregistered when the
   // returned Controller is deleted (deletion must happen on the current
-  // sequence). To call these methods, a FileDescriptorWatcher must have been
-  // instantiated on the current thread and SequencedTaskRunnerHandle::IsSet()
-  // must return true.
+  // sequence). |fd| must outlive the returned Controller. To call these
+  // methods, a FileDescriptorWatcher must have been instantiated on the current
+  // thread and SequencedTaskRunnerHandle::IsSet() must return true.
   static std::unique_ptr<Controller> WatchReadable(int fd,
                                                    const Closure& callback);
   static std::unique_ptr<Controller> WatchWritable(int fd,
