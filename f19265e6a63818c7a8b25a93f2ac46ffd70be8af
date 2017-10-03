@@ -22,6 +22,52 @@
       "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0911ac18_7ada1ef3",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T17:26:26Z",
+      "side": 1,
+      "message": "const InputDeviceInfoPtr\u0026 info_ref \u003d devices_[info-\u003eid] \u003d std::move(info);",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 37
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590b3622_3402739f",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T17:26:26Z",
+      "side": 1,
+      "message": "unnecessary parenthesis",
+      "range": {
+        "startLine": 501,
+        "startChar": 38,
+        "endLine": 501,
+        "endChar": 39
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
