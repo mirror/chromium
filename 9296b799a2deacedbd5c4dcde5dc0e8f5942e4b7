@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "94da6283_5ad6e043",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 1504,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-03T21:19:02Z",
+      "side": 1,
+      "message": "then I would say we need to add a new tablaunchtype or add a new constructor for (2) that sets this value right, not add a separate logic to set this state. My concern here is that people adding/using tabreparenting things will know to call attach/detach but it is not obvious at all that this state needs to be set separately.\n\nIn general I think if we are creating a tab with no Activity, this state should be set to true without the caller doing/saying/knowing anything.",
+      "parentUuid": "ac507141_0190dd56",
+      "revId": "9296b799a2deacedbd5c4dcde5dc0e8f5942e4b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b047eb32_0e04cad7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 7
