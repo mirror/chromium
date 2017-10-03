@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
+#include "base/strings/string_split.h"
 #include "base/timer/timer.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "content/public/browser/browser_thread.h"
@@ -124,16 +125,13 @@ const char kPermission[] = "permission";
 const char kPhaPatternType[] = "pha_pattern_type";
 const char kMalwareThreatType[] = "malware_threat_type";
 const char kSePatternType[] = "se_pattern_type";
-const char kSfPatternType[] = "sf_pattern_type";
+const char kSfType[] = "sf_type";
 const char kWarningKey[] = "warning";
 const char kLanding[] = "LANDING";
 const char kDistribution[] = "DISTRIBUTION";
 const char kSocialEngineeringAds[] = "SOCIAL_ENGINEERING_ADS";
 const char kSocialEngineeringLanding[] = "SOCIAL_ENGINEERING_LANDING";
 const char kPhishing[] = "PHISHING";
-const char kSubresourceFilterBetterAds[] = "BETTER_ADS";
-const char kSubresourceFilterAbusiveAds[] = "ABUSIVE_ADS";
-const char kSubresourceFilterAll[] = "ALL_ADS";
 
 }  // namespace
 
@@ -673,16 +671,11 @@ void V4GetHashProtocolManager::ParseMetadata(const ThreatMatch& match,
   } else if (match.threat_type() == SUBRESOURCE_FILTER) {
     for (const ThreatEntryMetadata::MetadataEntry& m :
          match.threat_entry_metadata().entries()) {
-      if (m.key() == kSfPatternType) {
-        if (m.value() == kSubresourceFilterBetterAds) {
-          metadata->threat_pattern_type =
-              ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS;
-        } else if (m.value() == kSubresourceFilterAbusiveAds) {
-          metadata->threat_pattern_type =
-              ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS;
-        } else if (m.value() == kSubresourceFilterAll) {
-          metadata->threat_pattern_type =
-              ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS;
+      if (m.key() == kSfType) {
+        for (const auto& cur :
+             base::SplitStringPiece(m.value(), ",", base::TRIM_WHITESPACE,
+                                    base::SPLIT_WANT_NONEMPTY)) {
+          metadata->subresource_filter_types.insert(cur.as_string());
         }
       } else if (m.key() == kWarningKey) {
         metadata->warning = m.value() == "true";
