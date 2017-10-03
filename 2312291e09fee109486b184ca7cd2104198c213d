@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54668d22_38c87dc8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-03T22:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e029caf9_802a4518",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "2312291e09fee109486b184ca7cd2104198c213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fab0ddea_d7b9ca38",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-03T14:08:23Z",
       "side": 1,
       "message": "nit: is this saying that this is [1]?  Or is [1] missing?",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 20
+      },
+      "revId": "2312291e09fee109486b184ca7cd2104198c213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0303b7d2_9a1d1555",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-03T22:55:49Z",
+      "side": 1,
+      "message": "this is [1], I see how this is confusing, changed and removed bookmarks.",
+      "parentUuid": "fab0ddea_d7b9ca38",
       "range": {
         "startLine": 11,
         "startChar": 16,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "8f4edd8f_c4e8fd49",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/events_to_stopped_extension/sw.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-03T22:55:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53e564a_e6ff4e2c",
+      "revId": "2312291e09fee109486b184ca7cd2104198c213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59252c13_af323028",
         "filename": "chrome/test/data/extensions/api_test/service_worker/events_to_stopped_extension/sw.js",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2017-10-03T14:08:23Z",
       "side": 1,
       "message": "Would it be worth verifying the tab\u0027s data at all?",
+      "revId": "2312291e09fee109486b184ca7cd2104198c213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7a6dbe_38b94bf1",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/events_to_stopped_extension/sw.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-03T22:55:49Z",
+      "side": 1,
+      "message": "Added tab url verification.\n(workers don\u0027t correctly work with chrome.test.assertX yet).",
+      "parentUuid": "59252c13_af323028",
       "revId": "2312291e09fee109486b184ca7cd2104198c213d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
