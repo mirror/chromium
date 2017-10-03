@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f196b334_8308d786",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T15:14:05Z",
+      "side": 1,
+      "message": "I think this change is probably fine, but what prompted it?",
+      "revId": "d704603eba37abd5be26ae96cf1072accfcfe414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d1d191_cc45fbbb",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T15:14:05Z",
+      "side": 1,
+      "message": "Logically, this seems much more correct, but this is a behavior change from the old code (where this was dispatched as part of UntrackTerminatedExtension, called from AddExtension or UninstallExtension).  Is this change intentional/safe?",
+      "revId": "d704603eba37abd5be26ae96cf1072accfcfe414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
