@@ -41,6 +41,9 @@ enum SandboxType {
   // The CDM service process.
   SANDBOX_TYPE_CDM,
 
+  // The pdf compositor service process.
+  SANDBOX_TYPE_PDF_COMPOSITOR,
+
   SANDBOX_TYPE_AFTER_LAST_TYPE,  // Placeholder to ease iteration.
 };
 

@@ -76,6 +76,8 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
     {service_manager::SANDBOX_TYPE_NETWORK, nullptr},
     {service_manager::SANDBOX_TYPE_CDM,
      service_manager::kSeatbeltPolicyString_ppapi},
+    {service_manager::SANDBOX_TYPE_PDF_COMPOSITOR,
+     service_manager::kSeatbeltPolicyString_ppapi},
 };
 
 static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) ==
