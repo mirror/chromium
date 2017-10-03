@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "88f85cb1_d1050a76",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:01:16Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment. What exactly was reversed and from where?",
+      "parentUuid": "41f33429_9897a887",
+      "range": {
+        "startLine": 1130,
+        "startChar": 44,
+        "endLine": 1130,
+        "endChar": 68
+      },
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a387a7d_558cd515",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:01:16Z",
+      "side": 1,
+      "message": "nit: \u0027return a bool success and string data result.\u0027",
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fcc6c95_680653eb",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 1
