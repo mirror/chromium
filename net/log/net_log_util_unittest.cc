@@ -98,7 +98,7 @@ TEST(NetLogUtil, CreateNetLogEntriesForActiveObjectsMultipleContexts) {
     std::vector<std::unique_ptr<URLRequest>> requests;
     std::set<URLRequestContext*> context_set;
     for (size_t i = 0; i < num_requests; ++i) {
-      contexts.push_back(base::WrapUnique(new TestURLRequestContext(true)));
+      contexts.push_back(std::make_unique<TestURLRequestContext>(true));
       contexts[i]->set_net_log(&net_log);
       contexts[i]->Init();
       context_set.insert(contexts[i].get());

@@ -424,7 +424,7 @@ std::unique_ptr<HostCache> HostCache::CreateDefaultCache() {
                       &max_entries);
   if ((max_entries == 0) || (max_entries > kSaneMaxEntries))
     max_entries = kDefaultMaxEntries;
-  return base::WrapUnique(new HostCache(max_entries));
+  return std::make_unique<HostCache>(max_entries);
 }
 
 void HostCache::EvictOneEntry(base::TimeTicks now) {

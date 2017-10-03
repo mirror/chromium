@@ -144,8 +144,8 @@ bool MDnsConnection::Init(MDnsSocketFactory* socket_factory) {
   socket_factory->CreateSockets(&sockets);
 
   for (std::unique_ptr<DatagramServerSocket>& socket : sockets) {
-    socket_handlers_.push_back(base::WrapUnique(
-        new MDnsConnection::SocketHandler(std::move(socket), this)));
+    socket_handlers_.push_back(std::make_unique<MDnsConnection::SocketHandler>(
+        std::move(socket), this));
   }
 
   // All unbound sockets need to be bound before processing untrusted input.

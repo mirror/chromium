@@ -812,7 +812,7 @@ class URLRequestTest : public PlatformTest {
 
   virtual void SetUpFactory() {
     job_factory_impl_->SetProtocolHandler(
-        "data", base::WrapUnique(new DataProtocolHandler));
+        "data", std::make_unique<DataProtocolHandler>());
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
     job_factory_impl_->SetProtocolHandler(
         "file", std::make_unique<FileProtocolHandler>(
@@ -6086,8 +6086,8 @@ TEST_F(URLRequestTestHTTP, PostFileTest) {
     element_readers.push_back(std::make_unique<UploadFileElementReader>(
         base::ThreadTaskRunnerHandle::Get().get(), path, 0,
         std::numeric_limits<uint64_t>::max(), base::Time()));
-    r->set_upload(base::WrapUnique<UploadDataStream>(
-        new ElementsUploadDataStream(std::move(element_readers), 0)));
+    r->set_upload(std::make_unique<ElementsUploadDataStream>(
+        std::move(element_readers), 0));
 
     r->Start();
     EXPECT_TRUE(r->is_pending());
@@ -6129,8 +6129,8 @@ TEST_F(URLRequestTestHTTP, PostUnreadableFileTest) {
         base::FilePath(FILE_PATH_LITERAL(
             "c:\\path\\to\\non\\existant\\file.randomness.12345")),
         0, std::numeric_limits<uint64_t>::max(), base::Time()));
-    r->set_upload(base::WrapUnique<UploadDataStream>(
-        new ElementsUploadDataStream(std::move(element_readers), 0)));
+    r->set_upload(std::make_unique<ElementsUploadDataStream>(
+        std::move(element_readers), 0));
 
     r->Start();
     EXPECT_TRUE(r->is_pending());
