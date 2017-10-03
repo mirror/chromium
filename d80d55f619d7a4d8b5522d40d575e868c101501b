@@ -16,6 +16,24 @@
       "revId": "d80d55f619d7a4d8b5522d40d575e868c101501b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6cba47_825a2e81",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-03T21:23:01Z",
+      "side": 1,
+      "message": "As I recall, we get an empty .gdb_index section and many things break in the debugger.",
+      "parentUuid": "20e3f804_b58a106b",
+      "revId": "d80d55f619d7a4d8b5522d40d575e868c101501b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
