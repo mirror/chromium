@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66268a4b_4e9b6738",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/NetworkConfigView.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-03T00:31:27Z",
+      "side": 1,
+      "message": "Load into the map? That would be less lines.",
+      "revId": "67fbd5ecf6de2b2b9a2d2978174938127deb90e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47287ab_c50b6f77",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-03T00:31:27Z",
+      "side": 1,
+      "message": "What is this?",
+      "revId": "67fbd5ecf6de2b2b9a2d2978174938127deb90e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
