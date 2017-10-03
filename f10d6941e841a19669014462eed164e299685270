@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df846fcf_2ba3481a",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T23:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28b99f59_f1fa70f6",
+      "range": {
+        "startLine": 387,
+        "startChar": 23,
+        "endLine": 387,
+        "endChar": 29
+      },
+      "revId": "f10d6941e841a19669014462eed164e299685270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b95edaa_930c7a53",
         "filename": "content/network/url_loader_impl.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "f10d6941e841a19669014462eed164e299685270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad4ed8d_3b199177",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T23:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b95edaa_930c7a53",
+      "range": {
+        "startLine": 405,
+        "startChar": 32,
+        "endLine": 405,
+        "endChar": 42
+      },
+      "revId": "f10d6941e841a19669014462eed164e299685270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7b28de68_664dd880",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T23:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d180a9d_42c9d9fd",
+      "range": {
+        "startLine": 125,
+        "startChar": 29,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "f10d6941e841a19669014462eed164e299685270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b116641_97fd7d3f",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-25T17:57:03Z",
       "side": 1,
       "message": "Suggest making this a private static method of SlowAfterHeadersHttpResponse.",
+      "range": {
+        "startLine": 126,
+        "startChar": 1,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "f10d6941e841a19669014462eed164e299685270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28526e82_98a73d7a",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T23:54:59Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "8b116641_97fd7d3f",
       "range": {
         "startLine": 126,
         "startChar": 1,
