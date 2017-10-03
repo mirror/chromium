@@ -21,8 +21,8 @@
 #include "base/sequenced_task_runner_helpers.h"
 #include "chrome/browser/safe_browsing/services_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
-#include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_feature_list.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
@@ -55,12 +55,9 @@ class ClientSideDetectionService;
 class DownloadProtectionService;
 class PasswordProtectionService;
 struct ResourceRequestInfo;
-struct SafeBrowsingProtocolConfig;
 class SafeBrowsingDatabaseManager;
 class SafeBrowsingNavigationObserverManager;
 class SafeBrowsingPingManager;
-class SafeBrowsingProtocolManager;
-class SafeBrowsingProtocolManagerDelegate;
 class SafeBrowsingServiceFactory;
 class SafeBrowsingUIManager;
 class SafeBrowsingURLRequestContextGetter;
@@ -99,9 +96,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // Called on UI thread to decide if the download file's sha256 hash
   // should be calculated for safebrowsing.
   bool DownloadBinHashNeeded() const;
-
-  // Create a protocol config struct.
-  virtual SafeBrowsingProtocolConfig GetProtocolConfig() const;
 
   // Create a v4 protocol config struct.
   virtual V4ProtocolConfig GetV4ProtocolConfig() const;
@@ -151,18 +145,13 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
 
   // This returns either the v3 or the v4 database manager, depending on
   // the experiment settings.
-  const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager() const;
+  virtual const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager()
+      const;
 
   scoped_refptr<SafeBrowsingNavigationObserverManager>
   navigation_observer_manager();
 
-  SafeBrowsingProtocolManager* protocol_manager() const;
-
   SafeBrowsingPingManager* ping_manager() const;
-
-  // This may be NULL if v4 is not enabled by experiment.
-  const scoped_refptr<SafeBrowsingDatabaseManager>& v4_local_database_manager()
-      const;
 
   TriggerManager* trigger_manager() const;
 
@@ -221,9 +210,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // Registers all the delayed analysis with the incident reporting service.
   // This is where you register your process-wide, profile-independent analysis.
   virtual void RegisterAllDelayedAnalysis();
-
-  // Return a ptr to DatabaseManager's delegate, or NULL if it doesn't have one.
-  virtual SafeBrowsingProtocolManagerDelegate* GetProtocolManagerDelegate();
 
   std::unique_ptr<ServicesDelegate> services_delegate_;
 
@@ -293,11 +279,6 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   // |url_request_context_|. Accessed on UI thread.
   scoped_refptr<SafeBrowsingURLRequestContextGetter>
       url_request_context_getter_;
-
-#if defined(SAFE_BROWSING_DB_LOCAL)
-  // Handles interaction with SafeBrowsing servers. Accessed on IO thread.
-  std::unique_ptr<SafeBrowsingProtocolManager> protocol_manager_;
-#endif
 
   // Provides phishing and malware statistics. Accessed on IO thread.
   std::unique_ptr<SafeBrowsingPingManager> ping_manager_;

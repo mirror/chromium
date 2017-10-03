@@ -7,12 +7,10 @@
 
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 
-#include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 
 namespace safe_browsing {
-struct SafeBrowsingProtocolConfig;
 class SafeBrowsingDatabaseManager;
 struct V4ProtocolConfig;
 class TestSafeBrowsingDatabaseManager;
@@ -42,7 +40,6 @@ class TestSafeBrowsingService : public SafeBrowsingService {
   explicit TestSafeBrowsingService(
       V4FeatureList::V4UsageStatus v4_usage_status);
   // SafeBrowsingService overrides
-  SafeBrowsingProtocolConfig GetProtocolConfig() const override;
   V4ProtocolConfig GetV4ProtocolConfig() const override;
 
   std::string serilized_download_report();
@@ -58,7 +55,6 @@ class TestSafeBrowsingService : public SafeBrowsingService {
   // following setters), and then initialized.
   void SetUIManager(TestSafeBrowsingUIManager* ui_manager);
   void SetDatabaseManager(TestSafeBrowsingDatabaseManager* database_manager);
-  void SetProtocolConfig(SafeBrowsingProtocolConfig* protocol_config);
   void SetV4ProtocolConfig(V4ProtocolConfig* v4_protocol_config);
 
  protected:
@@ -66,12 +62,9 @@ class TestSafeBrowsingService : public SafeBrowsingService {
   ~TestSafeBrowsingService() override;
   SafeBrowsingDatabaseManager* CreateDatabaseManager() override;
   SafeBrowsingUIManager* CreateUIManager() override;
-  SafeBrowsingProtocolManagerDelegate* GetProtocolManagerDelegate() override;
   void SendSerializedDownloadReport(const std::string& report) override;
 
  private:
-  bool protocol_manager_delegate_disabled_;
-  std::unique_ptr<SafeBrowsingProtocolConfig> protocol_config_;
   std::unique_ptr<V4ProtocolConfig> v4_protocol_config_;
   std::string serialized_download_report_;
 
@@ -96,13 +89,13 @@ class TestSafeBrowsingServiceFactory : public SafeBrowsingServiceFactory {
   void SetTestUIManager(TestSafeBrowsingUIManager* ui_manager);
   void SetTestDatabaseManager(
       TestSafeBrowsingDatabaseManager* database_manager);
-  void SetTestProtocolConfig(const SafeBrowsingProtocolConfig& protocol_config);
+  void SetTestV4ProtocolConfig(const V4ProtocolConfig& v4_protocol_config);
 
  private:
   TestSafeBrowsingService* test_safe_browsing_service_;
   scoped_refptr<TestSafeBrowsingDatabaseManager> test_database_manager_;
   scoped_refptr<TestSafeBrowsingUIManager> test_ui_manager_;
-  SafeBrowsingProtocolConfig* test_protocol_config_;
+  V4ProtocolConfig* test_v4_protocol_config_;
   V4FeatureList::V4UsageStatus v4_usage_status_;
 
   DISALLOW_COPY_AND_ASSIGN(TestSafeBrowsingServiceFactory);

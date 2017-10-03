@@ -34,7 +34,6 @@
 #include "chrome/browser/safe_browsing/download_protection/download_protection_util.h"
 #include "chrome/browser/safe_browsing/download_protection/ppapi_download_request.h"
 #include "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.h"
-#include "chrome/browser/safe_browsing/local_database_manager.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/safe_browsing/binary_feature_extractor.h"
@@ -97,6 +96,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
   MOCK_METHOD2(CheckDownloadUrl,
                bool(const std::vector<GURL>& url_chain,
                     SafeBrowsingDatabaseManager::Client* client));
+  bool IsDownloadProtectionEnabled() const override { return true; }
 
  private:
   virtual ~MockSafeBrowsingDatabaseManager() {}
@@ -116,6 +116,14 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
     return mock_database_manager_;
   }
 
+  const scoped_refptr<SafeBrowsingDatabaseManager>& database_manager()
+      const override {
+    VLOG(1) << __FUNCTION__
+            << ": mock_database_manager_: " << mock_database_manager_;
+    VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_;
+    return database_manager_;
+  }
+
   void SendSerializedDownloadReport(const std::string& unused_report) override {
     download_report_count_++;
   }
@@ -127,12 +135,12 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
 
   SafeBrowsingDatabaseManager* CreateDatabaseManager() override {
     mock_database_manager_ = new MockSafeBrowsingDatabaseManager();
+    database_manager_ = mock_database_manager_;
+    VLOG(1) << __FUNCTION__ << ": service: " << this;
+    VLOG(1) << __FUNCTION__
+            << ": mock_database_manager_: " << mock_database_manager_;
+    VLOG(1) << __FUNCTION__ << ": database_manager(): " << database_manager();
     return mock_database_manager_;
-  }
-
-  SafeBrowsingProtocolManagerDelegate* GetProtocolManagerDelegate() override {
-    // Our SafeBrowsingDatabaseManager doesn't implement this delegate.
-    return NULL;
   }
 
   void RegisterAllDelayedAnalysis() override {}
@@ -154,6 +162,7 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
     return nullptr;
   }
 
+  scoped_refptr<SafeBrowsingDatabaseManager> database_manager_;
   MockSafeBrowsingDatabaseManager* mock_database_manager_;
   int download_report_count_;
 
@@ -229,27 +238,14 @@ ACTION_P(TrustSignature, contents) {
   chain->add_element()->set_certificate(contents.data(), contents.size());
 }
 
-// We can't call OnSafeBrowsingResult directly because SafeBrowsingCheck does
-// not have any copy constructor which means it can't be stored in a callback
-// easily.  Note: check will be deleted automatically when the callback is
-// deleted.
-void OnSafeBrowsingResult(
-    LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck* check) {
-  check->OnSafeBrowsingResult();
-}
-
 ACTION_P(CheckDownloadUrlDone, threat_type) {
-  // TODO(nparker): Remove use of SafeBrowsingCheck and instead call
-  // client->OnCheckDownloadUrlResult(..) directly.
-  LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck* check =
-      new LocalSafeBrowsingDatabaseManager::SafeBrowsingCheck(
-          arg0, std::vector<SBFullHash>(), arg1, BINURL,
-          CreateSBThreatTypeSet({SB_THREAT_TYPE_URL_BINARY_MALWARE}));
-  for (size_t i = 0; i < check->url_results.size(); ++i)
-    check->url_results[i] = threat_type;
+  // |arg0| is the vector of URLs to check.
+  // |arg1| is a raw pointer to SafeBrowsingDatabaseManager::Client.
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&OnSafeBrowsingResult, base::Owned(check)));
+      base::BindOnce(
+          &SafeBrowsingDatabaseManager::Client::OnCheckDownloadUrlResult,
+          base::Unretained(arg1), arg0, threat_type));
 }
 
 class DownloadProtectionServiceTest : public testing::Test {
@@ -1226,6 +1222,8 @@ TEST_F(DownloadProtectionServiceTest, CheckClientDownloadBlob) {
       FILE_PATH_LITERAL("a.tmp"),   // tmp_path
       FILE_PATH_LITERAL("a.exe"));  // final_path
 
+  VLOG(1) << __FUNCTION__ << ": mock_database_manager: "
+          << sb_service_->mock_database_manager();
   EXPECT_CALL(*sb_service_->mock_database_manager(),
               MatchDownloadWhitelistUrl(_))
       .WillRepeatedly(Return(false));
@@ -1926,18 +1924,30 @@ TEST_F(DownloadProtectionServiceTest, TestCheckDownloadUrl) {
     // CheckDownloadURL returns immediately which means the client object
     // callback will never be called.  Nevertheless the callback provided
     // to CheckClientDownload must still be called.
+
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
+    VLOG(1) << __FUNCTION__
+            << ": db_manager: " << sb_service_->mock_database_manager();
     EXPECT_CALL(*sb_service_->mock_database_manager(),
                 CheckDownloadUrl(ContainerEq(url_chain), NotNull()))
         .WillOnce(Return(true));
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
     RunLoop run_loop;
     download_service_->CheckDownloadUrl(
         &item, base::Bind(&DownloadProtectionServiceTest::CheckDoneCallback,
                           base::Unretained(this), run_loop.QuitClosure()));
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
     run_loop.Run();
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
     EXPECT_TRUE(IsResult(DownloadCheckResult::SAFE));
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
     Mock::VerifyAndClearExpectations(sb_service_.get());
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 1";
   }
   {
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 2";
+    VLOG(1) << __FUNCTION__
+            << ": db_manager: " << sb_service_->mock_database_manager();
     EXPECT_CALL(*sb_service_->mock_database_manager(),
                 CheckDownloadUrl(ContainerEq(url_chain), NotNull()))
         .WillOnce(
@@ -1951,6 +1961,7 @@ TEST_F(DownloadProtectionServiceTest, TestCheckDownloadUrl) {
     Mock::VerifyAndClearExpectations(sb_service_.get());
   }
   {
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 3";
     EXPECT_CALL(*sb_service_->mock_database_manager(),
                 CheckDownloadUrl(ContainerEq(url_chain), NotNull()))
         .WillOnce(DoAll(CheckDownloadUrlDone(SB_THREAT_TYPE_URL_MALWARE),
@@ -1964,6 +1975,7 @@ TEST_F(DownloadProtectionServiceTest, TestCheckDownloadUrl) {
     Mock::VerifyAndClearExpectations(sb_service_.get());
   }
   {
+    VLOG(1) << __FUNCTION__ << ": " << __LINE__ << "; 4";
     EXPECT_CALL(*sb_service_->mock_database_manager(),
                 CheckDownloadUrl(ContainerEq(url_chain), NotNull()))
         .WillOnce(DoAll(CheckDownloadUrlDone(SB_THREAT_TYPE_URL_BINARY_MALWARE),

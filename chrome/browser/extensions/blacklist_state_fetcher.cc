@@ -32,10 +32,10 @@ BlacklistStateFetcher::~BlacklistStateFetcher() {
 void BlacklistStateFetcher::Request(const std::string& id,
                                     const RequestCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (!safe_browsing_config_) {
+  if (!safe_browsing_v4_config_) {
     if (g_browser_process && g_browser_process->safe_browsing_service()) {
       SetSafeBrowsingConfig(
-          g_browser_process->safe_browsing_service()->GetProtocolConfig());
+          g_browser_process->safe_browsing_service()->GetV4ProtocolConfig());
     } else {
       base::ThreadTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::BindOnce(callback, BLACKLISTED_UNKNOWN));
@@ -109,9 +109,8 @@ void BlacklistStateFetcher::SendRequest(const std::string& id) {
 }
 
 void BlacklistStateFetcher::SetSafeBrowsingConfig(
-    const safe_browsing::SafeBrowsingProtocolConfig& config) {
-  safe_browsing_config_.reset(
-      new safe_browsing::SafeBrowsingProtocolConfig(config));
+    const safe_browsing::V4ProtocolConfig& config) {
+  safe_browsing_v4_config_.reset(new safe_browsing::V4ProtocolConfig(config));
 }
 
 void BlacklistStateFetcher::SetURLRequestContextForTest(
@@ -120,12 +119,12 @@ void BlacklistStateFetcher::SetURLRequestContextForTest(
 }
 
 GURL BlacklistStateFetcher::RequestUrl() const {
-  std::string url = base::StringPrintf(
-      "%s/%s?client=%s&appver=%s&pver=2.2",
-      safe_browsing_config_->url_prefix.c_str(),
-      "clientreport/crx-list-info",
-      safe_browsing_config_->client_name.c_str(),
-      safe_browsing_config_->version.c_str());
+  std::string url =
+      base::StringPrintf("%s/%s?client=%s&appver=%s&pver=2.2",
+                         safe_browsing_v4_config_->report_url_prefix.c_str(),
+                         "clientreport/crx-list-info",
+                         safe_browsing_v4_config_->client_name.c_str(),
+                         safe_browsing_v4_config_->version.c_str());
   std::string api_key = google_apis::GetAPIKey();
   if (!api_key.empty()) {
     base::StringAppendF(&url, "&key=%s",

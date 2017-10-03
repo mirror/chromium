@@ -12,28 +12,17 @@ namespace extensions {
 namespace {
 
 static const char kUrlPrefix[] = "https://prefix.com/foo";
-static const char kBackupConnectUrlPrefix[] = "https://alt1-prefix.com/foo";
-static const char kBackupHttpUrlPrefix[] = "https://alt2-prefix.com/foo";
-static const char kBackupNetworkUrlPrefix[] = "https://alt3-prefix.com/foo";
 static const char kClient[] = "unittest";
 static const char kAppVer[] = "1.0";
-
-safe_browsing::SafeBrowsingProtocolConfig CreateSafeBrowsingProtocolConfig() {
-  safe_browsing::SafeBrowsingProtocolConfig config;
-  config.client_name = kClient;
-  config.url_prefix = kUrlPrefix;
-  config.backup_connect_error_url_prefix = kBackupConnectUrlPrefix;
-  config.backup_http_error_url_prefix = kBackupHttpUrlPrefix;
-  config.backup_network_error_url_prefix = kBackupNetworkUrlPrefix;
-  config.version = kAppVer;
-  return config;
-}
+static const char kKeyParam[] = "test_key";
 
 }  // namespace
 
 TestBlacklistStateFetcher::TestBlacklistStateFetcher(
     BlacklistStateFetcher* fetcher) : fetcher_(fetcher) {
-  fetcher_->SetSafeBrowsingConfig(CreateSafeBrowsingProtocolConfig());
+  safe_browsing::V4ProtocolConfig config(kClient, true, kKeyParam, kUrlPrefix,
+                                         kAppVer);
+  fetcher_->SetSafeBrowsingConfig(config);
   scoped_refptr<net::TestURLRequestContextGetter> context =
         new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get());

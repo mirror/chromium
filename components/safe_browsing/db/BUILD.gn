@@ -42,7 +42,6 @@ static_library("safe_browsing_api_handler_util") {
   ]
   deps = [
     ":metadata_proto",
-    ":util",
     "//base",
   ]
 }
@@ -54,7 +53,7 @@ source_set("safe_browsing_api_handler") {
   ]
   deps = [
     ":safe_browsing_api_handler_util",
-    ":util",
+    ":v4_protocol_manager_util",
     "//base",
     "//content/public/browser:browser",
     "//url",
@@ -81,7 +80,6 @@ source_set("unit_tests_mobile") {
     ":safe_browsing_api_handler",
     ":safe_browsing_api_handler_util",
     ":unit_tests_shared",
-    ":util",
     ":v4_test_util",
     "//base",
     "//components/variations",
@@ -123,9 +121,7 @@ group("safe_browsing_db_shared") {
   deps = [
     ":database_manager",
     ":hit_report",
-    ":prefix_set",
     ":safebrowsing_proto",
-    ":util",
     ":v4_feature_list",  # Used by SafeBrowsingService
     "//components/safe_browsing/common:safe_browsing_prefs",
   ]
@@ -146,7 +142,6 @@ static_library("database_manager") {
   ]
   deps = [
     ":hit_report",
-    ":util",
     ":v4_get_hash_protocol_manager",
     ":v4_protocol_manager_util",
     "//base",
@@ -166,24 +161,11 @@ static_library("hit_report") {
     "hit_report.cc",
     "hit_report.h",
   ]
-  public_deps = [
-    ":util",
-  ]
   deps = [
+    ":v4_protocol_manager_util",
     "//components/metrics",
     "//components/safe_browsing/common:safe_browsing_prefs",
     "//url",
-  ]
-}
-
-static_library("prefix_set") {
-  sources = [
-    "prefix_set.cc",
-    "prefix_set.h",
-  ]
-  deps = [
-    ":util",
-    "//base",
   ]
 }
 
@@ -198,29 +180,6 @@ static_library("test_database_manager") {
     "//base:base",
     "//net",
   ]
-}
-
-static_library("util") {
-  sources = [
-    "util.cc",
-    "util.h",
-  ]
-  public_deps = [
-    ":v4_protocol_manager_util",
-    "//components/safe_browsing/common:safe_browsing_prefs",
-  ]
-  deps = [
-    "//base",
-    "//components/version_info:version_info",
-    "//crypto",
-    "//google_apis:google_apis",
-    "//net",
-    "//url",
-  ]
-  if (is_win) {
-    # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
-    cflags = [ "/wd4267" ]  # Conversion from size_t to 'type'.
-  }
 }
 
 static_library("v4_database") {
@@ -260,7 +219,6 @@ static_library("v4_get_hash_protocol_manager") {
     ":safebrowsing_proto",
   ]
   deps = [
-    ":util",
     ":v4_protocol_manager_util",
     "//base",
     "//components/data_use_measurement/core",
@@ -303,6 +261,7 @@ source_set("v4_protocol_manager_util") {
   ]
   deps = [
     "//base",
+    "//components/version_info:version_info",
     "//net",
     "//url",
   ]
@@ -353,7 +312,6 @@ static_library("v4_test_util") {
     "v4_test_util.h",
   ]
   deps = [
-    ":util",
     ":v4_protocol_manager_util",
   ]
 }
@@ -365,7 +323,6 @@ static_library("v4_update_protocol_manager") {
   ]
   deps = [
     ":safebrowsing_proto",
-    ":util",
     ":v4_protocol_manager_util",
     "//base",
     "//components/data_use_measurement/core",
@@ -398,10 +355,10 @@ source_set("v4_get_hash_protocol_manager_unittest") {
   ]
   deps = [
     ":safebrowsing_proto",
-    ":util",
     ":v4_database",
     ":v4_get_hash_protocol_manager",
     ":v4_local_database_manager",
+    ":v4_protocol_manager_util",
     ":v4_test_util",
     "//base",
     "//base/test:test_support",
@@ -438,7 +395,7 @@ source_set("v4_update_protocol_manager_unittest") {
   ]
   deps = [
     ":safebrowsing_proto",
-    ":util",
+    ":v4_protocol_manager_util",
     ":v4_test_util",
     ":v4_update_protocol_manager",
     "//base",
@@ -453,18 +410,14 @@ source_set("unit_tests_shared") {
   testonly = true
   sources = [
     "database_manager_unittest.cc",
-    "prefix_set_unittest.cc",
-    "util_unittest.cc",
     "v4_get_hash_protocol_manager_unittest.cc",
     "v4_protocol_manager_util_unittest.cc",
     "whitelist_checker_client_unittest.cc",
   ]
   deps = [
     ":database_manager",
-    ":prefix_set",
     ":safebrowsing_proto",
     ":test_database_manager",
-    ":util",
     ":v4_get_hash_protocol_manager",
     ":v4_protocol_manager_util",
     ":v4_test_util",
@@ -493,7 +446,6 @@ source_set("unit_tests_desktop") {
   ]
   deps = [
     ":unit_tests_shared",
-    ":util",
     ":v4_database",
     ":v4_local_database_manager",
     ":v4_protocol_manager_util",

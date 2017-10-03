@@ -28,7 +28,7 @@ class SafeBrowsingPingManager : public BasePingManager {
   // Create an instance of the safe browsing ping manager.
   static std::unique_ptr<SafeBrowsingPingManager> Create(
       net::URLRequestContextGetter* request_context_getter,
-      const SafeBrowsingProtocolConfig& config);
+      const V4ProtocolConfig& config);
 
   // Report permission action to SafeBrowsing servers.
   void ReportPermissionAction(const PermissionReportInfo& report_info);
@@ -48,9 +48,8 @@ class SafeBrowsingPingManager : public BasePingManager {
 
   // Constructs a SafeBrowsingPingManager that issues network requests
   // using |request_context_getter|.
-  SafeBrowsingPingManager(
-      net::URLRequestContextGetter* request_context_getter,
-      const SafeBrowsingProtocolConfig& config);
+  SafeBrowsingPingManager(net::URLRequestContextGetter* request_context_getter,
+                          const V4ProtocolConfig& config);
 
   // Sends reports of permission actions.
   std::unique_ptr<PermissionReporter> permission_reporter_;

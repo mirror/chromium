@@ -3192,12 +3192,10 @@ TEST_F(ExtensionServiceTest, SetUnsetBlacklistInPrefs) {
   EXPECT_FALSE(IsPrefExist("invalid_id", "blacklist"));
 
   // Blacklist good0 and good1 (and an invalid extension ID).
-  test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_MALWARE, true);
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_MALWARE, true);
-  test_blacklist.SetBlacklistState(
-      "invalid_id", extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.SetBlacklistState(good0, extensions::BLACKLISTED_MALWARE);
+  test_blacklist.SetBlacklistState(good1, extensions::BLACKLISTED_MALWARE);
+  test_blacklist.SetBlacklistState("invalid_id",
+                                   extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   EXPECT_TRUE(!enabled_extensions.Contains(good0) &&
@@ -3213,13 +3211,11 @@ TEST_F(ExtensionServiceTest, SetUnsetBlacklistInPrefs) {
   EXPECT_FALSE(IsPrefExist("invalid_id", "blacklist"));
 
   // Un-blacklist good1 and blacklist good2.
-  test_blacklist.Clear(false);
-  test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_MALWARE, true);
-  test_blacklist.SetBlacklistState(
-      good2, extensions::BLACKLISTED_MALWARE, true);
-  test_blacklist.SetBlacklistState(
-      "invalid_id", extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.Clear(/*false*/);
+  test_blacklist.SetBlacklistState(good0, extensions::BLACKLISTED_MALWARE);
+  test_blacklist.SetBlacklistState(good2, extensions::BLACKLISTED_MALWARE);
+  test_blacklist.SetBlacklistState("invalid_id",
+                                   extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   EXPECT_TRUE(!enabled_extensions.Contains(good0) &&
@@ -3247,7 +3243,7 @@ TEST_F(ExtensionServiceTest, BlacklistedExtensionWillNotInstall) {
   service()->Init();
 
   // After blacklisting good_crx, we cannot install it.
-  blacklist_db->SetUnsafe(good_crx).NotifyUpdate();
+  blacklist_db->SetUnsafe(good_crx);
   content::RunAllTasksUntilIdle();
 
   base::FilePath path = data_dir().AppendASCII("good.crx");
@@ -3275,8 +3271,7 @@ TEST_F(ExtensionServiceTest, RemoveExtensionFromBlacklist) {
       extensions::ExtensionRegistry::Get(profile()), good0);
 
   // Add the extension to the blacklist.
-  test_blacklist.SetBlacklistState(good0, extensions::BLACKLISTED_MALWARE,
-                                   true);
+  test_blacklist.SetBlacklistState(good0, extensions::BLACKLISTED_MALWARE);
   observer.WaitForExtensionUnloaded();
 
   // The extension should be disabled, both "blacklist" and "blacklist_state"
@@ -3288,7 +3283,7 @@ TEST_F(ExtensionServiceTest, RemoveExtensionFromBlacklist) {
             prefs->GetExtensionBlacklistState(good0));
 
   // Remove the extension from the blacklist.
-  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED, true);
+  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED);
   observer.WaitForExtensionLoaded()->id();
 
   // The extension should be enabled, both "blacklist" and "blacklist_state"
@@ -3321,8 +3316,7 @@ TEST_F(ExtensionServiceTest, UnloadBlacklistedExtensionPolicy) {
     pref.SetIndividualExtensionInstallationAllowed(good_crx, true);
   }
 
-  test_blacklist.SetBlacklistState(
-      good_crx, extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.SetBlacklistState(good_crx, extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   // The good_crx is blacklisted and the whitelist doesn't negate it.
@@ -3342,8 +3336,8 @@ TEST_F(ExtensionServiceTest, WillNotLoadBlacklistedExtensionsFromDirectory) {
   test_blacklist.Attach(service()->blacklist_);
 
   // Blacklist good1 before the service initializes.
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_MALWARE, false);
+  test_blacklist.SetBlacklistState(good1,
+                                   extensions::BLACKLISTED_MALWARE /*, false*/);
 
   // Load extensions.
   service()->Init();
@@ -3373,8 +3367,8 @@ TEST_F(ExtensionServiceTest, BlacklistedInPrefsFromStartup) {
   ExtensionPrefs::Get(profile())->SetExtensionBlacklistState(
       good1, extensions::BLACKLISTED_MALWARE);
 
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_MALWARE, false);
+  test_blacklist.SetBlacklistState(good1,
+                                   extensions::BLACKLISTED_MALWARE /*, false*/);
 
   // Extension service hasn't loaded yet, but IsExtensionEnabled reads out of
   // prefs. Ensure it takes into account the blacklist state (crbug.com/373842).
@@ -3424,11 +3418,11 @@ TEST_F(ExtensionServiceTest, GreylistedExtensionDisabled) {
 
   // Blacklist good0 and good1 (and an invalid extension ID).
   test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION, true);
+      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION);
   test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED, true);
-  test_blacklist.SetBlacklistState(
-      "invalid_id", extensions::BLACKLISTED_MALWARE, true);
+      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED);
+  test_blacklist.SetBlacklistState("invalid_id",
+                                   extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   EXPECT_FALSE(enabled_extensions.Contains(good0));
@@ -3452,10 +3446,8 @@ TEST_F(ExtensionServiceTest, GreylistedExtensionDisabled) {
   EXPECT_TRUE(disabled_extensions.Contains(good1));
 
   // Remove extensions from blacklist.
-  test_blacklist.SetBlacklistState(
-      good0, extensions::NOT_BLACKLISTED, true);
-  test_blacklist.SetBlacklistState(
-      good1, extensions::NOT_BLACKLISTED, true);
+  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED);
+  test_blacklist.SetBlacklistState(good1, extensions::NOT_BLACKLISTED);
   content::RunAllTasksUntilIdle();
 
   // All extensions are enabled.
@@ -3488,11 +3480,11 @@ TEST_F(ExtensionServiceTest, GreylistDontEnableManuallyDisabled) {
                               extensions::disable_reason::DISABLE_USER_ACTION);
 
   test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION, true);
+      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION);
   test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED, true);
+      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED);
   test_blacklist.SetBlacklistState(
-      good2, extensions::BLACKLISTED_SECURITY_VULNERABILITY, true);
+      good2, extensions::BLACKLISTED_SECURITY_VULNERABILITY);
   content::RunAllTasksUntilIdle();
 
   // All extensions disabled.
@@ -3515,12 +3507,9 @@ TEST_F(ExtensionServiceTest, GreylistDontEnableManuallyDisabled) {
   EXPECT_TRUE(disabled_extensions.Contains(good1));
 
   // Remove extensions from blacklist.
-  test_blacklist.SetBlacklistState(
-      good0, extensions::NOT_BLACKLISTED, true);
-  test_blacklist.SetBlacklistState(
-      good1, extensions::NOT_BLACKLISTED, true);
-  test_blacklist.SetBlacklistState(
-      good2, extensions::NOT_BLACKLISTED, true);
+  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED);
+  test_blacklist.SetBlacklistState(good1, extensions::NOT_BLACKLISTED);
+  test_blacklist.SetBlacklistState(good2, extensions::NOT_BLACKLISTED);
   content::RunAllTasksUntilIdle();
 
   // good0 and good1 remain disabled.
@@ -3548,9 +3537,9 @@ TEST_F(ExtensionServiceTest, GreylistUnknownDontChange) {
       registry()->disabled_extensions();
 
   test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION, true);
+      good0, extensions::BLACKLISTED_CWS_POLICY_VIOLATION);
   test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED, true);
+      good1, extensions::BLACKLISTED_POTENTIALLY_UNWANTED);
   content::RunAllTasksUntilIdle();
 
   EXPECT_FALSE(enabled_extensions.Contains(good0));
@@ -3560,12 +3549,9 @@ TEST_F(ExtensionServiceTest, GreylistUnknownDontChange) {
   EXPECT_TRUE(enabled_extensions.Contains(good2));
   EXPECT_FALSE(disabled_extensions.Contains(good2));
 
-  test_blacklist.SetBlacklistState(
-      good0, extensions::NOT_BLACKLISTED, true);
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_UNKNOWN, true);
-  test_blacklist.SetBlacklistState(
-      good2, extensions::BLACKLISTED_UNKNOWN, true);
+  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED);
+  test_blacklist.SetBlacklistState(good1, extensions::BLACKLISTED_UNKNOWN);
+  test_blacklist.SetBlacklistState(good2, extensions::BLACKLISTED_UNKNOWN);
   content::RunAllTasksUntilIdle();
 
   // good0 re-enabled, other remain as they were.
@@ -3585,11 +3571,10 @@ TEST_F(ExtensionServiceTest, ReloadBlacklistedExtension) {
   InitializeGoodInstalledExtensionService();
   test_blacklist.Attach(service()->blacklist_);
 
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_MALWARE, false);
+  test_blacklist.SetBlacklistState(good1, extensions::BLACKLISTED_MALWARE);
   service()->Init();
-  test_blacklist.SetBlacklistState(
-      good2, extensions::BLACKLISTED_MALWARE, false);
+  test_blacklist.SetBlacklistState(good2,
+                                   extensions::BLACKLISTED_MALWARE /*, false*/);
   content::RunAllTasksUntilIdle();
 
   EXPECT_EQ(StringSet(good0), registry()->enabled_extensions().GetIDs());
@@ -3675,14 +3660,12 @@ TEST_F(ExtensionServiceTest, BlockAndUnblockBlacklistedExtension) {
   InitializeGoodInstalledExtensionService();
   test_blacklist.Attach(service()->blacklist_);
 
-  test_blacklist.SetBlacklistState(
-      good0, extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.SetBlacklistState(good0, extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   service()->Init();
 
-  test_blacklist.SetBlacklistState(
-      good1, extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.SetBlacklistState(good1, extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   // Blacklisted extensions stay blacklisted.
@@ -3692,11 +3675,9 @@ TEST_F(ExtensionServiceTest, BlockAndUnblockBlacklistedExtension) {
   service()->BlockAllExtensions();
 
   // Remove an extension from the blacklist while the service is blocked.
-  test_blacklist.SetBlacklistState(
-      good0, extensions::NOT_BLACKLISTED, true);
+  test_blacklist.SetBlacklistState(good0, extensions::NOT_BLACKLISTED);
   // Add an extension to the blacklist while the service is blocked.
-  test_blacklist.SetBlacklistState(
-      good2, extensions::BLACKLISTED_MALWARE, true);
+  test_blacklist.SetBlacklistState(good2, extensions::BLACKLISTED_MALWARE);
   content::RunAllTasksUntilIdle();
 
   // Go directly to blocked, do not pass go, do not collect $200.
