@@ -52,6 +52,24 @@
       "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dad740_9733a523",
+        "filename": "chromeos/tpm/tpm_token_info_getter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T08:10:51Z",
+      "side": 1,
+      "message": "Got it. Thank you for explanation and advice. Done.",
+      "parentUuid": "b13db11f_48994444",
+      "revId": "0af0d3a47f94055975a534e0e969bf1f34400675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
