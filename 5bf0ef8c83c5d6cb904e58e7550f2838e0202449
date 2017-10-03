@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c1aa3f9_097a6dc8",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-03T05:17:33Z",
+      "side": 1,
+      "message": "What does the \u0027pixel\u0027 comment mean?",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94275e9b_6785e757",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-03T05:17:33Z",
+      "side": 1,
+      "message": "I think these need to be a little longer (maybe 5 and 10?)",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b8445e_7869abd7",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-03T05:17:33Z",
+      "side": 1,
+      "message": "This can probably be longer too (4?)",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5392dd74_264fe907",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-03T05:17:33Z",
+      "side": 1,
+      "message": "What does \u0027pixel\u0027 mean here?",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
