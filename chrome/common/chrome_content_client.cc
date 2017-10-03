@@ -704,20 +704,6 @@ std::string ChromeContentClient::GetProcessTypeNameInEnglish(int type) {
   return "Unknown";
 }
 
-#if defined(OS_MACOSX)
-bool ChromeContentClient::GetSandboxProfileForSandboxType(
-    int sandbox_type,
-    const char** sandbox_profile) const {
-#if BUILDFLAG(ENABLE_NACL)
-  if (sandbox_type == NACL_SANDBOX_TYPE_NACL_LOADER) {
-    *sandbox_profile = service_manager::kSeatbeltPolicyString_nacl_loader;
-    return true;
-  }
-#endif
-  return false;
-}
-#endif
-
 bool ChromeContentClient::AllowScriptExtensionForServiceWorker(
     const GURL& script_url) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
