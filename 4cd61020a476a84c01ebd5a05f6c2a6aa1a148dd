@@ -52,6 +52,24 @@
       "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b106fb65_606bf46c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-03T18:15:04Z",
+      "side": 1,
+      "message": "How\u0027s this for a compromise? Currently, we switch to using a generic task queue for keepalive requests. This moves that selection to ResourceLoader. This is farther from the WebURLLoader construction, but ResourceLoader is closer the ResourceRequest that holds the keepalive state. It also means that we don\u0027t need to expose the task runner on The WebURLLoader interface, and ResourceLoader can take care of routing the correct task queue everywhere it needs to be.\n\nWDYT?",
+      "parentUuid": "7c3ea797_b74d5802",
+      "revId": "4cd61020a476a84c01ebd5a05f6c2a6aa1a148dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
