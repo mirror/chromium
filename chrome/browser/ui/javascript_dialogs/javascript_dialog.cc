@@ -23,8 +23,7 @@ base::WeakPtr<JavaScriptDialog> JavaScriptDialog::Create(
     content::JavaScriptDialogType dialog_type,
     const base::string16& message_text,
     const base::string16& default_prompt_text,
-    const content::JavaScriptDialogManager::DialogClosedCallback&
-        dialog_callback) {
+    content::JavaScriptDialogManager::DialogClosedCallback dialog_callback) {
   return JavaScriptDialogViews::Create(
       parent_web_contents, alerting_web_contents, title, dialog_type,
       message_text, default_prompt_text, dialog_callback);
