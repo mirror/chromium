@@ -48,7 +48,7 @@
         display: flex;
         height: 40px;
         margin-bottom: 12px;
-        padding: 8px 12px 0;
+        padding: 8px 23px 0;
       }
 
       #icon {
@@ -63,6 +63,15 @@
         @apply(--cr-title-text);
       }
 
+      .action-button {
+        --paper-button-ink-color: var(--google-blue-500);
+        color: var(--google-blue-500);
+        font-size: 15px;
+        font-weight: 500;
+        margin: 0;
+        width: 78px;
+      }
+
       .control-line {
         align-items: center;
         display: flex;
@@ -72,6 +81,16 @@
 
       .control-line span {
         color: var(--paper-grey-900);
+      }
+
+      .control-line span.warning-content,
+      .control-line span.suspicious-warn-text {
+        color: var(--paper-red-700);
+      }
+
+      #learn-more-link {
+        color: var(--google-blue-500);
+        text-decoration: none;
       }
 
       .section {
@@ -88,6 +107,11 @@
         border-top: none;
       }
 
+      .section.continuation.warning {
+        padding-left: 20.8px;
+        padding-right: 8px;
+      }
+
       .section:first-child {
         border: none;
       }
@@ -101,6 +125,11 @@
         color: var(--paper-grey-600);
       }
 
+      .suspicious-warn-text {
+        display: inline-block;
+        width: 484px;
+      }
+
       .actionable {
         cursor: pointer;
       }
@@ -111,9 +140,29 @@
         width: auto;  /* override the default button size of 24x24 */
       }
 
+      .warning-icon-container {
+        float: left;
+        margin-right: 17px;
+      }
+
+      .warning-icon {
+        --iron-icon-fill-color: var(--paper-red-700);
+        --iron-icon-width: 18.3px;
+      }
+
+      #warnings.layout.horizontal {
+        width: 78px;
+      }
+
       ul {
         -webkit-padding-start: 20px;
         margin: 0;
+      }
+    </style>
+    <style is="custom-style">
+      button[is=paper-icon-button-light] {
+        height: 14px;
+        width: 14px;
       }
     </style>
     <div id="main">
@@ -138,6 +187,49 @@
                 on-change="onEnableChange_"
                 disabled="[[!isEnableToggleEnabled_(data.*)]]">
             </cr-toggle>
+          </div>
+        </div>
+      </div>
+      <div id="warnings" hidden$="[[!hasWarnings_(data.*)]]">
+        <div class="section continuation warning" id="suspicious-warning"
+            hidden$="[[!data.disableReasons.suspiciousInstall]]">
+          <div class="control-line">
+            <span class="warning-content">
+                <span class="warning-icon-container">
+                  <iron-icon class="warning-icon" icon="cr:warning"></iron-icon>
+                </span>
+                <span class="suspicious-warn-text">
+                  $i18n{itemSuspiciousInstall}
+                  <a target="_blank" id="learn-more-link"
+                      href="$i18n{suspiciousInstallHelpUrl}">
+                    $i18n{learnMore}
+                  </a>
+                </span>
+            </span>
+          </div>
+        </div>
+        <div class="section continuation warning" id="corrupted-warning"
+            hidden$="[[!data.disableReasons.corruptInstall]]">
+          <div class="control-line">
+            <span class="warning-content">
+                <span class="warning-icon-container">
+                  <iron-icon class="warning-icon" icon="cr:warning"></iron-icon>
+                </span>$i18n{itemCorruptInstall}
+            </span>
+            <div class="layout horizontal">
+              <paper-button id="repair-button" class="action-button"
+                  on-tap="onRepairTap_">
+                  $i18n{itemRepair}
+              </paper-button>
+            </div>
+          </div>
+        </div>
+        <div class="section continuation warning" id="blacklisted-warning"
+            hidden$="[[!data.blacklistText]]">
+          <div class="control-line">
+            <span class="warning-content"><!-- No whitespace
+             -->[[data.blacklistText]]<!-- so we can use :empty in css.
+             --></span>
           </div>
         </div>
       </div>
