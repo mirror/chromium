@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df5aa736_0c3cbbd9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:28:09Z",
+      "side": 1,
+      "message": "oddly, I did change this, but I guess that change got lost somehow. Done.",
+      "parentUuid": "3fed0bca_2840da0c",
+      "revId": "82ed13d8ac712bc1d4343335f4b79d7f901961a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ffd00641_404e6675",
         "filename": "chrome/browser/ui/window_sizer/window_sizer.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T17:14:28Z",
       "side": 1,
       "message": "nit: This may need // nogncheck for the Linux Ozone bot (which is not in CQ, but under active development)",
+      "revId": "82ed13d8ac712bc1d4343335f4b79d7f901961a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4787608d_4c463fc7",
+        "filename": "chrome/browser/ui/window_sizer/window_sizer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:28:09Z",
+      "side": 1,
+      "message": "I assume that you don\u0027t have to nogncheck files that are in check_gn_headers_whitelist.txt",
+      "parentUuid": "ffd00641_404e6675",
       "revId": "82ed13d8ac712bc1d4343335f4b79d7f901961a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
