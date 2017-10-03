@@ -37,6 +37,47 @@
     },
     {
       "key": {
+        "uuid": "f40da4f0_5d414535",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T14:51:49Z",
+      "side": 1,
+      "message": "If you want to set reviewers at upload time, use `git cl upload -r \u003creviewer\u003e`. Gerrit will now insert the \"Reviewed-by:\" lines automatically on landing reflecting who actually +1\u0027d the CL.\n\nAnd yes I think a unittest would probably be better than the DCHECK, which will also get stripped out in release builds.",
+      "parentUuid": "f4c31a0a_45122496",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288635e3_da852aad",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T14:51:49Z",
+      "side": 1,
+      "message": "Why change this to 0? `nullptr` or `NULL` instead ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00eca535_3eb3c4aa",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
         "patchSetId": 1
@@ -92,6 +133,24 @@
       "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fc4c6f_b2e3ef9e",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T14:51:49Z",
+      "side": 1,
+      "message": "Yes, I suggested it because if the [panel delegate] branch is taken, then this work will be done for no reason. But yes definitely need to check before calling.",
+      "parentUuid": "f57cb1e0_bc49837e",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
