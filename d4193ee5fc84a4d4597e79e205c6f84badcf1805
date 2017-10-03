@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d35b4cdd_7ba8f4e6",
+        "filename": "net/nqe/throughput_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T22:35:31Z",
+      "side": 1,
+      "message": "We should pass in |request| as an optional here to do a separate check specifically for that request regardless of when the last global check was. I\u0027m concerned that if it has been 3.5 seconds, but the last check was .75 secs ago, we will miss removing this request and restarting the window.",
+      "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3e40cc_45c2b8f7",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T22:35:31Z",
+      "side": 1,
+      "message": "Thoughts on dep injecting instead of having this method?",
+      "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceed035a_54625816",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T22:35:31Z",
+      "side": 1,
+      "message": "Should this be a different typedef, why store base::TimeTicks() repeatedly?",
+      "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
