@@ -101,6 +101,10 @@ class FakeSessionManagerClient : public SessionManagerClient {
   void set_user_policy(const cryptohome::Identification& cryptohome_id,
                        const std::string& policy_blob);
 
+  void set_store_user_policy_success(bool success) {
+    store_user_policy_success_ = success;
+  }
+
   const std::string& device_local_account_policy(
       const std::string& account_id) const;
   void set_device_local_account_policy(const std::string& account_id,
@@ -138,6 +142,10 @@ class FakeSessionManagerClient : public SessionManagerClient {
  private:
   std::string device_policy_;
   std::map<cryptohome::Identification, std::string> user_policies_;
+
+  // Controls whether StorePolicyForUser() should success or not.
+  bool store_user_policy_success_ = true;
+
   std::map<std::string, std::string> device_local_account_policy_;
   base::ObserverList<Observer> observers_;
   SessionManagerClient::ActiveSessionsMap user_sessions_;
