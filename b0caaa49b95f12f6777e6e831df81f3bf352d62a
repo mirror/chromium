@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73bc9cf0_834d68fe",
+        "filename": "content/renderer/input/main_thread_event_queue_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-03T17:53:41Z",
+      "side": 1,
+      "message": "Naming here is kinda scary. In order to test that I haven\u0027t received a callback, I instantiate a ReceivedCallback object?\n\nNot sure what ideal naming would be, but this is kinda confusing.",
+      "range": {
+        "startLine": 103,
+        "startChar": 25,
+        "endLine": 103,
+        "endChar": 60
+      },
+      "revId": "b0caaa49b95f12f6777e6e831df81f3bf352d62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
