@@ -1579,6 +1579,10 @@ DOMWindow* LocalDOMWindow::open(const String& url_string,
   UseCounter::Count(*active_document, WebFeature::kDOMWindowOpen);
   if (!window_features_string.IsEmpty())
     UseCounter::Count(*active_document, WebFeature::kDOMWindowOpenFeatures);
+  probe::windowOpen(active_document,
+                    first_frame->GetDocument()->CompleteURL(url_string),
+                    frame_name.GetString(), window_features_string,
+                    UserGestureIndicator::ProcessingUserGesture());
 
   // Get the target frame for the special cases of _top and _parent.
   // In those cases, we schedule a location change right now and return early.
