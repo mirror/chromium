@@ -835,4 +835,8 @@ FloatSize HTMLImageElement::SourceDefaultObjectSize() {
   return FloatSize(width(), height());
 }
 
+bool HTMLImageElement::IsAsync() const {
+  return !FastGetAttribute(HTMLNames::asyncAttr).IsNull();
+}
+
 }  // namespace blink

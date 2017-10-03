@@ -45,7 +45,8 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode) override;
+            ImageClampingMode,
+            ImageDecodingMode) override;
 
   bool IsValid() const final;
   WebGraphicsContext3DProvider* ContextProvider() const final;
@@ -78,7 +79,7 @@ class PLATFORM_EXPORT AcceleratedStaticBitmapImage final
   // was a snapshot of an SkSurface that may be rendered to after
   void RetainOriginalSkImageForCopyOnWrite();
 
-  PaintImage PaintImageForCurrentFrame() override;
+  PaintImage PaintImageForCurrentFrame(ImageDecodingMode) override;
 
   void Abandon() final;
 

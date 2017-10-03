@@ -112,6 +112,7 @@ blink_core_sources("paint") {
     "ObjectPainter.cpp",
     "ObjectPainter.h",
     "PaintEvent.h",
+    "PaintInfo.cpp",
     "PaintInfo.h",
     "PaintInvalidationCapableScrollableArea.cpp",
     "PaintInvalidationCapableScrollableArea.h",

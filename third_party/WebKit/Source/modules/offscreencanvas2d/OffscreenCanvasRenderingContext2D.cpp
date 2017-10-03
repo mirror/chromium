@@ -128,8 +128,9 @@ ImageBitmap* OffscreenCanvasRenderingContext2D::TransferToImageBitmap(
   if (image->IsTextureBacked()) {
     // Before discarding the ImageBuffer, we need to flush pending render ops
     // to fully resolve the snapshot.
-    image->PaintImageForCurrentFrame().GetSkImage()->getTextureHandle(
-        true);  // Flush pending ops.
+    image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+        .GetSkImage()
+        ->getTextureHandle(true);  // Flush pending ops.
   }
   host()->DiscardImageBuffer();  // "Transfer" means no retained buffer.
   return ImageBitmap::Create(std::move(image));
@@ -157,8 +158,10 @@ ImageData* OffscreenCanvasRenderingContext2D::ToImageData(
     SkImageInfo image_info =
         SkImageInfo::Make(this->Width(), this->Height(), kRGBA_8888_SkColorType,
                           kUnpremul_SkAlphaType);
-    snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-        image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
+    snapshot->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+        .GetSkImage()
+        ->readPixels(image_info, image_data->data()->Data(),
+                     image_info.minRowBytes(), 0, 0);
   }
   return image_data;
 }

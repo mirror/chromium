@@ -136,6 +136,8 @@ class CORE_EXPORT HTMLImageElement final
   FormAssociated* ToFormAssociatedOrNull() override { return this; };
   void AssociateWith(HTMLFormElement*) override;
 
+  bool IsAsync() const;
+
  protected:
   // Controls how an image element appears in the layout. See:
   // https://html.spec.whatwg.org/multipage/embedded-content.html#image-request

@@ -55,8 +55,9 @@ bool HighContrastImageClassifier::GetBitmap(Image& image, SkBitmap* bitmap) {
       SkImageInfo::MakeN32(image.width(), image.height(), kPremul_SkAlphaType));
   SkCanvas canvas(*bitmap);
   canvas.clear(SK_ColorTRANSPARENT);
-  canvas.drawImageRect(image.PaintImageForCurrentFrame().GetSkImage(),
-                       SkRect::MakeIWH(image.width(), image.height()), nullptr);
+  canvas.drawImageRect(
+      image.PaintImageForCurrentFrame(Image::kUnspecifiedDecode).GetSkImage(),
+      SkRect::MakeIWH(image.width(), image.height()), nullptr);
   return true;
 }
 

@@ -110,7 +110,7 @@ class CORE_EXPORT SVGImage final : public Image {
                                              const IntRect& draw_dst_rect,
                                              bool flip_y) override;
 
-  PaintImage PaintImageForCurrentFrame() override;
+  PaintImage PaintImageForCurrentFrame(ImageDecodingMode) override;
 
  private:
   // Accesses m_page.
@@ -144,7 +144,8 @@ class CORE_EXPORT SVGImage final : public Image {
             const FloatRect& from_rect,
             const FloatRect& to_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode) override;
+            ImageClampingMode,
+            ImageDecodingMode) override;
   void DrawForContainer(PaintCanvas*,
                         const PaintFlags&,
                         const FloatSize&,

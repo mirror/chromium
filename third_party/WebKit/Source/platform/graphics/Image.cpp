@@ -122,7 +122,7 @@ void Image::DrawTiledBackground(GraphicsContext& ctxt,
   if (one_tile_rect.Contains(dest_rect)) {
     const FloatRect visible_src_rect =
         ComputeSubsetForTile(one_tile_rect, dest_rect, intrinsic_tile_size);
-    ctxt.DrawImage(this, dest_rect, &visible_src_rect, op,
+    ctxt.DrawImage(this, kUnspecifiedDecode, dest_rect, &visible_src_rect, op,
                    kDoNotRespectImageOrientation);
     return;
   }
@@ -278,7 +278,7 @@ void Image::DrawPattern(GraphicsContext& context,
                         const FloatSize& repeat_spacing) {
   TRACE_EVENT0("skia", "Image::drawPattern");
 
-  PaintImage image = PaintImageForCurrentFrame();
+  PaintImage image = PaintImageForCurrentFrame(kUnspecifiedDecode);
   if (!image)
     return;
 
@@ -357,7 +357,7 @@ void Image::InitPaintImageBuilder(PaintImageBuilder& builder) {
 bool Image::ApplyShader(PaintFlags& flags, const SkMatrix& local_matrix) {
   // Default shader impl: attempt to build a shader based on the current frame
   // SkImage.
-  PaintImage image = PaintImageForCurrentFrame();
+  PaintImage image = PaintImageForCurrentFrame(kUnspecifiedDecode);
   if (!image)
     return false;
 

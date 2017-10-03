@@ -114,7 +114,9 @@ ScriptPromise ShapeDetector::detect(
   // PaintImageForCurrentFrame() if needed, otherwise returning the original
   // SkImage.
   const sk_sp<SkImage> sk_image =
-      image->PaintImageForCurrentFrame().GetSkImage()->makeNonTextureImage();
+      image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+          .GetSkImage()
+          ->makeNonTextureImage();
   if (sk_image && sk_image->peekPixels(&pixmap)) {
     pixel_data_ptr = static_cast<uint8_t*>(pixmap.writable_addr());
     allocation_size = pixmap.getSafeSize();
@@ -181,7 +183,8 @@ ScriptPromise ShapeDetector::DetectShapesOnImageElement(
   }
 
   const sk_sp<SkImage> image =
-      blink_image->PaintImageForCurrentFrame().GetSkImage();
+      blink_image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+          .GetSkImage();
   DCHECK_EQ(img->naturalWidth(), static_cast<unsigned>(image->width()));
   DCHECK_EQ(img->naturalHeight(), static_cast<unsigned>(image->height()));
 

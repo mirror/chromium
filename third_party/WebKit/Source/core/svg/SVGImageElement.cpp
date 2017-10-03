@@ -204,4 +204,8 @@ void SVGImageElement::DidMoveToNewDocument(Document& old_document) {
   SVGGraphicsElement::DidMoveToNewDocument(old_document);
 }
 
+bool SVGImageElement::IsAsync() const {
+  return !FastGetAttribute(SVGNames::asyncAttr).IsNull();
+}
+
 }  // namespace blink
