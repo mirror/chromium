@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76b0ae91_66c817c1",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T22:35:24Z",
+      "side": 1,
+      "message": "If you want to newton it, this is the equation:\n\n(AD+B) ^ G + E  \u003d DGA(AD+B)^(G-1)   (solve for D)\n\nArithmetic solutions are not possible I think.\nThe newton method will converge faster but should yield the same result.\n\nI agree that fighting is likely, and it could become degenerate where D grows out of control.\nHowever, it\u0027s possible that none of this is an issue and that it will settle just fine in 99% of all cases, which we would have to test...\n\nGolden section search?",
+      "parentUuid": "0502671a_bcd501eb",
+      "revId": "f3b7de20572569db3625902f67beb766b5bc258b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a5c62e4_5c243d1e",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T22:14:10Z",
       "side": 1,
       "message": "I think we want this to be 1/sqrt(x)\n\nOr more accurately 1/(sqrt(x)+epsilon)",
+      "revId": "f3b7de20572569db3625902f67beb766b5bc258b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c953926_49daa2df",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T22:35:24Z",
+      "side": 1,
+      "message": "how about this?",
+      "parentUuid": "5a5c62e4_5c243d1e",
       "revId": "f3b7de20572569db3625902f67beb766b5bc258b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
