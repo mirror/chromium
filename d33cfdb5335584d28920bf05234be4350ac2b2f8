@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "096620bd_31e6acc3",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-03T17:37:42Z",
+      "side": 1,
+      "message": "Since only neighbor pages could be visible during scrolling, I changed it to all possible adjustments now.",
+      "parentUuid": "865e2a59_fe75b027",
+      "revId": "d33cfdb5335584d28920bf05234be4350ac2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "719102f3_b1f2240c",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 3

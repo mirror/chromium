@@ -34,6 +34,24 @@
       "revId": "ee89cd36c8ca7939f9ce24b417df16a3b2109614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0332f87a_1ff3c0e2",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-03T17:37:42Z",
+      "side": 1,
+      "message": "Yes, I am planning to do that. Think that it is OK to do now.\n\nI removed the other two helper methods. In test api, replace GetItemTileRectAt(int row, int col) with GetItemTileRectOnCurrentPageAt(int row, int col), wdyt?",
+      "parentUuid": "f6bea492_afdf25b1",
+      "revId": "ee89cd36c8ca7939f9ce24b417df16a3b2109614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
