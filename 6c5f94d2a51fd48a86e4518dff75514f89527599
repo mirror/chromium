@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d9c76e4_59b4840c",
+        "filename": "ash/display/root_window_transformers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T16:59:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to handle letterbox/pillar box scenario, which I thought we need to support in new scenario? Am I missing something?\n\nCouldn\u0027t you generalize \u0026 reuse the logic used in MirrorRootWindowTransformer? Instead of mirroring entire display, you should just mirror the portion of the display.",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1855641e_aa36ebd4",
+        "filename": "ash/display/unified_mouse_warp_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T16:59:38Z",
+      "side": 1,
+      "message": "Doesn\u0027t this work?\n\nDisplay display \u003d Screen-\u003eGetDisplayNearestWindow(host-\u003ewindow());",
+      "range": {
+        "startLine": 82,
+        "startChar": 22,
+        "endLine": 82,
+        "endChar": 63
+      },
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f2a176f_fa5198c3",
+        "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T16:59:38Z",
+      "side": 1,
+      "message": "just use gfx::Point. EXPECT_EQ can pretty print geometry classes now. (ToString() was used when it didn\u0027t)",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede924db_0a4e9d40",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T16:59:38Z",
+      "side": 1,
+      "message": "can you document these as well?",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
