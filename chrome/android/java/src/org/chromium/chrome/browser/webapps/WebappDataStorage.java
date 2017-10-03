@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.blink_public.platform.WebDisplayMode;
 import org.chromium.chrome.browser.ShortcutHelper;
@@ -20,6 +22,7 @@ import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.webapk.lib.common.WebApkConstants;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -28,6 +31,7 @@ import java.util.concurrent.TimeUnit;
  * track of web app data known to Chrome.
  */
 public class WebappDataStorage {
+    private static final String TAG = "WebappDataStorage";
 
     static final String SHARED_PREFS_FILE_PREFIX = "webapp_";
     static final String KEY_SPLASH_ICON = "splash_icon";
@@ -69,6 +73,9 @@ public class WebappDataStorage {
 
     // Whether the user has dismissed the disclosure UI.
     static final String KEY_DISMISSED_DISCLOSURE = "dismissed_dislosure";
+
+    // The path where serialized update data is written before uploading to the WebAPK server.
+    static final String KEY_PENDING_UPDATE_FILE_PATH = "pending_update_file_path";
 
     // Number of milliseconds between checks for whether the WebAPK's Web Manifest has changed.
     public static final long UPDATE_INTERVAL = TimeUnit.DAYS.toMillis(3L);
@@ -304,6 +311,7 @@ public class WebappDataStorage {
      * file. This does NOT delete the file itself but the file is left empty.
      */
     void delete() {
+        deletePendingUpdateRequestFile();
         mPreferences.edit().clear().apply();
     }
 
@@ -312,6 +320,8 @@ public class WebappDataStorage {
      * This does not remove the stored splash screen image (if any) for the app.
      */
     void clearHistory() {
+        deletePendingUpdateRequestFile();
+
         SharedPreferences.Editor editor = mPreferences.edit();
 
         editor.remove(KEY_LAST_USED);
@@ -411,7 +421,7 @@ public class WebappDataStorage {
      * Returns the completion time of the last check for whether the WebAPK's Web Manifest was
      * updated. This time needs to be set when the WebAPK is registered.
      */
-    private long getLastCheckForWebManifestUpdateTime() {
+    long getLastCheckForWebManifestUpdateTime() {
         return mPreferences.getLong(KEY_LAST_CHECK_WEB_MANIFEST_UPDATE_TIME, TIMESTAMP_INVALID);
     }
 
@@ -505,6 +515,42 @@ public class WebappDataStorage {
     /** Returns whether we should check for updates less frequently. */
     private boolean shouldRelaxUpdates() {
         return mPreferences.getBoolean(KEY_RELAX_UPDATES, false);
+    }
+
+    /**
+     * Returns file where WebAPK update data should be stored and stores the file name in
+     * SharedPreferences.
+     */
+    String createAndSetUpdateRequestFilePath(WebApkInfo info) {
+        String filePath = WebappDirectoryManager.getWebApkUpdateFilePathForStorage(this).getPath();
+        mPreferences.edit().putString(KEY_PENDING_UPDATE_FILE_PATH, filePath).apply();
+        return filePath;
+    }
+
+    /** Returns the path of the file which contains data to update the WebAPK. */
+    @Nullable
+    String getPendingUpdateRequestPath() {
+        return mPreferences.getString(KEY_PENDING_UPDATE_FILE_PATH, null);
+    }
+
+    /**
+     * Deletes the file which contains data to update the WebAPK. The file is large (> 1Kb) and
+     * should be deleted when the update completes.
+     */
+    void deletePendingUpdateRequestFile() {
+        final String pendingUpdateFilePath = getPendingUpdateRequestPath();
+        if (pendingUpdateFilePath == null) return;
+
+        mPreferences.edit().remove(KEY_PENDING_UPDATE_FILE_PATH).apply();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                if (!new File(pendingUpdateFilePath).delete()) {
+                    Log.d(TAG, "Failed to delete file " + pendingUpdateFilePath);
+                }
+                return null;
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /** Returns whether we should check for update. */

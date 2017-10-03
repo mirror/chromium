@@ -245,6 +245,11 @@ public class WebApkUma {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
+    /** Records to UMA the count of old "WebAPK update request" files. */
+    public static void recordNumberOfStaleWebApkUpdateRequestFiles(int count) {
+        RecordHistogram.recordCountHistogram("WebApk.Update.NumStaleUpdateRequestFiles", count);
+    }
+
     public static void logUnimportantStorageSizeInUMA() {
         WebsitePermissionsFetcher fetcher =
                 new WebsitePermissionsFetcher(new UnimportantStorageSizeCalculator());
