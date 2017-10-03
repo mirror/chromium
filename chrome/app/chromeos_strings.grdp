@@ -860,7 +860,7 @@ Press any key to continue exploring.
     Created Time
   </message>
   <message name="IDS_FILE_BROWSER_METADATA_BOX_DIMENSION" desc="Label for image dimension.">
-    Dimension
+    Dimensions
   </message>
   <message name="IDS_FILE_BROWSER_METADATA_BOX_DURATION" desc="Label for audio/video duration.">
     Duration
