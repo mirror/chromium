@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f810dbf3_30b0503c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-03T13:34:09Z",
+      "side": 1,
+      "message": "It\u0027s beyond the scope of this patch, but I\u0027m wondering if these modes are used outside of service worker. It\u0027s weird that the types are defined in content/public/common/service_worker_modes.h yet they are named \"fetch_*\". This relates with yhirano\u0027s investigation for URLLoader interfaces.\n\nIt could make sense for ServiceWorkerURLLoaderJob\u0027s constructor to DCHECK that these are set as coded here just to make the constraint clear that the ResourceRequest for a navigation must have these set.",
+      "revId": "fee53e698b08b05176e1de34a2f676d0a9f625ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
