@@ -152,6 +152,9 @@ class AURA_EXPORT WindowTreeClient
              ui::mojom::WindowTreeClientPtr client,
              uint32_t flags,
              const ui::mojom::WindowTree::EmbedCallback& callback);
+  void ScheduleEmbed(
+      ui::mojom::WindowTreeClientPtr client,
+      base::OnceCallback<void(const base::UnguessableToken&)> callback);
 
   void AttachCompositorFrameSink(
       Id window_id,

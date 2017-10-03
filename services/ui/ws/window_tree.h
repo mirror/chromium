@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/containers/flat_map.h"
 #include "base/containers/queue.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -435,6 +436,9 @@ class WindowTree : public mojom::WindowTree,
   ClientWindowId MakeClientWindowId(Id transport_window_id) const;
   ClientWindowId MakeClientWindowId(const WindowId& id) const;
 
+  mojom::WindowTreeClientPtr GetAndRemoveScheduledEmbedWindowTreeClient(
+      const base::UnguessableToken& token);
+
   // WindowTree:
   void NewWindow(uint32_t change_id,
                  Id transport_window_id,
@@ -497,6 +501,12 @@ class WindowTree : public mojom::WindowTree,
              mojom::WindowTreeClientPtr client,
              uint32_t flags,
              const EmbedCallback& callback) override;
+  void ScheduleEmbed(mojom::WindowTreeClientPtr client,
+                     const ScheduleEmbedCallback& callback) override;
+  void EmbedUsingToken(Id transport_window_id,
+                       const base::UnguessableToken& token,
+                       uint32_t flags,
+                       const EmbedUsingTokenCallback& callback) override;
   void SetFocus(uint32_t change_id, Id transport_window_id) override;
   void SetCanFocus(Id transport_window_id, bool can_focus) override;
   void SetEventTargetingPolicy(Id transport_window_id,
@@ -706,6 +716,10 @@ class WindowTree : public mojom::WindowTree,
   // WmMoveDragImage. Non-null while we're waiting for a response.
   struct DragMoveState;
   std::unique_ptr<DragMoveState> drag_move_state_;
+
+  using ScheduledEmbeds =
+      base::flat_map<base::UnguessableToken, mojom::WindowTreeClientPtr>;
+  ScheduledEmbeds scheduled_embeds_;
 
   // A weak ptr factory for callbacks from the window manager for when we send
   // a image move. All weak ptrs are invalidated when a drag is completed.
