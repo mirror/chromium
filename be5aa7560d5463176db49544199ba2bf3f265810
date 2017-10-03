@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "deedbba1_760c0b2b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "130074ba_f9879e87",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d99ade7_e586935a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79311182_1556169a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d99ade7_e586935a",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "940ebb9e_ab01ce1d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32c29530_c0afd34b",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e8a394b_2a35d74f",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "11e9bf66_ccf4e3af",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e8a394b_2a35d74f",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a847680_2e46942a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-02T06:24:41Z",
       "side": 1,
       "message": "nit: We should not expose |child_before_anchor_|, since it is implementation\ndetails.",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809e7208_3d64b70a",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "How should one retrieve the anchor?",
+      "parentUuid": "9a847680_2e46942a",
       "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "5a8918bc_48d9f100",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "What should I return for offset when the position is anchored to an object instead of a text offset? I made it return the IndexInParent of the object that comes after |child_before_anchor_|.",
+      "parentUuid": "c839130d_97b5905f",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf2391c_41d14293",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-02T06:24:41Z",
       "side": 1,
       "message": "We should have\nDCHECK(!a.IsNull());\nDCHECK(!b.IsNull());",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5185edf5_622638ae",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-03T06:46:00Z",
+      "side": 1,
+      "message": "Doesn\u0027t IsValid imply not IsNull?",
+      "parentUuid": "0cf2391c_41d14293",
       "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
