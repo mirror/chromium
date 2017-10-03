@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd58fd8_27b18a72",
+        "filename": "third_party/WebKit/Source/modules/bluetooth/BluetoothError.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T04:07:54Z",
+      "side": 1,
+      "message": "No need for this one either.",
+      "revId": "9002da5a7bc09ebecfff31488c34ce6a06d65d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b21620_eabb3545",
+        "filename": "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T04:07:54Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this anymore.",
+      "revId": "9002da5a7bc09ebecfff31488c34ce6a06d65d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
