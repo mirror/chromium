@@ -16,6 +16,24 @@
       "revId": "b7757a05d80cdf9cae0201bcdcdb6e1405548347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaaccd1_cb4a7192",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-03T00:12:46Z",
+      "side": 1,
+      "message": "GCC builds are still supported on Linux, though they are not on by default. I would get rid of the is_clang check here, and instead assert(is_clang || !is_cfi) after the declare_arg() block.",
+      "parentUuid": "c5498541_3901d386",
+      "revId": "b7757a05d80cdf9cae0201bcdcdb6e1405548347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
