@@ -129,6 +129,7 @@ class HTMLImportsController;
 class HTMLLinkElement;
 class HTMLScriptElementOrSVGScriptElement;
 class HitTestRequest;
+class IdlenessDetector;
 class IdleRequestOptions;
 class IntersectionObserverController;
 class LayoutPoint;
@@ -1369,6 +1370,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void SetFeaturePolicy(const String& feature_policy_header);
 
+  IdlenessDetector* GetIdlenessDetector() { return idleness_detector_; }
+
  protected:
   Document(const DocumentInit&, DocumentClassFlags = kDefaultDocumentClass);
 
@@ -1745,6 +1748,8 @@ class CORE_EXPORT Document : public ContainerNode,
   bool has_high_media_engagement_;
 
   std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
+
+  Member<IdlenessDetector> idleness_detector_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
