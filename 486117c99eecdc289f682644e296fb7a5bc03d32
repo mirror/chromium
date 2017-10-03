@@ -16,6 +16,24 @@
       "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346d7cf5_59d08a93",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-03T18:01:17Z",
+      "side": 0,
+      "message": "Good point -- this definitely seems like a bug.",
+      "parentUuid": "d353ffa4_a626adf4",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
