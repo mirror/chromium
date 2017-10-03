@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90e2f6cf_e32c36d6",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T16:24:37Z",
+      "side": 1,
+      "message": "nit: is_wow64",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e686a9af_d522f4c3",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T16:24:37Z",
+      "side": 1,
+      "message": "Why not FALSE?",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
