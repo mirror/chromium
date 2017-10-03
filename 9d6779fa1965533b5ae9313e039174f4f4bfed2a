@@ -16,6 +16,24 @@
       "revId": "9d6779fa1965533b5ae9313e039174f4f4bfed2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1dee55_91e8ef57",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:06:04Z",
+      "side": 1,
+      "message": "apparently not :)\n\nI tend to like inlining things where possible because the context in which it\u0027s used is the best (and only compiler-enforced) documentation, but I don\u0027t feel strongly.",
+      "parentUuid": "240628e4_ab060be1",
+      "revId": "9d6779fa1965533b5ae9313e039174f4f4bfed2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
