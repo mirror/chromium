@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64a56c99_89427b92",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-03T01:40:37Z",
+      "side": 1,
+      "message": "should this also call `set-debug-app org.chromium....\"?",
+      "revId": "de490255033710c1df9516a502e3dcf852b95869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7812ce17_ac4c4470",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-03T01:40:37Z",
+      "side": 1,
+      "message": "nit: should \u0027-w\u0027 be used for as an options?",
+      "revId": "de490255033710c1df9516a502e3dcf852b95869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

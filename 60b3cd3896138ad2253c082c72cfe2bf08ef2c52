@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a725e9_19c19e8f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-03T01:40:37Z",
+      "side": 0,
+      "message": "why removing the persistency for this apk to be debug-app?",
+      "revId": "60b3cd3896138ad2253c082c72cfe2bf08ef2c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
