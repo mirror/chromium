@@ -70,10 +70,8 @@ void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
                                          UnloadedExtensionReason reason) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  int include_mask =
-      ExtensionRegistry::EVERYTHING & ~ExtensionRegistry::TERMINATED;
   scoped_refptr<const Extension> extension(
-      registry_->GetExtensionById(extension_id, include_mask));
+      registry_->GetExtensionById(extension_id, ExtensionRegistry::EVERYTHING));
 
   // If the extension was already removed, just notify of the new unload reason.
   // TODO: It's unclear when this needs to be called given that it may be a
@@ -84,8 +82,10 @@ void ExtensionRegistrar::RemoveExtension(const ExtensionId& extension_id,
     return;
   }
 
-  if (registry_->disabled_extensions().Contains(extension_id)) {
+  if (registry_->disabled_extensions().Contains(extension_id) ||
+      registry_->terminated_extensions().Contains(extension_id)) {
     // The extension is already deactivated.
+    registry_->RemoveTerminated(extension->id());
     registry_->RemoveDisabled(extension->id());
     extension_system_->UnregisterExtensionWithRequestContexts(extension_id,
                                                               reason);
@@ -215,6 +215,24 @@ bool ExtensionRegistrar::ReplaceReloadedExtension(
   ActivateExtension(extension.get());
 
   return true;
+}
+
+void ExtensionRegistrar::TerminateExtension(const ExtensionId& extension_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  scoped_refptr<const Extension> extension =
+      registry_->enabled_extensions().GetByID(extension_id);
+  if (!extension)
+    return;
+
+  registry_->RemoveEnabled(extension_id);
+  registry_->AddTerminated(extension);
+  DeactivateExtension(extension.get(), UnloadedExtensionReason::TERMINATE);
+
+  content::NotificationService::current()->Notify(
+      extensions::NOTIFICATION_EXTENSION_REMOVED,
+      content::Source<content::BrowserContext>(browser_context_),
+      content::Details<const Extension>(extension.get()));
 }
 
 bool ExtensionRegistrar::IsExtensionEnabled(

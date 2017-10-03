@@ -829,8 +829,6 @@ bool ExtensionService::UninstallExtension(
   extensions::DataDeleter::StartDeleting(
       profile_, extension.get(), deletion_done_callback);
 
-  UntrackTerminatedExtension(extension->id());
-
   // Notify interested parties that we've uninstalled this extension.
   ExtensionRegistry::Get(profile_)
       ->TriggerOnUninstalled(extension.get(), reason);
@@ -1355,9 +1353,6 @@ void ExtensionService::AddExtension(const Extension* extension) {
   // The extension is now loaded, remove its data from unloaded extension map.
   unloaded_extension_paths_.erase(extension->id());
 
-  // If a terminated extension is loaded, remove it from the terminated list.
-  UntrackTerminatedExtension(extension->id());
-
   // Check if the extension's privileges have changed and mark the
   // extension disabled if necessary.
   CheckPermissionsIncrease(extension, is_extension_loaded);
@@ -1857,38 +1852,8 @@ void ExtensionService::RegisterContentSettings(
               false)));
 }
 
-void ExtensionService::TrackTerminatedExtension(
-    const std::string& extension_id) {
-  extensions_being_terminated_.erase(extension_id);
-
-  const Extension* extension = GetInstalledExtension(extension_id);
-  if (!extension) {
-    return;
-  }
-
-  // No need to check for duplicates; inserting a duplicate is a no-op.
-  registry_->AddTerminated(extension);
-  UnloadExtension(extension->id(), UnloadedExtensionReason::TERMINATE);
-}
-
 void ExtensionService::TerminateExtension(const std::string& extension_id) {
-  TrackTerminatedExtension(extension_id);
-}
-
-void ExtensionService::UntrackTerminatedExtension(const std::string& id) {
-  std::string lowercase_id = base::ToLowerASCII(id);
-  const Extension* extension =
-      registry_->terminated_extensions().GetByID(lowercase_id);
-  registry_->RemoveTerminated(lowercase_id);
-  if (extension) {
-    // TODO: This notification was already sent when the extension was
-    // unloaded as part of being terminated. But we send it again as observers
-    // may be tracking the terminated extension. See crbug.com/708230.
-    content::NotificationService::current()->Notify(
-        extensions::NOTIFICATION_EXTENSION_REMOVED,
-        content::Source<Profile>(profile_),
-        content::Details<const Extension>(extension));
-  }
+  extension_registrar_->TerminateExtension(extension_id);
 }
 
 const Extension* ExtensionService::GetInstalledExtension(
@@ -1997,22 +1962,16 @@ void ExtensionService::Observe(int type,
         break;
       }
 
-      extensions::ExtensionHost* host =
-          content::Details<extensions::ExtensionHost>(details).ptr();
-
-      // If the extension is already being terminated, there is nothing left to
-      // do.
-      if (!extensions_being_terminated_.insert(host->extension_id()).second)
-        break;
-
-      // Mark the extension as terminated and Unload it. We want it to
+      // Mark the extension as terminated and deactivated. We want it to
       // be in a consistent state: either fully working or not loaded
       // at all, but never half-crashed.  We do it in a PostTask so
       // that other handlers of this notification will still have
       // access to the Extension and ExtensionHost.
+      extensions::ExtensionHost* host =
+          content::Details<extensions::ExtensionHost>(details).ptr();
       base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::BindOnce(&ExtensionService::TrackTerminatedExtension,
-                                    AsWeakPtr(), host->extension()->id()));
+          FROM_HERE, base::BindOnce(&ExtensionService::TerminateExtension,
+                                    AsWeakPtr(), host->extension_id()));
       break;
     }
     case content::NOTIFICATION_RENDERER_PROCESS_TERMINATED: {
