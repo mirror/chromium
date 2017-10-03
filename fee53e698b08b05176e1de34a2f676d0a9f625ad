@@ -16,6 +16,24 @@
       "revId": "fee53e698b08b05176e1de34a2f676d0a9f625ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be32e209_5ef5b544",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-03T14:31:56Z",
+      "side": 1,
+      "message": "Added DCHECK in the constructor of ServiceWorkerURLLoaderJob.",
+      "parentUuid": "f810dbf3_30b0503c",
+      "revId": "fee53e698b08b05176e1de34a2f676d0a9f625ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
