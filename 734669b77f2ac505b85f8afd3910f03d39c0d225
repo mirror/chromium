@@ -46,6 +46,30 @@
       "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821474e7_0b41fd07",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T23:49:14Z",
+      "side": 1,
+      "message": "What I was hoping is that the win10 version checking could be isolated in a function so that you don\u0027t need to duplicate the ifdef (which could easily change). In other words line 461-464 become:\n\nif (ShouldOpenTabInIncognitoWindowOnStartup())\n  count \u003d 1;\n\nWhere ShouldOpenTabInIncognitoWindowOnStartup() is used in production code too.",
+      "parentUuid": "986d60ec_49ae2948",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 6
+      },
+      "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
