@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32c84536_4de9fd44",
+        "filename": "components/viz/service/display/display_scheduler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T17:17:05Z",
+      "side": 1,
+      "message": "How do these 2 lines relate to the rest, and what\u0027s their intention?",
+      "revId": "05a612a88b7eb768feba2c068d266dff02274263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
