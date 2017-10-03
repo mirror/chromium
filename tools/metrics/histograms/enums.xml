@@ -39092,7 +39092,7 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="50816767" label="lib_address_input"/>
   <int value="50859288" label="cloud_print_proxy"/>
   <int value="51164680" label="profile_avatar"/>
-  <int value="53695122" label="credenential_avatar"/>
+  <int value="53695122" label="credential_avatar"/>
   <int value="54836939" label="cryptauth_enrollment_flow_finish"/>
   <int value="56275203" label="save_file_manager"/>
   <int value="56351037" label="download_web_contents_frame"/>

@@ -116,7 +116,7 @@ void PrefetchImage1(const GURL& url) {
 
 void PrefetchImage2(const GURL& url) {
   net::PartialNetworkTrafficAnnotationTag partial_traffic_annotation =
-      net::DefinePartialNetworkTrafficAnnotation("credenential_avatar",
+      net::DefinePartialNetworkTrafficAnnotation("credential_avatar",
                                                  "bitmap_fetcher",
                                                  R"(
         semantics {

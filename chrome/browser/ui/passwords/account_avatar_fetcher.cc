@@ -13,7 +13,7 @@
 namespace {
 
 constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
-    net::DefineNetworkTrafficAnnotation("credenential_avatar", R"(
+    net::DefineNetworkTrafficAnnotation("credential_avatar", R"(
         semantics {
           sender: "Chrome Password Manager"
           description:
