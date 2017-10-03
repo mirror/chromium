@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.metrics.ImpressionTracker;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 
@@ -23,6 +25,16 @@ import java.util.Calendar;
  * to restore the dismissed sections and load new suggestions from the server.
  */
 public class AllDismissedItem extends OptionalLeaf {
+    private final ImpressionTracker mImpressionTracker = new ImpressionTracker(
+            new ImpressionTracker.Listener() {
+                @Override
+                public void onImpression() {
+                    if (FeatureUtilities.isChromeHomeEnabled()) {
+                        RecordUserAction.record("Suggestions.AllDismissed.Shown");
+                    }
+                    mImpressionTracker.reset(null);
+                }
+            });
 
     @Override
     @ItemViewType
@@ -33,6 +45,8 @@ public class AllDismissedItem extends OptionalLeaf {
     @Override
     public void onBindViewHolder(NewTabPageViewHolder holder) {
         ((ViewHolder) holder).onBindViewHolder();
+
+        mImpressionTracker.reset(mImpressionTracker.wasTriggered() ? null : holder.itemView);
     }
 
     @Override
