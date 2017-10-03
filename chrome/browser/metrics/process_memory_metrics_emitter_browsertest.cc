@@ -222,7 +222,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
  protected:
   std::unique_ptr<ukm::TestAutoSetUkmRecorder> test_ukm_recorder_;
 
-  void CheckAllUkmSources(size_t metric_count = 1u) {
+  void CheckAllUkmSources(size_t metric_count = 1u, bool has_page_info = true) {
     std::set<ukm::SourceId> source_ids = test_ukm_recorder_->GetSourceIds();
     for (auto source_id : source_ids) {
       if (ProcessHasTypeForSource(source_id, ProcessType::BROWSER)) {
@@ -230,7 +230,7 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
       } else if (ProcessHasTypeForSource(source_id, ProcessType::RENDERER)) {
         // Renderer metrics associate with navigation's source, instead of
         // creating a new one.
-        CheckUkmRendererSource(source_id, metric_count);
+        CheckUkmRendererSource(source_id, metric_count, has_page_info);
       } else if (ProcessHasTypeForSource(source_id, ProcessType::GPU)) {
         // Not checked yet.
       } else {
@@ -256,7 +256,8 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
   }
 
   void CheckUkmRendererSource(ukm::SourceId source_id,
-                              size_t metric_count = 1u) {
+                              size_t metric_count,
+                              bool has_page_info) {
     CheckMemoryMetricWithName(source_id, UkmEntry::kMallocName, false,
                               metric_count);
 #if !defined(OS_MACOSX)
@@ -274,6 +275,16 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
                               metric_count);
     CheckMemoryMetricWithName(source_id, UkmEntry::kNumberOfExtensionsName,
                               true, metric_count);
+    if (has_page_info) {
+      CheckMemoryMetricWithName(source_id, UkmEntry::kIsVisibleName, true,
+                                metric_count);
+      CheckMemoryMetricWithName(source_id,
+                                UkmEntry::kTimeSinceLastNavigationName, true,
+                                metric_count);
+      CheckMemoryMetricWithName(source_id,
+                                UkmEntry::kTimeSinceLastVisibilityChangeName,
+                                true, metric_count);
+    }
   }
 
   void CheckUkmBrowserSource(ukm::SourceId source_id,
@@ -414,8 +425,8 @@ IN_PROC_BROWSER_TEST_F(ProcessMemoryMetricsEmitterTest,
   run_loop.Run();
 
   CheckAllMemoryMetrics(histogram_tester, 1, 1, 2);
-  // Extensions do not get a UKM record.
-  CheckAllUkmSources();
+  // Extension processes do not have page_info.
+  CheckAllUkmSources(1u, false /* has_page_info */);
 }
 
 #if defined(ADDRESS_SANITIZER) || defined(MEMORY_SANITIZER)
@@ -457,7 +468,7 @@ IN_PROC_BROWSER_TEST_F(ProcessMemoryMetricsEmitterTest,
 
   // No extensions should be observed
   CheckAllMemoryMetrics(histogram_tester, 1, 1, 0);
-  CheckAllUkmSources();
+  CheckAllUkmSources(1u, false /* has_page_info */);
 }
 
 #if defined(ADDRESS_SANITIZER) || defined(MEMORY_SANITIZER)
@@ -504,8 +515,10 @@ IN_PROC_BROWSER_TEST_F(ProcessMemoryMetricsEmitterTest,
 
   run_loop.Run();
 
-  // When hosts share a process, no unique URL is identified, therefore no UKM.
   CheckAllMemoryMetrics(histogram_tester, 1, 1, 1);
+  // When hosts share a process, no unique URL is identified, therefore no page
+  // info.
+  CheckAllUkmSources(1u, false /* has_page_info */);
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
