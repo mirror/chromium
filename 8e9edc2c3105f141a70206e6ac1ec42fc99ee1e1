@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c27ecca7_2fae0e94",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4207,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T18:20:33Z",
+      "side": 0,
+      "message": "I\u0027ll try that in a follow-up CL.",
+      "range": {
+        "startLine": 4207,
+        "startChar": 17,
+        "endLine": 4207,
+        "endChar": 59
+      },
+      "revId": "8e9edc2c3105f141a70206e6ac1ec42fc99ee1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

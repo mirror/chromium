@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8bff978_7f6bf589",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T18:20:33Z",
+      "side": 1,
+      "message": "In a follow-up CL I\u0027ll try to change this to a *Frame*HostMsg_WebUISend.  This will help enforce WebUI bindings at frame granularity.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "313b26cde5523b9893b2c46a538c39d909eed3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23cce313_c192551d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5835,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T18:20:33Z",
+      "side": 1,
+      "message": "Also |git cl lint|.",
+      "range": {
+        "startLine": 5835,
+        "startChar": 2,
+        "endLine": 5835,
+        "endChar": 11
+      },
+      "revId": "313b26cde5523b9893b2c46a538c39d909eed3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3819eab0_6198001d",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T18:20:33Z",
+      "side": 1,
+      "message": "These are just IWYU fixes for issues detected by |git cl lint|.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "313b26cde5523b9893b2c46a538c39d909eed3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "40d2f91e_04cb605d",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T18:20:33Z",
+      "side": 1,
+      "message": "Also |git cl lint|.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 2,
+        "endLine": 1021,
+        "endChar": 10
+      },
+      "revId": "313b26cde5523b9893b2c46a538c39d909eed3ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
