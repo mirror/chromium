@@ -224,9 +224,14 @@ class Function<R(Args...), threadAffinity> {
     return *this;
   }
 
-  R operator()(Args... args) const {
+  R Run(Args... args) const & {
     DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
     return callback_.Run(std::forward<Args>(args)...);
+  }
+
+  R Run(Args... args) && {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    return std::move(callback_).Run(std::forward<Args>(args)...);
   }
 
   bool IsCancelled() const { return callback_.IsCancelled(); }

@@ -257,7 +257,7 @@ class WebCryptoResultAdapter : public ScriptFunction {
       : ScriptFunction(script_state), function_(std::move(function)) {}
 
   ScriptValue Call(ScriptValue value) final {
-    function_(ConvertCryptoResult<T>(value));
+    function_.Run(ConvertCryptoResult<T>(value));
     return ScriptValue::From(GetScriptState(), ToV8UndefinedGenerator());
   }
 

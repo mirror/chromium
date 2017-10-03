@@ -113,7 +113,7 @@ int ReturnFortyTwo() {
 
 TEST(FunctionalTest, Basic) {
   Function<int()> return_forty_two_function = Bind(&ReturnFortyTwo);
-  EXPECT_EQ(42, return_forty_two_function());
+  EXPECT_EQ(42, std::move(return_forty_two_function).Run());
 }
 
 int MultiplyByTwo(int n) {
@@ -126,20 +126,20 @@ double MultiplyByOneAndAHalf(double d) {
 
 TEST(FunctionalTest, UnaryBind) {
   Function<int()> multiply_four_by_two_function = Bind(MultiplyByTwo, 4);
-  EXPECT_EQ(8, multiply_four_by_two_function());
+  EXPECT_EQ(8, std::move(multiply_four_by_two_function).Run());
 
   Function<double()> multiply_by_one_and_a_half_function =
       Bind(MultiplyByOneAndAHalf, 3);
-  EXPECT_EQ(4.5, multiply_by_one_and_a_half_function());
+  EXPECT_EQ(4.5, std::move(multiply_by_one_and_a_half_function).Run());
 }
 
 TEST(FunctionalTest, UnaryPartBind) {
   Function<int(int)> multiply_by_two_function = Bind(MultiplyByTwo);
-  EXPECT_EQ(8, multiply_by_two_function(4));
+  EXPECT_EQ(8, std::move(multiply_by_two_function).Run(4));
 
   Function<double(double)> multiply_by_one_and_a_half_function =
       Bind(MultiplyByOneAndAHalf);
-  EXPECT_EQ(4.5, multiply_by_one_and_a_half_function(3));
+  EXPECT_EQ(4.5, std::move(multiply_by_one_and_a_half_function).Run(3));
 }
 
 int Multiply(int x, int y) {
@@ -152,22 +152,22 @@ int Subtract(int x, int y) {
 
 TEST(FunctionalTest, BinaryBind) {
   Function<int()> multiply_four_by_two_function = Bind(Multiply, 4, 2);
-  EXPECT_EQ(8, multiply_four_by_two_function());
+  EXPECT_EQ(8, std::move(multiply_four_by_two_function).Run());
 
   Function<int()> subtract_two_from_four_function = Bind(Subtract, 4, 2);
-  EXPECT_EQ(2, subtract_two_from_four_function());
+  EXPECT_EQ(2, std::move(subtract_two_from_four_function).Run());
 }
 
 TEST(FunctionalTest, BinaryPartBind) {
   Function<int(int)> multiply_four_function = Bind(Multiply, 4);
-  EXPECT_EQ(8, multiply_four_function(2));
+  EXPECT_EQ(8, std::move(multiply_four_function).Run(2));
   Function<int(int, int)> multiply_function = Bind(Multiply);
-  EXPECT_EQ(8, multiply_function(4, 2));
+  EXPECT_EQ(8, std::move(multiply_function).Run(4, 2));
 
   Function<int(int)> subtract_from_four_function = Bind(Subtract, 4);
-  EXPECT_EQ(2, subtract_from_four_function(2));
+  EXPECT_EQ(2, std::move(subtract_from_four_function).Run(2));
   Function<int(int, int)> subtract_function = Bind(Subtract);
-  EXPECT_EQ(2, subtract_function(4, 2));
+  EXPECT_EQ(2, std::move(subtract_function).Run(4, 2));
 }
 
 void SixArgFunc(int a, double b, char c, int* d, double* e, char* f) {
@@ -194,38 +194,38 @@ TEST(FunctionalTest, MultiPartBind) {
 
   Function<void(int, double, char, int*, double*, char*)> unbound =
       Bind(SixArgFunc);
-  unbound(1, 1.5, 'b', &a, &b, &c);
+  std::move(unbound).Run(1, 1.5, 'b', &a, &b, &c);
   AssertArgs(a, b, c, 1, 1.5, 'b');
 
   Function<void(double, char, int*, double*, char*)> one_bound =
       Bind(SixArgFunc, 2);
-  one_bound(2.5, 'c', &a, &b, &c);
+  std::move(one_bound).Run(2.5, 'c', &a, &b, &c);
   AssertArgs(a, b, c, 2, 2.5, 'c');
 
   Function<void(char, int*, double*, char*)> two_bound =
       Bind(SixArgFunc, 3, 3.5);
-  two_bound('d', &a, &b, &c);
+  std::move(two_bound).Run('d', &a, &b, &c);
   AssertArgs(a, b, c, 3, 3.5, 'd');
 
   Function<void(int*, double*, char*)> three_bound =
       Bind(SixArgFunc, 4, 4.5, 'e');
-  three_bound(&a, &b, &c);
+  std::move(three_bound).Run(&a, &b, &c);
   AssertArgs(a, b, c, 4, 4.5, 'e');
 
   Function<void(double*, char*)> four_bound =
       Bind(SixArgFunc, 5, 5.5, 'f', WTF::Unretained(&a));
-  four_bound(&b, &c);
+  std::move(four_bound).Run(&b, &c);
   AssertArgs(a, b, c, 5, 5.5, 'f');
 
   Function<void(char*)> five_bound =
       Bind(SixArgFunc, 6, 6.5, 'g', WTF::Unretained(&a), WTF::Unretained(&b));
-  five_bound(&c);
+  std::move(five_bound).Run(&c);
   AssertArgs(a, b, c, 6, 6.5, 'g');
 
   Function<void()> six_bound =
       Bind(SixArgFunc, 7, 7.5, 'h', WTF::Unretained(&a), WTF::Unretained(&b),
            WTF::Unretained(&c));
-  six_bound();
+  std::move(six_bound).Run();
   AssertArgs(a, b, c, 7, 7.5, 'h');
 }
 
@@ -254,68 +254,68 @@ class B : public A {
 TEST(FunctionalTest, MemberFunctionBind) {
   A a(10);
   Function<int()> function1 = Bind(&A::F, WTF::Unretained(&a));
-  EXPECT_EQ(10, function1());
+  EXPECT_EQ(10, std::move(function1).Run());
 
   Function<int()> function2 = Bind(&A::AddF, WTF::Unretained(&a), 15);
-  EXPECT_EQ(25, function2());
+  EXPECT_EQ(25, std::move(function2).Run());
 
   Function<int()> function3 = Bind(&A::Overridden, WTF::Unretained(&a));
-  EXPECT_EQ(42, function3());
+  EXPECT_EQ(42, std::move(function3).Run());
 }
 
 TEST(FunctionalTest, MemberFunctionBindWithSubclassPointer) {
   B b(10);
   Function<int()> function1 = Bind(&A::F, WTF::Unretained(&b));
-  EXPECT_EQ(10, function1());
+  EXPECT_EQ(10, std::move(function1).Run());
 
   Function<int()> function2 = Bind(&A::AddF, WTF::Unretained(&b), 15);
-  EXPECT_EQ(25, function2());
+  EXPECT_EQ(25, std::move(function2).Run());
 
   Function<int()> function3 = Bind(&A::Overridden, WTF::Unretained(&b));
-  EXPECT_EQ(43, function3());
+  EXPECT_EQ(43, std::move(function3).Run());
 
   Function<int()> function4 = Bind(&B::F, WTF::Unretained(&b));
-  EXPECT_EQ(11, function4());
+  EXPECT_EQ(11, std::move(function4).Run());
 
   Function<int()> function5 = Bind(&B::AddF, WTF::Unretained(&b), 15);
-  EXPECT_EQ(26, function5());
+  EXPECT_EQ(26, std::move(function5).Run());
 }
 
 TEST(FunctionalTest, MemberFunctionBindWithSubclassPointerWithCast) {
   B b(10);
   Function<int()> function1 = Bind(&A::F, WTF::Unretained(static_cast<A*>(&b)));
-  EXPECT_EQ(10, function1());
+  EXPECT_EQ(10, std::move(function1).Run());
 
   Function<int()> function2 =
       Bind(&A::AddF, WTF::Unretained(static_cast<A*>(&b)), 15);
-  EXPECT_EQ(25, function2());
+  EXPECT_EQ(25, std::move(function2).Run());
 
   Function<int()> function3 =
       Bind(&A::Overridden, WTF::Unretained(static_cast<A*>(&b)));
-  EXPECT_EQ(43, function3());
+  EXPECT_EQ(43, std::move(function3).Run());
 }
 
 TEST(FunctionalTest, MemberFunctionPartBind) {
   A a(10);
   Function<int(class A*)> function1 = Bind(&A::F);
-  EXPECT_EQ(10, function1(&a));
+  EXPECT_EQ(10, std::move(function1).Run(&a));
 
   Function<int(class A*, int)> unbound_function2 = Bind(&A::AddF);
-  EXPECT_EQ(25, unbound_function2(&a, 15));
+  EXPECT_EQ(25, std::move(unbound_function2).Run(&a, 15));
   Function<int(int)> object_bound_function2 =
       Bind(&A::AddF, WTF::Unretained(&a));
-  EXPECT_EQ(25, object_bound_function2(15));
+  EXPECT_EQ(25, std::move(object_bound_function2).Run(15));
 }
 
 TEST(FunctionalTest, MemberFunctionBindByUniquePtr) {
   Function<int()> function1 = WTF::Bind(&A::F, std::make_unique<A>(10));
-  EXPECT_EQ(10, function1());
+  EXPECT_EQ(10, std::move(function1).Run());
 }
 
 TEST(FunctionalTest, MemberFunctionBindByPassedUniquePtr) {
   Function<int()> function1 =
       WTF::Bind(&A::F, WTF::Passed(std::make_unique<A>(10)));
-  EXPECT_EQ(10, function1());
+  EXPECT_EQ(10, std::move(function1).Run());
 }
 
 class Number {
@@ -356,18 +356,18 @@ TEST(FunctionalTest, RefCountedStorage) {
   Function<int()> multiply_five_by_two_function =
       WTF::Bind(MultiplyNumberByTwo, five);
   EXPECT_EQ(2, five->RefCount());
-  EXPECT_EQ(10, multiply_five_by_two_function());
+  EXPECT_EQ(10, std::move(multiply_five_by_two_function).Run());
   EXPECT_EQ(2, five->RefCount());
 
   Function<int()> multiply_four_by_two_function =
       WTF::Bind(MultiplyNumberByTwo, Number::Create(4));
-  EXPECT_EQ(8, multiply_four_by_two_function());
+  EXPECT_EQ(8, std::move(multiply_four_by_two_function).Run());
 
   RefPtr<Number> six = Number::Create(6);
   Function<int()> multiply_six_by_two_function =
       WTF::Bind(MultiplyNumberByTwo, std::move(six));
   EXPECT_FALSE(six);
-  EXPECT_EQ(12, multiply_six_by_two_function());
+  EXPECT_EQ(12, std::move(multiply_six_by_two_function).Run());
 }
 
 TEST(FunctionalTest, UnretainedWithRefCounted) {
@@ -376,7 +376,7 @@ TEST(FunctionalTest, UnretainedWithRefCounted) {
   Function<int()> multiply_five_by_two_function =
       WTF::Bind(MultiplyNumberByTwo, WTF::Unretained(five.get()));
   EXPECT_EQ(1, five->RefCount());
-  EXPECT_EQ(10, multiply_five_by_two_function());
+  EXPECT_EQ(10, std::move(multiply_five_by_two_function).Run());
   EXPECT_EQ(1, five->RefCount());
 }
 
@@ -393,13 +393,13 @@ int ProcessUnwrappedClass(const UnwrappedClass& u, int v) {
 TEST(FunctionalTest, WrapUnwrap) {
   Function<int()> function =
       Bind(ProcessUnwrappedClass, ClassToBeWrapped(3), 7);
-  EXPECT_EQ(21, function());
+  EXPECT_EQ(21, std::move(function).Run());
 }
 
 TEST(FunctionalTest, WrapUnwrapInPartialBind) {
   Function<int(int)> partially_bound_function =
       Bind(ProcessUnwrappedClass, ClassToBeWrapped(3));
-  EXPECT_EQ(21, partially_bound_function(7));
+  EXPECT_EQ(21, std::move(partially_bound_function).Run(7));
 }
 
 bool LotsOfArguments(int first,
@@ -419,15 +419,15 @@ bool LotsOfArguments(int first,
 TEST(FunctionalTest, LotsOfBoundVariables) {
   Function<bool(int, int)> eight_bound =
       Bind(LotsOfArguments, 1, 2, 3, 4, 5, 6, 7, 8);
-  EXPECT_TRUE(eight_bound(9, 10));
+  EXPECT_TRUE(std::move(eight_bound).Run(9, 10));
 
   Function<bool(int)> nine_bound =
       Bind(LotsOfArguments, 1, 2, 3, 4, 5, 6, 7, 8, 9);
-  EXPECT_TRUE(nine_bound(10));
+  EXPECT_TRUE(std::move(nine_bound).Run(10));
 
   Function<bool()> all_bound =
       Bind(LotsOfArguments, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-  EXPECT_TRUE(all_bound());
+  EXPECT_TRUE(std::move(all_bound).Run());
 }
 
 int SingleMoveOnlyByRvalueReference(MoveOnly&& move_only) {
@@ -459,23 +459,23 @@ TEST(FunctionalTest, BindMoveOnlyObjects) {
   Function<int()> bound =
       Bind(SingleMoveOnlyByRvalueReference, WTF::Passed(std::move(one)));
   EXPECT_EQ(0, one.Value());  // Should be moved away.
-  EXPECT_EQ(1, bound());
+  EXPECT_EQ(1, bound.Run());
   // The stored value must be cleared in the first function call.
-  EXPECT_EQ(0, bound());
+  EXPECT_EQ(0, bound.Run());
 
   bound = Bind(SingleMoveOnlyByValue, WTF::Passed(MoveOnly(1)));
-  EXPECT_EQ(1, bound());
-  EXPECT_EQ(0, bound());
+  EXPECT_EQ(1, bound.Run());
+  EXPECT_EQ(0, bound.Run());
 
   bound = Bind(TripleMoveOnlysByRvalueReferences, WTF::Passed(MoveOnly(1)),
                WTF::Passed(MoveOnly(2)), WTF::Passed(MoveOnly(3)));
-  EXPECT_EQ(6, bound());
-  EXPECT_EQ(0, bound());
+  EXPECT_EQ(6, bound.Run());
+  EXPECT_EQ(0, bound.Run());
 
   bound = Bind(TripleMoveOnlysByValues, WTF::Passed(MoveOnly(1)),
                WTF::Passed(MoveOnly(2)), WTF::Passed(MoveOnly(3)));
-  EXPECT_EQ(6, bound());
-  EXPECT_EQ(0, bound());
+  EXPECT_EQ(6, bound.Run());
+  EXPECT_EQ(0, bound.Run());
 }
 
 class CountGeneration {
@@ -504,51 +504,52 @@ int TakeCountCopyAsValue(CountGeneration counter) {
 TEST(FunctionalTest, CountCopiesOfBoundArguments) {
   CountGeneration lvalue;
   Function<int()> bound = Bind(TakeCountCopyAsConstReference, lvalue);
-  EXPECT_EQ(2, bound());  // wrapping and unwrapping.
+  EXPECT_EQ(2, bound.Run());  // wrapping and unwrapping.
 
   bound = Bind(TakeCountCopyAsConstReference, CountGeneration());  // Rvalue.
-  EXPECT_EQ(2, bound());
+  EXPECT_EQ(2, bound.Run());
 
   bound = Bind(TakeCountCopyAsValue, lvalue);
   // wrapping, unwrapping and copying in the final function argument.
-  EXPECT_EQ(3, bound());
+  EXPECT_EQ(3, bound.Run());
 
   bound = Bind(TakeCountCopyAsValue, CountGeneration());
-  EXPECT_EQ(3, bound());
+  EXPECT_EQ(3, bound.Run());
 }
 
 TEST(FunctionalTest, MoveUnboundArgumentsByRvalueReference) {
   Function<int(MoveOnly &&)> bound_single =
       Bind(SingleMoveOnlyByRvalueReference);
-  EXPECT_EQ(1, bound_single(MoveOnly(1)));
-  EXPECT_EQ(42, bound_single(MoveOnly(42)));
+  EXPECT_EQ(1, bound_single.Run(MoveOnly(1)));
+  EXPECT_EQ(42, bound_single.Run(MoveOnly(42)));
 
   Function<int(MoveOnly&&, MoveOnly&&, MoveOnly &&)> bound_triple =
       Bind(TripleMoveOnlysByRvalueReferences);
-  EXPECT_EQ(6, bound_triple(MoveOnly(1), MoveOnly(2), MoveOnly(3)));
-  EXPECT_EQ(666, bound_triple(MoveOnly(111), MoveOnly(222), MoveOnly(333)));
+  EXPECT_EQ(6, bound_triple.Run(MoveOnly(1), MoveOnly(2), MoveOnly(3)));
+  EXPECT_EQ(666, bound_triple.Run(MoveOnly(111), MoveOnly(222), MoveOnly(333)));
 
   Function<int(MoveOnly)> bound_single_by_value = Bind(SingleMoveOnlyByValue);
-  EXPECT_EQ(1, bound_single_by_value(MoveOnly(1)));
+  EXPECT_EQ(1, bound_single_by_value.Run(MoveOnly(1)));
 
   Function<int(MoveOnly, MoveOnly, MoveOnly)> bound_triple_by_value =
       Bind(TripleMoveOnlysByValues);
-  EXPECT_EQ(6, bound_triple_by_value(MoveOnly(1), MoveOnly(2), MoveOnly(3)));
+  EXPECT_EQ(6,
+            bound_triple_by_value.Run(MoveOnly(1), MoveOnly(2), MoveOnly(3)));
 }
 
 TEST(FunctionalTest, CountCopiesOfUnboundArguments) {
   CountGeneration lvalue;
   Function<int(const CountGeneration&)> bound1 =
       Bind(TakeCountCopyAsConstReference);
-  EXPECT_EQ(0, bound1(lvalue));  // No copies!
-  EXPECT_EQ(0, bound1(CountGeneration()));
+  EXPECT_EQ(0, bound1.Run(lvalue));  // No copies!
+  EXPECT_EQ(0, bound1.Run(CountGeneration()));
 
   Function<int(CountGeneration)> bound2 = Bind(TakeCountCopyAsValue);
   // At Function::operator(), at Callback::Run() and at the destination
   // function.
-  EXPECT_EQ(3, bound2(lvalue));
+  EXPECT_EQ(3, bound2.Run(lvalue));
   // Compiler is allowed to optimize one copy away if the argument is rvalue.
-  EXPECT_LE(bound2(CountGeneration()), 2);
+  EXPECT_LE(bound2.Run(CountGeneration()), 2);
 }
 
 TEST(FunctionalTest, WeakPtr) {
@@ -558,13 +559,13 @@ TEST(FunctionalTest, WeakPtr) {
       WTF::Bind(&HasWeakPtrSupport::Increment, obj.CreateWeakPtr(),
                 WTF::Unretained(&counter));
 
-  bound();
+  bound.Run();
   EXPECT_FALSE(bound.IsCancelled());
   EXPECT_EQ(1, counter);
 
   obj.RevokeAll();
   EXPECT_TRUE(bound.IsCancelled());
-  bound();
+  bound.Run();
   EXPECT_EQ(1, counter);
 }
 

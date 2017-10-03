@@ -120,7 +120,7 @@ class RunTaskEventListener final : public EventListener {
  public:
   RunTaskEventListener(WTF::Closure task)
       : EventListener(kCPPEventListenerType), task_(std::move(task)) {}
-  void handleEvent(ExecutionContext*, Event*) override { task_(); }
+  void handleEvent(ExecutionContext*, Event*) override { task_.Run(); }
   bool operator==(const EventListener& other) const override {
     return this == &other;
   }
@@ -156,7 +156,7 @@ class RunTaskCallback final
     : public FrameRequestCallbackCollection::FrameCallback {
  public:
   RunTaskCallback(WTF::Closure task) : task_(std::move(task)) {}
-  void Invoke(double) override { task_(); }
+  void Invoke(double) override { task_.Run(); }
 
  private:
   WTF::Closure task_;

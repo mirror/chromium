@@ -39,7 +39,7 @@ class BLINK_PLATFORM_EXPORT InterfaceRegistry {
   static void ForwardToInterfaceFactory(
       const WTF::Function<void(mojo::InterfaceRequest<Interface>)>& factory,
       mojo::ScopedMessagePipeHandle handle) {
-    factory(mojo::InterfaceRequest<Interface>(std::move(handle)));
+    factory.Run(mojo::InterfaceRequest<Interface>(std::move(handle)));
   }
 #endif  // INSIDE_BLINK
 };

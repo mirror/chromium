@@ -81,7 +81,7 @@ void ClassicPendingScript::StreamingFinished() {
   }
 
   if (done)
-    done();
+    std::move(done).Run();
 }
 
 void ClassicPendingScript::FinishWaitingForStreaming() {

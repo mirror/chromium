@@ -32,12 +32,12 @@ TEST(PersistentTest, BindCancellation) {
       WTF::Bind(&Receiver::Increment, WrapWeakPersistent(receiver),
                 WTF::Unretained(&counter));
 
-  function();
+  function.Run();
   EXPECT_EQ(1, counter);
 
   receiver = nullptr;
   PreciselyCollectGarbage();
-  function();
+  function.Run();
   EXPECT_EQ(1, counter);
 }
 
@@ -48,12 +48,12 @@ TEST(PersistentTest, CrossThreadBindCancellation) {
       &Receiver::Increment, WrapCrossThreadWeakPersistent(receiver),
       WTF::CrossThreadUnretained(&counter));
 
-  function();
+  function.Run();
   EXPECT_EQ(1, counter);
 
   receiver = nullptr;
   PreciselyCollectGarbage();
-  function();
+  function.Run();
   EXPECT_EQ(1, counter);
 }
 

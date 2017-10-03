@@ -542,7 +542,7 @@ TEST_F(ScriptRunnerTest, DontExecuteWhileStreaming) {
   // is called, since out mock uses it to determine whether we're still
   // streaming.
   WTF::Closure tmp_callback = std::move(callback);
-  tmp_callback();
+  std::move(tmp_callback).Run();
 
   // Now that streaming is finished, expect Execute() to be called.
   EXPECT_CALL(*script_loader1, Execute()).Times(1);
