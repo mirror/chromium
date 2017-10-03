@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a91fc6_16f36cec",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:53:31Z",
+      "side": 1,
+      "message": "Nit (optional): Same element can be identified with selector \"#devtools-controls paper-button\". Consider dropping the ID? Same for #stack-trace-container -\u003e \"#devtools-controls ul\"",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183ac7cf_1f1f926d",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:53:31Z",
+      "side": 1,
+      "message": "Is it OK to break lines within the class attribute\u0027s value? Even if it works, probably more readable to move the entire attribute declaration in the 2nd line.",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1c8193_88399ab7",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:53:31Z",
+      "side": 1,
+      "message": "s/url/URL",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beff93b8_be0dc611",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:53:31Z",
+      "side": 1,
+      "message": "Is this checking if url starts with fullUrl? If so how about using String#startsWith instead (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith) ?",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28743ce1_78ca9b3a",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T22:53:31Z",
+      "side": 1,
+      "message": "@private @return missing, here and elsewhere.",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
