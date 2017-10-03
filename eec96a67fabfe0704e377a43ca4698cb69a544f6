@@ -16,6 +16,24 @@
       "revId": "eec96a67fabfe0704e377a43ca4698cb69a544f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4beb00_ce065465",
+        "filename": "net/cert_net/cert_net_fetcher_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-03T13:51:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2c993eb_2e208641",
+      "revId": "eec96a67fabfe0704e377a43ca4698cb69a544f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
