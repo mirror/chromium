@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282c95ac_020f5a08",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-03T13:33:32Z",
+      "side": 1,
+      "message": "This seems wrong. Won\u0027t they immediately go out of scope?",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 36
+      },
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
