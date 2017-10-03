@@ -16,6 +16,24 @@
       "revId": "13a9e1d6020a1080627a01ffd91b3dfdad5e748d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01b18bac_bbe81533",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-03T18:15:23Z",
+      "side": 1,
+      "message": "Done. I have left Mac and Android with a default nullptr for this argument, since it won\u0027t be supported on those platforms for a while. It makes sense to plumb it here, though, since it is trivial.",
+      "parentUuid": "411af816_69866fde",
+      "revId": "13a9e1d6020a1080627a01ffd91b3dfdad5e748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
