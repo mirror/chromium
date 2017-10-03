@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "081d6659_a1e2b8d4",
+        "filename": "third_party/WebKit/Source/core/dom/FlatTreeTraversal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-03T03:02:36Z",
+      "side": 1,
+      "message": "Could you explain why we need FirstWithin here?\nDoes TraversalChildrenIterator\u003cT\u003e need it? Could we remove dependency to FirstWithin?",
+      "revId": "99dc3ec6f7e959256ce4ca6fa6f9b22beefffd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
