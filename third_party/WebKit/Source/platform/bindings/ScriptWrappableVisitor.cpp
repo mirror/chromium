@@ -248,6 +248,16 @@ void ScriptWrappableVisitor::WriteBarrier(
   CurrentVisitor(isolate)->MarkWrapper(&(dst_object->As<v8::Value>()));
 }
 
+void ScriptWrappableVisitor::WriteBarrierForMainThread(
+    v8::Isolate* isolate,
+    const v8::Persistent<v8::Object>* dst_object) {
+  if (!dst_object || dst_object->IsEmpty() ||
+      !ThreadState::MainThreadState()->WrapperTracingInProgress()) {
+    return;
+  }
+  CurrentVisitor(isolate)->MarkWrapper(&(dst_object->As<v8::Value>()));
+}
+
 void ScriptWrappableVisitor::TraceWrappers(
     const TraceWrapperV8Reference<v8::Value>& traced_wrapper) const {
   MarkWrapper(

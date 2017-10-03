@@ -152,6 +152,8 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   // TODO(mlippautz): Remove once ScriptWrappable is converted to
   // TraceWrapperV8Reference.
   static void WriteBarrier(v8::Isolate*, const v8::Persistent<v8::Object>*);
+  static void WriteBarrierForMainThread(v8::Isolate*,
+                                        const v8::Persistent<v8::Object>*);
 
   ScriptWrappableVisitor(v8::Isolate* isolate) : isolate_(isolate){};
   virtual ~ScriptWrappableVisitor();
