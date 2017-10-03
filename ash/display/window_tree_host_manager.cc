@@ -10,7 +10,6 @@
 #include <memory>
 #include <utility>
 
-#include "ash/ash_switches.h"
 #include "ash/display/cursor_window_controller.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/root_window_transformers.h"
@@ -28,6 +27,7 @@
 #include "base/command_line.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/aura/client/capture_client.h"
 #include "ui/aura/client/focus_client.h"
@@ -794,8 +794,12 @@ AshWindowTreeHost* WindowTreeHostManager::AddWindowTreeHostForDisplay(
   window_tree_hosts_[display.id()] = ash_host;
   SetDisplayPropertiesOnHost(ash_host, display);
 
-  if (switches::ConstrainPointerToRoot())
+  const char kAshConstrainPointerToRoot[] = "ash-constrain-pointer-to-root";
+  if (base::SysInfo::IsRunningOnChromeOS() ||
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          kAshConstrainPointerToRoot)) {
     ash_host->ConfineCursorToRootWindow();
+  }
   return ash_host;
 }
 
