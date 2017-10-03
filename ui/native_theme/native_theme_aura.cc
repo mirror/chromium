@@ -53,13 +53,6 @@ NativeTheme* NativeTheme::GetInstanceForWeb() {
   return NativeThemeAura::web_instance();
 }
 
-#if !defined(OS_WIN)
-// static
-NativeTheme* NativeTheme::GetInstanceForNativeUi() {
-  return NativeThemeAura::instance();
-}
-#endif
-
 ////////////////////////////////////////////////////////////////////////////////
 // NativeThemeAura:
 
