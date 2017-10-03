@@ -16,6 +16,41 @@
       "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1120d839_46122474",
+        "filename": "ash/public/interfaces/new_window.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T00:44:01Z",
+      "side": 1,
+      "message": "See advice in other file.\n\nNewWindowController is quite confusing. It really does not need to inherit from NewWindowClient. I think erg@ did it that way because all the methods just forward to the client. But feel free to remove the inheritance.",
+      "parentUuid": "5ea8e53f_dcd3e7c7",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b2411_daa9e4dc",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T00:44:01Z",
+      "side": 1,
+      "message": "I would just call ChromeNewWindowClient::Get()-\u003eShowKeyboardOverlay().",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
