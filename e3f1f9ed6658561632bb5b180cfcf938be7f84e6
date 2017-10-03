@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baad652c_133a47ea",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T17:56:01Z",
+      "side": 1,
+      "message": "I know you didn\u0027t write this code, but when is there not a layer tree impl?",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d69d896_3121bcbf",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T17:56:01Z",
+      "side": 1,
+      "message": "I think this should use the MaximumTilingContentsScale as it would have below if this solid color path wasn\u0027t chosen for consistency.  That scale will also include page scales and any layer transformations as well that would have increased the scale that this layer is rastered at.",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b59f30_70caad74",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T17:56:01Z",
+      "side": 1,
+      "message": "This could also use a comment about this bug, to describe that downstream CA layer parts of the pipeline use the shared quad state to generate resources of the right size, even when they\u0027re solid colors.",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
