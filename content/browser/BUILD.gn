@@ -2006,6 +2006,8 @@ source_set("browser") {
       "android/tracing_controller_android.h",
       "android/web_contents_observer_proxy.cc",
       "android/web_contents_observer_proxy.h",
+      "android/webview_navigation_throttle.cc",
+      "android/webview_navigation_throttle.h",
       "frame_host/render_frame_host_android.cc",
       "frame_host/render_frame_host_android.h",
       "media/capture/screen_capture_device_android.cc",

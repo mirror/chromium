@@ -396,6 +396,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
 
+  std::string method() const { return method_; }
+
  private:
   friend class NavigationHandleImplTest;
 
