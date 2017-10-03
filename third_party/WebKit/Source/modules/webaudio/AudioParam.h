@@ -223,6 +223,9 @@ class AudioParam final : public GarbageCollectedFinalized<AudioParam>,
   DECLARE_TRACE();
   // |handler| always returns a valid object.
   AudioParamHandler& Handler() const { return *handler_; }
+
+  RefPtr<AudioParamHandler> HandlerRefPtr() const { return handler_; }
+
   // |context| always returns a valid object.
   BaseAudioContext* Context() const { return context_; }
 
