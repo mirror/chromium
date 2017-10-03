@@ -32,4 +32,28 @@ TEST_F(InsertTextCommandTest, WithTypingStyle) {
          "without applying typing style.";
 }
 
+// http://crbug.com/741826
+TEST_F(InsertTextCommandTest, TabAsWhitespace) {
+  Selection().SetSelection(
+      SetSelectionTextToBody("<p contenteditable><span>\ta|c</span></p>"));
+  GetDocument().execCommand("insertText", false, "B", ASSERT_NO_EXCEPTION);
+  EXPECT_EQ("<p contenteditable><span>\taB|c</span></p>",
+            GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()))
+      << "We should not split Text node";
+}
+
+// http://crbug.com/741826
+TEST_F(InsertTextCommandTest, TabAsSpecialCharacter) {
+  Selection().SetSelection(SetSelectionTextToBody(
+      "<p contenteditable><span style='white-space:pre'>\ta|c</span></p>"));
+  GetDocument().execCommand("insertText", false, "B", ASSERT_NO_EXCEPTION);
+  EXPECT_EQ(
+      "<p contenteditable>"
+      "<span style=\"white-space:pre\">\ta</span>"
+      "B|"
+      "<span style=\"white-space:pre\">c</span>"
+      "</p>",
+      GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
