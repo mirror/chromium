@@ -26,6 +26,7 @@
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_animation_delegate.h"
+#include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/layer_delegate.h"
 #include "ui/compositor/layer_type.h"
 #include "ui/gfx/geometry/rect.h"
@@ -434,6 +435,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Request deferring painting for layer.
   void AddDeferredPaintRequest();
   void RemoveDeferredPaintRequest();
+
+  bool IsPaintDeferredForTesting() const { return deferred_paint_requests_; }
 
   // Request trilinear filtering for layer.
   void SetTrilinearFiltering(bool trilinear_filtering);
