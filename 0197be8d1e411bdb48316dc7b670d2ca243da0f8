@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eda55897_8696e48a",
+        "filename": "chrome/browser/chromeos/night_light/night_light_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:54:16Z",
+      "side": 1,
+      "message": "nit: HasInstance is a bit more specific (\u0027Exists\u0027 suggests it might be checking whether the feature is available, etc)",
+      "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcc82a7_c74e00b2",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:54:16Z",
+      "side": 1,
+      "message": "This seems a bit fragile. If the construction of the night light client were to become asynchronous this could break.\n\nI would prefer to either use HasSwitch(ash::switches::kAshEnableNightLight) directly here, or move that logic into a static NightLightClient helper, e.g. IsNightLightEnabled() and use that both here and where NightLightClient is constructed.\n\nAlso, NightClientClient? :)",
+      "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
