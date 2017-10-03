@@ -16,6 +16,75 @@
       "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a34af78_dec76951",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-03T01:30:18Z",
+      "side": 1,
+      "message": "In the perfect world, option 2, change nothing \u003d\u003d roll over to starting\nstate. |EditingState| is a kind of poor man\u0027s transaction mechanism, but\nnot fully implement transaction.",
+      "parentUuid": "366b970e_5a56d885",
+      "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959c736a_60d59c2b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-03T01:30:18Z",
+      "side": 1,
+      "message": "nit: You can use EditingTestBase::SetSelectionText() like below:\n\nSelection().SetSelection(\n  SetSelectionTextToBody(\"\u003cdiv contenteditable\u003e^\u003ch1\u003eH1\u003c/h1\u003eello|\u003c/div\u003e\"));",
+      "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab1c37b_5b41ec58",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-03T01:30:18Z",
+      "side": 1,
+      "message": "Position(sample-\u003efirstChild(), 5) or\nPosition(sample, 2) // sample-\u003eCountChildren() \u003d\u003d 2, [0]\u003dH1, [1]\u003d\"ello\"",
+      "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7027a26c_c86de9c4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommandTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-03T01:30:18Z",
+      "side": 1,
+      "message": "nit: You can use EditingTestBase::GetSelectionTextFromBody()\n\nEXPECT_EQ(\".. including ^ and | ..\",\n  GetSelectionTextFromBody(Selection().GetSelecitonInDOMTree());",
+      "revId": "30f87d9f6ceec58d8d728bf2cf1982333dc75539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
