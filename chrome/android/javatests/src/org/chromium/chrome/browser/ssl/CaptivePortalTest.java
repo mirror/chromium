@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.parameter.CommandLineParameter;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -46,6 +47,24 @@ import java.util.concurrent.Callable;
 public class CaptivePortalTest {
     private static final String CAPTIVE_PORTAL_INTERSTITIAL_TITLE_PREFIX = "Connect to";
     private static final int INTERSTITIAL_TITLE_UPDATE_TIMEOUT_SECONDS = 5;
+
+    // UMA events copied from ssl_error_handler.h.
+    private enum UMAEvent {
+        HANDLE_ALL,
+        SHOW_CAPTIVE_PORTAL_INTERSTITIAL_NONOVERRIDABLE,
+        SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE,
+        SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE,
+        SHOW_SSL_INTERSTITIAL_OVERRIDABLE,
+        WWW_MISMATCH_FOUND, // Deprecated in M59 by WWW_MISMATCH_FOUND_IN_SAN.
+        WWW_MISMATCH_URL_AVAILABLE,
+        WWW_MISMATCH_URL_NOT_AVAILABLE,
+        SHOW_BAD_CLOCK,
+        CAPTIVE_PORTAL_CERT_FOUND,
+        WWW_MISMATCH_FOUND_IN_SAN,
+        SHOW_MITM_SOFTWARE_INTERSTITIAL,
+        OS_REPORTS_CAPTIVE_PORTAL
+    }
+    ;
 
     @Rule
     public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
@@ -108,11 +127,31 @@ public class CaptivePortalTest {
                 "sha256/" + Base64.encodeToString(rootCertSPKI, Base64.NO_WRAP));
 
         navigateAndCheckCaptivePortalInterstitial();
+
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", UMAEvent.HANDLE_ALL.ordinal()));
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        UMAEvent.CAPTIVE_PORTAL_CERT_FOUND.ordinal()));
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        UMAEvent.OS_REPORTS_CAPTIVE_PORTAL.ordinal()));
     }
 
     @Test
     public void testOSReportsCaptivePortal() throws Exception {
         CaptivePortalHelper.setOSReportsCaptivePortalForTesting(true);
         navigateAndCheckCaptivePortalInterstitial();
+
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", UMAEvent.HANDLE_ALL.ordinal()));
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        UMAEvent.CAPTIVE_PORTAL_CERT_FOUND.ordinal()));
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        UMAEvent.OS_REPORTS_CAPTIVE_PORTAL.ordinal()));
     }
 }
