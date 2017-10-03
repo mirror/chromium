@@ -847,8 +847,9 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return omniboxViewIOS->IsPopupOpen();
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection {
+  [super fakeTraitCollectionDidChange:previousTraitCollection];
   _lastKnownTraitCollection = [UITraitCollection
       traitCollectionWithTraitsFromCollections:@[ self.view.traitCollection ]];
   if (IsIPadIdiom()) {
@@ -1361,7 +1362,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)windowDidChange {
   if (![_lastKnownTraitCollection
           containsTraitsInCollection:self.view.traitCollection]) {
-    [self traitCollectionDidChange:_lastKnownTraitCollection];
+    [self fakeTraitCollectionDidChange:_lastKnownTraitCollection];
   }
 }
 
@@ -2383,7 +2384,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   CGRect frame = [self view].frame;
   CGFloat oldWidth = frame.size.width;
   frame.size.width = width;
-  [self view].frame = frame;
+  if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar))
+    [self view].frame = frame;
 
   UIGraphicsBeginImageContextWithOptions(frame.size, NO, 0.0);
   [[self view].layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -2402,7 +2404,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   DCHECK_EQ(frame.size.height, [self view].frame.size.height);
 
   frame.size.width = oldWidth;
-  [self view].frame = frame;
+  if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar))
+    [self view].frame = frame;
 
   _snapshotHash = [self snapshotHashWithWidth:width];
 }

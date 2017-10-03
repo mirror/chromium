@@ -554,6 +554,12 @@ bool IsURLAllowedInIncognito(const GURL& url) {
   // Coordinator for displaying snackbars.
   SnackbarCoordinator* _snackbarCoordinator;
 
+  // Constraints specifying the top, leading, and trailing constraints.
+  // In other words, everything except the height.
+  NSLayoutConstraint* toolbarTrailingConstraint_;
+  NSLayoutConstraint* toolbarLeadingConstraint_;
+  NSLayoutConstraint* toolbarTopConstraint_;
+
   // Fake status bar view used to blend the toolbar into the status bar.
   UIView* _fakeStatusBarView;
 }
@@ -1296,8 +1302,12 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [super viewSafeAreaInsetsDidChange];
   // Gate this behind iPhone X, since it's currently the only device that
   // needs layout updates here after startup.
-  if (IsIPhoneX())
+  if (IsIPhoneX()) {
     [self setUpViewLayout];
+  }
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [_toolbarController fakeViewSafeAreaInsetsDidChange];
+  }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -1408,7 +1418,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // view controller).
   [self.presentedViewController
       traitCollectionDidChange:previousTraitCollection];
-  [_toolbarController traitCollectionDidChange:previousTraitCollection];
+  [_toolbarController fakeTraitCollectionDidChange:previousTraitCollection];
   // Update voice search bar visibility.
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 }
@@ -1952,7 +1962,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   CGRect toolbarFrame = [[_toolbarController view] frame];
   toolbarFrame.origin = CGPointMake(0, minY);
   toolbarFrame.size.width = widthOfView;
-  [[_toolbarController view] setFrame:toolbarFrame];
+  if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [[_toolbarController view] setFrame:toolbarFrame];
+  }
 
   // Place the infobar container above the content area.
   InfoBarContainerView* infoBarContainerView = _infoBarContainer->view();
@@ -1961,6 +1973,31 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // Place the toolbar controller above the infobar container.
   [[self view] insertSubview:[_toolbarController view]
                 aboveSubview:infoBarContainerView];
+
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    if (!toolbarLeadingConstraint_) {
+      toolbarLeadingConstraint_ = [[_toolbarController view].leadingAnchor
+          constraintEqualToAnchor:[self view].leadingAnchor];
+      toolbarLeadingConstraint_.active = YES;
+    }
+    if (!toolbarTrailingConstraint_) {
+      toolbarTrailingConstraint_ = [[_toolbarController view].trailingAnchor
+          constraintEqualToAnchor:[self view].trailingAnchor];
+      toolbarTrailingConstraint_.active = YES;
+    }
+    if (!toolbarTopConstraint_) {
+      toolbarTopConstraint_ =
+          [NSLayoutConstraint constraintWithItem:[_toolbarController view]
+                                       attribute:NSLayoutAttributeTop
+                                       relatedBy:NSLayoutRelationEqual
+                                          toItem:[self view]
+                                       attribute:NSLayoutAttributeTop
+                                      multiplier:1.0
+                                        constant:minY];
+      toolbarTopConstraint_.active = YES;
+    }
+  }
+
   minY += CGRectGetHeight(toolbarFrame);
 
   // Account for the toolbar's drop shadow.  The toolbar overlaps with the web
