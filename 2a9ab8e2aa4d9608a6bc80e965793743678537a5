@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70e4d3cd_3eaa5c33",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-03T18:21:49Z",
+      "side": 1,
+      "message": "Very emphatically agree. Almost every time I touch this code I start changing the error computation, only to decide against it.\n\nSomething like abs(F(x)-T(x))/(x + epsilon) is what I usually think to do.\n\nAnother idea was abs(F(x)-T(x))/(x**fG + epsilon)",
+      "parentUuid": "5a0185dd_93532c33",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4d8fdd_3052f5d6",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "Hmm, I think I should have reviewed this code in more detail last time...\nAdded a bunch more comments, not sure if they are relevant to this code review though.",
       "parentUuid": "b8155c2f_57ece4b4",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4303100_de4d80cf",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-03T18:21:49Z",
+      "side": 1,
+      "message": "I may not have had you on the original checkins -- I originally wrote this with msarett (who wrote the SkColorSpaceTransferFn code in skia).",
+      "parentUuid": "79275f96_d8d6ed7d",
       "range": {
         "startLine": 287,
         "startChar": 21,
