@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "411af816_69866fde",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1440,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-10-03T03:21:37Z",
+      "side": 1,
+      "message": "This seems unfortunate. Plumb this through for Mac too please?",
+      "revId": "13a9e1d6020a1080627a01ffd91b3dfdad5e748d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
