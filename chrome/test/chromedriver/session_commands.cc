@@ -552,7 +552,11 @@ Status ExecuteSetTimeout(Session* session,
     session->implicit_wait = timeout;
   } else if (type == "script") {
     session->script_timeout = timeout;
-  } else if (type == "page load") {
+  } else if (session->w3c_compliant && type == "pageLoad") {
+    session->page_load_timeout =
+        ((timeout < base::TimeDelta()) ? Session::kDefaultPageLoadTimeout
+                                       : timeout);
+  } else if (!session->w3c_compliant && type == "page load") {
     session->page_load_timeout =
         ((timeout < base::TimeDelta()) ? Session::kDefaultPageLoadTimeout
                                        : timeout);
