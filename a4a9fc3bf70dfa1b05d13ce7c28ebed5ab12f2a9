@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "41f9b023_65995d13",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 1234,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-03T04:54:28Z",
+      "side": 1,
+      "message": "That\u0027s great, thank you!",
+      "parentUuid": "16d8caf8_bdd1c949",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7687d4c_2ca57383",
         "filename": "content/browser/tracing/background_tracing_manager_impl.cc",
         "patchSetId": 46
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "fccc8646_ed0479cc",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-03T04:54:28Z",
+      "side": 1,
+      "message": "Yep that sounds reasonable.",
+      "parentUuid": "e3afe369_cdefaabf",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80fdea99_01102a8e",
         "filename": "content/browser/tracing/tracing_controller_impl.cc",
         "patchSetId": 46
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "fd63b219_5d5d42ba",
+        "filename": "content/browser/tracing/tracing_controller_impl.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-03T04:54:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89aa230d_a9140d87",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "091b8ad0_6878e48a",
         "filename": "content/public/browser/tracing_delegate.cc",
         "patchSetId": 46
@@ -276,6 +330,24 @@
       "side": 1,
       "message": "- content::TracingDelegate is an abstract class.\n- This is the default behaviour for GenerateMetadataDict in subclasses. Note that returning a null pointer is not unexpected and is handled correctly: https://cs.chromium.org/chromium/src/services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.cc?l\u003d97.\n- Other GenerateMetadataDict methods return nullptr, too, when they don\u0027t want to add anything to the metadata, e.g. BackgroundTracingManagerImpl::GenerateMetadataDict().\n\nDid I answer the question or did I misunderstood it?",
       "parentUuid": "091b8ad0_6878e48a",
+      "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5384a50a_34b3b3fc",
+        "filename": "content/public/browser/tracing_delegate.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-10-03T04:54:28Z",
+      "side": 1,
+      "message": "Yep the default behavior of GenerateMetadataDict sounds good, I guess I was mainly curious about whether this base function ever gets called in practice (like non-Chrome embedder test targets). Regardless it\u0027s a detail, since nullptr gets handled correctly.",
+      "parentUuid": "5ec831db_9f79e4f2",
       "revId": "a4a9fc3bf70dfa1b05d13ce7c28ebed5ab12f2a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
