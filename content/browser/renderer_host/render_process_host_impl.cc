@@ -218,6 +218,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include <windows.h>
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/windows_version.h"
 #include "content/browser/renderer_host/dwrite_font_proxy_message_filter_win.h"
@@ -397,6 +398,35 @@ SiteProcessMap* GetSiteProcessMapForBrowserContext(BrowserContext* context) {
   return map;
 }
 
+#if defined(OS_WIN) && defined(ARCH_CPU_32_BITS)
+// Looks for the first region of unallocated address space large enough to
+// satisfy the request and returns it, or nullptr if no such region exists.
+void* FindAddressSpace(base::ProcessHandle process, size_t request_size) {
+  SYSTEM_INFO sys;
+  GetSystemInfo(&sys);
+  char* addr = reinterpret_cast<char*>(sys.lpMinimumApplicationAddress);
+  while (addr < reinterpret_cast<char*>(sys.lpMaximumApplicationAddress)) {
+    MEMORY_BASIC_INFORMATION mem;
+    if (sizeof(mem) != VirtualQueryEx(process, reinterpret_cast<void*>(addr),
+                                      &mem, sizeof(mem))) {
+      break;
+    }
+    if (mem.State == MEM_FREE && mem.RegionSize >= request_size)
+      return reinterpret_cast<void*>(addr);
+
+    addr += mem.RegionSize;
+  }
+  return nullptr;
+}
+
+void* TryReserveAddressSpace(base::ProcessHandle process, size_t size) {
+  void* result = FindAddressSpace(process, size);
+  if (result == nullptr)
+    return nullptr;
+  return VirtualAllocEx(process, result, size, MEM_RESERVE, PAGE_NOACCESS);
+}
+#endif  // defined(OS_WIN) && defined(ARCH_CPU_32_BITS)
+
 // NOTE: changes to this class need to be reviewed by the security team.
 class RendererSandboxedProcessLauncherDelegate
     : public SandboxedProcessLauncherDelegate {
@@ -417,6 +447,18 @@ class RendererSandboxedProcessLauncherDelegate
 
     return GetContentClient()->browser()->PreSpawnRenderer(policy);
   }
+
+#if defined(ARCH_CPU_32_BITS)
+  void PostSpawnTarget(base::ProcessHandle process) override {
+    // On 32 bit Windows, try to reserve a contiguous region of 512 MB.
+    // See BlinkInitializer.cpp, where we look for this reservation and try to
+    // take it over so large allocations will be more likely to succeed.
+    const size_t kReservationSize = 512 * 1024 * 1024;
+    if (TryReserveAddressSpace(process, kReservationSize) == nullptr) {
+      DLOG(WARNING) << "Failed to reserve address space";
+    }
+  }
+#endif  // defined(ARCH_CPU_32_BITS)
 
 #elif defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
     !defined(OS_FUCHSIA)
