@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "3b3ad339_0b2ae8fc",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6831caba_f5296ac9",
+      "range": {
+        "startLine": 157,
+        "startChar": 34,
+        "endLine": 157,
+        "endChar": 36
+      },
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ad636908_b9c589f4",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T22:34:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09af0681_f36cb251",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87642733_599d0af6",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-29T22:40:24Z",
       "side": 1,
       "message": "Can this be as follows instead?\nvalue: null,",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5967d0d_cdb432e2",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T22:34:18Z",
+      "side": 1,
+      "message": "It\u0027s better to keep it as function() if we\u0027re planning on making this page restamp soon. value: null makes it a static property across instances.\n\nSee: https://www.polymer-project.org/1.0/docs/devguide/properties#configure-values",
+      "parentUuid": "87642733_599d0af6",
       "revId": "dfa24b468efd91165769427b88e382545d12aee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "e336461c_7e1ece19",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T22:34:18Z",
+      "side": 1,
+      "message": "see above.",
+      "parentUuid": "34b55675_734401ab",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7928e468_6f8500b1",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 4
@@ -90,6 +168,24 @@
       "revId": "dfa24b468efd91165769427b88e382545d12aee1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f553ffc_5905c648",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T22:34:18Z",
+      "side": 1,
+      "message": "Done. I also did this for other computable properties like shownStackTrace_, PTAL.",
+      "parentUuid": "7928e468_6f8500b1",
+      "revId": "dfa24b468efd91165769427b88e382545d12aee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
