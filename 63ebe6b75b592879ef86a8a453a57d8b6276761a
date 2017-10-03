@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182f0547_c4358e5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T23:38:16Z",
+      "side": 1,
+      "message": "Perhaps expand on this a little, so that if these kills happen in practice, it\u0027s easier for someone to figure out what happened?  I.e., error pages used by ERR_BLOCKED_BY_CLIENT are unique because chrome-error:// is a scheme that requires a unique origin.  (And maybe also something about the \"data:,\" error pages from XFO blocks, if we end up also using them below.)",
+      "revId": "63ebe6b75b592879ef86a8a453a57d8b6276761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c054fc62_6652e027",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T23:38:16Z",
+      "side": 1,
+      "message": "I wonder if we should also consider ERR_BLOCKED_BY_RESPONSE as a blocked navigation?  This is what XFO blocks use in AncestorThrottle.\n\nOTOH, maybe not, or at least the CanCommitURL check below shouldn\u0027t use it, since  NavigationRequest::OnRequestFailed leaves the error page in-process in that case.  This kind of makes sense - the policy that blocked the frame load came in the response headers (and not from the frame owner), so the frame might reload successfully if the policy changes later.",
+      "revId": "63ebe6b75b592879ef86a8a453a57d8b6276761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
