@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "048396da_bad0def0",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-03T20:52:43Z",
+      "side": 1,
+      "message": "So we never hand this interface to a renderer?  If so, LGTM then.",
+      "range": {
+        "startLine": 87,
+        "startChar": 3,
+        "endLine": 87,
+        "endChar": 44
+      },
+      "revId": "fd0dd14ed3f7602ead7527b1564fa7f9c9ee503a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
