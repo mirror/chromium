@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3415faa0_05aff627",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T06:17:13Z",
+      "side": 1,
+      "message": "If the disposition is BACKGROUND_TAB we don\u0027t want to open the app because want \"Open link in new tab\" and Ctrl + Click to do the same i.e. open a new tab.\n\nSo if disposition \u003d\u003d BACKGROUND_TAB this if statement would be true and we wouldn\u0027t open the app.",
+      "parentUuid": "4e4e564c_675c1368",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "619d580a_0a5a7b82",
         "filename": "components/navigation_interception/intercept_navigation_throttle.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "85c88fa7_7b485397",
+        "filename": "components/navigation_interception/intercept_navigation_throttle.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T06:17:13Z",
+      "side": 1,
+      "message": "Good point. Once https://crrev.com/c/686085 lands, we won\u0027t be using these NavigationParams so we won\u0027t need to change this. I will revert changes to these NavigationParams once the other patch lands.",
+      "parentUuid": "619d580a_0a5a7b82",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96273c5_624f5eba",
         "filename": "ui/base/window_open_disposition.cc",
         "patchSetId": 17
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-29T21:23:42Z",
       "side": 1,
       "message": "I\u0027d split that in a separate CL and land it on its own, as it seems useful function that others can use.",
+      "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e1be38_ab873186",
+        "filename": "ui/base/window_open_disposition.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-03T06:17:13Z",
+      "side": 1,
+      "message": "Makes sense. Leaving unresolved for when I submit the next iteration of the patch.",
+      "parentUuid": "e96273c5_624f5eba",
       "revId": "73278c49b9d7cae744fa1d320cde4e9713c52706",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
