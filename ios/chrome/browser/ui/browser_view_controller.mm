@@ -575,10 +575,10 @@ NSString* const kBrowserViewControllerSnackbarCategory =
 @property(nonatomic, assign, readonly) BOOL canShowFindBar;
 // Whether the controller's view is currently available.
 // YES from viewWillAppear to viewWillDisappear.
-@property(nonatomic, assign, getter=isVisible) BOOL visible;
+@property(nonatomic, assign, getter=isXVisible) BOOL visible;
 // Whether the controller's view is currently visible.
 // YES from viewDidAppear to viewWillDisappear.
-@property(nonatomic, assign) BOOL viewVisible;
+@property(nonatomic, assign, getter=isXViewVisible) BOOL viewVisible;
 // Whether the controller is currently dismissing a presented view controller.
 @property(nonatomic, assign, getter=isDismissingModal) BOOL dismissingModal;
 // Returns YES if the toolbar has not been scrolled out by fullscreen.
@@ -4203,7 +4203,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
   };
 
   [self setLastTapPoint:command];
-  DCHECK(self.visible || self.dismissingModal);
+  DCHECK(self.visible || self.presentingViewController || self.dismissingModal);
   Tab* currentTab = [_model currentTab];
   if (currentTab) {
     [currentTab updateSnapshotWithOverlay:YES visibleFrameOnly:YES];
