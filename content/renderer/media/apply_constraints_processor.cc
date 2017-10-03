@@ -12,6 +12,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/task_runner.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "content/renderer/media/media_stream_constraints_util_video_content.h"
 #include "content/renderer/media/media_stream_constraints_util_video_device.h"
 #include "content/renderer/media/media_stream_source.h"
 #include "content/renderer/media/media_stream_video_source.h"
@@ -101,14 +102,43 @@ void ApplyConstraintsProcessor::ProcessVideoRequest() {
   }
 
   const MediaStreamDevice& device_info = video_source_->device();
-  if (device_info.type == MEDIA_DEVICE_VIDEO_CAPTURE) {
+  if (device_info.type == MEDIA_DEVICE_VIDEO_CAPTURE)
     ProcessVideoDeviceRequest();
-  } else {
-    // TODO(guidou): Add support for nondevice tracks. http://crbug.com/767064
-    CannotApplyConstraints(
-        "applyConstraints() not supported for this type of track");
+  else
+    ProcessVideoContentRequest();
+}
+
+void ApplyConstraintsProcessor::ProcessVideoContentRequest() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (AbortIfVideoRequestStateInvalid())
+    return;
+
+  // Run SelectSettings using the track's current settings as the default
+  // values. However, initialize |settings| with default values as a fallback
+  // in case GetSettings returns nothing and leaves |settings| unmodified.
+  blink::WebMediaStreamTrack::Settings settings;
+  settings.width = kDefaultScreenCastWidth;
+  settings.height = kDefaultScreenCastHeight;
+  GetCurrentVideoTrack()->GetSettings(settings);
+
+  // Using an empty |stream_source| is OK since |stream_source| does not affect
+  // any setting that can be changed with applyConstraints.
+  // Using 0.0 frame rate because content capture always uses the source's
+  // frame rate as default.
+  std::string stream_source;
+  VideoCaptureSettings video_capture_settings =
+      SelectSettingsVideoContentCapture(
+          current_request_.Constraints(), stream_source, settings.width,
+          settings.height, 0.0, settings.device_id.Utf8());
+
+  if (!video_capture_settings.HasValue()) {
+    ApplyConstraintsFailed(video_capture_settings.failed_constraint_name());
     return;
   }
+
+  video_source_->ReconfigureTrack(
+      GetCurrentVideoTrack(), video_capture_settings.track_adapter_settings());
+  ApplyConstraintsSucceeded();
 }
 
 void ApplyConstraintsProcessor::ProcessVideoDeviceRequest() {

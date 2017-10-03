@@ -55,6 +55,9 @@ class CONTENT_EXPORT ApplyConstraintsProcessor {
   VideoCaptureSettings SelectVideoDeviceSettings(
       media::VideoCaptureFormats formats);
 
+  // Helpers for video content requests.
+  void ProcessVideoContentRequest();
+
   // Helpers for video requests.
   void ProcessVideoRequest();
   MediaStreamVideoTrack* GetCurrentVideoTrack();
