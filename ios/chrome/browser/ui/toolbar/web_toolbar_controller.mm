@@ -427,16 +427,31 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
   _backButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kBackButtonFrame[idiom])];
-  [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                                   UIViewAutoresizingFlexibleTopMargin |
-                                   UIViewAutoresizingFlexibleBottomMargin];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [_backButton
+        setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
+                            UIViewAutoresizingFlexibleTopMargin];
+  } else {
+    [_backButton
+        setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
+                            UIViewAutoresizingFlexibleTopMargin |
+                            UIViewAutoresizingFlexibleBottomMargin];
+  }
+
+  UIViewAutoresizing verticalAutoresizingMask = 0;
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    verticalAutoresizingMask |= UIViewAutoresizingFlexibleTopMargin;
+  } else {
+    verticalAutoresizingMask |= UIViewAutoresizingFlexibleBottomMargin;
+  }
+
   // Note that the forward button gets repositioned when -layoutOmnibox is
   // called.
   _forwardButton = [[UIButton alloc]
       initWithFrame:LayoutRectGetRect(kForwardButtonFrame[idiom])];
   [_forwardButton
       setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                          UIViewAutoresizingFlexibleBottomMargin];
+                          verticalAutoresizingMask];
 
   [_webToolbar addSubview:_backButton];
   [_webToolbar addSubview:_forwardButton];
@@ -444,9 +459,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // _omniboxBackground needs to be added under _omniBox so as not to cover up
   // _omniBox.
   _omniboxBackground = [[UIImageView alloc] initWithFrame:omniboxRect];
-  [_omniboxBackground
-      setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                          UIViewAutoresizingFlexibleBottomMargin];
+  [_omniboxBackground setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                          verticalAutoresizingMask];
 
   if (idiom == IPAD_IDIOM) {
     [_webToolbar addSubview:_omniboxBackground];
@@ -457,7 +471,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
         RectShiftedUpAndResizedForStatusBar(kToolbarFrame[idiom]);
     _clippingView = [[UIView alloc] initWithFrame:clippingFrame];
     [_clippingView setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                       UIViewAutoresizingFlexibleBottomMargin];
+                                       verticalAutoresizingMask];
     [_clippingView setClipsToBounds:YES];
     [_clippingView setUserInteractionEnabled:NO];
     [_webToolbar addSubview:_clippingView];
@@ -497,20 +511,20 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
         initWithFrame:LayoutRectGetRect(kStopReloadButtonFrame)];
     [_reloadButton
         setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
+                            verticalAutoresizingMask];
     _stopButton = [[UIButton alloc]
         initWithFrame:LayoutRectGetRect(kStopReloadButtonFrame)];
     [_stopButton
         setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
+                            verticalAutoresizingMask];
     _starButton =
         [[UIButton alloc] initWithFrame:LayoutRectGetRect(kStarButtonFrame)];
-    [_starButton setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin |
+    [_starButton setAutoresizingMask:verticalAutoresizingMask |
                                      UIViewAutoresizingFlexibleLeadingMargin()];
     _voiceSearchButton = [[UIButton alloc]
         initWithFrame:LayoutRectGetRect(kVoiceSearchButtonFrame)];
     [_voiceSearchButton
-        setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin |
+        setAutoresizingMask:verticalAutoresizingMask |
                             UIViewAutoresizingFlexibleLeadingMargin()];
     [_voiceSearchButton addTarget:self
                            action:@selector(toolbarVoiceSearchButtonPressed:)
@@ -595,7 +609,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       _incognito ? @"omnibox_transparent_background" : @"omnibox_background";
   [_omniboxBackground setImage:StretchableImageNamed(imageName, 12, 12)];
   [_omniBox setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                UIViewAutoresizingFlexibleBottomMargin];
+                                verticalAutoresizingMask];
   [_reloadButton addTarget:self
                     action:@selector(cancelOmniboxEdit)
           forControlEvents:UIControlEventTouchUpInside];
@@ -617,7 +631,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   // Resize the container to match the available area.
   [self.view addSubview:_webToolbar];
   [_webToolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                   UIViewAutoresizingFlexibleBottomMargin];
+                                   verticalAutoresizingMask];
   [_webToolbar setFrame:[self specificControlsArea]];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
       _omniBox, _browserState, self, self, self.dispatcher);
@@ -847,8 +861,9 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return omniboxViewIOS->IsPopupOpen();
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection {
+  [super fakeTraitCollectionDidChange:previousTraitCollection];
   _lastKnownTraitCollection = [UITraitCollection
       traitCollectionWithTraitsFromCollections:@[ self.view.traitCollection ]];
   if (IsIPadIdiom()) {
@@ -1361,7 +1376,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)windowDidChange {
   if (![_lastKnownTraitCollection
           containsTraitsInCollection:self.view.traitCollection]) {
-    [self traitCollectionDidChange:_lastKnownTraitCollection];
+    [self fakeTraitCollectionDidChange:_lastKnownTraitCollection];
   }
 }
 
@@ -2383,7 +2398,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   CGRect frame = [self view].frame;
   CGFloat oldWidth = frame.size.width;
   frame.size.width = width;
-  [self view].frame = frame;
+  if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar))
+    [self view].frame = frame;
 
   UIGraphicsBeginImageContextWithOptions(frame.size, NO, 0.0);
   [[self view].layer renderInContext:UIGraphicsGetCurrentContext()];
@@ -2402,7 +2418,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   DCHECK_EQ(frame.size.height, [self view].frame.size.height);
 
   frame.size.width = oldWidth;
-  [self view].frame = frame;
+  if (!base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar))
+    [self view].frame = frame;
 
   _snapshotHash = [self snapshotHashWithWidth:width];
 }
