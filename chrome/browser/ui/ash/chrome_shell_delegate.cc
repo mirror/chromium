@@ -403,10 +403,6 @@ void ChromeShellDelegate::PreShutdown() {
   display_configuration_observer_.reset();
 }
 
-void ChromeShellDelegate::Exit() {
-  chrome::AttemptUserExit();
-}
-
 void ChromeShellDelegate::OpenUrlFromArc(const GURL& url) {
   if (!url.is_valid())
     return;

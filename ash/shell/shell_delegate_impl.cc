@@ -81,10 +81,6 @@ void ShellDelegateImpl::PreInit() {}
 
 void ShellDelegateImpl::PreShutdown() {}
 
-void ShellDelegateImpl::Exit() {
-  base::RunLoop::QuitCurrentWhenIdleDeprecated();
-}
-
 std::unique_ptr<keyboard::KeyboardUI> ShellDelegateImpl::CreateKeyboardUI() {
   return base::MakeUnique<TestKeyboardUI>();
 }

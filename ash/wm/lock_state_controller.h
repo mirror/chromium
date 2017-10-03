@@ -81,6 +81,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Returns true if we are shutting down.
   bool ShutdownRequested();
 
+  // Returns true if signing out was requested.
+  bool SignoutRequested();
+
   // Returns true if we are within cancellable lock timeframe.
   bool CanCancelLockAnimation();
 
@@ -99,6 +102,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Displays the shutdown animation and requests a system shutdown or system
   // restart depending on the the state of the |RebootOnShutdown| device policy.
   void RequestShutdown(ShutdownReason reason);
+
+  // Requests signout (currently handled by sending a message to Chrome).
+  void RequestSignout();
 
   // Called when ScreenLocker is ready to close, but not yet destroyed.
   // Can be used to display "hiding" animations on unlock.
@@ -193,6 +199,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
 
   // Are we in the process of shutting the machine down?
   bool shutting_down_ = false;
+
+  // Are we in the process of signing out?
+  bool signout_requested_ = false;
 
   // The reason (e.g. user action) for a pending shutdown.
   ShutdownReason shutdown_reason_ = ShutdownReason::UNKNOWN;

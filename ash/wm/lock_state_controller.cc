@@ -18,6 +18,7 @@
 #include "ash/shell_port.h"
 #include "ash/shutdown_controller.h"
 #include "ash/shutdown_reason.h"
+#include "ash/system/tray/system_tray_controller.h"
 #include "ash/wm/session_state_animator.h"
 #include "ash/wm/session_state_animator_impl.h"
 #include "base/bind.h"
@@ -141,6 +142,10 @@ bool LockStateController::ShutdownRequested() {
   return shutting_down_;
 }
 
+bool LockStateController::SignoutRequested() {
+  return signout_requested_;
+}
+
 bool LockStateController::CanCancelLockAnimation() {
   return can_cancel_lock_animation_;
 }
@@ -203,6 +208,13 @@ void LockStateController::RequestShutdown(ShutdownReason reason) {
   StartRealShutdownTimer(true);
 }
 
+void LockStateController::RequestSignout() {
+  if (signout_requested_)
+    return;
+  signout_requested_ = true;
+  Shell::Get()->system_tray_controller()->SignOut();
+}
+
 void LockStateController::OnLockScreenHide(base::OnceClosure callback) {
   StartUnlockAnimationBeforeUIDestroyed(std::move(callback));
 }
@@ -214,7 +226,7 @@ void LockStateController::SetLockScreenDisplayedCallback(
 }
 
 void LockStateController::OnHostCloseRequested(aura::WindowTreeHost* host) {
-  Shell::Get()->shell_delegate()->Exit();
+  RequestSignout();
 }
 
 void LockStateController::OnChromeTerminating() {

@@ -121,8 +121,7 @@ class LockStateControllerTest : public AshTestBase {
   }
 
   int NumShutdownRequests() {
-    return test_shutdown_controller_.num_shutdown_requests() +
-           shell_delegate_->num_exit_requests();
+    return test_shutdown_controller_.num_shutdown_requests();
   }
 
   void Advance(SessionStateAnimator::AnimationSpeed speed) {

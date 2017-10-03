@@ -161,7 +161,7 @@ void LoginShelfView::ButtonPressed(views::Button* sender,
       break;
     case kSignOut:
       base::RecordAction(base::UserMetricsAction("ScreenLocker_Signout"));
-      Shell::Get()->shell_delegate()->Exit();
+      Shell::Get()->lock_state_controller()->RequestSignout();
       break;
     case kCloseNote:
       Shell::Get()->tray_action()->CloseLockScreenNote(
