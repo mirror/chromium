@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240e1335_eb9fe4fb",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T23:10:40Z",
+      "side": 1,
+      "message": "It requires a bit of digging via AppBannerManager.java to see that this eventually calls OnAppDetailsRetrieved.  Could you perhaps mention that here, so that is clear when and how the FETCHING_NATIVE_DATA state will transition back to ACTIVE?",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a9c13e_a6a33000",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T23:10:40Z",
+      "side": 1,
+      "message": "This method name gives the impression that it has no side effects. I think it should have a more active name, such as \"PerformNonWebAppInstallableCheck\" (I\u0027m not sure if that\u0027s the best name, but you get the idea).",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "343de21f_de691dd6",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T23:10:40Z",
+      "side": 1,
+      "message": "If you are covering all cases in the switch (and I believe that you are using a switch to ensure that you do cover all cases), can\u0027t you drop this return?",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d1757e_cf5e46cb",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T23:10:40Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
