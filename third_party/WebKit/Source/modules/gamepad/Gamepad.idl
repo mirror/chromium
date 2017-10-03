@@ -39,6 +39,8 @@ interface Gamepad {
     [CachedAttribute=isAxisDataDirty, MeasureAs=GamepadAxes] readonly attribute FrozenArray<double> axes;
     [CachedAttribute=isButtonDataDirty, MeasureAs=GamepadButtons] readonly attribute FrozenArray<GamepadButton> buttons;
 
+    [OriginTrialEnabled=GamepadExtensions, MeasureAs=GamepadVibrationActuator] readonly attribute GamepadHapticActuator? vibrationActuator;
+
     [OriginTrialEnabled=GamepadExtensions, MeasureAs=GamepadPose] readonly attribute GamepadPose? pose;
     [OriginTrialEnabled=GamepadExtensions, MeasureAs=GamepadHand] readonly attribute GamepadHand hand;
 

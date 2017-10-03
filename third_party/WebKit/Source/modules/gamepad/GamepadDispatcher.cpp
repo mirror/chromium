@@ -19,6 +19,19 @@ void GamepadDispatcher::SampleGamepads(device::Gamepads& gamepads) {
   Platform::Current()->SampleGamepads(gamepads);
 }
 
+void GamepadDispatcher::PlayVibrationEffectOnce(
+    int pad_index,
+    device::GamepadHapticEffectType type,
+    const device::GamepadEffectParameters& params) {
+  NOTIMPLEMENTED();
+  return;
+}
+
+void GamepadDispatcher::ResetVibrationActuator(int pad_index) {
+  NOTIMPLEMENTED();
+  return;
+}
+
 GamepadDispatcher::GamepadDispatcher() {}
 
 GamepadDispatcher::~GamepadDispatcher() {}

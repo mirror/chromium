@@ -24,6 +24,11 @@ class GamepadDispatcher final
 
   void SampleGamepads(device::Gamepads&);
 
+  void PlayVibrationEffectOnce(int pad_index,
+                               device::GamepadHapticEffectType,
+                               const device::GamepadEffectParameters&);
+  void ResetVibrationActuator(int pad_index);
+
   struct ConnectionChange {
     DISALLOW_NEW();
     device::Gamepad pad;
