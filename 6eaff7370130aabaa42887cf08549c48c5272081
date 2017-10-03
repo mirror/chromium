@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7503fb63_ce8b6e41",
+        "filename": "ash/new_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d285e33_dc152857",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6919e53_06841ec9",
         "filename": "ash/new_window_controller.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6b9b55c2_a6bf05eb",
+        "filename": "ash/new_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:17:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6919e53_06841ec9",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "773fa5d7_b8971c83",
         "filename": "ash/new_window_controller.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-03T16:16:16Z",
       "side": 1,
       "message": "Is it important that this be private? I would either move this next to ShowKeyboardOverlay(), or add a comment there, e.g.\n// SetClient() is defined as a private override.",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b454190_13b79c24",
+        "filename": "ash/new_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:17:00Z",
+      "side": 1,
+      "message": "to my knowledge, no great reason it has to be private. Moved.",
+      "parentUuid": "773fa5d7_b8971c83",
       "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
