@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -344,11 +345,19 @@ public class HistoryAdapter extends DateDividedAdapter implements BrowsingHistor
         if (mIsInitialized) setHeaders();
     }
 
+    void updateClearBrowsingDataButtonVisibilityForTest() {
+        updateClearBrowsingDataButtonVisibility();
+    }
+
     private void updateClearBrowsingDataButtonVisibility() {
         // If the history header is not showing (e.g. when there is no browsing history),
         // mClearBrowsingDataButton will be null.
         if (mClearBrowsingDataButton == null) return;
         boolean shouldShowButton = PrefServiceBridge.getInstance().canDeleteBrowsingHistory();
+        for (StackTraceElement s : Thread.currentThread().getStackTrace()) {
+            Log.d("#YOLAND", "  " +  s.toString());
+        }
+        Log.d("#YOLAND", Boolean.toString(shouldShowButton));
         if (mClearBrowsingDataButtonVisible == shouldShowButton) return;
         mClearBrowsingDataButtonVisible = shouldShowButton;
         mPrivacyDisclaimerBottomSpace.setVisibility(shouldShowButton ? View.GONE : View.VISIBLE);
