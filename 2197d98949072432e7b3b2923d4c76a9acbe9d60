@@ -1,0 +1,633 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7154ca_d77d4bf6",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2678,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "I think this is CopyFromTextureOrFramebuffer ?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adff023_12223e28",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "sort",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d865b56d_8b6065dd",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "How is this different from just calling request.source()?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae388c2_4af78b65",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "do this in the .h for constants",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2af412_a4aab109",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "\u003c\u003c the two sizes for if this fails?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac09cd6_a7ac10a2",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "const auto\u0026 or not const? or maybe write out the type?\n\nconst prevents moving ownership.. so not sure it\u0027s the best to use for local vars, esp when the type is not clear\n\nthis reoccurs",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6de0d5_5dd4b3a1",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "Doing work in a predicate looks weird and might be problematic.\n\nHow about std::remove_if() and then you can iterate from there to the end and then erase().\n\nAlso, what if the framebuffercopy hasnt been used in this time, but the result texture has? Can we drop the former?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311f9b0e_fbe902c7",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "why RGBA?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "339281d8_54113b3d",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "\u003c\u003c the sizes?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb6cb245_e657be73",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "source_texture? maybe source is overloaded with the request_source, but some context here other than the type?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625267ad_828ca523",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "nit: just memcpy",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "571e0f53_84af4a28",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "old code did BindBuffer(0) first?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65e9d7f_92030659",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "id word this.. so the requestor can order use of the texture correctly with respect to the texture being written to.. or something",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6885e21_4cd005db",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "So we don\u0027t reuse textures in this mode. Maybe a TODO that we could?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "078d9b32_fb7c86a9",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "why does this take a request instead of a source like the other cache methods?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84743176_8062bff3",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "this could just take the source also?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e6b6c4_ed27b96a",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "stream of",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7739fc49_49b8279c",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "const?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be40e2a_bcc6cbd9",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "\u003d 0",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "768ae0b8_3995220d",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "\u003d {0, 0, 0} ?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61ce1ce_d7c93f92",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "produce is a loaded term in gl code, we \"produce mailbox\" to bind a new mailbox name to a texture id. Is there a synonym you can replace this with?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "189c636e_b346994c",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "into what?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ccb02c_689858ec",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "into what?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b6fd7f_f1533910",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "All this ownership documentation, should we use ScopedTexture from gl_helper.h or something one-off but similar here?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2bd782_b073612b",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "\u003d 0",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561eb3b8_ba3947d8",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "std::list is terrible overall due to the number of pointer derefs needed to do anything. How about vector?  I see you claim that this is more efficient for 0 or 1 things but that doesn\u0027t seem intuitive to me, why?\n\nActually why not base::flat_map\u003cbase::UnguessableToken, CacheEnty\u003e? Then you don\u0027t have to write your own lookup function, unless that messes up cleanup of the structure?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8281e38b_0fd78d90",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "One day we\u0027ll want to share contexts between compositors, at which point a compositor can be destroyed without the context being destroyed. For instance closing a window on desktop. We should make this not leak if the lifetime of contexts which it can\u0027t control changes.\n\nIt\u0027d be better to make the callback go to a static method, with a weakptr and refptr\u003ccontext\u003e as bound params. Then it can forward it on to the class or delete the resources? Or keep track of in-flight resources and delete them in the destructor since the callback won\u0027t run?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cf77a4_ad115cc3",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "Is the asumption here that a tab capture requests frames every second? That seems awfully long really.",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b780f326_faf636dc",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "x * 2 / 4 \u003d\u003d x * 1 / 2 \u003d\u003d x / 2 ?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af494315_84413682",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "Can u get this from the base class instead of from friends?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "805e108f_edbcbac3",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "Why do you need a GLRenderer at all in this test?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f860bd22_809f7608",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "nit: imo it\u0027s nice to store the params as fields in the class constructor, then use those elsewhere",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ef82185_8cb9f692",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "nit: writing code inside CHECK looks funny to my eyes, would prefer to grab the result in a var, and CHECK that instead",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbdd269_92cfcc67",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "There\u0027s 2 diff bitmaps right? It\u0027d be nice to write these to pngs on disk and compare to those I think, like our other pixel tests do.",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc420f7_da137e9f",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "use std::make_unique instead of new. you can use auto as the type then",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c04b1b2f_65bd9f50",
+        "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "It\u0027s a little surprising to see a unit test suite subclass a pixel test suite. How bad is it to not do this?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff97188_15a378ac",
+        "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T21:19:34Z",
+      "side": 1,
+      "message": "Does this need a renderer?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
