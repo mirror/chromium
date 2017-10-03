@@ -954,7 +954,6 @@ TEST_F(DataReductionProxyNetworkDelegateTest, LoFiTransitions) {
       base::FieldTrialList::CreateFieldTrial(params::GetLoFiFieldTrialName(),
                                              "Enabled");
     }
-    io_data()->SetLoFiModeActiveOnMainFrame(false);
 
     net::ProxyInfo data_reduction_proxy_info;
     std::string proxy;
@@ -1345,7 +1344,6 @@ TEST_F(DataReductionProxyNetworkDelegateTest, NetHistograms) {
   };
 
   for (size_t i = 0; i < arraysize(tests); ++i) {
-    config()->ResetLoFiStatusForTest();
 
     base::test::ScopedFeatureList scoped_feature_list;
     if (tests[i].lofi_enabled) {
