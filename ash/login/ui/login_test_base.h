@@ -24,8 +24,15 @@ class LoginTestBase : public AshTestBase {
   LoginTestBase();
   ~LoginTestBase() override;
 
-  // Creates and displays a widget containing |content|.
+  // Creates and displays a widget containing |content|. The created widget
+  // will be accessible using |widget()|. May be called at most once.
   void ShowWidgetWithContent(views::View* content);
+
+  // Creates a widget containing |content|. Unlike |ShowWidgetWithContent|, the
+  // ownership of the created widget is passed onto caller.
+  // NOTE: If your test needs only a single widget, prefer
+  // |ShowWidgetWithContent|.
+  views::Widget* CreateWidgetWithContent(views::View* content);
 
   views::Widget* widget() const { return widget_; }
 
@@ -46,8 +53,8 @@ class LoginTestBase : public AshTestBase {
  private:
   class WidgetDelegate;
 
+  // The widget created using |ShowWidgetWithContent|.
   views::Widget* widget_ = nullptr;
-  std::unique_ptr<WidgetDelegate> delegate_;
 
   std::vector<mojom::UserInfoPtr> users_;
 
