@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8409700d_3e891aa2",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Nit: I wouldn\u0027t mind indenting this line four more spaces, as it\u0027s a continuation of the attribute from the previous line.",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a5a573_ed0f637d",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Nit: If you already have a separate init() method anyway, you could call it here instead of from the constructor. I also find that looks a bit less weird than creating an object and not doing anything with it :)",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 18
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122c19c0_fcda0b39",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "If these are private, suffix them with _?",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 18
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78f26c2_163a22cf",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Add _MS to indicate the unit?",
+      "range": {
+        "startLine": 227,
+        "startChar": 11,
+        "endLine": 227,
+        "endChar": 31
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82be658b_62aa5297",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "You use the |searchTerm| as a regular expression pattern, which... could lead to unintended effects and generally seems like a slightly too powerful tool (plus, the check below searches for the raw string). If you want case-insensitive searches, you might have to escape the search term (I would use the escapeRegExp() function defined at the very end of https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Using_special_characters).\n\nI\u0027m also not sure what the negative lookahead assertion is for...? If it does have a use, could you explain it in a comment for future clueless reviewers? :)",
+      "range": {
+        "startLine": 260,
+        "startChar": 35,
+        "endLine": 260,
+        "endChar": 45
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d57a59_18f9f1a4",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "That\u0027s... pretty cool :-D",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 35
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "757a33c8_efaf0b0b",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Can you use .textContent here or are we applying this to something more complicated than a text node?",
+      "range": {
+        "startLine": 270,
+        "startChar": 26,
+        "endLine": 270,
+        "endChar": 35
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10ac66f_15b95d2a",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "The inner part here also should be escaped (so you\u0027re going to have to use a function instead of a string), this time for HTML. One way to do that would actually be to programmatically create a span element and then serialize it with innerHTML :)",
+      "range": {
+        "startLine": 271,
+        "startChar": 31,
+        "endLine": 271,
+        "endChar": 33
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26909dfb_f089d587",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Do you actually want to remove _all_ whitespace in the string? It might be useful to be able to search for two words in sequence...",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 68
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

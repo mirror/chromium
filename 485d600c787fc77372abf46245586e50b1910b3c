@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "bd2a2dc1_b8c0e4e0",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d31fd464_f5f3f709",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c2cd30_f1502595",
         "filename": "components/flags_ui/resources/flags.html",
         "patchSetId": 2
@@ -281,6 +305,30 @@
       "revId": "485d600c787fc77372abf46245586e50b1910b3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b7715d_1770dafd",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "6856d933_65685098",
+      "range": {
+        "startLine": 54,
+        "startChar": 6,
+        "endLine": 54,
+        "endChar": 13
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -413,6 +461,30 @@
       "side": 1,
       "message": "Agreed. I\u0027ve switched to use textContent for resetting.\n\nHowever for highlighting the match, I\u0027m not sure there is a way to do this cleanly and simply without creating the DOM elements from scratch each time / having a bunch of placeholders in the template code. I can switch to that method if you want.",
       "parentUuid": "81014e8f_0904a313",
+      "range": {
+        "startLine": 253,
+        "startChar": 7,
+        "endLine": 253,
+        "endChar": 16
+      },
+      "revId": "485d600c787fc77372abf46245586e50b1910b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1be9da7_0383d768",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T12:02:57Z",
+      "side": 1,
+      "message": "Hm, there are a few more tweaks that we need to make even for the innerHTML version (see other comments), but with those I think I would be fine with innerHTML (and we should be reasonably sure we don\u0027t get unintended side effects).",
+      "parentUuid": "55350bcf_a9ad2b28",
       "range": {
         "startLine": 253,
         "startChar": 7,
