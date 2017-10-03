@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8745563f_461c5e18",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-03T17:34:11Z",
+      "side": 1,
+      "message": "-\u003eOnFormSubmitted(/*force_logging\u003d*/false);\n(see autofill_metrics comment for force_logging name)",
+      "range": {
+        "startLine": 444,
+        "startChar": 46,
+        "endLine": 444,
+        "endChar": 51
+      },
+      "revId": "a61777c6d4388672ad27cb2372f8cd0ed96a3313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e93609_c6a70b94",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-03T17:34:11Z",
+      "side": 1,
+      "message": "s/Abalation/Ablation",
+      "range": {
+        "startLine": 585,
+        "startChar": 5,
+        "endLine": 585,
+        "endChar": 14
+      },
+      "revId": "a61777c6d4388672ad27cb2372f8cd0ed96a3313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e28fcf7_e540ed13",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-03T17:34:11Z",
+      "side": 1,
+      "message": "s/logging is still/logging still",
+      "range": {
+        "startLine": 2121,
+        "startChar": 17,
+        "endLine": 2121,
+        "endChar": 33
+      },
+      "revId": "a61777c6d4388672ad27cb2372f8cd0ed96a3313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1396f3_c58dda6d",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-03T17:34:11Z",
+      "side": 1,
+      "message": "Should verify address logging still works as well, since it is being affected via the new false flag.",
+      "range": {
+        "startLine": 2121,
+        "startChar": 5,
+        "endLine": 2121,
+        "endChar": 11
+      },
+      "revId": "a61777c6d4388672ad27cb2372f8cd0ed96a3313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96837d1c_70c3fe18",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-03T17:34:11Z",
+      "side": 1,
+      "message": "Would prefer to name this something like force_logging, for the following reasons:\n1) Seems weird to name a parameter in an important function after a temporary experiment\n2) Naming it \"force_logging\" would make it more clear why the address logger was provided \"false\"",
+      "range": {
+        "startLine": 1288,
+        "startChar": 9,
+        "endLine": 1288,
+        "endChar": 32
+      },
+      "revId": "a61777c6d4388672ad27cb2372f8cd0ed96a3313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
