@@ -562,14 +562,12 @@ void ParseAccessControlExposeHeadersAllowList(const WebString& header_value,
 }
 
 bool IsOnAccessControlResponseHeaderWhitelist(const WebString& name) {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      WebHTTPHeaderSet, allowed_cross_origin_response_headers,
-      ({
-          "cache-control", "content-language", "content-type", "expires",
-          "last-modified", "pragma",
-      }));
-  return allowed_cross_origin_response_headers.find(name.Ascii().data()) !=
-         allowed_cross_origin_response_headers.end();
+  static auto allowed_cross_origin_response_headers = new WebHTTPHeaderSet({
+      "cache-control", "content-language", "content-type", "expires",
+      "last-modified", "pragma",
+  });
+  return allowed_cross_origin_response_headers->find(name.Ascii().data()) !=
+         allowed_cross_origin_response_headers->end();
 }
 
 WebString ListOfCORSEnabledURLSchemes() {

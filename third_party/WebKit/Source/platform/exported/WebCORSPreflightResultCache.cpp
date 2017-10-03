@@ -27,7 +27,6 @@
 #include "public/platform/WebCORSPreflightResultCache.h"
 
 #include <memory>
-#include "base/lazy_instance.h"
 #include "platform/HTTPNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
 #include "platform/loader/fetch/ResourceResponse.h"
@@ -91,9 +90,6 @@ bool ParseAccessControlAllowList(const std::string& string, SetType& set) {
 
   return true;
 }
-
-static base::LazyInstance<WebCORSPreflightResultCache>::Leaky lazy_cache_ptr_ =
-    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
@@ -221,7 +217,8 @@ bool WebCORSPreflightResultCacheItem::AllowsRequest(
 }
 
 WebCORSPreflightResultCache& WebCORSPreflightResultCache::Shared() {
-  return lazy_cache_ptr_.Get();
+  static auto cache = new WebCORSPreflightResultCache();
+  return *cache;
 }
 
 WebCORSPreflightResultCache::~WebCORSPreflightResultCache() {}
