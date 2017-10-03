@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "309e4964_0a66c5e9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64269,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T21:48:45Z",
+      "side": 1,
+      "message": "nit: Please add the prefix \"Startup.\" to this histogram name, to reuse an existing group rather than creating a new one.",
+      "range": {
+        "startLine": 64269,
+        "startChar": 17,
+        "endLine": 64269,
+        "endChar": 56
+      },
+      "revId": "6018d3cc13ea262abc2cda8a2901e9b0796edaf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
