@@ -1366,6 +1366,7 @@ class CORE_EXPORT Document : public ContainerNode,
   void MaybeQueueSendDidEditFieldInInsecureContext();
 
   CoreProbeSink* GetProbeSink() final;
+  service_manager::InterfaceProvider* GetInterfaceProvider() const final;
 
   void SetFeaturePolicy(const String& feature_policy_header);
 

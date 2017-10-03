@@ -7067,6 +7067,13 @@ CoreProbeSink* Document::GetProbeSink() {
   return probe::ToCoreProbeSink(frame);
 }
 
+service_manager::InterfaceProvider* Document::GetInterfaceProvider() const {
+  if (!GetFrame())
+    return nullptr;
+
+  return &GetFrame()->GetInterfaceProvider();
+}
+
 DEFINE_TRACE(Document) {
   visitor->Trace(imports_controller_);
   visitor->Trace(doc_type_);
