@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "718b18a0_e887e7b3",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85de2788_812632e2",
+      "range": {
+        "startLine": 56,
+        "startChar": 21,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "707db0c8e747a6cefd7505298cc2bff50becd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eafb254_88bfb22b",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "707db0c8e747a6cefd7505298cc2bff50becd5f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2faf0b12_53e92e93",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T19:14:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eafb254_88bfb22b",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 54
+      },
+      "revId": "707db0c8e747a6cefd7505298cc2bff50becd5f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
