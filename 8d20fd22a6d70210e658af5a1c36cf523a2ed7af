@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2ef31f9_f5b333f8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1245945
+      },
+      "writtenOn": "2017-10-03T04:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "804fffe6_6ba5e182",
+      "range": {
+        "startLine": 196,
+        "startChar": 64,
+        "endLine": 196,
+        "endChar": 72
+      },
+      "revId": "8d20fd22a6d70210e658af5a1c36cf523a2ed7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c446456_0ae2ec70",
         "filename": "third_party/WebKit/Source/core/frame/History.cpp",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "8d20fd22a6d70210e658af5a1c36cf523a2ed7af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e96ca8c_75a364d2",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1245945
+      },
+      "writtenOn": "2017-10-03T04:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c446456_0ae2ec70",
+      "revId": "8d20fd22a6d70210e658af5a1c36cf523a2ed7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "8d20fd22a6d70210e658af5a1c36cf523a2ed7af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0316465_581f3f3e",
+        "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1245945
+      },
+      "writtenOn": "2017-10-03T04:52:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60caa800_e0dace82",
+      "range": {
+        "startLine": 989,
+        "startChar": 13,
+        "endLine": 989,
+        "endChar": 30
+      },
+      "revId": "8d20fd22a6d70210e658af5a1c36cf523a2ed7af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
