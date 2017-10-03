@@ -45,6 +45,100 @@
       "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0510e0c1_5631f569",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-03T17:41:27Z",
+      "side": 1,
+      "message": "This is cribbed from other calls to IsWow64Process where the sentinel value (-1) is used to detect if IsWow64Process has already been called and is_wow64 is static. However, here that doesn\u0027t make sense. Changed to initialize to FALSE.",
+      "parentUuid": "e686a9af_d522f4c3",
+      "range": {
+        "startLine": 32,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45deb19_18d0f0f2",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-03T17:41:27Z",
+      "side": 1,
+      "message": "Done here and also in address_space_randomization.cc for the static variable.",
+      "parentUuid": "90e2f6cf_e32c36d6",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13ceb2cb_31512ce9",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-03T17:41:27Z",
+      "side": 1,
+      "message": "I also added a check here that we GetRandomPageBase does return nullptr.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 10
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fa97ad_3b026c14",
+        "filename": "base/allocator/partition_allocator/address_space_randomization_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-03T17:41:27Z",
+      "side": 1,
+      "message": "Edited the comment to emphasize that only the masked bits should be set/cleared.",
+      "range": {
+        "startLine": 58,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "abad01ba73839dc982b5d4e9c7e0e002b9e2a764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
