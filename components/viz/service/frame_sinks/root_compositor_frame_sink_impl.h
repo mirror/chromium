@@ -82,6 +82,7 @@ class RootCompositorFrameSinkImpl : public mojom::CompositorFrameSink,
 
   // Must be destroyed before |compositor_frame_sink_client_|.
   std::unique_ptr<CompositorFrameSinkSupport> support_;
+  LocalSurfaceId local_surface_id_;
 
   // RootCompositorFrameSinkImpl holds a Display and its BeginFrameSource if
   // it was created with a non-null gpu::SurfaceHandle.

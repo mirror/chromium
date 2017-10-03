@@ -18,12 +18,15 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "components/viz/service/gl/gpu_service_impl.h"
 #include "content/child/child_thread_impl.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
+#include "gpu/ipc/gpu_in_process_thread_service.h"
+#include "gpu/ipc/in_process_command_buffer.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "gpu/ipc/service/gpu_channel_manager.h"
 #include "gpu/ipc/service/gpu_channel_manager_delegate.h"
@@ -39,6 +42,10 @@
 
 namespace gpu {
 class GpuInit;
+}
+
+namespace viz {
+class DisplayProvider;
 }
 
 namespace content {
@@ -90,6 +97,13 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
       viz::mojom::FrameSinkManagerRequest request,
       viz::mojom::FrameSinkManagerClientPtr client) override;
 
+  void CreateFrameSinkManagerInternal(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtrInfo client_info);
+  void CreateFrameSinkManagerOnCompositorThread(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtrInfo client_info);
+
   void BindServiceFactoryRequest(
       service_manager::mojom::ServiceFactoryRequest request);
 
@@ -120,6 +134,16 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
   AssociatedInterfaceRegistryImpl associated_interfaces_;
   std::unique_ptr<viz::GpuServiceImpl> gpu_service_;
   mojo::AssociatedBinding<ui::mojom::GpuMain> gpu_main_binding_;
+
+  // The InCommandCommandBuffer::Service used by the frame sink manager.
+  scoped_refptr<gpu::InProcessCommandBuffer::Service> gpu_command_service_;
+
+  std::unique_ptr<viz::DisplayProvider> display_provider_;
+  std::unique_ptr<viz::FrameSinkManagerImpl> frame_sink_manager_;
+
+  // The main thread for the display compositor.
+  std::unique_ptr<base::Thread> compositor_thread_;
+  scoped_refptr<base::SingleThreadTaskRunner> compositor_thread_task_runner_;
 
   // Holds a closure that releases pending interface requests on the IO thread.
   base::Closure release_pending_requests_closure_;

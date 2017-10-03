@@ -14,8 +14,10 @@
 
 namespace content {
 
-GpuClient::GpuClient(int render_process_id)
-    : render_process_id_(render_process_id), weak_factory_(this) {
+GpuClient::GpuClient(int render_process_id, bool privileged)
+    : render_process_id_(render_process_id),
+      privileged_(privileged),
+      weak_factory_(this) {
   bindings_.set_connection_error_handler(
       base::Bind(&GpuClient::OnError, base::Unretained(this)));
 }
@@ -81,9 +83,9 @@ void GpuClient::EstablishGpuChannel(
     return;
   }
 
-  bool preempts = false;
-  bool allow_view_command_buffers = false;
-  bool allow_real_time_streams = false;
+  bool preempts = privileged_;
+  bool allow_view_command_buffers = privileged_;
+  bool allow_real_time_streams = privileged_;
   host->EstablishGpuChannel(
       render_process_id_,
       ChildProcessHostImpl::ChildProcessUniqueIdToTracingProcessId(

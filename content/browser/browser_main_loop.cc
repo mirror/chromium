@@ -245,6 +245,12 @@ bool IsUsingMus() {
 #endif
 }
 
+void ConnectFrameSinkManagerOnIO(viz::mojom::FrameSinkManagerRequest request,
+                                 viz::mojom::FrameSinkManagerClientPtr client) {
+  GpuProcessHost::Get()->ConnectFrameSinkManager(std::move(request),
+                                                 std::move(client));
+}
+
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID) && \
     !defined(OS_FUCHSIA)
 void SetupSandbox(const base::CommandLine& parsed_command_line) {
@@ -1473,38 +1479,68 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       is_mus) {
     established_gpu_channel = always_uses_gpu = false;
   }
-  gpu::GpuChannelEstablishFactory* factory =
-      GetContentClient()->browser()->GetGpuChannelEstablishFactory();
-  if (!factory) {
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    factory = BrowserGpuChannelHostFactory::instance();
+  gpu::GpuChannelEstablishFactory* factory = nullptr;
+
+  const bool enable_viz =
+      base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableViz);
+
+  if (!enable_viz) {
+    factory = GetContentClient()->browser()->GetGpuChannelEstablishFactory();
+    if (!factory) {
+      BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
+      factory = BrowserGpuChannelHostFactory::instance();
+    }
   }
 #if !defined(OS_ANDROID)
   if (!is_mus) {
-    // TODO(kylechar): Remove flag along with surface sequences.
-    // See https://crbug.com/676384.
-    auto surface_lifetime_type =
-        base::CommandLine::ForCurrentProcess()->HasSwitch(
-            switches::kDisableSurfaceReferences)
-            ? viz::SurfaceManager::LifetimeType::SEQUENCES
-            : viz::SurfaceManager::LifetimeType::REFERENCES;
-    frame_sink_manager_impl_ =
-        std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
-
+    LOG(ERROR) << "Create HostFrameSinkManager";
     host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
 
-    // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
-    // Gpu process, instead get the mojo pointer from the Gpu process.
-    surface_utils::ConnectWithLocalFrameSinkManager(
-        host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
+    if (!enable_viz) {
+      // TODO(kylechar): Remove flag along with surface sequences.
+      // See https://crbug.com/676384.
+      auto surface_lifetime_type =
+          base::CommandLine::ForCurrentProcess()->HasSwitch(
+              switches::kDisableSurfaceReferences)
+              ? viz::SurfaceManager::LifetimeType::SEQUENCES
+              : viz::SurfaceManager::LifetimeType::REFERENCES;
+      frame_sink_manager_impl_ =
+          std::make_unique<viz::FrameSinkManagerImpl>(surface_lifetime_type);
+
+      // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
+      // Gpu process, instead get the mojo pointer from the Gpu process.
+      surface_utils::ConnectWithLocalFrameSinkManager(
+          host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
+    }
   }
 #endif
 
-  DCHECK(factory);
   if (!is_mus) {
     ImageTransportFactory::Initialize(GetResizeTaskRunner());
-    ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
-        factory);
+    if (enable_viz) {
+      DCHECK(!factory);
+
+      viz::mojom::FrameSinkManagerPtr frame_sink_manager;
+      viz::mojom::FrameSinkManagerRequest frame_sink_manager_request =
+          mojo::MakeRequest(&frame_sink_manager);
+      viz::mojom::FrameSinkManagerClientPtr frame_sink_manager_client;
+      viz::mojom::FrameSinkManagerClientRequest
+          frame_sink_manager_client_request =
+              mojo::MakeRequest(&frame_sink_manager_client);
+
+      host_frame_sink_manager_->BindAndSetManager(
+          std::move(frame_sink_manager_client_request), GetResizeTaskRunner(),
+          std::move(frame_sink_manager));
+
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::BindOnce(&ConnectFrameSinkManagerOnIO,
+                         std::move(frame_sink_manager_request),
+                         std::move(frame_sink_manager_client)));
+    } else {
+      ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(
+          factory);
+    }
   }
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {

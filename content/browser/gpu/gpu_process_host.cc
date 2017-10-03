@@ -739,6 +739,13 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
   gpu_service_ptr_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
 }
 
+void GpuProcessHost::ConnectFrameSinkManager(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtr client) {
+  TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
+  gpu_main_ptr_->CreateFrameSinkManager(std::move(request), std::move(client));
+}
+
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {
   if (status_ == SUCCESS || status_ == FAILURE) {
     std::move(request_cb).Run(GpuDataManagerImpl::GetInstance()->GetGPUInfo());

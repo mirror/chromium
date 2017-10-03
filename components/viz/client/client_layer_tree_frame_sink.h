@@ -35,6 +35,8 @@ class VIZ_CLIENT_EXPORT ClientLayerTreeFrameSink
     SharedBitmapManager* shared_bitmap_manager = nullptr;
     std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source;
     mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info;
+    mojom::CompositorFrameSinkAssociatedPtrInfo
+        compositor_frame_sink_associated_info;
     mojom::CompositorFrameSinkClientRequest client_request;
     std::unique_ptr<HitTestDataProvider> hit_test_data_provider;
     std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider;
@@ -87,8 +89,14 @@ class VIZ_CLIENT_EXPORT ClientLayerTreeFrameSink
   std::unique_ptr<ExternalBeginFrameSource> begin_frame_source_;
   std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source_;
   mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info_;
+  mojom::CompositorFrameSinkAssociatedPtrInfo
+      compositor_frame_sink_associated_info_;
   mojom::CompositorFrameSinkClientRequest client_request_;
-  mojom::CompositorFrameSinkPtr compositor_frame_sink_;
+
+  mojom::CompositorFrameSink* compositor_frame_sink_ = nullptr;
+  mojom::CompositorFrameSinkPtr compositor_frame_sink_ptr_;
+  mojom::CompositorFrameSinkAssociatedPtr compositor_frame_sink_associated_;
+
   mojo::Binding<mojom::CompositorFrameSinkClient> client_binding_;
   THREAD_CHECKER(thread_checker_);
   const bool enable_surface_synchronization_;

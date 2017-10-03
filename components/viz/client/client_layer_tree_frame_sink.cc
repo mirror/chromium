@@ -33,6 +33,8 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
           std::move(params->synthetic_begin_frame_source)),
       compositor_frame_sink_info_(
           std::move(params->compositor_frame_sink_info)),
+      compositor_frame_sink_associated_info_(
+          std::move(params->compositor_frame_sink_associated_info)),
       client_request_(std::move(params->client_request)),
       client_binding_(this),
       enable_surface_synchronization_(params->enable_surface_synchronization),
@@ -71,9 +73,21 @@ bool ClientLayerTreeFrameSink::BindToClient(
   if (!cc::LayerTreeFrameSink::BindToClient(client))
     return false;
 
-  compositor_frame_sink_.Bind(std::move(compositor_frame_sink_info_));
-  compositor_frame_sink_.set_connection_error_with_reason_handler(
-      base::Bind(ClientLayerTreeFrameSink::OnMojoConnectionError));
+  if (compositor_frame_sink_info_.is_valid()) {
+    compositor_frame_sink_ptr_.Bind(std::move(compositor_frame_sink_info_));
+    compositor_frame_sink_ = compositor_frame_sink_ptr_.get();
+    compositor_frame_sink_ptr_.set_connection_error_with_reason_handler(
+        base::Bind(ClientLayerTreeFrameSink::OnMojoConnectionError));
+  } else if (compositor_frame_sink_associated_info_.is_valid()) {
+    compositor_frame_sink_associated_.Bind(
+        std::move(compositor_frame_sink_associated_info_));
+    compositor_frame_sink_ = compositor_frame_sink_associated_.get();
+    compositor_frame_sink_associated_.set_connection_error_with_reason_handler(
+        base::Bind(ClientLayerTreeFrameSink::OnMojoConnectionError));
+  } else {
+    CHECK(false);
+  }
+
   client_binding_.Bind(std::move(client_request_));
 
   if (synthetic_begin_frame_source_) {
@@ -93,7 +107,9 @@ void ClientLayerTreeFrameSink::DetachFromClient() {
   begin_frame_source_.reset();
   synthetic_begin_frame_source_.reset();
   client_binding_.Close();
-  compositor_frame_sink_.reset();
+  compositor_frame_sink_ptr_.reset();
+  compositor_frame_sink_associated_.reset();
+  compositor_frame_sink_ = nullptr;
   cc::LayerTreeFrameSink::DetachFromClient();
 }
 

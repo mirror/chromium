@@ -80,6 +80,12 @@ void RootCompositorFrameSinkImpl::SubmitCompositorFrame(
     CompositorFrame frame,
     mojom::HitTestRegionListPtr hit_test_region_list,
     uint64_t submit_time) {
+  if (local_surface_id != local_surface_id_) {
+    local_surface_id_ = local_surface_id;
+    display_->Resize(frame.size_in_pixels());
+    display_->SetLocalSurfaceId(local_surface_id_, frame.device_scale_factor());
+  }
+
   if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame),
                                        std::move(hit_test_region_list))) {
     DLOG(ERROR) << "SubmitCompositorFrame failed for " << local_surface_id;

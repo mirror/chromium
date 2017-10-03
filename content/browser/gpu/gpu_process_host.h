@@ -33,6 +33,7 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -147,6 +148,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const gpu::SyncToken& sync_token);
+
+  // Connects to FrameSinkManager in viz process.
+  void ConnectFrameSinkManager(viz::mojom::FrameSinkManagerRequest request,
+                               viz::mojom::FrameSinkManagerClientPtr client);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
 

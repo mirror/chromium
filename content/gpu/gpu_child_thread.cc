@@ -9,12 +9,15 @@
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
+#include "base/command_line.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "build/build_config.h"
+#include "components/viz/common/switches.h"
+#include "components/viz/service/display_embedder/gpu_display_provider.h"
 #include "content/child/child_process.h"
 #include "content/gpu/gpu_service_factory.h"
 #include "content/public/common/connection_filter.h"
@@ -43,6 +46,22 @@
 
 namespace content {
 namespace {
+
+std::unique_ptr<base::Thread> CreateAndStartCompositorThread() {
+  auto thread = std::make_unique<base::Thread>("CompositorThread");
+  base::Thread::Options thread_options;
+  thread_options.priority = base::ThreadPriority::DISPLAY;
+
+#if defined(USE_X11)
+  thread_options.message_pump_factory = base::Bind([]() {
+    return base::MessageLoop::CreateMessagePumpForType(
+        base::MessageLoop::TYPE_DEFAULT);
+  });
+#endif
+
+  CHECK(thread->StartWithOptions(thread_options));
+  return thread;
+}
 
 ChildThreadImpl::Options GetOptions() {
   ChildThreadImpl::Options::Builder builder;
@@ -157,6 +176,13 @@ GpuChildThread::GpuChildThread(const ChildThreadImpl::Options& options,
                                   gpu_init_->gpu_feature_info())),
       gpu_main_binding_(this),
       weak_factory_(this) {
+  // TODO(kylechar): Figure out why viz process command line is mangled.
+  // if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+  //        switches::kEnableViz)) {
+  compositor_thread_ = CreateAndStartCompositorThread();
+  compositor_thread_task_runner_ = compositor_thread_->task_runner();
+  //}
+
   if (gpu_init_->gpu_info().in_process_gpu) {
     DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
                switches::kSingleProcess) ||
@@ -275,7 +301,45 @@ void GpuChildThread::CreateGpuService(
 void GpuChildThread::CreateFrameSinkManager(
     viz::mojom::FrameSinkManagerRequest request,
     viz::mojom::FrameSinkManagerClientPtr client) {
-  NOTREACHED();
+  if (!gpu_service_ || !gpu_service_->is_initialized()) {
+    // TODO(kylechar): Hold onto interface requests to connect later.
+    return;
+  }
+  CreateFrameSinkManagerInternal(std::move(request), client.PassInterface());
+}
+
+void GpuChildThread::CreateFrameSinkManagerInternal(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtrInfo client_info) {
+  DCHECK(!gpu_command_service_);
+  DCHECK(gpu_service_);
+
+  gpu_command_service_ = base::MakeRefCounted<gpu::GpuInProcessThreadService>(
+      base::ThreadTaskRunnerHandle::Get(), gpu_service_->sync_point_manager(),
+      gpu_service_->mailbox_manager(), gpu_service_->share_group(),
+      gpu_service_->gpu_feature_info());
+
+  compositor_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&GpuChildThread::CreateFrameSinkManagerOnCompositorThread,
+                 base::Unretained(this), base::Passed(std::move(request)),
+                 base::Passed(std::move(client_info))));
+}
+
+void GpuChildThread::CreateFrameSinkManagerOnCompositorThread(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtrInfo client_info) {
+  DCHECK(!frame_sink_manager_);
+  viz::mojom::FrameSinkManagerClientPtr client;
+  client.Bind(std::move(client_info));
+
+  display_provider_ = std::make_unique<viz::GpuDisplayProvider>(
+      gpu_command_service_, gpu_service_->gpu_channel_manager());
+
+  frame_sink_manager_ = std::make_unique<viz::FrameSinkManagerImpl>(
+      viz::SurfaceManager::LifetimeType::REFERENCES, display_provider_.get());
+  frame_sink_manager_->BindAndSetClient(std::move(request), nullptr,
+                                        std::move(client));
 }
 
 void GpuChildThread::BindServiceFactoryRequest(

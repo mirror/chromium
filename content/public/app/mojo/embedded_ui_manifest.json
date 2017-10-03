@@ -1,0 +1,14 @@
+{
+  "name": "embedded_ui",
+  "sandbox_type": "none",
+  "display_name": "Embedded UI Service",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "browser": [
+          "ui::mojom::Gpu"
+        ]
+      }
+    }
+  }
+}
