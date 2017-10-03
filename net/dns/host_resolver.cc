@@ -151,7 +151,7 @@ std::unique_ptr<HostResolver> HostResolver::CreateSystemResolver(
 std::unique_ptr<HostResolverImpl> HostResolver::CreateSystemResolverImpl(
     const Options& options,
     NetLog* net_log) {
-  return base::WrapUnique(new HostResolverImpl(options, net_log));
+  return std::make_unique<HostResolverImpl>(options, net_log);
 }
 
 // static

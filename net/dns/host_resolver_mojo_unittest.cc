@@ -136,8 +136,8 @@ void MockMojoHostResolver::ResolveDns(
                            std::move(actions_[results_returned_].addresses));
       break;
     case HostResolverAction::RETAIN:
-      requests_.push_back(base::WrapUnique(new MockMojoHostResolverRequest(
-          std::move(client), request_connection_error_callback_)));
+      requests_.push_back(std::make_unique<MockMojoHostResolverRequest>(
+          std::move(client), request_connection_error_callback_));
       break;
     case HostResolverAction::DROP:
       client.reset();
