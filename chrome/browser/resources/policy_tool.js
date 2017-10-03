@@ -2,6 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+policy.Page.downloadFile = function(contents) {
+  var blob = new Blob([contents], {type: 'text/json'});
+  var link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = 'policies.json';
+  link.click();
+};
+
 // Override some methods of policy.Page.
 
 /** @override */
@@ -56,6 +64,10 @@ policy.Page.prototype.initialize = function() {
     for (policyTable in this.policyTables) {
       this.policyTables[policyTable].filter();
     }
+  };
+
+  $('export-linux').onclick = () => {
+    chrome.send('exportLinux', [this.getDictionary()]);
   };
 
   // Notify the browser that the page has loaded, causing it to send the
@@ -123,6 +135,8 @@ policy.Policy.prototype.setStatus_ = function(value) {
     status = loadTimeData.getString('unset');
   } else if (value.error) {
     status = value.error;
+  } else if (value.invalid) {
+    status = loadTimeData.getString('errorInvalidType');
   } else {
     status = loadTimeData.getString('ok');
   }
@@ -136,7 +150,7 @@ policy.Policy.prototype.setStatus_ = function(value) {
  */
 policy.Policy.prototype.setValue_ = function(value) {
   this.value = value;
-  if (!value) {
+  if (value == undefined) {
     value = '';
   } else if (typeof value != 'string') {
     value = JSON.stringify(value);
