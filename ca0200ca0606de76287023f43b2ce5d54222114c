@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838b90be_30d30f76",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 50421,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-03T19:53:54Z",
+      "side": 1,
+      "message": "Since you don\u0027t record to the base histogram, mark it base\u003d\"true\"",
+      "range": {
+        "startLine": 50421,
+        "startChar": 28,
+        "endLine": 50421,
+        "endChar": 29
+      },
+      "revId": "ca0200ca0606de76287023f43b2ce5d54222114c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
