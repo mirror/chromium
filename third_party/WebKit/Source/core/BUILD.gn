@@ -1753,6 +1753,7 @@ fuzzer_test("stylesheet_contents_fuzzer") {
     ":core",
     "../platform:blink_fuzzer_test_support",
   ]
+  dict = "//testing/libfuzzer/fuzzers/dicts/css.dict"
   seed_corpus = "//third_party/WebKit/LayoutTests/fast/css/resources"
   libfuzzer_options = [ "max_len=2048" ]
 }
