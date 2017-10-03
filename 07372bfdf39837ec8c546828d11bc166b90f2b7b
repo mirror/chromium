@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7453fe38_af5691e5",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:41:40Z",
+      "side": 1,
+      "message": "Do we also want to check main_thread_only().stopped_when_backgrounded to avoid false positives when the loading queue is stopped for other reasons?",
+      "range": {
+        "startLine": 1226,
+        "startChar": 17,
+        "endLine": 1226,
+        "endChar": 37
+      },
+      "revId": "07372bfdf39837ec8c546828d11bc166b90f2b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
