@@ -6,8 +6,20 @@ module content.mojom;
 
 import "services/ui/public/interfaces/window_tree.mojom";
 
+interface RenderWidgetWindowTreeClient {
+  // Asks the renderer to create a Window for the frame with the routing id
+  // |routing_id| and embeds |window_tree_client| in it.
+  Embed(uint32 frame_routing_id, ui.mojom.WindowTreeClient window_tree_client);
+
+  // Called when a render frame has been destroyed. This is sent via mojom
+  // to handle to ensure there aren't race conditions because of message order
+  // delivery.
+  DestroyFrame(uint32 frame_routing_id);
+};
+
 interface RenderWidgetWindowTreeClientFactory {
   CreateWindowTreeClientForRenderWidget(
-      uint32 routing_id,
-      ui.mojom.WindowTreeClient& window_tree_client);
+      uint32 render_widget_host_routing_id,
+      ui.mojom.WindowTreeClient& window_tree_client,
+      RenderWidgetWindowTreeClient& render_widget_window_tree_client_request);
 };
