@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <script src="dir1/included_script.js"></script>
+  </head>
+
+  <body>
+    <script type='text/javascript'>
+      function getChildFrameUrl(case_number, is_third_party) {
+        var url = '';
+        url += window.location.protocol + '//';              // scheme (preserved)
+        url += is_third_party ? "third_party_host.com" : window.location.hostname;   // host
+        if (window.location.port)
+          url += ':' + window.location.port;                 // port (preserved)
+        url += "/child_frame.html?case=" + case_number;      // path
+        console.log(url);
+        return url;
+      }
+
+      function main() {
+        // Append 4 pairs of iframes. Each pair with one first party and second
+        // third party iframe.
+        for (var i = 1; i <= 4; i++) {
+          var first_party = document.createElement('iframe');
+          first_party.src = getChildFrameUrl(i, false);
+          first_party.name = "first_party_" + i;
+          document.body.appendChild(first_party);
+
+          var third_party = document.createElement('iframe');
+          third_party.src = getChildFrameUrl(i, true);
+          third_party.name = "third_party_" + i;
+          document.body.appendChild(third_party);
+        }
+      }
+
+      main();
+    </script>
+  </body>
+</html>
