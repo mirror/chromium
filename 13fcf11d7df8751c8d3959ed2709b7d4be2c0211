@@ -22,6 +22,30 @@
       "revId": "13fcf11d7df8751c8d3959ed2709b7d4be2c0211",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0073f356_edae88d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T04:06:21Z",
+      "side": 1,
+      "message": "Done, but isn\u0027t unittest enough?",
+      "parentUuid": "3af77bf2_1bf586fd",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "13fcf11d7df8751c8d3959ed2709b7d4be2c0211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
