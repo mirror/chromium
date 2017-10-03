@@ -31,6 +31,8 @@ blink_modules_sources("peerconnection") {
     "RTCRtpReceiver.h",
     "RTCRtpSender.cpp",
     "RTCRtpSender.h",
+    "RTCRtpSynchronizationSource.cpp",
+    "RTCRtpSynchronizationSource.h",
     "RTCSessionDescription.cpp",
     "RTCSessionDescription.h",
     "RTCSessionDescriptionCallback.h",

@@ -201,6 +201,52 @@ promise_test(function() {
     });
 }, 'receiver.getContributingSources()');
 
+promise_test(function() {
+  let pc = new RTCPeerConnection();
+  let receiver = null;
+  let synchronizationSource0 = null;
+  return createStreams({audio:true}, 1)
+      .then(function(streams) {
+	return addRemoteStreamsFromLocalStreams(pc, streams);
+      })
+      .then(function() {
+	verifyStreamAndTrackCounts(pc.getRemoteStreams(), 1, true, false);
+	verifyRemoteTracksHaveReceivers(pc);
+
+	assert_equals(pc.getReceivers().length, 1);
+	receiver = pc.getReceivers()[0];
+	verifySynchronizationSourcesAreCached(receiver);
+
+	let synchronizationSources = receiver.getSynchronizationSources();
+	assert_equals(synchronizationSources.length, 1);
+	assertSynchronizationSourceEquals(synchronizationSources[0], 0, 0.0);
+
+	// Invalidate the synchronization sources cache.
+	synchronizationSource0 = synchronizationSources[0];
+	return Promise.resolve(synchronizationSource0);
+      }).then(function(prevSynchronizationSource) {
+	verifySynchronizationSourcesAreCached(receiver);
+
+	let synchronizationSources = receiver.getSynchronizationSources();
+	assert_equals(synchronizationSources.length, 1);
+	assertSynchronizationSourceEquals(synchronizationSources[0], 0, 5000.0);
+
+	// Check that object identities are preserved between event loop task
+	// executions.
+	assert_equals(synchronizationSources[0], prevSynchronizationSource);
+
+	return Promise.resolve(synchronizationSources[0]);
+      }).then(function(prevSynchronizationSource) {
+	verifySynchronizationSourcesAreCached(receiver);
+
+	// Check that synchronization sources are kept up to date even when
+	// |getSynchronizationSources| is not explicitly called.
+	assertSynchronizationSourceEquals(synchronizationSource0, 0, 10000.0);
+
+	return Promise.resolve();
+      });
+}, 'receiver.getSynchronizationSources()');
+
 /**
  * Helper functions to tests.
  */
@@ -313,9 +359,23 @@ function verifyContributingSourcesAreCached(receiver) {
                       receiver.getContributingSources());
 }
 
+/**
+ * |RTCRtpReceiver| caches the result of |getSynchronizationSources| to make
+ * sure the objects do not change during the same event loop task execution.
+ */
+function verifySynchronizationSourcesAreCached(receiver) {
+  assert_array_equals(receiver.getSynchronizationSources(),
+		      receiver.getSynchronizationSources());
+}
+
 function assertContributingSourceEquals(contributingSource, source, timestamp) {
   assert_equals(contributingSource.source, source);
   assert_equals(contributingSource.timestamp, timestamp);
+}
+
+function assertSynchronizationSourceEquals(synchronizationSource, source, timestamp) {
+  assert_equals(synchronizationSource.source, source);
+  assert_equals(synchronizationSource.timestamp, timestamp);
 }
 </script>
 </body>

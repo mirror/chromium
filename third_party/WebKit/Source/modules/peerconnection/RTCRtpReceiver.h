@@ -9,6 +9,7 @@
 
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/peerconnection/RTCRtpContributingSource.h"
+#include "modules/peerconnection/RTCRtpSynchronizationSource.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/GarbageCollected.h"
 #include "platform/heap/Member.h"
@@ -28,13 +29,15 @@ class RTCRtpReceiver final : public GarbageCollectedFinalized<RTCRtpReceiver>,
 
   MediaStreamTrack* track() const;
   const HeapVector<Member<RTCRtpContributingSource>>& getContributingSources();
+  const HeapVector<Member<RTCRtpSynchronizationSource>>&
+  getSynchronizationSources();
 
   void UpdateSourcesIfNeeded();
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  void SetContributingSourcesNeedsUpdating();
+  void SetSourcesNeedUpdating();
 
   std::unique_ptr<WebRTCRtpReceiver> receiver_;
   Member<MediaStreamTrack> track_;
@@ -51,7 +54,15 @@ class RTCRtpReceiver final : public GarbageCollectedFinalized<RTCRtpReceiver>,
       contributing_sources_by_source_id_;
   // The current contributing sources (|getContributingSources|).
   HeapVector<Member<RTCRtpContributingSource>> contributing_sources_;
-  bool contributing_sources_needs_updating_ = true;
+  // See |contributing_sources_by_source_id_|.
+  HeapHashMap<uint32_t,
+              WeakMember<RTCRtpSynchronizationSource>,
+              typename DefaultHash<uint32_t>::Hash,
+              WTF::UnsignedWithZeroKeyHashTraits<uint32_t>>
+      synchronization_sources_by_source_id_;
+  // The current synchronization sources (|getSynchronizationSources|).
+  HeapVector<Member<RTCRtpSynchronizationSource>> synchronization_sources_;
+  bool sources_need_updating_ = true;
 };
 
 }  // namespace blink
