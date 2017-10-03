@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5981bbf3_d937e6c4",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:41:14Z",
+      "side": 0,
+      "message": "This will conflict with Majid\u0027s in flight patch since we will need an interface to send updates from AnimationWorklet back to the compositor: https://chromium-review.googlesource.com/c/chromium/src/+/613860/20/cc/trees/layer_tree_mutator.h\n\nWe could leave the interface empty or Majid could add it back.",
+      "revId": "d6f6effe1f647b70320210f0e8ac4a4adb0d0baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

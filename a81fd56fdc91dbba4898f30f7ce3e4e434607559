@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9a1877_5e0ec273",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:41:14Z",
+      "side": 1,
+      "message": "return !!mutator;\n\nI\u0027m worried this means we will always tick since I believe we always attach a mutator. Can we check that we at least have active animations?",
+      "revId": "a81fd56fdc91dbba4898f30f7ce3e4e434607559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
