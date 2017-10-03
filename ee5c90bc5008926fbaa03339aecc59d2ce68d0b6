@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7909953d_973a9ca2",
+        "filename": "chrome_elf/nt_registry/nt_registry.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-03T03:30:02Z",
+      "side": 1,
+      "message": "I\u0027ve removed the argument checks from the code!  (The older functions don\u0027t check the arguments, so this will be consistent.)\n\nThe only documentation I could find in the coding standard says: A DCHECK() means “this condition must always be true”.  Which didn\u0027t seem right for an exported API.\n\nI was thinking of this lib as a standalone thing - but it\u0027s not really a DLL or service-for-the-world.\n\nAnd then I was referred to this:\nhttps://groups.google.com/a/chromium.org/forum/#!msg/chromium-dev/KJdw-QiKdxY/EUs2R-OrXdUJ\n\nAnd I can get on board with that.\n\nDone!",
+      "parentUuid": "0306bdf5_1db6a042",
+      "range": {
+        "startLine": 1107,
+        "startChar": 15,
+        "endLine": 1107,
+        "endChar": 31
+      },
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74fb1a53_bb2a754c",
         "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
         "patchSetId": 7
@@ -354,6 +378,24 @@
       "side": 1,
       "message": "I don\u0027t see why not. Otherwise it\u0027s likely getting pushed onto the stack byte by byte. \"static constexpr\" results in code in the function just using a pointer to the string in .rdata.",
       "parentUuid": "06520404_b6914c87",
+      "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65b064a7_101a422b",
+        "filename": "chrome_elf/nt_registry/nt_registry_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-03T03:30:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b164c7b3_d9512feb",
       "revId": "ee5c90bc5008926fbaa03339aecc59d2ce68d0b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
