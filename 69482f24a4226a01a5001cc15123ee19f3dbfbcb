@@ -39,6 +39,24 @@
       "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a6c4ed_7f71ba1a",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-03T22:34:23Z",
+      "side": 1,
+      "message": "I am not sure. The printing:: constants all are also used for other purposes. Both kSettingPreviewModifiable and kSettingShouldPrintSelectionOnly are used for parsing the print ticket, and kSettingPrinterName is used when returning printer information. So using those means there is no longer a 1:1 mapping between the JS struct and the dictionary key constants, since the constants will be used for multiple messages to/from JS. I am not sure if it is better to avoid adding new strings or to avoid re-using the same strings in multiple messages. Do you know which approach is generally preferred?",
+      "parentUuid": "afd00810_41f5233c",
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
