@@ -8,6 +8,7 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "ash/system/tray/system_tray_controller.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -107,7 +108,7 @@ void ExitWarningHandler::HandleAccelerator() {
       CancelTimer();
       Hide();
       base::RecordAction(base::UserMetricsAction("Accel_Exit_Second_Q"));
-      Shell::Get()->shell_delegate()->Exit();
+      Shell::Get()->system_tray_controller()->SignOut();
       break;
     case EXITING:
       break;

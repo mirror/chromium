@@ -210,11 +210,8 @@ TEST_F(LoginShelfViewTest, ClickRestartButton) {
 }
 
 TEST_F(LoginShelfViewTest, ClickSignOutButton) {
-  TestShellDelegate* shell_delegate_ =
-      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
-  EXPECT_EQ(shell_delegate_->num_exit_requests(), 0);
   Click(LoginShelfView::kSignOut);
-  EXPECT_EQ(shell_delegate_->num_exit_requests(), 1);
+  EXPECT_TRUE(Shell::Get()->lock_state_controller()->SignoutRequested());
 }
 
 TEST_F(LoginShelfViewTest, ClickUnlockButton) {
