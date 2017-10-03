@@ -54,6 +54,7 @@ import org.chromium.content_public.browser.AccessibilitySnapshotNode;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.ImeEventObserver;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.browser.WebContentsObserver;
 import org.chromium.device.gamepad.GamepadList;
@@ -2127,11 +2128,23 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * Sets the client that can process and augment existing text selection, e.g. Contextual Search.
-     * @param selectionClient The client that receives related notifications.
+     * Adds the given {@link SelectionClient} to the popup menu controller.
+     * @param selectionClient The {@link SelectionClient} to add.
      */
-    public void setSelectionClient(SelectionClient selectionClient) {
-        mSelectionPopupController.setSelectionClient(selectionClient);
+    public void addContextualSearchSelectionClient(SelectionClient selectionClient) {
+        mSelectionPopupController.addContextualSearchSelectionClient(selectionClient);
+    }
+
+    /** Removes the given {@link SelectionClient} from the popup menu controller. */
+    public void removeContextualSearchSelectionClient(SelectionClient selectionClient) {
+        mSelectionPopupController.removeContextualSearchSelectionClient(selectionClient);
+    }
+
+    /**
+     * Gets the current {@link SelectionClientManager} from the popup controller.
+     */
+    public SelectionClientManager getSelectionClientManager() {
+        return mSelectionPopupController.getSelectionClientManager();
     }
 
     /**

@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content_public.browser.GestureStateListener;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.net.NetworkChangeNotifier;
 
 /**
@@ -41,6 +42,9 @@ public class ContextualSearchTabHelper
      * The GestureListener used for handling events from the current ContentViewCore.
      */
     private GestureStateListener mGestureStateListener;
+
+    /** The SelectionClient provided by Contextual Search, or {@code null} if there isn't one. */
+    private SelectionClient mContextualSearchSelectionClient;
 
     private long mNativeHelper;
 
@@ -195,7 +199,8 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener == null && manager != null) {
             mGestureStateListener = manager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            mContextualSearchSelectionClient = manager.getContextualSearchSelectionClient();
+            cvc.addContextualSearchSelectionClient(mContextualSearchSelectionClient);
         }
     }
 
@@ -209,7 +214,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.removeContextualSearchSelectionClient(mContextualSearchSelectionClient);
         }
     }
 

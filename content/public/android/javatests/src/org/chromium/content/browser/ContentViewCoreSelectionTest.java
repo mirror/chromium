@@ -29,6 +29,7 @@ import org.chromium.content.browser.test.ContentJUnit4ClassRunner;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
 import org.chromium.content.browser.test.util.DOMUtils;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_shell_apk.ContentShellActivityTestRule;
 
 import java.util.concurrent.Callable;
@@ -99,6 +100,7 @@ public class ContentViewCoreSelectionTest {
 
         mContentViewCore = mActivityTestRule.getContentViewCore();
         mSelectionPopupController = mContentViewCore.getSelectionPopupControllerForTesting();
+        SelectionClientManager.setSmartSelectionEnabled(true);
         waitForSelectActionBarVisible(false);
         waitForPastePopupStatus(false);
     }

@@ -150,6 +150,7 @@ import org.chromium.chrome.browser.widget.textbubble.TextBubble;
 import org.chromium.components.bookmarks.BookmarkId;
 import org.chromium.content.browser.ContentVideoView;
 import org.chromium.content.browser.ContentViewCore;
+import org.chromium.content.browser.SelectionClientManager;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content_public.browser.ContentBitmapCallback;
 import org.chromium.content_public.browser.LoadUrlParams;
@@ -763,11 +764,16 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 DeviceClassManager.enableSnapshots()));
         mCompositorViewHolder.onNativeLibraryReady(getWindowAndroid(), getTabContentManager());
 
+        // Enable Smart Selection on Android O+, which interacts with Contextual Search.
+        boolean enableSmartSelection = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
+        SelectionClientManager.setSmartSelectionEnabled(enableSmartSelection);
         if (isContextualSearchAllowed() && ContextualSearchFieldTrial.isEnabled()) {
             mContextualSearchManager = new ContextualSearchManager(this, this);
             if (mFindToolbarManager != null) {
                 mContextualSearchManager.setFindToolbarManager(mFindToolbarManager);
             }
+            mContextualSearchManager.suppressContextualSearchForSmartSelection(
+                    enableSmartSelection);
         }
 
         if (ReaderModeManager.isEnabled(this)) {
