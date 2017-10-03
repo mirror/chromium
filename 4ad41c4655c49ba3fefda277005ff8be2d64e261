@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e6702c_67c57895",
+        "filename": "ui/views/controls/webview/unhandled_keyboard_event_handler_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-03T00:43:36Z",
+      "side": 1,
+      "message": "(assuming we don\u0027t just fix [event window], an improvement here would be:\n\nI think there are times we want to dispatch to the menu bar, even when no view has focus. The most straightforward way to do this I think is to add an accessor on views::FocusManager\n\n  Widget* widget() { return widget_; }\n\n\nHere, do\n\n  NSWindow* window \u003d focus_manager-\u003ewidget()-\u003eGetNativeWindow();\n  [base::mac::ObjCCastStrict\u003cNativeWidgetMacNSWindow\u003e(window)\n      redispatchKeyEvent:event];\n\n\n\nnote it doesn\u0027t look possible for UnhandledKeyboardEventHandler::HandleKeyboardEvent() to pass a null focus_manager, nor for FocusManager::widget_ to be null, so there\u0027s no point adding null checks for those.",
+      "revId": "4ad41c4655c49ba3fefda277005ff8be2d64e261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
