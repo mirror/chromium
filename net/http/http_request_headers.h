@@ -32,6 +32,10 @@ class NET_EXPORT HttpRequestHeaders {
     HeaderKeyValuePair();
     HeaderKeyValuePair(const base::StringPiece& key,
                        const base::StringPiece& value);
+    HeaderKeyValuePair(const HeaderKeyValuePair& other) = default;
+    HeaderKeyValuePair& operator=(const HeaderKeyValuePair& other) = default;
+    HeaderKeyValuePair(HeaderKeyValuePair&& other);
+    HeaderKeyValuePair& operator=(HeaderKeyValuePair&& other);
 
     std::string key;
     std::string value;
@@ -112,10 +116,13 @@ class NET_EXPORT HttpRequestHeaders {
   // |value| passes HttpUtil::IsValidHeaderValue().
   void SetHeader(const base::StringPiece& key, const base::StringPiece& value);
 
+  // Does the same as above, but performs a move-only operation.
+  void SetHeader(HeaderKeyValuePair&& pair);
+
   // Does the same as above but without internal DCHECKs for validations.
   void SetHeaderWithoutCheckForTesting(const base::StringPiece& key,
                                        const base::StringPiece& value) {
-    SetHeaderInternal(key, value);
+    SetHeaderInternal(HeaderKeyValuePair(key, value));
   }
 
   // Sets the header value pair for |key| and |value|, if |key| does not exist.
@@ -179,8 +186,7 @@ class NET_EXPORT HttpRequestHeaders {
   HeaderVector::iterator FindHeader(const base::StringPiece& key);
   HeaderVector::const_iterator FindHeader(const base::StringPiece& key) const;
 
-  void SetHeaderInternal(const base::StringPiece& key,
-                         const base::StringPiece& value);
+  void SetHeaderInternal(HeaderKeyValuePair&& pair);
 
   HeaderVector headers_;
 

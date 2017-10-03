@@ -53,6 +53,16 @@ HttpRequestHeaders::HeaderKeyValuePair::HeaderKeyValuePair(
     : key(key.data(), key.size()), value(value.data(), value.size()) {
 }
 
+HttpRequestHeaders::HeaderKeyValuePair::HeaderKeyValuePair(
+    HeaderKeyValuePair&& other)
+    : key(std::move(other.key)), value(std::move(other.value)) {}
+
+HttpRequestHeaders::HeaderKeyValuePair& HttpRequestHeaders::HeaderKeyValuePair::
+operator=(HeaderKeyValuePair&& other) {
+  key = std::move(other.key);
+  value = std::move(other.value);
+  return *this;
+}
 
 HttpRequestHeaders::Iterator::Iterator(const HttpRequestHeaders& headers)
     : started_(false),
@@ -96,7 +106,14 @@ void HttpRequestHeaders::SetHeader(const base::StringPiece& key,
                                    const base::StringPiece& value) {
   DCHECK(HttpUtil::IsValidHeaderName(key)) << key;
   DCHECK(HttpUtil::IsValidHeaderValue(value)) << key << ":" << value;
-  SetHeaderInternal(key, value);
+  SetHeaderInternal(HeaderKeyValuePair(key, value));
+}
+
+void HttpRequestHeaders::SetHeader(HeaderKeyValuePair&& pair) {
+  DCHECK(HttpUtil::IsValidHeaderName(pair.key)) << pair.key;
+  DCHECK(HttpUtil::IsValidHeaderValue(pair.value))
+      << pair.key << ":" << pair.value;
+  SetHeaderInternal(std::move(pair));
 }
 
 void HttpRequestHeaders::SetHeaderIfMissing(const base::StringPiece& key,
@@ -105,7 +122,7 @@ void HttpRequestHeaders::SetHeaderIfMissing(const base::StringPiece& key,
   DCHECK(HttpUtil::IsValidHeaderValue(value));
   HeaderVector::iterator it = FindHeader(key);
   if (it == headers_.end())
-    headers_.push_back(HeaderKeyValuePair(key, value));
+    headers_.emplace_back(key, value);
 }
 
 void HttpRequestHeaders::RemoveHeader(const base::StringPiece& key) {
@@ -225,13 +242,12 @@ HttpRequestHeaders::FindHeader(const base::StringPiece& key) const {
   return headers_.end();
 }
 
-void HttpRequestHeaders::SetHeaderInternal(const base::StringPiece& key,
-                                           const base::StringPiece& value) {
-  HeaderVector::iterator it = FindHeader(key);
+void HttpRequestHeaders::SetHeaderInternal(HeaderKeyValuePair&& pair) {
+  HeaderVector::iterator it = FindHeader(pair.key);
   if (it != headers_.end())
-    it->value.assign(value.data(), value.size());
+    it->value = std::move(pair.value);
   else
-    headers_.push_back(HeaderKeyValuePair(key, value));
+    headers_.push_back(pair);
 }
 
 }  // namespace net
