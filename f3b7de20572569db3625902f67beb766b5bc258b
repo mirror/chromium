@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0502671a_bcd501eb",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-03T22:14:10Z",
+      "side": 1,
+      "message": "I really like this idea.\n\nSolving for the 0th and 1st derivatives to equal should probably be done using Newton\u0027s method.\n\nI\u0027m not sure how to fit this in with the Gauss-Newton iteration -- there\u0027s a good chance that they would fight. Maybe we should do the first few Gauss-Newton steps with fD fixed (say, at 0.15 or 0.25), and then allow the two to duke it out in the last steps.\n\nAnother idea that I had was to do something like golden section search for fD.",
+      "revId": "f3b7de20572569db3625902f67beb766b5bc258b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5c62e4_5c243d1e",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-03T22:14:10Z",
+      "side": 1,
+      "message": "I think we want this to be 1/sqrt(x)\n\nOr more accurately 1/(sqrt(x)+epsilon)",
+      "revId": "f3b7de20572569db3625902f67beb766b5bc258b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
