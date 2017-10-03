@@ -681,6 +681,13 @@ void EventRouter::OnEventAck(BrowserContext* context,
     pm->DecrementLazyKeepaliveCount(host->extension());
 }
 
+bool EventRouter::HasRegisteredEvents(const ExtensionId& extension_id) const {
+  return !GetRegisteredEvents(extension_id, RegisteredEventType::kLazy)
+              .empty() ||
+         !GetRegisteredEvents(extension_id, RegisteredEventType::kServiceWorker)
+              .empty();
+}
+
 void EventRouter::ReportEvent(events::HistogramValue histogram_value,
                               const Extension* extension,
                               bool did_enqueue) {
