@@ -111,6 +111,9 @@ webrtc::EncodedImageCallback::Result WebrtcDummyVideoEncoder::SendEncodedFrame(
         webrtc::EncodedImageCallback::Result::ERROR_SEND_FAILED);
   }
 
+  LOG(ERROR) << "### SendEncodedFrame, size: " << buffer_size
+             << ", key: " << (frame.key_frame ? "yes" : "no");
+
   webrtc::EncodedImage encoded_image(buffer, buffer_size, buffer_size);
   encoded_image._encodedWidth = frame.size.width();
   encoded_image._encodedHeight = frame.size.height();

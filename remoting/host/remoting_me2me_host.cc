@@ -21,6 +21,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/field_trial.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -1722,6 +1723,13 @@ int HostProcessMain() {
   // network thread. base::GetLinuxDistro() caches the result.
   base::GetLinuxDistro();
 #endif
+
+  // Initialize global field trials.
+  new base::FieldTrialList(nullptr);
+
+  base::FieldTrialList::CreateTrialsFromString(
+      "WebRTC-ProbingScreenshareBwe/1.0,3000,80,40,-60,1/",
+      std::set<std::string>());
 
   base::TaskScheduler::CreateAndStartWithDefaultParams("Me2Me");
 
