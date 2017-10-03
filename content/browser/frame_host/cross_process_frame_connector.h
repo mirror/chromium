@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include "base/memory/weak_ptr.h"
 #include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "content/browser/renderer_host/frame_connector_delegate.h"
@@ -134,6 +135,8 @@ class CONTENT_EXPORT CrossProcessFrameConnector
 
   // The RenderWidgetHostView for the frame. Initially NULL.
   RenderWidgetHostViewChildFrame* view_;
+
+  base::WeakPtr<RenderWidgetHostViewBase> root_view_weak_ptr_;
 
   gfx::Rect child_frame_rect_;
   bool is_inert_ = false;
