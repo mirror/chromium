@@ -553,7 +553,8 @@ int LaunchTests(TestLauncherDelegate* launcher_delegate,
 
 #if defined(OS_WIN)
   sandbox::SandboxInterfaceInfo sandbox_info = {0};
-  InitializeSandboxInfo(&sandbox_info);
+  InitializeSandboxInfo(
+      service_manager::SandboxTypeFromCommandLine(command_line), &sandbox_info);
 
   params.instance = GetModuleHandle(NULL);
   params.sandbox_info = &sandbox_info;
