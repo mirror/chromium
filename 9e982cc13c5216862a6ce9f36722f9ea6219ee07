@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8def17b9_2007cb78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanel.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-03T16:56:43Z",
+      "side": 1,
+      "message": "This actually isn\u0027t needed at the moment. This was to handle the removal of updateOverlay but I\u0027ll be tackling that in a separate patch.",
+      "parentUuid": "b20ffcbd_d3d5c781",
+      "range": {
+        "startLine": 764,
+        "startChar": 0,
+        "endLine": 764,
+        "endChar": 70
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cc0318_5e2bc63b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanelAnimation.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1968034_a2444465",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanelAnimation.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-03T16:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11cc0318_5e2bc63b",
+      "range": {
+        "startLine": 343,
+        "startChar": 8,
+        "endLine": 343,
+        "endChar": 27
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aea4cf3f_eb7fb662",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPeekPromoControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-03T16:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a635e64c_e7c9fde1",
+      "range": {
+        "startLine": 238,
+        "startChar": 79,
+        "endLine": 238,
+        "endChar": 84
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3e6434f_dfb5cc6b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPromoControl.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7fdd0e1c_fdda0ea8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPromoControl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-03T16:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e6434f_dfb5cc6b",
+      "range": {
+        "startLine": 291,
+        "startChar": 80,
+        "endLine": 291,
+        "endChar": 84
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01618914_342b0290",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-30T02:26:58Z",
       "side": 1,
       "message": "This looks out of place, maybe accidental?  Or some cleanup leftover from another change?",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 47
+      },
+      "revId": "9e982cc13c5216862a6ce9f36722f9ea6219ee07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ebe55d8d_29f017a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-03T16:56:43Z",
+      "side": 1,
+      "message": "The name of the function changed in this patch. The refactoring tool in android studio caught this apparently. Removed.",
+      "parentUuid": "01618914_342b0290",
       "range": {
         "startLine": 217,
         "startChar": 0,
