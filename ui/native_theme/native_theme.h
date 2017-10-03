@@ -382,6 +382,9 @@ class NATIVE_THEME_EXPORT NativeTheme {
     kColorId_ResultsTableNegativeText,
     kColorId_ResultsTableNegativeHoveredText,
     kColorId_ResultsTableNegativeSelectedText,
+    // Colors for the progress bar.
+    kColorId_ProgressBarForeground,
+    kColorId_ProgressBarBackground,
     // Colors for the material spinner (aka throbber).
     kColorId_ThrobberSpinningColor,
     kColorId_ThrobberWaitingColor,

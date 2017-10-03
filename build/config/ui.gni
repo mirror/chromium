@@ -39,6 +39,9 @@ declare_args() {
 
 declare_args() {
   # True means the UI is built using the "views" framework.
+  # This probably doesn't need to be changed, but may need a note like, "note
+  # that the chromecast build depends on //ui/views, but doesn't use it for its
+  # Browser UI".
   toolkit_views = (is_mac || is_win || is_chromeos || use_aura) &&
                   !is_chromecast && !is_fuchsia
 }

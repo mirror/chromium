@@ -301,6 +301,18 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
     case NativeTheme::kColorId_ResultsTableNegativeSelectedText:
       return kResultsTableNegativeSelectedText;
 
+    // Progress bar.
+    case NativeTheme::kColorId_ProgressBarForeground:
+      return base_theme->GetSystemColor(
+          NativeTheme::kColorId_ProminentButtonColor);
+    case NativeTheme::kColorId_ProgressBarBackground:
+      // The default foreground is GoogleBlue500, and the default background is
+      // that color but 80% lighter.
+      return color_utils::BlendTowardOppositeLuma(
+          base_theme->GetSystemColor(
+              NativeTheme::kColorId_ProgressBarForeground),
+          0xCC);
+
     // Material spinner/throbber
     case NativeTheme::kColorId_ThrobberSpinningColor:
       return kThrobberSpinningColor;

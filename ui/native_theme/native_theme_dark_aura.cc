@@ -144,6 +144,8 @@ SkColor NativeThemeDarkAura::GetSystemColor(ColorId color_id) const {
     case kColorId_ResultsTableNegativeHoveredText:
     case kColorId_ResultsTableNegativeSelectedText:
     case kColorId_SeparatorColor:
+    case kColorId_ProgressBarForeground:
+    case kColorId_ProgressBarBackground:
     case kColorId_ThrobberSpinningColor:
     case kColorId_ThrobberWaitingColor:
     case kColorId_ThrobberLightColor:
