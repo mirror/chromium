@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b064308_2127743a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T21:51:19Z",
+      "side": 1,
+      "message": "Nit: kNotMainFrame would usually just be called kSubframe\n\n(Also, is the description about cross-origin still accurate?)",
+      "range": {
+        "startLine": 748,
+        "startChar": 56,
+        "endLine": 748,
+        "endChar": 69
+      },
+      "revId": "e970875fa4b047984fc5c014b168c382a0cc59af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
