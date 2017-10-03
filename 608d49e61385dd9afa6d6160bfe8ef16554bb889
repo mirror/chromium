@@ -51,6 +51,24 @@
       "revId": "608d49e61385dd9afa6d6160bfe8ef16554bb889",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a871298_23ff742f",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ProbeSink.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-03T22:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59aa059e_834f6402",
+      "revId": "608d49e61385dd9afa6d6160bfe8ef16554bb889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
