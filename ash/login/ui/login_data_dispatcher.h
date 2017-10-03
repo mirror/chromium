@@ -47,6 +47,10 @@ class ASH_EXPORT LoginDataDispatcher {
 
     // Called when the lock screen note state changes.
     virtual void OnLockScreenNoteStateChanged(mojom::TrayActionState state);
+
+    // Called when focus is leaving a lock screen app window due to tabbing.
+    // |reverse| - whether the tab order is reversed.
+    virtual void OnFocusLeavingLockScreenApps(bool reverse);
   };
 
   LoginDataDispatcher();
@@ -60,6 +64,8 @@ class ASH_EXPORT LoginDataDispatcher {
   void SetPinEnabledForUser(const AccountId& user, bool enabled);
 
   void SetLockScreenNoteState(mojom::TrayActionState state);
+
+  void NotifyFocusLeavingLockScreenApps(bool reverse);
 
  private:
   base::ObserverList<Observer> observers_;

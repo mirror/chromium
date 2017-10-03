@@ -145,6 +145,10 @@ class LockDebugView::DebugDataDispatcherTransformer
     debug_dispatcher_.SetLockScreenNoteState(state);
   }
 
+  void OnFocusLeavingLockScreenApps(bool reverse) override {
+    debug_dispatcher_.NotifyFocusLeavingLockScreenApps(reverse);
+  }
+
  private:
   // The debug overlay UI takes ground-truth data from |root_dispatcher_|,
   // applies a series of transformations to it, and exposes it to the UI via

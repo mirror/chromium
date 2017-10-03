@@ -83,6 +83,12 @@ void LockScreenClient::OnNoPodFocused() {
     delegate_->HandleOnNoPodFocused();
 }
 
+void LockScreenClient::FocusLockScreenApps(bool reverse) {
+  if (!delegate_ || !delegate_->HandleFocusLockScreenApps(reverse)) {
+    HandleFocusLeavingLockScreenApps(reverse);
+  }
+}
+
 void LockScreenClient::LoadWallpaper(const AccountId& account_id) {
   chromeos::WallpaperManager::Get()->SetUserWallpaperDelayed(account_id);
 }
@@ -138,6 +144,10 @@ void LockScreenClient::LoadUsers(
 void LockScreenClient::SetPinEnabledForUser(const AccountId& account_id,
                                             bool is_enabled) {
   lock_screen_->SetPinEnabledForUser(account_id, is_enabled);
+}
+
+void LockScreenClient::HandleFocusLeavingLockScreenApps(bool reverse) {
+  lock_screen_->HandleFocusLeavingLockScreenApps(reverse);
 }
 
 void LockScreenClient::SetDelegate(Delegate* delegate) {
