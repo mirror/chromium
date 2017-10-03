@@ -204,11 +204,11 @@ void FrameGenerator::DrawWindow(viz::RenderPass* pass) {
               false /* are_contents_opaque */, 1.0f /* opacity */,
               SkBlendMode::kSrcOver, 0 /* sorting-context_id */);
   auto* quad = pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
-  quad->SetAll(sqs, bounds_at_origin /* rect */,
-               bounds_at_origin /* visible_rect */, true /* needs_blending*/,
-               window_manager_surface_info_.id(),
-               viz::SurfaceDrawQuadType::PRIMARY,
-               SK_ColorWHITE /* default_background_color */, nullptr);
+  quad->SetAll(
+      sqs, bounds_at_origin /* rect */, bounds_at_origin /* visible_rect */,
+      true /* needs_blending*/, window_manager_surface_info_.id(),
+      window_manager_surface_info_.id(), viz::SurfaceDrawQuadType::PRIMARY,
+      SK_ColorWHITE /* default_background_color */);
 }
 
 void FrameGenerator::SetNeedsBeginFrame(bool needs_begin_frame) {

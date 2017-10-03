@@ -35,9 +35,9 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   // compositor will use the fallback if the primary surface is unavailable
   // at the time of surface aggregation. If surface synchronization is not
   // enabled, then the primary and fallback surfaces will always match.
-  void SetFallbackSurfaceInfo(const viz::SurfaceInfo& surface_info);
-  const viz::SurfaceInfo& fallback_surface_info() const {
-    return fallback_surface_info_;
+  void SetFallbackSurfaceId(const viz::SurfaceId& surface_id);
+  const viz::SurfaceId& fallback_surface_id() const {
+    return fallback_surface_id_;
   }
 
   void SetStretchContentToFillBounds(bool stretch_content);
@@ -62,6 +62,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
       viz::RenderPass* render_pass,
       viz::SurfaceDrawQuadType surface_draw_quad_type,
       const viz::SurfaceInfo& surface_info,
+      const base::Optional<viz::SurfaceId>& fallback_surface_id,
       viz::SharedQuadState** common_shared_quad_state);
 
   void GetDebugBorderProperties(SkColor* color, float* width) const override;
@@ -70,7 +71,7 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   const char* LayerTypeAsString() const override;
 
   viz::SurfaceInfo primary_surface_info_;
-  viz::SurfaceInfo fallback_surface_info_;
+  viz::SurfaceId fallback_surface_id_;
 
   bool stretch_content_to_fill_bounds_ = false;
   SkColor default_background_color_ = SK_ColorWHITE;

@@ -56,8 +56,8 @@ void CreateSurfaceDrawQuad(RenderPass* pass,
   SurfaceDrawQuad* surface_quad =
       pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   surface_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,
-                       quad_rect, surface_id, SurfaceDrawQuadType::PRIMARY,
-                       SK_ColorWHITE, nullptr);
+                       quad_rect, surface_id, SurfaceId(),
+                       SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE);
 }
 
 void CreateRenderPass(int render_pass_id,
