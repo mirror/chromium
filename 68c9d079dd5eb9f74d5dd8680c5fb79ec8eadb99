@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fceb84d_3dd2da61",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-03T12:42:12Z",
+      "side": 1,
+      "message": "// Console message for warning should be displayed.",
+      "revId": "68c9d079dd5eb9f74d5dd8680c5fb79ec8eadb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4a2370_d91f1681",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-03T12:42:12Z",
+      "side": 1,
+      "message": "Is this always going to be lower case or should this match be case insensitive?",
+      "revId": "68c9d079dd5eb9f74d5dd8680c5fb79ec8eadb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bd66d8_15a91c85",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-03T12:42:12Z",
+      "side": 1,
+      "message": "A URL ...",
+      "range": {
+        "startLine": 97,
+        "startChar": 5,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "68c9d079dd5eb9f74d5dd8680c5fb79ec8eadb99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
