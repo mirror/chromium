@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b1f6fd8_e236d998",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-03T16:46:54Z",
+      "side": 1,
+      "message": "How about making this something like \u0027allow_collection_restart\u0027? The term \u0027shutdown\u0027 is already used to refer to termination of the SamplingThread.",
+      "range": {
+        "startLine": 488,
+        "startChar": 9,
+        "endLine": 488,
+        "endChar": 22
+      },
+      "revId": "1386d8496708466c2f5a6502c253dff10479586e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a61e31a_767e0b57",
+        "filename": "base/profiler/stack_sampling_profiler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-03T16:46:54Z",
+      "side": 1,
+      "message": "For conceptual consistency can we return empty params if we\u0027re not restarting collection?",
+      "range": {
+        "startLine": 516,
+        "startChar": 2,
+        "endLine": 516,
+        "endChar": 19
+      },
+      "revId": "1386d8496708466c2f5a6502c253dff10479586e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
