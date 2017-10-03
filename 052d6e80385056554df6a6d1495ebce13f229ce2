@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49924607_c3e606bc",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "Nit: trailing spaces",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a152da_55401dc3",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "The ARC++ convention is to tag structs with the next version tag to use, so maybe we ought to do that here (I assume versions start implicitly at 0)",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2b4a03_5358fc4b",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "Should we explicitly give fields ordinals to make this less likely? ARC++ does this, and maybe we should do it here if we\u0027re going to persist them?",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91270a5f_3cae1d17",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "Maybe we should just move this to a mojom as well? Or maybe we should just explicitly map the values between the two, so we don\u0027t need to guarantee that they match?",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b42e43_d1cd26f6",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "Is it possible to change ExplodedPageState to hold optional\u003cbase::string16\u003e rather than NullableString16?",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81da2e39_3458e07d",
+        "filename": "content/common/page_state_serialization_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T22:23:52Z",
+      "side": 1,
+      "message": "FWIW, googletest no longer differentiates between the LHS and the RHS for expected vs actual",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
