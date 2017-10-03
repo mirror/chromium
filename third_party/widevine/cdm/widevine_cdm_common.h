@@ -37,6 +37,11 @@ const char kWidevineCdmPluginMimeType[] = "application/x-ppapi-widevine-cdm";
 const char kWidevineCdmPluginMimeTypeDescription[] =
     "Widevine Content Decryption Module";
 
+// Identifier used by the PluginPrivateFileSystem to identify the files stored
+// for the Widevine CDM. This is used to store persistent files, so modifying
+// this will result in any existing saved files becoming inaccesssible.
+const char kWidevineCdmFileSystemId[] = "application_x-ppapi-widevine-cdm";
+
 // Name of the CDM library.
 const char kWidevineCdmLibraryName[] = "widevinecdm";
 
