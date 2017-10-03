@@ -107,7 +107,9 @@ class PtrStorageImpl<T,
         strongOrWeak == WebPrivatePtrStrength::kNormal,
         "Ref-counted classes do not support weak WebPrivatePtr<> references");
     Release();
-    ptr_ = val.LeakRef();
+    val->AddRef();
+    ptr_ = val.get();
+    val = nullptr;
   }
 
   void Assign(const PtrStorageImpl& other) {
