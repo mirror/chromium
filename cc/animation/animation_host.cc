@@ -45,7 +45,6 @@ AnimationHost::AnimationHost(ThreadInstance thread_instance)
       thread_instance_(thread_instance),
       supports_scroll_animations_(false),
       needs_push_properties_(false),
-      mutator_needs_mutate_(false),
       mutator_(nullptr) {
   if (thread_instance_ == ThreadInstance::IMPL) {
     scroll_offset_animations_impl_ =
@@ -278,7 +277,7 @@ bool AnimationHost::NeedsTickAnimations() const {
 }
 
 bool AnimationHost::NeedsTickMutator() const {
-  return mutator_ && mutator_needs_mutate_;
+  return mutator_ ? true : false;
 }
 
 bool AnimationHost::NeedsTickAnimationPlayers() const {
@@ -312,8 +311,9 @@ bool AnimationHost::TickAnimations(base::TimeTicks monotonic_time) {
     // TODO(majidvp): At the moment we call this for both active and pending
     // trees similar to other animations. However our final goal is to only
     // call these once ideally after activation.
-    did_animate |= mutator_->Mutate(monotonic_time);
-    mutator_needs_mutate_ = did_animate;
+    mutator_->Mutate(monotonic_time);
+
+    did_animate = true;
   }
 
   return did_animate;
@@ -574,11 +574,6 @@ void AnimationHost::SetLayerTreeMutator(
   if (mutator == mutator_)
     return;
   mutator_ = std::move(mutator);
-  mutator_->SetClient(this);
-}
-
-void AnimationHost::SetNeedsMutate() {
-  mutator_needs_mutate_ = true;
 }
 
 }  // namespace cc
