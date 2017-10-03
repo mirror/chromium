@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ee02d6_83e34f5f",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-03T11:56:59Z",
+      "side": 1,
+      "message": "nix this in favor of base::IgnoreResult (base/bind_helpers.h) down below.",
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7790798_cf001a22",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-03T11:56:59Z",
+      "side": 1,
+      "message": "these functions are exported from C:\\Windows\\System32\\netapi32.dll on my Win10 box. i don\u0027t have any *_function.dll. what is that?",
+      "range": {
+        "startLine": 311,
+        "startChar": 39,
+        "endLine": 311,
+        "endChar": 60
+      },
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "addd74a7_bfde3f47",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-03T11:56:59Z",
+      "side": 1,
+      "message": "ping re my question for this metric -- is this needed? is it better to suffix EnterpriseCheck.IsDomainJoined based on which functions are being used? i suppose it depends on how you plan to slice the data. what do you think?",
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
