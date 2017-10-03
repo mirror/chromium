@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876765af_2a811b9a",
+        "filename": "media/gpu/android/avda_codec_allocator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-03T04:28:34Z",
+      "side": 1,
+      "message": "Out of date? It posts to the allocator thread",
+      "range": {
+        "startLine": 133,
+        "startChar": 36,
+        "endLine": 134,
+        "endChar": 53
+      },
+      "revId": "a42faa39e8998b8f104d895258974965d52512b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d2fc97_ced47043",
+        "filename": "media/gpu/android/avda_codec_allocator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-03T04:28:34Z",
+      "side": 1,
+      "message": "s/new_thread/allocator_thread_/",
+      "range": {
+        "startLine": 348,
+        "startChar": 52,
+        "endLine": 348,
+        "endChar": 65
+      },
+      "revId": "a42faa39e8998b8f104d895258974965d52512b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
