@@ -31,9 +31,10 @@ class PLATFORM_EXPORT WebViewScheduler {
 
   // Creates a new WebFrameScheduler. The caller is responsible for deleting
   // it. All tasks executed by the frame scheduler will be attributed to
-  // |BlameContext|.
+  // |blame_context|.
   virtual std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
-      BlameContext*) = 0;
+      BlameContext* blame_context,
+      bool is_main_frame) = 0;
 
   // Instructs this WebViewScheduler to use virtual time. When virtual time is
   // enabled the system doesn't actually sleep for the delays between tasks

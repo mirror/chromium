@@ -36,7 +36,8 @@ WebFrameSchedulerImpl::ActiveConnectionHandleImpl::
 WebFrameSchedulerImpl::WebFrameSchedulerImpl(
     RendererSchedulerImpl* renderer_scheduler,
     WebViewSchedulerImpl* parent_web_view_scheduler,
-    base::trace_event::BlameContext* blame_context)
+    base::trace_event::BlameContext* blame_context,
+    bool is_main_frame)
     : renderer_scheduler_(renderer_scheduler),
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
@@ -44,6 +45,7 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       page_visible_(true),
       frame_paused_(false),
       cross_origin_(false),
+      is_main_frame_(is_main_frame),
       active_connection_count_(0),
       weak_factory_(this) {}
 
@@ -146,6 +148,10 @@ void WebFrameSchedulerImpl::SetCrossOrigin(bool cross_origin) {
 
 bool WebFrameSchedulerImpl::IsCrossOrigin() const {
   return cross_origin_;
+}
+
+bool WebFrameSchedulerImpl::IsMainFrame() {
+  return is_main_frame_;
 }
 
 RefPtr<blink::WebTaskRunner> WebFrameSchedulerImpl::LoadingTaskRunner() {
@@ -327,6 +333,7 @@ void WebFrameSchedulerImpl::AsValueInto(
   state->SetBoolean("frame_visible", frame_visible_);
   state->SetBoolean("page_visible", page_visible_);
   state->SetBoolean("cross_origin", cross_origin_);
+  state->SetBoolean("is_main_frame", is_main_frame_);
   if (loading_task_queue_) {
     state->SetString("loading_task_queue",
                      trace_helper::PointerToString(loading_task_queue_.get()));

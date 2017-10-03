@@ -36,7 +36,8 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
  public:
   WebFrameSchedulerImpl(RendererSchedulerImpl* renderer_scheduler,
                         WebViewSchedulerImpl* parent_web_view_scheduler,
-                        base::trace_event::BlameContext* blame_context);
+                        base::trace_event::BlameContext* blame_context,
+                        bool is_main_frame);
 
   ~WebFrameSchedulerImpl() override;
 
@@ -50,6 +51,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetPaused(bool frame_paused) override;
   void SetCrossOrigin(bool cross_origin) override;
   bool IsCrossOrigin() const override;
+  bool IsMainFrame() override;
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
   RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
   RefPtr<WebTaskRunner> ThrottleableTaskRunner() override;
@@ -125,6 +127,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   bool page_visible_;
   bool frame_paused_;
   bool cross_origin_;
+  bool is_main_frame_;
   int active_connection_count_;
 
   base::WeakPtrFactory<WebFrameSchedulerImpl> weak_factory_;

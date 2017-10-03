@@ -45,7 +45,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   // WebViewScheduler implementation:
   void SetPageVisible(bool page_visible) override;
   std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
-      BlameContext* blame_context) override;
+      BlameContext* blame_context,
+      bool is_main_frame) override;
   void EnableVirtualTime() override;
   void DisableVirtualTimeForTesting() override;
   bool VirtualTimeAllowedToAdvance() const override;
@@ -62,7 +63,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   virtual void ReportIntervention(const std::string& message);
 
   std::unique_ptr<WebFrameSchedulerImpl> CreateWebFrameSchedulerImpl(
-      base::trace_event::BlameContext* blame_context);
+      base::trace_event::BlameContext* blame_context,
+      bool is_main_frame);
 
   void DidStartLoading(unsigned long identifier);
   void DidStopLoading(unsigned long identifier);

@@ -39,7 +39,7 @@ class WebFrameSchedulerImplTest : public ::testing::Test {
     web_view_scheduler_.reset(
         new WebViewSchedulerImpl(nullptr, nullptr, scheduler_.get(), false));
     web_frame_scheduler_ =
-        web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr);
+        web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr, false);
   }
 
   void TearDown() override {

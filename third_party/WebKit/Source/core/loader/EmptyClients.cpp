@@ -151,7 +151,8 @@ String EmptyChromeClient::AcceptLanguages() {
 }
 
 std::unique_ptr<WebFrameScheduler> EmptyChromeClient::CreateFrameScheduler(
-    BlameContext*) {
+    BlameContext* blame_context,
+    bool is_main_frame) {
   return WTF::MakeUnique<EmptyFrameScheduler>();
 }
 

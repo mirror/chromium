@@ -139,18 +139,21 @@ void WebViewSchedulerImpl::SetPageVisible(bool page_visible) {
 
 std::unique_ptr<WebFrameSchedulerImpl>
 WebViewSchedulerImpl::CreateWebFrameSchedulerImpl(
-    base::trace_event::BlameContext* blame_context) {
+    base::trace_event::BlameContext* blame_context,
+    bool is_main_frame) {
   MaybeInitializeBackgroundCPUTimeBudgetPool();
   std::unique_ptr<WebFrameSchedulerImpl> frame_scheduler(
-      new WebFrameSchedulerImpl(renderer_scheduler_, this, blame_context));
+      new WebFrameSchedulerImpl(renderer_scheduler_, this, blame_context,
+                                is_main_frame));
   frame_scheduler->SetPageVisible(page_visible_);
   frame_schedulers_.insert(frame_scheduler.get());
   return frame_scheduler;
 }
 
 std::unique_ptr<blink::WebFrameScheduler>
-WebViewSchedulerImpl::CreateFrameScheduler(blink::BlameContext* blame_context) {
-  return CreateWebFrameSchedulerImpl(blame_context);
+WebViewSchedulerImpl::CreateFrameScheduler(blink::BlameContext* blame_context,
+                                           bool is_main_frame) {
+  return CreateWebFrameSchedulerImpl(blame_context, is_main_frame);
 }
 
 void WebViewSchedulerImpl::Unregister(WebFrameSchedulerImpl* frame_scheduler) {
