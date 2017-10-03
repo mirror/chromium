@@ -16,6 +16,24 @@
       "revId": "c7c66bf7a4ebe3947cb3a440fb8787e4a54fe4c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00b9c24_37c04a3a",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T17:13:58Z",
+      "side": 1,
+      "message": "Fixed; the symbols are hidden in libblink_core.so, so went via the LayoutObject instead which is cleaner anyway.",
+      "parentUuid": "7a41f682_59493926",
+      "revId": "c7c66bf7a4ebe3947cb3a440fb8787e4a54fe4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
