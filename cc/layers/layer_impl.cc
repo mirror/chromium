@@ -168,7 +168,10 @@ void LayerImpl::PopulateScaledSharedQuadState(viz::SharedQuadState* state,
   scaled_visible_layer_rect.Intersect(gfx::Rect(scaled_bounds));
 
   state->SetAll(scaled_draw_transform, gfx::Rect(scaled_bounds),
-                scaled_visible_layer_rect, draw_properties().clip_rect,
+                scaled_visible_layer_rect,
+                gfx::ScaleToEnclosingRect(draw_properties().clip_rect,
+                                          layer_to_content_scale_x,
+                                          layer_to_content_scale_y),
                 draw_properties().is_clipped, contents_opaque,
                 draw_properties().opacity, SkBlendMode::kSrcOver,
                 GetSortingContextId());

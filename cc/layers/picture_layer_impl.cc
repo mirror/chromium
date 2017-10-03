@@ -210,21 +210,26 @@ void PictureLayerImpl::AppendQuads(viz::RenderPass* render_pass,
   viz::SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
 
+  float device_scale_factor =
+      layer_tree_impl() ? layer_tree_impl()->device_scale_factor() : 1;
+
   if (raster_source_->IsSolidColor()) {
-    PopulateSharedQuadState(shared_quad_state, contents_opaque());
+    float max_contents_scale = device_scale_factor;
+    PopulateScaledSharedQuadState(shared_quad_state, max_contents_scale,
+                                  max_contents_scale, contents_opaque());
 
     AppendDebugBorderQuad(render_pass, gfx::Rect(bounds()), shared_quad_state,
                           append_quads_data);
 
+    gfx::Rect scaled_visible_layer_rect = gfx::ScaleToEnclosedRect(
+        visible_layer_rect(), max_contents_scale, max_contents_scale);
     SolidColorLayerImpl::AppendSolidQuads(
         render_pass, draw_properties().occlusion_in_content_space,
-        shared_quad_state, visible_layer_rect(),
+        shared_quad_state, scaled_visible_layer_rect,
         raster_source_->GetSolidColor(), append_quads_data);
     return;
   }
 
-  float device_scale_factor =
-      layer_tree_impl() ? layer_tree_impl()->device_scale_factor() : 1;
   float max_contents_scale = MaximumTilingContentsScale();
   PopulateScaledSharedQuadState(shared_quad_state, max_contents_scale,
                                 max_contents_scale, contents_opaque());
