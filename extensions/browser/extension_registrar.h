@@ -94,6 +94,10 @@ class ExtensionRegistrar {
 
   // TODO(michaelpg): Add methods for blacklisting and blocking extensions.
 
+  // Deactivates the extension, adding its id to the list of terminated
+  // extensions.
+  void TerminateExtension(const ExtensionId& extension_id);
+
   // Returns true if the extension is enabled (including terminated), or if it
   // is not loaded but isn't explicitly disabled in preferences.
   bool IsExtensionEnabled(const ExtensionId& extension_id) const;
