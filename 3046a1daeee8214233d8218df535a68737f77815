@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6ca37e_c596379d",
+        "filename": "third_party/WebKit/Source/core/workers/AbstractWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-03T05:44:24Z",
+      "side": 1,
+      "message": "HTML spec",
+      "revId": "3046a1daeee8214233d8218df535a68737f77815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4797d89_67eaf434",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-03T05:44:24Z",
+      "side": 1,
+      "message": "\"Implementation\" and \"HTML spec\"\n\nCan the comment explain why this class is called DedicatedWorker even though it\u0027s for the Worker interface? Something like \"Confusingly, the Worker interface is for dedicated workers, so this class is called DedicatedWorker.\"",
+      "revId": "3046a1daeee8214233d8218df535a68737f77815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d020b_aa0077ed",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-03T05:44:24Z",
+      "side": 1,
+      "message": "is something like this worth it? I dunno but it\u0027s hard for me to trace the class hierarchy to find the original function:\n(via AbstractWorker -\u003e EventTargetWithInlineData -\u003e EventTarget)",
+      "revId": "3046a1daeee8214233d8218df535a68737f77815",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
