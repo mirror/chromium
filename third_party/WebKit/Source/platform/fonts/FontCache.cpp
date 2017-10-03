@@ -288,7 +288,7 @@ String FontCache::FirstAvailableOrFirst(const String& families) {
 
 SimpleFontData* FontCache::GetNonRetainedLastResortFallbackFont(
     const FontDescription& font_description) {
-  return GetLastResortFallbackFont(font_description, kDoNotRetain).LeakRef();
+  return LeakRef(GetLastResortFallbackFont(font_description, kDoNotRetain));
 }
 
 void FontCache::ReleaseFontData(const SimpleFontData* font_data) {
