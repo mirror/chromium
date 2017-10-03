@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f33429_9897a887",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T11:48:08Z",
+      "side": 1,
+      "message": "Off-topic: the order of args was reversed. Any reasons? Should we put some comment here (or fix the reversing?).",
+      "range": {
+        "startLine": 1130,
+        "startChar": 44,
+        "endLine": 1130,
+        "endChar": 68
+      },
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcc6c95_680653eb",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T11:48:08Z",
+      "side": 1,
+      "message": "note: the name \"result\" is conflicting (we call the tuple \"result\" to be consistent with other cases). So, renamed to |success| to avoid the conflicting, mostly for the suggestion for the caller to unpack.",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 32
+      },
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
