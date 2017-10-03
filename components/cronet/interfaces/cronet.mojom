@@ -1,0 +1,324 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module cronet.mojom;
+
+// General system support interfaces.
+
+struct Annotation {
+  uint64 value;
+};
+
+interface Buffer {
+  [Sync]
+  capacity() => (int32 capacity);
+
+  [Sync]
+  clear() => (Buffer thisBuffer);
+
+  [Sync]
+  flip() => (Buffer thisBuffer);
+
+  [Sync]
+  limit() => (int32 limit);
+
+  [Sync]
+  setLimit(int32 newLimit) => (Buffer thisBuffer);
+
+  [Sync]
+  position() => (int32 position);
+
+  [Sync]
+  setPosition(int32 newPosition) => (Buffer thisBuffer);
+};
+
+interface CronetException {
+};
+
+interface Runnable {
+  run();
+};
+
+interface Executor {
+  execute(Runnable command);
+};
+
+
+/**
+ * An engine to process CronetUrlRequests, which uses the best HTTP stack
+ * available on the current platform. An instance of this class can be created
+ * using CreateWithParams.
+ */
+interface CronetEngine {
+
+  CreateWithParams(CronetEngineParams params) => (CronetEngine engine);
+
+  /**
+   * Starts NetLog logging to a file. The NetLog will contain events emitted
+   * by all live CronetEngines. The NetLog is useful for debugging.
+   * The file can be viewed using a Chrome browser navigated to
+   * chrome://net-internals/#import
+   * @param fileName the complete file path. It must not be empty. If the file
+   *            exists, it is truncated before starting. If actively logging,
+   *            this method is ignored.
+   * @param logAll {@code true} to include basic events, user cookies,
+   *    credentials and all transferred bytes in the log. This option presents
+   *    a privacy risk, since it exposes the user's credentials, and should
+   *    only be used with the user's consent and in situations where the log
+   *    won't be public.  {@code false} to just include basic events.
+   */
+  StartNetLogToFile(string fileName, bool logAll);
+
+  /**
+   * Stops NetLog logging and flushes file to disk. If a logging session is
+   * not in progress, this call is ignored.
+   */
+  StopNetLog();
+
+  [Sync]
+  GetDefaultUserAgent() => (string default_user_agent);
+
+  /**
+   * Return a human-readable version string of the engine.
+   */
+  [Sync]
+  GetVersionString() => (string version_string);
+};
+
+struct QuicHint {
+  string host;
+  int32 port;
+  int32 alternatePort;
+};
+
+struct PublicKeyPins {
+  string host;
+  array<array<int8>> pinsSha256;
+  bool includeSubdomains;
+};
+
+struct CronetEngineParams {
+  /**
+   * Override of the User-Agent header for all requests. An explicitly
+   * set User-Agent header will override a value set using this param.
+   */
+  string userAgent;
+
+  /**
+   * Directory for HTTP Cache and Prefs Storage. The directory must exist.
+   */
+  string storagePath;
+
+  /**
+   * Whether <a href="https://www.chromium.org/quic">QUIC</a> protocol
+   * is enabled. If QUIC is enabled, then QUIC User Agent Id
+   * containing application name and Cronet version is sent to the server.
+   */
+  bool enableQuic;
+
+  /**
+   * Whether <a href="https://tools.ietf.org/html/rfc7540">HTTP/2</a>
+   * protocol is enabled.
+   */
+  bool enableHttp2;
+
+  /**
+   * Whether <a href="https://tools.ietf.org/html/rfc7932">Brotli</a> compression is
+   * enabled. If enabled, Brotli will be advertised in Accept-Encoding request headers.
+   */
+  bool enableBrotli;
+
+  /**
+   * Enables or disables caching of HTTP data and other information like QUIC
+   * server information.
+   */
+  enum HTTP_CACHE_MODE {
+    /**
+     * Disable HTTP cache. Some data may still be temporarily stored in memory.
+     */
+    DISABLED = 0,
+
+    /**
+     * Enable in-memory HTTP cache, including HTTP data.
+     */
+    IN_MEMORY = 1,
+
+    /**
+     * Enable on-disk cache, excluding HTTP data.
+     * |storagePath| must be set to existing directory.
+     */
+    DISK_NO_HTTP = 2,
+
+    /**
+     * Enable on-disk cache, including HTTP data.
+     * |storagePath| must be set to existing directory.
+     */
+    DISK = 3
+  };
+  HTTP_CACHE_MODE httpCacheMode;
+  /**
+   * Maximum size in bytes used to cache data (advisory and maybe exceeded at
+   * times).
+   */
+  int32 httpCacheMaxSize;
+
+  array<QuicHint> quicHints;
+
+  array<PublicKeyPins> publicKeyPins;
+  bool enablePublicKeyPinningBypassForLocalTrustAnchors;
+};
+
+struct HttpHeader {
+  string name;
+  string value;
+};
+
+struct UrlResponseInfo {
+  /**
+   * The URL the response is for. This is the URL after following
+   * redirects, so it may not be the originally requested URL.
+   */
+  string url;
+
+  /**
+   * The URL chain. The first entry is the originally requested URL;
+   * the following entries are redirects followed.
+   */
+  array<string> urlChain;
+
+  /**
+   * The HTTP status code. When a resource is retrieved from the cache,
+   * whether it was revalidated or not, the original status code is returned.
+   */
+  int32 httpStatusCode;
+
+  /**
+   * The HTTP status text of the status line. For example, if the
+   * request received a "HTTP/1.1 200 OK" response, this method returns "OK".
+   */
+  string httpStatusText;
+
+  /**
+   * Returns an unmodifiable list of response header field and value pairs.
+   * The headers are in the same order they are received over the wire.
+   */
+  array<HttpHeader> allHeadersList;
+
+  /**
+   * True if the response came from the cache, including
+   * requests that were revalidated over the network before being retrieved
+   * from the cache, failed otherwise.
+   */
+  bool wasCached;
+
+  /**
+   * The protocol (for example 'quic/1+spdy/3') negotiated with the server.
+   * An empty string if no protocol was negotiated, the protocol is
+   * not known, or when using plain HTTP or HTTPS.
+   */
+  string negotiatedProtocol;
+
+  /**
+   * The proxy server that was used for the request.
+   */
+  string proxyServer;
+
+  /**
+   * A minimum count of bytes received from the network to process this
+   * request. This count may ignore certain overheads (for example IP and
+   * TCP/UDP framing, SSL handshake and framing, proxy handling). This count is
+   * taken prior to decompression (for example GZIP and Brotli) and includes
+   * headers and data from all redirects.
+   */
+  int64 receivedByteCount;
+};
+
+interface UrlStatusListener {
+  enum Status {
+    INVALID = -1,
+    IDLE = 0,
+    WAITING_FOR_STALLED_SOCKET_POOL = 1,
+    WAITING_FOR_AVAILABLE_SOCKET = 2,
+    WAITING_FOR_DELEGATE = 3,
+  };
+
+  OnStatus(Status status);
+};
+
+interface UrlRequestCallback {
+  onRedirectReceived(UrlRequest request, UrlResponseInfo info, string newLocationUrl);
+
+  onResponseStarted(UrlRequest request, UrlResponseInfo info);
+
+  onReadCompleted(UrlRequest request, UrlResponseInfo info, Buffer buffer);
+
+  onSucceeded(UrlRequest request, UrlResponseInfo info);
+
+  onFailed(UrlRequest request, UrlResponseInfo info, CronetException error);
+
+  onCanceled(UrlRequest request, UrlResponseInfo info);
+};
+
+interface UploadDataSink {
+  onReadSucceeded(bool finalChunk);
+
+  onReadError(CronetException error);
+
+  onRewindSucceded();
+
+  onRewindError(CronetException error);
+};
+
+interface UploadDataProvider {
+  [Sync]
+  getLength() => (int64 length);
+
+  read(UploadDataSink uploadDataSink, Buffer buffer);
+
+  rewind(UploadDataSink uploadDataSink);
+
+  close();
+};
+
+interface UrlRequest {
+
+  CreateWithParams(CronetEngine engine,
+                   UrlRequestParams params,
+                   UrlRequestCallback callback,
+                   Executor executor) => (UrlRequest request);
+  start();
+
+  followRedirect();
+
+  read(Buffer buffer);
+
+  cancel();
+
+  [Sync]
+  isDone() => (bool done);
+
+  getStatus(UrlStatusListener listener);
+
+  Destroy();
+};
+
+struct UrlRequestParams {
+  enum REQUEST_PRIORITY {
+    REQUEST_PRIORITY_IDLE = 0,
+    REQUEST_PRIORITY_LOWEST = 1,
+    REQUEST_PRIORITY_LOW = 2,
+    REQUEST_PRIORITY_MEDIUM = 3,
+    REQUEST_PRIORITY_HIGHEST = 4,
+  };
+
+  string url;
+  string httpMethod;
+  array<HttpHeader> requestHeaders;
+  bool disableCache;
+  REQUEST_PRIORITY priority;
+  UploadDataProvider uploadDataProvider;
+  Executor uploadDataProviderExecutor;
+  bool allowDirectExecutor;
+  Annotation annotation;
+};
