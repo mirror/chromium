@@ -18,7 +18,7 @@ namespace content {
 
 namespace {
 
-bool InitializeSandbox(int sandbox_type,
+bool InitializeSandbox(service_manager::SandboxType sandbox_type,
                        const base::FilePath& allowed_dir,
                        base::OnceClosure hook) {
   // Warm up APIs before turning on the sandbox.
