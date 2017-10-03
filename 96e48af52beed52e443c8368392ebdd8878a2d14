@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5decad94_4de3aa49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T15:24:34Z",
+      "side": 0,
+      "message": "I had a idea spurred from investigations to grow the toolbar when the sheet is opened.\n\nWhat if we made mBottomSheetContentContainer\u0027s height parentHeight + bottomNavHeight instead of MATCH_PARENT? I think that would allow us to add padding to the bottom of the contentView rather than internal elements of the contentView.\n\nIt\u0027d look something like this\n\n _________________  \n| (       ) [ ] : |\n|-----------------|\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|                 |\n|_________________|\n|_________________|   \u003c--- bottom nav\n|/////////////////|   \u003c--- off screen, part of content container height\n\n\nWe could set the height in this method, e.g. mBottomSheetContentContainer.getLayoutParams().height \u003d bottom - top + getBottomNavHeight();",
+      "range": {
+        "startLine": 701,
+        "startChar": 16,
+        "endLine": 701,
+        "endChar": 20
+      },
+      "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
