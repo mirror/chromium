@@ -26,7 +26,7 @@ TEST(RefPtrTest, LeakRef) {
   EXPECT_TRUE(string);
   EXPECT_TRUE(string->HasOneRef());
   StringImpl* raw = string.get();
-  StringImpl* leaked = string.LeakRef();
+  StringImpl* leaked = LeakRef(std::move(string));
   EXPECT_TRUE(!string);
   EXPECT_TRUE(leaked);
   EXPECT_TRUE(leaked->HasOneRef());

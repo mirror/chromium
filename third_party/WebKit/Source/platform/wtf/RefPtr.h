@@ -38,6 +38,9 @@ class RefPtr;
 template <typename T>
 RefPtr<T> AdoptRef(T*);
 
+template <typename T>
+T* LeakRef(RefPtr<T>) WARN_UNUSED_RESULT;
+
 // requireAdoption() is not overloaded for WTF::RefCounted, which has a built-in
 // assumption that adoption is required. requireAdoption() is for bootstrapping
 // alternate reference count classes that are compatible with RefPtr
@@ -79,12 +82,11 @@ class RefPtr {
   RefPtr(RefPtr&& o) : ptr_(o.ptr_) { o.ptr_ = nullptr; }
   template <typename U>
   RefPtr(RefPtr<U>&& o, EnsurePtrConvertibleArgDecl(U, T))
-      : ptr_(o.LeakRef()) {}
+      : ptr_(LeakRef(std::move(o))) {}
 
   ALWAYS_INLINE ~RefPtr() { DerefIfNotNull(ptr_); }
 
   ALWAYS_INLINE T* get() const { return ptr_; }
-  T* LeakRef() WARN_UNUSED_RESULT;
 
   T& operator*() const { return *ptr_; }
   ALWAYS_INLINE T* operator->() const { return ptr_; }
@@ -110,19 +112,14 @@ class RefPtr {
 
  private:
   friend RefPtr AdoptRef<T>(T*);
+  template <typename U>
+  friend U* LeakRef(RefPtr<U>);
 
   enum AdoptRefTag { kAdoptRef };
   RefPtr(T* ptr, AdoptRefTag) : ptr_(ptr) {}
 
   T* ptr_;
 };
-
-template <typename T>
-inline T* RefPtr<T>::LeakRef() {
-  T* ptr = ptr_;
-  ptr_ = nullptr;
-  return ptr;
-}
 
 template <typename T>
 template <typename U>
@@ -222,6 +219,13 @@ RefPtr<T> AdoptRef(T* p) {
 template <typename T>
 RefPtr<T> WrapRefPtr(T* ptr) {
   return RefPtr<T>(ptr);
+}
+
+template <typename T>
+T* LeakRef(RefPtr<T> ref) {
+  T* ptr = ref.ptr_;
+  ref.ptr_ = nullptr;
+  return ptr;
 }
 
 }  // namespace WTF

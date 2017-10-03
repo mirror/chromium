@@ -38,7 +38,7 @@ void WebAudioBus::Initialize(unsigned number_of_channels,
   if (private_)
     private_->Release();
 
-  private_ = audio_bus.LeakRef();
+  private_ = LeakRef(std::move(audio_bus));
 }
 
 void WebAudioBus::ResizeSmaller(size_t new_length) {
