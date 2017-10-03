@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40da90a1_bfd59190",
+        "filename": "base/android/javatests/src/org/chromium/base/CommandLineInitUtilTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-03T08:30:51Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning behind this change? I know that this class will appear in content_shell_test_apk, but I\u0027d think that initializing the command line here would mean that the test below would still pass...",
+      "revId": "5f816303bc4448ee2809dd1386bebc99445ac734",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
