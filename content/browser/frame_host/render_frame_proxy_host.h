@@ -18,6 +18,14 @@
 struct FrameHostMsg_OpenURL_Params;
 struct FrameMsg_PostMessage_Params;
 
+namespace blink {
+struct WebRemoteScrollProperties;
+}
+
+namespace gfx {
+class Rect;
+}
+
 namespace content {
 
 class CrossProcessFrameConnector;
@@ -106,6 +114,14 @@ class RenderFrameProxyHost
   // called to replicate the focused frame when a frame in a different process
   // becomes focused.
   void SetFocusedFrame();
+
+  // Asks the parent process to scroll |rect_to_scroll| into view. This is in
+  // response to a scroll into visible started in the remote process and will
+  // trigger a similar recursive scrolling in the parent process which starts
+  // with remote frame's owner element. The coordinates of  the rectangle are
+  // absolute in side the remote process (transforms removed).
+  void ScrollRectToVisible(const gfx::Rect& rect_to_scroll,
+                           const blink::WebRemoteScrollProperties properties);
 
   void set_render_frame_proxy_created(bool created) {
     render_frame_proxy_created_ = created;

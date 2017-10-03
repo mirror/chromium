@@ -645,6 +645,7 @@ component("platform") {
     "exported/WebRTCStatsRequest.cpp",
     "exported/WebRTCStatsResponse.cpp",
     "exported/WebRTCVoidRequest.cpp",
+    "exported/WebRemoteScrollProperties.cpp",
     "exported/WebRuntimeFeatures.cpp",
     "exported/WebScrollbarImpl.cpp",
     "exported/WebScrollbarImpl.h",
