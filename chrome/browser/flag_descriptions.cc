@@ -1410,6 +1410,10 @@ const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =
     "Enables the new ddljson API to fetch Doodles for the NTP.";
 
+const char kUseModernMediaControlsName[] = "New Media Controls";
+const char kUseModernMediaControlsDescription[] =
+    "Enables the new style native media controls.";
+
 const char kUserConsentForExtensionScriptsName[] =
     "User consent for extension scripts";
 const char kUserConsentForExtensionScriptsDescription[] =
