@@ -94,7 +94,7 @@ class CC_EXPORT LayerTreeSettings {
 
   bool enable_color_correct_rasterization = true;
 
-  bool enable_mask_tiling = false;
+  bool enable_mask_tiling = true;
 
   // If set to true, the compositor may selectively defer image decodes to the
   // Image Decode Service and raster tiles without images until the decode is
