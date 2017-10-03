@@ -22,6 +22,30 @@
       "revId": "573e9f77c279c060e7fab0d79d80f961067751ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "979ef868_164d3635",
+        "filename": "ash/public/cpp/stylus_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T01:12:50Z",
+      "side": 1,
+      "message": "Yes, this should be a named constant.",
+      "parentUuid": "0fcd9cd4_619c1e46",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "573e9f77c279c060e7fab0d79d80f961067751ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
