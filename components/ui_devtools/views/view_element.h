@@ -29,6 +29,7 @@ class ViewElement : public views::ViewObserver, public UIElement {
   void OnChildViewAdded(views::View* parent, views::View* view) override;
   void OnChildViewReordered(views::View* parent, views::View*) override;
   void OnViewBoundsChanged(views::View* view) override;
+  void OnViewIsDeleting(views::View* observed_view) override;
 
   // UIElement:
   std::vector<std::pair<std::string, std::string>> GetCustomAttributes()
