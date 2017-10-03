@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a1bcaf_b9db297e",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-03T15:53:23Z",
+      "side": 1,
+      "message": "newField?",
+      "range": {
+        "startLine": 336,
+        "startChar": 30,
+        "endLine": 336,
+        "endChar": 38
+      },
+      "revId": "795b2fe558160a7118c6006c8f4655b954aa4941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30699dd7_8e775e0a",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-03T15:53:23Z",
+      "side": 1,
+      "message": "ditto (and below)?",
+      "range": {
+        "startLine": 342,
+        "startChar": 21,
+        "endLine": 342,
+        "endChar": 29
+      },
+      "revId": "795b2fe558160a7118c6006c8f4655b954aa4941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
