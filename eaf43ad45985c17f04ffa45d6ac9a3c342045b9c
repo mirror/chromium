@@ -118,6 +118,30 @@
       "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45589cf_48bc2b68",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T02:50:32Z",
+      "side": 0,
+      "message": "To be clear, the on-screen image is drawn multiple times via GenerateMaskedSmallIcon(), with a different color passed each time the function is called. So, the notification must store a color-agnostic version of the icon so that this function can be called.\n\nhttps://cs.chromium.org/chromium/src/ui/message_center/notification.h?q\u003dGenerateMaskedSmallIcon",
+      "parentUuid": "803a50f3_07f3be7d",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
