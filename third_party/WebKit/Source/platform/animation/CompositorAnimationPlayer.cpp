@@ -8,13 +8,25 @@
 #include "cc/animation/animation_timeline.h"
 #include "platform/animation/CompositorAnimation.h"
 #include "platform/animation/CompositorAnimationDelegate.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
+std::unique_ptr<CompositorAnimationPlayer>
+CompositorAnimationPlayer::CreateWorkletPlayer(const String& name) {
+  return WTF::WrapUnique(
+      new CompositorAnimationPlayer(cc::WorkletAnimationPlayer::Create(
+          cc::AnimationIdProvider::NextPlayerId(),
+          std::string(name.Ascii().data(), name.length()))));
+}
+
 CompositorAnimationPlayer::CompositorAnimationPlayer()
-    : animation_player_(
-          cc::AnimationPlayer::Create(cc::AnimationIdProvider::NextPlayerId())),
-      delegate_() {}
+    : CompositorAnimationPlayer(cc::AnimationPlayer::Create(
+          cc::AnimationIdProvider::NextPlayerId())) {}
+
+CompositorAnimationPlayer::CompositorAnimationPlayer(
+    scoped_refptr<cc::AnimationPlayer> player)
+    : animation_player_(player), delegate_() {}
 
 CompositorAnimationPlayer::~CompositorAnimationPlayer() {
   SetAnimationDelegate(nullptr);

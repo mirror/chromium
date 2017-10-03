@@ -187,7 +187,6 @@ void AnimationHost::SetNeedsPushProperties() {
 
 void AnimationHost::PushPropertiesTo(MutatorHost* mutator_host_impl) {
   auto* host_impl = static_cast<AnimationHost*>(mutator_host_impl);
-
   if (needs_push_properties_) {
     needs_push_properties_ = false;
     PushTimelinesToImplThread(host_impl);

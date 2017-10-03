@@ -10,6 +10,8 @@
 
 namespace blink {
 
+class Document;
+
 class CORE_EXPORT WorkletAnimationBase
     : public GarbageCollectedFinalized<WorkletAnimationBase> {
  public:
@@ -22,6 +24,8 @@ class CORE_EXPORT WorkletAnimationBase
   // compositor later (e.g. if an incompatible property is removed from the
   // element), so the caller should try again next main frame.
   virtual bool StartOnCompositor() = 0;
+
+  virtual Document* GetDocument() const = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 };

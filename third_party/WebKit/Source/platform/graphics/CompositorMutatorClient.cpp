@@ -43,6 +43,9 @@ void CompositorMutatorClient::Mutate(
 void CompositorMutatorClient::SetClient(cc::LayerTreeMutatorClient* client) {
   TRACE_EVENT0("compositor-worker", "CompositorMutatorClient::SetClient");
   client_ = client;
+  // TODO(majidvp): For AnimationWorklet we don't need to schedule a mutate
+  // call immediately. Perhaps wait until at least one worklet animation is
+  // started.
   SetNeedsMutate();
 }
 
