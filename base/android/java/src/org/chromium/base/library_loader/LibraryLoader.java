@@ -393,7 +393,6 @@ public class LibraryLoader {
         if (mCommandLineSwitched) {
             return;
         }
-        nativeInitCommandLine(CommandLine.getJavaSwitchesOrNull());
         CommandLine.enableNativeProxy();
         mCommandLineSwitched = true;
     }
@@ -498,7 +497,7 @@ public class LibraryLoader {
         sInstance = loader;
     }
 
-    private native void nativeInitCommandLine(String[] initCommandLine);
+    public static native void nativeInitCommandLine(String[] initCommandLine);  // XXX
 
     // Only methods needed before or during normal JNI registration are during System.OnLoad.
     // nativeLibraryLoaded is then called to register everything else.  This process is called

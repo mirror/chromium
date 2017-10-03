@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.chromium.base.annotations.MainDex;
+import org.chromium.base.library_loader.LibraryLoader;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -216,7 +217,7 @@ public abstract class CommandLine {
         // Make a best-effort to ensure we make a clean (atomic) switch over from the old to
         // the new command line implementation. If another thread is modifying the command line
         // when this happens, all bets are off. (As per the native CommandLine).
-        sCommandLine.set(new NativeCommandLine());
+        sCommandLine.set(new NativeCommandLine(getJavaSwitchesOrNull()));
     }
 
     public static String[] getJavaSwitchesOrNull() {
@@ -230,10 +231,15 @@ public abstract class CommandLine {
 
     private static void setInstance(CommandLine commandLine) {
         CommandLine oldCommandLine = sCommandLine.getAndSet(commandLine);
-        if (oldCommandLine != null && oldCommandLine.isNativeImplementation()) {
-            nativeReset();
+        if (oldCommandLine != null) {
+            oldCommandLine.destroy();
         }
     }
+
+    /**
+     *
+     */
+    protected void destroy() {}
 
     /**
      * @param fileName the file to read in.
@@ -370,6 +376,12 @@ public abstract class CommandLine {
     }
 
     private static class NativeCommandLine extends CommandLine {
+        private final Throwable mSource = new Throwable();
+
+        public NativeCommandLine(String[] args) {
+            LibraryLoader.nativeInitCommandLine(args);
+        }
+
         @Override
         public boolean hasSwitch(String switchString) {
             return nativeHasSwitch(switchString);
@@ -398,6 +410,12 @@ public abstract class CommandLine {
         @Override
         public boolean isNativeImplementation() {
             return true;
+        }
+
+        @Override
+        protected void destroy() {
+            nativeReset();
+            throw new RuntimeException("native has been started!", mSource);
         }
     }
 

@@ -167,7 +167,7 @@ void SetLibraryLoadedHook(LibraryLoadedHook* func) {
 
 static void InitCommandLine(
     JNIEnv* env,
-    const JavaParamRef<jobject>& jcaller,
+    const JavaParamRef<jclass>& jclazz,
     const JavaParamRef<jobjectArray>& init_command_line) {
   InitNativeCommandLineFromJavaArray(env, init_command_line);
 }
