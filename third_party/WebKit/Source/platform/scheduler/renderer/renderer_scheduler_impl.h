@@ -152,6 +152,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
   scoped_refptr<MainThreadTaskQueue> LoadingTaskQueue();
   scoped_refptr<MainThreadTaskQueue> TimerTaskQueue();
+  scoped_refptr<MainThreadTaskQueue> V8TaskQueue();
 
   // Returns a new task queue created with given params.
   scoped_refptr<MainThreadTaskQueue> NewTaskQueue(
@@ -165,6 +166,10 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   // Returns a new timer task queue. This queue is intended for DOM Timers.
   scoped_refptr<MainThreadTaskQueue> NewTimerTaskQueue(
+      MainThreadTaskQueue::QueueType queue_type);
+
+  // Returns a new timer task queue. This queue is intended for V8.
+  scoped_refptr<MainThreadTaskQueue> NewV8TaskQueue(
       MainThreadTaskQueue::QueueType queue_type);
 
   // Returns a task queue where tasks run at the highest possible priority.
@@ -535,6 +540,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   scoped_refptr<MainThreadTaskQueue> default_loading_task_queue_;
   scoped_refptr<MainThreadTaskQueue> default_timer_task_queue_;
+  scoped_refptr<MainThreadTaskQueue> v8_task_queue_;
 
   // Note |virtual_time_domain_| is lazily created.
   std::unique_ptr<AutoAdvancingVirtualTimeDomain> virtual_time_domain_;

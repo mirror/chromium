@@ -121,6 +121,7 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
+  v8_task_queue_ = NewV8TaskQueue(MainThreadTaskQueue::QueueType::V8);
 
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
@@ -297,6 +298,11 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
   return default_timer_task_queue_;
 }
 
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::V8TaskQueue() {
+  helper_.CheckOnValidThread();
+  return v8_task_queue_;
+}
+
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::ControlTaskQueue() {
   helper_.CheckOnValidThread();
   return helper_.ControlMainThreadTaskQueue();
@@ -366,6 +372,20 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
                           .SetCanBeStopped(true)
                           .SetCanBeDeferred(true)
                           .SetCanBeThrottled(true));
+}
+
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewV8TaskQueue(
+    MainThreadTaskQueue::QueueType queue_type) {
+  DCHECK_EQ(MainThreadTaskQueue::QueueClassForQueueType(queue_type),
+            MainThreadTaskQueue::QueueClass::LOADING);
+  return NewTaskQueue(
+      MainThreadTaskQueue::QueueCreationParams(queue_type)
+          .SetCanBePaused(true)
+          .SetCanBeStopped(true)
+          .SetCanBeDeferred(true)
+          .SetUsedForControlTasks(
+              queue_type ==
+              MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL));
 }
 
 std::unique_ptr<RenderWidgetSchedulingState>

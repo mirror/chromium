@@ -42,6 +42,8 @@ const char* MainThreadTaskQueue::NameForQueueType(
       return "test_tq";
     case MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL:
       return "frame_loading_control_tq";
+    case MainThreadTaskQueue::QueueType::V8:
+      return "v8";
     case MainThreadTaskQueue::QueueType::COUNT:
       NOTREACHED();
       return nullptr;
@@ -61,6 +63,7 @@ MainThreadTaskQueue::QueueClass MainThreadTaskQueue::QueueClassForQueueType(
     case QueueType::DEFAULT_LOADING:
     case QueueType::FRAME_LOADING:
     case QueueType::FRAME_LOADING_CONTROL:
+    case QueueType::V8:
       return QueueClass::LOADING;
     case QueueType::DEFAULT_TIMER:
     case QueueType::UNTHROTTLED:
