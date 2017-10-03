@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d721d3fd_c28b898e",
+        "filename": "chromeos/components/tether/ble_synchronizer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T17:23:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1233616_8ee21692",
+      "range": {
+        "startLine": 207,
+        "startChar": 56,
+        "endLine": 207,
+        "endChar": 59
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81115fa6_b364b0ea",
         "filename": "chromeos/components/tether/ble_synchronizer_base.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7276bb56_c63eeaa9",
+        "filename": "chromeos/components/tether/ble_synchronizer_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T17:23:20Z",
+      "side": 1,
+      "message": "No, it is not used correctly. This is better not being a pure virtual method IMO because then the test double would need to implement it.",
+      "parentUuid": "81115fa6_b364b0ea",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58500a5e_487d1286",
         "filename": "chromeos/components/tether/ble_synchronizer_base.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-03T16:58:50Z",
       "side": 1,
       "message": "Why did you choose the BleSynchronizerBase and BleSynchronizer naming scheme, instead of BleSynchronizer and BleSynchronizerImpl?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d8ae49_c9a8065b",
+        "filename": "chromeos/components/tether/ble_synchronizer_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T17:23:20Z",
+      "side": 1,
+      "message": "We use the Foo \u0026 FooImpl naming scheme when Foo is a pure virtual class. BleSynchronizerBase is not a pure virtual class - the majority of the implementation is here. This is a common convention across Chromium.",
+      "parentUuid": "58500a5e_487d1286",
       "range": {
         "startLine": 25,
         "startChar": 6,
