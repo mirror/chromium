@@ -16,6 +16,24 @@
       "revId": "04f7c7aaa1d568391a8495da6ca78c0542e67dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7625231_1a9c872d",
+        "filename": "chrome/browser/chromeos/system/tray_accessibility_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-03T21:10:34Z",
+      "side": 1,
+      "message": "They are needed for OnViewClicked(view).",
+      "parentUuid": "27db062b_ccc90cb0",
+      "revId": "04f7c7aaa1d568391a8495da6ca78c0542e67dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
