@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2d539fe_e8594a35",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-03T07:02:17Z",
+      "side": 1,
+      "message": "I am returning a std::unique_ptr\u003c\u003e because the std::string is potentially several KB. It is natural to pass around std::unique_ptr\u003c\u003e without copies (but not really natural to do so with std::strings)",
+      "parentUuid": "38ce8215_b9858e84",
+      "revId": "f8be78ea58394c4a3d22062db52101d10b76be7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a056e17d_814468ee",
         "filename": "chrome/browser/android/webapk/webapk_installer.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-25T21:45:50Z",
       "side": 1,
       "message": "Optional: DCHECK(serialized_size \u003d\u003d serialized_proto.size()) since we\u0027re assuming they\u0027ll be the same when we write it to disk, but we don\u0027t have access to the proto there?",
+      "revId": "f8be78ea58394c4a3d22062db52101d10b76be7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f9827b_0ca8ea7f",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-03T07:02:17Z",
+      "side": 1,
+      "message": "It looks like SerializeToString() resizes the std::string for us already. Removing line 184 :)",
+      "parentUuid": "a056e17d_814468ee",
       "revId": "f8be78ea58394c4a3d22062db52101d10b76be7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
