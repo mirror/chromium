@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39f75258_0e2abb70",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-03T05:04:27Z",
+      "side": 1,
+      "message": "Nit: The formatting here seems a little off - could you please check what ClangFormat would do to regular C++ here, and do that?",
+      "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6f0962_dfc5afe5",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-03T05:04:27Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right - you\u0027ve introduced a circular path between CSSPropertyAPIs and CSSProperty. Is there a way to do it that doesn\u0027t require calling into CSSProperty again from CSSPropertyAPI? Is this a case where it might make sense to move ResolvePhysicalProperty to a CSSPropertyAPI helper or base class?",
+      "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
