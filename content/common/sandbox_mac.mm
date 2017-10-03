@@ -76,6 +76,8 @@ SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
     {service_manager::SANDBOX_TYPE_NETWORK, nullptr},
     {service_manager::SANDBOX_TYPE_CDM,
      service_manager::kSeatbeltPolicyString_ppapi},
+    {service_manager::SANDBOX_TYPE_CDM,
+     service_manager::kSeatbeltPolicyString_nacl_loader},
 };
 
 static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) ==
@@ -195,7 +197,6 @@ void Sandbox::SandboxWarmup(int sandbox_type) {
 std::string LoadSandboxTemplate(int sandbox_type) {
   // We use a custom sandbox definition to lock things down as tightly as
   // possible.
-  base::StringPiece sandbox_definition;
   auto* it = std::find_if(
       std::begin(kDefaultSandboxTypeToResourceIDMapping),
       std::end(kDefaultSandboxTypeToResourceIDMapping),
@@ -203,23 +204,12 @@ std::string LoadSandboxTemplate(int sandbox_type) {
         return element.sandbox_type == sandbox_type;
       });
 
-  if (it != std::end(kDefaultSandboxTypeToResourceIDMapping)) {
-    sandbox_definition = it->seatbelt_policy_string;
-  } else {
-    // Check if the embedder knows about this sandbox process type.
-    const char* result_string;
-    bool sandbox_type_found =
-        GetContentClient()->GetSandboxProfileForSandboxType(sandbox_type,
-                                                            &result_string);
-    CHECK(sandbox_type_found) << "Unknown sandbox type " << sandbox_type;
-    sandbox_definition = result_string;
-  }
-
-  base::StringPiece common_sandbox_definition =
-      service_manager::kSeatbeltPolicyString_common;
+  CHECK(it != std::end(kDefaultSandboxTypeToResourceIDMapping))
+      << "Unknown sandbox type " << sandbox_type;
+  base::StringPiece sandbox_definition = it->seatbelt_policy_string;
 
   // Prefix sandbox_data with common_sandbox_prefix_data.
-  std::string sandbox_profile = common_sandbox_definition.as_string();
+  std::string sandbox_profile = service_manager::kSeatbeltPolicyString_common;
   sandbox_definition.AppendToString(&sandbox_profile);
   return sandbox_profile;
 }
