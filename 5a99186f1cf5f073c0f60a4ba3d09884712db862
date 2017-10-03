@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "9947faaa_c46f4388",
+        "filename": "android_webview/browser/tracing/aw_tracing_delegate.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T18:18:52Z",
+      "side": 1,
+      "message": "don\u0027t need to repeat things from header",
+      "revId": "5a99186f1cf5f073c0f60a4ba3d09884712db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909d0375_0af507d4",
+        "filename": "android_webview/browser/tracing/aw_tracing_delegate.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T18:18:52Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "5a99186f1cf5f073c0f60a4ba3d09884712db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fddc97b_4fe79261",
+        "filename": "android_webview/browser/tracing/aw_tracing_delegate.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T18:18:52Z",
+      "side": 1,
+      "message": "don\u0027t need this either, this type is never actually used here",
+      "revId": "5a99186f1cf5f073c0f60a4ba3d09884712db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95915223_f18d0522",
+        "filename": "android_webview/browser/tracing/aw_tracing_delegate.h",
+        "patchSetId": 48
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-03T18:18:52Z",
+      "side": 1,
+      "message": "these shouldn\u0027t be necessary, because the parent class must have forward declared these already?",
+      "revId": "5a99186f1cf5f073c0f60a4ba3d09884712db862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "938721ee_263b2bfc",
         "filename": "components/feedback/tracing_manager.cc",
         "patchSetId": 48
