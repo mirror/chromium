@@ -16,6 +16,29 @@
       "revId": "3b288ade28efbc174b6d13b6924e33f2818c7f58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9146e01d_2f669b3b",
+        "filename": "chrome/browser/download/download_target_determiner.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-03T22:41:34Z",
+      "side": 1,
+      "message": "Does it make sense to } else { here, and remove the DoLoop()/return from the success path?  Then leave the final DoLoop() at the bottom of this method?",
+      "range": {
+        "startLine": 374,
+        "startChar": 2,
+        "endLine": 374,
+        "endChar": 3
+      },
+      "revId": "3b288ade28efbc174b6d13b6924e33f2818c7f58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
