@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "967f34b9_b963c072",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-03T23:04:32Z",
+      "side": 1,
+      "message": "Nit, add period.",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfc85d73_5be151da",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -42,6 +65,23 @@
         "endLine": 129,
         "endChar": 73
       },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40ab191a_8619d4b8",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-03T23:04:32Z",
+      "side": 1,
+      "message": "I think you can just use find(job_state_reasons.begin(), job_state_reasons.end(), reason) instead of doing the whole lambda thing.",
       "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
