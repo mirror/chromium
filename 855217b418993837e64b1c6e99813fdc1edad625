@@ -68,6 +68,24 @@
       "revId": "855217b418993837e64b1c6e99813fdc1edad625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2311168_441ef3d0",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-03T12:44:24Z",
+      "side": 1,
+      "message": "That looks good.",
+      "parentUuid": "1ae4c52a_3a6ed526",
+      "revId": "855217b418993837e64b1c6e99813fdc1edad625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
