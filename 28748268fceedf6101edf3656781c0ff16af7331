@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50433870_1a95f061",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88ef9a82_abf602b3",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb7d48bd_51b81f43",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1f2e90_85fb5618",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7d48bd_51b81f43",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0a5f9a89_9bacea98",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "This call is now moved to an Initialize method, which allow tests to see when initialize has completed.",
+      "parentUuid": "8b550298_ebcd3217",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "597f7179_6db380de",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d1e2e9_ab2a57a4",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done. Used make_tuple since tie() wants lvalues",
+      "parentUuid": "597f7179_6db380de",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ba6403d1_9b55d80b",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Moved the comment inside the if { .. } to be consistent with else",
+      "parentUuid": "9642ca28_05638829",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75afaa70_cd5b9db5",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae01d684_46e977b0",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75afaa70_cd5b9db5",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "36db8d99_b996c4b2",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "This type is generated from the .proto. I peeked at the generated file and found that its a class and doesn\u0027t have a constructor other than the default. No way to generate one AFAIK",
+      "parentUuid": "f23210a2_a902dd2e",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "187df12b_b9534239",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbafd67e_bf6c4560",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187df12b_b9534239",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +322,24 @@
     },
     {
       "key": {
+        "uuid": "b3660dc6_b23bf145",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "ditto on generated",
+      "parentUuid": "e7f6a93c_b49a9484",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8080ae1_d325b304",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -192,6 +354,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edeea23_a3f21f92",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8080ae1_d325b304",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +415,24 @@
     },
     {
       "key": {
+        "uuid": "e724c7bf_e926224b",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40dea65b_0ef587e1",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02bdb3eb_f55664d1",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -249,6 +447,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92de15e_4b67cf2c",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02bdb3eb_f55664d1",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +485,24 @@
     },
     {
       "key": {
+        "uuid": "758594c3_87531fc5",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4db7a5df_a94c0aa1",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61b73f42_c6cc2301",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -283,6 +517,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60435af8_9c93412f",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Thanks, not what I want! Test added",
+      "parentUuid": "61b73f42_c6cc2301",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -303,6 +555,24 @@
     },
     {
       "key": {
+        "uuid": "db27c7b5_3849ae53",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bdd5c26_00cba298",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9f65c09_7e4558c1",
         "filename": "media/mojo/services/media_capabilities_leveldb.h",
         "patchSetId": 2
@@ -317,6 +587,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a163a14f_30852ee9",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Rename to MediaCapabilitiesDatabaseImpl Done. \n\nImpl is separated for test-ability of the VideoDecoderPerfService that fakes the interface.",
+      "parentUuid": "c9f65c09_7e4558c1",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -337,6 +625,24 @@
     },
     {
       "key": {
+        "uuid": "5285dab8_3fde63a1",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Renamed: GetDecodingInfo",
+      "parentUuid": "26669bc7_d4a0e8c1",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5b859b3_904d628e",
         "filename": "media/mojo/services/media_capabilities_leveldb.h",
         "patchSetId": 2
@@ -351,6 +657,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e22ef86_c5a1c372",
+        "filename": "media/mojo/services/media_capabilities_leveldb.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5b859b3_904d628e",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +695,24 @@
     },
     {
       "key": {
+        "uuid": "b7f12430_453b9eed",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9295e2db_3b980b66",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e087daa7_a8a8ccaa",
         "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
         "patchSetId": 2
@@ -388,6 +730,24 @@
     },
     {
       "key": {
+        "uuid": "ed4683d0_d84887d7",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "e087daa7_a8a8ccaa",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "418399ec_8429d84a",
         "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
         "patchSetId": 2
@@ -399,6 +759,24 @@
       "writtenOn": "2017-09-29T19:16:06Z",
       "side": 1,
       "message": "Should take a RunLoop quit closure here instead of relying on RunUntilIdle; calls to RunUntilIdle will just be RunLoop().Run() then. It causes flakiness if any calls are delayed; which very well may happen in the depths of leveldb.",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ab7d5e_a202f815",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Somewhat done. I\u0027m now using run loop and quitting upon receiving callbacks for Initialize (new method, replace ctor), and GetDecodeInfo. But I don\u0027t have a callback to wait on for the AppendEntry(...) API - by design. I\u0027ve attempted to just use RunLoop::RunUntilIdle() in those cases, but for some reason this isn\u0027t cutting it. The subsequent GetDecoderInfo calls fail because AppendEntry\u0027s async tasks haven\u0027t really run to completion. If I add a ScopedTaskEnvironment::RunUntilIdle, the tests again pass. I haven\u0027t written tons of run loop tests, so probably doing something dumb.",
+      "parentUuid": "418399ec_8429d84a",
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -422,6 +800,24 @@
     },
     {
       "key": {
+        "uuid": "33bad931_0341dfe9",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54e816d_a8963b8c",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4832f69b_7fc7eca6",
         "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
         "patchSetId": 2
@@ -439,6 +835,24 @@
     },
     {
       "key": {
+        "uuid": "ca850a49_9a035c5a",
+        "filename": "media/mojo/services/media_capabilities_leveldb_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4832f69b_7fc7eca6",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38eb5dbe_e823ee35",
         "filename": "media/mojo/services/video_decode_perf_history.cc",
         "patchSetId": 2
@@ -453,6 +867,24 @@
       "revId": "28748268fceedf6101edf3656781c0ff16af7331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "540f024d_fa12a8da",
+        "filename": "media/mojo/services/video_decode_perf_history.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T06:30:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38eb5dbe_e823ee35",
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
