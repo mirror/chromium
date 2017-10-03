@@ -174,7 +174,22 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   virtual RefPtr<Image> ImageForDefaultFrame();
 
-  virtual PaintImage PaintImageForCurrentFrame() = 0;
+  enum ImageDecodingMode { kUnspecifiedDecode, kSyncDecode, kAsyncDecode };
+
+  static PaintImage::DecodingMode ToPaintImageDecodingMode(
+      ImageDecodingMode mode) {
+    switch (mode) {
+      case kUnspecifiedDecode:
+        return PaintImage::DecodingMode::kUnspecified;
+      case kSyncDecode:
+        return PaintImage::DecodingMode::kSync;
+      case kAsyncDecode:
+        return PaintImage::DecodingMode::kAsync;
+    }
+    return PaintImage::DecodingMode::kUnspecified;
+  }
+
+  virtual PaintImage PaintImageForCurrentFrame(ImageDecodingMode) = 0;
 
   enum ImageClampingMode {
     kClampImageToSourceRect,
@@ -186,7 +201,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                     const FloatRect& dst_rect,
                     const FloatRect& src_rect,
                     RespectImageOrientationEnum,
-                    ImageClampingMode) = 0;
+                    ImageClampingMode,
+                    ImageDecodingMode) = 0;
 
   virtual bool ApplyShader(PaintFlags&, const SkMatrix& local_matrix);
 

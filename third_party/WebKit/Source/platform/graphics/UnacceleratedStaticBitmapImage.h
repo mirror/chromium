@@ -25,9 +25,10 @@ class PLATFORM_EXPORT UnacceleratedStaticBitmapImage final
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode) override;
+            ImageClampingMode,
+            ImageDecodingMode) override;
 
-  PaintImage PaintImageForCurrentFrame() override;
+  PaintImage PaintImageForCurrentFrame(ImageDecodingMode) override;
 
  private:
   UnacceleratedStaticBitmapImage(sk_sp<SkImage>);

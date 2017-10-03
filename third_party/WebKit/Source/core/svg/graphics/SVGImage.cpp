@@ -315,10 +315,11 @@ void SVGImage::DrawForContainer(PaintCanvas* canvas,
   });
 }
 
-PaintImage SVGImage::PaintImageForCurrentFrame() {
+PaintImage SVGImage::PaintImageForCurrentFrame(ImageDecodingMode mode) {
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
-  builder.set_completion_state(completion_state());
+  builder.set_completion_state(completion_state())
+      .set_decoding_mode(ToPaintImageDecodingMode(mode));
   PopulatePaintRecordForCurrentFrameForContainer(builder, NullURL(), Size());
   return builder.TakePaintImage();
 }
@@ -467,7 +468,8 @@ void SVGImage::Draw(
     const FloatRect& dst_rect,
     const FloatRect& src_rect,
     RespectImageOrientationEnum should_respect_image_orientation,
-    ImageClampingMode clamp_mode) {
+    ImageClampingMode clamp_mode,
+    ImageDecodingMode decode_mode) {
   if (!page_)
     return;
 
