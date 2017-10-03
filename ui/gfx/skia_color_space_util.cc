@@ -106,6 +106,26 @@ bool SkTransferFnGaussNewtonStepNonlinear(SkColorSpaceTransferFn* fn,
   // fA should always be positive.
   fn->fA = std::max(fn->fA, 0.f);
 
+  // Recalculate fD and fC so that the linear segment
+  // is a tangent to the non-linear curve and the cut
+  // point is where the lines meet.
+  float minD = 0.f;
+  float maxD = 0.5f;
+  fn->fD = 0.f;
+  for (int i = 0; i < 10; i++) {
+    float mid = (minD + maxD) / 2.f;
+    float value = SkTransferFnEval(*fn, mid);
+    float slope = fn->fA * fn->fG * pow(fn->fA * mid + fn->fB, fn->fG - 1.f);
+    // Check where the tangent hits x=0
+    if (value - slope * mid > 0) {
+      minD = mid;
+    } else {
+      maxD = mid;
+    }
+  }
+  fn->fD = (minD + maxD) / 2;
+  fn->fC = fn->fA * fn->fG * pow(fn->fA * fn->fD + fn->fB, fn->fG - 1.f);
+
   // Ensure that fn be defined at fD.
   if (fn->fA * fn->fD + fn->fB < 0.f)
     fn->fB = -fn->fA * fn->fD;
@@ -113,10 +133,10 @@ bool SkTransferFnGaussNewtonStepNonlinear(SkColorSpaceTransferFn* fn,
   // Compute the Linfinity error.
   *error_Linfty_after = 0;
   for (size_t i = 0; i < n; ++i) {
-    if (x[i] >= fn->fD) {
-      float error = std::abs(t[i] - SkTransferFnEval(*fn, x[i]));
-      *error_Linfty_after = std::max(error, *error_Linfty_after);
-    }
+    float error = std::abs(t[i] - SkTransferFnEval(*fn, x[i]));
+    float weight = sqrt(x[i]);
+    error *= weight;
+    *error_Linfty_after = std::max(error, *error_Linfty_after);
   }
 
   return true;
@@ -154,17 +174,6 @@ bool SkTransferFnSolveNonlinear(SkColorSpaceTransferFn* fn,
       // region of convergence.
       if (step_error[step] > 1.f && step_error[step - 1] > 1.f)
         return false;
-
-      // If our error didn't change by ~1%, assume we've converged as much as we
-      // are going to.
-      const float kEarlyOutByPercentChangeThreshold = 32.f / 256.f;
-      const float kMinimumPercentChange = 1.f / 128.f;
-      float percent_change =
-          std::abs(step_error[step] - step_error[step - 1]) / step_error[step];
-      if (percent_change < kMinimumPercentChange &&
-          step_error[step] < kEarlyOutByPercentChangeThreshold) {
-        break;
-      }
     }
     if (step == kNumSteps - 1)
       break;
@@ -221,73 +230,6 @@ bool SkApproximateTransferFnInternal(const float* x,
   if (!nonlinear_fit_converged)
     return false;
 
-  // Now walk back fD from our initial guess to the point where our nonlinear
-  // fit no longer fits (or all the way to 0 if it fits).
-  {
-    // Find the L-infinity error of this nonlinear fit (using our old fD value).
-    float max_error_in_nonlinear_fit = 0;
-    for (size_t i = 0; i < n; ++i) {
-      if (x[i] < fn->fD)
-        continue;
-      float error_at_xi = std::abs(t[i] - SkTransferFnEval(*fn, x[i]));
-      max_error_in_nonlinear_fit =
-          std::max(max_error_in_nonlinear_fit, error_at_xi);
-    }
-
-    // Now find the maximum x value where this nonlinear fit is no longer
-    // accurate, no longer defined, or no longer nonnegative.
-    fn->fD = 0.f;
-    float max_x_where_nonlinear_does_not_fit = -1.f;
-    for (size_t i = 0; i < n; ++i) {
-      if (x[i] >= kLinearSegmentMaximum)
-        continue;
-
-      // The nonlinear segment is only undefined when fA * x + fB is
-      // nonnegative.
-      float fn_at_xi = -1;
-      if (fn->fA * x[i] + fn->fB >= 0)
-        fn_at_xi = SkTransferFnEvalUnclamped(*fn, x[i]);
-
-      // If the value is negative (or undefined), say that the fit was bad.
-      bool nonlinear_fits_xi = true;
-      if (fn_at_xi < 0)
-        nonlinear_fits_xi = false;
-
-      // Compute the error, and define "no longer accurate" as "has more than
-      // 10% more error than the maximum error in the fit segment".
-      if (nonlinear_fits_xi) {
-        float error_at_xi = std::abs(t[i] - fn_at_xi);
-        if (error_at_xi > 1.1f * max_error_in_nonlinear_fit)
-          nonlinear_fits_xi = false;
-      }
-
-      if (!nonlinear_fits_xi) {
-        max_x_where_nonlinear_does_not_fit =
-            std::max(max_x_where_nonlinear_does_not_fit, x[i]);
-      }
-    }
-
-    // Now let fD be the highest sample of x that is above the threshold where
-    // the nonlinear segment does not fit.
-    fn->fD = 1.f;
-    for (size_t i = 0; i < n; ++i) {
-      if (x[i] > max_x_where_nonlinear_does_not_fit)
-        fn->fD = std::min(fn->fD, x[i]);
-    }
-  }
-
-  // Compute the linear segment, now that we have our definitive fD.
-  if (fn->fD <= 0) {
-    // If this has no linear segment, don't try to solve for one.
-    fn->fC = 1;
-    fn->fF = 0;
-  } else {
-    // Set the linear portion such that it go through the origin and be
-    // continuous with the nonlinear segment.
-    float fn_at_fD = SkTransferFnEval(*fn, fn->fD);
-    fn->fC = fn_at_fD / fn->fD;
-    fn->fF = 0;
-  }
   return true;
 }
 
