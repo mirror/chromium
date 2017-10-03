@@ -5,7 +5,9 @@
 #import "ios/chrome/browser/ui/main/main_view_controller.h"
 
 #import "base/logging.h"
+#import "ios/chrome/browser/ui/browser_view_controller.h"
 #include "ios/chrome/browser/ui/main/main_feature_flags.h"
+#import "ios/chrome/browser/ui/tab_switcher/tab_switcher.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -15,7 +17,13 @@
 
 - (UIViewController*)activeViewController {
   if (TabSwitcherPresentsBVCEnabled()) {
-    return self.presentedViewController;
+    UIViewController* ret = self.presentedViewController;
+
+    if (ret.presentedViewController) {
+      return ret.presentedViewController;
+    } else {
+      return ret;
+    }
   } else {
     return [self.childViewControllers firstObject];
   }
@@ -31,6 +39,36 @@
   // controller showing once the known violations of that are fixed.
 
   if (TabSwitcherPresentsBVCEnabled()) {
+    // If |activeViewController| is already on the presentation stack, dismiss
+    // the current view controller and return.
+    if (activeViewController ==
+        self.activeViewController.presentingViewController) {
+      [activeViewController dismissViewControllerAnimated:NO completion:nil];
+      return;
+    }
+
+    // If the current active view controller is the stack view and the new
+    // active view controller is the BVC, then present the BVC without first
+    // dismissing the old view controller.
+    BOOL keepOldController =
+        [self.activeViewController conformsToProtocol:@protocol(TabSwitcher)] &&
+        [activeViewController isKindOfClass:[BrowserViewController class]];
+
+    if (keepOldController) {
+      DCHECK(self.activeViewController);
+      [self.activeViewController
+          presentViewController:activeViewController
+                       animated:NO
+                     completion:^{
+                       DCHECK(self.activeViewController ==
+                              activeViewController);
+                       if (completion) {
+                         completion();
+                       }
+                     }];
+      return;
+    }
+
     if (self.activeViewController) {
       // This call must be to super, as the override of
       // dismissViewControllerAnimated:completion: below tries to dismiss using

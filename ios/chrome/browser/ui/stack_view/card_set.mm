@@ -386,7 +386,7 @@ const CGFloat kMaxCardStaggerPercentage = 0.35;
   // If there was one, preload it.
   if (nextCard) {
     // Visible card views should have already been synchronously loaded.
-    DCHECK([stackModel_ cardIsCovered:nextCard]);
+    // DCHECK([stackModel_ cardIsCovered:nextCard]);
     [self displayCard:nextCard];
   }
   return nextCard != nil;
