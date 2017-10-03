@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e05a53_72f1c270",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-03T06:57:21Z",
+      "side": 1,
+      "message": "Can you elaborate on why the changes to the tests were needed? If this is a real deficiency of the network service, we should probably fix that rather than change the tests.",
+      "revId": "e0daf3f1dd0e67b4f6caa80a378dfdde0d23ea6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
