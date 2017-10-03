@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3af77bf2_1bf586fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-03T03:35:26Z",
+      "side": 1,
+      "message": "HomedirMethods and CryptohomeClient are not tested.\nThis should be \"none\" or\"build\" if you haven\u0027t done any manual testing.",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 16
+      },
+      "revId": "13fcf11d7df8751c8d3959ed2709b7d4be2c0211",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
