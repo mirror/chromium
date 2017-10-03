@@ -165,6 +165,8 @@ class DefaultWebClientWorker
   // the default state to the caller.
   void StartSetAsDefault();
 
+  static void DeleteTaskRunnerForTest();
+
  protected:
   friend class base::RefCountedThreadSafe<DefaultWebClientWorker>;
 
