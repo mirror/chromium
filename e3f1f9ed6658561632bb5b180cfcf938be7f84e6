@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b407fe3_7aa23183",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T20:23:52Z",
+      "side": 1,
+      "message": "I see that you changed this, but are there cases where there is not a layer tree impl? Or are you just thinking to change it and see if anything crops up?",
+      "parentUuid": "baad652c_133a47ea",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d69d896_3121bcbf",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 6
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "It looks like MaximumTilingContentsScale (0.0625) does not match device scale factor (2) here.",
       "parentUuid": "2d69d896_3121bcbf",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c77eec39_9f608c3d",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T20:23:52Z",
+      "side": 1,
+      "message": "Reading the code, it looks like we don\u0027t create tilings if the raster source is a solid color.  That would explain why MaximumTilingContentsScale doesn\u0027t return anything meaningful here.  That makes sense.\n\nWhat about using GetIdealContentsScale() here, which includes device scale, page scale, and layer transform?  Mostly I just want to use something more than just device scale that includes the other scale factors that may be affecting a layer.",
+      "parentUuid": "a31e9a0d_f950715d",
       "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
