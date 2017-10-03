@@ -205,6 +205,12 @@ static WTF::Optional<DocumentMarker::MarkerType> MarkerTypeFrom(
     return DocumentMarker::kGrammar;
   if (DeprecatedEqualIgnoringCase(marker_type, "TextMatch"))
     return DocumentMarker::kTextMatch;
+  if (DeprecatedEqualIgnoringCase(marker_type, "Composition"))
+    return DocumentMarker::kComposition;
+  if (DeprecatedEqualIgnoringCase(marker_type, "ActiveSuggestion"))
+    return DocumentMarker::kActiveSuggestion;
+  if (DeprecatedEqualIgnoringCase(marker_type, "Suggestion"))
+    return DocumentMarker::kSuggestion;
   return WTF::nullopt;
 }
 
@@ -1043,6 +1049,28 @@ String Internals::markerDescriptionForNode(Node* node,
   if (!marker || !IsSpellCheckMarker(*marker))
     return String();
   return ToSpellCheckMarker(marker)->Description();
+}
+
+unsigned Internals::markerBackgroundColorForNode(
+    Node* node,
+    const String& marker_type,
+    unsigned index,
+    ExceptionState& exception_state) {
+  DocumentMarker* marker = MarkerAt(node, marker_type, index, exception_state);
+  if (!marker || !IsStyleableMarker(*marker))
+    return 0;
+  return ToStyleableMarker(marker)->BackgroundColor().Rgb();
+}
+
+unsigned Internals::markerUnderlineColorForNode(
+    Node* node,
+    const String& marker_type,
+    unsigned index,
+    ExceptionState& exception_state) {
+  DocumentMarker* marker = MarkerAt(node, marker_type, index, exception_state);
+  if (!marker || !IsStyleableMarker(*marker))
+    return 0;
+  return ToStyleableMarker(marker)->UnderlineColor().Rgb();
 }
 
 static WTF::Optional<TextMatchMarker::MatchStatus> MatchStatusFrom(
