@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a476d7e5_1170f9fe",
+        "filename": "content/browser/android/webview_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T18:18:42Z",
+      "side": 1,
+      "message": "Why do we need to do a PostTask here? Can\u0027t we do a synchronous check and return directly? The content/ layer should be able to handle the throttle implementation doing a load and deleting itself. It will keep the overhead of navigations lower, as we don\u0027t need to wait for a full event loop to compute the result.",
+      "revId": "530c82461526f31663aa95ba804c8736600864ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01bbbac1_44f6be48",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T18:18:42Z",
+      "side": 1,
+      "message": "Since this is a WebView specific code, let\u0027s not register it for all Android navigations, especially if we must keep the behavior of \"defer, PostTask, check, cancel | resume\". This will add an extra delay in navigations in Chrome on Android, which is undersirable, as it doesn\u0027t support this WebView API.\n\nChatting with boliu@, it should be possible to put this registration in chrome/android_webview/ and use a content/public API through ContentBrowserClient to let the WebView code register it itself.",
+      "revId": "530c82461526f31663aa95ba804c8736600864ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
