@@ -229,9 +229,8 @@ void GIFImageDecoder::Decode(size_t index) {
   if (frame.GetStatus() == ImageFrame::kFrameEmpty) {
     size_t required_previous_frame_index = frame.RequiredPreviousFrameIndex();
     if (required_previous_frame_index == kNotFound) {
-      frame.AllocatePixelData(Size().Width(), Size().Height(),
+      frame.AllocatePixelData(image_info.width(), image_info.height(),
                               ColorSpaceForSkImages());
-      frame.ZeroFillPixelData();
     } else {
       size_t previous_frame_index = GetViableReferenceFrameIndex(index);
       if (previous_frame_index == kNotFound) {
@@ -270,30 +269,44 @@ void GIFImageDecoder::Decode(size_t index) {
         SetFailed();
         return;
     }
-    frame.SetStatus(ImageFrame::kFramePartial);
   }
 
-  SkCodec::Result incremental_decode_result = codec_->incrementalDecode();
+  int rows_decoded;
+  SkCodec::Result incremental_decode_result =
+      codec_->incrementalDecode(&rows_decoded);
   switch (incremental_decode_result) {
     case SkCodec::kSuccess: {
       SkCodec::FrameInfo frame_info;
       bool frame_info_received = codec_->getFrameInfo(index, &frame_info);
       DCHECK(frame_info_received);
       frame.SetHasAlpha(frame_info.fAlpha != SkEncodedInfo::kOpaque_Alpha);
-      frame.SetPixelsChanged(true);
-      frame.SetStatus(ImageFrame::kFrameComplete);
-      PostDecodeProcessing(index);
       break;
     }
     case SkCodec::kIncompleteInput:
-      frame.SetPixelsChanged(true);
-      if (FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {
+    // fall through
+    case SkCodec::kErrorInInput: {
+      if (incremental_decode_result == SkCodec::kErrorInInput ||
+          (!index && frame.GetStatus() == ImageFrame::kFrameAllocated)) {
+        frame.ZeroFillFrameRect(IntRect(0, rows_decoded, image_info.width(),
+                                        image_info.height() - rows_decoded));
+      }
+      if (incremental_decode_result == SkCodec::kErrorInInput ||
+          FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {
         SetFailed();
       }
       break;
+    }
     default:
       SetFailed();
       break;
+  }
+
+  frame.SetStatus(ImageFrame::kFramePartial);
+
+  frame.SetPixelsChanged(true);
+  if (incremental_decode_result == SkCodec::kSuccess) {
+    frame.SetStatus(ImageFrame::kFrameComplete);
+    PostDecodeProcessing(index);
   }
 }
 
