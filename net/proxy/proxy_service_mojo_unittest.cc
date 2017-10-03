@@ -5,12 +5,10 @@
 #include "net/proxy/proxy_service_mojo.h"
 
 #include <algorithm>
-#include <memory>
 #include <string>
 #include <utility>
 
 #include "base/callback_helpers.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "net/base/network_delegate_impl.h"
