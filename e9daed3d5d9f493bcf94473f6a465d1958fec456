@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "522a913e_d0ef2bf3",
+        "filename": "content/browser/frame_host/render_frame_proxy_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10226737_b78c46f8",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a70aaf_ab15d244",
         "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T19:01:43Z",
       "side": 1,
       "message": "Is there a reason that this is in WebViewImpl rather than WebRemoteFrameImpl? Then it could be called on the WebRemoteFrame rather than passing it as an argument.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443c0f83_50e3c5b7",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2583,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "Not really (there were some other scroll related methods there so I started in WebView).\n\nI also agree it will look better in WebRemoteFrame and I moved it there.",
+      "parentUuid": "a2a70aaf_ab15d244",
       "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04221e0f_5a9df112",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2589,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "81785345_075b1abe",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5712eac0_90d179f5",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-29T19:01:43Z",
       "side": 1,
       "message": "I\u0027ve had pushback before about adding OOPIF-specific logic into layout code. It might need to add a method to LocalFrameView and move this logic there (except the EnclosingLayoutRect() calculation).",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5eefe00_e77165b9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "Thanks for the tip! I moved the whole thing to LocalFrameView to avoid calling IsLocalRoot() as well.",
+      "parentUuid": "5712eac0_90d179f5",
       "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3a15d7e9_4f40805b",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRemoteScrollProperties.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "\u003e It would be stronger to use STATIC_ASSERT_ENUM on each enumerated value.\n\nThanks! Done.\n\n\u003e Also, why are you not checking the Alignment enum?\n\nThe core side (ScrollAlignment) is not an enum, unfortunately. All the ScrollAlignment* values the Alignment enum represents are actually static constants of type ScrollAlignment.",
+      "parentUuid": "de6c757f_dbeead9b",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfceb237_c09d4626",
         "filename": "third_party/WebKit/public/platform/WebRemoteScrollProperties.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-29T19:01:43Z",
       "side": 1,
       "message": "nit: The last element in these enums could be, for example, \u0027kLast \u003d kRightAlways,\u0027 to make the max value always stay the same in the IPC enum traits.",
+      "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ada9b8_2448c005",
+        "filename": "third_party/WebKit/public/platform/WebRemoteScrollProperties.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-03T14:52:38Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "dfceb237_c09d4626",
       "revId": "e9daed3d5d9f493bcf94473f6a465d1958fec456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
