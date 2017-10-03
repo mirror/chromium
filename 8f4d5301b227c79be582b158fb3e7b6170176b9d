@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "abcaca38_584f2fe0",
+        "filename": "chrome/browser/usb/usb_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T17:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f9887ff_3a464f3e",
+      "revId": "8f4d5301b227c79be582b158fb3e7b6170176b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10807273_2144a266",
         "filename": "chrome/browser/usb/usb_util.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8f4d5301b227c79be582b158fb3e7b6170176b9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013fb297_04c82b25",
+        "filename": "chrome/browser/usb/usb_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T17:58:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10807273_2144a266",
+      "revId": "8f4d5301b227c79be582b158fb3e7b6170176b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
