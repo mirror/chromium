@@ -192,6 +192,24 @@
       "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39e2966_71865f33",
+        "filename": "chrome/browser/ui/views/tab_icon_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-03T04:05:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c70cce_12061b45",
+      "revId": "eedb33098f7faa0e476cf85c1e18b2120f7431ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
