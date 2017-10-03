@@ -60,6 +60,7 @@
 #include "modules/media_controls/elements/MediaControlCurrentTimeDisplayElement.h"
 #include "modules/media_controls/elements/MediaControlDownloadButtonElement.h"
 #include "modules/media_controls/elements/MediaControlFullscreenButtonElement.h"
+#include "modules/media_controls/elements/MediaControlModernPlayButtonElement.h"
 #include "modules/media_controls/elements/MediaControlMuteButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuButtonElement.h"
 #include "modules/media_controls/elements/MediaControlOverflowMenuListElement.h"
@@ -291,6 +292,7 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
       text_track_list_(nullptr),
       overflow_list_(nullptr),
       media_button_panel_(nullptr),
+      modern_play_button_(nullptr),
       cast_button_(nullptr),
       fullscreen_button_(nullptr),
       download_button_(nullptr),
@@ -377,6 +379,9 @@ MediaControlsImpl* MediaControlsImpl::Create(HTMLMediaElement& media_element,
 //     |    (-webkit-media-controls-panel)
 //     |  {if ModernMediaControlsEnabled, otherwise
 //     |   contents are directly attached to parent.
+//     +-MediaControlModernPlayButtonElement
+//     |  (-internal-media-controls-play-button)
+//     |  {if ModernMediaControlsEnabled}
 //     +-HTMLDivElement
 //     |  |  (-internal-media-controls-button-panel)
 //     |  +-MediaControlPlayButtonElement
@@ -434,6 +439,9 @@ void MediaControlsImpl::InitializeControls() {
   // seperate button panel. This is because they are displayed in two lines.
   Element* button_panel = panel_;
   if (IsModern()) {
+    modern_play_button_ = new MediaControlModernPlayButtonElement(*this);
+    panel_->AppendChild(modern_play_button_);
+
     media_button_panel_ = HTMLDivElement::Create(GetDocument());
     media_button_panel_->SetShadowPseudoId(
         "-internal-media-controls-button-panel");
@@ -853,6 +861,36 @@ void MediaControlsImpl::RemotePlaybackStateChanged() {
   overlay_cast_button_->UpdateDisplayType();
 }
 
+void MediaControlsImpl::UpdateOverflowMenuWanted() {
+  // If any of these controls are wanted then we should show the overflow menu.
+  MediaControlElementBase* elements[] = {
+      download_button_.Get(), toggle_closed_captions_button_.Get(),
+      cast_button_.Get(),
+  };
+
+  bool wanted = false;
+  for (MediaControlElementBase* element : elements) {
+    if (element->IsWanted() && element->HasOverflowButton())
+      wanted = true;
+
+    element->SetDoesFit(false);
+    element->SetOverflowElementIsWanted(element->IsWanted());
+  }
+
+  overflow_menu_->SetDoesFit(wanted);
+  overflow_menu_->SetIsWanted(wanted);
+
+  // Record the display state when needed. It is only recorded when the media
+  // element is in a state that allows it in order to reduce noise in the
+  // metrics.
+  if (MediaControlInputElement::ShouldRecordDisplayStates(MediaElement())) {
+    // Record which controls are used.
+    for (const auto& element : elements)
+      element->MaybeRecordDisplayed();
+    overflow_menu_->MaybeRecordDisplayed();
+  }
+}
+
 void MediaControlsImpl::DefaultEventHandler(Event* event) {
   HTMLDivElement::DefaultEventHandler(event);
 
@@ -1042,7 +1080,7 @@ void MediaControlsImpl::OnDurationChange() {
 
   // Update the displayed current time/duration.
   duration_display_->SetCurrentValue(duration);
-  duration_display_->SetIsWanted(std::isfinite(duration));
+  duration_display_->SetIsWanted(IsModern() || std::isfinite(duration));
   // TODO(crbug.com/756698): Determine if this is still needed since the format
   // of the current time no longer depends on the duration.
   UpdateCurrentTimeDisplay();
@@ -1155,8 +1193,10 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
   // won't benefit from that anwyay, we just do it here like JS will.
 
   // TODO(beccahughes): Update this for modern controls.
-  if (IsModern())
+  if (IsModern()) {
+    UpdateOverflowMenuWanted();
     return;
+  }
 
   // Controls that we'll hide / show, in order of decreasing priority.
   MediaControlElementBase* elements[] = {
@@ -1291,7 +1331,6 @@ void MediaControlsImpl::PositionPopupMenu(Element* popup_menu) {
 
   DOMRect* bounding_client_rect = MediaElement().getBoundingClientRect();
   DOMVisualViewport* viewport = GetDocument().domWindow()->visualViewport();
-  ;
 
   int bottom = viewport->height() - bounding_client_rect->y() -
                bounding_client_rect->height() + kPopupMenuMarginPx;
@@ -1404,6 +1443,7 @@ DEFINE_TRACE(MediaControlsImpl) {
   visitor->Trace(rotate_to_fullscreen_delegate_);
   visitor->Trace(download_iph_manager_);
   visitor->Trace(media_button_panel_);
+  visitor->Trace(modern_play_button_);
   MediaControls::Trace(visitor);
   HTMLDivElement::Trace(visitor);
 }

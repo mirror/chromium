@@ -142,15 +142,17 @@ void MediaControlInputElement::MaybeRecordInteracted() {
   if (interaction_recorded_)
     return;
 
-  if (!display_recorded_) {
+  if (!display_recorded_ && ShouldRecordDisplayStates(MediaElement())) {
     // The only valid reason to not have the display recorded at this point is
     // if it wasn't allowed. Regardless, the display will now be recorded.
-    DCHECK(!ShouldRecordDisplayStates(MediaElement()));
+    // DCHECK(!ShouldRecordDisplayStates(MediaElement()));
     RecordCTREvent(CTREvent::kDisplayed);
   }
 
-  RecordCTREvent(CTREvent::kInteracted);
-  interaction_recorded_ = true;
+  if (display_recorded_) {
+    RecordCTREvent(CTREvent::kInteracted);
+    interaction_recorded_ = true;
+  }
 }
 
 bool MediaControlInputElement::IsOverflowElement() const {
