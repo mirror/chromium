@@ -16,6 +16,24 @@
       "revId": "e19b726cb53baeb858a632d2ce379d5f4d3923ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfdd773_96d98a45",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/input/ImeTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1659,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-03T21:24:48Z",
+      "side": 1,
+      "message": "The test failed because I\u0027d forgotten this needs some Internals stuff I added in https://chromium-review.googlesource.com/c/chromium/src/+/696490. I\u0027ve landed that CL and rebased this one on master, so the test should pass now.",
+      "parentUuid": "db263082_37e259bb",
+      "revId": "e19b726cb53baeb858a632d2ce379d5f4d3923ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
