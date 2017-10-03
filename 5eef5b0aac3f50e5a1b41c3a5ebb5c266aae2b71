@@ -16,6 +16,24 @@
       "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c948628a_fdd0713f",
+        "filename": "components/arc/ime/arc_ime_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T02:34:40Z",
+      "side": 1,
+      "message": "Can we just make these the same mojo type?",
+      "parentUuid": "638a0739_f408fa9f",
+      "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
