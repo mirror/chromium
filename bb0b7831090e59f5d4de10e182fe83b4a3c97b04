@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eace6000_aac2fb99",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-03T22:15:07Z",
+      "side": 1,
+      "message": "It is a LayerTreeHost setting so we won\u0027t catch it if SetPosition is invoked before attaching. Nevertheless I think it\u0027s a good sanity check. Done.",
+      "parentUuid": "edf21eb1_e60c0050",
+      "revId": "bb0b7831090e59f5d4de10e182fe83b4a3c97b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4de4ae7b_a6067ead",
         "filename": "cc/trees/draw_property_utils.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T17:03:05Z",
       "side": 1,
       "message": "Does this add any value if the page scale layer is the root? It\u0027s no longer called\nin that case.",
+      "revId": "bb0b7831090e59f5d4de10e182fe83b4a3c97b04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a74811_21297f4f",
+        "filename": "cc/trees/draw_property_utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-03T22:15:07Z",
+      "side": 1,
+      "message": "Good find. I think this DCHECK was added because the quick update for post_local here uses an incomplete formula, so we have to make sure all other parameters have no-op values. Since now we always compute post_local on the fly in TransformTree::UpdateLocalTransform(), I think we can safely remove this DCHECK.",
+      "parentUuid": "4de4ae7b_a6067ead",
       "revId": "bb0b7831090e59f5d4de10e182fe83b4a3c97b04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
