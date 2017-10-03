@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5a0185dd_93532c33",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T17:18:15Z",
+      "side": 1,
+      "message": "This error should really be divided by the square or cube root root of the value or some such.\nA 0.01 inaccuracy near the bottom is much worse than a 0.01 accuracy near the top.",
+      "range": {
+        "startLine": 117,
+        "startChar": 20,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4d8fdd_3052f5d6",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -37,6 +60,30 @@
       "side": 1,
       "message": "https://cs.chromium.org/chromium/src/third_party/skia/include/core/SkColorSpace.h?rcl\u003d3c83668862521b3bbbd628a522c05688348d6e7f\u0026l\u003d32",
       "parentUuid": "db4d8fdd_3052f5d6",
+      "range": {
+        "startLine": 196,
+        "startChar": 32,
+        "endLine": 196,
+        "endChar": 33
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c4927c_e940f8f3",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T17:18:15Z",
+      "side": 1,
+      "message": "Does this code or it\u0027s header file contain a reference to the formula in SkColorSpace.h ?\nIf not, can we add it? (It it does, how did I miss it?)",
+      "parentUuid": "a88b2bd6_b4c0d7fc",
       "range": {
         "startLine": 196,
         "startChar": 32,
@@ -101,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "7b3da0a0_91f3a3ef",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T17:18:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53489691_3536bd70",
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d62a5e_f2294837",
         "filename": "ui/gfx/skia_color_space_util.cc",
         "patchSetId": 1
@@ -136,6 +201,30 @@
       "side": 1,
       "message": "We could potentially take that into account when deciding fn-\u003efD (where we switch from linear to nonlinear), to try to minimize the discontinuity in the derivative.\n\nI\u0027d be up for looking into doing that in a follow-on.",
       "parentUuid": "26d62a5e_f2294837",
+      "range": {
+        "startLine": 287,
+        "startChar": 21,
+        "endLine": 287,
+        "endChar": 37
+      },
+      "revId": "2a9ab8e2aa4d9608a6bc80e965793743678537a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79275f96_d8d6ed7d",
+        "filename": "ui/gfx/skia_color_space_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-10-03T17:18:15Z",
+      "side": 1,
+      "message": "Hmm, I think I should have reviewed this code in more detail last time...\nAdded a bunch more comments, not sure if they are relevant to this code review though.",
+      "parentUuid": "b8155c2f_57ece4b4",
       "range": {
         "startLine": 287,
         "startChar": 21,
