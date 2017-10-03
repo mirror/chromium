@@ -94,6 +94,30 @@
       "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "803a50f3_07f3be7d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T02:43:17Z",
+      "side": 0,
+      "message": "I tried that out, but it requires passing a color as a parameter. We want this icon to be agnostic to color because it is drawn in one color (blue) when drawn on the notification but is drawn in another color (white) when drawn in the black bar at the bottom of the UI. That\u0027s why I needed that previous CL which allows setting alpha without also setting color.",
+      "parentUuid": "cf4f5dbc_4cbcd169",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 51
+      },
+      "revId": "eaf43ad45985c17f04ffa45d6ac9a3c342045b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
