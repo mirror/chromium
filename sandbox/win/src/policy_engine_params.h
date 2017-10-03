@@ -59,7 +59,7 @@ namespace sandbox {
 //  probably add other types as well.
 class ParameterSet {
  public:
-  ParameterSet() : real_type_(INVALID_TYPE), address_(NULL) {}
+  ParameterSet() : real_type_(INVALID_TYPE), address_(nullptr) {}
 
   // Retrieve the stored parameter. If the type does not match ulong fail.
   bool Get(uint32_t* destination) const {
@@ -149,6 +149,13 @@ template <>
 class ParameterSetEx<uint32_t> : public ParameterSet {
  public:
   ParameterSetEx(const void* address) : ParameterSet(UINT32_TYPE, address) {}
+};
+
+template <>
+class ParameterSetEx<bool> : public ParameterSet {
+ public:
+  ParameterSetEx(const void* address)
+      : ParameterSet(UINT32_TYPE, reinterpret_cast<const uint32_t*>(address)) {}
 };
 
 template <>
