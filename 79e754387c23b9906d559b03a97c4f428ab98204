@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03a89105_99b19b3d",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-10-03T17:20:32Z",
+      "side": 1,
+      "message": "This is Thread class override. It is called by thread just before starting running the thread\u0027s message loop. Deep copy isn\u0027t needed. Task_runner_ is ref-counted so this class will keep the object alive.",
+      "parentUuid": "9836d224_abc80833",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "79e754387c23b9906d559b03a97c4f428ab98204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cc27f2f_da24926f",
         "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
         "patchSetId": 3
