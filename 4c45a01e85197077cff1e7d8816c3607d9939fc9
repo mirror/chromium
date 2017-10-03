@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b44169e6_34f68b84",
+        "filename": "third_party/protobuf/README.chromium",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1149279
+      },
+      "writtenOn": "2017-10-03T17:56:44Z",
+      "side": 1,
+      "message": "Can you link the upstream revision or pull request?",
+      "range": {
+        "startLine": 111,
+        "startChar": 70,
+        "endLine": 111,
+        "endChar": 78
+      },
+      "revId": "4c45a01e85197077cff1e7d8816c3607d9939fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
