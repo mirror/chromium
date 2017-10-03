@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58bfc49a_4d34bc57",
+        "filename": "ui/views/animation/ink_drop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-10-03T18:35:17Z",
+      "side": 1,
+      "message": "nit: separate from above with a blank line please.",
+      "revId": "65b7d4418b037088319c56d28877225e9db34881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e056a1_a697635d",
+        "filename": "ui/views/animation/ink_drop.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-10-03T18:35:17Z",
+      "side": 1,
+      "message": "nit: annimation -\u003e animation",
+      "range": {
+        "startLine": 70,
+        "startChar": 43,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "65b7d4418b037088319c56d28877225e9db34881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d55e1393_6733ac01",
+        "filename": "ui/views/animation/ink_drop_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-10-03T18:35:17Z",
+      "side": 1,
+      "message": "Why are you limiting this to ripple only? Can you include highlight to make it more consistent with \u0027started\u0027?",
+      "revId": "65b7d4418b037088319c56d28877225e9db34881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
