@@ -45,6 +45,7 @@
 #include "content/public/app/sandbox_helper_win.h"
 #include "content/public/common/content_switches.h"
 #include "sandbox/win/src/sandbox.h"
+#include "services/service_manager/sandbox/sandbox_type.h"
 
 namespace {
 // The entry point signature of chrome.dll.
@@ -186,7 +187,8 @@ int MainDllLoader::Launch(HINSTANCE instance,
     // For child processes that are running as --no-sandbox, don't initialize
     // the sandbox info, otherwise they'll be treated as brokers (as if they
     // were the browser).
-    content::InitializeSandboxInfo(&sandbox_info);
+    content::InitializeSandboxInfo(
+        service_manager::SandboxTypeFromCommandLine(cmd_line), &sandbox_info);
   }
 
   dll_ = Load(&file);

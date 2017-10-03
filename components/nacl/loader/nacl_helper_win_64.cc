@@ -56,8 +56,6 @@ namespace nacl {
 
 int NaClWin64Main() {
   sandbox::SandboxInterfaceInfo sandbox_info = {0};
-  content::InitializeSandboxInfo(&sandbox_info);
-
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   std::string process_type =
@@ -73,7 +71,10 @@ int NaClWin64Main() {
     base::RouteStdioToConsole(true);
 
   // Initialize the sandbox for this process.
-  bool sandbox_initialized_ok = content::InitializeSandbox(&sandbox_info);
+  content::InitializeSandboxInfo(&sandbox_info);
+  bool sandbox_initialized_ok = content::InitializeSandbox(
+      service_manager::SandboxTypeFromCommandLine(command_line), &sandbox_info);
+
   // Die if the sandbox can't be enabled.
   CHECK(sandbox_initialized_ok) << "Error initializing sandbox for "
                                 << process_type;
