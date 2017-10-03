@@ -70,7 +70,8 @@ void IncognitoWindowTracker::ShowPromo() {
       IncognitoWindowPromoBubbleView::CreateOwned(app_menu_button);
   views::Widget* widget = incognito_promo_->GetWidget();
   incognito_promo_observer_.Add(widget);
-  app_menu_button->AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
+  app_menu_button->set_shadow_needed(true);
+  // app_menu_button->AnimateInkDrop(views::InkDropState::ACTIVATED, nullptr);
   app_menu_button->SchedulePaint();
 }
 
@@ -83,7 +84,9 @@ void IncognitoWindowTracker::OnWidgetDestroying(views::Widget* widget) {
 
   if (incognito_promo_observer_.IsObserving(widget)) {
     incognito_promo_observer_.Remove(widget);
-    app_menu_button->AnimateInkDrop(views::InkDropState::DEACTIVATED, nullptr);
+    app_menu_button->set_shadow_needed(false);
+    // app_menu_button->AnimateInkDrop(views::InkDropState::DEACTIVATED,
+    // nullptr);
     app_menu_button->SchedulePaint();
   }
 }

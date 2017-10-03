@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
 
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
@@ -25,6 +26,9 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
+#include "third_party/skia/include/core/SkColorFilter.h"
+#include "third_party/skia/include/effects/SkBlurMaskFilter.h"
+#include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -32,6 +36,7 @@
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/keyboard/keyboard_controller.h"
+#include "ui/views/animation/ink_drop_impl.h"
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/controls/menu/menu_listener.h"
 #include "ui/views/metrics.h"
@@ -39,6 +44,23 @@
 namespace {
 
 constexpr float kIconSize = 16;
+
+sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
+  SkLayerDrawLooper::Builder looper_builder;
+  looper_builder.addLayer();
+
+  SkLayerDrawLooper::LayerInfo layer_info;
+  layer_info.fPaintBits |= SkLayerDrawLooper::kMaskFilter_Bit;
+  layer_info.fPaintBits |= SkLayerDrawLooper::kColorFilter_Bit;
+  layer_info.fColorMode = SkBlendMode::kDst;
+  layer_info.fOffset.set(0, 1);
+  SkPaint* layer_paint = looper_builder.addLayer(layer_info);
+  layer_paint->setMaskFilter(SkBlurMaskFilter::Make(
+      kNormal_SkBlurStyle, 0.5, SkBlurMaskFilter::kHighQuality_BlurFlag));
+  layer_paint->setColorFilter(
+      SkColorFilter::MakeModeFilter(color, SkBlendMode::kSrcIn));
+  return looper_builder.detach();
+}
 
 }  // namespace
 
@@ -252,6 +274,24 @@ gfx::Rect AppMenuButton::GetThemePaintRect() const {
   gfx::Rect rect(MenuButton::GetThemePaintRect());
   rect.Inset(0, 0, margin_trailing_, 0);
   return rect;
+}
+
+void AppMenuButton::PaintButtonContents(gfx::Canvas* canvas) {
+  if (shadow_needed_) {
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    const SkColor stroke_color = GetNativeTheme()->GetSystemColor(
+        ui::NativeTheme::kColorId_ProminentButtonColor);
+    const float alpha = SkColorGetA(stroke_color);
+    const SkAlpha shadow_alpha =
+        base::saturated_cast<SkAlpha>(std::round(2.1875f * alpha));
+    flags.setLooper(
+        CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
+    const SkAlpha path_alpha = static_cast<SkAlpha>(std::round(alpha));
+    const SkColor color = SkColorSetA(stroke_color, path_alpha);
+    flags.setColor(color);
+    canvas->DrawRect(GetLocalBounds(), flags);
+  }
 }
 
 bool AppMenuButton::GetDropFormats(
