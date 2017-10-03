@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "114c414c_83bbc5c3",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T06:24:29Z",
+      "side": 1,
+      "message": "Removed because this comment is not clear and actionable.",
+      "parentUuid": "3ad6cb3e_7d5b3249",
+      "revId": "300f063f6d3184b667a7f923adfe0c27b67a568f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce5e5c64_13af93f1",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
         "patchSetId": 3
