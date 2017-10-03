@@ -57,6 +57,14 @@ void ViewElement::OnViewBoundsChanged(views::View* view) {
   delegate()->OnUIElementBoundsChanged(this);
 }
 
+void ViewElement::OnViewIsDeleting(views::View* observed_view) {
+  LOG(ERROR) << __PRETTY_FUNCTION__;
+  // DCHECK_EQ(view_, observed_view);
+  // LOG(ERROR) << __PRETTY_FUNCTION__;
+  // view_ = nullptr;
+  // LOG(ERROR) << __PRETTY_FUNCTION__;
+}
+
 std::vector<std::pair<std::string, std::string>>
 ViewElement::GetCustomAttributes() const {
   base::string16 description;
