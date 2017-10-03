@@ -129,5 +129,14 @@ chrome.test.runTests([
       chrome.test.assertTrue(chrome.runtime.lastError != undefined);
       chrome.test.succeed();
     });
-  }
+  },
+  function getLauncherApps() {
+    chrome.autotestPrivate.getLauncherApps(function(apps) {
+      // Number of apps may vary, but there should be always at least one app,
+      // such as Chromium or Chrome.
+      chrome.test.assertTrue(apps.length > 0);
+      console.error(JSON.stringify(apps));
+      chrome.test.succeed();
+    });
+  },
 ]);
