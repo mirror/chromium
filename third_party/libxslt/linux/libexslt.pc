@@ -5,8 +5,8 @@ includedir=${prefix}/include
 
 
 Name: libexslt
-Version: 0.8.17
+Version: 0.8.18
 Description: EXSLT Extension library
 Requires: libxml-2.0
-Libs: -L${libdir} -lexslt -lxslt -L/usr/local/google/work/ca/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm -lgcrypt
+Libs: -L${libdir} -lexslt -lxslt -L/usr/local/google/work/cr/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm -lgcrypt
 Cflags: -I${includedir}

@@ -80,15 +80,15 @@ POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
 subdir = .
-DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog COPYING \
-	$(srcdir)/Makefile.in $(srcdir)/Makefile.am \
+DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(srcdir)/config.h.in $(srcdir)/libxslt.pc.in \
 	$(srcdir)/libexslt.pc.in $(srcdir)/xslt-config.in \
-	$(srcdir)/libxslt.spec.in TODO compile config.guess config.sub \
-	install-sh missing ltmain.sh
+	$(srcdir)/libxslt.spec.in AUTHORS ChangeLog INSTALL NEWS \
+	README TODO compile config.guess config.sub install-sh missing \
+	ltmain.sh
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.in
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -226,14 +226,14 @@ distuninstallcheck_listfiles = find . -type f -print
 am__distuninstallcheck_listfiles = $(distuninstallcheck_listfiles) \
   | sed 's|^\./|$(prefix)/|' | grep -v '$(infodir)/dir$$'
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/missing aclocal-1.14
+ACLOCAL = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/missing aclocal-1.14
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 0
 AR = ar
 AS = as
-AUTOCONF = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/missing autoconf
-AUTOHEADER = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/missing autoheader
-AUTOMAKE = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/missing automake-1.14
+AUTOCONF = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/missing autoconf
+AUTOHEADER = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/missing autoheader
+AUTOMAKE = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/missing automake-1.14
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -254,7 +254,7 @@ EGREP = /bin/grep -E
 EXEEXT = 
 EXSLT_INCLUDEDIR = -I${includedir}
 EXSLT_LIBDIR = -L${libdir}
-EXSLT_LIBS = -lexslt -lxslt -L/usr/local/google/work/ca/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm -lgcrypt
+EXSLT_LIBS = -lexslt -lxslt -L/usr/local/google/work/cr/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm -lgcrypt
 EXTRA_LIBS = 
 FGREP = /bin/grep -F
 GREP = /bin/grep
@@ -267,38 +267,37 @@ INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld -m elf_x86_64
 LDFLAGS = 
 LIBEXSLT_MAJOR_VERSION = 0
-LIBEXSLT_MICRO_VERSION = 17
+LIBEXSLT_MICRO_VERSION = 18
 LIBEXSLT_MINOR_VERSION = 8
-LIBEXSLT_VERSION = 0.8.17
+LIBEXSLT_VERSION = 0.8.18
 LIBEXSLT_VERSION_EXTRA = 
-LIBEXSLT_VERSION_INFO = 8:17:8
-LIBEXSLT_VERSION_NUMBER = 817
+LIBEXSLT_VERSION_INFO = 8:18:8
+LIBEXSLT_VERSION_NUMBER = 818
 LIBGCRYPT_CFLAGS = 
 LIBGCRYPT_CONFIG = /usr/bin/libgcrypt-config
 LIBGCRYPT_LIBS = -lgcrypt
 LIBOBJS = 
 LIBS = 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
-LIBXML_CFLAGS = -I/usr/local/google/work/ca/src/third_party/libxml/linux/include
-LIBXML_LIBS = -L/usr/local/google/work/ca/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm
+LIBXML_CFLAGS = -I/usr/local/google/work/cr/src/third_party/libxml/linux/include
+LIBXML_LIBS = -L/usr/local/google/work/cr/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm
 LIBXML_REQUIRED_VERSION = 2.6.27
-LIBXML_SRC = /usr/local/google/work/ca/src/third_party/libxml/linux
+LIBXML_SRC = /usr/local/google/work/cr/src/third_party/libxml/linux
 LIBXSLT_DEFAULT_PLUGINS_PATH = /usr/local/lib/libxslt-plugins
 LIBXSLT_MAJOR_MINOR_VERSION = 1.1
 LIBXSLT_MAJOR_VERSION = 1
-LIBXSLT_MICRO_VERSION = 29
+LIBXSLT_MICRO_VERSION = 30
 LIBXSLT_MINOR_VERSION = 1
-LIBXSLT_VERSION = 1.1.29
+LIBXSLT_VERSION = 1.1.30
 LIBXSLT_VERSION_EXTRA = 
-LIBXSLT_VERSION_INFO = 2:29:1
-LIBXSLT_VERSION_NUMBER = 10129
+LIBXSLT_VERSION_INFO = 2:30:1
+LIBXSLT_VERSION_NUMBER = 10130
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/missing makeinfo
+MAKEINFO = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/missing makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
-MV = /bin/mv
 M_LIBS = -lm
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -308,13 +307,16 @@ OTOOL =
 OTOOL64 = 
 PACKAGE = libxslt
 PACKAGE_BUGREPORT = 
-PACKAGE_NAME = 
-PACKAGE_STRING = 
-PACKAGE_TARNAME = 
+PACKAGE_NAME = libxslt
+PACKAGE_STRING = libxslt 1.1.30
+PACKAGE_TARNAME = libxslt
 PACKAGE_URL = 
-PACKAGE_VERSION = 
+PACKAGE_VERSION = 1.1.30
 PATH_SEPARATOR = :
 PERL = perl
+PKG_CONFIG = /usr/bin/pkg-config
+PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_PATH = 
 PYTHON = /usr/bin/python
 PYTHONSODV = 
 PYTHON_INCLUDES = /usr/include/python2.7
@@ -323,15 +325,13 @@ PYTHON_SITE_PACKAGES = /usr/lib/python2.7/dist-packages
 PYTHON_SUBDIR = python
 PYTHON_VERSION = 2.7
 RANLIB = ranlib
-RELDATE = Mon May  8 2017
-RM = /bin/rm
+RELDATE = Tue Oct  3 2017
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = strip
-TAR = /bin/tar
 THREAD_LIBS = -lpthread
-VERSION = 1.1.29
+VERSION = 1.1.30
 VERSION_SCRIPT_FLAGS = -Wl,--version-script=
 WIN32_EXTRA_LDFLAGS = 
 WIN32_EXTRA_LIBADD = 
@@ -342,18 +342,18 @@ WITH_MODULES = 0
 WITH_TRIO = 0
 WITH_XSLT_DEBUG = 0
 XMLLINT = /usr/bin/xmllint
-XML_CONFIG = /usr/local/google/work/ca/src/third_party/libxml/linux/xml2-config
+XML_CONFIG = /usr/local/google/work/cr/src/third_party/libxml/linux/xml2-config
 XSLTPROC = /usr/bin/xsltproc
 XSLTPROCDV = 
 XSLT_INCLUDEDIR = -I${includedir}
 XSLT_LIBDIR = -L${libdir}
-XSLT_LIBS = -lxslt -L/usr/local/google/work/ca/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm
+XSLT_LIBS = -lxslt -L/usr/local/google/work/cr/src/third_party/libxml/linux -L/usr/local/lib -lxml2 -licui18n -licuuc -licudata -lm -lm
 XSLT_LOCALE_WINAPI = 0
 XSLT_LOCALE_XLOCALE = 1
-abs_builddir = /usr/local/google/work/ca/src/third_party/libxslt/linux
-abs_srcdir = /usr/local/google/work/ca/src/third_party/libxslt/linux/../src
-abs_top_builddir = /usr/local/google/work/ca/src/third_party/libxslt/linux
-abs_top_srcdir = /usr/local/google/work/ca/src/third_party/libxslt/linux/../src
+abs_builddir = /usr/local/google/work/cr/src/third_party/libxslt/linux
+abs_srcdir = /usr/local/google/work/cr/src/third_party/libxslt/linux/../src
+abs_top_builddir = /usr/local/google/work/cr/src/third_party/libxslt/linux
+abs_top_srcdir = /usr/local/google/work/cr/src/third_party/libxslt/linux/../src
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -371,7 +371,7 @@ build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
-docdir = ${datarootdir}/doc/${PACKAGE}
+docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
 host = x86_64-unknown-linux-gnu
@@ -382,7 +382,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /usr/local/google/work/ca/src/third_party/libxslt/src/install-sh
+install_sh = ${SHELL} /usr/local/google/work/cr/src/third_party/libxslt/src/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -437,15 +437,15 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
-	      echo ' cd $(srcdir) && $(AUTOMAKE) --gnu'; \
-	      $(am__cd) $(srcdir) && $(AUTOMAKE) --gnu \
+	      echo ' cd $(srcdir) && $(AUTOMAKE) --foreign'; \
+	      $(am__cd) $(srcdir) && $(AUTOMAKE) --foreign \
 		&& exit 0; \
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu Makefile
+	  $(AUTOMAKE) --foreign Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -1047,9 +1047,9 @@ dummy:
 
 tests: dummy
 	@echo '## Running the regression test suite'
-	@(cd tests ; $(MAKE) tests)
-	@(cd xsltproc ; $(MAKE) tests)
-	@(if [ "$(PYTHON_SUBDIR)" != "" ] ; then cd python ; $(MAKE) tests ; fi)
+	@(cd tests ; $(MAKE) -s tests)
+	@(cd xsltproc ; $(MAKE) -s tests)
+	@(if [ "$(PYTHON_SUBDIR)" != "" ] ; then cd python ; $(MAKE) -s tests ; fi)
 
 valgrind:
 	@echo '## Running the regression tests under Valgrind'
