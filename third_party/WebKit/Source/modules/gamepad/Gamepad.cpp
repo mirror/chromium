@@ -81,6 +81,11 @@ void Gamepad::SetButtons(unsigned count, const device::GamepadButton* data) {
   is_button_data_dirty_ = true;
 }
 
+void Gamepad::SetVibrationActuator(
+    const device::GamepadHapticActuator& actuator) {
+  vibration_actuator_ = GamepadHapticActuator::Create(index_, actuator.type);
+}
+
 void Gamepad::SetPose(const device::GamepadPose& pose) {
   if (!pose.not_null) {
     if (pose_)
@@ -112,6 +117,7 @@ void Gamepad::SetHand(const device::GamepadHand& hand) {
 
 DEFINE_TRACE(Gamepad) {
   visitor->Trace(buttons_);
+  visitor->Trace(vibration_actuator_);
   visitor->Trace(pose_);
 }
 
