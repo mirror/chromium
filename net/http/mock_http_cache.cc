@@ -741,21 +741,28 @@ int MockHttpCache::GetCountReaders(const std::string& key) {
   HttpCache::ActiveEntry* entry = http_cache_.FindActiveEntry(key);
   if (entry)
     return entry->readers.size();
-  return false;
+  return 0;
 }
 
 int MockHttpCache::GetCountAddToEntryQueue(const std::string& key) {
   HttpCache::ActiveEntry* entry = http_cache_.FindActiveEntry(key);
   if (entry)
     return entry->add_to_entry_queue.size();
-  return false;
+  return 0;
 }
 
 int MockHttpCache::GetCountDoneHeadersQueue(const std::string& key) {
   HttpCache::ActiveEntry* entry = http_cache_.FindActiveEntry(key);
   if (entry)
     return entry->done_headers_queue.size();
-  return false;
+  return 0;
+}
+
+int MockHttpCache::GetCountWriterTransactions(const std::string& key) {
+  HttpCache::ActiveEntry* entry = http_cache_.FindActiveEntry(key);
+  if (entry)
+    return entry->writers->GetTransactionsCount();
+  return 0;
 }
 
 //-----------------------------------------------------------------------------
