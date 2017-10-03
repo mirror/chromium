@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37d1c58_23e940b5",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T16:27:57Z",
+      "side": 1,
+      "message": "optional: sort the entries? They are mostly sorted above, but not entirely.",
+      "range": {
+        "startLine": 1532,
+        "startChar": 6,
+        "endLine": 1532,
+        "endChar": 28
+      },
+      "revId": "a8c5a1babaa2d5760ff77de50139b33108ab3b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
