@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "1a404080_4d9d2b18",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T03:52:08Z",
+      "side": 1,
+      "message": "It really isn\u0027t false, false either. Should it be 0u, false?",
+      "parentUuid": "a4ff84ff_ee122122",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b33c70e_9711cfd8",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T03:52:08Z",
+      "side": 1,
+      "message": "Again this is a bool-\u003eunsigned-\u003ebool.. kind of weird can we clean this up?",
+      "range": {
+        "startLine": 499,
+        "startChar": 49,
+        "endLine": 499,
+        "endChar": 66
+      },
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c20be02_d87caded",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
         "patchSetId": 2
@@ -30,6 +71,52 @@
       "writtenOn": "2017-10-02T20:32:19Z",
       "side": 1,
       "message": "I think this comment can be removed now, right?",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3e5026_e64a6db0",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T03:52:08Z",
+      "side": 1,
+      "message": "can_scroll not initialized in the no-args ctor.",
+      "range": {
+        "startLine": 102,
+        "startChar": 9,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd41f46_a886013b",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T03:52:08Z",
+      "side": 1,
+      "message": "This implicit unsigned to bool conversion is weird and it isn\u0027t really is_active_buttons because it is buttons unsigned value isn\u0027t it?",
+      "range": {
+        "startLine": 108,
+        "startChar": 28,
+        "endLine": 108,
+        "endChar": 45
+      },
       "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
