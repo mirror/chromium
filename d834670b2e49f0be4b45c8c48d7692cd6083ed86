@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d49dba8_b2399d3e",
+        "filename": "extensions/renderer/bindings/api_request_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-03T18:54:07Z",
+      "side": 1,
+      "message": "And an extra HandleScope, and an extra Context::Scope, etc. It\u0027s probably not huge for this use, but it\u0027s a little more than just the map lookup.",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c2e230_0114fda8",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-03T18:54:07Z",
+      "side": 1,
+      "message": "nit: NOTREACHED() here, since this really ought not to happen",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377418b2_846d731b",
+        "filename": "extensions/renderer/one_time_message_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-03T18:54:07Z",
+      "side": 1,
+      "message": "nit: delete this line?",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
