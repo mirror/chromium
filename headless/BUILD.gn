@@ -246,7 +246,7 @@ if (headless_fontconfig_utils && !is_fuchsia) {
 
     deps = [
       "//third_party/fontconfig",
-      "//third_party/freetype",
+      "//third_party/harfbuzz-ng:font",
     ]
 
     configs += [ ":headless_implementation" ]
