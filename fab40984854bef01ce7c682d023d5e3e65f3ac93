@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cac79c7_f4757221",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-03T18:33:27Z",
+      "side": 1,
+      "message": ".nit 0u",
+      "range": {
+        "startLine": 179,
+        "startChar": 41,
+        "endLine": 179,
+        "endChar": 50
+      },
+      "revId": "fab40984854bef01ce7c682d023d5e3e65f3ac93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92dfcc08_87269bec",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-03T18:33:27Z",
+      "side": 1,
+      "message": "Why isn\u0027t this DCHECK_EQ?",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 11
+      },
+      "revId": "fab40984854bef01ce7c682d023d5e3e65f3ac93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
