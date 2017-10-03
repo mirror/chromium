@@ -16,6 +16,24 @@
       "revId": "e0daf3f1dd0e67b4f6caa80a378dfdde0d23ea6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8028a1fe_4b4b3e80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-03T07:31:09Z",
+      "side": 1,
+      "message": "These tests rely on the mime sniffing logic. If the browser can\u0027t recognize the response is HTML correctly, the browser doesn\u0027t execute window.parent.postMessage(). So the tests timeout.\n\nAccording to the MIME Sniffing spec, \"The user agent can also choose to opt out of sniffing for all resources.\"\nhttps://mimesniff.spec.whatwg.org/#handling-a-resource\nSo I think this test should not relay on the mime sniffing.\n\nWhen network service is not enabled, the mime sniffing logic is executed by MimeSniffingResourceHandler. So the response from the SW is sniffed by it.\n\nWhen the network is enabled, the mime sniffing logic is executed by URLLoaderImpl. That is in the net layer, and the response from the SW is not sniffed by it.",
+      "parentUuid": "04e05a53_72f1c270",
+      "revId": "e0daf3f1dd0e67b4f6caa80a378dfdde0d23ea6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
