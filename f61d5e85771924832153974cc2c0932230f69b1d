@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "69e43421_1abc1122",
+        "filename": "ash/public/interfaces/new_window.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T01:23:00Z",
+      "side": 1,
+      "message": "you\u0027re right, that is confusing. I didn\u0027t notice that, but we can remove that inheritance without issue it seems.",
+      "parentUuid": "1120d839_46122474",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "185b2411_daa9e4dc",
         "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.cc",
         "patchSetId": 1
@@ -48,6 +66,24 @@
       "writtenOn": "2017-10-03T00:44:01Z",
       "side": 1,
       "message": "I would just call ChromeNewWindowClient::Get()-\u003eShowKeyboardOverlay().",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028f73c1_0ab18226",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T01:23:00Z",
+      "side": 1,
+      "message": "The note in that function and the reliance on ash::KeyboardOverlayView makes it seem as if it belongs in ash (I know this doesn\u0027t move it to ash, but this is correct from the perspective of KeyboardHandler).",
+      "parentUuid": "185b2411_daa9e4dc",
       "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
