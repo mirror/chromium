@@ -125,6 +125,19 @@ void LockScreenController::AuthenticateUser(
       &LockScreenController::OnGetSystemSalt, base::Unretained(this)));
 }
 
+void LockScreenController::AddLockScreenAppsToFocusCycle() {
+  lock_screen_apps_part_of_focus_cycle_ = true;
+}
+
+void LockScreenController::RemoveLockScreenAppsFromFocusCycle() {
+  lock_screen_apps_part_of_focus_cycle_ = false;
+}
+
+void LockScreenController::HandleLockScreenAppsFocusOut(bool reverse) {
+  if (DataDispatcher())
+    DataDispatcher()->OnLockScreenAppsFocusOut(reverse);
+}
+
 void LockScreenController::AttemptUnlock(const AccountId& account_id) {
   if (!lock_screen_client_)
     return;
@@ -178,6 +191,13 @@ void LockScreenController::OnMaxIncorrectPasswordAttempted(
   if (!lock_screen_client_)
     return;
   lock_screen_client_->OnMaxIncorrectPasswordAttempted(account_id);
+}
+
+bool LockScreenController::FocusLockScreenApps(bool reverse) {
+  if (!lock_screen_client_ || !lock_screen_apps_part_of_focus_cycle_)
+    return false;
+  lock_screen_client_->FocusLockScreenApps(reverse);
+  return true;
 }
 
 void LockScreenController::DoAuthenticateUser(

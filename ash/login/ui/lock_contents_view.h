@@ -73,6 +73,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   // LoginDataDispatcher::Observer:
   void OnUsersChanged(const std::vector<mojom::UserInfoPtr>& users) override;
   void OnPinEnabledForUserChanged(const AccountId& user, bool enabled) override;
+  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+  void OnLockScreenAppsFocusOut(bool reverse) override;
 
   // SystemTrayFocusObserver:
   void OnFocusLeavingSystemTray(bool reverse) override;
@@ -173,6 +175,8 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
 
   std::unique_ptr<LoginBubble> error_bubble_;
   int unlock_attempt_ = 0;
+
+  bool lock_screen_apps_active_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LockContentsView);
 };
