@@ -69,6 +69,24 @@
       "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f10dc3_d991a719",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T07:38:18Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right, it reads in a loop until the pipe is closed.  BlockingCopyHelper\u0027s around handling the result of write_bytes was confusing me.  Is rather unfortunate that reading the source is necessary to figure out what the method actually does.",
+      "parentUuid": "57526886_356654d2",
+      "revId": "f52832aca8b3a84204969aaccaca41eb94d8c795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
