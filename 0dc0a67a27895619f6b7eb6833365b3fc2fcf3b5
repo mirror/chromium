@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb44ec2f_5b999881",
+        "filename": "components/flags_ui/resources/flags.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Done. Also indented the dom at the flagsTemplate level too.",
+      "parentUuid": "8409700d_3e891aa2",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2a5a573_ed0f637d",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2856e207_d832e730",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2a5a573_ed0f637d",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 18
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a65bffb1_d7794acd",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "122c19c0_fcda0b39",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 18
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f78f26c2_163a22cf",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "36061a40_ca13494e",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f78f26c2_163a22cf",
+      "range": {
+        "startLine": 227,
+        "startChar": 11,
+        "endLine": 227,
+        "endChar": 31
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82be658b_62aa5297",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-03T12:02:57Z",
       "side": 1,
       "message": "You use the |searchTerm| as a regular expression pattern, which... could lead to unintended effects and generally seems like a slightly too powerful tool (plus, the check below searches for the raw string). If you want case-insensitive searches, you might have to escape the search term (I would use the escapeRegExp() function defined at the very end of https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Using_special_characters).\n\nI\u0027m also not sure what the negative lookahead assertion is for...? If it does have a use, could you explain it in a comment for future clueless reviewers? :)",
+      "range": {
+        "startLine": 260,
+        "startChar": 35,
+        "endLine": 260,
+        "endChar": 45
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9dedb0_68662008",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Escaping for sure. Done \n\nThe negative look up was to prevents matching between tags. I don\u0027t need this now as I\u0027ve scoped to the flag name only now. I was doing full text search previously.",
+      "parentUuid": "82be658b_62aa5297",
       "range": {
         "startLine": 260,
         "startChar": 35,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "55c5ed26_acc2c663",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3d57a59_18f9f1a4",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 35
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "757a33c8_efaf0b0b",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 4
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-03T12:02:57Z",
       "side": 1,
       "message": "Can you use .textContent here or are we applying this to something more complicated than a text node?",
+      "range": {
+        "startLine": 270,
+        "startChar": 26,
+        "endLine": 270,
+        "endChar": 35
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be813698_bc08dbad",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "I\u0027ve refactored this to recreate the dom each time.",
+      "parentUuid": "757a33c8_efaf0b0b",
       "range": {
         "startLine": 270,
         "startChar": 26,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "88acaf8a_f3609b9c",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "Ack. The refactoring creates a element as suggested.",
+      "parentUuid": "e10ac66f_15b95d2a",
+      "range": {
+        "startLine": 271,
+        "startChar": 31,
+        "endLine": 271,
+        "endChar": 33
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26909dfb_f089d587",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 4
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-03T12:02:57Z",
       "side": 1,
       "message": "Do you actually want to remove _all_ whitespace in the string? It might be useful to be able to search for two words in sequence...",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 68
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23048e0c_bc9260d1",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-03T21:56:48Z",
+      "side": 1,
+      "message": "As the search scope is to flag name only, I felt there was a need to strip the white space. However thinking about it I might be better off replacing it with \u0027-\u0027 so that \u0027gpu blacklist\u0027 would match \u0027#ignore-gpu-blacklist\u0027.",
+      "parentUuid": "26909dfb_f089d587",
       "range": {
         "startLine": 286,
         "startChar": 64,
