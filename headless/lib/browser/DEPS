@@ -2,6 +2,7 @@ include_rules = [
   "+components/printing/browser",
   "+components/printing/common",
   "+components/security_state",
+  "+content/common/devtools",
   "+printing",
   "+storage/browser/quota",
   "+storage/common/quota",
