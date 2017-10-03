@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f21d6cd7_9712e9b1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T03:44:01Z",
+      "side": 1,
+      "message": "nit: we show console warnings not only for subresources but also for main resources by this CL, right?",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ad6ada_44b8cc1f",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 3
@@ -81,6 +98,24 @@
       "writtenOn": "2017-10-02T18:44:53Z",
       "side": 1,
       "message": "Let\u0027s just assume that WebFrameClient is always reachable here (since WebFrameClient being unreachable is almost the same thing as LocalFrameClient being unreachable). If that\u0027s the case, do we still need this to be able to return a bool? I can\u0027t think of cases where it\u0027d be useful to report outside a frame attached to a RenderFrameImpl, but maybe I\u0027m missing something.",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793ee771_bb1f1a74",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T03:44:01Z",
+      "side": 1,
+      "message": "Embedders that do not want to override the console message could still return false to let blink show the default message, right?",
+      "parentUuid": "8cc41122_0c57d738",
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
