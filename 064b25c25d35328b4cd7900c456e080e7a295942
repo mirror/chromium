@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aab24dd5_bb23d3f0",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-03T05:22:11Z",
+      "side": 1,
+      "message": "nit:also explain the extra check here in comment",
+      "revId": "064b25c25d35328b4cd7900c456e080e7a295942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fb4221_38d0fb23",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-03T05:22:11Z",
+      "side": 1,
+      "message": "please add a comment here indicating that this are commands that are also passed into devtools to handle.",
+      "range": {
+        "startLine": 98,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 70
+      },
+      "revId": "064b25c25d35328b4cd7900c456e080e7a295942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
