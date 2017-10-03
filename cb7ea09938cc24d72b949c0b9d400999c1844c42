@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd60f473_2015fcb4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "is this part of the warning message change?",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca03d4f7_d1eb2cb8",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the latter here, since suspicious-warn-text is a child of warning-content.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3fc423_e1e87b55",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the latter here, since suspicious-warn-text is a child of warning-content.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06af9cae_c7b2d15d",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the latter here, since suspicious-warn-text is a child of warn-content.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3125a701_131e90bf",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "can the decimal pixel value be avoided?",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda8a8b0_8e54cecb",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "Can we just apply a max-width to .warning-content instead, and remove the suspicious-warn-text span? Or maybe use display:flex to achieve the same desired layout so you won\u0027t need a hard-coded width at all.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39cddde9_f589f2d2",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "Can this be applied on the icon itself so that the container can be removed?",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ae8114_b9dcfb0b",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "can the decimal pixel value be avoided?",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683e5346_495a60c4",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "what is this for? the only paper-icon-button-light I see is the back button, which should use the standard size.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4557e18f_c7d6db8a",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I think here and the following two blocks, the same visual results can be achieved with simplified mark-up, along with shuffling some css rules, like so:\n\n\u003cdiv class\u003d\"control-line warning-content\"\u003e\n  \u003ciron-icon ...\u003e\n  \u003cspan\u003etext...\u003c/span\u003e\n  \u003cpaper-button ...\u003e\n\u003c/div\u003e\n\nWith this, you might need to use display:flex to achieve the desired layout, but it\u0027ll help make the mark-up a lot cleaner.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6858ee2_7ee80426",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I think you copied this from item.html, but there\u0027s no :empty css rule defined in this file.\n\nOn a separate note, I think instead of doing :empty { display: none;}, we should opt for \u003cspan hidden\u003d\"[[!text]]\"\u003e",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "460ea5c7_b2b7db3a",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you need !! here, since Javascript evaluates empty strings to falsey.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9223dc2_7323e693",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-03T18:49:25Z",
+      "side": 1,
+      "message": "You can combine these into:\n\nvar testWarningVisible(id, isVisible){\n  var f \u003d isVisible ? expectTrue : expectFalse;\n  f(extensions_test_util.isVisible(item, id));\n}\n\nthen do:\n\nitem.set(\u0027data.disableReasons.corruptInstall\u0027, true);\nPolymer.dom.flush();\ntestWarningVisible(#corrupted-warning, true);\ntestWarningVisible(#suspicious-warning, false);\ntestWarningVisible(#blacklisted-warning, false);",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
