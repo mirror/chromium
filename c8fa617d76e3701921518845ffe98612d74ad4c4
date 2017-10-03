@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91dbc4b7_1220bdde",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1500,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "It might be worth linking to the bug here, and clarifying that this logic exists to verify that we don\u0027t crash in this case.",
+      "range": {
+        "startLine": 1500,
+        "startChar": 28,
+        "endLine": 1500,
+        "endChar": 33
+      },
+      "revId": "c8fa617d76e3701921518845ffe98612d74ad4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
