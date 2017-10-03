@@ -34,6 +34,24 @@
       "revId": "28159cb795fec8ef308a4cb8f15ba1c3b65d0fb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccf07b9_134e7980",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T05:59:13Z",
+      "side": 1,
+      "message": "\"const static\" sounds good. Done.",
+      "parentUuid": "1dea8e78_8501a3ea",
+      "revId": "28159cb795fec8ef308a4cb8f15ba1c3b65d0fb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
