@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c28e740a_2bb35184",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-03T18:32:58Z",
+      "side": 1,
+      "message": "Is there such a thing as a non-thenable promise?",
+      "range": {
+        "startLine": 148,
+        "startChar": 47,
+        "endLine": 148,
+        "endChar": 55
+      },
+      "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5f53c37_91f0a667",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserTest.cpp",
         "patchSetId": 19
@@ -13,6 +36,47 @@
       "writtenOn": "2017-09-25T15:32:33Z",
       "side": 1,
       "message": "Putting \"pan-left pan-right\" will cause |value| to be nullptr. This is because\nthe way CSSPropertyAPIScrollCustomization.cpp implements parsing expects only one item for x-direction. But I am not sure if this is correct (actually no idea how it should be treated).\n\nIs this fine, or a correct parsing will convert something like \"pan-left pan-right pan-up pan-up \" to \"pan-x pan-up\"?",
+      "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc694b9f_c39d7a43",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-03T18:32:58Z",
+      "side": 1,
+      "message": "We should probably do whatever touch-action does here.",
+      "parentUuid": "c5f53c37_91f0a667",
+      "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799911fc_bd65364b",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-03T18:32:58Z",
+      "side": 1,
+      "message": "ScrollState doesn\u0027t represent an arbitrary gesture.\n\nPerhaps HasScrollCustomizationForGesture-\u003eIsScrollCustomized",
+      "range": {
+        "startLine": 179,
+        "startChar": 5,
+        "endLine": 179,
+        "endChar": 37
+      },
       "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
