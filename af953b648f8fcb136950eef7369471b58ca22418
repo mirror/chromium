@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "742bdc30_02252477",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T05:23:07Z",
+      "side": 1,
+      "message": "I believe that this replicates the old behaviour, but I didn\u0027t quite understand the old comment, so please review this carefully.\n\nBasically, we always used to increment NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP up until the point that we called metrics_-\u003eResolve(), and so this replicates that.",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 77
+      },
+      "revId": "af953b648f8fcb136950eef7369471b58ca22418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b673a7ec_c108f9d0",
+        "filename": "chrome/browser/installable/installable_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-03T05:23:07Z",
+      "side": 1,
+      "message": "Note, in the existing code, we increment  COMPLETE_NOT_PROGRESSIVE_WEB_APP in AccumulatingRecorder::Flush() if waiting_for_service_worker is true.  That doesn\u0027t seem right; I think they should be one of the IN_PROGRESS statuses.  Now, the equivalent of calling Flush with  waiting_for_service_worker \u003d\u003d true is calling Resolve with NON_PWA, which means that the IN_PROGRESS_NON_PROGRESSIVE_WEB_APP will be used, which I think is correct.\n\nPlease review carefully.",
+      "range": {
+        "startLine": 233,
+        "startChar": 2,
+        "endLine": 243,
+        "endChar": 59
+      },
+      "revId": "af953b648f8fcb136950eef7369471b58ca22418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
