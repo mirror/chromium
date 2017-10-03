@@ -35,6 +35,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutDetailsMarker.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -888,10 +889,13 @@ String MarkerTextForListItem(Element* element) {
   element->GetDocument().UpdateStyleAndLayout();
 
   LayoutObject* layout_object = element->GetLayoutObject();
-  if (!layout_object || !layout_object->IsListItem())
-    return String();
-
-  return ToLayoutListItem(layout_object)->MarkerText();
+  if (layout_object) {
+    if (layout_object->IsListItem())
+      return ToLayoutListItem(layout_object)->MarkerText();
+    if (layout_object->IsLayoutNGListItem())
+      return ToLayoutNGListItem(layout_object)->MarkerTextWithoutSuffix();
+  }
+  return g_empty_string;
 }
 
 }  // namespace blink
