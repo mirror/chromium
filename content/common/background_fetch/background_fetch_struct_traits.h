@@ -49,6 +49,10 @@ struct CONTENT_EXPORT
       const content::BackgroundFetchRegistration& registration) {
     return registration.id;
   }
+  static const std::string& job_guid(
+      const content::BackgroundFetchRegistration& registration) {
+    return registration.job_guid;
+  }
   static uint64_t upload_total(
       const content::BackgroundFetchRegistration& registration) {
     return registration.upload_total;

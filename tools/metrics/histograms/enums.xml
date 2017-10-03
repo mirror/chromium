@@ -2707,6 +2707,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="176" label="SWDH_PROVIDER_CREATED_DUPLICATE_ID"/>
   <int value="177" label="SWDH_PROVIDER_CREATED_BAD_ID"/>
   <int value="178" label="RFH_KEEP_ALIVE_HANDLE_REQUESTED_INCORRECTLY"/>
+  <int value="179" label="BFSI_INVALID_JOB_GUID"/>
 </enum>
 
 <enum name="BadMessageReasonExtensions">

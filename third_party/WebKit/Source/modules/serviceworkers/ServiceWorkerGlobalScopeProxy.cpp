@@ -199,6 +199,7 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchFailEvent(
 void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
     int event_id,
     const WebString& id,
+    const WebString& job_guid,
     const WebVector<WebBackgroundFetchSettledFetch>& fetches) {
   DCHECK(WorkerGlobalScope()->IsContextThread());
   WaitUntilObserver* observer = WaitUntilObserver::Create(
@@ -212,8 +213,8 @@ void ServiceWorkerGlobalScopeProxy::DispatchBackgroundFetchedEvent(
   ScriptState::Scope scope(script_state);
 
   BackgroundFetchedEvent* event = BackgroundFetchedEvent::Create(
-      EventTypeNames::backgroundfetched, init, fetches, script_state, observer,
-      worker_global_scope_->registration());
+      EventTypeNames::backgroundfetched, init, job_guid, fetches, script_state,
+      observer, worker_global_scope_->registration());
 
   WorkerGlobalScope()->DispatchExtendableEvent(event, observer);
 }

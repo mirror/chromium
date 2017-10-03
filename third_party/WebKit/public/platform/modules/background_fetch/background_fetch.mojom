@@ -38,6 +38,7 @@ struct BackgroundFetchOptions {
 // https://wicg.github.io/background-fetch/#background-fetch-registration
 struct BackgroundFetchRegistration {
   string id;
+  string job_guid;
   uint64 upload_total;
   uint64 uploaded;
   uint64 download_total;
@@ -62,6 +63,7 @@ interface BackgroundFetchService {
   UpdateUI(int64 service_worker_registration_id,
            url.mojom.Origin origin,
            string id,
+           string job_guid,
            string title)
       => (BackgroundFetchError error);
 
@@ -69,7 +71,8 @@ interface BackgroundFetchService {
   // |service_worker_registration_id| and the |id|.
   Abort(int64 service_worker_registration_id,
         url.mojom.Origin origin,
-        string id)
+        string id,
+        string job_guid)
       => (BackgroundFetchError error);
 
   // Gets the Background Fetch registration identified by the

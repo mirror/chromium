@@ -48,11 +48,13 @@ class CONTENT_EXPORT BackgroundFetchServiceImpl
   void UpdateUI(int64_t service_worker_registration_id,
                 const url::Origin& origin,
                 const std::string& id,
+                const std::string& job_guid,
                 const std::string& title,
                 UpdateUICallback callback) override;
   void Abort(int64_t service_worker_registration_id,
              const url::Origin& origin,
              const std::string& id,
+             const std::string& job_guid,
              AbortCallback callback) override;
   void GetRegistration(int64_t service_worker_registration_id,
                        const url::Origin& origin,
@@ -63,17 +65,13 @@ class CONTENT_EXPORT BackgroundFetchServiceImpl
               GetIdsCallback callback) override;
 
  private:
-  // Validates and returns whether the |id| contains a valid value. The
-  // renderer will be flagged for having send a bad message if it isn't.
+  // Validates and returns whether the |id|, |job_guid|, |requests| and |title|
+  // respectively have valid values. The renderer will be flagged for having
+  // sent a bad message if the values are invalid.
   bool ValidateId(const std::string& id) WARN_UNUSED_RESULT;
-
-  // Validates and returns whether |requests| contains at least a valid request.
-  // The renderer will be flagged for having send a bad message if it isn't.
+  bool ValidateJobGuid(const std::string& job_guid) WARN_UNUSED_RESULT;
   bool ValidateRequests(const std::vector<ServiceWorkerFetchRequest>& requests)
       WARN_UNUSED_RESULT;
-
-  // Validates and returns whether the |title| contains a valid value. The
-  // renderer will be flagged for having send a bad message if it isn't.
   bool ValidateTitle(const std::string& title) WARN_UNUSED_RESULT;
 
   // Id of the renderer process that this service has been created for.

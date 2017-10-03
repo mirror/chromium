@@ -27,6 +27,7 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
 
  public:
   BackgroundFetchRegistration(String id,
+                              String job_guid,
                               unsigned long long upload_total,
                               unsigned long long uploaded,
                               unsigned long long download_total,
@@ -65,6 +66,7 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   Member<ServiceWorkerRegistration> registration_;
 
   String id_;
+  String job_guid_;
   unsigned long long upload_total_;
   unsigned long long uploaded_;
   unsigned long long download_total_;

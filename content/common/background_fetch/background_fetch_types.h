@@ -53,6 +53,7 @@ struct CONTENT_EXPORT BackgroundFetchRegistration {
   ~BackgroundFetchRegistration();
 
   std::string id;
+  std::string job_guid;  // Not exposed to JavaScript.
   uint64_t upload_total = 0;
   uint64_t uploaded = 0;
   uint64_t download_total = 0;
