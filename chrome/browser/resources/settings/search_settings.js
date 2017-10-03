@@ -213,13 +213,14 @@ cr.define('settings', function() {
     // Dynamically position the bubble at the edge the associated control
     // element.
     var updatePosition = function() {
-      if (innards.classList.contains('above')) {
-        searchBubble.style.top =
-            element.offsetTop - searchBubble.offsetHeight + 'px';
-      } else {
-        searchBubble.style.top =
-            element.offsetTop + element.offsetHeight + 'px';
+      let top = innards.classList.contains('above') ?
+          -searchBubble.offsetHeight :
+          element.offsetHeight;
+      if (element.is === undefined) {
+        // The position needs the outer scope.
+        top += element.offsetTop;
       }
+      searchBubble.style.top = top + 'px';
     };
     updatePosition();
 
