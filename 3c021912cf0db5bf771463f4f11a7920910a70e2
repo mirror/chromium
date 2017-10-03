@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "504199dc_4a7ebe30",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T04:27:50Z",
+      "side": 1,
+      "message": "My intention is to only fill the 0th frame, since all other frames will not be displayed until they are fully decoded (and thus the fill is unneeded). That is, unless there is an error. Good call. :)\n\nIt seems to me like there are 2 cases where we should zero-fill the remaining pixels:\n1.) Any time there is an error (so we can display the portion of the frame)\n2.) On the first kIncompleteInput of the 0th frame\n\n(That should handle the problem with re-zero-filling.)\n\nAlthough, it sounds you like feel we shouldn\u0027t zero-fill if the frame already contains prior frame contents? I\u0027m okay with that idea. But before I do it, I just want to make sure I understand that correctly.\n\nI think a way I can avoid re-zero-filling and handle the prior-contents at the same time is by leveraging the Partial status.",
+      "parentUuid": "2a7b20e1_430fab98",
+      "range": {
+        "startLine": 290,
+        "startChar": 6,
+        "endLine": 290,
+        "endChar": 19
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fff4293_cb77309f",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "df761a23_2ac58bbb",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T04:27:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fff4293_cb77309f",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 36
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dcf6fe4_944e6199",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-02T12:55:42Z",
       "side": 1,
       "message": "This case should look pretty similar to the prior one. How about\n\n    case SkCodec::kIncompleteInput:\n    case SkCodec::kErrorInInput: {\n      IntSize image_size \u003d Size();\n      frame.ZeroFillFrameRect(IntRect(0, rows_decoded, image_size.Width(),\n                                      image_size.Height() - rows_decoded));\n      frame.SetPixelsChanged(true);\n      if (incremental_decode_result \u003d\u003d SkCodec::kErrorInInput) {\n        SetFailed();\n        break;\n      }\n      if (FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {\n        SetFailed();\n      }\n      break;\n    }\n\nYou could even combine those if statements into one:\n\n      if (incremental_decode_result \u003d\u003d SkCodec::kErrorInInput\n          || FrameIsReceivedAtIndex(index) || IsAllDataReceived()) {\n        SetFailed();\n      }\n      break;",
+      "range": {
+        "startLine": 300,
+        "startChar": 4,
+        "endLine": 300,
+        "endChar": 31
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4689d48_4f226055",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T04:27:50Z",
+      "side": 1,
+      "message": "Done with a variation.",
+      "parentUuid": "8dcf6fe4_944e6199",
       "range": {
         "startLine": 300,
         "startChar": 4,
@@ -91,6 +163,30 @@
       "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e274daed_cc02eab4",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T04:27:50Z",
+      "side": 1,
+      "message": "The default case doesn\u0027t call this.\nHowever, the default case should almost never actually happen. So slowing down the default case is probably not much of a problem. And if it is, we can wrap it in if (one_of_the_specific_return_values)\n\nIn the kSuccess case, there are extra function calls which must happen after SetPixelsChanged(true); is called. So I\u0027ll have to move that to the bottom as well. But I think that is alright.",
+      "parentUuid": "2866f93f_446ce676",
+      "range": {
+        "startLine": 304,
+        "startChar": 6,
+        "endLine": 304,
+        "endChar": 35
+      },
+      "revId": "3c021912cf0db5bf771463f4f11a7920910a70e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
