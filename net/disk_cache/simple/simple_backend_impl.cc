@@ -16,8 +16,10 @@
 #endif
 
 #include "base/bind.h"
+#include "base/debug/stack_trace.h"
 #include "base/callback.h"
 #include "base/files/file_util.h"
+#include "base/hack.h"
 #include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/macros.h"
@@ -75,7 +77,13 @@ class LeakySequencedWorkerPool {
                                     kThreadNamePrefix,
                                     base::TaskPriority::USER_BLOCKING)) {}
 
-  void FlushForTesting() { sequenced_worker_pool_->FlushForTesting(); }
+  void FlushForTesting() {
+    base::debug::StackTrace().Print();
+    HACK_WaitUntil(base::Starting);
+    HACK_AdvanceState(base::Starting, base::GoingToFlushWorkerPool);
+    sequenced_worker_pool_->FlushForTesting();
+    HACK_AdvanceState(base::GoingToFlushWorkerPool, base::FlushedWorkerPool);
+  }
 
   scoped_refptr<base::TaskRunner> GetTaskRunner() {
     return sequenced_worker_pool_->GetTaskRunnerWithShutdownBehavior(
@@ -271,9 +279,13 @@ SimpleBackendImpl::SimpleBackendImpl(
   if (orig_max_size_ < 0)
     orig_max_size_ = 0;
   MaybeHistogramFdLimit(cache_type_);
+  LOG(ERROR) << "SimpleEntryImpl";
+  base::debug::StackTrace().Print();
 }
 
 SimpleBackendImpl::~SimpleBackendImpl() {
+  LOG(ERROR) << "~SimpleBackendImpl";
+  base::debug::StackTrace().Print();
   index_->WriteToDisk(SimpleIndex::INDEX_WRITE_REASON_SHUTDOWN);
 }
 

@@ -893,10 +893,15 @@ void SequencedWorkerPool::Inner::CleanupForTesting() {
   DCHECK_NE(g_all_pools_state, AllPoolsState::REDIRECTED_TO_TASK_SCHEDULER);
   AutoLock lock(lock_);
   CHECK_EQ(CLEANUP_DONE, cleanup_state_);
+  LOG(ERROR) << "shutdown_called_=" << shutdown_called_;
   if (shutdown_called_)
     return;
+  LOG(ERROR) << "pending_tasks_.empty=" << pending_tasks_.empty();
+  LOG(ERROR) << "waiting_thread_count_=" << waiting_thread_count_;
+  LOG(ERROR) << "threads_.size()=" << threads_.size();
   if (pending_tasks_.empty() && waiting_thread_count_ == threads_.size())
     return;
+  LOG(ERROR) << "doing 'full' cleanup";
   cleanup_state_ = CLEANUP_REQUESTED;
   cleanup_idlers_ = 0;
   has_work_cv_.Signal();

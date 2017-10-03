@@ -10,6 +10,7 @@
 #include "base/files/file.h"
 #include "base/files/file_util.h"
 #include "base/files/memory_mapped_file.h"
+#include "base/hack.h"
 #include "base/hash.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -366,7 +367,11 @@ void SimpleIndexFile::LoadIndexEntries(base::Time cache_last_modified,
                                   cache_type_,
                                   cache_last_modified, cache_directory_,
                                   index_file_, out_result);
+  //HACK_WaitUntil(base::FlushedWorkerPool);
+  LOG(ERROR) << "About to post LoadIndexEntries";
   worker_pool_->PostTaskAndReply(FROM_HERE, task, callback);
+  LOG(ERROR) << "Posted LoadIndexEntries";
+  //HACK_AdvanceState(base::FlushedWorkerPool, base::PostedLoadIndexEntries);
 }
 
 void SimpleIndexFile::WriteToDisk(SimpleIndex::IndexWriteToDiskReason reason,
