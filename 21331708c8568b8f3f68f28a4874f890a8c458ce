@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4b3f5b9b_b5dc4c99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 1229,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Good point -- originally we were mixing the bridge in here, but now we can just return the same object.  Done.",
+      "parentUuid": "8509d9d8_4541ca37",
+      "range": {
+        "startLine": 1228,
+        "startChar": 4,
+        "endLine": 1229,
+        "endChar": 53
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bb409d6_00753d82",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada5e964_0b8dbf3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Done: Added enabling to SelectionClientManager and a setter in ChromeActivity.",
+      "parentUuid": "3bb409d6_00753d82",
+      "range": {
+        "startLine": 203,
+        "startChar": 12,
+        "endLine": 208,
+        "endChar": 15
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c8bfe0d7_89409b2b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right.",
+      "parentUuid": "92a517b3_6b31659d",
+      "range": {
+        "startLine": 14,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13882f55_c0e8af21",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9543d6f_185bd245",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right.",
+      "parentUuid": "13882f55_c0e8af21",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "69a96198_92bcf70a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce1cb9f7_e5108a96",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4e96a3c_7cd75671",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
         "patchSetId": 13
@@ -137,6 +257,30 @@
       "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c940dd_62cef100",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-03T21:53:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4e96a3c_7cd75671",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
