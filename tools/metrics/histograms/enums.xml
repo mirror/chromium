@@ -23141,6 +23141,17 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="LoginCustomFlags">
+<!--
+Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
+This enum is verified by AboutFlagsHistogramTest unit test.
+To add a new entry, add it with any unique value and run test to compute valid
+value. After that run tools/metrics/histograms/validate_format.py to find out
+where the value should be inserted to maintain ordering.
+Don't remove entries when removing a flag, they are still used to decode data
+from previous Chrome versions.
+-->
+
+  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
   <int value="-2146613579" label="V8Future:disabled"/>
   <int value="-2145472146" label="OfflinePagesResourceBasedSnapshot:disabled"/>
   <int value="-2143961262" label="D3DVsync:disabled"/>
@@ -23885,17 +23896,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="0" label="BAD_FLAG_FORMAT">
     Command-line flag doesn't start with two dashes.
   </int>
-<!--
-Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
-This enum is verified by AboutFlagsHistogramTest unit test.
-To add a new entry, add it with any unique value and run test to compute valid
-value. After that run tools/metrics/histograms/validate_format.py to find out
-where the value should be inserted to maintain ordering.
-Don't remove entries when removing a flag, they are still used to decode data
-from previous Chrome versions.
--->
-
-  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
   <int value="7444737" label="NTPSuggestionsStandaloneUI:disabled"/>
   <int value="7533886" label="disable-offer-store-unmasked-wallet-cards"/>
   <int value="10458238" label="disable-print-preview-simplify"/>
@@ -24363,6 +24363,7 @@ from previous Chrome versions.
   <int value="1389729816" label="data-reduction-proxy-lo-fi"/>
   <int value="1397069250" label="NetworkService:disabled"/>
   <int value="1405459667" label="enable-fast-text-autosizing"/>
+  <int value="1406046556" label="enable-slimming-paint-v175"/>
   <int value="1406354320" label="MacViewsWebUIDialogs:enabled"/>
   <int value="1407625309"
       label="disable-minimize-on-second-launcher-item-click"/>
