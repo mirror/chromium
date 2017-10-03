@@ -985,5 +985,9 @@
       name: "navigatorPlatformOverride",
       type: "String",
     },
+    {
+      name: "shouldThrottlePushState",
+      initial: true,
+    }
   ],
 }

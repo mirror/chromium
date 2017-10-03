@@ -28,8 +28,11 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/frame/FrameConsole.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
+#include "core/frame/Settings.h"
+#include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/HistoryItem.h"
@@ -141,6 +144,9 @@ HistoryScrollRestorationType History::ScrollRestorationInternal() const {
 // need. However, it does somewhat mitigate the immediate concern of |pushState|
 // and |replaceState| DoS (assuming the renderer has not been compromised).
 bool History::ShouldThrottleStateObjectChanges() {
+  if (!GetFrame()->GetSettings()->GetShouldThrottlePushState())
+    return false;
+
   const int kStateUpdateLimit = 50;
 
   if (state_flood_guard.count > kStateUpdateLimit) {
@@ -284,8 +290,14 @@ void History::StateObjectAdded(RefPtr<SerializedScriptValue> data,
     return;
   }
 
-  if (ShouldThrottleStateObjectChanges())
+  if (ShouldThrottleStateObjectChanges()) {
+    GetFrame()->Console().AddMessage(ConsoleMessage::Create(
+        kJSMessageSource, kWarningMessageLevel,
+        "Throttling history state changes to prevent the browser from hanging. "
+        "To disable this throttling use the --disable-pushstate-throttle "
+        "flag."));
     return;
+  }
 
   GetFrame()->Loader().UpdateForSameDocumentNavigation(
       full_url, kSameDocumentNavigationHistoryApi, std::move(data),
