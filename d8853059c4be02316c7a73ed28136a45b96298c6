@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6bc65d0_899cf383",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-03T18:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1cac0cc_aed87ca4",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 33
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b96242b7_18693e65",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9542c73f_4a7e1b8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-03T18:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b96242b7_18693e65",
+      "range": {
+        "startLine": 1088,
+        "startChar": 45,
+        "endLine": 1088,
+        "endChar": 75
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a8448f8b_213f853e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-03T18:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387ca2f7_dd99e972",
+      "range": {
+        "startLine": 1094,
+        "startChar": 12,
+        "endLine": 1094,
+        "endChar": 31
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d102da9_4f8c7d29",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
         "patchSetId": 8
@@ -85,6 +157,24 @@
       "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d990ac_2f779264",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-03T18:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d102da9_4f8c7d29",
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a62d02_a01fb986",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-03T18:46:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "270a7cb3_443324f4",
+      "range": {
+        "startLine": 427,
+        "startChar": 45,
+        "endLine": 427,
+        "endChar": 57
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
