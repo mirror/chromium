@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "523deaf9_12290c49",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-03T10:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53dbd59_289f55c6",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a42cd436_83c98c16",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "12a8764c_5294ca5f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-03T10:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a42cd436_83c98c16",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a561013_6a916d5f",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "1fc03654de6c6d0728463987abba982263e45776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06694e16_a9d68650",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-03T10:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a561013_6a916d5f",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 15
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +186,54 @@
       "revId": "1fc03654de6c6d0728463987abba982263e45776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53302c18_c0ba9b69",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-03T10:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e37a5bad_b3901139",
+      "range": {
+        "startLine": 69,
+        "startChar": 58,
+        "endLine": 69,
+        "endChar": 64
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d112b452_0f1597e7",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItemTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-03T10:57:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3056ce03_4fc3d455",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "1fc03654de6c6d0728463987abba982263e45776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
