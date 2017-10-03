@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "111b1c59_e9a8a17f",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-03T22:41:53Z",
+      "side": 1,
+      "message": "nit: tautological error handling, can you return ProcessReadPixels directly?",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53dca815_12028e03",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1119849
+      },
+      "writtenOn": "2017-10-03T22:41:53Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee5db679_da0e1987",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 6
