@@ -4,9 +4,13 @@
 
 #include "components/offline_pages/core/prefetch/prefetch_downloader_impl.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "base/time/default_clock.h"
+#include "base/time/time.h"
 #include "components/download/public/download_params.h"
 #include "components/download/public/download_service.h"
 #include "components/offline_pages/core/offline_event_logger.h"
@@ -18,6 +22,10 @@
 
 namespace offline_pages {
 namespace {
+
+// TODO(dewittj): Unify this with FreshnessPeriodForState from
+// stale_entry_finalizer_task.cc
+constexpr base::TimeDelta kDownloadCancelTime = base::TimeDelta::FromDays(2);
 
 void NotifyDispatcher(PrefetchService* service, PrefetchDownloadResult result) {
   if (service) {
@@ -32,7 +40,8 @@ void NotifyDispatcher(PrefetchService* service, PrefetchDownloadResult result) {
 PrefetchDownloaderImpl::PrefetchDownloaderImpl(
     download::DownloadService* download_service,
     version_info::Channel channel)
-    : download_service_(download_service),
+    : clock_(new base::DefaultClock()),
+      download_service_(download_service),
       channel_(channel),
       weak_ptr_factory_(this) {
   DCHECK(download_service);
@@ -106,6 +115,7 @@ void PrefetchDownloaderImpl::StartDownload(
       download::SchedulingParams::NetworkRequirements::UNMETERED;
   params.scheduling_params.battery_requirements =
       download::SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE;
+  params.scheduling_params.cancel_time = clock_->Now() + kDownloadCancelTime;
   params.request_params.url = PrefetchDownloadURL(download_location, channel_);
   // The download service can queue the download even if it is not fully up yet.
   download_service_->StartDownload(params);
@@ -161,6 +171,11 @@ void PrefetchDownloaderImpl::OnDownloadFailed(const std::string& download_id) {
   prefetch_service_->GetLogger()->RecordActivity(
       "Downloader: Download failed, download_id=" + download_id);
   NotifyDispatcher(prefetch_service_, result);
+}
+
+void PrefetchDownloaderImpl::SetClockForTest(
+    std::unique_ptr<base::Clock> clock) {
+  clock_ = std::move(clock);
 }
 
 void PrefetchDownloaderImpl::OnStartDownload(
