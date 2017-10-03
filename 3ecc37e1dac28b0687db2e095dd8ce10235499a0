@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b36af71d_37d3fa52",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T15:34:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure this code is correct anymore with the context of this fix.\n\nIf the first_bubbling_scroll_target_.target is destroyed then all bubbling is canceled and I think this is at odds with your change.",
+      "revId": "3ecc37e1dac28b0687db2e095dd8ce10235499a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fc7a75_182543eb",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-10-03T15:34:06Z",
+      "side": 1,
+      "message": "I understand that this is called DummyGestureScrollUpdate but I\u0027d prefer a more explicit name like fake_scroll_update so it defines what the event type is.",
+      "revId": "3ecc37e1dac28b0687db2e095dd8ce10235499a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
