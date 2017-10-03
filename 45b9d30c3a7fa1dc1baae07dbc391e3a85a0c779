@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d3580597_09548d76",
+        "filename": "components/translate/core/browser/translate_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-03T00:57:14Z",
+      "side": 1,
+      "message": "The comment is still accurate (the method is static, so it accepts the language model as an argument), but I\u0027ve updated it to use the actual argument name.",
+      "parentUuid": "81aacde3_a6c9da70",
+      "revId": "45b9d30c3a7fa1dc1baae07dbc391e3a85a0c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b3a2262_94826c51",
         "filename": "components/translate/core/browser/translate_manager_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "45b9d30c3a7fa1dc1baae07dbc391e3a85a0c779",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1615c6_f8fa8e23",
+        "filename": "components/translate/core/browser/translate_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-03T00:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b3a2262_94826c51",
+      "revId": "45b9d30c3a7fa1dc1baae07dbc391e3a85a0c779",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
