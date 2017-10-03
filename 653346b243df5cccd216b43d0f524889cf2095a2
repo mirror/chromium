@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894174c9_f650b795",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-03T16:06:05Z",
+      "side": 1,
+      "message": "nit: large_shadow_layer_ \u003d std::make_unique\u003cui::Layer\u003e();",
+      "revId": "653346b243df5cccd216b43d0f524889cf2095a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "752f0694_ed5d2591",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-03T16:06:05Z",
+      "side": 1,
+      "message": "nit: update this to use std::make_unique too",
+      "revId": "653346b243df5cccd216b43d0f524889cf2095a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
