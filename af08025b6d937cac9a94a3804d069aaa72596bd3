@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "0566f0a8_dc0c15e9",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-03T23:31:55Z",
+      "side": 1,
+      "message": "Sorry, I misspoke here, 1000000/44100 is a rational number. Still the problem is that this number has an infinite representation in binary form, so it\u0027t can\u0027t be stored in floating-point type.",
+      "parentUuid": "e3f4bc87_398ecfa5",
+      "revId": "af08025b6d937cac9a94a3804d069aaa72596bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8323cac8_9d1a4300",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 8
