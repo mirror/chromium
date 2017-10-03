@@ -134,6 +134,24 @@
       "revId": "65b7d4418b037088319c56d28877225e9db34881",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae3072b9_13763886",
+        "filename": "ui/views/animation/ink_drop_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-03T20:11:06Z",
+      "side": 1,
+      "message": "OK, renamed it to InkDropRippleAnimationEnded",
+      "parentUuid": "10acff7f_fe867522",
+      "revId": "65b7d4418b037088319c56d28877225e9db34881",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
