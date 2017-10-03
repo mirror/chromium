@@ -80,6 +80,27 @@ const chromeos::AudioDevice* GetDeviceFromId(
   return nullptr;
 }
 
+base::StringPiece GetHardwareDeviceFromDeviceId(
+    const chromeos::AudioDeviceList& devices,
+    bool is_input,
+    const std::string& device_id) {
+  std::string normalized_id = device_id;
+  uint64_t u64_device_id = 0;
+  if (AudioDeviceDescription::IsDefaultDevice(device_id)) {
+    u64_device_id =
+        is_input ? GetPrimaryActiveInputNode() : GetPrimaryActiveutputNode();
+  } else {
+    if (!base::StringToUint64(normalized_id, &u64_device_id))
+      return "";
+  }
+
+  const chromeos::AudioDevice* device = GetDeviceFromId(devices, u64_device_id);
+  if (!device)
+    return "";
+
+  return device.device_name;
+}
+
 // Process |device_list| that two shares the same dev_index by creating a
 // virtual device name for them.
 void ProcessVirtualDeviceName(AudioDeviceNames* device_names,
@@ -202,24 +223,17 @@ std::string AudioManagerCras::GetAssociatedOutputDeviceID(
   chromeos::AudioDeviceList devices;
   GetAudioDevices(&devices);
 
-  uint64_t device_id = 0;
   if (input_device_id == AudioDeviceDescription::kDefaultDeviceId) {
-    return AudioDeviceDescription::kDefaultDeviceId;
-  } else {
-    // At this point, we know we have an ordinary input device id, so we parse
-    // the string for its device_id.
-    if (!base::StringToUint64(input_device_id, &device_id))
-      return "";
+    // Note: the default input should not be associated to any output, as this
+    // may lead to accidental ues of a pinned stream.
+    return "";
   }
 
-  // Find the device in the device list to get the device name (identifying the
-  // hardware device).
-  const chromeos::AudioDevice* input_device =
-      GetDeviceFromId(devices, device_id);
-  if (!input_device)
-    return "";
+  const base::StringPiece device_name =
+      GetHardwareDeviceFromDeviceId(devices, true, input_device_id);
 
-  const base::StringPiece device_name = input_device->device_name;
+  if (device_name.empty())
+    return "";
 
   // Now search for an output device with the same device name.
   auto output_device_it = std::find_if(
@@ -250,6 +264,20 @@ std::string AudioManagerCras::GetDefaultOutputDeviceID() {
   }
   WaitEventOrShutdown(&event);
   return base::Uint64ToString(active_output_node_id);
+}
+
+std::string GetGroupIdOutput(const std::string& output_device_id) {
+  chromeos::AudioDeviceList devices;
+  GetAudioDevices(&devices);
+
+  return GetHardwareDeviceFromDeviceId(devices, false, output_device_id);
+}
+
+std::string GetGroupIdInput(const std::string& input_device_id) {
+  chromeos::AudioDeviceList devices;
+  GetAudioDevices(&devices);
+
+  return GetHardwareDeviceFromDeviceId(devices, true, input_device_id);
 }
 
 const char* AudioManagerCras::GetName() {
