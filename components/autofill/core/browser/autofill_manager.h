@@ -36,14 +36,6 @@
 #include "components/autofill/core/browser/autofill_assistant.h"
 #endif
 
-// This define protects some debugging code (see DumpAutofillData). This
-// is here to make it easier to delete this code when the test is complete,
-// and to prevent adding the code on mobile where there is no desktop (the
-// debug dump file is written to the desktop) or command-line flags to enable.
-#if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
-#define ENABLE_FORM_DEBUG_DUMP
-#endif
-
 namespace gfx {
 class RectF;
 }
@@ -487,11 +479,6 @@ class AutofillManager : public AutofillHandler,
       size_t current_index,
       const ServerFieldTypeSet& upload_types);
 
-#ifdef ENABLE_FORM_DEBUG_DUMP
-  // Dumps the cached forms to a file on disk.
-  void DumpAutofillData(bool imported_cc) const;
-#endif
-
   // Logs the card upload decisions in UKM and UMA.
   // |upload_decision_metrics| is a bitmask of
   // |AutofillMetrics::CardUploadDecisionMetric|.
@@ -583,13 +570,6 @@ class AutofillManager : public AutofillHandler,
   bool found_cvc_value_in_non_cvc_field_;
 
   GURL pending_upload_request_url_;
-
-#ifdef ENABLE_FORM_DEBUG_DUMP
-  // The last few autofilled forms (key/value pairs) submitted, for debugging.
-  // TODO(brettw) this should be removed. See DumpAutofillData.
-  std::vector<std::map<std::string, base::string16>>
-      recently_autofilled_forms_;
-#endif
 
   // Suggestion backend ID to ID mapping. We keep two maps to convert back and
   // forth. These should be used only by BackendIDToInt and IntToBackendID.

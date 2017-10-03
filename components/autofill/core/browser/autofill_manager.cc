@@ -1227,36 +1227,6 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
           &imported_credit_card_matches_masked_server_credit_card))
     return;
 
-#ifdef ENABLE_FORM_DEBUG_DUMP
-  // Debug code for research on what autofill Chrome extracts from the last few
-  // forms when submitting credit card data. See DumpAutofillData().
-  bool dump_data =
-      base::CommandLine::ForCurrentProcess()->HasSwitch("dump-autofill-data");
-
-  // Save the form data for future dumping.
-  if (dump_data) {
-    if (recently_autofilled_forms_.size() > 5)
-      recently_autofilled_forms_.erase(recently_autofilled_forms_.begin());
-
-    recently_autofilled_forms_.push_back(
-        std::map<std::string, base::string16>());
-    auto& map = recently_autofilled_forms_.back();
-    for (const auto& field : submitted_form) {
-      AutofillType type = field->Type();
-      // Even though this is for development only, mask full credit card #'s.
-      if (type.GetStorableType() == CREDIT_CARD_NUMBER &&
-          field->value.size() > 4) {
-        map[type.ToString()] = base::ASCIIToUTF16("...(omitted)...") +
-                               field->value.substr(field->value.size() - 4, 4);
-      } else {
-        map[type.ToString()] = field->value;
-      }
-    }
-
-    DumpAutofillData(!!imported_credit_card);
-  }
-#endif  // ENABLE_FORM_DEBUG_DUMP
-
   // No card available to offer save or upload.
   if (!imported_credit_card)
     return;
@@ -2352,46 +2322,6 @@ void AutofillManager::DisambiguateNameUploadTypes(
     field->set_possible_types(matching_types);
   }
 }
-
-#ifdef ENABLE_FORM_DEBUG_DUMP
-void AutofillManager::DumpAutofillData(bool imported_cc) const {
-  base::ThreadRestrictions::ScopedAllowIO allow_id;
-
-  // This code dumps the last few forms seen on the current tab to a file on
-  // the desktop. This is only enabled when a specific command line flag is
-  // passed for manual analysis of the address context information available
-  // when offering to save credit cards in a checkout session. This is to
-  // help developers experimenting with better card saving features.
-  base::FilePath path;
-  if (!PathService::Get(base::DIR_USER_DESKTOP, &path))
-    return;
-  path = path.Append(FILE_PATH_LITERAL("autofill_debug_dump.txt"));
-  FILE* file = base::OpenFile(path, "a");
-  if (!file)
-    return;
-
-  fputs("------------------------------------------------------\n", file);
-  if (imported_cc)
-    fputs("Got a new credit card on CC form:\n", file);
-  else
-    fputs("Submitted form:\n", file);
-  for (int i = static_cast<int>(recently_autofilled_forms_.size()) - 1; i >= 0;
-       i--) {
-    for (const auto& pair : recently_autofilled_forms_[i]) {
-      fputs("  ", file);
-      fputs(pair.first.c_str(), file);
-      fputs(" = ", file);
-      fputs(base::UTF16ToUTF8(pair.second).c_str(), file);
-      fputs("\n", file);
-    }
-    if (i > 0)
-      fputs("Next oldest form:\n", file);
-  }
-  fputs("\n", file);
-
-  fclose(file);
-}
-#endif  // ENABLE_FORM_DEBUG_DUMP
 
 void AutofillManager::LogCardUploadDecisions(int upload_decision_metrics) {
   AutofillMetrics::LogCardUploadDecisionMetrics(upload_decision_metrics);
