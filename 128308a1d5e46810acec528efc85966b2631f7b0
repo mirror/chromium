@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1493fe65_fd6f7790",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/TabsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1485,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T22:12:53Z",
+      "side": 1,
+      "message": "nit: s/Should be/Should not be",
+      "range": {
+        "startLine": 1485,
+        "startChar": 63,
+        "endLine": 1485,
+        "endChar": 90
+      },
+      "revId": "128308a1d5e46810acec528efc85966b2631f7b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
