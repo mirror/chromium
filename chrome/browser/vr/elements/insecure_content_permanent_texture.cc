@@ -19,11 +19,11 @@ namespace vr {
 
 namespace {
 
-constexpr float kBorderFactor = 0.1;
-constexpr float kIconSizeFactor = 0.7;
-constexpr float kFontSizeFactor = 0.40;
-constexpr float kTextHeightFactor = 1.0 - 2 * kBorderFactor;
-constexpr float kTextWidthFactor = 4.0 - 3 * kBorderFactor - kIconSizeFactor;
+constexpr float kBorderFactor = 0.1f;
+constexpr float kIconSizeFactor = 0.7f;
+constexpr float kFontSizeFactor = 0.40f;
+constexpr float kTextHeightFactor = 1.0f - 2 * kBorderFactor;
+constexpr float kTextWidthFactor = 4.0f - 3 * kBorderFactor - kIconSizeFactor;
 
 }  // namespace
 

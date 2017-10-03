@@ -15,7 +15,7 @@
 #include "third_party/skia/include/core/SkStream.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
-#include "ui/gl/test/gl_image_test_template.h"
+#include "ui/gl/test/gl_test_helper.h"
 
 namespace vr {
 

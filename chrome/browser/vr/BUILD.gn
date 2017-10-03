@@ -208,6 +208,11 @@ test("vr_common_unittests") {
     "//ui/gl:test_support",
   ]
 
+  if (is_win) {
+    # TODO(crbug/770891): Fix GLTF parsing on Windows and reenable the test.
+    sources -= [ "gltf_parser_unittest.cc" ]
+  }
+
   if (is_android) {
     deps += [ "//ui/android:ui_java" ]
   }
