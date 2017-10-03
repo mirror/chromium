@@ -69,6 +69,24 @@
       "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9baddf10_ee9df099",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-03T19:00:04Z",
+      "side": 1,
+      "message": "Yep, that\u0027s right, but it\u0027s a nit. Feel free to ignore or do in a follow-up if you prefer.",
+      "parentUuid": "924e2e5d_f6a468ef",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
