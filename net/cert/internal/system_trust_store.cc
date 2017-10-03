@@ -203,7 +203,7 @@ class SystemTrustStoreFuchsia : public BaseSystemTrustStore {
 };
 
 std::unique_ptr<SystemTrustStore> CreateSslSystemTrustStore() {
-  return base::MakeUnique<SystemTrustStoreFuchsia>();
+  return std::make_unique<SystemTrustStoreFuchsia>();
 }
 
 #else

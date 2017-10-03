@@ -3286,7 +3286,7 @@ TEST_F(CookieMonsterNotificationTest, GlobalNotBroadcast) {
 
   // Bind it to a CookieMonster
   std::unique_ptr<CookieMonster> monster(
-      base::MakeUnique<CookieMonster>(store.get()));
+      std::make_unique<CookieMonster>(store.get()));
 
   // Trigger load dispatch and confirm it.
   monster->GetAllCookiesAsync(CookieStore::GetCookieListCallback());

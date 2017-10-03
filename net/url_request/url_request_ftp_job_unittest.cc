@@ -89,8 +89,7 @@ class FtpTestURLRequestContext : public TestURLRequestContext {
         FtpProtocolHandler::CreateForTesting(
             std::make_unique<MockFtpTransactionFactory>()));
     auth_cache_ = ftp_protocol_handler->ftp_auth_cache_.get();
-    std::unique_ptr<URLRequestJobFactoryImpl> job_factory =
-        base::WrapUnique(new URLRequestJobFactoryImpl);
+    auto job_factory = std::make_unique<URLRequestJobFactoryImpl>();
     job_factory->SetProtocolHandler("ftp", std::move(ftp_protocol_handler));
     context_storage_.set_job_factory(std::move(job_factory));
     Init();
@@ -162,7 +161,7 @@ class TestURLRequestFtpJob : public URLRequestFtpJob {
 class URLRequestFtpJobPriorityTest : public testing::Test {
  protected:
   URLRequestFtpJobPriorityTest()
-      : proxy_service_(base::WrapUnique(new SimpleProxyConfigService),
+      : proxy_service_(std::make_unique<SimpleProxyConfigService>(),
                        NULL,
                        NULL),
         req_(context_.CreateRequest(GURL("ftp://ftp.example.com"),
@@ -256,7 +255,7 @@ class URLRequestFtpJobTest : public testing::Test {
   URLRequestFtpJobTest()
       : request_context_(&socket_factory_,
                          std::make_unique<ProxyService>(
-                             base::WrapUnique(new SimpleProxyConfigService),
+                             std::make_unique<SimpleProxyConfigService>(),
                              nullptr,
                              nullptr),
                          &network_delegate_) {}
@@ -329,10 +328,10 @@ TEST_F(URLRequestFtpJobTest, FtpProxyRequestOrphanJob) {
   MockProxyResolverFactory* resolver_factory = owned_resolver_factory.get();
 
   // Use a PAC URL so that URLRequestFtpJob's |pac_request_| field is non-NULL.
-  request_context()->set_proxy_service(base::WrapUnique(new ProxyService(
-      base::WrapUnique(new ProxyConfigServiceFixed(
-          ProxyConfig::CreateFromCustomPacURL(GURL("http://foo")))),
-      std::move(owned_resolver_factory), nullptr)));
+  request_context()->set_proxy_service(std::make_unique<ProxyService>(
+      std::make_unique<ProxyConfigServiceFixed>(
+          ProxyConfig::CreateFromCustomPacURL(GURL("http://foo"))),
+      std::move(owned_resolver_factory), nullptr));
 
   TestDelegate request_delegate;
   std::unique_ptr<URLRequest> url_request(request_context()->CreateRequest(
@@ -361,10 +360,10 @@ TEST_F(URLRequestFtpJobTest, FtpProxyRequestCancelRequest) {
   MockProxyResolverFactory* resolver_factory = owned_resolver_factory.get();
 
   // Use a PAC URL so that URLRequestFtpJob's |pac_request_| field is non-NULL.
-  request_context()->set_proxy_service(base::WrapUnique(new ProxyService(
-      base::WrapUnique(new ProxyConfigServiceFixed(
-          ProxyConfig::CreateFromCustomPacURL(GURL("http://foo")))),
-      std::move(owned_resolver_factory), nullptr)));
+  request_context()->set_proxy_service(std::make_unique<ProxyService>(
+      std::make_unique<ProxyConfigServiceFixed>(
+          ProxyConfig::CreateFromCustomPacURL(GURL("http://foo"))),
+      std::move(owned_resolver_factory), nullptr));
 
   TestDelegate request_delegate;
   std::unique_ptr<URLRequest> url_request(request_context()->CreateRequest(

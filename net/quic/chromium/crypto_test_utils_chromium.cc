@@ -103,9 +103,9 @@ std::unique_ptr<ProofVerifier> ProofVerifierForTesting() {
   cert_verifier->AddResultForCertAndHost(verify_result.verified_cert.get(),
                                          "test.example.com", verify_result, OK);
   return std::make_unique<TestProofVerifierChromium>(
-      std::move(cert_verifier), base::WrapUnique(new TransportSecurityState),
-      base::WrapUnique(new MultiLogCTVerifier),
-      base::WrapUnique(new CTPolicyEnforcer), "quic_root.crt");
+      std::move(cert_verifier), std::make_unique<TransportSecurityState>(),
+      std::make_unique<MultiLogCTVerifier>(),
+      std::make_unique<CTPolicyEnforcer>(), "quic_root.crt");
 }
 
 ProofVerifyContext* ProofVerifyContextForTesting() {
