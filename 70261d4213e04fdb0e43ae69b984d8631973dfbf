@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4b4378aa_623dca16",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-03T20:09:23Z",
+      "side": 1,
+      "message": "Yes, can_scroll eqvt to WebTouchEventPath, which is what I wanted to say originally.  Sorry for the confusion.\n\nEven though pointercancel is the last event for the |pointer_id|\u0027s event sequence, it seems wrong to flip the |can_scroll| bit from |true| to |false| in |pointer_id_mapping_| here.  This could possibly cause unnecessary debugging hurdle when, e.g., watching active pointer details.",
+      "parentUuid": "53d92316_223bb22f",
+      "revId": "70261d4213e04fdb0e43ae69b984d8631973dfbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b33c70e_9711cfd8",
         "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
         "patchSetId": 2
