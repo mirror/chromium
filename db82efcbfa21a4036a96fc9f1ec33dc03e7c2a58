@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5daea8e3_a4914ef6",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/StyleBuilder.cpp.tmpl",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-03T05:40:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39f75258_0e2abb70",
+      "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee6f0962_dfc5afe5",
         "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
         "patchSetId": 10
