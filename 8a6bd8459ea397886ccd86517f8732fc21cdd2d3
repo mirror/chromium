@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "c42b59e8_f7090200",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-03T00:03:00Z",
+      "side": 1,
+      "message": "Yeah, my hunch here is that we should be informing Sync that it should delete its own favicon here as well. As long as this is triggered by a combo of the user visiting the site and the site no longer having a favicon, that seems like it would make things consistent, right?",
+      "parentUuid": "2a61ce5e_52dafb3c",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15
