@@ -16,6 +16,24 @@
       "revId": "60b3cd3896138ad2253c082c72cfe2bf08ef2c52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177f9dad_c8127fff",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-03T13:52:42Z",
+      "side": 0,
+      "message": "--persistent causes the debugger to pause every time the app is launched in the future, even when not from this script. For \"apk_operations.py launch\", I think the desired behaviour is for it to pause only the first time, and if you want it to pause again, use the script again.",
+      "parentUuid": "e1a725e9_19c19e8f",
+      "revId": "60b3cd3896138ad2253c082c72cfe2bf08ef2c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

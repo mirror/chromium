@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d15e8f58_b134f35b",
+        "filename": "build/android/pylib/local/device/local_device_instrumentation_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-03T13:52:42Z",
+      "side": 1,
+      "message": "In this case, set_debug_app is called during setUp(), and uses --persistent, so no need to set it again here. (and it\u0027s cleared during tearDown)",
+      "parentUuid": "64a56c99_89427b92",
+      "revId": "de490255033710c1df9516a502e3dcf852b95869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7812ce17_ac4c4470",
         "filename": "build/android/test_runner.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "de490255033710c1df9516a502e3dcf852b95869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea6a883_9adeb2bd",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-03T13:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7812ce17_ac4c4470",
+      "revId": "de490255033710c1df9516a502e3dcf852b95869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
