@@ -214,11 +214,9 @@ cr.define('settings', function() {
     // element.
     var updatePosition = function() {
       if (innards.classList.contains('above')) {
-        searchBubble.style.top =
-            element.offsetTop - searchBubble.offsetHeight + 'px';
+        searchBubble.style.top = -searchBubble.offsetHeight + 'px';
       } else {
-        searchBubble.style.top =
-            element.offsetTop + element.offsetHeight + 'px';
+        searchBubble.style.top = element.offsetHeight + 'px';
       }
     };
     updatePosition();
