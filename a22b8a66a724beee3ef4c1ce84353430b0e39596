@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54033816_53dc058c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "s/hanging/a hanging/",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5db280_3b034959",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "s/heuristicalal/heuristic/",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575b2e8e_752ad186",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "Can you copy the comment style already in the file, i.e., |this|-\u003eNetworkQualityEstimator",
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc9dc1a_c5804e6b",
+        "filename": "net/nqe/throughput_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "is there style around map stuff? usually, I like [] notation for inserts instead of inserting a pair (it makes it more clear from just reading that it is a map rather than a collection of pairs).",
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997e23ef_288b01cb",
+        "filename": "net/nqe/throughput_analyzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand the code in this file, but would it be better to move this call into  the start of MaybeStartThroughputObservationWindow. Let me know why I\u0027m wrong.",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 22
+      },
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fa60c4_3699090f",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "comment?",
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a897e6_a26e804d",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-03T21:04:35Z",
+      "side": 1,
+      "message": "annoyingly, I\u0027d recommend to move the definition to the cc if it uses thread_checker_ like this.",
+      "revId": "a22b8a66a724beee3ef4c1ce84353430b0e39596",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
