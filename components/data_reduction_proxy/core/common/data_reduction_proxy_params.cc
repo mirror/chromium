@@ -38,9 +38,6 @@ const char kQuicFieldTrial[] = "DataReductionProxyUseQuic";
 const char kLoFiFieldTrial[] = "DataCompressionProxyLoFi";
 const char kLoFiFlagFieldTrial[] = "DataCompressionProxyLoFiFlag";
 
-const char kBlackListTransitionFieldTrial[] =
-    "DataReductionProxyPreviewsBlackListTransition";
-
 // Default URL for retrieving the Data Reduction Proxy configuration.
 const char kClientConfigURL[] =
     "https://datasaver.googleapis.com/v1/clientConfigs";
@@ -263,12 +260,6 @@ bool IsConfigClientEnabled() {
   return !base::StartsWith(
       base::FieldTrialList::FindFullName("DataReductionProxyConfigService"),
       kDisabled, base::CompareCase::SENSITIVE);
-}
-
-bool IsBlackListEnabledForServerPreviews() {
-  return base::StartsWith(
-      base::FieldTrialList::FindFullName(kBlackListTransitionFieldTrial),
-      kEnabled, base::CompareCase::SENSITIVE);
 }
 
 GURL GetConfigServiceURL() {
