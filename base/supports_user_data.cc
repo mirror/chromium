@@ -35,6 +35,21 @@ void SupportsUserData::RemoveUserData(const void* key) {
   user_data_.erase(key);
 }
 
+SupportsUserData::Data* SupportsUserData::GetOrCreateUserData(
+    const void* key,
+    std::unique_ptr<Data> (*factory)(const void*),
+    const void* context) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  // Avoid null keys; they are too vulnerable to collision.
+  DCHECK(key);
+
+  auto result = user_data_.emplace(key, nullptr);
+  auto& data = result.first->second;
+  if (result.second)
+    data = factory(context);
+  return data.get();
+}
+
 void SupportsUserData::DetachFromSequence() {
   sequence_checker_.DetachFromSequence();
 }

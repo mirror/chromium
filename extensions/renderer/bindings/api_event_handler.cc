@@ -62,18 +62,14 @@ APIEventPerContextData* GetContextData(v8::Local<v8::Context> context,
   gin::PerContextData* per_context_data = gin::PerContextData::From(context);
   if (!per_context_data)
     return nullptr;
-  auto* data = static_cast<APIEventPerContextData*>(
-      per_context_data->GetUserData(kExtensionAPIEventPerContextKey));
 
-  if (!data && should_create) {
-    auto api_data =
-        std::make_unique<APIEventPerContextData>(context->GetIsolate());
-    data = api_data.get();
-    per_context_data->SetUserData(kExtensionAPIEventPerContextKey,
-                                  std::move(api_data));
-  }
-
-  return data;
+  const char* key = kExtensionAPIEventPerContextKey;
+  auto factory = [context]() {
+    return std::make_unique<APIEventPerContextData>(context->GetIsolate());
+  };
+  return static_cast<APIEventPerContextData*>(
+      should_create ? per_context_data->GetOrCreateUserData(key, factory)
+                    : per_context_data->GetUserData(key));
 }
 
 void DispatchEvent(const v8::FunctionCallbackInfo<v8::Value>& info) {
