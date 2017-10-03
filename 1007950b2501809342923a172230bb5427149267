@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49ec91f2_d167a51f",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-03T20:58:55Z",
+      "side": 1,
+      "message": "LoginDataDispatcher is for the data model and not UI interaction, either just call the focus method on ash::LockScreen directly or setup an observer/etc similar to SystemTrayFocusObserver.",
+      "revId": "1007950b2501809342923a172230bb5427149267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69732134_4ebc529f",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-03T20:58:55Z",
+      "side": 1,
+      "message": "Also add that this does not show the widget.",
+      "revId": "1007950b2501809342923a172230bb5427149267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
