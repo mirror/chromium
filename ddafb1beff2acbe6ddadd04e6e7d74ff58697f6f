@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c7d6cf6_72398627",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-03T19:49:12Z",
+      "side": 1,
+      "message": "Cannot set opacity in visited style.",
+      "parentUuid": "910dff1d_382e7217",
+      "range": {
+        "startLine": 4,
+        "startChar": 10,
+        "endLine": 4,
+        "endChar": 15
+      },
+      "revId": "ddafb1beff2acbe6ddadd04e6e7d74ff58697f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2abef433_550f417c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-29T04:32:43Z",
       "side": 1,
       "message": "Ha, that\u0027s funny.\n\nTo test this, see if the test fails if you set opacity:0 instead of color.",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "ddafb1beff2acbe6ddadd04e6e7d74ff58697f6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa62f096_2e645178",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-10-03T19:49:12Z",
+      "side": 1,
+      "message": "Setting opacity:0 (outside of visited) causes the test to fail.",
+      "parentUuid": "2abef433_550f417c",
       "range": {
         "startLine": 35,
         "startChar": 9,
