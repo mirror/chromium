@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43f84a1d_c5afcfb2",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-03T15:13:34Z",
+      "side": 1,
+      "message": "D\u0027Ho! \n\nAgain, sorry, I should have looked for this.\n\nDone...",
+      "parentUuid": "38ee02d6_83e34f5f",
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7790798_cf001a22",
         "filename": "components/policy/core/common/policy_loader_win.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "ebf8e6b1_a7a13a75",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-03T15:13:34Z",
+      "side": 1,
+      "message": "My bad, seems like the _function got pasted there as part of of copy paste, or search and replace error somewhere... :-(\n\nFixed...",
+      "parentUuid": "b7790798_cf001a22",
+      "range": {
+        "startLine": 311,
+        "startChar": 39,
+        "endLine": 311,
+        "endChar": 60
+      },
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "addd74a7_bfde3f47",
         "filename": "components/policy/core/common/policy_loader_win.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c142f9a_fb33b429",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-03T15:13:34Z",
+      "side": 1,
+      "message": "Sorry, I should have answered before. I didn\u0027t see the gain in using suffixes, we don\u0027t really need to join this and IsDomainJoined, and suffixes don\u0027t help much in querying for the data anyway. The only gain of suffixes, as I understand them (and as was described by someone from the metrics team) is the simplification of the histograms.xml file when the results are common enough that they could share the same description, which is not the case here. OK?",
+      "parentUuid": "addd74a7_bfde3f47",
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
