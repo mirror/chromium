@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0df3075f_ed1dffa8",
+        "filename": "ash/system/tray/system_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T00:56:09Z",
+      "side": 1,
+      "message": "Good job figuring out that |activate| was never used here, especially via SystemTrayItem::TransitionDetailedView().",
+      "revId": "c380d311f39281489f37dbb5a4a14f53082e5610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad47a19_eba45c34",
+        "filename": "ash/system/tray/system_tray.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T00:56:09Z",
+      "side": 1,
+      "message": "Is this part of the comment still relevant?",
+      "revId": "c380d311f39281489f37dbb5a4a14f53082e5610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
