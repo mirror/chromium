@@ -143,6 +143,10 @@ div.splitter {
   display: flex;
 }
 
+#directory-tree .tree-row > .button[menu='#add-new-services-menu'] {
+    overflow: hidden;
+}
+
 #directory-tree .tree-row > .expand-icon {
   flex: none;
   height: 36px;
