@@ -240,6 +240,7 @@ extern const char kEnableHungRendererInfoBar[];
 extern const char kForceShowUpdateMenuBadge[];
 extern const char kForceShowUpdateMenuItem[];
 extern const char kForceShowUpdateMenuItemCustomSummary[];
+extern const char kGrantGeolocationPermissionToAllOriginsForTesting[];
 extern const char kMarketUrlForTesting[];
 extern const char kNtpSwitchToExistingTab[];
 extern const char kProgressBarAnimation[];

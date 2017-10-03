@@ -1191,4 +1191,16 @@ TEST_F(GeolocationPermissionContextTests, GeolocationStatusSystemDisabled) {
                 content::PermissionType::GEOLOCATION, requesting_frame,
                 requesting_frame));
 }
+
+TEST_F(GeolocationPermissionContextTests, GrantedForTesting) {
+  GURL requesting_frame("https://www.example.com/geolocation");
+  SetGeolocationContentSetting(requesting_frame, requesting_frame,
+                               CONTENT_SETTING_BLOCK);
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kGrantGeolocationPermissionToAllOriginsForTesting, "true");
+  ASSERT_EQ(blink::mojom::PermissionStatus::GRANTED,
+            PermissionManager::Get(profile())->GetPermissionStatus(
+                content::PermissionType::GEOLOCATION, requesting_frame,
+                requesting_frame));
+}
 #endif  // defined(OS_ANDROID)
