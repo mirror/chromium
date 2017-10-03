@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f6e4f42b_3f5fd1ff",
+        "filename": "chrome/installer/linux/debian/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T22:15:00Z",
+      "side": 1,
+      "message": "OK. Maybe if/when we fix the lint errors/warnings, we can enable this in the build to automatically enforce the lint issues stay away.",
+      "parentUuid": "df505b24_d15d4de8",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e7fbbc4_2039bd5c",
         "filename": "chrome/installer/linux/debian/lint_package.py",
         "patchSetId": 1
