@@ -97,6 +97,13 @@ class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
         return false;
 #endif
       }
+      case gfx::BufferUsage::PROTECTED: {
+#if defined(OS_CHROMEOS)
+        return true;
+#else
+        return false;
+#endif
+      }
     }
     NOTREACHED();
     return false;
@@ -111,6 +118,7 @@ class ClientNativePixmapFactoryDmabuf : public ClientNativePixmapFactory {
       case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE:
       case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
       case gfx::BufferUsage::SCANOUT_CAMERA_READ_WRITE:
+      case gfx::BufferUsage::PROTECTED:
 #if defined(OS_CHROMEOS)
         return ClientNativePixmapDmaBuf::ImportFromDmabuf(handle, size);
 #else

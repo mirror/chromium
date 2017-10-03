@@ -97,6 +97,7 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
       gfx::AcceleratedWidget widget,
       gfx::Size size,
       gfx::BufferFormat format,
+      gfx::BufferUsage usage,
       const gfx::NativePixmapHandle& handle);
 
  protected:

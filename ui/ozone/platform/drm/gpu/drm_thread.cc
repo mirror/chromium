@@ -104,15 +104,7 @@ void DrmThread::Init() {
       new DrmGpuDisplayManager(screen_manager_.get(), device_manager_.get()));
 }
 
-void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
-                             const gfx::Size& size,
-                             gfx::BufferFormat format,
-                             gfx::BufferUsage usage,
-                             scoped_refptr<GbmBuffer>* buffer) {
-  scoped_refptr<GbmDevice> gbm =
-      static_cast<GbmDevice*>(device_manager_->GetDrmDevice(widget).get());
-  DCHECK(gbm);
-
+static uint32_t BufferUsageToGbmFlags(gfx::BufferUsage usage) {
   uint32_t flags = 0;
   switch (usage) {
     case gfx::BufferUsage::GPU_READ:
@@ -135,7 +127,28 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
       flags = GBM_BO_USE_LINEAR | GBM_BO_USE_TEXTURING;
       break;
+    case gfx::BufferUsage::PROTECTED:
+// TODO(posciak): Remove once the toolchain/sdk is upreved.
+#ifndef GBM_BO_USE_PROTECTED
+#define GBM_BO_USE_PROTECTED (1 << 8)
+#endif
+      flags = GBM_BO_USE_PROTECTED;
+      break;
   }
+
+  return flags;
+}
+
+void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
+                             const gfx::Size& size,
+                             gfx::BufferFormat format,
+                             gfx::BufferUsage usage,
+                             scoped_refptr<GbmBuffer>* buffer) {
+  scoped_refptr<GbmDevice> gbm =
+      static_cast<GbmDevice*>(device_manager_->GetDrmDevice(widget).get());
+  DCHECK(gbm);
+
+  uint32_t flags = BufferUsageToGbmFlags(usage);
 
   DrmWindow* window = screen_manager_->GetWindow(widget);
   std::vector<uint64_t> modifiers;
@@ -168,15 +181,17 @@ void DrmThread::CreateBufferFromFds(
     gfx::AcceleratedWidget widget,
     const gfx::Size& size,
     gfx::BufferFormat format,
+    gfx::BufferUsage usage,
     std::vector<base::ScopedFD>&& fds,
     const std::vector<gfx::NativePixmapPlane>& planes,
     scoped_refptr<GbmBuffer>* buffer) {
   scoped_refptr<GbmDevice> gbm =
       static_cast<GbmDevice*>(device_manager_->GetDrmDevice(widget).get());
   DCHECK(gbm);
+  uint32_t flags = BufferUsageToGbmFlags(usage);
   *buffer = GbmBuffer::CreateBufferFromFds(
-      gbm, ui::GetFourCCFormatFromBufferFormat(format), size, std::move(fds),
-      planes);
+      gbm, ui::GetFourCCFormatFromBufferFormat(format), size, flags,
+      std::move(fds), planes);
 }
 
 void DrmThread::GetScanoutFormats(

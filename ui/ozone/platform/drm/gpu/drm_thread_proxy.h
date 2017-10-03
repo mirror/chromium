@@ -41,6 +41,7 @@ class DrmThreadProxy {
       gfx::AcceleratedWidget widget,
       const gfx::Size& size,
       gfx::BufferFormat format,
+      gfx::BufferUsage usage,
       std::vector<base::ScopedFD>&& fds,
       const std::vector<gfx::NativePixmapPlane>& planes);
 

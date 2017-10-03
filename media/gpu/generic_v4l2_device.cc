@@ -348,6 +348,7 @@ scoped_refptr<gl::GLImage> GenericV4L2Device::CreateGLImage(
       ui::OzonePlatform::GetInstance()
           ->GetSurfaceFactoryOzone()
           ->CreateNativePixmapFromHandle(0, size, buffer_format,
+                                         gfx::BufferUsage::SCANOUT,
                                          native_pixmap_handle);
 
   DCHECK(pixmap);

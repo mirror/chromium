@@ -20,12 +20,14 @@ namespace gpu {
 
 // static
 std::unique_ptr<GpuMemoryBufferFactory>
-GpuMemoryBufferFactory::CreateNativeType() {
+GpuMemoryBufferFactory::CreateNativeType(
+    ProtectedGpuMemoryBufferManager* protected_buffer_manager) {
 #if defined(OS_MACOSX)
   return base::WrapUnique(new GpuMemoryBufferFactoryIOSurface);
 #endif
 #if defined(OS_LINUX)
-  return base::WrapUnique(new GpuMemoryBufferFactoryNativePixmap);
+  return base::WrapUnique(
+      new GpuMemoryBufferFactoryNativePixmap(protected_buffer_manager));
 #endif
   return nullptr;
 }

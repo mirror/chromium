@@ -164,6 +164,7 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
     gfx::AcceleratedWidget widget,
     gfx::Size size,
     gfx::BufferFormat format,
+    gfx::BufferUsage usage,
     const gfx::NativePixmapHandle& handle) {
   size_t num_planes = gfx::NumberOfPlanesForBufferFormat(format);
   if (handle.planes.size() != num_planes ||
@@ -182,7 +183,7 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
   }
 
   scoped_refptr<GbmBuffer> buffer = drm_thread_proxy_->CreateBufferFromFds(
-      widget, size, format, std::move(scoped_fds), planes);
+      widget, size, format, usage, std::move(scoped_fds), planes);
   if (!buffer)
     return nullptr;
   return base::MakeRefCounted<GbmPixmap>(this, buffer);

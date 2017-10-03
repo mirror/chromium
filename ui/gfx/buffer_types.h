@@ -53,8 +53,9 @@ enum class BufferUsage {
   // TODO(reveman): Merge this with GPU_READ_CPU_READ_WRITE when SurfaceTexture
   // backed buffers are single buffered and support it.
   GPU_READ_CPU_READ_WRITE_PERSISTENT,
+  PROTECTED,
 
-  LAST = GPU_READ_CPU_READ_WRITE_PERSISTENT
+  LAST = PROTECTED,
 };
 
 }  // namespace gfx
