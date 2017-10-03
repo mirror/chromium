@@ -16,6 +16,24 @@
       "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e68042_50248905",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-03T19:35:30Z",
+      "side": 1,
+      "message": "Hi Mike,\n\nThis is not ARC corner-case behavior. This problem belongs both, Extension and ARC controllers. Both have idea of Registering and Unregestering app. For example Extension controller on registering app observe aura::Window events. When shelf item delegate is changed in shelf Extension controller does not know about and continue observing window events. Next when event is fired, Extension controller map window to item controller, which does not longer exists. That is the crash condition.",
+      "parentUuid": "fdeb3604_042a7c5f",
+      "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
