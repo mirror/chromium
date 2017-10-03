@@ -1436,7 +1436,8 @@ void RenderWidgetHostViewMac::DidCreateNewRendererCompositorFrameSink(
 
 void RenderWidgetHostViewMac::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
-    viz::CompositorFrame frame) {
+    viz::CompositorFrame frame,
+    viz::mojom::HitTestRegionListPtr hit_test_region_list) {
   TRACE_EVENT0("browser", "RenderWidgetHostViewMac::OnSwapCompositorFrame");
 
   last_frame_root_background_color_ = frame.metadata.root_background_color;
@@ -1444,8 +1445,8 @@ void RenderWidgetHostViewMac::SubmitCompositorFrame(
 
   page_at_minimum_scale_ =
       frame.metadata.page_scale_factor == frame.metadata.min_page_scale_factor;
-  browser_compositor_->SubmitCompositorFrame(local_surface_id,
-                                             std::move(frame));
+  browser_compositor_->SubmitCompositorFrame(local_surface_id, std::move(frame),
+                                             std::move(hit_test_region_list));
   UpdateDisplayVSyncParameters();
 }
 
