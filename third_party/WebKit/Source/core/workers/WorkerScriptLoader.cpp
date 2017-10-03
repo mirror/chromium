@@ -168,7 +168,7 @@ void WorkerScriptLoader::DidReceiveResponse(
   }
 
   if (response_callback_)
-    response_callback_();
+    std::move(response_callback_).Run();
 }
 
 void WorkerScriptLoader::DidReceiveData(const char* data, unsigned len) {
@@ -243,8 +243,7 @@ void WorkerScriptLoader::NotifyFinished() {
   if (!finished_callback_)
     return;
 
-  WTF::Closure callback = std::move(finished_callback_);
-  callback();
+  std::move(finished_callback_).Run();
 }
 
 void WorkerScriptLoader::ProcessContentSecurityPolicy(

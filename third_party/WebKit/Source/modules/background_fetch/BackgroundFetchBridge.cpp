@@ -95,7 +95,7 @@ void BackgroundFetchBridge::DidGetRegistration(
     registration->SetServiceWorkerRegistration(GetSupplementable());
   }
 
-  callback(error, registration);
+  std::move(callback).Run(error, registration);
 }
 
 void BackgroundFetchBridge::GetIds(GetIdsCallback callback) {

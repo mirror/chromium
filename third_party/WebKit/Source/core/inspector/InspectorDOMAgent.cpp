@@ -1739,7 +1739,7 @@ void InspectorDOMAgent::CollectNodes(Node* node,
                                      bool pierce,
                                      const Function<bool(Node*)>& filter,
                                      HeapVector<Member<Node>>* result) {
-  if (filter && filter(node))
+  if (filter && filter.Run(node))
     result->push_back(node);
   if (--depth <= 0)
     return;

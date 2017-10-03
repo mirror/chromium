@@ -85,7 +85,7 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
     callback_count_ += 1;
 
     if (closure_)
-      closure_();
+      closure_.Run();
   }
 
   virtual void OnLineStateChange(bool on_line) {
@@ -93,7 +93,7 @@ class StateObserver : public NetworkStateNotifier::NetworkStateObserver {
     callback_count_ += 1;
 
     if (closure_)
-      closure_();
+      closure_.Run();
   }
 
   WebConnectionType ObservedType() const { return observed_type_; }

@@ -95,7 +95,7 @@ static bool TestLayoutObject(LayoutObject* object,
   if (!TestLayoutObjectState(object, state, invalidate))
     return false;
 
-  if (!predicate(*object))
+  if (!predicate.Run(*object))
     return false;
   return true;
 }

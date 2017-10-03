@@ -512,7 +512,7 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
                : SelectCompileFunction(cache_options, cache_handler, code_cache,
                                        code, cacheability_if_no_handler);
 
-  return compile_fn(isolate, code, origin);
+  return std::move(compile_fn).Run(isolate, code, origin);
 }
 
 v8::MaybeLocal<v8::Module> V8ScriptRunner::CompileModule(

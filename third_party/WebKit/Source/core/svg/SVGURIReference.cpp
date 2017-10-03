@@ -40,7 +40,7 @@ class SVGElementReferenceObserver : public IdTargetObserver {
         closure_(std::move(closure)) {}
 
  private:
-  void IdTargetChanged() override { closure_(); }
+  void IdTargetChanged() override { closure_.Run(); }
   WTF::Closure closure_;
 };
 }

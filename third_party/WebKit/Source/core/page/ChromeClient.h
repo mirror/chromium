@@ -358,7 +358,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void RequestDecode(LocalFrame*,
                              const PaintImage& image,
                              WTF::Function<void(bool)> callback) {
-    callback(false);
+    std::move(callback).Run(false);
   }
 
   DECLARE_TRACE();
