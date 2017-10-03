@@ -291,10 +291,11 @@ void BitmapImage::Draw(
     const FloatRect& dst_rect,
     const FloatRect& src_rect,
     RespectImageOrientationEnum should_respect_image_orientation,
-    ImageClampingMode clamp_mode) {
+    ImageClampingMode clamp_mode,
+    ImageDecodingMode decode_mode) {
   TRACE_EVENT0("skia", "BitmapImage::draw");
 
-  PaintImage image = PaintImageForCurrentFrame();
+  PaintImage image = PaintImageForCurrentFrame(decode_mode);
   if (!image)
     return;  // It's too early and we don't have an image yet.
 
@@ -397,8 +398,10 @@ TimeDelta BitmapImage::FrameDurationAtIndex(size_t index) const {
   return decoder_->FrameDurationAtIndex(index);
 }
 
-PaintImage BitmapImage::PaintImageForCurrentFrame() {
-  return FrameAtIndex(current_frame_index_);
+PaintImage BitmapImage::PaintImageForCurrentFrame(ImageDecodingMode mode) {
+  PaintImage frame = FrameAtIndex(current_frame_index_);
+  frame.set_decoding_mode(ToPaintImageDecodingMode(mode));
+  return frame;
 }
 
 RefPtr<Image> BitmapImage::ImageForDefaultFrame() {

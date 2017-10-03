@@ -78,6 +78,10 @@ class CC_PAINT_EXPORT PaintImageBuilder {
     paint_image_.reset_animation_sequence_id_ = id;
     return *this;
   }
+  PaintImageBuilder& set_decoding_mode(PaintImage::DecodingMode decoding_mode) {
+    paint_image_.decoding_mode_ = decoding_mode;
+    return *this;
+  }
 
   PaintImage TakePaintImage() const;
 

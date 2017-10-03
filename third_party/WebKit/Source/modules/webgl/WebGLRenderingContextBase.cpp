@@ -831,9 +831,10 @@ ImageData* WebGLRenderingContextBase::ToImageData(SnapshotReason reason) {
     RefPtr<StaticBitmapImage> snapshot = MakeImageSnapshot(image_info);
     if (snapshot) {
       image_data = ImageData::Create(GetDrawingBuffer()->Size());
-      snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-          image_info, image_data->data()->Data(), image_info.minRowBytes(), 0,
-          0);
+      snapshot->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+          .GetSkImage()
+          ->readPixels(image_info, image_data->data()->Data(),
+                       image_info.minRowBytes(), 0, 0);
     }
   }
   return image_data;
@@ -4554,7 +4555,7 @@ RefPtr<Image> WebGLRenderingContextBase::DrawImageIntoBuffer(
   // https://crbug.com/672299
   image->Draw(buf->Canvas(), flags, dest_rect, src_rect,
               kDoNotRespectImageOrientation,
-              Image::kDoNotClampImageToSourceRect);
+              Image::kDoNotClampImageToSourceRect, Image::kUnspecifiedDecode);
   return buf->NewImageSnapshot(kPreferNoAcceleration,
                                kSnapshotReasonWebGLDrawImageIntoBuffer);
 }
@@ -5420,7 +5421,9 @@ void WebGLRenderingContextBase::TexImageHelperImageBitmap(
     return;
   }
   sk_sp<SkImage> sk_image =
-      bitmap->BitmapImage()->PaintImageForCurrentFrame().GetSkImage();
+      bitmap->BitmapImage()
+          ->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+          .GetSkImage();
   SkPixmap pixmap;
   uint8_t* pixel_data_ptr = nullptr;
   RefPtr<Uint8Array> pixel_data;
