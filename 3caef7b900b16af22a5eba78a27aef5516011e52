@@ -39,6 +39,24 @@
       "revId": "3caef7b900b16af22a5eba78a27aef5516011e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d5273b_3a8b59b6",
+        "filename": "chrome/browser/policy/cloud/component_cloud_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-03T21:02:03Z",
+      "side": 0,
+      "message": "It\u0027s thanks to the CQ :)\nTrying to SetUpOnMainThread twice created a second ScopedIgnoreContentVerifierForTest instance which causes the DCHECK in ContentVerifyJob::SetDelegateForTests to be triggered.",
+      "parentUuid": "185e4b81_85475a52",
+      "revId": "3caef7b900b16af22a5eba78a27aef5516011e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
