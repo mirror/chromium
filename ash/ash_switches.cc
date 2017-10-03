@@ -4,9 +4,6 @@
 
 #include "ash/ash_switches.h"
 
-#include "base/command_line.h"
-#include "base/sys_info.h"
-
 namespace ash {
 namespace switches {
 
@@ -143,15 +140,6 @@ const char kSpuriousPowerButtonLidAngleChange[] =
 // By default we use classic IME (i.e. InputMethodChromeOS) in kMus. This flag
 // enables the IME service (i.e. InputMethodMus) instead.
 const char kUseIMEService[] = "use-ime-service";
-
-// Constrains the pointer movement within a root window on desktop.
-bool ConstrainPointerToRoot() {
-  const char kAshConstrainPointerToRoot[] = "ash-constrain-pointer-to-root";
-
-  return base::SysInfo::IsRunningOnChromeOS() ||
-         base::CommandLine::ForCurrentProcess()->HasSwitch(
-             kAshConstrainPointerToRoot);
-}
 
 }  // namespace switches
 }  // namespace ash
