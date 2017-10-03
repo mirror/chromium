@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "9438bb20_04d354fb",
+        "filename": "chromeos/components/tether/ble_synchronizer_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-10-03T17:56:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034c84d3_253cb306",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58500a5e_487d1286",
         "filename": "chromeos/components/tether/ble_synchronizer_base.h",
         "patchSetId": 2
