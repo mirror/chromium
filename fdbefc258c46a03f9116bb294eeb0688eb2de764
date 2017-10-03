@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1ecbbfe_9a257257",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88cc4732_1cf336ea",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 41
+      },
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86a1a696_f8a28453",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cac43a8_e8155f6f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a1a696_f8a28453",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "b1cc542f_28266497",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "The first suggestion has been done.  However, doing it revealed a bug that I needed to fix with the operation name not being sent down properly.  Fixing that bug required then modifying the tests in prefetch_request_operation_response_unittest.cc, and removing the operation name check, since the different types now return the operation name differently.\n\nI added a TODO for the second part of your comment above.",
+      "parentUuid": "faf349dd_0c1cd14a",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e637271_039adab6",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3754aff_46025288",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e637271_039adab6",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "cf817e4d_8e5c08d0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "Done as Justin suggests for now.",
+      "parentUuid": "48c6a5a5_97cb49b8",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f94055_4ee82df4",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1
@@ -125,6 +221,24 @@
       "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e54cbcd_37e549eb",
+        "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-03T23:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f94055_4ee82df4",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
