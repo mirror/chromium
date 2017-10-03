@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58eba777_301a1217",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2836,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-03T23:39:45Z",
+      "side": 1,
+      "message": "Good question, I just cargo-culted the above check assuming it can. Taking a look it seems like it comes from an InterfaceProvider -- I\u0027m assuming perhaps that can sometimes fail and return an unbound WidgetPtr?",
+      "parentUuid": "5e92098e_7a5948b6",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0255b88_cb87833f",
         "filename": "content/common/widget_host.mojom",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2be92ad8_05d0bbd0",
+        "filename": "content/common/widget_host.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-03T23:39:45Z",
+      "side": 1,
+      "message": "This is meant to be page-wide. So top level Document only (viewport \u003cmeta\u003e applies only to the top document). dtapuska@ had a similar comment in that we don\u0027t really need/want this to apply to popup widgets (for e.g.). Would FrameHost be a more appropriate place? Is there an abstraction in Chrome for \"top level frame\"?",
+      "parentUuid": "d0255b88_cb87833f",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4cf1427_02e81852",
         "filename": "content/renderer/render_widget.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-30T06:50:11Z",
       "side": 1,
       "message": "Nit: DCHECK",
+      "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ac4e4b_48e1459b",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-03T23:39:45Z",
+      "side": 1,
+      "message": "This is just for my own local testing - I *think* I hit a null ptr deref here so I\u0027ve been running with this to see if I spot it again...",
+      "parentUuid": "e4cf1427_02e81852",
       "revId": "ba9f3a942f03ba2425b8530ab14df456fb1132d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
