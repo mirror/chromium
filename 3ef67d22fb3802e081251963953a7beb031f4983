@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f85ce90a_e29d41e1",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-03T20:18:26Z",
+      "side": 1,
+      "message": "nit: Move to L231 to keep getters/setters in place.",
+      "range": {
+        "startLine": 190,
+        "startChar": 7,
+        "endLine": 190,
+        "endChar": 38
+      },
+      "revId": "3ef67d22fb3802e081251963953a7beb031f4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
