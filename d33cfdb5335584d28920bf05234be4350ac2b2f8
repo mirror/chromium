@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "865e2a59_fe75b027",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1496,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-03T16:44:55Z",
+      "side": 1,
+      "message": "Why do we only need to adjust the neighbor pages?",
+      "revId": "d33cfdb5335584d28920bf05234be4350ac2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719102f3_b1f2240c",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2600,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-03T16:44:55Z",
+      "side": 1,
+      "message": "The impl here and L2596 above can be changed to call the new version.\ne.g.\n  return GetExpectedTileBounds(Index(pagination_model_.selected_page(),\n                                     row * cols_ + col));",
+      "revId": "d33cfdb5335584d28920bf05234be4350ac2b2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -16,6 +16,24 @@
       "revId": "ee89cd36c8ca7939f9ce24b417df16a3b2109614",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bea492_afdf25b1",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-03T16:44:55Z",
+      "side": 1,
+      "message": "Think you can just redirect AppsGridViewTestApi::GetItemTileRectAt to call your new version.\n\nI am okay to clean it up in a follow-up CL.",
+      "parentUuid": "d35dcc36_f2e9d043",
+      "revId": "ee89cd36c8ca7939f9ce24b417df16a3b2109614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
