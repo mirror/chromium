@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb60b056_2df77574",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T16:18:58Z",
+      "side": 1,
+      "message": "just to clarify, is there a corresponding other test in this file that verifies that we do finish composing text for other deletes?\n\nIs it the other testDelete_* cases?  Should this be near one of those?",
+      "range": {
+        "startLine": 1221,
+        "startChar": 16,
+        "endLine": 1221,
+        "endChar": 60
+      },
+      "revId": "0b209013a4ef1d3ad00dd8eebf1f008942d1689b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
