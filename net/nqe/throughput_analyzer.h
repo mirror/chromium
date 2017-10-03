@@ -27,6 +27,7 @@ class SingleThreadTaskRunner;
 namespace net {
 
 class NetworkQualityEstimatorParams;
+class NetworkQualityProvider;
 class URLRequest;
 
 namespace nqe {
@@ -57,6 +58,7 @@ class NET_EXPORT_PRIVATE ThroughputAnalyzer {
   // estimation.
   // Virtualized for testing.
   ThroughputAnalyzer(
+      const NetworkQualityProvider* network_quality_provider,
       const NetworkQualityEstimatorParams* params,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       ThroughputObservationCallback throughput_observation_callback,
@@ -65,6 +67,9 @@ class NET_EXPORT_PRIVATE ThroughputAnalyzer {
 
   // Notifies |this| that the headers of |request| are about to be sent.
   void NotifyStartTransaction(const URLRequest& request);
+
+  // Notifies |this| that unfiltered bytes have been read for |request|.
+  void NotifyBytesRead(const URLRequest& request);
 
   // Notifies |this| that |request| has completed.
   void NotifyRequestCompleted(const URLRequest& request);
@@ -94,10 +99,15 @@ class NET_EXPORT_PRIVATE ThroughputAnalyzer {
   // testing.
   virtual int64_t GetBitsReceived() const;
 
+  size_t count_in_flight_requests() const {
+    DCHECK(thread_checker_.CalledOnValidThread());
+    return requests_.size();
+  }
+
  private:
   friend class TestThroughputAnalyzer;
 
-  typedef base::hash_set<const URLRequest*> Requests;
+  typedef base::hash_map<const URLRequest*, base::TimeTicks> Requests;
 
   // Returns true if downstream throughput can be recorded. In that case,
   // |downstream_kbps| is set to the computed downstream throughput (in
@@ -129,7 +139,16 @@ class NET_EXPORT_PRIVATE ThroughputAnalyzer {
   // do not exceed their capacities.
   void BoundRequestsSize();
 
+  // Removes hanging requests from |requests_|. If any hanging requests are
+  // detected to be in-flight, the observation window is ended.
+  void EraseHangingRequests();
+
+  // Guaranteed to be non-null during the duration of |this|.
+  const NetworkQualityProvider* network_quality_provider_;
+
+  // Guaranteed to be non-null during the duration of |this|.
   const NetworkQualityEstimatorParams* params_;
+
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // Called every time a new throughput observation is available.

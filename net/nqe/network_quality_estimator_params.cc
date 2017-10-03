@@ -423,6 +423,10 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
               params_,
               "historical_time_threshold",
               60000))),
+      hanging_request_duration_http_rtt_multiplier_(GetValueForVariationParam(
+          params_,
+          "hanging_request_duration_http_rtt_multiplier",
+          -1)),
       use_small_responses_(false) {
   DCHECK_LE(0.0, correlation_uma_logging_probability_);
   DCHECK_GE(1.0, correlation_uma_logging_probability_);
