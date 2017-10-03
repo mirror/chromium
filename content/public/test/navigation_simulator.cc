@@ -25,47 +25,6 @@
 
 namespace content {
 
-namespace {
-
-class NavigationThrottleCallbackRunner : public NavigationThrottle {
- public:
-  NavigationThrottleCallbackRunner(
-      NavigationHandle* handle,
-      const base::Closure& on_will_start_request,
-      const base::Closure& on_will_redirect_request,
-      const base::Closure& on_will_process_response)
-      : NavigationThrottle(handle),
-        on_will_start_request_(on_will_start_request),
-        on_will_redirect_request_(on_will_redirect_request),
-        on_will_process_response_(on_will_process_response) {}
-
-  NavigationThrottle::ThrottleCheckResult WillStartRequest() override {
-    on_will_start_request_.Run();
-    return NavigationThrottle::PROCEED;
-  }
-
-  NavigationThrottle::ThrottleCheckResult WillRedirectRequest() override {
-    on_will_redirect_request_.Run();
-    return NavigationThrottle::PROCEED;
-  }
-
-  NavigationThrottle::ThrottleCheckResult WillProcessResponse() override {
-    on_will_process_response_.Run();
-    return NavigationThrottle::PROCEED;
-  }
-
-  const char* GetNameForLogging() override {
-    return "NavigationThrottleCallbackRunner";
-  }
-
- private:
-  base::Closure on_will_start_request_;
-  base::Closure on_will_redirect_request_;
-  base::Closure on_will_process_response_;
-};
-
-}  // namespace
-
 // static
 RenderFrameHost* NavigationSimulator::NavigateAndCommitFromBrowser(
     WebContents* web_contents,
@@ -643,15 +602,12 @@ void NavigationSimulator::DidStartNavigation(
   num_did_start_navigation_called_++;
 
   // Add a throttle to count NavigationThrottle calls count.
-  handle->RegisterThrottleForTesting(
-      base::MakeUnique<NavigationThrottleCallbackRunner>(
-          handle,
-          base::Bind(&NavigationSimulator::OnWillStartRequest,
-                     weak_factory_.GetWeakPtr()),
-          base::Bind(&NavigationSimulator::OnWillRedirectRequest,
-                     weak_factory_.GetWeakPtr()),
-          base::Bind(&NavigationSimulator::OnWillProcessResponse,
-                     weak_factory_.GetWeakPtr())));
+  std::unique_ptr<TestNavigationThrottle> counting_throttle =
+      base::MakeUnique<TestNavigationThrottle>(handle);
+  counting_throttle->SetMethodCalledCallback(
+      base::BindRepeating(&NavigationSimulator::OnCountingThrottleMethodCalled,
+                          weak_factory_.GetWeakPtr()));
+  handle->RegisterThrottleForTesting(std::move(counting_throttle));
 
   // Pass the |on_defer_callback_| if it was registered.
   if (!on_defer_callback_.is_null()) {
@@ -682,16 +638,21 @@ void NavigationSimulator::DidFinishNavigation(
   }
 }
 
-void NavigationSimulator::OnWillStartRequest() {
-  num_will_start_request_called_++;
-}
-
-void NavigationSimulator::OnWillRedirectRequest() {
-  num_will_redirect_request_called_++;
-}
-
-void NavigationSimulator::OnWillProcessResponse() {
-  num_will_process_response_called_++;
+void NavigationSimulator::OnCountingThrottleMethodCalled(
+    const TestNavigationThrottle::Status& status) {
+  switch (status.method) {
+    case TestNavigationThrottle::WILL_START_REQUEST:
+      num_will_start_request_called_++;
+      break;
+    case TestNavigationThrottle::WILL_REDIRECT_REQUEST:
+      num_will_redirect_request_called_++;
+      break;
+    case TestNavigationThrottle::WILL_PROCESS_RESPONSE:
+      num_will_process_response_called_++;
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 bool NavigationSimulator::SimulateBrowserInitiatedStart() {

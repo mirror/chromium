@@ -467,42 +467,6 @@ CrossSiteRedirectResponseHandler(const net::EmbeddedTestServer* test_server,
   return std::move(http_response);
 }
 
-// Helper class used by the TestNavigationManager to pause navigations.
-// Note: the throttle should be added to the *end* of the list of throttles,
-// so all NavigationThrottles that should be attached observe the
-// WillStartRequest callback. RegisterThrottleForTesting has this behavior.
-class TestNavigationManagerThrottle : public NavigationThrottle {
- public:
-  TestNavigationManagerThrottle(NavigationHandle* handle,
-                                base::Closure on_will_start_request_closure,
-                                base::Closure on_will_process_response_closure)
-      : NavigationThrottle(handle),
-        on_will_start_request_closure_(on_will_start_request_closure),
-        on_will_process_response_closure_(on_will_process_response_closure) {}
-  ~TestNavigationManagerThrottle() override {}
-
-  const char* GetNameForLogging() override {
-    return "TestNavigationManagerThrottle";
-  }
-
- private:
-  // NavigationThrottle:
-  NavigationThrottle::ThrottleCheckResult WillStartRequest() override {
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            on_will_start_request_closure_);
-    return NavigationThrottle::DEFER;
-  }
-
-  NavigationThrottle::ThrottleCheckResult WillProcessResponse() override {
-    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                            on_will_process_response_closure_);
-    return NavigationThrottle::DEFER;
-  }
-
-  base::Closure on_will_start_request_closure_;
-  base::Closure on_will_process_response_closure_;
-};
-
 bool HasGzipHeader(const base::RefCountedMemory& maybe_gzipped) {
   net::GZipHeader header;
   net::GZipHeader::Status header_status = net::GZipHeader::INCOMPLETE_HEADER;
@@ -1997,13 +1961,17 @@ void TestNavigationManager::DidStartNavigation(NavigationHandle* handle) {
   if (!ShouldMonitorNavigation(handle))
     return;
 
-  handle_ = handle;
-  std::unique_ptr<NavigationThrottle> throttle(
-      new TestNavigationManagerThrottle(
-          handle_, base::Bind(&TestNavigationManager::OnWillStartRequest,
-                              weak_factory_.GetWeakPtr()),
-          base::Bind(&TestNavigationManager::OnWillProcessResponse,
-                     weak_factory_.GetWeakPtr())));
+  std::unique_ptr<TestNavigationThrottle> throttle =
+      base::MakeUnique<TestNavigationThrottle>(handle_);
+  throttle->SetResponse(TestNavigationThrottle::WILL_START_REQUEST,
+                        TestNavigationThrottle::SYNCHRONOUS,
+                        NavigationThrottle::DEFER);
+  throttle->SetResponse(TestNavigationThrottle::WILL_PROCESS_RESPONSE,
+                        TestNavigationThrottle::SYNCHRONOUS,
+                        NavigationThrottle::DEFER);
+  throttle->SetMethodCalledCallback(
+      base::BindRepeating(&TestNavigationManager::TestThrottleMethodCalled,
+                          weak_factory_.GetWeakPtr()));
   handle_->RegisterThrottleForTesting(std::move(throttle));
 }
 
@@ -2016,14 +1984,19 @@ void TestNavigationManager::DidFinishNavigation(NavigationHandle* handle) {
   OnNavigationStateChanged();
 }
 
-void TestNavigationManager::OnWillStartRequest() {
-  current_state_ = NavigationState::STARTED;
-  navigation_paused_ = true;
-  OnNavigationStateChanged();
-}
+void TestNavigationManager::TestThrottleMethodCalled(
+    const TestNavigationThrottle::Status& status) {
+  switch (status.method) {
+    case TestNavigationThrottle::WILL_START_REQUEST:
+      current_state_ = NavigationState::STARTED;
+      break;
+    case TestNavigationThrottle::WILL_PROCESS_RESPONSE:
+      current_state_ = NavigationState::RESPONSE;
+      break;
+    default:
+      return;
+  }
 
-void TestNavigationManager::OnWillProcessResponse() {
-  current_state_ = NavigationState::RESPONSE;
   navigation_paused_ = true;
   OnNavigationStateChanged();
 }

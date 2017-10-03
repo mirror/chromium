@@ -33,6 +33,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/navigation_handle_observer.h"
 #include "content/public/test/test_navigation_observer.h"
+#include "content/public/test/test_navigation_throttle.h"
 #include "google_apis/gaia/gaia_switches.h"
 #include "net/dns/mock_host_resolver.h"
 
@@ -817,40 +818,23 @@ class WillProcessResponseObserver : public content::WebContentsObserver {
       : content::WebContentsObserver(web_contents), url_(url) {}
   ~WillProcessResponseObserver() override {}
 
-  bool WillProcessResponseCalled() { return will_process_response_called_; }
+  // TODO(crbug.com/770292): This appears to be flaky in the tests below.
+  bool WillProcessResponseCalled() {
+    return !!test_throttle_ &&
+           test_throttle_->GetCallCount(
+               content::TestNavigationThrottle::WILL_PROCESS_RESPONSE) > 0;
+  }
 
  private:
   GURL url_;
-  bool will_process_response_called_ = false;
-
-  // Is used to set |will_process_response_called_| to true when
-  // NavigationThrottle::WillProcessResponse() is called.
-  class WillProcessResponseObserverThrottle
-      : public content::NavigationThrottle {
-   public:
-    WillProcessResponseObserverThrottle(content::NavigationHandle* handle,
-                                        bool* will_process_response_called)
-        : NavigationThrottle(handle),
-          will_process_response_called_(will_process_response_called) {}
-
-    const char* GetNameForLogging() override {
-      return "WillProcessResponseObserverThrottle";
-    }
-
-   private:
-    bool* will_process_response_called_;
-    NavigationThrottle::ThrottleCheckResult WillProcessResponse() override {
-      *will_process_response_called_ = true;
-      return NavigationThrottle::PROCEED;
-    }
-  };
+  content::TestNavigationThrottle* test_throttle_;
 
   // WebContentsObserver
   void DidStartNavigation(content::NavigationHandle* handle) override {
     if (handle->GetURL() == url_) {
+      test_throttle_ = new content::TestNavigationThrottle(handle);
       handle->RegisterThrottleForTesting(
-          std::make_unique<WillProcessResponseObserverThrottle>(
-              handle, &will_process_response_called_));
+          std::unique_ptr<content::TestNavigationThrottle>(test_throttle_));
     }
   }
 };
@@ -904,7 +888,8 @@ IN_PROC_BROWSER_TEST_F(ChromeNavigationBrowserTest, BlockLegacySubresources) {
       EXPECT_TRUE(NavigateIframeToURL(web_contents, "test", iframe_url));
 
       if (test_case.allowed) {
-        EXPECT_TRUE(will_process_response_observer.WillProcessResponseCalled());
+        EXPECT_TRUE(
+            will_process_response_observer.WillProcessResponseCalled());
         EXPECT_FALSE(navigation_handle_observer.is_error());
         EXPECT_EQ(test_case.iframe_url,
                   navigation_handle_observer.last_committed_url());

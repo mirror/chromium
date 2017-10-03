@@ -14,6 +14,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/referrer.h"
 #include "content/public/test/navigation_simulator.h"
+#include "content/public/test/test_navigation_throttle.h"
 #include "net/base/host_port_pair.h"
 #include "ui/base/page_transition_types.h"
 
@@ -222,9 +223,8 @@ class NavigationSimulator : public WebContentsObserver {
   void ReadyToCommitNavigation(NavigationHandle* navigation_handle) override;
   void DidFinishNavigation(NavigationHandle* navigation_handle) override;
 
-  void OnWillStartRequest();
-  void OnWillRedirectRequest();
-  void OnWillProcessResponse();
+  void OnCountingThrottleMethodCalled(
+      const TestNavigationThrottle::Status& status);
 
   // Simulates a browser-initiated navigation starting. Returns false if the
   // navigation failed synchronously.
