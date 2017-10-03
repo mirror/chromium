@@ -70,6 +70,30 @@
       "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0de039_43ab6df4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-10-03T07:53:33Z",
+      "side": 0,
+      "message": "Thanks for the point and sorry for the delay (OOO in last 2 weeks).\n\nAfter reading most of the usages, there were about 3 types getAccessibility text.\n\n1, Default. Read directly from a TextView with id (R.id.infobar_message) under the main view.\n2, Has a TextView with id (R.id.infobar_message) but customize the message. E.g. PreviewsInfoBar\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/infobar/PreviewsInfoBar.java?l\u003d34\u0026rcl\u003d3e6a96e73ba7b1d7ca23a36591651d951dd29ae3\n3, Compact infobar. Mostly the main view doesn\u0027t contain any TextView with ID (R.id.infobar_message), and we should provide a clear message for its type.\n\nBased on that, I did a little more code refactoring to fit all and added the unit test to cover more cases.",
+      "parentUuid": "e6532960_df92ccf0",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
