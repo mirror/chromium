@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "a31e9a0d_f950715d",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-03T20:12:20Z",
+      "side": 1,
+      "message": "It looks like MaximumTilingContentsScale (0.0625) does not match device scale factor (2) here.",
+      "parentUuid": "2d69d896_3121bcbf",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99b59f30_70caad74",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 6
@@ -50,6 +68,24 @@
       "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2a1a46_88fc6ce5",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-10-03T20:12:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99b59f30_70caad74",
+      "revId": "e3f1f9ed6658561632bb5b180cfcf938be7f84e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
