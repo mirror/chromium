@@ -1124,7 +1124,7 @@ void GraphicsLayer::SetContentsToImage(
     RespectImageOrientationEnum respect_image_orientation) {
   PaintImage paint_image;
   if (image)
-    paint_image = image->PaintImageForCurrentFrame();
+    paint_image = image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode);
 
   if (paint_image && image->IsBitmapImage() &&
       respect_image_orientation == kRespectImageOrientation) {

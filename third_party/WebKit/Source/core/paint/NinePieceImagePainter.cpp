@@ -38,7 +38,8 @@ void PaintPieces(GraphicsContext& context,
 
     if (draw_info.is_drawable) {
       if (draw_info.is_corner_piece) {
-        context.DrawImage(image, draw_info.destination, &draw_info.source, op);
+        context.DrawImage(image, Image::kUnspecifiedDecode,
+                          draw_info.destination, &draw_info.source, op);
       } else {
         context.DrawTiledImage(image, draw_info.destination, draw_info.source,
                                draw_info.tile_scale,

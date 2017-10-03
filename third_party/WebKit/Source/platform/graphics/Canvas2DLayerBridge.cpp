@@ -429,7 +429,8 @@ bool Canvas2DLayerBridge::PrepareMailboxFromImage(
     return true;
   }
 
-  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
+  sk_sp<SkImage> skia_image =
+      image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode).GetSkImage();
 
   if (RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled()) {
     if (PrepareGpuMemoryBufferMailboxFromImage(skia_image.get(), mailbox_info,
@@ -993,7 +994,9 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
     return false;
 
   {
-    sk_sp<SkImage> skImage = image->PaintImageForCurrentFrame().GetSkImage();
+    sk_sp<SkImage> skImage =
+        image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+            .GetSkImage();
     // Early exit if canvas was not drawn to since last prepareMailbox.
     GLenum filter = GetGLFilter();
     if (skImage->uniqueID() == last_image_id_ && filter == last_filter_)

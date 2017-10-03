@@ -199,7 +199,9 @@ sk_sp<SkImageFilter> FEImage::CreateImageFilter() {
     return CreateImageFilterForLayoutObject(*layout_object);
 
   sk_sp<SkImage> image =
-      image_ ? image_->PaintImageForCurrentFrame().GetSkImage() : nullptr;
+      image_ ? image_->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+                   .GetSkImage()
+             : nullptr;
   if (!image) {
     // "A href reference that is an empty image (zero width or zero height),
     //  that fails to download, is non-existent, or that cannot be displayed

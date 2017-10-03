@@ -65,6 +65,8 @@ class CORE_EXPORT SVGImageElement final
     return GetImageLoader().GetImage();
   }
 
+  bool IsAsync() const;
+
  private:
   explicit SVGImageElement(Document&);
 

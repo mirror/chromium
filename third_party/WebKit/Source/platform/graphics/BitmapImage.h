@@ -94,7 +94,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   // Advance the image animation by one frame.
   void AdvanceAnimationForTesting() override { InternalAdvanceAnimation(); }
 
-  PaintImage PaintImageForCurrentFrame() override;
+  PaintImage PaintImageForCurrentFrame(ImageDecodingMode) override;
 
   void SetDecoderForTesting(std::unique_ptr<DeferredImageDecoder> decoder) {
     decoder_ = std::move(decoder);
@@ -124,7 +124,8 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
             const FloatRect& dst_rect,
             const FloatRect& src_rect,
             RespectImageOrientationEnum,
-            ImageClampingMode) override;
+            ImageClampingMode,
+            ImageDecodingMode) override;
 
   PaintImage FrameAtIndex(size_t);
 

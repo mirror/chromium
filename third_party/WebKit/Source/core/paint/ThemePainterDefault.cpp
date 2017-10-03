@@ -469,7 +469,7 @@ bool ThemePainterDefault::PaintSearchFieldCancelButton(
   paint_info.context.DrawImage(LayoutTheme::IsPressed(cancel_button_object)
                                    ? cancel_pressed_image
                                    : cancel_image,
-                               painting_rect);
+                               Image::kUnspecifiedDecode, painting_rect);
   return false;
 }
 

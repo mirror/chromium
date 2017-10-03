@@ -19,7 +19,8 @@ RefPtr<ImagePattern> ImagePattern::Create(RefPtr<Image> image,
 }
 
 ImagePattern::ImagePattern(RefPtr<Image> image, RepeatMode repeat_mode)
-    : Pattern(repeat_mode), tile_image_(image->PaintImageForCurrentFrame()) {
+    : Pattern(repeat_mode),
+      tile_image_(image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)) {
   previous_local_matrix_.setIdentity();
 }
 
