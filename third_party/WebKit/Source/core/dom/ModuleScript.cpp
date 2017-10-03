@@ -34,23 +34,31 @@ ModuleScript* ModuleScript::Create(
     AccessControlStatus access_control_status,
     const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
-  // Step 1. "Let script be a new module script that this algorithm will
-  // subsequently initialize, with its module record initially set to null."
-  // [spec text] Step 2. "Set script's settings object to the environment
-  // settings object provided." [spec text] Note: "script's settings object"
-  // will be "modulator".
+
+  // Step 1. "If scripting is disabled for settings's responsible browsing
+  // context, then set source to the empty string." [spec text]
+  //
+  // TODO: Implement this?
+
+  // Step 2. "Let script be a new module script that this algorithm will
+  // subsequently initialize." [spec text]
+
+  // Step 3. "Set script's settings object to settings." [spec text]
+  //
+  // Note: "script's settings object" will be |modulator|.
+
+  // Delegate to Modulator::CompileModule to process Steps 5-6.
   ScriptState* script_state = modulator->GetScriptState();
   ScriptState::Scope scope(script_state);
   v8::Isolate* isolate = script_state->GetIsolate();
   ExceptionState exception_state(isolate, ExceptionState::kExecutionContext,
                                  "ModuleScript", "Create");
-
-  // Delegate to Modulator::CompileModule to process Steps 3-5.
   ScriptModule result = modulator->CompileModule(
       source_text, base_url.GetString(), access_control_status,
       credentials_mode, nonce, parser_state, start_position, exception_state);
 
-  // CreateInternal processes Steps 8-13.
+  // CreateInternal processes Steps 4 and 8-13.
+  //
   // [nospec] We initialize the other ModuleScript members anyway by running
   // Steps 8-13 before Step 6. In a case that compile failed, we will
   // immediately turn the script into errored state. Thus the members will not
@@ -59,14 +67,14 @@ ModuleScript* ModuleScript::Create(
       CreateInternal(source_text, modulator, result, base_url, nonce,
                      parser_state, credentials_mode, start_position);
 
-  // Step 6. "If result is a List of errors, then:" [spec text]
+  // Step 6. "If result is a list of errors, then:" [spec text]
   if (exception_state.HadException()) {
     DCHECK(result.IsNull());
 
-    // Step 6.1. "Error script with errors[0]." [spec text]
+    // Step 6.1. "Set script's parse error to result[0]." [spec text]
     v8::Local<v8::Value> error = exception_state.GetException();
     exception_state.ClearException();
-    script->SetErrorAndClearRecord(ScriptValue(script_state, error));
+    script->SetParseErrorAndClearRecord(ScriptValue(script_state, error));
 
     // Step 6.2. "Return script." [spec text]
     return script;
@@ -77,8 +85,10 @@ ModuleScript* ModuleScript::Create(
   for (const auto& requested :
        modulator->ModuleRequestsFromScriptModule(result)) {
     // Step 7.1. "Let url be the result of resolving a module specifier given
-    // module script and requested."[spec text] Step 7.2. "If url is failure:"
-    // [spec text]
+    // module script and requested."[spec text]
+    //
+    // Step 7.2. "If url is failure:" [spec text]
+    //
     // TODO(kouhei): Cache the url here instead of issuing
     // ResolveModuleSpecifier later again in ModuleTreeLinker.
     if (modulator->ResolveModuleSpecifier(requested.specifier, base_url)
@@ -90,8 +100,8 @@ ModuleScript* ModuleScript::Create(
         isolate,
         "Failed to resolve module specifier '" + requested.specifier + "'");
 
-    // Step 7.2.2. "Set the parse error of script to error." [spec text]
-    script->SetErrorAndClearRecord(ScriptValue(script_state, error));
+    // Step 7.2.2. "Set script's parse error to error." [spec text]
+    script->SetParseErrorAndClearRecord(ScriptValue(script_state, error));
 
     // Step 7.2.3. "Return script." [spec text]
     return script;
@@ -123,6 +133,7 @@ ModuleScript* ModuleScript::CreateInternal(
     WebURLRequest::FetchCredentialsMode credentials_mode,
     const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
+  // Step 4. Set script's parse error and error to rethrow to null.
   // Step 8. Set script's module record to result.
   // Step 9. Set script's base URL to the script base URL provided.
   // Step 10. Set script's cryptographic nonce to the cryptographic nonce
@@ -153,7 +164,8 @@ ModuleScript::ModuleScript(Modulator* settings_object,
     : settings_object_(settings_object),
       record_(this),
       base_url_(base_url),
-      preinstantiation_error_(this),
+      parse_error_(this),
+      error_to_rethrow_(this),
       nonce_(nonce),
       parser_state_(parser_state),
       credentials_mode_(credentials_mode),
@@ -184,13 +196,15 @@ bool ModuleScript::HasEmptyRecord() const {
   return record_.IsEmpty();
 }
 
-ScriptModuleState ModuleScript::RecordStatus() const {
+ScriptModuleState ModuleScript::RecordStatusDeprecated() const {
   DCHECK(!record_.IsEmpty());
-  return settings_object_->GetRecordStatus(Record());
+
+  ScriptState* script_state = settings_object_->GetScriptState();
+  ScriptState::Scope scope(script_state);
+  return Record().Status(script_state);
 }
 
-// https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-has-instantiated
-bool ModuleScript::HasInstantiated() const {
+bool ModuleScript::HasInstantiatedDeprecated() const {
   // "We say that a module script has instantiated if ..." [spec text]
 
   // "its module record is not null, and ..." [spec text]
@@ -198,15 +212,14 @@ bool ModuleScript::HasInstantiated() const {
     return false;
 
   // "its module record's [[Status]] field is ..." [spec text]
-  ScriptModuleState status = RecordStatus();
+  ScriptModuleState status = RecordStatusDeprecated();
 
   // "either "instantiated" or "evaluated"." [spec text]
   return status == ScriptModuleState::kInstantiated ||
          status == ScriptModuleState::kEvaluated;
 }
 
-// https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-is-errored
-bool ModuleScript::IsErrored() const {
+bool ModuleScript::IsErroredDeprecated() const {
   // "We say that a module script is errored ..." [spec text]
 
   // "if either its module record is null, ..." [spec text]
@@ -215,30 +228,39 @@ bool ModuleScript::IsErrored() const {
 
   // "or its module record's [[Status]] field has the value "errored"." [spec
   // text]
-  return RecordStatus() == ScriptModuleState::kErrored;
+  return RecordStatusDeprecated() == ScriptModuleState::kErrored;
 }
 
-void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
-  DVLOG(1) << *this << "::SetErrorAndClearRecord()";
-
-  // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-set-pre-instantiation-error
-  // Step 1. "If script's module record is not null, ..." [spec text]
-  if (!record_.IsEmpty()) {
-    // "set its [[HostDefined]] field to undefined." [spec text]
-    if (ScriptModuleResolver* resolver =
-            settings_object_->GetScriptModuleResolver())
-      resolver->UnregisterModuleScript(this);
-  }
-
-  // Step 2. "Set script's module record to null." [spec text]
-  record_.Clear();
-
-  // Step 3. "Set script's pre-instantiation error to error." [spec text]
+void ModuleScript::SetParseErrorAndClearRecord(ScriptValue error) {
+  DCHECK(!record_.IsEmpty());
   DCHECK(!error.IsEmpty());
-  {
-    ScriptState::Scope scope(error.GetScriptState());
-    preinstantiation_error_.Set(error.GetIsolate(), error.V8Value());
-  }
+
+  record_.Clear();
+  ScriptState::Scope scope(error.GetScriptState());
+  parse_error_.Set(error.GetIsolate(), error.V8Value());
+}
+
+ScriptValue ModuleScript::CreateParseError() const {
+  ScriptState* script_state = settings_object_->GetScriptState();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  ScriptState::Scope scope(script_state);
+  ScriptValue error(script_state, parse_error_.NewLocal(isolate));
+  DCHECK(!error.IsEmpty());
+  return error;
+}
+
+void ModuleScript::SetErrorToRethrow(ScriptValue error) {
+  ScriptState::Scope scope(error.GetScriptState());
+  error_to_rethrow_.Set(error.GetIsolate(), error.V8Value());
+}
+
+ScriptValue ModuleScript::CreateErrorToRethrow() const {
+  ScriptState* script_state = settings_object_->GetScriptState();
+  v8::Isolate* isolate = script_state->GetIsolate();
+  ScriptState::Scope scope(script_state);
+  ScriptValue error(script_state, error_to_rethrow_.NewLocal(isolate));
+  DCHECK(!error.IsEmpty());
+  return error;
 }
 
 DEFINE_TRACE(ModuleScript) {
@@ -249,7 +271,8 @@ DEFINE_TRACE_WRAPPERS(ModuleScript) {
   // TODO(mlippautz): Support TraceWrappers(const
   // TraceWrapperV8Reference<v8::Module>&) to remove the cast.
   visitor->TraceWrappers(record_.UnsafeCast<v8::Value>());
-  visitor->TraceWrappers(preinstantiation_error_);
+  visitor->TraceWrappers(parse_error_);
+  visitor->TraceWrappers(error_to_rethrow_);
 }
 
 bool ModuleScript::CheckMIMETypeBeforeRunScript(Document* context_document,
@@ -275,7 +298,7 @@ std::ostream& operator<<(std::ostream& stream,
     stream << "errored (empty record)";
   } else {
     stream << "record's [[Status]] = "
-           << ScriptModuleStateToString(module_script.RecordStatus());
+           << ScriptModuleStateToString(module_script.RecordStatusDeprecated());
   }
 
   return stream << "]";

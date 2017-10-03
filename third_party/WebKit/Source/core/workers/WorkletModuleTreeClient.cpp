@@ -42,8 +42,11 @@ void WorkletModuleTreeClient::NotifyModuleTreeLoadFinished(
   modulator_->ExecuteModule(module_script);
   WorkletGlobalScope* global_scope = ToWorkletGlobalScope(
       ExecutionContext::From(modulator_->GetScriptState()));
-  global_scope->ReportingProxy().DidEvaluateModuleScript(
-      !module_script->IsErrored());
+
+  bool evaluation_succeeded =
+      module_script->Record().Status(modulator_->GetScriptState()) !=
+      ScriptModuleState::kErrored;
+  global_scope->ReportingProxy().DidEvaluateModuleScript(evaluation_succeeded);
 
   // Step 5: "Queue a task on outsideSettings's responsible event loop to run
   // these steps:"
