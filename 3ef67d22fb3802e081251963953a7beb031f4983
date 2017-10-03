@@ -22,6 +22,30 @@
       "revId": "3ef67d22fb3802e081251963953a7beb031f4983",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388360ad_e05f98b5",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-10-03T23:22:28Z",
+      "side": 1,
+      "message": "Sorry I missed this comment. I\u0027ve made a note to do this the next time I touch this file. I\u0027ll include you on the review.",
+      "parentUuid": "f85ce90a_e29d41e1",
+      "range": {
+        "startLine": 190,
+        "startChar": 7,
+        "endLine": 190,
+        "endChar": 38
+      },
+      "revId": "3ef67d22fb3802e081251963953a7beb031f4983",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
