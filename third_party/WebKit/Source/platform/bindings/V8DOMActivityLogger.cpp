@@ -77,14 +77,13 @@ V8DOMActivityLogger* V8DOMActivityLogger::ActivityLogger(int world_id,
 }
 
 V8DOMActivityLogger* V8DOMActivityLogger::CurrentActivityLogger() {
-  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  DCHECK(IsMainThread());
+  v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
   if (!isolate->InContext())
     return 0;
 
-  v8::HandleScope handle_scope(isolate);
-  v8::Local<v8::Context> context = isolate->GetCurrentContext();
-
-  V8PerContextData* context_data = ScriptState::From(context)->PerContextData();
+  V8PerContextData* context_data =
+      V8PerContextData::From(isolate->GetCurrentContext());
   if (!context_data)
     return 0;
 
@@ -93,14 +92,15 @@ V8DOMActivityLogger* V8DOMActivityLogger::CurrentActivityLogger() {
 
 V8DOMActivityLogger*
 V8DOMActivityLogger::CurrentActivityLoggerIfIsolatedWorld() {
-  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  DCHECK(IsMainThread());
+  if (!DOMWrapperWorld::NonMainWorldsExistInMainThread())
+    return 0;
+
+  v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
   if (!isolate->InContext())
     return 0;
 
-  v8::HandleScope handle_scope(isolate);
-  v8::Local<v8::Context> context = isolate->GetCurrentContext();
-
-  ScriptState* script_state = ScriptState::From(context);
+  ScriptState* script_state = ScriptState::From(isolate->GetCurrentContext());
   if (!script_state->World().IsIsolatedWorld())
     return 0;
 
