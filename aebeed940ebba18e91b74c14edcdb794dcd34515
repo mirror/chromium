@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ba97bf1_df9f65a9",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-03T20:58:09Z",
+      "side": 1,
+      "message": "Question for Randy: It seems we never reset |request_|, so I assume that it is always valid. Does that make sense?\n\nI noticed that you have got debugging code like AssertURLRequestPresent(). I wonder whether that is related to a recently-fixed memory corruption. I commented in the bug report. The Mojo team (and many others) also spent a lot of time on a memory corruption issue likely sharing the same root cause.",
+      "revId": "aebeed940ebba18e91b74c14edcdb794dcd34515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
