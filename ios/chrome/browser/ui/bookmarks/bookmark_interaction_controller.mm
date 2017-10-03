@@ -140,10 +140,7 @@ using bookmarks::BookmarkNode;
                                 completion:nil];
 }
 
-- (void)presentBookmarkForTab:(Tab*)tab
-          currentlyBookmarked:(BOOL)bookmarked
-                       inView:(UIView*)parentView
-                   originRect:(CGRect)origin {
+- (void)presentBookmarkForTab:(Tab*)tab currentlyBookmarked:(BOOL)bookmarked {
   if (!self.bookmarkModel->loaded())
     return;
   if (!tab)
