@@ -18,6 +18,13 @@ bool LayoutNGListItem::IsOfType(LayoutObjectType type) const {
   return type == kLayoutObjectNGListItem || LayoutNGBlockFlow::IsOfType(type);
 }
 
+bool LayoutNGListItem::IsListMarker(LayoutObject* layout_object) {
+  if (!layout_object || !layout_object->IsLayoutBlockFlow())
+    return false;
+  LayoutObject* parent = layout_object->Parent();
+  return parent && parent->IsLayoutNGListItem() || ToLayoutNGListItem(parent)->marker_ == layout_object;
+}
+
 void LayoutNGListItem::WillBeDestroyed() {
   if (marker_) {
     marker_->Destroy();
@@ -71,9 +78,18 @@ void LayoutNGListItem::UpdateMarker() {
   if (!marker_)
     marker_ = LayoutBlockFlow::CreateAnonymous(&GetDocument());
 
-  RefPtr<ComputedStyle> marker_style =
-      ComputedStyle::CreateAnonymousStyleWithDisplay(style,
-                                                     EDisplay::kInlineBlock);
+  RefPtr<ComputedStyle> marker_style;
+  switch (style.ListStylePosition()) {
+    case EListStylePosition::kInside:
+      marker_style = ComputedStyle::CreateAnonymousStyleWithDisplay(
+          style, EDisplay::kInline);
+      break;
+    case EListStylePosition::kOutside:
+      marker_style = ComputedStyle::CreateAnonymousStyleWithDisplay(
+          style, EDisplay::kInlineBlock);
+      //marker_style->SetPosition(EPosition::kAbsolute);
+      break;
+  }
   marker_->SetStyle(std::move(marker_style));
 
   LayoutText* text = nullptr;

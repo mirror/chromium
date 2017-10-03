@@ -22,6 +22,8 @@ class CORE_EXPORT LayoutNGListItem final : public LayoutNGBlockFlow {
 
   void OrdinalValueChanged();
 
+  static bool IsListMarker(LayoutObject*);
+
   const char* GetName() const override { return "LayoutNGListItem"; }
 
  private:

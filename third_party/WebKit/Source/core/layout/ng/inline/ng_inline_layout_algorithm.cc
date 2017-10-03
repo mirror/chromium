@@ -14,6 +14,7 @@
 #include "core/layout/ng/inline/ng_line_breaker.h"
 #include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/inline/ng_text_fragment_builder.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/ng_block_layout_algorithm.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space.h"
@@ -222,7 +223,12 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
       box = PlaceAtomicInline(item, &item_result, *line_info, position,
                               &line_box);
+    } else if (item.Type() == NGInlineItem::kListMarker) {
+      PlaceListMarker(item, &item_result, *line_info, &line_box);
     } else if (item.Type() == NGInlineItem::kOutOfFlowPositioned) {
+      if (LayoutNGListItem::IsListMarker(item.GetLayoutObject())) {
+        LOG(INFO) << "list";
+      }
       // TODO(layout-dev): Report the correct static position for the out of
       // flow descendant. We can't do this here yet as it doesn't know the
       // size of the line box.
@@ -333,6 +339,39 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
                      {position, line_top});
 
   return box_states_.OnCloseTag(item, line_box, box, baseline_type_);
+}
+
+void NGInlineLayoutAlgorithm::PlaceListMarker(
+  const NGInlineItem& item,
+  NGInlineItemResult* item_result,
+  const NGLineInfo& line_info,
+  NGLineBoxFragmentBuilder* line_box) {
+  const ComputedStyle& style = *item.Style();
+  LayoutUnit position(-10);
+  DCHECK(item_result->layout_result);
+  DCHECK(item_result->layout_result->PhysicalFragment());
+  NGBoxFragment fragment(
+      ConstraintSpace().WritingMode(),
+      ToNGPhysicalBoxFragment(*item_result->layout_result->PhysicalFragment()));
+  NGLineHeightMetrics metrics = fragment.BaselineMetrics(
+      {NGBaselineAlgorithmType::kAtomicInline, baseline_type_});
+
+  LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
+  if (!RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
+    // |CopyFragmentDataToLayoutBox| needs to know if a box fragment is an
+    // atomic inline, and its item_index. Add a text fragment as a marker.
+    NGTextFragmentBuilder text_builder(Node(), &style,
+                                       ConstraintSpace().WritingMode());
+    text_builder.SetSize({fragment.InlineSize(), metrics.LineHeight()});
+    RefPtr<NGPhysicalTextFragment> text_fragment = text_builder.ToTextFragment(
+        item_result->item_index, item_result->start_offset,
+        item_result->end_offset);
+    line_box->AddChild(std::move(text_fragment), {position, line_top});
+    // We need the box fragment as well to compute VisualRect() correctly.
+  }
+
+  line_box->AddChild(std::move(item_result->layout_result),
+                     {position, line_top});
 }
 
 // Justify the line. This changes the size of items by adding spacing.
