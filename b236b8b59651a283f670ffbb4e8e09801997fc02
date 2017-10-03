@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8825761f_af6e292c",
+        "filename": "ios/chrome/browser/ui/history/history_entries_status_item.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-03T18:00:23Z",
+      "side": 0,
+      "message": "Is this still needed?",
+      "range": {
+        "startLine": 13,
+        "startChar": 27,
+        "endLine": 13,
+        "endChar": 47
+      },
+      "revId": "b236b8b59651a283f670ffbb4e8e09801997fc02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
