@@ -103,6 +103,7 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.omaha.UpdateMenuItemHelper;
 import org.chromium.chrome.browser.page_info.PageInfoPopup;
+import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomizations;
 import org.chromium.chrome.browser.physicalweb.PhysicalWebShareActivity;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -1443,6 +1444,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             assert false;
             return;
         }
+
+        PartnerBookmarksShim.kickOffReading(this);
 
         // Note the use of getUserBookmarkId() over getBookmarkId() here: Managed bookmarks can't be
         // edited. If the current URL is only bookmarked by managed bookmarks, this will return
