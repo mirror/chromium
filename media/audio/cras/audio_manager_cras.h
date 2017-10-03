@@ -35,6 +35,8 @@ class MEDIA_EXPORT AudioManagerCras : public AudioManagerBase {
   std::string GetAssociatedOutputDeviceID(
       const std::string& input_device_id) override;
   std::string GetDefaultOutputDeviceID() override;
+  std::string GetGroupIdOutput(const std::string& output_device_id) override;
+  std::string GetGroupIdInput(const std::string& input_device_id) override;
   const char* GetName() override;
   bool Shutdown() override;
 
