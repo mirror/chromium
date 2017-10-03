@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "263b2663_15f77235",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-03T18:22:57Z",
+      "side": 1,
+      "message": "Why not remove this fn?",
+      "revId": "0ac904116c0eb53ddc8fbf6b01419f9be1cea5ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
