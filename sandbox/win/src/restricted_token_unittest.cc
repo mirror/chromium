@@ -20,7 +20,7 @@ namespace {
 
 void TestDefaultDalc(bool restricted_required) {
   RestrictedToken token;
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   if (!restricted_required)
     token.SetLockdownDefaultDacl();
 
@@ -69,7 +69,7 @@ TEST(RestrictedTokenTest, InvalidHandle) {
             token.Init(reinterpret_cast<HANDLE>(0x5555)));
 }
 
-// Tests the initialization with NULL as parameter.
+// Tests the initialization with nullptr as parameter.
 TEST(RestrictedTokenTest, DefaultInit) {
   // Get the current process token.
   HANDLE token_handle = INVALID_HANDLE_VALUE;
@@ -83,7 +83,7 @@ TEST(RestrictedTokenTest, DefaultInit) {
 
   // Create the token using the current token.
   RestrictedToken token_default;
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token_default.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token_default.Init(nullptr));
 
   // Get the handle to the restricted token.
 
@@ -149,7 +149,7 @@ TEST(RestrictedTokenTest, CustomInit) {
 // Verifies that the token created by the object are valid.
 TEST(RestrictedTokenTest, ResultToken) {
   RestrictedToken token;
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
 
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSid(ATL::Sids::World().GetPSID()));
@@ -195,7 +195,7 @@ TEST(RestrictedTokenTest, DenySid) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddSidForDenyOnly(Sid(WinWorldSid)));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -224,9 +224,9 @@ TEST(RestrictedTokenTest, DenySids) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
-            token.AddAllSidsForDenyOnly(NULL));
+            token.AddAllSidsForDenyOnly(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.GetRestrictedToken(&token_handle));
 
@@ -258,7 +258,7 @@ TEST(RestrictedTokenTest, DenySidsException) {
   std::vector<Sid> sids_exception;
   sids_exception.push_back(Sid(WinWorldSid));
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddAllSidsForDenyOnly(&sids_exception));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -293,7 +293,7 @@ TEST(RestrictedTokenTest, DenyOwnerSid) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.AddUserSidForDenyOnly());
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.GetRestrictedToken(&token_handle));
@@ -365,8 +365,9 @@ TEST(RestrictedTokenTest, DeleteAllPrivileges) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.DeleteAllPrivileges(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
+            token.DeleteAllPrivileges(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.GetRestrictedToken(&token_handle));
 
@@ -387,7 +388,7 @@ TEST(RestrictedTokenTest, DeleteAllPrivilegesException) {
   std::vector<base::string16> exceptions;
   exceptions.push_back(SE_CHANGE_NOTIFY_NAME);
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.DeleteAllPrivileges(&exceptions));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -416,7 +417,7 @@ TEST(RestrictedTokenTest, DeletePrivilege) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.DeletePrivilege(SE_CHANGE_NOTIFY_NAME));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -477,7 +478,7 @@ TEST(RestrictedTokenTest, AddRestrictingSid) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSid(ATL::Sids::World().GetPSID()));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -494,7 +495,7 @@ TEST(RestrictedTokenTest, AddRestrictingSidCurrentUser) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSidCurrentUser());
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -542,7 +543,7 @@ TEST(RestrictedTokenTest, AddRestrictingSidLogonSession) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSidLogonSession());
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -561,7 +562,7 @@ TEST(RestrictedTokenTest, AddMultipleRestrictingSids) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSidCurrentUser());
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -594,7 +595,7 @@ TEST(RestrictedTokenTest, AddAllSidToRestrictingSids) {
   RestrictedToken token;
   base::win::ScopedHandle token_handle;
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             token.AddRestrictingSidAllSids());
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
@@ -626,9 +627,9 @@ TEST(RestrictedTokenTest, AddAllSidToRestrictingSids) {
 // Checks the error code when the object is initialized twice.
 TEST(RestrictedTokenTest, DoubleInit) {
   RestrictedToken token;
-  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS), token.Init(nullptr));
 
-  ASSERT_EQ(static_cast<DWORD>(ERROR_ALREADY_INITIALIZED), token.Init(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_ALREADY_INITIALIZED), token.Init(nullptr));
 }
 
 TEST(RestrictedTokenTest, LockdownDefaultDaclNoLogonSid) {

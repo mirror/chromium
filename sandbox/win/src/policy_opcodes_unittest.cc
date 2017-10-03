@@ -14,7 +14,7 @@
 #define INIT_GLOBAL_RTL(member)                                             \
   g_nt.member =                                                             \
       reinterpret_cast<member##Function>(::GetProcAddress(ntdll, #member)); \
-  if (NULL == g_nt.member)                                                  \
+  if (!g_nt.member)                                                         \
   return false
 
 namespace sandbox {
@@ -65,7 +65,7 @@ TEST(PolicyEngineTest, ParameterSetTest) {
   // Test that we can store and retrieve a string:
   const wchar_t* txt = L"S231L";
   ParameterSet pset4 = ParamPickerMake(txt);
-  const wchar_t* result3 = NULL;
+  const wchar_t* result3 = nullptr;
   EXPECT_TRUE(pset4.Get(&result3));
   EXPECT_EQ(0, wcscmp(txt, result3));
 }
@@ -83,7 +83,7 @@ TEST(PolicyEngineTest, OpcodeConstraints) {
 }
 
 TEST(PolicyEngineTest, TrueFalseOpcodes) {
-  void* dummy = NULL;
+  void* dummy = nullptr;
   ParameterSet ppb1 = ParamPickerMake(dummy);
   char memory[kOpcodeMemory];
   OpcodeFactory opcode_maker(memory, sizeof(memory));
@@ -91,31 +91,31 @@ TEST(PolicyEngineTest, TrueFalseOpcodes) {
   // This opcode always evaluates to true.
   PolicyOpcode* op1 = opcode_maker.MakeOpAlwaysFalse(kPolNone);
   ASSERT_NE(nullptr, op1);
-  EXPECT_EQ(EVAL_FALSE, op1->Evaluate(&ppb1, 1, NULL));
+  EXPECT_EQ(EVAL_false, op1->Evaluate(&ppb1, 1, nullptr));
   EXPECT_FALSE(op1->IsAction());
 
   // This opcode always evaluates to false.
   PolicyOpcode* op2 = opcode_maker.MakeOpAlwaysTrue(kPolNone);
   ASSERT_NE(nullptr, op2);
-  EXPECT_EQ(EVAL_TRUE, op2->Evaluate(&ppb1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op2->Evaluate(&ppb1, 1, nullptr));
 
   // Nulls not allowed on the params.
-  EXPECT_EQ(EVAL_ERROR, op2->Evaluate(NULL, 0, NULL));
-  EXPECT_EQ(EVAL_ERROR, op2->Evaluate(NULL, 1, NULL));
+  EXPECT_EQ(EVAL_ERROR, op2->Evaluate(nullptr, 0, nullptr));
+  EXPECT_EQ(EVAL_ERROR, op2->Evaluate(nullptr, 1, nullptr));
 
   // True and False opcodes do not 'require' a number of parameters
-  EXPECT_EQ(EVAL_TRUE, op2->Evaluate(&ppb1, 0, NULL));
-  EXPECT_EQ(EVAL_TRUE, op2->Evaluate(&ppb1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op2->Evaluate(&ppb1, 0, nullptr));
+  EXPECT_EQ(EVAL_true, op2->Evaluate(&ppb1, 1, nullptr));
 
   // Test Inverting the logic. Note that inversion is done outside
   // any particular opcode evaluation so no need to repeat for all
   // opcodes.
   PolicyOpcode* op3 = opcode_maker.MakeOpAlwaysFalse(kPolNegateEval);
   ASSERT_NE(nullptr, op3);
-  EXPECT_EQ(EVAL_TRUE, op3->Evaluate(&ppb1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op3->Evaluate(&ppb1, 1, nullptr));
   PolicyOpcode* op4 = opcode_maker.MakeOpAlwaysTrue(kPolNegateEval);
   ASSERT_NE(nullptr, op4);
-  EXPECT_EQ(EVAL_FALSE, op4->Evaluate(&ppb1, 1, NULL));
+  EXPECT_EQ(EVAL_false, op4->Evaluate(&ppb1, 1, nullptr));
 
   // Test that we clear the match context
   PolicyOpcode* op5 = opcode_maker.MakeOpAlwaysTrue(kPolClearContext);
@@ -123,7 +123,7 @@ TEST(PolicyEngineTest, TrueFalseOpcodes) {
   MatchContext context;
   context.position = 1;
   context.options = kPolUseOREval;
-  EXPECT_EQ(EVAL_TRUE, op5->Evaluate(&ppb1, 1, &context));
+  EXPECT_EQ(EVAL_true, op5->Evaluate(&ppb1, 1, &context));
   EXPECT_EQ(0u, context.position);
   MatchContext context2;
   EXPECT_EQ(context2.options, context.options);
@@ -132,7 +132,7 @@ TEST(PolicyEngineTest, TrueFalseOpcodes) {
 TEST(PolicyEngineTest, OpcodeMakerCase1) {
   // Testing that the opcode maker does not overrun the
   // supplied buffer. It should only be able to make 'count' opcodes.
-  void* dummy = NULL;
+  void* dummy = nullptr;
   ParameterSet ppb1 = ParamPickerMake(dummy);
 
   char memory[kOpcodeMemory];
@@ -142,7 +142,7 @@ TEST(PolicyEngineTest, OpcodeMakerCase1) {
   for (size_t ix = 0; ix != count; ++ix) {
     PolicyOpcode* op = opcode_maker.MakeOpAlwaysFalse(kPolNone);
     ASSERT_NE(nullptr, op);
-    EXPECT_EQ(EVAL_FALSE, op->Evaluate(&ppb1, 1, NULL));
+    EXPECT_EQ(EVAL_false, op->Evaluate(&ppb1, 1, nullptr));
   }
   // There should be no room more another opcode:
   PolicyOpcode* op1 = opcode_maker.MakeOpAlwaysFalse(kPolNone);
@@ -170,7 +170,7 @@ TEST(PolicyEngineTest, OpcodeMakerCase2) {
     PolicyOpcode* op = opcode_maker.MakeOpWStringMatch(
         0, txt2, 0, CASE_SENSITIVE, kPolClearContext);
     ASSERT_NE(nullptr, op);
-    EXPECT_EQ(EVAL_TRUE, op->Evaluate(&ppb1, 1, &mc1));
+    EXPECT_EQ(EVAL_true, op->Evaluate(&ppb1, 1, &mc1));
   }
 
   // There should be no room more another opcode:
@@ -194,26 +194,27 @@ TEST(PolicyEngineTest, IntegerOpcodes) {
   // Test basic match for uint32s 42 == 42 and 42 != 113377.
   PolicyOpcode* op_m42 = opcode_maker.MakeOpNumberMatch(0, 42UL, kPolNone);
   ASSERT_NE(nullptr, op_m42);
-  EXPECT_EQ(EVAL_TRUE, op_m42->Evaluate(&pp_num1, 1, NULL));
-  EXPECT_EQ(EVAL_FALSE, op_m42->Evaluate(&pp_num2, 1, NULL));
-  EXPECT_EQ(EVAL_ERROR, op_m42->Evaluate(&pp_wrong1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op_m42->Evaluate(&pp_num1, 1, nullptr));
+  EXPECT_EQ(EVAL_false, op_m42->Evaluate(&pp_num2, 1, nullptr));
+  EXPECT_EQ(EVAL_ERROR, op_m42->Evaluate(&pp_wrong1, 1, nullptr));
 
   // Test basic match for void pointers.
-  const void* vp = NULL;
+  const void* vp = nullptr;
   ParameterSet pp_num3 = ParamPickerMake(vp);
-  PolicyOpcode* op_vp_null = opcode_maker.MakeOpVoidPtrMatch(0, NULL, kPolNone);
+  PolicyOpcode* op_vp_null =
+      opcode_maker.MakeOpVoidPtrMatch(0, nullptr, kPolNone);
   ASSERT_NE(nullptr, op_vp_null);
-  EXPECT_EQ(EVAL_TRUE, op_vp_null->Evaluate(&pp_num3, 1, NULL));
-  EXPECT_EQ(EVAL_FALSE, op_vp_null->Evaluate(&pp_num1, 1, NULL));
-  EXPECT_EQ(EVAL_ERROR, op_vp_null->Evaluate(&pp_wrong1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op_vp_null->Evaluate(&pp_num3, 1, nullptr));
+  EXPECT_EQ(EVAL_false, op_vp_null->Evaluate(&pp_num1, 1, nullptr));
+  EXPECT_EQ(EVAL_ERROR, op_vp_null->Evaluate(&pp_wrong1, 1, nullptr));
 
   // Basic range test [41 43] (inclusive).
   PolicyOpcode* op_range1 =
       opcode_maker.MakeOpNumberMatchRange(0, 41, 43, kPolNone);
   ASSERT_NE(nullptr, op_range1);
-  EXPECT_EQ(EVAL_TRUE, op_range1->Evaluate(&pp_num1, 1, NULL));
-  EXPECT_EQ(EVAL_FALSE, op_range1->Evaluate(&pp_num2, 1, NULL));
-  EXPECT_EQ(EVAL_ERROR, op_range1->Evaluate(&pp_wrong1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op_range1->Evaluate(&pp_num1, 1, nullptr));
+  EXPECT_EQ(EVAL_false, op_range1->Evaluate(&pp_num2, 1, nullptr));
+  EXPECT_EQ(EVAL_ERROR, op_range1->Evaluate(&pp_wrong1, 1, nullptr));
 }
 
 TEST(PolicyEngineTest, LogicalOpcodes) {
@@ -226,11 +227,11 @@ TEST(PolicyEngineTest, LogicalOpcodes) {
   PolicyOpcode* op_and1 =
       opcode_maker.MakeOpNumberAndMatch(0, 0x00100000, kPolNone);
   ASSERT_NE(nullptr, op_and1);
-  EXPECT_EQ(EVAL_TRUE, op_and1->Evaluate(&pp_num1, 1, NULL));
+  EXPECT_EQ(EVAL_true, op_and1->Evaluate(&pp_num1, 1, nullptr));
   PolicyOpcode* op_and2 =
       opcode_maker.MakeOpNumberAndMatch(0, 0x00000001, kPolNone);
   ASSERT_NE(nullptr, op_and2);
-  EXPECT_EQ(EVAL_FALSE, op_and2->Evaluate(&pp_num1, 1, NULL));
+  EXPECT_EQ(EVAL_false, op_and2->Evaluate(&pp_num1, 1, nullptr));
 }
 
 TEST(PolicyEngineTest, WCharOpcodes1) {
@@ -254,11 +255,11 @@ TEST(PolicyEngineTest, WCharOpcodes1) {
   // Simplest substring match from pos 0. It should be a successful match
   // and the match context should be updated.
   MatchContext mc1;
-  EXPECT_EQ(EVAL_TRUE, op1->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op1->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_TRUE(_countof(txt2) == mc1.position + 1);
 
   // Matching again should fail and the context should be unmodified.
-  EXPECT_EQ(EVAL_FALSE, op1->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_false, op1->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_TRUE(_countof(txt2) == mc1.position + 1);
 
   // Using the same match context we should continue where we left
@@ -266,7 +267,7 @@ TEST(PolicyEngineTest, WCharOpcodes1) {
   PolicyOpcode* op3 =
       opcode_maker.MakeOpWStringMatch(0, txt3, 0, CASE_SENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op3);
-  EXPECT_EQ(EVAL_TRUE, op3->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op3->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_TRUE(_countof(txt3) + _countof(txt2) == mc1.position + 2);
 
   // We now keep on matching but now we skip 6 characters which means
@@ -275,14 +276,14 @@ TEST(PolicyEngineTest, WCharOpcodes1) {
   PolicyOpcode* op4 = opcode_maker.MakeOpWStringMatch(
       0, txt4, 6, CASE_SENSITIVE, kPolClearContext);
   ASSERT_NE(nullptr, op4);
-  EXPECT_EQ(EVAL_TRUE, op4->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op4->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_EQ(0u, mc1.position);
 
   // Test that we can properly match the last part of the string
   PolicyOpcode* op4b = opcode_maker.MakeOpWStringMatch(
       0, txt4, kSeekToEnd, CASE_SENSITIVE, kPolClearContext);
   ASSERT_NE(nullptr, op4b);
-  EXPECT_EQ(EVAL_TRUE, op4b->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op4b->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_EQ(0u, mc1.position);
 
   // Test matching 'jumps over' over the entire string. This is the
@@ -290,14 +291,14 @@ TEST(PolicyEngineTest, WCharOpcodes1) {
   PolicyOpcode* op5 = opcode_maker.MakeOpWStringMatch(0, txt5, kSeekForward,
                                                       CASE_SENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op5);
-  EXPECT_EQ(EVAL_TRUE, op5->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op5->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_EQ(24u, mc1.position);
 
   // Test that we don't match because it is not at the end of the string
   PolicyOpcode* op5b = opcode_maker.MakeOpWStringMatch(
       0, txt5, kSeekToEnd, CASE_SENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op5b);
-  EXPECT_EQ(EVAL_FALSE, op5b->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_false, op5b->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_EQ(24u, mc1.position);
 
   // Test that we function if the string does not fit. In this case we
@@ -305,19 +306,19 @@ TEST(PolicyEngineTest, WCharOpcodes1) {
   PolicyOpcode* op6 =
       opcode_maker.MakeOpWStringMatch(0, txt4, 2, CASE_SENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op6);
-  EXPECT_EQ(EVAL_FALSE, op6->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_false, op6->Evaluate(&pp_tc1, 1, &mc1));
 
   // Testing matching against 'g' which should be the last char.
   MatchContext mc2;
   PolicyOpcode* op7 = opcode_maker.MakeOpWStringMatch(0, txt6, kSeekForward,
                                                       CASE_SENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op7);
-  EXPECT_EQ(EVAL_TRUE, op7->Evaluate(&pp_tc1, 1, &mc2));
+  EXPECT_EQ(EVAL_true, op7->Evaluate(&pp_tc1, 1, &mc2));
   EXPECT_EQ(37u, mc2.position);
 
   // Trying to match again should fail since we are in the last char.
   // This also covers a couple of boundary conditions.
-  EXPECT_EQ(EVAL_FALSE, op7->Evaluate(&pp_tc1, 1, &mc2));
+  EXPECT_EQ(EVAL_false, op7->Evaluate(&pp_tc1, 1, &mc2));
   EXPECT_EQ(37u, mc2.position);
 }
 
@@ -341,8 +342,8 @@ TEST(PolicyEngineTest, WCharOpcodes2) {
   PolicyOpcode* op1i = opcode_maker.MakeOpWStringMatch(
       0, txt1, kSeekForward, CASE_INSENSITIVE, kPolNone);
   ASSERT_NE(nullptr, op1i);
-  EXPECT_EQ(EVAL_FALSE, op1s->Evaluate(&pp_tc1, 1, &mc1));
-  EXPECT_EQ(EVAL_TRUE, op1i->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_false, op1s->Evaluate(&pp_tc1, 1, &mc1));
+  EXPECT_EQ(EVAL_true, op1i->Evaluate(&pp_tc1, 1, &mc1));
   EXPECT_EQ(35u, mc1.position);
 }
 
@@ -350,7 +351,7 @@ TEST(PolicyEngineTest, ActionOpcodes) {
   char memory[kOpcodeMemory];
   OpcodeFactory opcode_maker(memory, sizeof(memory));
   MatchContext mc1;
-  void* dummy = NULL;
+  void* dummy = nullptr;
   ParameterSet ppb1 = ParamPickerMake(dummy);
 
   PolicyOpcode* op1 = opcode_maker.MakeOpAction(ASK_BROKER, kPolNone);

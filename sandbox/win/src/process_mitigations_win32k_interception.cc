@@ -62,18 +62,18 @@ BOOL WINAPI
 TargetGdiDllInitialize(GdiDllInitializeFunction orig_gdi_dll_initialize,
                        HANDLE dll,
                        DWORD reason) {
-  return TRUE;
+  return true;
 }
 
 HGDIOBJ WINAPI
 TargetGetStockObject(GetStockObjectFunction orig_get_stock_object, int object) {
-  return reinterpret_cast<HGDIOBJ>(NULL);
+  return reinterpret_cast<HGDIOBJ>(nullptr);
 }
 
 ATOM WINAPI
 TargetRegisterClassW(RegisterClassWFunction orig_register_class_function,
                      const WNDCLASS* wnd_class) {
-  return TRUE;
+  return true;
 }
 
 BOOL WINAPI TargetEnumDisplayMonitors(EnumDisplayMonitorsFunction,
@@ -82,16 +82,16 @@ BOOL WINAPI TargetEnumDisplayMonitors(EnumDisplayMonitorsFunction,
                                       MONITORENUMPROC lpfnEnum,
                                       LPARAM dwData) {
   if (!lpfnEnum || hdc || lprcClip) {
-    return FALSE;
+    return false;
   }
 
   // We don't trust that the IPC can work this early.
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
-    return FALSE;
+    return false;
 
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
-    return FALSE;
+  if (!ipc_memory)
+    return false;
 
   CrossCallReturn answer = {0};
   answer.nt_status = 0;
@@ -102,26 +102,26 @@ BOOL WINAPI TargetEnumDisplayMonitors(EnumDisplayMonitorsFunction,
       CrossCall(ipc, IPC_USER_ENUMDISPLAYMONITORS_TAG, result_buffer, &answer);
 
   if (code != SBOX_ALL_OK) {
-    return FALSE;
+    return false;
   }
 
   if (answer.win32_result) {
-    return FALSE;
+    return false;
   }
 
   if (result.monitor_count > kMaxEnumMonitors) {
-    return FALSE;
+    return false;
   }
 
   for (uint32_t monitor_pos = 0; monitor_pos < result.monitor_count;
        ++monitor_pos) {
-    BOOL continue_enum =
+    bool continue_enum =
         lpfnEnum(result.monitors[monitor_pos], nullptr, nullptr, dwData);
     if (!continue_enum)
-      return FALSE;
+      return false;
   }
 
-  return TRUE;
+  return true;
 }
 
 BOOL WINAPI TargetEnumDisplayDevicesA(EnumDisplayDevicesAFunction,
@@ -129,18 +129,18 @@ BOOL WINAPI TargetEnumDisplayDevicesA(EnumDisplayDevicesAFunction,
                                       DWORD iDevNum,
                                       PDISPLAY_DEVICEA lpDisplayDevice,
                                       DWORD dwFlags) {
-  return FALSE;
+  return false;
 }
 
-static BOOL CallMonitorInfo(HMONITOR monitor,
+static bool CallMonitorInfo(HMONITOR monitor,
                             MONITORINFOEXW* monitor_info_ptr) {
   // We don't trust that the IPC can work this early.
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
-    return FALSE;
+    return false;
 
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
-    return FALSE;
+  if (!ipc_memory)
+    return false;
 
   CrossCallReturn answer = {};
   SharedMemIPCClient ipc(ipc_memory);
@@ -149,29 +149,29 @@ static BOOL CallMonitorInfo(HMONITOR monitor,
                               static_cast<void*>(monitor), buffer, &answer);
 
   if (code != SBOX_ALL_OK) {
-    return FALSE;
+    return false;
   }
 
   if (answer.win32_result != ERROR_SUCCESS)
-    return FALSE;
+    return false;
 
-  return TRUE;
+  return true;
 }
 
 BOOL WINAPI TargetGetMonitorInfoA(GetMonitorInfoAFunction,
                                   HMONITOR monitor,
                                   MONITORINFO* monitor_info_ptr) {
   if (!monitor_info_ptr)
-    return FALSE;
+    return false;
   DWORD size = monitor_info_ptr->cbSize;
   if (size != sizeof(MONITORINFO) && size != sizeof(MONITORINFOEXA)) {
-    return FALSE;
+    return false;
   }
   MONITORINFOEXW monitor_info_tmp = {};
   monitor_info_tmp.cbSize = sizeof(monitor_info_tmp);
-  BOOL success = CallMonitorInfo(monitor, &monitor_info_tmp);
+  bool success = CallMonitorInfo(monitor, &monitor_info_tmp);
   if (!success)
-    return FALSE;
+    return false;
   memcpy(monitor_info_ptr, &monitor_info_tmp, sizeof(*monitor_info_ptr));
   if (size == sizeof(MONITORINFOEXA)) {
     MONITORINFOEXA* monitor_info_exa =
@@ -180,28 +180,28 @@ BOOL WINAPI TargetGetMonitorInfoA(GetMonitorInfoAFunction,
                                monitor_info_exa->szDevice,
                                sizeof(monitor_info_exa->szDevice), nullptr,
                                nullptr)) {
-      return FALSE;
+      return false;
     }
   }
-  return TRUE;
+  return true;
 }
 
 BOOL WINAPI TargetGetMonitorInfoW(GetMonitorInfoWFunction,
                                   HMONITOR monitor,
                                   LPMONITORINFO monitor_info_ptr) {
   if (!monitor_info_ptr)
-    return FALSE;
+    return false;
   DWORD size = monitor_info_ptr->cbSize;
   if (size != sizeof(MONITORINFO) && size != sizeof(MONITORINFOEXW)) {
-    return FALSE;
+    return false;
   }
   MONITORINFOEXW monitor_info_tmp = {};
   monitor_info_tmp.cbSize = sizeof(monitor_info_tmp);
-  BOOL success = CallMonitorInfo(monitor, &monitor_info_tmp);
+  bool success = CallMonitorInfo(monitor, &monitor_info_tmp);
   if (!success)
-    return FALSE;
+    return false;
   memcpy(monitor_info_ptr, &monitor_info_tmp, size);
-  return TRUE;
+  return true;
 }
 
 static NTSTATUS GetCertificateCommon(
@@ -220,7 +220,7 @@ static NTSTATUS GetCertificateCommon(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   ScopedSharedMemory buffer(certificate_size);
@@ -273,7 +273,7 @@ static NTSTATUS GetCertificateSizeCommon(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   CrossCallReturn answer = {};
@@ -333,7 +333,7 @@ TargetDestroyOPMProtectedOutput(DestroyOPMProtectedOutputFunction,
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   CrossCallReturn answer = {};
@@ -361,7 +361,7 @@ NTSTATUS WINAPI TargetConfigureOPMProtectedOutput(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   ScopedSharedMemory buffer(sizeof(*parameters));
@@ -392,7 +392,7 @@ NTSTATUS WINAPI TargetGetOPMInformation(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   ScopedSharedMemory buffer(base::checked_cast<uint32_t>(max_size));
@@ -423,7 +423,7 @@ TargetGetOPMRandomNumber(GetOPMRandomNumberFunction,
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   CrossCallReturn answer = {};
@@ -446,7 +446,7 @@ NTSTATUS WINAPI TargetGetSuggestedOPMProtectedOutputArraySize(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   CrossCallReturn answer = {};
@@ -473,7 +473,7 @@ NTSTATUS WINAPI TargetSetOPMSigningKeyAndSequenceNumbers(
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   DXGKMDT_OPM_ENCRYPTED_PARAMETERS temp_parameters = *parameters;
@@ -504,7 +504,7 @@ TargetCreateOPMProtectedOutputs(CreateOPMProtectedOutputsFunction,
   if (!SandboxFactory::GetTargetServices()->GetState()->InitCalled())
     return STATUS_ACCESS_DENIED;
   void* ipc_memory = GetGlobalIPCMemory();
-  if (ipc_memory == NULL)
+  if (!ipc_memory)
     return STATUS_ACCESS_DENIED;
 
   CrossCallReturn answer = {};

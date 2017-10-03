@@ -18,7 +18,7 @@
 // comparison against one single input parameter. For example, an opcode can
 // encode just one of the following comparison:
 //
-// - Is input parameter 3 not equal to NULL?
+// - Is input parameter 3 not equal to nullptr?
 // - Does input parameter 2 start with L"c:\\"?
 // - Is input parameter 5, bit 3 is equal 1?
 //
@@ -56,8 +56,8 @@ namespace sandbox {
 // cases to ignore the policy outcome.
 enum EvalResult {
   // Comparison opcode values:
-  EVAL_TRUE,   // Opcode condition evaluated true.
-  EVAL_FALSE,  // Opcode condition evaluated false.
+  EVAL_true,   // Opcode condition evaluated true.
+  EVAL_false,  // Opcode condition evaluated false.
   EVAL_ERROR,  // Opcode condition generated an error while evaluating.
   // Action opcode values:
   ASK_BROKER,   // The target must generate an IPC to the broker. On the broker
@@ -76,8 +76,8 @@ enum EvalResult {
 
 // The following are the implemented opcodes.
 enum OpcodeID {
-  OP_ALWAYS_FALSE,        // Evaluates to false (EVAL_FALSE).
-  OP_ALWAYS_TRUE,         // Evaluates to true (EVAL_TRUE).
+  OP_ALWAYS_false,        // Evaluates to false (EVAL_false).
+  OP_ALWAYS_true,         // Evaluates to true (EVAL_true).
   OP_NUMBER_MATCH,        // Match a 32-bit integer as n == a.
   OP_NUMBER_MATCH_RANGE,  // Match a 32-bit integer as a <= n <= b.
   OP_NUMBER_AND_MATCH,    // Match using bitwise AND; as in: n & a != 0.
@@ -90,7 +90,7 @@ enum OpcodeID {
 // Do nothing special.
 const uint32_t kPolNone = 0;
 
-// Convert EVAL_TRUE into EVAL_FALSE and vice-versa. This allows to express
+// Convert EVAL_true into EVAL_false and vice-versa. This allows to express
 // negated conditions such as if ( a && !b).
 const uint32_t kPolNegateEval = 1;
 
@@ -142,7 +142,7 @@ class PolicyOpcode {
 
  public:
   // Evaluates the opcode. For a typical comparison opcode the return value
-  // is EVAL_TRUE or EVAL_FALSE. If there was an error in the evaluation the
+  // is EVAL_true or EVAL_false. If there was an error in the evaluation the
   // the return is EVAL_ERROR. If the opcode is an action opcode then the
   // return can take other values such as ASK_BROKER.
   // parameters: An array of all input parameters. This argument is normally
@@ -267,7 +267,7 @@ struct PolicyBuffer {
 // Note that this class does not keep track of the number of opcodes made and
 // it is designed to be a building block for low-level policy.
 //
-// Note that any of the MakeOpXXXXX member functions below can return NULL on
+// Note that any of the MakeOpXXXXX member functions below can return nullptr on
 // failure. When that happens opcode sequence creation must be aborted.
 class OpcodeFactory {
  public:

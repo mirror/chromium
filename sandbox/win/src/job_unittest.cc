@@ -22,16 +22,16 @@ TEST(JobTest, TestCreation) {
 
     // check if the job exists.
     HANDLE job_handle =
-        ::OpenJobObjectW(GENERIC_ALL, FALSE, L"my_test_job_name");
-    ASSERT_TRUE(job_handle != NULL);
+        ::OpenJobObjectW(GENERIC_ALL, false, L"my_test_job_name");
+    ASSERT_TRUE(job_handle);
 
     if (job_handle)
       CloseHandle(job_handle);
   }
 
   // Check if the job is destroyed when the object goes out of scope.
-  HANDLE job_handle = ::OpenJobObjectW(GENERIC_ALL, FALSE, L"my_test_job_name");
-  ASSERT_TRUE(job_handle == NULL);
+  HANDLE job_handle = ::OpenJobObjectW(GENERIC_ALL, false, L"my_test_job_name");
+  ASSERT_TRUE(!job_handle);
   ASSERT_EQ(static_cast<DWORD>(ERROR_FILE_NOT_FOUND), ::GetLastError());
 }
 
@@ -52,8 +52,8 @@ TEST(JobTest, Take) {
   // Check to be sure that the job is still alive even after the object is gone
   // out of scope.
   HANDLE job_handle_dup =
-      ::OpenJobObjectW(GENERIC_ALL, FALSE, L"my_test_job_name");
-  ASSERT_TRUE(job_handle_dup != NULL);
+      ::OpenJobObjectW(GENERIC_ALL, false, L"my_test_job_name");
+  ASSERT_TRUE(job_handle_dup);
 
   // Remove all references.
   if (job_handle_dup)
@@ -62,8 +62,8 @@ TEST(JobTest, Take) {
   job_handle.Close();
 
   // Check if the jbo is really dead.
-  job_handle_dup = ::OpenJobObjectW(GENERIC_ALL, FALSE, L"my_test_job_name");
-  ASSERT_TRUE(job_handle_dup == NULL);
+  job_handle_dup = ::OpenJobObjectW(GENERIC_ALL, false, L"my_test_job_name");
+  ASSERT_TRUE(!job_handle_dup);
   ASSERT_EQ(static_cast<DWORD>(ERROR_FILE_NOT_FOUND), ::GetLastError());
 }
 
@@ -83,7 +83,7 @@ TEST(JobTest, TestExceptions) {
 
     JOBOBJECT_BASIC_UI_RESTRICTIONS jbur = {0};
     DWORD size = sizeof(jbur);
-    BOOL result = ::QueryInformationJobObject(
+    bool result = ::QueryInformationJobObject(
         job_handle.Get(), JobObjectBasicUIRestrictions, &jbur, size, &size);
     ASSERT_TRUE(result);
 
@@ -103,7 +103,7 @@ TEST(JobTest, TestExceptions) {
 
     JOBOBJECT_BASIC_UI_RESTRICTIONS jbur = {0};
     DWORD size = sizeof(jbur);
-    BOOL result = ::QueryInformationJobObject(
+    bool result = ::QueryInformationJobObject(
         job_handle.Get(), JobObjectBasicUIRestrictions, &jbur, size, &size);
     ASSERT_TRUE(result);
 
@@ -126,8 +126,9 @@ TEST(JobTest, DoubleInit) {
 // initialized.
 TEST(JobTest, NoInit) {
   Job job;
-  ASSERT_EQ(static_cast<DWORD>(ERROR_NO_DATA), job.UserHandleGrantAccess(NULL));
-  ASSERT_EQ(static_cast<DWORD>(ERROR_NO_DATA), job.AssignProcessToJob(NULL));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_NO_DATA),
+            job.UserHandleGrantAccess(nullptr));
+  ASSERT_EQ(static_cast<DWORD>(ERROR_NO_DATA), job.AssignProcessToJob(nullptr));
   ASSERT_FALSE(job.Take().IsValid());
 }
 
@@ -170,13 +171,13 @@ TEST(JobTest, ProcessInJob) {
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),
             job.Init(JOB_UNPROTECTED, L"job_test_process", 0, 0));
 
-  BOOL result = FALSE;
+  bool result = false;
 
   wchar_t notepad[] = L"notepad";
   STARTUPINFO si = {sizeof(si)};
   PROCESS_INFORMATION temp_process_info = {};
-  result = ::CreateProcess(NULL, notepad, NULL, NULL, FALSE, 0, NULL, NULL, &si,
-                           &temp_process_info);
+  result = ::CreateProcess(nullptr, notepad, nullptr, nullptr, false, 0,
+                           nullptr, nullptr, &si, &temp_process_info);
   ASSERT_TRUE(result);
   base::win::ScopedProcessInformation pi(temp_process_info);
   ASSERT_EQ(static_cast<DWORD>(ERROR_SUCCESS),

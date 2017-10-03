@@ -111,7 +111,7 @@ class PolicyProcessor {
 
   // This constructor is just a variant of the previous constructor.
   explicit PolicyProcessor(PolicyBuffer* policy) : policy_(policy) {
-    SetInternalState(0, EVAL_FALSE);
+    SetInternalState(0, EVAL_false);
   }
 
   // Evaluates a policy-opcode stream. See the comments at the top of this

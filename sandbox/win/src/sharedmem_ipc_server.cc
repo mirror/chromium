@@ -17,7 +17,7 @@
 
 namespace {
 // This handle must not be closed.
-volatile HANDLE g_alive_mutex = NULL;
+volatile HANDLE g_alive_mutex = nullptr;
 }  // namespace
 
 namespace sandbox {
@@ -30,7 +30,7 @@ SharedMemIPCServer::SharedMemIPCServer(HANDLE target_process,
                                        DWORD target_process_id,
                                        ThreadProvider* thread_provider,
                                        Dispatcher* dispatcher)
-    : client_control_(NULL),
+    : client_control_(nullptr),
       thread_provider_(thread_provider),
       target_process_(target_process),
       target_process_id_(target_process_id),
@@ -42,8 +42,8 @@ SharedMemIPCServer::SharedMemIPCServer(HANDLE target_process,
   // be closed by Windows itself so it is properly marked as abandoned if the
   // server dies.
   if (!g_alive_mutex) {
-    HANDLE mutex = ::CreateMutexW(NULL, TRUE, NULL);
-    if (::InterlockedCompareExchangePointer(&g_alive_mutex, mutex, NULL)) {
+    HANDLE mutex = ::CreateMutexW(nullptr, true, nullptr);
+    if (::InterlockedCompareExchangePointer(&g_alive_mutex, mutex, nullptr)) {
       // We lost the race to create the mutex.
       ::CloseHandle(mutex);
     }
@@ -129,7 +129,7 @@ bool SharedMemIPCServer::Init(void* shared_mem,
   }
   if (!::DuplicateHandle(::GetCurrentProcess(), g_alive_mutex, target_process_,
                          &client_control_->server_alive,
-                         SYNCHRONIZE | EVENT_MODIFY_STATE, FALSE, 0)) {
+                         SYNCHRONIZE | EVENT_MODIFY_STATE, false, 0)) {
     return false;
   }
   // This last setting indicates to the client all is setup.
@@ -143,12 +143,12 @@ void ReleaseArgs(const IPCParams* ipc_params, void* args[kMaxIpcParams]) {
     switch (ipc_params->args[i]) {
       case WCHAR_TYPE: {
         delete reinterpret_cast<base::string16*>(args[i]);
-        args[i] = NULL;
+        args[i] = nullptr;
         break;
       }
       case INOUTPTR_TYPE: {
         delete reinterpret_cast<CountedBuffer*>(args[i]);
-        args[i] = NULL;
+        args[i] = nullptr;
         break;
       }
       default:
@@ -246,7 +246,7 @@ bool SharedMemIPCServer::InvokeCallback(const ServerControl* service_context,
   Dispatcher* dispatcher = service_context->dispatcher;
   DCHECK(dispatcher);
   bool error = true;
-  Dispatcher* handler = NULL;
+  Dispatcher* handler = nullptr;
 
   Dispatcher::CallbackGeneric callback_generic;
   handler = dispatcher->OnMessageReady(&ipc_params, &callback_generic);
@@ -369,7 +369,7 @@ bool SharedMemIPCServer::InvokeCallback(const ServerControl* service_context,
 // call above.
 void __stdcall SharedMemIPCServer::ThreadPingEventReady(void* context,
                                                         unsigned char) {
-  if (NULL == context) {
+  if (!context) {
     DCHECK(false);
     return;
   }
@@ -407,16 +407,16 @@ bool SharedMemIPCServer::MakeEvents(base::win::ScopedHandle* server_ping,
   const DWORD kDesiredAccess = SYNCHRONIZE | EVENT_MODIFY_STATE;
 
   // The events are auto reset, and start not signaled.
-  server_ping->Set(::CreateEventW(NULL, FALSE, FALSE, NULL));
+  server_ping->Set(::CreateEventW(nullptr, false, false, nullptr));
   if (!::DuplicateHandle(::GetCurrentProcess(), server_ping->Get(),
-                         target_process_, client_ping, kDesiredAccess, FALSE,
+                         target_process_, client_ping, kDesiredAccess, false,
                          0)) {
     return false;
   }
 
-  server_pong->Set(::CreateEventW(NULL, FALSE, FALSE, NULL));
+  server_pong->Set(::CreateEventW(nullptr, false, false, nullptr));
   if (!::DuplicateHandle(::GetCurrentProcess(), server_pong->Get(),
-                         target_process_, client_pong, kDesiredAccess, FALSE,
+                         target_process_, client_pong, kDesiredAccess, false,
                          0)) {
     return false;
   }
