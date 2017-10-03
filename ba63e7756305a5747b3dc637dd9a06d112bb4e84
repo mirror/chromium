@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0a77a843_e097e072",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-03T12:10:40Z",
+      "side": 1,
+      "message": "decltype() can be used because the function\u0027s signature is known at compile-time. we need to use GetProcAddress because the function probably doesn\u0027t exist on Win7. if we called it directly (like we can now with SetProcessDPIAware), we\u0027d fail to load on Win8 and lower. so for this function, the extra indirection is needed.\n\nI\u0027m not sure i get what\u0027s going on with the fallback here. the way it\u0027s coded up, any failure here will result in SetProcessDPIAware being called. while i understand why that\u0027s the case for Win7 and Win8 (where |set_process_dpi_awareness_func| will be null), it\u0027s not clear to me that it\u0027s the right thing for any other failure (e.g., EnableHighDPISupport being called twice).\n\ni think it\u0027s okay to leave this as-is here since you\u0027re preserving existing behavior. would you spark up an email thread with the original author (CC me) to see what they think about the error cases and to ask about why the \"Internal\" function?",
+      "parentUuid": "19d73820_92b16e5e",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7f648b7_4ee4e86b",
         "filename": "base/win/win_util.cc",
         "patchSetId": 8
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Makes sense to me, how do I figure that out? Is that translating to using a certain Windows SDK version or is this a runtime-linking thing?",
       "parentUuid": "f7f648b7_4ee4e86b",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9681f33e_18816e06",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-03T12:10:40Z",
+      "side": 1,
+      "message": "just do it. :-) it\u0027ll either fail spectacularly in the trybots, or it won\u0027t. i think it\u0027s the right thing. i propose removing this wrapper function and changing line 708 to simply:\n    ::SetProcessDPIAware();",
+      "parentUuid": "adae065b_9dc1f1dc",
       "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
