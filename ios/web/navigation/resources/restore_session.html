@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+  <script>
+    var base_url = [
+      window.location.protocol,
+      window.location.host,
+      window.location.pathname].join('');
+
+    function getRestoreURL(url) {
+      return base_url + '?targetUrl=' + encodeURIComponent(url);
+    }
+
+    function restoreSession(encodedSessionHistory) {
+      var sessionHistory = [];
+      try {
+        sessionHistory = JSON.parse(decodeURIComponent(encodedSessionHistory));
+
+        if (sessionHistory.urls.length < 1) {
+          handleError("sessionHistory is empty");
+          return;
+        }
+
+        history.replaceState(null,  /* state */
+                             sessionHistory.titles[0] || "Untitled",
+                             getRestoreURL(sessionHistory.urls[0] || "about:blank"));
+
+        for (var i = 1; i < sessionHistory.urls.length; i++) {
+          history.pushState(null,  /* state */
+                            sessionHistory.titles[i] || "Untitled",
+                            getRestoreURL(sessionHistory.urls[i] || "about:blank"));
+        }
+
+        var currentItemOffset = parseInt(sessionHistory.offset);
+        history.go(currentItemOffset);
+      } catch (e) {
+        handleError(e.name + ": " + e.message);
+      }
+    }
+
+    window.onpopstate = function(event) {
+      location.reload();
+    }
+
+    function redirect(encodedTargetUrl) {
+      var target = decodeURIComponent(encodedTargetUrl);
+      window.location.replace(target);
+    }
+
+    function handleError(message) {
+      console.log("Error: " + message);
+    }
+
+    // Main entry point
+    if (window.location.search == '') {
+      handleError("Search query is mandatory");
+    }
+
+    let params = new URLSearchParams(document.location.search.substring(1));
+    let sessionHistory = params.get("session");
+    let targetUrl = params.get("targetUrl");
+    if (sessionHistory) {
+      restoreSession(sessionHistory);
+    } else if (targetUrl) {
+      redirect(targetUrl);
+    } else {
+      handleError("Missing both sessionHistory and targetUrl");
+    }
+  </script>
+  </head>
+  <body>
+  </body>
+</html>
