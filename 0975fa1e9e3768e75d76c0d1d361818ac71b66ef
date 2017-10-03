@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7bc7ee61_b4f41f94",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-03T06:08:48Z",
+      "side": 1,
+      "message": "This code already produces the following error so I don\u0027t think a change is necessary.\nerror: [blink-gc] Garbage collected class \u0027NameSource\u0027 is not permitted to override its new operator.",
+      "parentUuid": "b228b1ba_3156579b",
+      "revId": "0975fa1e9e3768e75d76c0d1d361818ac71b66ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ac9e79b_12f45de0",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
         "patchSetId": 1
