@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f30ed46_25740175",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:41:06Z",
+      "side": 1,
+      "message": "If we\u0027re making the find bar look like all the other bubbles (and it seems like we are, wrt alignment, lack of arrow, border, etc.) wouldn\u0027t you want to turn the find bar into an actual bubble? That way the animations look the same whether you press ctrl+f or ctrl+d.",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c09f7a4_519d6f16",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:41:06Z",
+      "side": 1,
+      "message": "one wonders why these two (zoom and pw) don\u0027t set visibility to false.",
+      "range": {
+        "startLine": 234,
+        "startChar": 2,
+        "endLine": 234,
+        "endChar": 38
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d27ea65_c207f2f0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T17:41:06Z",
+      "side": 1,
+      "message": "optional: the penny pincher in me wants to see this stanza turned into a lambda",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
