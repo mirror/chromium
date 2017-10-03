@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aa5b23c_e2de6161",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T22:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d00cab12_5a2ebf67",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5d5e59_692c51f6",
         "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44816f0f_11990b8a",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T22:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a5d5e59_692c51f6",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2b5c1f0b_35d44111",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T22:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0b8983c_68cf9810",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dc8e131_bfaf8551",
         "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce4cff33_a815cf23",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T22:56:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc8e131_bfaf8551",
+      "revId": "7d57ed74be7eae9f2177d60338ce39f609dce017",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
