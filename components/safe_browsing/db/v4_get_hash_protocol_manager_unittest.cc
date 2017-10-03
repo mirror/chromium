@@ -10,6 +10,7 @@
 #include "base/base64.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
+#include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
@@ -509,11 +510,12 @@ TEST_F(V4GetHashProtocolManagerTest, TestParseSubresourceFilterMetadata) {
   FullHash full_hash("Everything's shiny, Cap'n.");
   sf->mutable_threat()->set_hash(full_hash);
 
-  // sf_pattern_type
+  // sf_pattern_type. Set two types.
   ThreatEntryMetadata::MetadataEntry* sf_pattern_meta =
       sf->mutable_threat_entry_metadata()->add_entries();
-  sf_pattern_meta->set_key("sf_pattern_type");
-  sf_pattern_meta->set_value("ALL_ADS");
+  sf_pattern_meta->set_key("sf_type");
+  sf_pattern_meta->set_value("ABUSIVE,BETTER_ADS");
+
   // warning
   ThreatEntryMetadata::MetadataEntry* sf_warning_meta =
       sf->mutable_threat_entry_metadata()->add_entries();
@@ -533,8 +535,9 @@ TEST_F(V4GetHashProtocolManagerTest, TestParseSubresourceFilterMetadata) {
   EXPECT_EQ(full_hash, fhi.full_hash);
   const ListIdentifier list_id(CHROME_PLATFORM, URL, SUBRESOURCE_FILTER);
   EXPECT_EQ(list_id, fhi.list_id);
-  EXPECT_EQ(ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS,
-            fhi.metadata.threat_pattern_type);
+  EXPECT_EQ(1u, fhi.metadata.subresource_filter_types.count("ABUSIVE"));
+  EXPECT_EQ(1u, fhi.metadata.subresource_filter_types.count("BETTER_ADS"));
+  EXPECT_EQ(0u, fhi.metadata.subresource_filter_types.count("RANDOM"));
   EXPECT_TRUE(fhi.metadata.warning);
 }
 

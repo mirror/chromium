@@ -24,6 +24,9 @@ std::ostream& operator<<(std::ostream& os, const ThreatMetadata& meta) {
      << ", api_permissions=[";
   for (auto p : meta.api_permissions)
     os << p << ",";
+  os << "subresource_filter_types=[";
+  for (auto t : meta.subresource_filter_types)
+    os << t << ",";
   return os << "], population_id=" << meta.population_id << "}";
 }
 

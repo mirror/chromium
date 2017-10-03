@@ -153,15 +153,6 @@ const ActivationListTestData kActivationListTestData[] = {
     {kActivationListSubresourceFilter, ActivationList::SUBRESOURCE_FILTER,
      safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
      safe_browsing::ThreatPatternType::NONE},
-    {kActivationListBetterAds, ActivationList::BETTER_ADS,
-     safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
-     safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS},
-    {kActivationListAbusiveAds, ActivationList::ABUSIVE_ADS,
-     safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
-     safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS},
-    {kActivationListAllAds, ActivationList::ALL_ADS,
-     safe_browsing::SB_THREAT_TYPE_SUBRESOURCE_FILTER,
-     safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS},
 };
 
 }  //  namespace
