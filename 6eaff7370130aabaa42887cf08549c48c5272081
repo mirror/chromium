@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d285e33_dc152857",
+        "filename": "ash/new_window_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:16:16Z",
+      "side": 1,
+      "message": "Even though this is commented in the ,mojom, scanning this file is confusing, we should add a comment here also (unless we are fixing this immediately).",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6919e53_06841ec9",
+        "filename": "ash/new_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:16:16Z",
+      "side": 1,
+      "message": "The fact the these methods mirror the NewWindowClient interface seems comment-worthy, e.g. \u0027Convenience methods for calling into |client_|.\n\nPersonally I\u0027d prefer to see a client() method and remove these, but no need to do that in this CL.",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773fa5d7_b8971c83",
+        "filename": "ash/new_window_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T16:16:16Z",
+      "side": 1,
+      "message": "Is it important that this be private? I would either move this next to ShowKeyboardOverlay(), or add a comment there, e.g.\n// SetClient() is defined as a private override.",
+      "revId": "6eaff7370130aabaa42887cf08549c48c5272081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
