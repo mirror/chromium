@@ -8,8 +8,7 @@ namespace chromeos {
 
 namespace tether {
 
-FakeBleSynchronizer::FakeBleSynchronizer()
-    : BleSynchronizer(nullptr /* bluetooth_adapter */) {}
+FakeBleSynchronizer::FakeBleSynchronizer() {}
 
 FakeBleSynchronizer::~FakeBleSynchronizer() {}
 
@@ -84,9 +83,6 @@ FakeBleSynchronizer::GetStopDiscoveryErrorCallback(size_t index) {
   DCHECK(command_queue()[index]->command_type == CommandType::STOP_DISCOVERY);
   return command_queue()[index]->stop_discovery_args->error_callback;
 }
-
-// Intentionally left blank. The fake should not actually issue any commands.
-void FakeBleSynchronizer::ProcessQueue() {}
 
 }  // namespace tether
 
