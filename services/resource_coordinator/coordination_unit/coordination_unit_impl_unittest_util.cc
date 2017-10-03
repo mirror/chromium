@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
 namespace resource_coordinator {
@@ -44,6 +45,14 @@ CoordinationUnitImplTestBase::CreateCoordinationUnit(
     CoordinationUnitType type) {
   CoordinationUnitID cu_id(type, std::string());
   return CreateCoordinationUnit(cu_id);
+}
+
+// static
+void CoordinationUnitImplTestBase::SetPageCoordinationUnitClock(
+    CoordinationUnitImpl* page_cu,
+    base::SimpleTestTickClock* clock) {
+  const_cast<base::TickClock*&>(
+      CoordinationUnitImpl::ToPageCoordinationUnit(page_cu)->clock_) = clock;
 }
 
 }  // namespace resource_coordinator
