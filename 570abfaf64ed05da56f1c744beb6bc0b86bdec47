@@ -93,6 +93,30 @@
       "revId": "570abfaf64ed05da56f1c744beb6bc0b86bdec47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66345fee_b373c664",
+        "filename": "chrome/test/chromedriver/embed_mobile_devices_in_cpp.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-10-03T20:13:29Z",
+      "side": 1,
+      "message": "As there is an assumption on the ordering, it seems better to make it explicit here. When the assumption is wrong later, it is easier to understand where goes wrong.",
+      "parentUuid": "e4fc4dff_81d5deb3",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "570abfaf64ed05da56f1c744beb6bc0b86bdec47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
