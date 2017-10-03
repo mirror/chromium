@@ -85,24 +85,14 @@ enum class TaskShutdownBehavior {
 // WithBaseSyncPrimitives trait.
 struct MayBlock {};
 
-// Tasks with this trait will pass base::AssertWaitAllowed(), i.e. will be
-// allowed on the following methods :
-// - base::WaitableEvent::Wait
-// - base::ConditionVariable::Wait
-// - base::PlatformThread::Join
-// - base::PlatformThread::Sleep
-// - base::Process::WaitForExit
-// - base::Process::WaitForExitWithTimeout
+// DEPRECATED. Use base::ScopedAllowBaseSyncPrimitives(ForTesting) instead.
 //
-// Tasks should generally not use these methods.
-//
-// Instead of waiting on a WaitableEvent or a ConditionVariable, put the work
-// that should happen after the wait in a callback and post that callback from
-// where the WaitableEvent or ConditionVariable would have been signaled. If
-// something needs to be scheduled after many tasks have executed, use
-// base::BarrierClosure.
-//
-// On Windows, join processes asynchronously using base::win::ObjectWatcher.
+// Tasks with this trait are allowed to wait on a WaitableEvent or a
+// ConditionVariable. This should generally not be used.  Instead of waiting on
+// a WaitableEvent or a ConditionVariable, put the work that should happen after
+// the wait in a callback and post that callback from where the WaitableEvent or
+// ConditionVariable would have been signaled. If something needs to be
+// scheduled after many tasks have executed, use base::BarrierClosure.
 //
 // MayBlock() must be specified in conjunction with this trait if and only if
 // removing usage of methods listed above in the labeled tasks would still
