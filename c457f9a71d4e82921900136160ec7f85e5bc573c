@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f357e219_8c495b32",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-03T08:18:54Z",
+      "side": 1,
+      "message": "Can we get an accessor for the token here? The reason for this is Headless needs to look up the frame token associated with a ResourceRequestInfo (if any).\n\nCurrently we are maintaining a map of [render_process_id, render_frame_routing_id] \u003d\u003e frame_tree_node_id and it\u0027s easy to change the code to map to the new token instead afterwards if we do this.\n\nLater on I\u0027d like to remove that map but it\u0027s probably quite a large change that I don\u0027t really have time for right now.  (This patch while welcome will break our headless embedder)",
+      "range": {
+        "startLine": 158,
+        "startChar": 6,
+        "endLine": 158,
+        "endChar": 24
+      },
+      "revId": "c457f9a71d4e82921900136160ec7f85e5bc573c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
