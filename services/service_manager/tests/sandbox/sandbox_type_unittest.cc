@@ -64,6 +64,11 @@ TEST(SandboxTypeTest, Utility) {
   command_line6.AppendSwitchASCII(switches::kServiceSandboxType, "bogus");
   EXPECT_EQ(SANDBOX_TYPE_UTILITY, SandboxTypeFromCommandLine(command_line6));
 
+  base::CommandLine command_line7(command_line);
+  SetCommandLineFlagsForSandboxType(&command_line7, SANDBOX_TYPE_PDFCOMPOSITOR);
+  EXPECT_EQ(SANDBOX_TYPE_PDFCOMPOSITOR,
+            SandboxTypeFromCommandLine(command_line7));
+
   command_line.AppendSwitch(switches::kNoSandbox);
   EXPECT_EQ(SANDBOX_TYPE_NO_SANDBOX, SandboxTypeFromCommandLine(command_line));
 }
