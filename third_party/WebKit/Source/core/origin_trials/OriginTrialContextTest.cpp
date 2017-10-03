@@ -13,6 +13,7 @@
 #include "core/testing/DummyPageHolder.h"
 #include "core/testing/NullExecutionContext.h"
 #include "platform/testing/HistogramTester.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/PtrUtil.h"
@@ -71,17 +72,12 @@ class MockTokenValidator : public WebTrialTokenValidator {
 class OriginTrialContextTest : public ::testing::Test {
  protected:
   OriginTrialContextTest()
-      : framework_was_enabled_(RuntimeEnabledFeatures::OriginTrialsEnabled()),
-        execution_context_(new NullExecutionContext()),
+      : execution_context_(new NullExecutionContext()),
         token_validator_(WTF::MakeUnique<MockTokenValidator>()),
         origin_trial_context_(new OriginTrialContext(*execution_context_,
                                                      token_validator_.get())),
         histogram_tester_(new HistogramTester()) {
-    RuntimeEnabledFeatures::SetOriginTrialsEnabled(true);
-  }
-
-  ~OriginTrialContextTest() {
-    RuntimeEnabledFeatures::SetOriginTrialsEnabled(framework_was_enabled_);
+    origin_trials_.reset(new ScopedOriginTrialsForTest(true));
   }
 
   MockTokenValidator* TokenValidator() { return token_validator_.get(); }
@@ -110,11 +106,11 @@ class OriginTrialContextTest : public ::testing::Test {
   }
 
  private:
-  const bool framework_was_enabled_;
   Persistent<NullExecutionContext> execution_context_;
   std::unique_ptr<MockTokenValidator> token_validator_;
   Persistent<OriginTrialContext> origin_trial_context_;
   std::unique_ptr<HistogramTester> histogram_tester_;
+  std::unique_ptr<ScopedOriginTrialsForTest> origin_trials_;
 };
 
 TEST_F(OriginTrialContextTest, EnabledNonExistingTrial) {

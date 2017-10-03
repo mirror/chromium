@@ -24,10 +24,7 @@ class ScrollAnchorTest
       public RenderingTest {
  public:
   ScrollAnchorTest() : ScopedRootLayerScrollingForTest(GetParam()) {
-    RuntimeEnabledFeatures::SetScrollAnchoringEnabled(true);
-  }
-  ~ScrollAnchorTest() {
-    RuntimeEnabledFeatures::SetScrollAnchoringEnabled(false);
+    scroll_anchoring_.reset(new ScopedScrollAnchoringForTest(true));
   }
 
  protected:
@@ -70,6 +67,9 @@ class ScrollAnchorTest
       scrolling_element->setScrollTop(scrolling_element->scrollTop() +
                                       delta.Height());
   }
+
+ private:
+  std::unique_ptr<ScopedScrollAnchoringForTest> scroll_anchoring_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, ScrollAnchorTest, ::testing::Bool());

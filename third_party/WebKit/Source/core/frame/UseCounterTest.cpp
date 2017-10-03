@@ -7,6 +7,7 @@
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/testing/HistogramTester.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -480,12 +481,8 @@ TEST_F(DeprecationTest, InspectorDisablesDeprecation) {
 class FeaturePolicyDisabledDeprecationTest : public ::testing::Test {
  public:
   FeaturePolicyDisabledDeprecationTest() {
-    feature_policy_was_enabled = RuntimeEnabledFeatures::FeaturePolicyEnabled();
-    RuntimeEnabledFeatures::SetFeaturePolicyEnabled(false);
+    feature_policy_.reset(new ScopedFeaturePolicyForTest(false));
     dummy_ = DummyPageHolder::Create();
-  }
-  ~FeaturePolicyDisabledDeprecationTest() {
-    RuntimeEnabledFeatures::SetFeaturePolicyEnabled(feature_policy_was_enabled);
   }
 
  protected:
@@ -495,7 +492,7 @@ class FeaturePolicyDisabledDeprecationTest : public ::testing::Test {
   std::unique_ptr<DummyPageHolder> dummy_;
 
  private:
-  bool feature_policy_was_enabled;
+  std::unique_ptr<ScopedFeaturePolicyForTest> feature_policy_;
 };
 
 TEST_F(FeaturePolicyDisabledDeprecationTest,

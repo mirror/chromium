@@ -19,21 +19,16 @@ namespace blink {
 class DisableBackgroundThrottlingIsRespectedTest : public SimTest {
  public:
   void SetUp() override {
-    background_tab_timer_throttling_feature_ =
-        WTF::MakeUnique<ScopedBackgroundTabTimerThrottlingForTest>(false);
+    timer_throttling_for_background_tabs_ =
+        WTF::MakeUnique<ScopedTimerThrottlingForBackgroundTabsForTest>(false);
     SimTest::SetUp();
   }
 
-  void TearDown() { background_tab_timer_throttling_feature_.reset(); }
+  void TearDown() { timer_throttling_for_background_tabs_.reset(); }
 
  private:
-  typedef ScopedRuntimeEnabledFeatureForTest<
-      RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled,
-      RuntimeEnabledFeatures::SetTimerThrottlingForBackgroundTabsEnabled>
-      ScopedBackgroundTabTimerThrottlingForTest;
-
-  std::unique_ptr<ScopedBackgroundTabTimerThrottlingForTest>
-      background_tab_timer_throttling_feature_;
+  std::unique_ptr<ScopedTimerThrottlingForBackgroundTabsForTest>
+      timer_throttling_for_background_tabs_;
 };
 
 TEST_F(DisableBackgroundThrottlingIsRespectedTest,

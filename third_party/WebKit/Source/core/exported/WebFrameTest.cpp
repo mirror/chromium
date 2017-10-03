@@ -108,7 +108,6 @@
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
-#include "platform/runtime_enabled_features.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarTestSuite.h"
 #include "platform/testing/HistogramTester.h"
@@ -5933,7 +5932,8 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
   CompositedSelectionBoundsTest()
       : fake_selection_layer_tree_view_(
             fake_selection_web_view_client_.SelectionLayerTreeView()) {
-    RuntimeEnabledFeatures::SetCompositedSelectionUpdateEnabled(true);
+    composited_selection_update_.reset(
+        new ScopedCompositedSelectionUpdateForTest(true));
     RegisterMockedHttpURLLoad("Ahem.ttf");
 
     web_view_helper_.Initialize(nullptr, &fake_selection_web_view_client_);
@@ -6142,6 +6142,8 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
   CompositedSelectionBoundsTestWebViewClient fake_selection_web_view_client_;
   CompositedSelectionBoundsTestLayerTreeView& fake_selection_layer_tree_view_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  std::unique_ptr<ScopedCompositedSelectionUpdateForTest>
+      composited_selection_update_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, CompositedSelectionBoundsTest, ::testing::Bool());
@@ -8567,7 +8569,7 @@ class TestFullscreenWebViewClient : public FrameTestHelpers::TestWebViewClient {
 }  // namespace
 
 TEST_P(ParameterizedWebFrameTest, OverlayFullscreenVideo) {
-  RuntimeEnabledFeatures::SetForceOverlayFullscreenVideoEnabled(true);
+  ScopedForceOverlayFullscreenVideoForTest force_overlay_fullscreen_video(true);
   RegisterMockedHttpURLLoad("fullscreen_video.html");
   TestFullscreenWebViewClient web_view_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
@@ -10463,7 +10465,7 @@ TEST_P(WebFrameOverscrollTest, OnlyMainFrameScrollBoundaryBehaviorHasEffect) {
 }
 
 TEST_P(ParameterizedWebFrameTest, OrientationFrameDetach) {
-  RuntimeEnabledFeatures::SetOrientationEventEnabled(true);
+  ScopedOrientationEventForTest orientation_event(true);
   RegisterMockedHttpURLLoad("orientation-frame-detach.html");
   FrameTestHelpers::WebViewHelper web_view_helper;
   WebViewImpl* web_view_impl = web_view_helper.InitializeAndLoad(
