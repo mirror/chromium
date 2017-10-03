@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "831b7255_4dbbcd91",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T21:11:08Z",
+      "side": 1,
+      "message": "Can you put this in alphabetical order, below invalidations_resources.grd, and adjust the resource IDs?\n\nGiven extensions_resources.grd with room for N structures, you want to give extensions_resources.grd 11960 - N, and then subtract N from invalidations_resources.grd\u0027s and component_extension_resources.grd\u0027s IDs.",
+      "revId": "d071df5b4019c3118daeb9ee34eddb1578d897f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
