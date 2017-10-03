@@ -19,32 +19,25 @@
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
+#include "platform/bindings/CallbackFunctionBase.h"
 
 namespace blink {
 
 class ScriptState;
 class HTMLDivElement;
 
-class CORE_EXPORT V8VoidCallbackFunctionInterfaceArg final : public GarbageCollectedFinalized<V8VoidCallbackFunctionInterfaceArg>, public TraceWrapperBase {
+class CORE_EXPORT V8VoidCallbackFunctionInterfaceArg final : public CallbackFunctionBase {
  public:
   static V8VoidCallbackFunctionInterfaceArg* Create(ScriptState*, v8::Local<v8::Value> callback);
 
   ~V8VoidCallbackFunctionInterfaceArg() = default;
 
-  DEFINE_INLINE_TRACE() {}
   DECLARE_TRACE_WRAPPERS();
 
   bool call(ScriptWrappable* scriptWrappable, HTMLDivElement* divElement);
 
-  v8::Local<v8::Function> v8Value(v8::Isolate* isolate) {
-    return callback_.NewLocal(isolate);
-  }
-
  private:
   V8VoidCallbackFunctionInterfaceArg(ScriptState*, v8::Local<v8::Function>);
-
-  RefPtr<ScriptState> script_state_;
-  TraceWrapperV8Reference<v8::Function> callback_;
 };
 
 template <>
