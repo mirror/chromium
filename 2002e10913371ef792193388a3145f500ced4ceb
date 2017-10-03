@@ -1,0 +1,277 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c833ab68_d55b7b44",
+        "filename": "content/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "add this under a if(enable_library_cdms) block.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b27647b_079e121d",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "nit: using Key \u003d CdmStorageImpl::FileLockKey;",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aad37e7_d801e421",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "It\u0027s odd that we use IsValidFileName() to check the plugin ID, which is not a file name.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a58650_9625a915",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "here and everywhere, s/filesystem/file_system/, as in FileSystem, they are two words.\n\nAlso code search shows that file_system_context is used way more often than filesystem_context",
+      "range": {
+        "startLine": 169,
+        "startChar": 6,
+        "endLine": 169,
+        "endChar": 16
+      },
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ddb5b3f_607f9228",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "here and everywhere else, \"content::\" not needed anymore.",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8791ffde_7b02b82a",
+        "filename": "content/browser/media/cdm_storage_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "We are actually not testing Clear Key CDM in this test. Can we just use a random file_system_id, e.g. dummy-file-system? Do we have to follow some specific format?\n\nFor example, if in the future we want to introduce a new Foo CDM, and we can choose what the file system ID is for this new CDM, what\u0027s the rule on the file system ID string?\n\nFor whatever rules there might be, it\u0027ll be nice to add unittests to cover them.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c411d39b_0284567f",
+        "filename": "content/browser/media/cdm_storage_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "nit: Do this in SetUp(), then you don\u0027t need to call Initialize() in every test.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86051a89_f7e8dffe",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "ISTM you moved this because you need this function in GetFrameServices(). But actually you already have |cdm_info| in MediaInterfaceProxy::ConnectToCdmService(). See the comment below.\n\nWith that, you don\u0027t need to move this. And IMHO keeping this code closer to the caller makes it more readable.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a484556a_14021f92",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "in the .h file this is |plugin_id|, I suppose this is because you need to rebase on my CL? :)",
+      "range": {
+        "startLine": 151,
+        "startChar": 57,
+        "endLine": 151,
+        "endChar": 67
+      },
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974d3b11_0cc10cae",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "nit: nest this in the ENABLE_MOJO_CDM block",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2552d579_578a7d5b",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "nit: cdm_info can be null",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4363550_e4b5a22a",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "You have |cdm_info| above, where you can use to get the cdm file system ID.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c1d4d8_2dc85f55",
+        "filename": "content/browser/media/media_interface_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "nit: s/plugin_id/cdm_file_system_id/ and add a comment",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7321ce_1e3549ac",
+        "filename": "content/public/common/cdm_info.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "here and everywhere else. in the future, after we deprecate pepper CDM, it\u0027ll be a bit odd to have \"plugin\" here. Can we name this \"file_system_id\"? Same for constants like kClearKeyCdmPluginFileSystemId -\u003e kClearKeyCdmFileSystemId.\n\nAlso document any requirement for a valid ID.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198ed33c_cc8724cf",
+        "filename": "third_party/widevine/cdm/widevine_cdm_common.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T07:18:43Z",
+      "side": 1,
+      "message": "Add a comment that this is used to store persistent files. Changing this will lose existing files.",
+      "revId": "2002e10913371ef792193388a3145f500ced4ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
