@@ -62,7 +62,7 @@ InProcessWorkerObjectProxy::~InProcessWorkerObjectProxy() {}
 
 void InProcessWorkerObjectProxy::PostMessageToWorkerObject(
     RefPtr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels) {
+    MessagePortChannelArray channels) {
   GetParentFrameTaskRunners()
       ->Get(TaskType::kPostedMessage)
       ->PostTask(BLINK_FROM_HERE,
@@ -74,7 +74,7 @@ void InProcessWorkerObjectProxy::PostMessageToWorkerObject(
 
 void InProcessWorkerObjectProxy::ProcessMessageFromWorkerObject(
     RefPtr<SerializedScriptValue> message,
-    Vector<MessagePortChannel> channels,
+    MessagePortChannelArray channels,
     WorkerThread* worker_thread) {
   WorkerGlobalScope* global_scope =
       ToWorkerGlobalScope(worker_thread->GlobalScope());
