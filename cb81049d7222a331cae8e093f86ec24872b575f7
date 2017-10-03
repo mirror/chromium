@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46c446d4_82d00215",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4ea80d_c7e0b8c2",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b34668a4_fab29d43",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c5b30ee4_09f6ee62",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "Yeah, these two were temp hacking to shorten the run. Both removed.",
+      "parentUuid": "02fc8e10_4a45cb06",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af347d05_8f851f8b",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "d181cf30_1b34c540",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af347d05_8f851f8b",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c9c0d2_9d8035f3",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -99,6 +153,24 @@
       "writtenOn": "2017-10-03T20:05:05Z",
       "side": 1,
       "message": "The lexical scoping of the \"file_suffix\" declaration feels weird here. Shouldn\u0027t we be declaring it above the \"if\"?\n\nObviously it must be valid given that it\u0027s not exploding, but gahh.\n\nCould we initialize it to \"\" and then set it to \".FAILED\" if exit_code !\u003d 0?",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f952816_bd09ff51",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "There\u0027s only function scope and global scope in Python. This is used frequently, e.g. with \u0027with\u0027.",
+      "parentUuid": "70c9c0d2_9d8035f3",
       "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "6ab0bf05_52b61130",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76489b6f_17481897",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "589aa30a_e3e3b4a0",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -142,6 +238,24 @@
       "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade6d7ce_7b34d4e5",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-03T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "589aa30a_e3e3b4a0",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
