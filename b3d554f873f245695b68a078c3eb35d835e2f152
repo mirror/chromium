@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a7704d_173b7db7",
+        "filename": "third_party/minizip/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1158814
+      },
+      "writtenOn": "2017-10-03T08:44:23Z",
+      "side": 1,
+      "message": "This change brakes non x86 builds, mipsel for example.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 1
+      },
+      "revId": "b3d554f873f245695b68a078c3eb35d835e2f152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
