@@ -615,7 +615,7 @@ std::unique_ptr<CompositorLock> Compositor::GetCompositorLock(
     for (auto& observer : observer_list_)
       observer.OnCompositingLockStateChanged(this);
   }
-
+  /*
   if (should_extend_timeout) {
     // The timeout task uses an independent WeakPtrFactory that is invalidated
     // when all locks are ended to prevent the timeout from leaking into
@@ -626,6 +626,7 @@ std::unique_ptr<CompositorLock> Compositor::GetCompositorLock(
                    lock_timeout_weak_ptr_factory_.GetWeakPtr()),
         timeout);
   }
+  */
   return lock;
 }
 
