@@ -383,6 +383,11 @@ void HeadlessBrowserContextImpl::NotifyUrlRequestFailed(
     observer.UrlRequestFailed(request, net_error, canceled_by_devtools);
 }
 
+void HeadlessBrowserContextImpl::SetNetworkConditions(
+    std::unique_ptr<content::DevToolsNetworkConditions> conditions) {
+  network_conditions_ = std::move(conditions);
+}
+
 HeadlessBrowserContext::Builder::Builder(HeadlessBrowserImpl* browser)
     : browser_(browser),
       options_(new HeadlessBrowserContextOptions(browser->options())),

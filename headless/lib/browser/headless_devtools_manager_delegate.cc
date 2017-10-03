@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "base/json/json_writer.h"
+#include "content/common/devtools/devtools_network_conditions.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/devtools_frontend_host.h"
@@ -200,6 +201,10 @@ HeadlessDevToolsManagerDelegate::HeadlessDevToolsManagerDelegate(
       base::Bind(&HeadlessDevToolsManagerDelegate::SetWindowBounds,
                  base::Unretained(this));
 
+  unhandled_command_map_["Network.emulateNetworkConditions"] =
+      base::Bind(&HeadlessDevToolsManagerDelegate::EmulateNetworkConditions,
+                 base::Unretained(this));
+
   async_command_map_["Page.printToPDF"] = base::Bind(
       &HeadlessDevToolsManagerDelegate::PrintToPDF, base::Unretained(this));
 }
@@ -220,17 +225,24 @@ bool HeadlessDevToolsManagerDelegate::HandleCommand(
   if (!command->GetInteger("id", &id) || !command->GetString("method", &method))
     return false;
 
+  const base::DictionaryValue* params = nullptr;
+  command->GetDictionary("params", &params);
+
   auto find_it = command_map_.find(method);
-  if (find_it == command_map_.end())
+  if (find_it == command_map_.end()) {
+    // Check for any commands that are actioned then passed on to devtools to
+    // handle.
+    find_it = unhandled_command_map_.find(method);
+    if (find_it != unhandled_command_map_.end())
+      find_it->second.Run(id, params);
     return false;
+  }
 
   // Handle Browser domain commands only from Browser DevToolsAgentHost.
   if (method.find("Browser.") == 0 &&
       agent_host->GetType() != content::DevToolsAgentHost::kTypeBrowser)
     return false;
 
-  const base::DictionaryValue* params = nullptr;
-  command->GetDictionary("params", &params);
   auto cmd_result = find_it->second.Run(id, params);
   if (!cmd_result)
     return false;
@@ -527,6 +539,28 @@ HeadlessDevToolsManagerDelegate::SetWindowBounds(
 
   web_contents->set_window_state(window_state);
   web_contents->SetBounds(bounds);
+  return CreateSuccessResponse(command_id, nullptr);
+}
+
+std::unique_ptr<base::DictionaryValue>
+HeadlessDevToolsManagerDelegate::EmulateNetworkConditions(
+    int command_id,
+    const base::DictionaryValue* params) {
+  // Associate NetworkConditions to context
+  HeadlessBrowserContextImpl* browser_context =
+      static_cast<HeadlessBrowserContextImpl*>(
+          browser_->GetDefaultBrowserContext());
+  bool offline = false;
+  double latency = 0, download_throughput = 0, upload_throughput = 0;
+  params->GetBoolean("offline", &offline);
+  params->GetDouble("latency", &latency);
+  params->GetDouble("downloadThroughput", &download_throughput);
+  params->GetDouble("uploadThroughput", &upload_throughput);
+  std::unique_ptr<content::DevToolsNetworkConditions> conditions(
+      new content::DevToolsNetworkConditions(offline, std::max(latency, 0.0),
+                                             std::max(download_throughput, 0.0),
+                                             std::max(upload_throughput, 0.0)));
+  browser_context->SetNetworkConditions(std::move(conditions));
   return CreateSuccessResponse(command_id, nullptr);
 }
 
