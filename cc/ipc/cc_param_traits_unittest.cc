@@ -395,8 +395,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       pass_in->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   surface_in->SetAll(shared_state3_in, arbitrary_rect2,
                      arbitrary_rect1_inside_rect2, arbitrary_bool1,
-                     arbitrary_surface_id, viz::SurfaceDrawQuadType::PRIMARY,
-                     SK_ColorWHITE, nullptr);
+                     arbitrary_surface_id, base::nullopt,
+                     viz::SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   pass_cmp->CopyFromAndAppendDrawQuad(surface_in);
 
   TextureDrawQuad* texture_in =
