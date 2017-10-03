@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c82dbb88_3911dbe1",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ece117b_2ee75e49",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f5dcfae_0912fed8",
         "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "05b98965_caae91a6",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f5dcfae_0912fed8",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9212eb2b_4fd5ec56",
         "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf0408b_7b520d8f",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9212eb2b_4fd5ec56",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "06d32b0c_8b617bb8",
+        "filename": "content/renderer/media/webrtc/rtc_rtp_contributing_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "I don\u0027t think I can use Optional in third_party/WebKit/public/platform/WebRTCRtpSource.h - right?",
+      "parentUuid": "11b556eb_eaee8375",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "094bb8ba_7da58067",
         "filename": "content/shell/test_runner/mock_webrtc_peer_connection_handler.cc",
         "patchSetId": 1
@@ -111,6 +183,30 @@
     },
     {
       "key": {
+        "uuid": "afbb6c03_b1f0e5b4",
+        "filename": "content/shell/test_runner/mock_webrtc_peer_connection_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094bb8ba_7da58067",
+      "range": {
+        "startLine": 311,
+        "startChar": 8,
+        "endLine": 311,
+        "endChar": 28
+      },
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73943fb8_27d593be",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpReceiver.cpp",
         "patchSetId": 1
@@ -128,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "84767deb_7c09c45c",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpReceiver.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73943fb8_27d593be",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8414300f_52f1bbdb",
         "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
         "patchSetId": 1
@@ -142,6 +256,24 @@
       "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575ef077_2e997ef2",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8414300f_52f1bbdb",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +309,24 @@
       "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60270bd2_825c45ae",
+        "filename": "third_party/WebKit/Source/modules/peerconnection/RTCRtpSynchronizationSource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1182820
+      },
+      "writtenOn": "2017-10-03T23:00:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dbac678_4c150f20",
+      "revId": "3a0fb0765ca649a33ec52f21448f946a9869d32b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
