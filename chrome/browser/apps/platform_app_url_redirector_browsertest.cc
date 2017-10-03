@@ -144,9 +144,8 @@ void PlatformAppUrlRedirectorBrowserTest::TestNavigationInTab(
   ExtensionTestMessageListener handler_listener(handler_start_message, false);
 
   ui_test_utils::NavigateToURL(
-      browser(),
-      embedded_test_server()->GetURL(base::StringPrintf(
-          "/extensions/platform_apps/%s", launcher_page)));
+      browser(), embedded_test_server()->GetURL(base::StringPrintf(
+                     "/extensions/platform_apps/%s", launcher_page)));
 
   ASSERT_TRUE(handler_listener.WaitUntilSatisfied());
 
@@ -167,9 +166,8 @@ void PlatformAppUrlRedirectorBrowserTest::TestMismatchingNavigationInTab(
   content::TitleWatcher title_watcher(tab, success_title);
 
   ui_test_utils::NavigateToURL(
-      browser(),
-      embedded_test_server()->GetURL(base::StringPrintf(
-          "/extensions/platform_apps/%s", launcher_page)));
+      browser(), embedded_test_server()->GetURL(base::StringPrintf(
+                     "/extensions/platform_apps/%s", launcher_page)));
 
   ASSERT_EQ(success_title, title_watcher.WaitAndGetTitle());
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
@@ -193,9 +191,8 @@ void PlatformAppUrlRedirectorBrowserTest::TestNegativeXhrInTab(
   title_watcher.AlsoWaitForTitle(failure_title);
 
   ui_test_utils::NavigateToURL(
-      browser(),
-      embedded_test_server()->GetURL(base::StringPrintf(
-          "/extensions/platform_apps/%s", launcher_page)));
+      browser(), embedded_test_server()->GetURL(base::StringPrintf(
+                     "/extensions/platform_apps/%s", launcher_page)));
 
   ASSERT_EQ(success_title, title_watcher.WaitAndGetTitle());
   ASSERT_EQ(1, browser()->tab_strip_model()->count());
@@ -272,7 +269,7 @@ void PlatformAppUrlRedirectorBrowserTest::TestNavigationInBrowser(
   chrome::NavigateParams params(
       browser(),
       embedded_test_server()->GetURL(base::StringPrintf(
-           "/extensions/platform_apps/%s", matching_target_page)),
+          "/extensions/platform_apps/%s", matching_target_page)),
       transition);
   ui_test_utils::NavigateToURL(&params);
 
@@ -298,7 +295,7 @@ void PlatformAppUrlRedirectorBrowserTest::TestNegativeNavigationInBrowser(
   chrome::NavigateParams params(
       browser(),
       embedded_test_server()->GetURL(base::StringPrintf(
-           "/extensions/platform_apps/%s", matching_target_page)),
+          "/extensions/platform_apps/%s", matching_target_page)),
       transition);
   ui_test_utils::NavigateToURL(&params);
 
@@ -311,38 +308,32 @@ void PlatformAppUrlRedirectorBrowserTest::TestMismatchingNavigationInBrowser(
     ui::PageTransition transition,
     const char* success_tab_title,
     const char* handler) {
-  TestNegativeNavigationInBrowser(
-      mismatching_target_page, transition, success_tab_title, handler);
+  TestNegativeNavigationInBrowser(mismatching_target_page, transition,
+                                  success_tab_title, handler);
 }
 
 // Test that a click on a regular link in a tab launches an app that has
 // matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        ClickInTabIntercepted) {
-  TestNavigationInTab(
-      "url_handlers/launching_pages/click_link.html",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInTab("url_handlers/launching_pages/click_link.html",
+                      "url_handlers/handlers/simple", "Handler launched");
 }
 
 // Test that a click on a target='_blank' link in a tab launches an app that has
 // matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        BlankClickInTabIntercepted) {
-  TestNavigationInTab(
-      "url_handlers/launching_pages/click_blank_link.html",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInTab("url_handlers/launching_pages/click_blank_link.html",
+                      "url_handlers/handlers/simple", "Handler launched");
 }
 
 // Test that a call to window.open() in a tab launches an app that has
 // matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        WindowOpenInTabIntercepted) {
-  TestNavigationInTab(
-      "url_handlers/launching_pages/call_window_open.html",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInTab("url_handlers/launching_pages/call_window_open.html",
+                      "url_handlers/handlers/simple", "Handler launched");
 }
 
 // Test that a click on a regular link in a tab launches an app that has
@@ -351,30 +342,25 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        MismatchingClickInTabNotIntercepted) {
   TestMismatchingNavigationInTab(
       "url_handlers/launching_pages/click_mismatching_link.html",
-      "Mismatching link target loaded",
-      "url_handlers/handlers/simple");
+      "Mismatching link target loaded", "url_handlers/handlers/simple");
 }
 
 // Test that a click on target='_blank' link in an app's window launches
 // another app that has matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        BlankClickInAppIntercepted) {
-  TestNavigationInApp(
-      "url_handlers/launchers/click_blank_link",
-      "Launcher done",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInApp("url_handlers/launchers/click_blank_link",
+                      "Launcher done", "url_handlers/handlers/simple",
+                      "Handler launched");
 }
 
 // Test that a call to window.open() in the app's foreground page launches
 // another app that has matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        WindowOpenInAppIntercepted) {
-  TestNavigationInApp(
-      "url_handlers/launchers/call_window_open",
-      "Launcher done",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInApp("url_handlers/launchers/call_window_open",
+                      "Launcher done", "url_handlers/handlers/simple",
+                      "Handler launched");
 }
 
 // Test that an app with url_handlers does not intercept a mismatching
@@ -382,8 +368,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        MismatchingWindowOpenInAppNotIntercepted) {
   TestMismatchingNavigationInApp(
-      "url_handlers/launchers/call_mismatching_window_open",
-      "Launcher done",
+      "url_handlers/launchers/call_mismatching_window_open", "Launcher done",
       "url_handlers/handlers/simple");
 }
 
@@ -397,10 +382,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
   // navigate-intercept-launch sequences with multiplying handler's windows.
   // There should be 2 windows only: launcher's and handler's.
   TestNavigationInApp(
-      "url_handlers/launchers/click_blank_link",
-      "Launcher done",
-      "url_handlers/handlers/navigate_webview_to_url",
-      "Handler launched");
+      "url_handlers/launchers/click_blank_link", "Launcher done",
+      "url_handlers/handlers/navigate_webview_to_url", "Handler launched");
 }
 
 // Test that a webview in an app can be navigated to a URL without interception
@@ -413,8 +396,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
   // navigate-intercept-launch sequences with multiplying handler's windows.
   // There should be 2 windows only: launcher's and handler's.
   TestMismatchingNavigationInApp(
-      "url_handlers/launchers/click_mismatching_blank_link",
-      "Launcher done",
+      "url_handlers/launchers/click_mismatching_blank_link", "Launcher done",
       "url_handlers/handlers/simple");
 }
 
@@ -422,11 +404,9 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
 // url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        EntryInOmnibarIntercepted) {
-  TestNavigationInBrowser(
-      "url_handlers/common/target.html",
-      ui::PAGE_TRANSITION_TYPED,
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInBrowser("url_handlers/common/target.html",
+                          ui::PAGE_TRANSITION_TYPED,
+                          "url_handlers/handlers/simple", "Handler launched");
 }
 
 // Test that an app with url_handlers does not intercept a mismatching
@@ -434,10 +414,8 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        MismatchingEntryInOmnibarNotIntercepted) {
   TestMismatchingNavigationInBrowser(
-      "url_handlers/common/mismatching_target.html",
-      ui::PAGE_TRANSITION_TYPED,
-      "Mismatching link target loaded",
-      "url_handlers/handlers/simple");
+      "url_handlers/common/mismatching_target.html", ui::PAGE_TRANSITION_TYPED,
+      "Mismatching link target loaded", "url_handlers/handlers/simple");
 }
 
 // Test that a form submission in a page is never subject to interception
@@ -445,8 +423,7 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        FormSubmissionInTabNotIntercepted) {
   TestMismatchingNavigationInTab(
-      "url_handlers/launching_pages/submit_form.html",
-      "Link target loaded",
+      "url_handlers/launching_pages/submit_form.html", "Link target loaded",
       "url_handlers/handlers/simple");
 }
 
@@ -454,20 +431,15 @@ IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
 // by apps even with matching url_handlers.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        XhrInTabNotIntercepted) {
-  TestNegativeXhrInTab(
-      "url_handlers/xhr_downloader/main.html",
-      "XHR succeeded",
-      "XHR failed",
-      "url_handlers/handlers/steal_xhr_target");
+  TestNegativeXhrInTab("url_handlers/xhr_downloader/main.html", "XHR succeeded",
+                       "XHR failed", "url_handlers/handlers/steal_xhr_target");
 }
 
 // Test that a click on a prerendered link still launches.
 IN_PROC_BROWSER_TEST_F(PlatformAppUrlRedirectorBrowserTest,
                        PrerenderedClickInTabIntercepted) {
-  TestNavigationInTab(
-      "url_handlers/launching_pages/prerender_link.html",
-      "url_handlers/handlers/simple",
-      "Handler launched");
+  TestNavigationInTab("url_handlers/launching_pages/prerender_link.html",
+                      "url_handlers/handlers/simple", "Handler launched");
 }
 
 }  // namespace extensions
