@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "d6bcf3cc_c8addd50",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T08:34:15Z",
+      "side": 1,
+      "message": "you are adding this file in this CL. But it\u0027s copyright is 2014. So either you\u0027ve moved it or need to change the copyright or adjust this in some other fashion?",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32fac126_dc577338",
         "filename": "content/common/frame_sink_provider.mojom",
         "patchSetId": 2
@@ -151,6 +168,24 @@
       "side": 1,
       "message": "Yea, that\u0027s something we didn\u0027t really consider in our directory structure. Does something used by privileged code but implemented by clients belong in privileged or public?\n\nMaybe public is the right place (because the renderer shouldn\u0027t be reaching into privileged), although it doesn\u0027t convey the fact that only the viz host can use this interface.",
       "parentUuid": "3baffd8f_7536d133",
+      "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2699eb11_b3d53de3",
+        "filename": "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T08:34:15Z",
+      "side": 1,
+      "message": "Perhaps we need a new directory that is a sibling to privileged and public to make it clear that the service implementation is an obligation of the client and its results cannot necessarily be trusted by the (privileged) HitTestQuery",
+      "parentUuid": "b47bb0b2_5e7c08d2",
       "revId": "897d1a7b456bb39e980e823cc45ed3060ab5e6f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
