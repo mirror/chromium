@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34fc0752_32d4cc9c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-03T22:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d1fed6_04edd128",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "857056ed_22f8613e",
         "filename": "chrome/installer/linux/debian/lint_package.py",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T19:23:07Z",
       "side": 1,
       "message": "Do we want to add a flag for official-ness and only suppress this for non-official builds?",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df505b24_d15d4de8",
+        "filename": "chrome/installer/linux/debian/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-03T22:10:12Z",
+      "side": 1,
+      "message": "nah, I want to keep it simple.  I don\u0027t intend for this to be run on the bots, so I want users to be able to just do \u0027lint_package.py path/to/package.rpm\u0027",
+      "parentUuid": "857056ed_22f8613e",
       "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ebe1feac_e609fa52",
+        "filename": "chrome/installer/linux/debian/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-03T22:10:12Z",
+      "side": 1,
+      "message": "nope; done",
+      "parentUuid": "8e7fbbc4_2039bd5c",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e82031cf_3a63ede0",
         "filename": "chrome/installer/linux/rpm/lint_package.py",
         "patchSetId": 1
@@ -64,6 +118,30 @@
       "writtenOn": "2017-10-03T19:23:07Z",
       "side": 1,
       "message": "Why check differently here vs line 57?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e3ee91_02d8534a",
+        "filename": "chrome/installer/linux/rpm/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-03T22:10:12Z",
+      "side": 1,
+      "message": "no good reason; changed",
+      "parentUuid": "e82031cf_3a63ede0",
       "range": {
         "startLine": 59,
         "startChar": 8,
