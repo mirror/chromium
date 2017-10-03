@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e99ce60_12f24875",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-03T19:08:21Z",
+      "side": 1,
+      "message": "Previously, I set kFramePartial after startIncrementalDecode() is called. That way we don\u0027t call it a second time.\n\nI moved it here so we also don\u0027t zero-fill a second time.",
+      "revId": "254393986307d7ea1b2b767ab773b3a3311d4e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
