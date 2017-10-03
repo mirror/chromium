@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cac5c9a9_4fc1b928",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T15:11:03Z",
+      "side": 1,
+      "message": "Hrm, no it doesn\u0027t. If the context provider is null, but the gpu channel isn\u0027t and IsLost, then we can try again. Else we can give up forever?",
+      "parentUuid": "26c96b77_8a717b5d",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
@@ -65,6 +83,24 @@
       "writtenOn": "2017-09-29T23:46:14Z",
       "side": 1,
       "message": "Well, RenderThreadImpl::RequestNewLayerTreeFrameSink also has a software fallback if we failed too many times in a row, whereas SharedMainThreadContextProvider might still succeed",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32119bad_5bf311fd",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T15:11:03Z",
+      "side": 1,
+      "message": "I thot we moved that to the browser so everything in the renderer just stops getting a context if we decide to stop using gpu compositing. I don\u0027t see the fallback looking at the use of |use_software|, am I overlooking it?",
+      "parentUuid": "ad6368ab_cad80f9d",
       "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
