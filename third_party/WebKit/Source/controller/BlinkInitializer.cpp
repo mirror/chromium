@@ -44,6 +44,10 @@
 #include "public/web/WebKit.h"
 #include "v8/include/v8.h"
 
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
 namespace blink {
 
 namespace {
@@ -56,6 +60,33 @@ class EndOfTaskRunner : public WebThread::TaskObserver {
     V8Initializer::ReportRejectedPromisesOnMainThread();
   }
 };
+
+#if defined(OS_WIN)
+bool FindAndReleaseReservation(size_t request_size) {
+  // See the SandboxedProcessLauncherDelegate::PostSpawnTarget method in
+  // render_process_host_impl.cc to see how the memory is reserved. The memory
+  // parameters must match what we use to find the reservation here.
+  SYSTEM_INFO sys;
+  GetSystemInfo(&sys);
+  char* addr = reinterpret_cast<char*>(sys.lpMinimumApplicationAddress);
+  while (addr < reinterpret_cast<char*>(sys.lpMaximumApplicationAddress)) {
+    MEMORY_BASIC_INFORMATION mem;
+    if (sizeof(mem) !=
+        VirtualQuery(reinterpret_cast<void*>(addr), &mem, sizeof(mem))) {
+      break;
+    }
+
+    if (mem.State == MEM_RESERVE && mem.AllocationProtect == PAGE_NOACCESS &&
+        mem.RegionSize == request_size) {
+      if (VirtualFree(reinterpret_cast<void*>(addr), 0, MEM_RELEASE))
+        return true;
+      break;
+    }
+    addr = += mem.RegionSize;
+  }
+  return false;
+}
+#endif  // defined(OS_WIN)
 
 }  // namespace
 
@@ -70,23 +101,31 @@ static ModulesInitializer& GetModulesInitializer() {
 void Initialize(Platform* platform) {
   Platform::Initialize(platform);
 
-#if !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) && defined(OS_WIN)
-  // Reserve address space on 32 bit Windows, to make it likelier that large
-  // array buffer allocations succeed.
+#if defined(OS_WIN)
+  // Try to reserve a large region of address space on 32 bit Windows, to make
+  // large array buffer allocations likelier to succeed.
   BOOL is_wow_64 = -1;
   if (!IsWow64Process(GetCurrentProcess(), &is_wow_64))
     is_wow_64 = FALSE;
   if (!is_wow_64) {
-    // Try to reserve as much address space as we reasonably can.
     const size_t kMB = 1024 * 1024;
-    for (size_t size = 512 * kMB; size >= 32 * kMB; size -= 16 * kMB) {
+    const size_t kReservationSize = 512 * kMB;
+    const size_t kMinSize = 32 * kMB;
+    const size_t kStepSize = 16 * kMB;
+    // Search for a reserved block of 512 MB made on our behalf by the browser
+    // and free it, so it's available for page allocator's reservation.
+    if (!FindAndReleaseReservation(kReservationSize)) {
+      DLOG(WARNING) << "Could not find and release reserved address space";
+    }
+    // Try to reserve as much address space as we reasonably can. We retry
+    // since we might lose some or all of the reservation due to a race.
+    for (size_t size = kReservationSize; size >= kMinSize; size -= kStepSize) {
       if (base::ReserveAddressSpace(size)) {
         break;
       }
     }
   }
-#endif  // !defined(ARCH_CPU_X86_64) && !defined(ARCH_CPU_ARM64) &&
-        // defined(OS_WIN)
+#endif  // defined(OS_WIN)
 
   V8Initializer::InitializeMainThread(
       V8ContextSnapshotExternalReferences::GetTable());
