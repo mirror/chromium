@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32041fe1_95dd200c",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T19:39:14Z",
+      "side": 1,
+      "message": "Is there a reason to base this around the URLRequestContextGetter instead of the cookie store?  CookieManagerImpl wraps the cookie store.",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b2faf9_d4262534",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T19:39:14Z",
+      "side": 1,
+      "message": "What\u0027s the meaning of this argument, given that the function this structure is used in already has a url and a site_for_cookies url?",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
