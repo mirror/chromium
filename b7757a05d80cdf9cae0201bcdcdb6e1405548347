@@ -34,6 +34,24 @@
       "revId": "b7757a05d80cdf9cae0201bcdcdb6e1405548347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5337786_d39f4147",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-03T00:20:45Z",
+      "side": 1,
+      "message": "Yes, that seems better. Done.",
+      "parentUuid": "5aaaccd1_cb4a7192",
+      "revId": "b7757a05d80cdf9cae0201bcdcdb6e1405548347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
