@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "3fb8f3de_b4e74993",
+        "filename": "chrome/browser/notifications/message_center_display_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T16:44:47Z",
+      "side": 1,
+      "message": "Isn\u0027t it implicit in being a browser context keyed service that |profile_| outlasts |this|, and hence every function is executing under the pretense that the profile hasn\u0027t yet shut down?",
+      "parentUuid": "98cddb5e_a0525474",
+      "revId": "e16dc68c2bbd6a3a1f77388c30b876261a4b71d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e604b71_cb01321f",
         "filename": "ui/message_center/notification.h",
         "patchSetId": 4

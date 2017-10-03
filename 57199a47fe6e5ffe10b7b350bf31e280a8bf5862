@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15497681_3594a926",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T16:44:47Z",
+      "side": 1,
+      "message": "Interesting. I think I\u0027ll leave that for a later date though. I want to change this to be more than a \"hand cursor\" bit, i.e. the notifications should not call the click handler unless this is set. That way, whatever we might decide in terms of visual feedback, consistency will be more enforced when people add new notifications.",
+      "parentUuid": "be443ffa_a960ebbe",
+      "revId": "57199a47fe6e5ffe10b7b350bf31e280a8bf5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61e0a7a7_c0af9eb5",
         "filename": "ui/message_center/notification.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T16:21:53Z",
       "side": 1,
       "message": "Maybe update this to indicate that it\u0027s about the mouse cursor more than clickability? Even when set to |false|, clicks still work.",
+      "revId": "57199a47fe6e5ffe10b7b350bf31e280a8bf5862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04eb03a8_0512514f",
+        "filename": "ui/message_center/notification.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-03T16:44:47Z",
+      "side": 1,
+      "message": "I would like to eventually change that fact (i.e. make reality match this comment). WDYT?",
+      "parentUuid": "61e0a7a7_c0af9eb5",
       "revId": "57199a47fe6e5ffe10b7b350bf31e280a8bf5862",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
