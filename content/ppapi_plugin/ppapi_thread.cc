@@ -359,8 +359,8 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
   // Use a local instance of CdmHostFiles so that if we return early for any
-  // error, all files will closed automatically.
-  std::unique_ptr<media::CdmHostFiles> cdm_host_files;
+  // error, all files will be closed automatically.
+  media::CdmHostFiles cdm_host_files;
   auto cdm_status = media::CdmHostFiles::Status::kNotCalled;
 
   // Open CDM host files before the process is sandboxed.
@@ -368,15 +368,15 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
     std::vector<media::CdmHostFilePath> cdm_host_file_paths;
     GetContentClient()->AddContentDecryptionModules(nullptr,
                                                     &cdm_host_file_paths);
-    cdm_host_files = media::CdmHostFiles::Create(path, cdm_host_file_paths);
+    cdm_host_files.InitializeWithAdapter(path, cdm_host_file_paths);
   }
 
 #if defined(OS_WIN)
   // On Windows, initialize CDM host verification unsandboxed. On other
   // platforms, this is called sandboxed below.
-  if (cdm_host_files) {
-    DCHECK(!is_broker_ && media::IsCdm(path));
-    cdm_status = cdm_host_files->InitVerification(library.get(), path);
+  if (!is_broker_ && media::IsCdm(path)) {
+    cdm_status =
+        cdm_host_files.InitVerificationWithAdapter(library.get(), path);
     // Ignore other failures for backward compatibility, e.g. when using an old
     // CDM which doesn't implement the verification API.
     if (cdm_status == media::CdmHostFiles::Status::kInitVerificationFailed) {
@@ -464,9 +464,9 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
 #if !defined(OS_WIN)
     // Now we are sandboxed, initialize CDM host verification.
-    if (cdm_host_files) {
-      DCHECK(!is_broker_ && media::IsCdm(path));
-      cdm_status = cdm_host_files->InitVerification(library.get(), path);
+    if (!is_broker_ && media::IsCdm(path)) {
+      cdm_status =
+          cdm_host_files.InitVerificationWithAdapter(library.get(), path);
       // Ignore other failures for backward compatibility, e.g. when using an
       // old CDM which doesn't implement the verification API.
       if (cdm_status == media::CdmHostFiles::Status::kInitVerificationFailed) {
@@ -480,7 +480,7 @@ void PpapiThread::OnLoadPlugin(const base::FilePath& path,
     if (!is_broker_ && media::IsCdm(path)) {
       UMA_HISTOGRAM_ENUMERATION("Media.EME.CdmHostVerificationStatus",
                                 cdm_status,
-                                media::CdmHostFiles::Status::kStatusCount);
+                                media::CdmHostFiles::Status::kStatusMax + 1);
     }
 #endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION) && !defined(OS_WIN)
 

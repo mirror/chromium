@@ -50,6 +50,11 @@ class MEDIA_MOJO_EXPORT MediaService : public service_manager::Service,
       mojom::InterfaceFactoryRequest request,
       service_manager::mojom::InterfaceProviderPtr host_interfaces) final;
 
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  // Try to
+  void InitializeCdmModule(const base::FilePath& cdm_path);
+#endif
+
   // Note: Since each instance runs on a different thread, do not share a common
   // MojoMediaClient with other instances to avoid threading issues. Hence using
   // a unique_ptr here.
@@ -62,10 +67,6 @@ class MEDIA_MOJO_EXPORT MediaService : public service_manager::Service,
 
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::MediaService> bindings_;
-
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-  bool is_cdm_loaded_ = false;
-#endif
 };
 
 }  // namespace media
