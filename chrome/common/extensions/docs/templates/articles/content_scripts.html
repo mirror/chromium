@@ -1,137 +1,206 @@
-<h1>Content Scripts</h1>
-
-
-<p>
-Content scripts are JavaScript files that run in the context of web pages.
-By using the standard
-<a href="http://www.w3.org/TR/DOM-Level-2-HTML/">Document
-Object Model</a> (DOM),
-they can read details of the web pages the browser visits,
-or make changes to them.
-</p>
+<h1>Webpage Manipulation and Communication</h1>
 
 <p>
-Here are some examples of what content scripts can do:
+Content scripts enable extensions to manipulate
+and exchange information
+with the Document Object Model (DOM)
+of a webpage.
+Functionality can include <a href="/samples#search:speak%20selection">speaking the selected text</a>,
+<a href="/samples#search:page%20redder">changing the page background color</a>,
+and <a href="/samples#search:broken%20links">turning unlinked URLs into hyperlinks</a>.
 </p>
 
-<ul>
-  <li>Find unlinked URLs in web pages and convert them into hyperlinks
-  <li>Increase the font size to make text more legible
-  <li>Find and process <a href="http://microformats.org/">microformat</a> data in the DOM
-</ul>
-
-<p>
-However, content scripts have some limitations.
-They <b>cannot</b>:
-</p>
-
-<ul>
-  <li>
-    Use chrome.* APIs, with the exception of:
+<h2 id="readAndModify">Content Script Capabilities</h2>
+  <p>
+    Content scrips can access the following chrome API's directly:
     <ul id="content_script_supported_nodes">
-      {{#api:content_scripts}}
-      <li>
-        $(ref:{{api.name}})
-        {{?api.restrictedTo}}
-          ({{#n:api.restrictedTo}}
-           $(ref:{{api.name}}.{{n.node}} {{n.node}})
-           {{^n.last}},{{/n.last}}
-           {{/api.restrictedTo}})
-        {{/api.restrictedTo}}
-      </li>
-      {{/content_scripts}}
-    </ul>
-  </li>
-  <li>
-    Use variables or functions defined by their extension's pages
-  </li>
-  <li>
-    Use variables or functions defined by web pages or by other content scripts
-  </li>
-</ul>
-
+        {{#api:content_scripts}}
+        <li>
+          $(ref:{{api.name}})
+          {{?api.restrictedTo}}
+            ({{#n:api.restrictedTo}}
+             $(ref:{{api.name}}.{{n.node}} {{n.node}})
+             {{^n.last}},{{/n.last}}
+             {{/api.restrictedTo}})
+          {{/api.restrictedTo}}
+        </li>
+        {{/content_scripts}}
+      </ul>
+    </li>
+  </ul>
+  They can also access information granted by their parent extension
+  by exchanging <a href="messaging">messages</a> and making
+  <a href="xhr">cross-site XMLHttpRequests</a>
+  to parent accessed sites.
+  Additionally, content scripts can get the URL of an extension's file with
+  <code>chrome.extension.getURL()</code>
+  and use the result the same as other URLs.
+  <pre>
+    <em>//Code for displaying &lt;extensionDir>/images/myimage.png:</em>
+    var imgURL = <b>chrome.extension.getURL("images/myimage.png")</b>;
+    document.getElementById("someImage").src = imgURL;
+  </pre>
+</p>
 <p>
-These limitations aren't as bad as they sound.
-Content scripts can <em>indirectly</em> use the chrome.* APIs,
-get access to extension data,
-and request extension actions
-by exchanging <a href="messaging">messages</a>
-with their parent extension.
-Content scripts can also
-make <a href="xhr">cross-site XMLHttpRequests</a>
-to the same sites as their parent extensions,
-and they can
-<a href="#host-page-communication">communicate with web pages</a>
-using the shared DOM.
-For more insight into what content scripts can and can't do,
-learn about the
-<a href="#execution-environment">execution environment</a>.
+  Content scripts live in an isolated world with an idependent copy of the DOM.
+  This allows each content script to makes changes to its JavaScript environment
+  without conflicting with the page or additional content scripts.
+  If our extension ran in the following webpage:
 </p>
 
-<h2 id="registration">Manifest</h2>
+  <p>
+    <pre data-filename="hello.html">
+    &lt;html&gt;
+      &lt;button id="mybutton"&gt;click me&lt;/button&gt;
+      &lt;script&gt;
+        var greeting = "hello, ";
+        var button = document.getElementById("mybutton");
+        button.person_name = "Bob";
+        button.addEventListener("click", function() {
+          alert(greeting + button.person_name + ".");
+        }, false);
+      &lt;/script&gt;
+    &lt;/html&gt;
+    </pre>
 
-<p>If your content script's code should always be injected,
-register it in the
-<a href="manifest">extension manifest</a>
-using the <code>content_scripts</code> field,
-as in the following example.
+    then injected this script:
+
+    <pre data-filename="contentscript.js">
+    var greeting = "hola, ";
+    var button = document.getElementById("mybutton");
+    button.person_name = "Roberto";
+    button.addEventListener("click", function() {
+      alert(greeting + button.person_name + ".");
+    }, false);
+    </pre>
+
+    Both alerts would appear if the button was pressed.
+  </p>
+
+  <p>
+    Isolated worlds does not allow content scripts, the extension,
+    and the webpage to access any variables or functions created by the others.
+    This also gives content scripts the ability to enable functionality
+    that should not be accessible to the web page.
+  </p>
+
+<h2 id="functionality">Declare Script Insertion</h2>
+  <p>
+    Content Scripts can be automatically and programmatically inserted.
+  </p>
+<h3 id='programmatic'>Programmatic</h3>
+  <p>
+    Programmatic insertion is for content scripts that need to be run on specific occasions.
+  </p>
+  <p>
+    To register a programmatic content script,
+    provide the <a href='/activeTab'>activeTab</a>
+    permission in the Manifest.
+    This will enable the content script run on the current active tab
+    without specifying <a href="xhr#requesting-permission">cross-origin permissions</a>
+    and grant temporary secure access to the <a href="/tabs#manifest">tabs</a> permissions.
+
+
+    <pre data-file="manifest.json">
+      {
+        "name": "My extension",
+        ...
+        <b>"permissions": [
+          "activeTab"
+        ]</b>,
+        ...
+      }
+    </pre>
+
+  Content scripts can be executed inside an event listener
+  <pre data-filename="background.js">
+    chrome.runtime.onMessage.addListener(
+      function(message, callback) {
+        if (message == “changeColor”){
+          chrome.tabs.executeScript({
+            code: 'document.body.style.backgroundColor="orange"'
+          });
+        }
+     });
+  </pre>
+Or an outside file can be called
+<pre data-filename="background.js">
+  chrome.runtime.onMessage.addListener(
+    function(message, callback) {
+      if (message == “runContentScript”){
+        chrome.tabs.executeScript({
+          file: 'contentScript.js'
+        });
+      }
+   });
+  </pre>
 </p>
 
-<pre data-filename="manifest.json">
-{
-  "name": "My extension",
-  ...
-  <b>"content_scripts": [
-    {
-      "matches": ["http://www.google.com/*"],
-      "css": ["mystyles.css"],
-      "js": ["jquery.js", "myscript.js"]
-    }
-  ]</b>,
-  ...
-}
-</pre>
+<h3 id='autorun'>Automatic</h3>
 
 <p>
-If you want to inject the code only sometimes,
-use the
-<a href="declare_permissions"><code>permissions</code></a> field instead,
-as described in <a href="#pi">Programmatic injection</a>.
+  Automatic insertion is for content scripts that should be automatically inserted on specified pages.
 </p>
 
-<pre data-filename="manifest.json">
-{
-  "name": "My extension",
-  ...
-  <b>"permissions": [
-    "tabs", "http://www.google.com/*"
-  ]</b>,
-  ...
-}
-</pre>
-
 <p>
-Using the <code>content_scripts</code> field,
-an extension can insert multiple content scripts into a page;
-each of these content scripts can have multiple JavaScript and CSS files.
-Each item in the <code>content_scripts</code> array
-can have the following properties:</p>
+ Austomatic insertion are registered in the manifest under the content_scripts field.
+ They can include JavaScript files, CSS files or both.
+ All auto-run content scripts must have field for matching pages:
+ <pre data-filename="manifest.json">
+ {
+   "name": "My extension",
+   ...
+   <b>"content_scripts": [
+     {
+       "matches": ["http://*.nytimes.com/*"],
+       "css": ["myStyles.css"],
+       "js": ["contentScript.js"]
+     }
+   ]</b>,
+   ...
+ }
+ </pre>
+
+ <table class="simple">
+   <tr>
+     <th>Name</th>
+     <th>Type</th>
+     <th>Description</th>
+   </tr>
+   <tr id="matches">
+     <td><code>matches</code></td>
+     <td>array of strings</td>
+     <td><em>Required.</em>
+     Specifies which pages this content script will be injected into.
+     See <a href="match_patterns">Match Patterns</a>
+     for more details on the syntax of these strings
+     and <a href="#matchAndGlob">Match patterns and globs</a>
+     for information on how to exclude URLs.</td>
+   </tr>
+   <tr id="css">
+     <td><code>css<code></td>
+     <td>array of strings</td>
+     <td><em>Optional.</em>
+     The list of CSS files to be injected into matching pages. These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.</td>
+   </tr>
+   <tr id="js">
+     <td><code>js<code></td>
+     <td><nobr>array of strings</nobr></td>
+     <td><em>Optional.</em>
+     The list of JavaScript files to be injected into matching pages. These are injected in the order they appear in this array.</td>
+   </tr>
+
+ </table>
+</p>
+<h4 id="matchAndGlob">Exclude Matches and Globs</h4>
+<p>
+Further page matching is customizable by including following fields in the manifest registration.
 
 <table class="simple">
   <tr>
     <th>Name</th>
     <th>Type</th>
     <th>Description</th>
-  </tr>
-  <tr id="matches">
-    <td><code>matches</code></td>
-    <td>array of strings</td>
-    <td><em>Required.</em>
-    Specifies which pages this content script will be injected into.
-    See <a href="match_patterns">Match Patterns</a>
-    for more details on the syntax of these strings
-    and <a href="#match-patterns-globs">Match patterns and globs</a>
-    for information on how to exclude URLs.</td>
   </tr>
   <tr id="exclude_matches">
     <td><code>exclude_matches</code></td>
@@ -140,35 +209,143 @@ can have the following properties:</p>
     Excludes pages that this content script would otherwise be
     injected into.
     See <a href="match_patterns">Match Patterns</a>
-    for more details on the syntax of these strings
-    and <a href="#match-patterns-globs">Match patterns and globs</a>
-    for information on how to exclude URLs.</td>
+    for more details on the syntax of these strings.
   </tr>
-  <tr id="match_about_blank">
-    <td><code>match_about_blank<code></td>
-    <td>boolean</td>
+  <tr id="include_globs">
+    <td><code>include_globs</code></td>
+    <td>array of string</td>
     <td><em>Optional.</em>
-    Whether to insert the content script on <code>about:blank</code> and
-    <code>about:srcdoc</code>. Content scripts will only be injected on pages
-    when their inherit URL is matched by one of the declared patterns in the
-    <code>matches</code> field. The inherit URL is the URL of the document that
-    created the frame or window.
-    <br>
-    Content scripts cannot be inserted in sandboxed frames.
-    <br><br>
-    Defaults to <code>false</code>.</td>
+    Applied after <code>matches</code> to include only those URLs that also match this glob. Intended to emulate the <a href="http://wiki.greasespot.net/Metadata_Block#.40include"><code>@include</code></a> Greasemonkey keyword.
   </tr>
-  <tr id="css">
-    <td><code>css<code></td>
-    <td>array of strings</td>
+  <tr id="exclude_globs">
+    <td><code>exclude_globs</code></td>
+    <td>array of string</td>
     <td><em>Optional.</em>
-    The list of CSS files to be injected into matching pages. These are injected in the order they appear in this array, before any DOM is constructed or displayed for the page.</td>
+    Applied after <code>matches</code> to exclude URLs that match this glob.
+    Intended to emulate the <a href="http://wiki.greasespot.net/Metadata_Block#.40include"><code>@exclude</code></a> Greasemonkey keyword.
   </tr>
-  <tr id="js">
-    <td><code>js<code></td>
-    <td><nobr>array of strings</nobr></td>
-    <td><em>Optional.</em>
-    The list of JavaScript files to be injected into matching pages. These are injected in the order they appear in this array.</td>
+</table>
+<p>
+The content script will be injected into a page if its URL matches any
+<code>matches</code> pattern and any <code>include_globs</code> pattern,
+as long as the URL doesn't also match an <code>exclude_matches</code> or
+<code>exclude_globs</code> pattern.
+
+Because the <code>matches</code> property is required,
+<code>exclude_matches</code>, <code>include_globs</code>,
+and <code>exclude_globs</code> can only be used to limit which pages will be affected.
+</p>
+
+The following extension would injected the content script into
+<b>http://www.nytimes.com/<span style="background-color: #a7e2b6">health</span></b>
+ but not into <b>http://www.nytimes.com/<span style="background-color: #f2afab">business</span></b>.
+
+<pre data-filename="manifest.json">
+{
+  "name": "My extension",
+  ...
+  "content_scripts": [
+    {
+      "matches": ["http://*.nytimes.com/*"],
+      <b>"exclude_matches": ["*://*/*business*"],</b>
+      "js": ["contentScript.js"]
+    }
+  ],
+  ...
+}
+</pre>
+
+While this extension would inject the content script into
+<b>http:/www.nytimes.com/<span style="background-color: #a7e2b6">arts</span>/index.html</b>
+and <b>http://www.nytimes.com/<span style="background-color: #a7e2b6">jobs</span>/index.html</b>
+ but not into <b>http://www.nytimes.com/<span style="background-color: #f2afab">sports</span>/index.html</b>.
+
+<pre data-filename="manifest.json">
+{
+  "name": "My extension",
+  ...
+  "content_scripts": [
+    {
+      "matches": ["http://*.nytimes.com/*"],
+      <b>"include_globs": ["*nytimes.com/???s/*"],</b>
+      "js": ["contentScript.js"]
+    }
+  ],
+  ...
+}
+</pre>
+
+And this extension would inject the content script into
+<b>http://<span style="background-color: #a7e2b6">history</span>.nytimes.com</b> and
+<b>http://.nytimes.com/<span style="background-color: #a7e2b6">history</span></b> but not into
+<b>http://<span style="background-color: #f2afab">science</span>.nytimes.com</b> or
+<b>http://www.nytimes.com/<span style="background-color: #f2afab">science</span></b>.
+<pre data-filename="manifest.json">
+{
+  "name": "My extension",
+  ...
+  "content_scripts": [
+    {
+      "matches": ["http://*.nytimes.com/*"],
+       <b>"exclude_globs": ["*science*"],</b>
+      "js": ["contentScript.js"]
+    }
+  ],
+  ...
+}
+</pre>
+
+You can include, one, all, or some of these to achieve the correct scope.
+<pre data-filename="manifest.json">
+{
+  "name": "My extension",
+  ...
+  "content_scripts": [
+    {
+      "matches": ["http://*.nytimes.com/*"],
+       <b>"exclude_matches": ["*://*/*business*"],
+      "include_globs": ["*nytimes.com/???s/*"],
+      "exclude_globs": ["*science*"],</b>
+      "js": ["contentScript.js"]
+    }
+  ],
+  ...
+}
+</pre>
+<p>
+Glob properties follow a different, more flexible syntax than
+<a href="match_patterns">match patterns</a>.
+Acceptable glob strings are URLs that may contain "wildcard" asterisks and question marks.
+The asterisk (<b>*</b>) matches any string of any length, including the empty string,
+while the question mark (<b>?</b>) matches any single character.
+</p>
+
+<p>
+For example, the glob
+<b>http://<span style="background-color: #a7e2b6">???</span>.example.com/foo/<span style="background-color: #a7e2b6">*</span></b>
+matches any of the following:
+</p>
+<ul>
+  <li><b>http://<span style="background-color: #a7e2b6">www</span>.example.com/foo<span style="background-color: #a7e2b6">/bar</span></b></li>
+  <li><b>http://<span style="background-color: #a7e2b6">the</span>.example.com/foo<span style="background-color: #a7e2b6">/&ensp;</span></b></li>
+</ul>
+<p>
+However, it does <em>not</em> match the following:
+</p>
+<ul>
+  <li><b>http://<span style="background-color: #f2afab">my</span>.example.com/foo/bar</b></li>
+  <li><b>http://<span style="background-color: #f2afab">example</span>.com/foo/</b></li>
+  <li><b>http://www.example.com/foo<span style="background-color: #f2afab">&ensp;</span></b></li>
+</ul>
+</p>
+<h4 id="runAndFrames">Run Time and Frames</h4>
+<p>
+Lastly, you can choose when your script runs and with which frames.
+<table class="simple">
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
   </tr>
   <tr id="run_at">
     <td><code>run_at<code></td>
@@ -201,215 +378,41 @@ can have the following properties:</p>
     <br><br>
     Defaults to <code>false</code>, meaning that only the top frame is matched.</td>
   </tr>
-  <tr id="include_globs">
-    <td><code>include_globs</code></td>
-    <td>array of string</td>
-    <td><em>Optional.</em>
-    Applied after <code>matches</code> to include only those URLs that also match this glob. Intended to emulate the <a href="http://wiki.greasespot.net/Metadata_Block#.40include"><code>@include</code></a> Greasemonkey keyword.
-    See <a href="#match-patterns-globs">Match patterns and globs</a> below for more details.</td>
-  </tr>
-  <tr id="exclude_globs">
-    <td><code>exclude_globs</code></td>
-    <td>array of string</td>
-    <td><em>Optional.</em>
-    Applied after <code>matches</code> to exclude URLs that match this glob.
-    Intended to emulate the <a href="http://wiki.greasespot.net/Metadata_Block#.40include"><code>@exclude</code></a> Greasemonkey keyword.
-    See <a href="#match-patterns-globs">Match patterns and globs</a> below for more details.</td>
-  </tr>
 </table>
-
-<h3 id="match-patterns-globs">Match patterns and globs</h3>
-
-<p>
-The content script will be injected into a page if its URL matches any <code>matches</code> pattern and any <code>include_globs</code> pattern, as long as the URL doesn't also match an <code>exclude_matches</code> or <code>exclude_globs</code> pattern.
-
-Because the <code>matches</code> property is required, <code>exclude_matches</code>, <code>include_globs</code>, and <code>exclude_globs</code> can only be used to limit which pages will be affected.
-</p>
-
-<p>
-For example, assume <code>matches</code> is <code>["http://*.nytimes.com/*"]</code>:
-</p>
-<ul>
-<li>If <code>exclude_matches</code> is <code>["*://*/*business*"]</code>, then the content script would be injected into "http://www.nytimes.com/health" but not into "http://www.nytimes.com/business".</li>
-<li>If <code>include_globs</code> is <code>["*nytimes.com/???s/*"]</code>, then the content script would be injected into "http:/www.nytimes.com/arts/index.html" and "http://www.nytimes.com/jobs/index.html" but not into "http://www.nytimes.com/sports/index.html".</li>
-<li>If <code>exclude_globs</code> is <code>["*science*"]</code>, then the content script would be injected into "http://www.nytimes.com" but not into "http://science.nytimes.com" or "http://www.nytimes.com/science".</li>
-</ul>
-<p>
-
-<p>
-Glob properties follow a different, more flexible syntax than <a href="match_patterns">match patterns</a>.  Acceptable glob strings are URLs that may contain "wildcard" asterisks and question marks. The asterisk (*) matches any string of any length (including the empty string); the question mark (?) matches any single character.
-</p>
-
-<p>
-For example, the glob "http://???.example.com/foo/*" matches any of the following:
-</p>
-<ul>
-  <li>"http://www.example.com/foo/bar"</li>
-  <li>"http://the.example.com/foo/"</li>
-</ul>
-<p>
-However, it does <em>not</em> match the following:
-</p>
-<ul>
-  <li>"http://my.example.com/foo/bar"</li>
-  <li>"http://example.com/foo/"</li>
-  <li>"http://www.example.com/foo"</li>
-</ul>
-
-<h2 id="pi">Programmatic injection</h2>
-
-<p>
-Inserting code into a page programmatically is useful
-when your JavaScript or CSS code
-shouldn't be injected into every single page
-that matches the pattern &mdash;
-for example, if you want a script to run
-only when the user clicks a browser action's icon.
-</p>
-
-<p>
-To insert code into a page,
-your extension must have
-<a href="xhr#requesting-permission">cross-origin permissions</a>
-for the page.
-It also must be able to use the <code>chrome.tabs</code> module.
-You can get both kinds of permission
-using the manifest file's
-<a href="declare_permissions">permissions</a> field.
-</p>
-
-<p>
-Once you have permissions set up,
-you can inject JavaScript into a page by calling
-$(ref:tabs.executeScript).
-To inject CSS, use
-$(ref:tabs.insertCSS).
-</p>
-
-<p>
-The following code
-(from the
-<a href="https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/browserAction/make_page_red/">make_page_red</a> example)
-reacts to a user click
-by inserting JavaScript into the current tab's page
-and executing the script.
-</p>
-
-<pre data-filename="background.html">
-chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.tabs.executeScript({
-    code: 'document.body.style.backgroundColor="red"'
-  });
-});
-</pre>
 <pre data-filename="manifest.json">
-"permissions": [
-  "activeTab"
-],
+{
+  "name": "My extension",
+  ...
+  "content_scripts": [
+    {
+      "matches": ["http://*.nytimes.com/*"],
+       <b>"run_at": "document_start",
+      "all_frames": true,</b>
+      "js": ["contentScript.js"]
+    }
+  ],
+  ...
+}
 </pre>
+</p>
 
+<h2 id='security'>Stay Secure</h2>
 <p>
-When the browser is displaying an HTTP page
-and the user clicks this extension's browser action,
-the extension sets the page's <code>bgcolor</code> property to 'red'.
-The result,
-unless the page has CSS that sets the background color,
-is that the page turns red.
+  While isolated worlds provides a layer of protention,
+  using content scripts can create vulnerabilities in your extension
+  and the webpage. If your content script rexeives content from a seprate website,
+  such as making an <a href="xhr">XMLHttpRequest</a>, be careful to filter content
+  <a href="http://en.wikipedia.org/wiki/Cross-site_scripting">cross-site
+  scripting</a> attacks before injecting it.
+  Be especially careful when retrieving HTTP content on an HTTPS page because
+  the HTTP content might have been corrupted by a network <a
+  href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">"man-in-the-middle"</a>
+  if the user is on a hostile network.
 </p>
 
 <p>
-Usually, instead of inserting code directly (as in the previous sample),
-you put the code in a file.
-You inject the file's contents like this:
-</p>
-
-<pre>chrome.tabs.executeScript(null, {file: "content_script.js"});</pre>
-
-
-<h2 id="execution-environment">Execution environment</h2>
-
-<p>Content scripts execute in a special environment called an <em>isolated world</em>. They have access to the DOM of the page they are injected into, but not to any JavaScript variables or functions created by the page. It looks to each content script as if there is no other JavaScript executing on the page it is running on. The same is true in reverse: JavaScript running on the page cannot call any functions or access any variables defined by content scripts.
-
-<p>For example, consider this simple page:
-
-<pre data-filename="hello.html">
-&lt;html&gt;
-  &lt;button id="mybutton"&gt;click me&lt;/button&gt;
-  &lt;script&gt;
-    var greeting = "hello, ";
-    var button = document.getElementById("mybutton");
-    button.person_name = "Bob";
-    button.addEventListener("click", function() {
-      alert(greeting + button.person_name + ".");
-    }, false);
-  &lt;/script&gt;
-&lt;/html&gt;
-</pre>
-
-<p>Now, suppose this content script was injected into hello.html:
-
-<pre data-filename="contentscript.js">
-var greeting = "hola, ";
-var button = document.getElementById("mybutton");
-button.person_name = "Roberto";
-button.addEventListener("click", function() {
-  alert(greeting + button.person_name + ".");
-}, false);
-</pre>
-
-<p>Now, if the button is pressed, you will see both greetings.
-
-<p>Isolated worlds allow each content script to make changes to its JavaScript environment without worrying about conflicting with the page or with other content scripts. For example, a content script could include JQuery v1 and the page could include JQuery v2, and they wouldn't conflict with each other.
-
-<p>Another important benefit of isolated worlds is that they completely separate the JavaScript on the page from the JavaScript in extensions. This allows us to offer extra functionality to content scripts that should not be accessible from web pages without worrying about web pages accessing it.
-
-<p>It's worth noting what happens with JavaScript objects that are shared by the page and the extension - for example, the <code>window.onload</code> event. Each isolated world sees its own version of the object. Assigning to the object affects your independent copy of the object. For example, both the page and extension can assign to <code>window.onload</code>, but neither one can read the other's event handler. The event handlers are called in the order in which they were assigned.
-
-<h2 id="host-page-communication">Communication with the embedding page</h2>
-
-<p>Although the execution environments of content scripts and the pages that host them are isolated from each other, they share access to the page's DOM. If the page wishes to communicate with the content script (or with the extension via the content script), it must do so through the shared DOM.</p>
-<p>An example can be accomplished using window.postMessage (or window.webkitPostMessage for Transferable objects):</p>
-<pre data-filename="contentscript.js">
-var port = chrome.runtime.connect();
-
-window.addEventListener("message", function(event) {
-  // We only accept messages from ourselves
-  if (event.source != window)
-    return;
-
-  if (event.data.type &amp;&amp; (event.data.type == "FROM_PAGE")) {
-    console.log("Content script received: " + event.data.text);
-    port.postMessage(event.data.text);
-  }
-}, false);
-</pre>
-<pre data-filename="http://foo.com/example.html">
-document.getElementById("theButton").addEventListener("click",
-    function() {
-  window.postMessage({ type: "FROM_PAGE", text: "Hello from the webpage!" }, "*");
-}, false);</pre>
-<p>In the above example, example.html (which is not a part of the extension) posts messages to itself, which are intercepted and inspected by the content script, and then posted to the extension process. In this way, the page establishes a line of communication to the extension process. The reverse is possible through similar means.</p>
-
-<h2 id="security-considerations">Security considerations</h2>
-
-<p>When writing a content script, you should be aware of two security issues.
-First, be careful not to introduce security vulnerabilities into the web site
-your content script is injected into.  For example, if your content script
-receives content from another web site (for example, by making an <a
-href="xhr">XMLHttpRequest</a>),
-be careful to filter that content for <a
-href="http://en.wikipedia.org/wiki/Cross-site_scripting">cross-site
-scripting</a> attacks before injecting the content into the current page.
-For example, prefer to inject content via innerText rather than innerHTML.
-Be especially careful when retrieving HTTP content on an HTTPS page because
-the HTTP content might have been corrupted by a network <a
-href="http://en.wikipedia.org/wiki/Man-in-the-middle_attack">"man-in-the-middle"</a>
-if the user is on a hostile network.</p>
-
-<p>Second, although running your content script in an isolated world provides
-some protection from the web page, a malicious web page might still be able
-to attack your content script if you use content from the web page
-indiscriminately.  For example, the following patterns are dangerous:
+Be sure to filter for malicious web pages.
+For example, the following patterns are dangerous:
 <pre data-filename="contentscript.js">
 var data = document.getElementById("json-data")
 // WARNING! Might be evaluating an evil script!
@@ -433,54 +436,3 @@ window.setTimeout(function() {
   animate(elmt_id);
 }, 200);
 </pre>
-
-<h2 id="extension-files">Referring to extension files</h2>
-
-<p>
-Get the URL of an extension's file using
-<code>chrome.extension.getURL()</code>.
-You can use the result
-just like you would any other URL,
-as the following code shows.
-</p>
-
-
-<pre>
-<em>//Code for displaying &lt;extensionDir>/images/myimage.png:</em>
-var imgURL = <b>chrome.extension.getURL("images/myimage.png")</b>;
-document.getElementById("someImage").src = imgURL;
-</pre>
-
-<h2 id="examples"> Examples </h2>
-
-<p>
-You can find many
-<a href="samples#search:script">examples that use content scripts</a>.
-A simple example of communication via messages is in the
-<a href="samples#message-timer">Message Timer</a>.
-See <a href="samples#page-redder">Page Redder</a> and
-<a href="samples#email-this-page-(by-google)">Email This Page</a>
-for examples of programmatic injection.
-</p>
-
-
-<h2 id="videos"> Videos </h2>
-
-<p>
-The following videos discuss concepts that are important for content scripts.
-The first video describes content scripts and isolated worlds.
-</p>
-
-<div class="video-container">
-  <iframe title="YouTube video player" width="640" height="390" src="//www.youtube.com/embed/laLudeUmXHM?rel=0" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<p>
-The next video describes message passing,
-featuring an example of a content script
-sending a request to its parent extension.
-</p>
-
-<div class="video-container">
-  <iframe title="YouTube video player" width="640" height="390" src="//www.youtube.com/embed/B4M_a7xejYI?rel=0" frameborder="0" allowfullscreen></iframe>
-</div>
