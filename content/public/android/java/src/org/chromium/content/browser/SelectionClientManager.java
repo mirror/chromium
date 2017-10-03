@@ -31,8 +31,14 @@ import javax.annotation.Nullable;
  * the permanent {@link SelectionClient} is present.
  */
 public class SelectionClientManager implements SelectionClient {
-    private boolean mIsBridged;
+    /** The optional {@link SelectionClient} that handles requests to this classes instance */
     private @Nullable SelectionClient mOptionalSelectionClient;
+
+    /** Whether the optional client was added with addSelectionClient (rather than set) */
+    private boolean mIsAdded;
+
+    /** Whether the optional client is a bridge between two clients. */
+    private boolean mIsBridged;
 
     /**
      * Constructs an instance that is also a {@link SelectionClient} that does nothing until a
@@ -51,6 +57,7 @@ public class SelectionClientManager implements SelectionClient {
      *        {@code SmartSelectionClient} instance is used.
      */
     void setSelectionClient(@Nullable SelectionClient permanentSelectionClient) {
+        assert mOptionalSelectionClient == null;
         mOptionalSelectionClient = permanentSelectionClient;
     }
 
@@ -66,6 +73,7 @@ public class SelectionClientManager implements SelectionClient {
     void addSelectionClient(SelectionClient selectionClientToAdd,
             Runnable suppressContextualSearchForSmartSelectRunnable) {
         assert selectionClientToAdd != null;
+        assert !mIsAdded;
         if (mOptionalSelectionClient == null) {
             mOptionalSelectionClient = selectionClientToAdd;
         } else {
@@ -76,6 +84,7 @@ public class SelectionClientManager implements SelectionClient {
             // Tell ContextualSearch to suppress it's UI for SmartSelect.
             suppressContextualSearchForSmartSelectRunnable.run();
         }
+        mIsAdded = true;
     }
 
     /**
