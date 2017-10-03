@@ -116,6 +116,7 @@
 #include "components/web_resource/web_resource_pref_names.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_security_policy.h"
+#include "content/public/browser/network_change_manager_client_impl.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/plugin_service.h"
 #include "content/public/browser/render_process_host.h"
@@ -578,6 +579,15 @@ BrowserProcessImpl::system_network_context_manager() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(system_network_context_manager_.get());
   return system_network_context_manager_.get();
+}
+
+content::NetworkChangeManagerClientImpl*
+BrowserProcessImpl::network_change_manager_client() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  // TODO(xunjieli): Initialize |network_change_manager_client_|.
+  // crbug.com/754709.
+  DCHECK(network_change_manager_client_.get());
+  return network_change_manager_client_.get();
 }
 
 WatchDogThread* BrowserProcessImpl::watchdog_thread() {

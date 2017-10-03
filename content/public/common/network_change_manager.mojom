@@ -1,0 +1,31 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// This needs to match the definition of net::ConnectionType.
+enum ConnectionType {
+  CONNECTION_UNKNOWN = 0,  // A connection exists, but its type is unknown.
+                           // Also used as a default value.
+  CONNECTION_ETHERNET = 1,
+  CONNECTION_WIFI = 2,
+  CONNECTION_2G = 3,
+  CONNECTION_3G = 4,
+  CONNECTION_4G = 5,
+  CONNECTION_NONE = 6,     // No connection.
+  CONNECTION_BLUETOOTH = 7,
+  CONNECTION_LAST = CONNECTION_BLUETOOTH
+};
+
+// A client interface that subscribes to network change events from
+// NetworkChangeManager.
+interface NetworkChangeManagerClient {
+  OnNetworkChanged(ConnectionType type);
+};
+
+// An interface that broadcasts network change events.
+interface NetworkChangeManager {
+  // Requests to receive notification when there is a network change.
+  RequestNotifications(NetworkChangeManagerClient client_ptr);
+};
