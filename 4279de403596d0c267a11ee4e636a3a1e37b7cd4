@@ -71,6 +71,81 @@
     },
     {
       "key": {
+        "uuid": "80c25748_e9a8c158",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "I\u0027m deferring this to dmazzoni@, but FWIW your analysis and fix makes sense to me.",
+      "parentUuid": "84273a7e_9b9a5e52",
+      "range": {
+        "startLine": 1139,
+        "startChar": 2,
+        "endLine": 1139,
+        "endChar": 41
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ddc142_44bc9a48",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "ChromeContentBrowserClientExtensionsPart::ShouldAllowOpenURL uses url::Origin(url) to properly handle blob: and filesystem: URLs.  Do we need to do the same here?",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfc0973_72fd9014",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Just to sanity check this, this allow committing URLs for non-existent or uninstalled/disabled extensions in any process.  Is that the behavior we want?  I suppose there\u0027s a case where we could start a load and then disable/uninstall the extension before this load commits, in which case we probably don\u0027t want to kill it.  I\u0027m not exactly sure how that\u0027ll work or if this case is even possible.  The other thing I\u0027m thinking about is if we have this committed (i.e., error page for non-existent extension URL), it shouldn\u0027t allow us to later enable the extension and reload this URL in the wrong process.  In any case, if we do decide to tighten this somehow, it\u0027s probably best to leave to a follow-up.",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa443bf8_43911a97",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Just curious, was this because of error pages or something else?",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea67d4e9_a5957221",
         "filename": "content/browser/frame_host/navigation_request.cc",
         "patchSetId": 7
@@ -82,6 +157,30 @@
       "writtenOn": "2017-10-03T15:21:20Z",
       "side": 1,
       "message": "Without this condition, this DCHECK would fail when running running ProcessManagementTest.NavigateToBlockedExtensionPageInNewTab test (after the CanCommitURL tightening done by this CL).",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 806,
+        "endChar": 48
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf59d913_f4bbb907",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea67d4e9_a5957221",
       "range": {
         "startLine": 806,
         "startChar": 2,
@@ -117,6 +216,30 @@
     },
     {
       "key": {
+        "uuid": "60c3e58f_fcdd5eef",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a76c8bd_e5feaa71",
+      "range": {
+        "startLine": 1554,
+        "startChar": 7,
+        "endLine": 1554,
+        "endChar": 28
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c22e0be_17e9727a",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -140,6 +263,64 @@
     },
     {
       "key": {
+        "uuid": "af16f3f4_a826aeab",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3c22e0be_17e9727a",
+      "range": {
+        "startLine": 1561,
+        "startChar": 6,
+        "endLine": 1561,
+        "endChar": 32
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb234ab4_6554bc62",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "I\u0027m curious if it\u0027s worth collecting any UMAs for things that we block (extension URL in non-extension process, non-extension URL in extension process, etc).  I suppose we\u0027ll investigate any unexpected renderer kills anyway, but still curious if there might be value in knowing how often the blocking kicks in in practice.",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0879ba_f17d9177",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3667,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "Of course this is something we want to change eventually; might be good to reference 614463 for this.",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90635948_37047133",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -151,6 +332,30 @@
       "writtenOn": "2017-10-03T15:21:20Z",
       "side": 1,
       "message": "Without this early return, a bunch of WebViewTest.*, WebViewPluginTest.* and WebViewGuestScrollTouchTest.* tests would fail.",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8765cc4c_ca83f4a7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-03T18:37:13Z",
+      "side": 1,
+      "message": "I wonder if we still want to somehow do the CWS check here though?  Seems like we previously didn\u0027t allow CWS to commit inside webview guests, but now we do.\n\nThere\u0027s a similar question about allowing blocked navigations to CWS commit anywhere.  We should be very careful that it doesn\u0027t let us later avoid a process swap to a real CWS page - I *think* it\u0027s ok because we\u0027ll catch it on next commit, but still wanted to mention it.",
+      "parentUuid": "90635948_37047133",
       "range": {
         "startLine": 3671,
         "startChar": 4,
