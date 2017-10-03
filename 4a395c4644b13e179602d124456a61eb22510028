@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b17d953d_6bcd3c01",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T04:59:16Z",
+      "side": 1,
+      "message": "Cool.  Do you think it\u0027s worth adding an additional flag to turn on and off this behavior so that we can observe potential memory saving here?",
+      "revId": "4a395c4644b13e179602d124456a61eb22510028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
