@@ -88,6 +88,24 @@
       "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c701d745_cc0c2af6",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-03T19:19:07Z",
+      "side": 1,
+      "message": "Will change back to std::unique_ptr\u003c\u003e.\nAre you waiting on another review pass from @lazyboy to LGTM this CL?",
+      "parentUuid": "71aee40f_766ad758",
+      "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
