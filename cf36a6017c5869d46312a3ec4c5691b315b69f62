@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af25e633_f2ea6126",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "s\\u0065tTimeout --\u003e setTimeout?",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62802b39_5fe293d6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I\u0027m not sure how the comment helps the readers. IMO this\u0027d make some sense if someone other than you would be landing these tests and we\u0027d want to make sure that the original author is credited.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d272e62e_28ff5d17",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I think that the comment becomes unnecessary if you do the following:\n\n1) rename cleanup to resetCookies\n2) create a teardown method that calls resetCookies\n3) move the asserts from resetCookies to teardown\n4) duplicate teardown as a testharness setup hook [1] and update assertion messages (test beginning instead of end)\n\n[1] http://web-platform-tests.org/writing-tests/testharness-api.html#setup",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc4e2b9_429ea2cb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/cookie_store_tests.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "promise_rejects_when_unsecured doesn\u0027t seem right here. If this throws due to a bug, the cleanup fails. I think you want something like Promise.finally, namely an await wrapped in a try with an empty catch.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78e2798_ad12837f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "Can you add a comment block documenting the endpoint\u0027s API?",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37c6747_1a0c1b9a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "Why are restrictions necessary at all? I think that the tests would be responsible for regulating their commands.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866fe642_fc4344f4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "What\u0027s the goal behind this?",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ba08b4_90b9e616",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "This seems odd. Can you do JSON for requests and responses instead of URL-encoding? This\u0027ll make things easier to debug, and fetch() has built-in JSON support.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb31733b_54dca183",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this is used",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc806fd_ca99ff20",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I think this becomes unnecessary if we decide we\u0027ll only read JSON from the body",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ed0de4_c28f9775",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/cookie_helper.py",
+        "patchSetId": 29
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I think this can be simplified, we only care about the cookies header",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c61cff4_21bbe952",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I think you should move this description to the CGI script (and change the tone from \"the CGI script should do\" to \"this script does\")",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e580ac_742ce657",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "I think it\u0027d be clearer if you either use a separate script per operation, or use a unified POST format with an \"op\" / \"method\" property to the JSON body received by the POST. I see no reason for the cognitive overhead of having to remember what a GET and a POST does.\n\nIf you do separate scripts, their names should reflect what they do (example: echo_set_cookie.py). If you use a single script, the \"op\" / \"method\" property should convey that.",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f4f8eb_50e491f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/resources/testharness-helpers.js",
+        "patchSetId": 29
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "Please remove this. The spec for \u003cmeta http-equiv\u003d\"set-cookie\"\u003e is going away, so there\u0027s no value in trying to get interop there.\n\nSee https://chromium.googlesource.com/chromium/src/+/lkcr/docs/testing/web_platform_tests.md#write-tests-against-specifications",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b38ed64_bd93ed20",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/async_cookies/test_document_cookie_static.tentative.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-03T23:36:48Z",
+      "side": 1,
+      "message": "test_ is redundant in the file name",
+      "revId": "cf36a6017c5869d46312a3ec4c5691b315b69f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
