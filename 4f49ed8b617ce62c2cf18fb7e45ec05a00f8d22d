@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c68fbc_1c3f24c7",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T22:30:38Z",
+      "side": 1,
+      "message": "Do we have to explicitly reset() or null out pointers here?",
+      "revId": "4f49ed8b617ce62c2cf18fb7e45ec05a00f8d22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e5698e_0ea5b41b",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T22:30:38Z",
+      "side": 1,
+      "message": "More places where we probably need ASSERT_EQ() so array access don\u0027t go out of bounds.",
+      "revId": "4f49ed8b617ce62c2cf18fb7e45ec05a00f8d22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
