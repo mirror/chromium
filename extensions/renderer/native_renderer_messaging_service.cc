@@ -44,17 +44,12 @@ MessagingPerContextData* GetPerContextData(v8::Local<v8::Context> context,
   gin::PerContextData* per_context_data = gin::PerContextData::From(context);
   if (!per_context_data)
     return nullptr;
-  auto* data = static_cast<MessagingPerContextData*>(
-      per_context_data->GetUserData(kExtensionMessagingPerContextData));
 
-  if (!data && should_create) {
-    auto messaging_data = std::make_unique<MessagingPerContextData>();
-    data = messaging_data.get();
-    per_context_data->SetUserData(kExtensionMessagingPerContextData,
-                                  std::move(messaging_data));
-  }
-
-  return data;
+  const char* key = kExtensionMessagingPerContextData;
+  auto factory = []() { return std::make_unique<MessagingPerContextData>(); };
+  return static_cast<MessagingPerContextData*>(
+      should_create ? per_context_data->GetOrCreateUserData(key, factory)
+                    : per_context_data->GetUserData(key));
 }
 
 bool ScriptContextIsValid(ScriptContext* script_context) {

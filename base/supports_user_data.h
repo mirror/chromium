@@ -42,6 +42,20 @@ class BASE_EXPORT SupportsUserData {
   void SetUserData(const void* key, std::unique_ptr<Data> data);
   void RemoveUserData(const void* key);
 
+  // Allows user data to be created if none yet exists.
+  template <typename Factory>
+  Data* GetOrCreateUserData(const void* key, const Factory& factory) {
+    return GetOrCreateUserData(
+        key,
+        [](const void* factory) -> std::unique_ptr<Data> {
+          return (*static_cast<const Factory*>(factory))();
+        },
+        &factory);
+  }
+  Data* GetOrCreateUserData(const void* key,
+                            std::unique_ptr<Data> (*factory)(const void*),
+                            const void* context);
+
   // SupportsUserData is not thread-safe, and on debug build will assert it is
   // only used on one execution sequence. Calling this method allows the caller
   // to hand the SupportsUserData instance across execution sequences. Use only
