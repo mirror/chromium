@@ -44,7 +44,7 @@ class TriggeredProfileResetter : public KeyedService {
  public:
   enum : size_t { kMaxToolNameLength = 100 };
 
-  explicit TriggeredProfileResetter(Profile* profile);
+  explicit TriggeredProfileResetter(Profile*);
   ~TriggeredProfileResetter() override;
 
   // Causes the TriggeredProfileResetter to look for the presence of a trigger.
@@ -67,8 +67,6 @@ class TriggeredProfileResetter : public KeyedService {
   virtual base::string16 GetResetToolName();
 
  private:
-  Profile* profile_;
-
   bool has_reset_trigger_ = false;
   bool activate_called_ = false;
 

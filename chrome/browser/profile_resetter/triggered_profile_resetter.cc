@@ -6,8 +6,7 @@
 
 #include "base/logging.h"
 
-TriggeredProfileResetter::TriggeredProfileResetter(Profile* profile)
-    : profile_(profile) {}
+TriggeredProfileResetter::TriggeredProfileResetter(Profile*) {}
 
 TriggeredProfileResetter::~TriggeredProfileResetter() {}
 
