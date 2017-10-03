@@ -191,6 +191,19 @@ NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {
   return box_strut.SnapToDevicePixels();
 }
 
+LayoutRect NGPhysicalFragment::LocalVisualRectForSelf() const {
+  switch (Type()) {
+    case kFragmentBox:
+      return ToNGPhysicalBoxFragment(this)->LocalVisualRectForSelf();
+    case kFragmentText:
+      return ToNGPhysicalTextFragment(this)->LocalVisualRect();
+    case kFragmentLineBox:
+      return {};
+  }
+  NOTREACHED();
+  return {};
+}
+
 RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
   switch (Type()) {
     case kFragmentBox:
@@ -210,10 +223,6 @@ RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
       break;
   }
   return nullptr;
-}
-
-void NGPhysicalFragment::UpdateVisualRect() const {
-  SetVisualRect({LayoutPoint(), LayoutSize(Size().width, Size().height)});
 }
 
 String NGPhysicalFragment::ToString() const {

@@ -9,10 +9,9 @@
 
 namespace blink {
 
-void NGPhysicalTextFragment::UpdateVisualRect() const {
+LayoutRect NGPhysicalTextFragment::LocalVisualRect() const {
   if (!shape_result_) {
-    NGPhysicalFragment::UpdateVisualRect();
-    return;
+    return {};
   }
 
   // TODO(kojii): Copying InlineTextBox logic from
@@ -60,7 +59,7 @@ void NGPhysicalTextFragment::UpdateVisualRect() const {
       break;
   }
 
-  SetVisualRect(visual_rect);
+  return visual_rect;
 }
 
 }  // namespace blink
