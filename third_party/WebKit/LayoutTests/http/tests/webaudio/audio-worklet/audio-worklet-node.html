@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Test the construction of AudioWorkletNode
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../../../webaudio-resources/audit.js"></script>
+    <script src="audio-worklet-common.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      // TODO(hongchan): remove this assertion when AudioWorklet shipped.
+      assertAudioWorklet();
+
+      let audit = Audit.createTaskRunner();
+
+      // Test the construction of AudioWorkletNode after the resolution of
+      // |.addModule()|.
+      audit.define(
+          {label: 'construction-after-module-loading'},
+          (task, should) => {
+            audioWorklet.addModule('bypass-processor.js').then(() => {
+              let context = new AudioContext();
+              let bypasser = new AudioWorkletNode(context, 'bypasser');
+              should(bypasser instanceof AudioWorkletNode,
+                     '"bypasser" is an instance of AudioWorkletNode')
+                  .beTrue();
+              task.done();
+            });
+          });
+
+      audit.run();
+    </script>
+  </body>
+</html>
