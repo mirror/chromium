@@ -159,25 +159,36 @@ void ReportPrintDocumentTypeHistogram(enum PrintDocumentTypeBuckets doctype) {
 }
 
 // Name of a dictionary field holding cloud print related data;
-const char kAppState[] = "appState";
+const char kAppState[] = "serializedAppStateStr";
 // Name of a dictionary field holding the initiator title.
-const char kInitiatorTitle[] = "initiatorTitle";
+const char kInitiatorTitle[] = "documentTitle";
 // Name of a dictionary field holding the measurement system according to the
 // locale.
-const char kMeasurementSystem[] = "measurementSystem";
-// Name of a dictionary field holding the number format according to the locale.
-const char kNumberFormat[] = "numberFormat";
+const char kUnitType[] = "unitType";
+// Name of a dictionary field holding the decimal delimeter according to the
+// locale.
+const char kDecimalDelimeter[] = "decimalDelimeter";
+// Name of a dictionary field holding the thousands delimeter according to the
+// locale.
+const char kThousandsDelimeter[] = "thousandsDelimeter";
 // Name of a dictionary field specifying whether to print automatically in
 // kiosk mode. See http://crbug.com/31395.
-const char kPrintAutomaticallyInKioskMode[] = "printAutomaticallyInKioskMode";
+const char kPrintAutomaticallyInKioskMode[] = "isInKioskAutoPrintMode";
 // Dictionary field to indicate whether Chrome is running in forced app (app
 // kiosk) mode. It's not the same as desktop Chrome kiosk (the one above).
-const char kAppKioskMode[] = "appKioskMode";
+const char kAppKioskMode[] = "isInAppKioskMode";
+// Name of a dictionary field indicating whether preview document is
+// modifiable.
+const char kDocumentModifiable[] = "isDocumentModifiable";
 // Name of a dictionary field holding the state of selection for document.
 const char kDocumentHasSelection[] = "documentHasSelection";
-// Dictionary field holding the default destination selection rules.
+// Name of a dictionary field holding the default destination selection rules.
 const char kDefaultDestinationSelectionRules[] =
-    "defaultDestinationSelectionRules";
+    "serializedDefaultDestinationSelectionRulesStr";
+// Name of a dictionary field indicating whether to print only the selection.
+const char kSelectionOnly[] = "selectionOnly";
+// Name of a dictionary field holding the name of the system default printer.
+const char kSystemDefaultDestinationId[] = "systemDefaultDestinationId";
 
 // Get the print job settings dictionary from |json_str|. Returns NULL on
 // failure.
@@ -958,8 +969,10 @@ void PrintPreviewHandler::GetNumberFormatAndMeasurementSystem(
 
   // Getting the number formatting based on the locale and writing to
   // dictionary.
-  settings->SetString(kNumberFormat, base::FormatDouble(123456.78, 2));
-  settings->SetInteger(kMeasurementSystem, system);
+  base::string16 number_format = base::FormatDouble(123456.78, 2);
+  settings->SetString(kDecimalDelimeter, number_format.substr(6, 1));
+  settings->SetString(kThousandsDelimeter, number_format.substr(3, 1));
+  settings->SetInteger(kUnitType, system);
 }
 
 void PrintPreviewHandler::HandleGetInitialSettings(
@@ -995,12 +1008,12 @@ void PrintPreviewHandler::SendInitialSettings(
   base::DictionaryValue initial_settings;
   initial_settings.SetString(kInitiatorTitle,
                              print_preview_ui()->initiator_title());
-  initial_settings.SetBoolean(printing::kSettingPreviewModifiable,
+  initial_settings.SetBoolean(kDocumentModifiable,
                               print_preview_ui()->source_is_modifiable());
-  initial_settings.SetString(printing::kSettingPrinterName, default_printer);
+  initial_settings.SetString(kSystemDefaultDestinationId, default_printer);
   initial_settings.SetBoolean(kDocumentHasSelection,
                               print_preview_ui()->source_has_selection());
-  initial_settings.SetBoolean(printing::kSettingShouldPrintSelectionOnly,
+  initial_settings.SetBoolean(kSelectionOnly,
                               print_preview_ui()->print_selection_only());
   PrefService* prefs = Profile::FromBrowserContext(
       preview_web_contents()->GetBrowserContext())->GetPrefs();
@@ -1009,6 +1022,8 @@ void PrintPreviewHandler::SendInitialSettings(
   if (sticky_settings->printer_app_state()) {
     initial_settings.SetString(kAppState,
                                *sticky_settings->printer_app_state());
+  } else {
+    initial_settings.SetPath({kAppState}, base::Value());
   }
 
   base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
@@ -1016,11 +1031,18 @@ void PrintPreviewHandler::SendInitialSettings(
                               cmdline->HasSwitch(switches::kKioskModePrinting));
   initial_settings.SetBoolean(kAppKioskMode,
                               chrome::IsRunningInForcedAppMode());
+  bool set_rules = false;
   if (prefs) {
     const std::string rules_str =
         prefs->GetString(prefs::kPrintPreviewDefaultDestinationSelectionRules);
-    if (!rules_str.empty())
+    if (!rules_str.empty()) {
       initial_settings.SetString(kDefaultDestinationSelectionRules, rules_str);
+      set_rules = true;
+    }
+  }
+  if (!set_rules) {
+    initial_settings.SetPath({kDefaultDestinationSelectionRules},
+                             base::Value());
   }
 
   if (print_preview_ui()->source_is_modifiable())
