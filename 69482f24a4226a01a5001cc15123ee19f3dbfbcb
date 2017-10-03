@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f15fb600_b088f323",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T23:01:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "260c9379_4985ce01",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afd00810_41f5233c",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 4
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "I am not sure. The printing:: constants all are also used for other purposes. Both kSettingPreviewModifiable and kSettingShouldPrintSelectionOnly are used for parsing the print ticket, and kSettingPrinterName is used when returning printer information. So using those means there is no longer a 1:1 mapping between the JS struct and the dictionary key constants, since the constants will be used for multiple messages to/from JS. I am not sure if it is better to avoid adding new strings or to avoid re-using the same strings in multiple messages. Do you know which approach is generally preferred?",
       "parentUuid": "afd00810_41f5233c",
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3523916_928dcdbc",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T23:01:58Z",
+      "side": 1,
+      "message": "I see. Not aware of a generic rule/guideline for such cases. At first glance, reusing the same dictionary keys for across different messages sounds OK to me, as long as the keys convey the meaning accurately. If that involves a lot of JS changes, then let\u0027s postpone this for a different CL (if we decide to do this).\n\nAs I see it, each function has its own contract (input/output structs format), regardless of whether the dictionary keys re-occur across different functions.",
+      "parentUuid": "77a6c4ed_7f71ba1a",
       "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
