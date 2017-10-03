@@ -46,6 +46,8 @@
         testRunner.waitUntilDone();
     }
 
+    var floatPrecision = 0.00001;
+
     // Default.
     function base(e)
     {
@@ -65,10 +67,10 @@
     {
         event = e;
         debug("\nJust zoomed");
-        shouldBe("event.clientX", "83");
-        shouldBe("event.clientY", "83");
-        shouldBe("event.pageX", "83");
-        shouldBe("event.pageY", "83");
+        shouldBeCloseTo('event.clientX', 83.33333, floatPrecision);
+        shouldBeCloseTo('event.clientY', 83.33333, floatPrecision);
+        shouldBeCloseTo('event.pageX', 83.33333, floatPrecision);
+        shouldBeCloseTo('event.pageY', 83.33333, floatPrecision);
     }
     window.addEventListener("click", justZoomed, false);
     zoomPageIn();
@@ -97,10 +99,10 @@
     {
         event = e;
         debug("\nZoomed and scrolled");
-        shouldBe("event.clientX", "83");
-        shouldBe("event.clientY", "83");
-        shouldBe("event.pageX", "133");
-        shouldBe("event.pageY", "133");
+        shouldBeCloseTo('event.clientX', 83.33333, floatPrecision);
+        shouldBeCloseTo('event.clientY', 83.33333, floatPrecision);
+        shouldBeCloseTo('event.pageX', 133.33333, floatPrecision);
+        shouldBeCloseTo('event.pageY', 133.33333, floatPrecision);
     }
     window.addEventListener("click", zoomedAndScrolled, false);
     zoomPageIn();
