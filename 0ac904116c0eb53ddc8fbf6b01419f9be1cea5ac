@@ -16,6 +16,24 @@
       "revId": "0ac904116c0eb53ddc8fbf6b01419f9be1cea5ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709110c1_61983337",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-03T18:41:31Z",
+      "side": 1,
+      "message": "Because there\u0027s a lot of cleanup to do at the callsite, so I\u0027m doing that as a separate CL.\n\nAdded a TODO.",
+      "parentUuid": "263b2663_15f77235",
+      "revId": "0ac904116c0eb53ddc8fbf6b01419f9be1cea5ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
