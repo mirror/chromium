@@ -39,20 +39,17 @@ bool SkipOpcode(const PolicyOpcode& opcode,
 PolicyResult PolicyProcessor::Evaluate(uint32_t options,
                                        ParameterSet* parameters,
                                        size_t param_count) {
-  if (NULL == policy_) {
+  if (!policy_)
     return NO_POLICY_MATCH;
-  }
-  if (0 == policy_->opcode_count) {
+  if (0 == policy_->opcode_count)
     return NO_POLICY_MATCH;
-  }
-  if (!(kShortEval & options)) {
+  if (!(kShortEval & options))
     return POLICY_ERROR;
-  }
 
   MatchContext context;
   bool evaluation = false;
   bool skip_group = false;
-  SetInternalState(0, EVAL_FALSE);
+  SetInternalState(0, EVAL_false);
   size_t count = policy_->opcode_count;
 
   // Loop over all the opcodes Evaluating in sequence. Since we only support
@@ -60,37 +57,32 @@ PolicyResult PolicyProcessor::Evaluate(uint32_t options,
   // and the current evaluation is true.
   //
   // Skipping opcodes can happen when we are in AND mode (!kPolUseOREval) and
-  // have got EVAL_FALSE or when we are in OR mode (kPolUseOREval) and got
-  // EVAL_TRUE. Skipping will stop at the next action opcode or at the opcode
+  // have got EVAL_false or when we are in OR mode (kPolUseOREval) and got
+  // EVAL_true. Skipping will stop at the next action opcode or at the opcode
   // after the action depending on kPolUseOREval.
 
   for (size_t ix = 0; ix != count; ++ix) {
     PolicyOpcode& opcode = policy_->opcodes[ix];
     // Skipping block.
-    if (skip_group) {
-      if (SkipOpcode(opcode, &context, &skip_group)) {
+    if (skip_group)
+      if (SkipOpcode(opcode, &context, &skip_group))
         continue;
-      }
-    }
     // Evaluation block.
     EvalResult result = opcode.Evaluate(parameters, param_count, &context);
     switch (result) {
-      case EVAL_FALSE:
+      case EVAL_false:
         evaluation = false;
-        if (kPolUseOREval != context.options) {
+        if (kPolUseOREval != context.options)
           skip_group = true;
-        }
         break;
       case EVAL_ERROR:
-        if (kStopOnErrors & options) {
+        if (kStopOnErrors & options)
           return POLICY_ERROR;
-        }
         break;
-      case EVAL_TRUE:
+      case EVAL_true:
         evaluation = true;
-        if (kPolUseOREval == context.options) {
+        if (kPolUseOREval == context.options)
           skip_group = true;
-        }
         break;
       default:
         // We have evaluated an action.

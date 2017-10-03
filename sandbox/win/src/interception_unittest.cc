@@ -40,9 +40,9 @@ void WalkBuffer(void* buffer,
                 int* num_dlls,
                 int* num_functions,
                 int* num_names) {
-  ASSERT_TRUE(NULL != buffer);
-  ASSERT_TRUE(NULL != num_functions);
-  ASSERT_TRUE(NULL != num_names);
+  ASSERT_TRUE(buffer);
+  ASSERT_TRUE(num_functions);
+  ASSERT_TRUE(num_names);
   *num_dlls = *num_functions = *num_names = 0;
   SharedMemory* memory = reinterpret_cast<SharedMemory*>(buffer);
 
@@ -72,9 +72,9 @@ void WalkBuffer(void* buffer,
       // look for a named interceptor
       if (strlen(name)) {
         (*num_names)++;
-        EXPECT_TRUE(NULL == function->interceptor_address);
+        EXPECT_TRUE(!function->interceptor_address);
       } else {
-        EXPECT_TRUE(NULL != function->interceptor_address);
+        EXPECT_TRUE(function->interceptor_address);
       }
 
       (*num_functions)++;
@@ -129,7 +129,7 @@ TEST(InterceptionManagerTest, GetGranularAlignedRandomOffset) {
 
 TEST(InterceptionManagerTest, BufferLayout1) {
   wchar_t exe_name[MAX_PATH];
-  ASSERT_NE(0u, GetModuleFileName(NULL, exe_name, MAX_PATH - 1));
+  ASSERT_NE(0u, GetModuleFileName(nullptr, exe_name, MAX_PATH - 1));
 
   TargetProcess* target =
       MakeTestTargetProcess(::GetCurrentProcess(), ::GetModuleHandle(exe_name));
@@ -215,7 +215,7 @@ TEST(InterceptionManagerTest, BufferLayout1) {
 
 TEST(InterceptionManagerTest, BufferLayout2) {
   wchar_t exe_name[MAX_PATH];
-  ASSERT_NE(0u, GetModuleFileName(NULL, exe_name, MAX_PATH - 1));
+  ASSERT_NE(0u, GetModuleFileName(nullptr, exe_name, MAX_PATH - 1));
 
   TargetProcess* target =
       MakeTestTargetProcess(::GetCurrentProcess(), ::GetModuleHandle(exe_name));
