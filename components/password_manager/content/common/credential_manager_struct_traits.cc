@@ -7,39 +7,42 @@
 #include "url/mojo/origin_struct_traits.h"
 #include "url/mojo/url_gurl_struct_traits.h"
 
-using namespace password_manager;
+using password_manager::CredentialInfo;
+using password_manager::CredentialType;
+using password_manager::CredentialManagerError;
+using password_manager::CredentialMediationRequirement;
 
 namespace mojo {
 
 // static
-mojom::CredentialType
-EnumTraits<mojom::CredentialType, CredentialType>::ToMojom(
+password_manager::mojom::CredentialType
+EnumTraits<password_manager::mojom::CredentialType, CredentialType>::ToMojom(
     CredentialType input) {
   switch (input) {
     case CredentialType::CREDENTIAL_TYPE_EMPTY:
-      return mojom::CredentialType::EMPTY;
+      return password_manager::mojom::CredentialType::EMPTY;
     case CredentialType::CREDENTIAL_TYPE_PASSWORD:
-      return mojom::CredentialType::PASSWORD;
+      return password_manager::mojom::CredentialType::PASSWORD;
     case CredentialType::CREDENTIAL_TYPE_FEDERATED:
-      return mojom::CredentialType::FEDERATED;
+      return password_manager::mojom::CredentialType::FEDERATED;
   }
 
   NOTREACHED();
-  return mojom::CredentialType::EMPTY;
+  return password_manager::mojom::CredentialType::EMPTY;
 }
 
 // static
-bool EnumTraits<mojom::CredentialType, CredentialType>::FromMojom(
-    mojom::CredentialType input,
-    CredentialType* output) {
+bool EnumTraits<password_manager::mojom::CredentialType, CredentialType>::
+    FromMojom(password_manager::mojom::CredentialType input,
+              CredentialType* output) {
   switch (input) {
-    case mojom::CredentialType::EMPTY:
+    case password_manager::mojom::CredentialType::EMPTY:
       *output = CredentialType::CREDENTIAL_TYPE_EMPTY;
       return true;
-    case mojom::CredentialType::PASSWORD:
+    case password_manager::mojom::CredentialType::PASSWORD:
       *output = CredentialType::CREDENTIAL_TYPE_PASSWORD;
       return true;
-    case mojom::CredentialType::FEDERATED:
+    case password_manager::mojom::CredentialType::FEDERATED:
       *output = CredentialType::CREDENTIAL_TYPE_FEDERATED;
       return true;
   }
@@ -49,44 +52,47 @@ bool EnumTraits<mojom::CredentialType, CredentialType>::FromMojom(
 }
 
 // static
-mojom::CredentialManagerError
-EnumTraits<mojom::CredentialManagerError, CredentialManagerError>::ToMojom(
-    CredentialManagerError input) {
+password_manager::mojom::CredentialManagerError
+EnumTraits<password_manager::mojom::CredentialManagerError,
+           CredentialManagerError>::ToMojom(CredentialManagerError input) {
   switch (input) {
     case CredentialManagerError::SUCCESS:
-      return mojom::CredentialManagerError::SUCCESS;
+      return password_manager::mojom::CredentialManagerError::SUCCESS;
     case CredentialManagerError::DISABLED:
-      return mojom::CredentialManagerError::DISABLED;
+      return password_manager::mojom::CredentialManagerError::DISABLED;
     case CredentialManagerError::PENDINGREQUEST:
-      return mojom::CredentialManagerError::PENDINGREQUEST;
+      return password_manager::mojom::CredentialManagerError::PENDINGREQUEST;
     case CredentialManagerError::PASSWORDSTOREUNAVAILABLE:
-      return mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE;
+      return password_manager::mojom::CredentialManagerError::
+          PASSWORDSTOREUNAVAILABLE;
     case CredentialManagerError::UNKNOWN:
-      return mojom::CredentialManagerError::UNKNOWN;
+      return password_manager::mojom::CredentialManagerError::UNKNOWN;
   }
 
   NOTREACHED();
-  return mojom::CredentialManagerError::UNKNOWN;
+  return password_manager::mojom::CredentialManagerError::UNKNOWN;
 }
 
 // static
-bool EnumTraits<mojom::CredentialManagerError, CredentialManagerError>::
-    FromMojom(mojom::CredentialManagerError input,
+bool EnumTraits<password_manager::mojom::CredentialManagerError,
+                CredentialManagerError>::
+    FromMojom(password_manager::mojom::CredentialManagerError input,
               CredentialManagerError* output) {
   switch (input) {
-    case mojom::CredentialManagerError::SUCCESS:
+    case password_manager::mojom::CredentialManagerError::SUCCESS:
       *output = CredentialManagerError::SUCCESS;
       return true;
-    case mojom::CredentialManagerError::DISABLED:
+    case password_manager::mojom::CredentialManagerError::DISABLED:
       *output = CredentialManagerError::DISABLED;
       return true;
-    case mojom::CredentialManagerError::PENDINGREQUEST:
+    case password_manager::mojom::CredentialManagerError::PENDINGREQUEST:
       *output = CredentialManagerError::PENDINGREQUEST;
       return true;
-    case mojom::CredentialManagerError::PASSWORDSTOREUNAVAILABLE:
+    case password_manager::mojom::CredentialManagerError::
+        PASSWORDSTOREUNAVAILABLE:
       *output = CredentialManagerError::PASSWORDSTOREUNAVAILABLE;
       return true;
-    case mojom::CredentialManagerError::UNKNOWN:
+    case password_manager::mojom::CredentialManagerError::UNKNOWN:
       *output = CredentialManagerError::UNKNOWN;
       return true;
   }
@@ -96,36 +102,36 @@ bool EnumTraits<mojom::CredentialManagerError, CredentialManagerError>::
 }
 
 // static
-mojom::CredentialMediationRequirement EnumTraits<
-    mojom::CredentialMediationRequirement,
+password_manager::mojom::CredentialMediationRequirement EnumTraits<
+    password_manager::mojom::CredentialMediationRequirement,
     CredentialMediationRequirement>::ToMojom(CredentialMediationRequirement
                                                  input) {
   switch (input) {
     case CredentialMediationRequirement::kSilent:
-      return mojom::CredentialMediationRequirement::kSilent;
+      return password_manager::mojom::CredentialMediationRequirement::kSilent;
     case CredentialMediationRequirement::kOptional:
-      return mojom::CredentialMediationRequirement::kOptional;
+      return password_manager::mojom::CredentialMediationRequirement::kOptional;
     case CredentialMediationRequirement::kRequired:
-      return mojom::CredentialMediationRequirement::kRequired;
+      return password_manager::mojom::CredentialMediationRequirement::kRequired;
   }
 
   NOTREACHED();
-  return mojom::CredentialMediationRequirement::kOptional;
+  return password_manager::mojom::CredentialMediationRequirement::kOptional;
 }
 
 // static
-bool EnumTraits<mojom::CredentialMediationRequirement,
+bool EnumTraits<password_manager::mojom::CredentialMediationRequirement,
                 CredentialMediationRequirement>::
-    FromMojom(mojom::CredentialMediationRequirement input,
+    FromMojom(password_manager::mojom::CredentialMediationRequirement input,
               CredentialMediationRequirement* output) {
   switch (input) {
-    case mojom::CredentialMediationRequirement::kSilent:
+    case password_manager::mojom::CredentialMediationRequirement::kSilent:
       *output = CredentialMediationRequirement::kSilent;
       return true;
-    case mojom::CredentialMediationRequirement::kOptional:
+    case password_manager::mojom::CredentialMediationRequirement::kOptional:
       *output = CredentialMediationRequirement::kOptional;
       return true;
-    case mojom::CredentialMediationRequirement::kRequired:
+    case password_manager::mojom::CredentialMediationRequirement::kRequired:
       *output = CredentialMediationRequirement::kRequired;
       return true;
   }
@@ -135,9 +141,10 @@ bool EnumTraits<mojom::CredentialMediationRequirement,
 }
 
 // static
-bool StructTraits<mojom::CredentialInfoDataView, CredentialInfo>::Read(
-    mojom::CredentialInfoDataView data,
-    CredentialInfo* out) {
+bool StructTraits<
+    password_manager::mojom::CredentialInfoDataView,
+    CredentialInfo>::Read(password_manager::mojom::CredentialInfoDataView data,
+                          CredentialInfo* out) {
   if (data.ReadType(&out->type) && data.ReadId(&out->id) &&
       data.ReadName(&out->name) && data.ReadIcon(&out->icon) &&
       data.ReadPassword(&out->password) &&

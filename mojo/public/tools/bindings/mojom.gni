@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")
+
 declare_args() {
   # Indicates whether typemapping should be supported in this build
   # configuration. This may be disabled when building external projects which
@@ -438,7 +440,7 @@ template("mojom") {
   }
 
   shared_cpp_sources_target_name = "${target_name}_shared_cpp_sources"
-  source_set(shared_cpp_sources_target_name) {
+  jumbo_source_set(shared_cpp_sources_target_name) {
     if (defined(invoker.testonly)) {
       testonly = invoker.testonly
     }
@@ -755,7 +757,7 @@ template("mojom") {
       output_target_type = "source_set"
     }
 
-    target(output_target_type, "${target_name}${variant_suffix}") {
+    target("jumbo_" + output_target_type, "${target_name}${variant_suffix}") {
       if (defined(bindings_configuration.for_blink) &&
           bindings_configuration.for_blink &&
           defined(invoker.visibility_blink)) {
