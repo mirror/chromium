@@ -129,6 +129,9 @@ function MainWindowComponent(
       'pathclick', this.onBreadcrumbClick_.bind(this));
   ui.toggleViewButton.addEventListener(
       'click', this.onToggleViewButtonClick_.bind(this));
+  ui.sortButton.addEventListener(
+      cr.ui.MenuButton.EventType.FOCUS_RELEASE,
+      this.onMenuReleaseFocus_.bind(this));
   directoryModel.addEventListener(
       'directory-changed', this.onDirectoryChanged_.bind(this));
   volumeManager.addEventListener(
@@ -300,6 +303,15 @@ MainWindowComponent.prototype.onToggleViewButtonClick_ = function(event) {
   this.ui_.setCurrentListType(listType);
   this.appStateController_.saveViewOptions();
 
+  this.ui_.listContainer.focus();
+};
+
+/**
+ * Handles event when a menu button releases focus.
+ * @param {Event} event The event.
+ * @private
+ */
+MainWindowComponent.prototype.onMenuReleaseFocus_ = function(event) {
   this.ui_.listContainer.focus();
 };
 
