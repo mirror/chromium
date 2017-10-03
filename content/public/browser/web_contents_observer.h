@@ -486,6 +486,7 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
   // TODO(https://crbug.com/758026): Delete this overload when possible.
   bool OnMessageReceived(const IPC::Message& message) override;
 
+  // Returns the WebContents that is being observed.
   WebContents* web_contents() const;
 
  protected:
@@ -501,6 +502,8 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener {
   ~WebContentsObserver() override;
 
   // Start observing a different WebContents; used with the default constructor.
+  // Cancel observing the current WebContents if |web_contents| is null. It is
+  // not allowed to cancel observing if no WebContents is being observed.
   void Observe(WebContents* web_contents);
 
  private:

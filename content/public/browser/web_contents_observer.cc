@@ -4,6 +4,7 @@
 
 #include "content/public/browser/web_contents_observer.h"
 
+#include "base/logging.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/public/browser/navigation_details.h"
 #include "content/public/browser/render_view_host.h"
@@ -29,6 +30,9 @@ WebContents* WebContentsObserver::web_contents() const {
 }
 
 void WebContentsObserver::Observe(WebContents* web_contents) {
+  DCHECK(web_contents_ || web_contents)
+      << "Trying to cancel observing but no WebCotnents is being observed.";
+
   if (web_contents == web_contents_) {
     // Early exit to avoid infinite loops if we're in the middle of a callback.
     return;
