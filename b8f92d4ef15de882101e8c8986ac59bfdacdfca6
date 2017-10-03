@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67927633_b3d1debf",
+        "filename": "third_party/WebKit/Source/core/exported/WebAssociatedURLLoaderImplTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-03T06:02:19Z",
+      "side": 1,
+      "message": "You don\u0027t need to create a WrappedResourceResponse.\n\nCreating a WebURLResponse is cleaner and you won\u0027t need to have registered_responses_ at all.",
+      "revId": "b8f92d4ef15de882101e8c8986ac59bfdacdfca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
