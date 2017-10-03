@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8f5112a_fcc4a209",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T23:43:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240e1335_eb9fe4fb",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a9c13e_a6a33000",
         "filename": "chrome/browser/android/banners/app_banner_manager_android.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1f05af7a_cdeece1c",
+        "filename": "chrome/browser/android/banners/app_banner_manager_android.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T23:43:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a9c13e_a6a33000",
+      "range": {
+        "startLine": 102,
+        "startChar": 24,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "343de21f_de691dd6",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "791fa577_665e0e53",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T23:43:30Z",
+      "side": 1,
+      "message": "That doesn\u0027t compile on Windows - see the delta between https://codereview.chromium.org/2942513002/patch/80001/90003 and https://codereview.chromium.org/2942513002/patch/100001/110003.",
+      "parentUuid": "343de21f_de691dd6",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5d1757e_cf5e46cb",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-03T23:10:40Z",
       "side": 1,
       "message": "same here.",
+      "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d05a84_17572c7a",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T23:43:30Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "c5d1757e_cf5e46cb",
       "revId": "beba295f7a242deb346d2c926be69515316b8f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
