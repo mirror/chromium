@@ -34,6 +34,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "664d4599_90958f13",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1245945
+      },
+      "writtenOn": "2017-10-03T17:29:57Z",
+      "side": 1,
+      "message": "IMO, there should be some message, as just dropping the method call is quite confusing. It doesn\u0027t necessarily need to mention the flag if we expect it to not be needed long term. And once-per-page seems reasonable to me (though may need some guidance on how to guarantee that in code).",
+      "parentUuid": "f6a15c2b_e7c71b2e",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
