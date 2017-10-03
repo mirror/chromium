@@ -47,7 +47,7 @@
                 <ViewStub
                     android:id="@+id/toolbar_stub"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="@dimen/bottom_sheet_toolbar_holder_height" />
 
             </FrameLayout>
 

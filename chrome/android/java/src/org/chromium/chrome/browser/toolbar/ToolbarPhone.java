@@ -124,7 +124,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected ImageView mToggleTabStackButton;
     protected NewTabButton mNewTabButton;
     private TintedImageButton mHomeButton;
-    private TextView mUrlBar;
+    protected TextView mUrlBar;
     protected View mUrlActionContainer;
     protected ImageView mToolbarShadow;
     // TODO(twellington): Make this final after modern is always enabled for Chrome Home.
@@ -834,11 +834,10 @@ public class ToolbarPhone extends ToolbarLayout
         // - The right most visible location bar child view.
         // - The bottom of the viewport is aligned with the bottom of the location bar.
         // Additional padding can be applied for use during animations.
-        int verticalMargin = getLocationBarBackgroundVerticalMargin(expansion);
-        out.set(leftViewPosition,
-                mLocationBar.getTop() + verticalMargin,
-                rightViewPosition,
-                mLocationBar.getBottom() - verticalMargin);
+        int verticalTopMargin = getLocationBarBackgroundTopMargin(expansion);
+        int verticalBottomMargin = getLocationBarBackgroundBottomMargin(expansion);
+        out.set(leftViewPosition, mLocationBar.getTop() + verticalTopMargin, rightViewPosition,
+                mLocationBar.getBottom() - verticalBottomMargin);
     }
 
     /**
@@ -846,8 +845,12 @@ public class ToolbarPhone extends ToolbarLayout
      * @return The vertical margin to apply to the location bar background. The margin is used to
      *         clip the background.
      */
-    protected int getLocationBarBackgroundVerticalMargin(float expansion) {
+    protected int getLocationBarBackgroundTopMargin(float expansion) {
         return (int) MathUtils.interpolate(mLocationBarVerticalMargin, 0, expansion);
+    }
+
+    protected int getLocationBarBackgroundBottomMargin(float expansion) {
+        return getLocationBarBackgroundTopMargin(expansion);
     }
 
     /**

@@ -1018,7 +1018,10 @@ public class BottomSheet
         } else {
             View contentView = content.getContentView();
             if (content.applyDefaultTopPadding()) {
-                contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
+                contentView.setPadding(contentView.getPaddingLeft(),
+                        getResources().getDimensionPixelSize(
+                                R.dimen.bottom_sheet_toolbar_holder_height)
+                                + contentView.getPaddingTop(),
                         contentView.getPaddingRight(), contentView.getPaddingBottom());
             }
             animators.add(getViewTransitionAnimator(

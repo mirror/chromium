@@ -41,6 +41,7 @@ import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
+import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.ToolbarProgressBar;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
@@ -68,12 +69,16 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 // focused, the new content description is read immediately.
                 if (hasFocus() && !urlHasFocus()) mBottomSheet.requestFocus();
             }
+
+            ViewUtils.setAncestorsShouldClipChildren(BottomToolbarPhone.this, false);
         }
 
         @Override
         public void onSheetClosed(@StateChangeReason int reason) {
             onPrimaryColorChanged(true);
             updateMenuButtonClickableState();
+
+            ViewUtils.setAncestorsShouldClipChildren(BottomToolbarPhone.this, true);
         }
 
         @Override
@@ -104,6 +109,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
             boolean isMovingUp = transitionFraction > mLastPeekToHalfHeightFraction;
             mLastPeekToHalfHeightFraction = transitionFraction;
             updateToolbarButtonAnimation(isMovingUp);
+
+            mToolbarHandleView.setTranslationY(mToolbarHandleOffset * (1.f - transitionFraction));
+            mCurrentToolbarOffset = (int) (mToolbarHandleOffset * (1.f - transitionFraction));
+            updateToolbarTranslationY(mCurrentToolbarOffset);
+            mUrlBar.setTranslationY(mCurrentToolbarOffset);
+            // TODO(twellington): offset lock icon too.
         }
     };
 
@@ -211,6 +222,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /** A handle to the {@link ChromeActivity} this toolbar exists in. */
     private ChromeActivity mActivity;
 
+    private int mToolbarHandleOffset;
+    private int mToolbarOffset;
+    private int mCurrentToolbarOffset;
+
     /**
      * Constructs a BottomToolbarPhone object.
      * @param context The Context in which this View object is created.
@@ -277,6 +292,12 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 tab.getInfoBarContainer().addObserver(mInfoBarContainerObserver);
             }
         };
+
+        mToolbarOffset =
+                getResources().getDimensionPixelSize(R.dimen.bottom_toolbar_offset_sheet_closed);
+        mCurrentToolbarOffset = mToolbarOffset;
+        mToolbarHandleOffset =
+                getResources().getDimensionPixelSize(R.dimen.toolbar_handle_offset_sheet_closed);
     }
 
     /**
@@ -544,8 +565,15 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     @Override
-    protected int getLocationBarBackgroundVerticalMargin(float expansion) {
-        return (int) ((mLocationBar.getHeight() - mLocationBarBackgroundHeight) / 2);
+    protected int getLocationBarBackgroundTopMargin(float expansion) {
+        return (int) ((mLocationBar.getHeight() - mLocationBarBackgroundHeight) / 2)
+                + mCurrentToolbarOffset;
+    }
+
+    @Override
+    protected int getLocationBarBackgroundBottomMargin(float expansion) {
+        return (int) ((mLocationBar.getHeight() - mLocationBarBackgroundHeight) / 2)
+                - mCurrentToolbarOffset;
     }
 
     @Override
@@ -694,6 +722,25 @@ public class BottomToolbarPhone extends ToolbarPhone {
         }
     }
 
+    private void updateToolbarTranslationY(int padding) {
+        // Programmatically apply a top margin to all the children of the toolbar container. This
+        // is done so the view hierarchy does not need to be changed.
+        int topMarginForControls = getExtraTopMargin();
+
+        View topShadow = findViewById(R.id.bottom_toolbar_shadow);
+
+        for (int i = 0; i < getChildCount(); i++) {
+            View curView = getChildAt(i);
+
+            // Skip the shadow that sits at the top of the toolbar since this needs to sit on top
+            // of the toolbar.
+            if (curView == topShadow) continue;
+
+            curView.setPadding(curView.getPaddingLeft(), padding, curView.getPaddingRight(),
+                    curView.getPaddingBottom());
+        }
+    }
+
     @Override
     protected boolean shouldDrawLocationBarBackground() {
         return mLocationBar.getAlpha() > 0 || mForceDrawLocationBarBackground;
@@ -708,6 +755,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // own. Get the root view and search for the handle.
         mToolbarHandleView = (ImageView) getRootView().findViewById(R.id.toolbar_handle);
         mToolbarHandleView.setImageDrawable(mHandleDark);
+        mToolbarHandleView.setTranslationY(mToolbarHandleOffset);
+        updateToolbarTranslationY(mToolbarOffset);
+        mUrlBar.setTranslationY(mToolbarOffset);
 
         setUseToolbarHandle();
 

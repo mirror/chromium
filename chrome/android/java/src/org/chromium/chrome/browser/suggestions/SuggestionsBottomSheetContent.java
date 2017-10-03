@@ -333,10 +333,10 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         if (!showLogo) {
             mLogoView.setVisibility(View.GONE);
             mControlContainerView.setTranslationY(0);
-            mToolbarPullHandle.setTranslationY(0);
+            //            mToolbarPullHandle.setTranslationY(0);
             mToolbarShadow.setTranslationY(0);
             mRecyclerView.setTranslationY(0);
-            ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, true);
+            //            ViewUtils.setAncestorsShouldClipChildren(mControlContainerView, true);
             return;
         }
 
