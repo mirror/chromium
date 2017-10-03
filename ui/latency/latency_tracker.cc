@@ -172,22 +172,21 @@ void LatencyTracker::ComputeEndToEndLatencyHistograms(
   } else if (latency.FindLatency(
                  ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT,
                  &original_component)) {
-    // This UMA metric tracks the time from when the original touch event is
-    // created to when the scroll gesture results in final frame swap.
+    // This UMA metric tracks the time from when the original touch/wheel event
+    // is created to when the scroll gesture results in final frame swap.
     // First scroll events are excluded from this metric.
-    if (input_modality == "Touch") {
-      UMA_HISTOGRAM_INPUT_LATENCY_HIGH_RESOLUTION_MICROSECONDS(
-          "Event.Latency.ScrollUpdate.Touch.TimeToScrollUpdateSwapBegin2",
-          original_component, gpu_swap_begin_component);
+    UMA_HISTOGRAM_INPUT_LATENCY_HIGH_RESOLUTION_MICROSECONDS(
+        "Event.Latency.ScrollUpdate." + input_modality +
+            ".TimeToScrollUpdateSwapBegin2",
+        original_component, gpu_swap_begin_component);
 
-      ReportRapporScrollLatency(
-          "Event.Latency.ScrollUpdate.Touch.TimeToScrollUpdateSwapBegin2",
-          original_component, gpu_swap_begin_component);
+    ReportRapporScrollLatency("Event.Latency.ScrollUpdate." + input_modality +
+                                  ".TimeToScrollUpdateSwapBegin2",
+                              original_component, gpu_swap_begin_component);
 
-      ReportUkmScrollLatency("Event.ScrollUpdate.Touch",
-                             "TimeToScrollUpdateSwapBegin", original_component,
-                             gpu_swap_begin_component);
-    }
+    ReportUkmScrollLatency("Event.ScrollUpdate." + input_modality,
+                           "TimeToScrollUpdateSwapBegin", original_component,
+                           gpu_swap_begin_component);
   } else if (latency.FindLatency(ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0,
                                  &original_component)) {
     if (input_modality == "KeyPress") {

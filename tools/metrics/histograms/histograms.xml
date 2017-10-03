@@ -19693,6 +19693,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Event.Latency.ScrollUpdate.Wheel.TimeToScrollUpdateSwapBegin2"
+    units="microseconds">
+  <owner>tdresser@chromium.org</owner>
+  <summary>
+    Time between initial creation of a wheel event and start of the frame swap
+    on the GPU service caused by the generated ScrollUpdate gesture event. If no
+    swap was induced by the event, no recording is made.
+
+    Team: input-dev@chromium.org.
+  </summary>
+</histogram>
+
 <histogram name="Event.Latency.Touch.TimeToFirstScrollUpdateSwapBegin2"
     units="microseconds">
   <obsolete>
