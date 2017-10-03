@@ -236,6 +236,23 @@ ResourceLoader::ResourceLoader(std::unique_ptr<net::URLRequest> request,
 }
 
 ResourceLoader::~ResourceLoader() {
+  if (update_body_read_before_paused_)
+    body_read_before_paused_ = total_body_read_bytes_;
+  if (body_read_before_paused_ != -1) {
+    if (!request_->was_cached()) {
+      DVLOG(1) << "Reported Network.URLLoader.BodyReadFromNetBeforePaused."
+               << "body_read_before_paused_: " << body_read_before_paused_;
+
+      UMA_HISTOGRAM_COUNTS_1M("Network.URLLoader.BodyReadFromNetBeforePaused",
+                              body_read_before_paused_);
+    } else {
+      DVLOG(1) << "The request has been paused, but "
+               << "Network.URLLoader.BodyReadFromNetBeforePaused is not "
+               << "reported because the response body may be from cache. "
+               << "body_read_before_paused_: " << body_read_before_paused_;
+    }
+  }
+
   if (login_delegate_.get())
     login_delegate_->OnRequestCancelled();
   ssl_client_auth_handler_.reset();
@@ -315,6 +332,40 @@ void ResourceLoader::ClearLoginDelegate() {
 
 void ResourceLoader::OutOfBandCancel(int error_code, bool tell_renderer) {
   CancelRequestInternal(error_code, !tell_renderer);
+}
+
+void ResourceLoader::PauseReadingBodyFromNet() {
+  DVLOG(1) << "ResourceLoader pauses fetching response body for "
+           << request_->original_url().spec();
+
+  // Please note that we pause reading body in all cases. Even if the URL
+  // request indicates that the response was cached, there could still be
+  // network activity involved. For example, the response was only partially
+  // cached.
+  //
+  // On the other hand, we only report BodyReadFromNetBeforePaused histogram
+  // when we are sure that the response body hasn't been read from cache. This
+  // avoids polluting the histogram data with data points from cached responses.
+  should_pause_reading_body_ = true;
+
+  if (request_->status().is_io_pending()) {
+    update_body_read_before_paused_ = true;
+  } else {
+    body_read_before_paused_ = total_body_read_bytes_;
+  }
+}
+
+void ResourceLoader::ResumeReadingBodyFromNet() {
+  DVLOG(1) << "ResourceLoader resumes fetching response body for "
+           << request_->original_url().spec();
+
+  should_pause_reading_body_ = false;
+
+  if (read_more_body_supressed_) {
+    read_more_body_supressed_ = false;
+    if (!is_deferred())
+      ReadMore(true /* handle_result_async */);
+  }
 }
 
 void ResourceLoader::AssertURLRequestPresent() const {
@@ -709,6 +760,11 @@ void ResourceLoader::ReadMore(bool handle_result_async) {
   DCHECK(read_buffer_.get());
   DCHECK_GT(read_buffer_size_, 0);
 
+  if (should_pause_reading_body_) {
+    read_more_body_supressed_ = true;
+    return;
+  }
+
   int result = request_->Read(read_buffer_.get(), read_buffer_size_);
   // Have to do this after the Read call, to ensure it still has an outstanding
   // reference.
@@ -751,6 +807,12 @@ void ResourceLoader::CompleteRead(int bytes_read) {
 
   DCHECK(bytes_read >= 0);
   DCHECK(request_->status().is_success());
+
+  total_body_read_bytes_ += bytes_read;
+  if (update_body_read_before_paused_) {
+    update_body_read_before_paused_ = false;
+    body_read_before_paused_ = total_body_read_bytes_;
+  }
 
   ScopedDeferral scoped_deferral(
       this, bytes_read > 0 ? DEFERRED_READ : DEFERRED_RESPONSE_COMPLETE);

@@ -27,9 +27,7 @@ namespace content {
 struct ResourceResponse;
 
 // Used to apply a list of ResourceThrottle instances to an URLRequest.
-class CONTENT_EXPORT ThrottlingResourceHandler
-    : public LayeredResourceHandler,
-      public ResourceThrottle::Delegate {
+class CONTENT_EXPORT ThrottlingResourceHandler : public LayeredResourceHandler {
  public:
   ThrottlingResourceHandler(
       std::unique_ptr<ResourceHandler> next_handler,
@@ -48,12 +46,31 @@ class CONTENT_EXPORT ThrottlingResourceHandler
   void OnWillStart(const GURL& url,
                    std::unique_ptr<ResourceController> controller) override;
 
-  // ResourceThrottle::Delegate implementation:
-  void Cancel() override;
-  void CancelWithError(int error_code) override;
-  void Resume() override;
-
  private:
+  class ForwardingThrottleDelegate : public ResourceThrottle::Delegate {
+   public:
+    ForwardingThrottleDelegate(ThrottlingResourceHandler* handler,
+                               size_t throttle_index);
+    ~ForwardingThrottleDelegate() override;
+
+    // ResourceThrottle::Delegate implementation:
+    void Cancel() override;
+    void CancelWithError(int error_code) override;
+    void Resume() override;
+    void PauseReadingBodyFromNet() override;
+    void ResumeReadingBodyFromNet() override;
+
+   private:
+    ThrottlingResourceHandler* const handler_;
+    const size_t throttle_index_;
+  };
+
+  void Cancel();
+  void CancelWithError(int error_code);
+  void Resume();
+  void RequestToPauseReadingBodyFromNet(size_t throttle_index);
+  void RequestToResumeReadingBodyFromNet(size_t throttle_index);
+
   void ResumeStart();
   void ResumeRedirect();
   void ResumeResponse();
@@ -72,6 +89,11 @@ class CONTENT_EXPORT ThrottlingResourceHandler
 
   std::vector<std::unique_ptr<ResourceThrottle>> throttles_;
   size_t next_index_;
+
+  // This vector has the same size as |throttles_|. Each element is used by the
+  // ResourceThrottle at the same position in |throttles_|.
+  std::vector<ForwardingThrottleDelegate> throttling_delegates_;
+  std::set<size_t> pausing_reading_body_from_net_throttles_;
 
   GURL deferred_url_;
   net::RedirectInfo deferred_redirect_;

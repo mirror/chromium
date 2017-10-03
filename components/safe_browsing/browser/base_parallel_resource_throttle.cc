@@ -25,6 +25,16 @@ void BaseParallelResourceThrottle::URLLoaderThrottleDelegateImpl::Resume() {
   owner_->Resume();
 }
 
+void BaseParallelResourceThrottle::URLLoaderThrottleDelegateImpl::
+    PauseReadingBodyFromNet() {
+  owner_->PauseReadingBodyFromNet();
+}
+
+void BaseParallelResourceThrottle::URLLoaderThrottleDelegateImpl::
+    ResumeReadingBodyFromNet() {
+  owner_->ResumeReadingBodyFromNet();
+}
+
 BaseParallelResourceThrottle::BaseParallelResourceThrottle(
     const net::URLRequest* request,
     content::ResourceType resource_type,

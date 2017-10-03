@@ -4,7 +4,17 @@
 
 #include "content/public/browser/resource_throttle.h"
 
+#include "base/logging.h"
+
 namespace content {
+
+void ResourceThrottle::Delegate::PauseReadingBodyFromNet() {
+  NOTIMPLEMENTED();
+}
+
+void ResourceThrottle::Delegate::ResumeReadingBodyFromNet() {
+  NOTIMPLEMENTED();
+}
 
 bool ResourceThrottle::MustProcessResponseBeforeReadingBody() {
   return false;
@@ -20,6 +30,14 @@ void ResourceThrottle::CancelWithError(int error_code) {
 
 void ResourceThrottle::Resume() {
   delegate_->Resume();
+}
+
+void ResourceThrottle::PauseReadingBodyFromNet() {
+  delegate_->PauseReadingBodyFromNet();
+}
+
+void ResourceThrottle::ResumeReadingBodyFromNet() {
+  delegate_->ResumeReadingBodyFromNet();
 }
 
 }  // namespace content

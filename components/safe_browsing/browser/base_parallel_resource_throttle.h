@@ -53,6 +53,8 @@ class BaseParallelResourceThrottle : public content::ResourceThrottle {
     // content::URLLoaderThrottle::Delegate implementation:
     void CancelWithError(int error_code) override;
     void Resume() override;
+    void PauseReadingBodyFromNet() override;
+    void ResumeReadingBodyFromNet() override;
 
    private:
     BaseParallelResourceThrottle* const owner_;

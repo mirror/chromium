@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/loader/resource_controller.h"
@@ -192,6 +193,14 @@ void MockResourceLoader::OutOfBandCancel(int error_code, bool tell_renderer) {
   // To mimic real behavior, keep old error, in the case of double-cancel.
   if (error_code_ == net::OK)
     error_code_ = error_code;
+}
+
+void MockResourceLoader::PauseReadingBodyFromNet() {
+  NOTIMPLEMENTED();
+}
+
+void MockResourceLoader::ResumeReadingBodyFromNet() {
+  NOTIMPLEMENTED();
 }
 
 void MockResourceLoader::OnCancel(int error_code) {

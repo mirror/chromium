@@ -50,6 +50,14 @@ void ResourceHandler::OutOfBandCancel(int error_code, bool tell_renderer) {
   delegate_->OutOfBandCancel(error_code, tell_renderer);
 }
 
+void ResourceHandler::PauseReadingBodyFromNet() {
+  delegate_->PauseReadingBodyFromNet();
+}
+
+void ResourceHandler::ResumeReadingBodyFromNet() {
+  delegate_->ResumeReadingBodyFromNet();
+}
+
 ResourceRequestInfoImpl* ResourceHandler::GetRequestInfo() const {
   return ResourceRequestInfoImpl::ForRequest(request_);
 }

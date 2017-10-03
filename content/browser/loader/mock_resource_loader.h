@@ -90,6 +90,8 @@ class MockResourceLoader : public ResourceHandler::Delegate {
 
   // ResourceHandler::Delegate implementation:
   void OutOfBandCancel(int error_code, bool tell_renderer) override;
+  void PauseReadingBodyFromNet() override;
+  void ResumeReadingBodyFromNet() override;
 
   void OnCancel(int error_code);
   void OnResume();
