@@ -482,6 +482,17 @@ fuzzer_test("hash_fuzzer") {
   ]
 }
 
+fuzzer_test("net_hpack_decoder_fuzzer") {
+  sources = [
+    "net_hpack_decoder_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+    "//net",
+  ]
+  libfuzzer_options = [ "max_len=4096" ]
+}
+
 # third_party/minizip/src is checked out only on unix platform by gclient.
 if (is_linux) {
   # TODO(yawano): Add compress test case
