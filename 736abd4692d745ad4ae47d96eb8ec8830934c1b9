@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91bce9a9_9b4a8bbc",
+        "filename": "third_party/WebKit/LayoutTests/fast/writing-mode/orthogonal-inline-block.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-03T18:32:30Z",
+      "side": 1,
+      "message": "Done, good point, thank you.",
+      "parentUuid": "7e408154_50fd1b24",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ef067cc_b2236333",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "082d62ce_d5852a4e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-03T18:32:30Z",
+      "side": 1,
+      "message": "Brilliant idea, done!",
+      "parentUuid": "7ef067cc_b2236333",
+      "range": {
+        "startLine": 120,
+        "startChar": 30,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f22af35_f5adeedf",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85480070_d8210e2b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-03T18:32:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f22af35_f5adeedf",
+      "range": {
+        "startLine": 286,
+        "startChar": 36,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
