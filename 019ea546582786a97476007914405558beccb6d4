@@ -22,6 +22,30 @@
       "revId": "019ea546582786a97476007914405558beccb6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542091bb_5341daa9",
+        "filename": "chrome/browser/feature_engagement/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-03T22:44:24Z",
+      "side": 1,
+      "message": "Could you explain a little bit more about what you mean? Desktop in-product help feature promos are currently only implemented through views which is why we originally put it there.",
+      "parentUuid": "55882071_401ad1dc",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 43
+      },
+      "revId": "019ea546582786a97476007914405558beccb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
