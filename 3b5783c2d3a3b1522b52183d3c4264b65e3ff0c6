@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16826b8a_6c7188b0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 66187,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-03T14:14:28Z",
+      "side": 1,
+      "message": "we discussed this a bit during the convergence, but I think it would be better for you to email our internal list with the outliers and we can see if the issue is with the metric or with UMA - and if there\u0027s anything we can do to help.",
+      "revId": "3b5783c2d3a3b1522b52183d3c4264b65e3ff0c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
