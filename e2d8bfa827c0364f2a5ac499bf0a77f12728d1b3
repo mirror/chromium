@@ -34,6 +34,24 @@
       "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c175f30_b5dcbf31",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T15:22:50Z",
+      "side": 1,
+      "message": "I see. I\u0027d be nice if IntegerPrefMember accepts enum like this\n\n  template \u003ctypename T\u003e\n  void SetValue(T t) {\n    static_assert(std::is_enum\u003cT\u003e::value, \"Must be enum\");\n    static_assert(std::is_same\u003cValueType, int\u003e, \"must be int\");\n    SetValue(static_cast\u003cV\u003e(t));\n  }",
+      "parentUuid": "f325afd4_aa3042d7",
+      "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
