@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5951bc6_7f5d59a5",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T15:02:48Z",
+      "side": 1,
+      "message": "use a name with more context please",
+      "revId": "5475a2ce5b3c953a07c68098873f19659fab9389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be04913_c7175c39",
+        "filename": "components/viz/service/display/renderer_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-03T15:02:48Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5475a2ce5b3c953a07c68098873f19659fab9389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
