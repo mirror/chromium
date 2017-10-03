@@ -221,6 +221,7 @@ AutofillManager::AutofillManager(
       client_(client),
       payments_client_(base::MakeUnique<payments::PaymentsClient>(
           driver->GetURLRequestContext(),
+          client->GetPrefs(),
           this)),
       app_locale_(app_locale),
       personal_data_(client->GetPersonalDataManager()),
@@ -270,13 +271,15 @@ AutofillManager::~AutofillManager() {}
 // static
 void AutofillManager::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterInt64Pref(
+      prefs::kAutofillBillingCustomerNumber, 0,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
   // This pref is not synced because it's for a signin promo, which by
   // definition will not be synced.
   registry->RegisterIntegerPref(
       prefs::kAutofillCreditCardSigninPromoImpressionCount, 0);
   registry->RegisterBooleanPref(
-      prefs::kAutofillEnabled,
-      true,
+      prefs::kAutofillEnabled, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
       prefs::kAutofillProfileUseDatesFixed, false,
@@ -1165,6 +1168,9 @@ void AutofillManager::OnUserDidAcceptUpload() {
       upload_request_.cvc =
           client_->GetSaveCardBubbleController()->GetCvcEnteredByUser();
     }
+    upload_request_.billing_customer_number =
+        payments_client_->GetPrefService()->GetInt64(
+            prefs::kAutofillBillingCustomerNumber);
     payments_client_->UploadCard(upload_request_);
   }
 }
@@ -1180,6 +1186,9 @@ void AutofillManager::OnDidGetUploadRiskData(const std::string& risk_data) {
       upload_request_.cvc =
           client_->GetSaveCardBubbleController()->GetCvcEnteredByUser();
     }
+    upload_request_.billing_customer_number =
+        payments_client_->GetPrefService()->GetInt64(
+            prefs::kAutofillBillingCustomerNumber);
     payments_client_->UploadCard(upload_request_);
   }
 }
@@ -1609,6 +1618,7 @@ AutofillManager::AutofillManager(AutofillDriver* driver,
       client_(client),
       payments_client_(base::MakeUnique<payments::PaymentsClient>(
           driver->GetURLRequestContext(),
+          client->GetPrefs(),
           this)),
       app_locale_("en-US"),
       personal_data_(personal_data),
