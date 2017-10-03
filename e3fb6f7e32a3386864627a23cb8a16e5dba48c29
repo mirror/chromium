@@ -94,6 +94,30 @@
       "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423c7f77_3fd6e3eb",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T18:09:42Z",
+      "side": 0,
+      "message": "Got it, thanks!\n\nI gave it a try an unfortunately it didn\u0027t work. I made sure that customTimesChanged_() gets invoked whenever any of the observed values is updated, however, the knobs remain erroneously in the left of the slider. There must be a timing issue. \n\nReading through the Polymer docs of the initialization order: https://www.polymer-project.org/1.0/docs/devguide/registering-elements#initialization-order, I tried to use attached() instead, but it didn\u0027t work either. The only way I got it to work was by using this.async(); \n\nThe docs above talks about using this.async() but for \"Initialization timing for siblings\", I don\u0027t think we care about siblings here, but this.async() was the only I got it to work.\n\nWhat\u0027s going on?",
+      "parentUuid": "82152d1e_95ed4dc6",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
