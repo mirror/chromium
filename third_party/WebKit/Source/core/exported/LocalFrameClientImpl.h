@@ -242,6 +242,15 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   void DidBlockFramebust(const KURL&) override;
 
+  bool CreatePluginFrame(HTMLPlugInElement*,
+                         const KURL&,
+                         const String&) override;
+  void DidReceiveDataInPluginDocument(HTMLPlugInElement*,
+                                      const char*,
+                                      size_t) override;
+  v8::Local<v8::Object> V8ScriptableObject(HTMLPlugInElement*,
+                                           v8::Isolate*) override;
+
  private:
   explicit LocalFrameClientImpl(WebLocalFrameImpl*);
 

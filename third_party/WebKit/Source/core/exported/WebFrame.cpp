@@ -118,6 +118,8 @@ bool WebFrame::Swap(WebFrame* frame) {
     }
   } else {
     ToWebRemoteFrameImpl(frame)->InitializeCoreFrame(*page, owner, name);
+    if (old_frame->IsPluginFrame())
+      owner->ContentFrame()->SetIsPluginFrame();
   }
 
   if (parent_ && old_frame->HasReceivedUserGesture())

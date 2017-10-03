@@ -10,10 +10,12 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_api_frame_id_map.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/browser/extension_util.h"
 #include "extensions/browser/extensions_browser_client.h"
 #include "extensions/browser/mojo/interface_registration.h"
 #include "extensions/browser/process_manager.h"
@@ -121,7 +123,12 @@ void ExtensionWebContentsObserver::RenderFrameCreated(
   //
   // TODO(devlin,alexmos): Do this for subframes as well. See
   // https://crbug.com/760341.
-  if (!render_frame_host->GetParent()) {
+  bool activate_pdf_extension =
+      base::FeatureList::IsEnabled(
+          features::kPdfExtensionInOutOfProcessFrame) &&
+      util::IsPdfExtensionUrl(
+          render_frame_host->GetSiteInstance()->GetSiteURL());
+  if (!render_frame_host->GetParent() || activate_pdf_extension) {
     RendererStartupHelperFactory::GetForBrowserContext(browser_context_)
         ->ActivateExtensionInProcess(*extension,
                                      render_frame_host->GetProcess());

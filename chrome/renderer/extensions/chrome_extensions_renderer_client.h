@@ -17,6 +17,7 @@ class ChromeExtensionsDispatcherDelegate;
 class GURL;
 
 namespace blink {
+class WebElement;
 class WebLocalFrame;
 struct WebPluginParams;
 class WebURL;
@@ -34,6 +35,13 @@ class ExtensionsGuestViewContainerDispatcher;
 class RendererPermissionsPolicyDelegate;
 class ResourceRequestPolicy;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 class ChromeExtensionsRendererClient
     : public extensions::ExtensionsRendererClient {
@@ -59,6 +67,16 @@ class ChromeExtensionsRendererClient
   void RenderViewCreated(content::RenderView* render_view);
   bool OverrideCreatePlugin(content::RenderFrame* render_frame,
                             const blink::WebPluginParams& params);
+  bool CreatePluginController(const blink::WebElement& plugin_element,
+                              const GURL& completed_url,
+                              const std::string& mime_type);
+  void DidReceiveDataInPluginDocument(const blink::WebElement& plugin_element,
+                                      const char* data,
+                                      size_t length);
+  v8::Local<v8::Object> V8ScriptableObject(
+      const blink::WebElement& plugin_element,
+      v8::Isolate* isolate);
+
   bool AllowPopup();
   bool WillSendRequest(blink::WebLocalFrame* frame,
                        ui::PageTransition transition_type,
