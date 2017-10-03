@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92b60bcc_e8b10a4b",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-03T16:15:51Z",
+      "side": 1,
+      "message": "Could you please move this file to src/net/http2/decoder/? It\u0027s better to keep fuzz targets closer to the code being tested.\n\ntesting/lubfuzzer/fuzzers is a place for \"random\" targets that don\u0027t have a good place anywhere else :)",
+      "range": {
+        "startLine": 487,
+        "startChar": 5,
+        "endLine": 487,
+        "endChar": 35
+      },
+      "revId": "1be9da22a990debf553b0f1fa58bb3642db911aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f563ed_b86ce16b",
+        "filename": "testing/libfuzzer/fuzzers/net_http2_frame_decoder_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-03T16:15:51Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "1be9da22a990debf553b0f1fa58bb3642db911aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b805757_c394e585",
+        "filename": "testing/libfuzzer/fuzzers/net_http2_frame_decoder_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-03T16:15:51Z",
+      "side": 1,
+      "message": "a little suggestion for an improvement (sorry if it\u0027s stupid): let\u0027s call decoder.DecodeFrame twice? Using the same data is fine. If I understand correctly, there is some \"state_\" inside the decoder, which might change over time, so it might be interesting to fuzz it with states different from default \"State::kStartDecodingHeader\".\n\nwhat do you think about it?",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "1be9da22a990debf553b0f1fa58bb3642db911aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
