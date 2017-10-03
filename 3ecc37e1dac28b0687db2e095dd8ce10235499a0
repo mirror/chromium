@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62521fb7_0ce1733c",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-03T16:00:31Z",
+      "side": 1,
+      "message": "Ah yes, this would be the case with nested OOPIFs. By the time we get the PhaseEnded wheel event we\u0027ll have already set bubbling_gesture_scroll_target_.target to null.",
+      "parentUuid": "b36af71d_37d3fa52",
+      "revId": "3ecc37e1dac28b0687db2e095dd8ce10235499a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99fc7a75_182543eb",
         "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
         "patchSetId": 3
