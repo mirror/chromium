@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0003c941_79ed863a",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-03T02:53:55Z",
+      "side": 1,
+      "message": "\u003d -1;",
+      "range": {
+        "startLine": 96,
+        "startChar": 4,
+        "endLine": 96,
+        "endChar": 13
+      },
+      "revId": "c640d5726800a606b133cee3f2eb17889ce45d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b66532_7eb43d6d",
+        "filename": "chromeos/tpm/tpm_token_info_getter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-03T02:53:55Z",
+      "side": 1,
+      "message": "std::string() instead of \"\" to avoid unnecessary conversion.",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "c640d5726800a606b133cee3f2eb17889ce45d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5965a8f_f09c9eda",
+        "filename": "chromeos/tpm/tpm_token_info_getter_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-03T02:53:55Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 190,
+        "startChar": 43,
+        "endLine": 190,
+        "endChar": 45
+      },
+      "revId": "c640d5726800a606b133cee3f2eb17889ce45d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
