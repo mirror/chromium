@@ -316,7 +316,42 @@ typedef NS_ENUM(NSInteger, ItemType) {
 #pragma mark - PaymentRequestEditConsumer
 
 - (void)setEditorFields:(NSArray<EditorField*>*)fields {
-  self.fields = fields;
+  // Set the editor fields and return if they have not been previously set.
+  if (!self.fields.count) {
+    self.fields = fields;
+    return;
+  }
+
+  // Otherweise, iterate over the fields and only update the respective items'
+  // values. This way the existing fields and any state on them are preserved.
+  [fields enumerateObjectsUsingBlock:^(EditorField* newField, NSUInteger index,
+                                       BOOL* stop) {
+    NSInteger sectionIdentifier = SectionIdentifierFirstField + index;
+    NSNumber* key = [NSNumber numberWithInt:sectionIdentifier];
+    EditorField* oldField = [self.fieldsMap objectForKey:key];
+    switch (oldField.fieldType) {
+      case EditorFieldTypeTextField: {
+        AutofillEditItem* item =
+            base::mac::ObjCCastStrict<AutofillEditItem>(oldField.item);
+        item.textFieldValue = oldField.value;
+        break;
+      }
+      case EditorFieldTypeSelector: {
+        PaymentsSelectorEditItem* item =
+            base::mac::ObjCCastStrict<PaymentsSelectorEditItem>(oldField.item);
+        item.value = oldField.displayValue;
+        break;
+      }
+      case EditorFieldTypeSwitch: {
+        CollectionViewSwitchItem* item =
+            base::mac::ObjCCastStrict<CollectionViewSwitchItem>(oldField.item);
+        item.on = [oldField.value boolValue];
+        break;
+      }
+      default:
+        NOTREACHED();
+    }
+  }];
 }
 
 - (void)setOptions:(NSArray<NSArray<NSString*>*>*)options
