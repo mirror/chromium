@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3f6b7138_e99b4ca4",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-03T19:14:03Z",
+      "side": 1,
+      "message": "it means x and y are in pixel units.",
+      "parentUuid": "2c1aa3f9_097a6dc8",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94275e9b_6785e757",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10281922_dd6d3ffd",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-03T19:14:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94275e9b_6785e757",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6b5887d8_406c73e6",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-03T19:14:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8b8445e_7869abd7",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5392dd74_264fe907",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-03T05:17:33Z",
       "side": 1,
       "message": "What does \u0027pixel\u0027 mean here?",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a8fbd6_6053f9dc",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-03T19:14:03Z",
+      "side": 1,
+      "message": "it means x and y are in pixel units.",
+      "parentUuid": "5392dd74_264fe907",
       "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
