@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e47a16_28b95cf3",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "nit: maybe\n} else {  // Extension is enabled.\n\nfor clarity",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a28cd08_fc198eb4",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "/sigh... another existing bug for a TODO:\nConsider:\n- Reload is triggered\n- Extension is disabled for reason reload\n- Some other disable reason comes in (say, sync)\n- Disable reasons are added\n- Reload is finished\n- We re-enable it here and get rid of all those disable reasons\n\nInstead, we should only remove the reload disable reason here, and re-enable the extension iff there are no other reasons.",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6136728_cbe4ce89",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Is it worth making this a StrictMock so that we can verify these calls?",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

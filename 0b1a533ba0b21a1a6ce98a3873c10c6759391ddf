@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1a2d95f7_10da0f95",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Hmm... I personally would find it more helpful if PostActivateExtension() was given a bool is_new_extension  or similar.  Would that work?\n\nThe more things like EnableExtension() can purely forward to ExtensionRegistrar, the better.  The hooks like PostActivateExtension() are where the embedder-specific logic should go.  That way, we can (hopefully!) eventually get rid of ExtensionService::EnableExtension() entirely, rather than needing to always go through it.",
+      "parentUuid": "3cd4acfd_79e3aca5",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75ca1353_f51014b6",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 17
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Ditto. ExtensionService knows that an existing extension being replaced by a reloaded version might need its background page started/dev tools reattached.",
       "parentUuid": "75ca1353_f51014b6",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a65edc44_e9b130e6",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Ditto. :)",
+      "parentUuid": "d27f6aa1_0fffaeaf",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "44160ea0_4d609569",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Yuck.  Maybe add a TODO to explain that this isn\u0027t desirable?",
+      "parentUuid": "babda3e8_03ad12aa",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8cc6ff4_b6d9ff86",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "IsExtensionEnabled() returns true for extensions that haven\u0027t been loaded but aren\u0027t disabled/blacklisted in prefs.",
       "parentUuid": "f8cc6ff4_b6d9ff86",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fac3eaec_070055b6",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Why is that bad?",
+      "parentUuid": "7fe52eb7_3e619f8d",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -265,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "c5477eb0_df88f3fa",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "(moot if it\u0027s gone, but) I agree that UnregisterExtensionWithRequestContexts is poorly named, but that doesn\u0027t make NotifyExtensionDisabledOrRemoved any more accurate. :)",
+      "parentUuid": "650c00ff_d1f75110",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d546013_43d6cc10",
         "filename": "extensions/browser/extension_registrar.h",
         "patchSetId": 17
@@ -294,6 +384,24 @@
       "side": 1,
       "message": "Does the comment above need to be more specific about who should own what?",
       "parentUuid": "3d546013_43d6cc10",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4c8e5a_4c124f26",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-03T13:20:15Z",
+      "side": 1,
+      "message": "Well, the comment doesn\u0027t really apply to all of these.  For instance, ExtensionService *is* the object that owns this, so it won\u0027t outlive the service that owns this.",
+      "parentUuid": "da378520_5b43de2e",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
