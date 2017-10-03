@@ -4,7 +4,7 @@
 
 #include "net/cert/test_keychain_search_list_mac.h"
 
-#include "base/memory/ptr_util.h"
+#include <memory>
 
 namespace net {
 
@@ -28,7 +28,7 @@ TestKeychainSearchList::~TestKeychainSearchList() {
 std::unique_ptr<TestKeychainSearchList> TestKeychainSearchList::Create() {
   if (g_test_keychain_search_list)
     return nullptr;
-  return base::WrapUnique(new TestKeychainSearchList);
+  return std::make_unique<TestKeychainSearchList>();
 }
 
 // static
