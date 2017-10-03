@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a55292e8_14d4846a",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T16:53:16Z",
+      "side": 1,
+      "message": "This is easy to get out of sync with the code. Can the test call into the production code to determine how many tabs are going to be created? Would it be better to have this code directly call GetOnboardingTabs?",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 6
+      },
+      "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
