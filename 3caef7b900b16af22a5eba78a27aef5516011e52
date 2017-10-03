@@ -22,6 +22,23 @@
       "revId": "3caef7b900b16af22a5eba78a27aef5516011e52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185e4b81_85475a52",
+        "filename": "chrome/browser/policy/cloud/component_cloud_policy_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-03T20:47:20Z",
+      "side": 0,
+      "message": "good catch, thanks.",
+      "revId": "3caef7b900b16af22a5eba78a27aef5516011e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
