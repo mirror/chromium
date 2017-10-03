@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "aed2a6bc_7bb63077",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-03T23:42:39Z",
+      "side": 1,
+      "message": "Good point.  You actually just want base::ContainsValue from stl_util.h",
+      "parentUuid": "40ab191a_8619d4b8",
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e96a7986_e89f09c9",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
