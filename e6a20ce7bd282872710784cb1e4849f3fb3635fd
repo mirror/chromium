@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dd17693_95801a53",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_media_webview_content.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-03T08:37:44Z",
+      "side": 1,
+      "message": "|content| is \u003cwebview\u003e element. So, here we are making\n\u003cwebview\u003e\nfasdfasdfasdfasdfasdfasdfasdfasdf... (snip the text content)\n\u003c/webview\u003e\n\nI guess \u003cwebview\u003e is not supposed to have innter text content in it.\nThat\u0027s why the size of webview is weird...?",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 51
+      },
+      "revId": "e6a20ce7bd282872710784cb1e4849f3fb3635fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
