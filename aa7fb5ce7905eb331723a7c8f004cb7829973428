@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "375602af_8de361a5",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLMediaElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-03T22:42:25Z",
+      "side": 1,
+      "message": "This is a minor drive-by change for consistency with the rest.\nIf currentSrc is empty, but non-null it will still not be found in the registry, so the only chance is srcObject.",
+      "range": {
+        "startLine": 161,
+        "startChar": 29,
+        "endLine": 161,
+        "endChar": 36
+      },
+      "revId": "aa7fb5ce7905eb331723a7c8f004cb7829973428",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
