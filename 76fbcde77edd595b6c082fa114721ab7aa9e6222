@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5be7bb10_33010978",
+        "filename": "cc/animation/element_animations_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T20:02:48Z",
+      "side": 1,
+      "message": "Ah good catch! There is no real fix here, so I have just removed the EXPECT_TRUE code. The test appeared to be trying to validate that all the ticking players were registered with the timeline (unclear why they thought it was important - no comments!). In the new world there is no (direct) link from AnimationTicker to timeline registration, so it does not make sense to check for that.\n\nI kept the list size check because that is actually useful.",
+      "parentUuid": "0d546a2f_334d3554",
+      "revId": "76fbcde77edd595b6c082fa114721ab7aa9e6222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b197858_1aa681d6",
         "filename": "cc/trees/layer_tree_host_common_unittest.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T18:50:23Z",
       "side": 1,
       "message": "OOC, why were these changes necessary in this patch?",
+      "revId": "76fbcde77edd595b6c082fa114721ab7aa9e6222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1a38bc_0fd784bb",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8822,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T20:02:48Z",
+      "side": 1,
+      "message": "It stems from the fact that this test calls AnimationHost::RegisterPlayerForElement directly, rather than letting it be called via AnimationPlayer::RegisterPlayer (via attaching a timeline and element).\n\nAnimationHost::RegisterPlayerForElement is now responsible for binding the element animations as well, which requires that a timeline is attached. Therefore calling it without attaching a timeline is a bad idea.\n\nI think perhaps this test should probably not be calling cc::AnimationHost::RegisterPlayerForElement directly, and should attach a timeline and element instead, but I was wary of changing too much about the unittests. Lmk if you\u0027d rather I try to fix that.",
+      "parentUuid": "2b197858_1aa681d6",
       "revId": "76fbcde77edd595b6c082fa114721ab7aa9e6222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
