@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f332d01_a8d52bbb",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-03T04:19:57Z",
+      "side": 1,
+      "message": "Comment? Something like,\n\n // The extension icon may be loading still. Return a transparent icon rather than\n // a placeholder to avoid flickering.",
+      "revId": "84cc02cd1a2b143d8a070550926ad9a47813efa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "577b8c7f_c3518dfa",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-03T04:19:57Z",
+      "side": 1,
+      "message": "is this unnecessary now?",
+      "revId": "84cc02cd1a2b143d8a070550926ad9a47813efa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
