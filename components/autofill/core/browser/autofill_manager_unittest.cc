@@ -1101,6 +1101,10 @@ class AutofillManagerTest : public testing::Test {
         kAutofillUpstreamUseAutofillProfileComparator);
   }
 
+  void DisableCreditCardAutofill() {
+    scoped_feature_list_.InitAndEnableFeature(kAutofillCreditCardDisabled);
+  }
+
   void ExpectUniqueFillableFormParsedUkm() {
     // Check that one source is logged.
     ASSERT_EQ(1U, test_ukm_recorder_.sources_count());
@@ -2086,6 +2090,38 @@ TEST_F(AutofillManagerTest, GetAddressAndCreditCardSuggestionsNonHttps) {
   personal_data_.ClearCreditCards();
   GetAutofillSuggestions(form, field);
   external_delegate_->CheckNoSuggestions(kDefaultPageID);
+}
+
+TEST_F(AutofillManagerTest, DisableCreditCardAutofill) {
+  DisableCreditCardAutofill();
+
+  // Set up our form data.
+  FormData form;
+  test::CreateTestAddressFormData(&form);
+  CreateTestCreditCardFormData(&form, true, false);
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  FormFieldData field = form.fields[0];
+  GetAutofillSuggestions(form, field);
+
+  // Test that we sent the right address suggestions to the external delegate.
+  external_delegate_->CheckSuggestions(
+      kDefaultPageID, Suggestion("Charles", "123 Apple St.", "", 1),
+      Suggestion("Elvis", "3734 Elvis Presley Blvd.", "", 2));
+
+  base::HistogramTester histogram_tester;
+  const int kPageID2 = 2;
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  GetAutofillSuggestions(kPageID2, form, field);
+  // Test that there were no credit card suggestions, despite having local
+  // credit card profiles.
+  external_delegate_->CheckNoSuggestions(kPageID2);
+
+  // Verify that logging is still works.
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FormEvents.CreditCard.WithOnlyLocalData",
+      AutofillMetrics::FORM_EVENT_INTERACTED_ONCE, 1);
 }
 
 // Test that we return autocomplete-like suggestions when trying to autofill

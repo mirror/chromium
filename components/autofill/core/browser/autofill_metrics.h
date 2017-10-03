@@ -918,7 +918,7 @@ class AutofillMetrics {
 
     void OnWillSubmitForm();
 
-    void OnFormSubmitted();
+    void OnFormSubmitted(bool enable_ablation_logging);
 
     void SetBankNameAvailable();
 
