@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032d73ef_6e88fe32",
+        "filename": "base/i18n/bidi_line_iterator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "I\u0027d suggest collapsing GetCustomCharBiDiClass and GetCustomCharBiDiClassCallback into a single file-local helper function with URL in the name, maybe GetURLCharBiDiClass. There\u0027s no strong reason to employ the static cast to dereference a non-static member function just to DCHECK before switching on a char value.",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbd7579_c0593cc6",
+        "filename": "base/i18n/bidi_line_iterator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "optional nit: use std::find or strchr() instead",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6be4755_b53273c7",
+        "filename": "base/i18n/bidi_line_iterator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: comment",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e288582c_db0146c4",
+        "filename": "base/i18n/bidi_line_iterator_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "Please add a url custom behavior test",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2254f40_0482328e",
+        "filename": "base/i18n/bidi_line_iterator_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a2163a_e5ac7295",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: abc order here and in cc",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf7310c_8a2eb4e4",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "Please update these to \\u notation, see my cleanup: crrev.com/c/648353, ditto below.\nYou can probably inline the actual characters if you prefer that.",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd99f5a8_a741b369",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3764,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: 10-14?",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace37ca0_6ff0a84b",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "q: is the whitespace before abc intentional? (ditto on line 3806)",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185f1903_47d89533",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: revert spacing?",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca068fd3_9d1669ce",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T15:33:33Z",
+      "side": 1,
+      "message": "nit: match spacing above?",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
