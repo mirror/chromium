@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "82d95531_c731db78",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T22:59:08Z",
+      "side": 1,
+      "message": "Maybe something like that. I wonder if we could be more explicit at the RenderThreadImpl level - \"valid GpuChannelHost\" vs \"lost GpuChannelHost but will try again\" vs \"lost GpuChannelHost and won\u0027t try any more\".",
+      "parentUuid": "cac5c9a9_4fc1b928",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I thot we moved that to the browser so everything in the renderer just stops getting a context if we decide to stop using gpu compositing. I don\u0027t see the fallback looking at the use of |use_software|, am I overlooking it?",
       "parentUuid": "ad6368ab_cad80f9d",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3799364_301842bf",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T22:59:08Z",
+      "side": 1,
+      "message": "Fair enough. I got it wrong, the fallback is if we got a ContextProvider, but it failed to create the command buffer context (BindToCurrentThread failed). It could be because the channel is dead, but it could also be because of some other things (e.g. failure to create a context on the service side).\n\nI don\u0027t have a good theory of why one would succeed and the other one wouldn\u0027t (maybe lack of resources?), but at the same time I don\u0027t think we have strong guarantees. Those would be edge cases. We may have those wrong in other places. I wonder if there is a way to measure that.",
+      "parentUuid": "32119bad_5bf311fd",
       "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
