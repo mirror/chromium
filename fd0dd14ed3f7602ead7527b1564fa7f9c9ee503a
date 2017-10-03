@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "add818cc_d33c020a",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T21:11:55Z",
+      "side": 1,
+      "message": "Should we send the current state to client (Maybe just if it\u0027s not unknown?)",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 41
+      },
+      "revId": "fd0dd14ed3f7602ead7527b1564fa7f9c9ee503a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "048396da_bad0def0",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 14
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-03T20:52:43Z",
       "side": 1,
       "message": "So we never hand this interface to a renderer?  If so, LGTM then.",
+      "range": {
+        "startLine": 87,
+        "startChar": 3,
+        "endLine": 87,
+        "endChar": 44
+      },
+      "revId": "fd0dd14ed3f7602ead7527b1564fa7f9c9ee503a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270a7b81_7a0a83df",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T21:11:55Z",
+      "side": 1,
+      "message": "I\u0027m thinking we may want to do this in the future.  We already send offline/online state to the renderer, and it might be nice to hook up this API, just to reuse the interface.  REgardless, that\u0027s an issue for another day.",
+      "parentUuid": "048396da_bad0def0",
       "range": {
         "startLine": 87,
         "startChar": 3,
