@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad0d5752_703d0400",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Could you add a brief comment on what is this class for?",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1dfb06_cee8c20b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Is this class STACK_ALLOCATED()?\n\nIf that is the case, you don\u0027t need to inherit GarbageCollected\u003c\u003e and\nyou don\u0027t need Member\u003c\u003e in ScopedFocusNavigation::navigation_.",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a6fca2_0c6f87f1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "If an argument has some role, the role name is more readable than its type-like name.\nHow about s/node/root/?",
+      "range": {
+        "startLine": 80,
+        "startChar": 33,
+        "endLine": 80,
+        "endChar": 37
+      },
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ceca6e_0d34f7e3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "I thought originally you\u0027d like to pass around the map for several FocusNavigations -\nin that case you have to pass reference or pointer to this constructor, otherwise\nyou get a copy of the caller\u0027s map every time this object is created, and the caller\ncannot know any modification to the map.\nIf this is intentional, let me know the intention.\n\nAnd in general in C++, you should avoid passing a complex object by value.",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4cc1d0a_6a8900e9",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "This function does not modify |current|, therefore this can be\nconst Element* Next(const Element\u0026 current) const {...}\n\nThe caller must guarantee current is never null, then you can omit the\nDCHECK on the next line.\n\nThe same applies to the following 3 functions (Previous, First, Last).",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cef5ff_482770a1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "As used elsewhere, |owner_map_| sounds better name for this.",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aef0bea_63f23a11",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Could you add a comment on definition for \"owner\"?",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469df829_a21713aa",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Even though this is using HashMap, find(node) would take time for computing hash for\n|node|.  I\u0027d write these as\n\nContainerNode* owner \u003d nullptr;\nif (node-\u003eAssignedSlot())\n  owner \u003d node-\u003eAssignedSlot();\n...\n\nowner_.insert(node, owner);\nreturn owner;",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b68c69c_7880c227",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "You can write these 4 lines as\n  return FindOwner(node) \u003d\u003d Owner();",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a83bd0_78d08a55",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Using |current_| is okay instead of |CurrentElement()|.",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31a6ab2_fc580f6f",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "Please be careful when you use \"Node\" - the FocusController is carefully written to\nuse as most restrictive type as possible, so in most places we use \"Element\" instead\nof \"Node\" or \"ContainerNode\".  Node can be accidentally a comment node or a text node.\nIf your intention is to include Document and ShadowRoot, ContainerNode is better here.",
+      "range": {
+        "startLine": 134,
+        "startChar": 21,
+        "endLine": 134,
+        "endChar": 25
+      },
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290b0edf_e0b9e121",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-03T06:29:53Z",
+      "side": 1,
+      "message": "If you include this in FocusController, this map\u0027s lifetime is same as FocusController.\n\nIn that case, you should clear the map every time AdvanceFocus() is called.\nI\u0027d recommend move this in AdvanceFocus()\u0027s local variable.\n\nAlso, you can give this map a name - e.g.\nusing OwnerMap \u003d HeapHashMap\u003cMember\u003cNode\u003e, Member\u003cElement\u003e\u003e;\nThen the rest of the code becomes lot easier to read.",
+      "revId": "ec66dbeecc64311f94b9c93973b2976d69205aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
