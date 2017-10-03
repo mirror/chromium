@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "98710234_e12905ba",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T00:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d419f5_11251764",
+      "revId": "e75af2ba4d2089c5d0ebf3531349bbd02ae10787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19baab23_09a41402",
         "filename": "ash/system/night_light/night_light_controller.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "e75af2ba4d2089c5d0ebf3531349bbd02ae10787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4282a5e9_06dcd444",
+        "filename": "ash/system/night_light/night_light_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T00:28:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19baab23_09a41402",
+      "revId": "e75af2ba4d2089c5d0ebf3531349bbd02ae10787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
