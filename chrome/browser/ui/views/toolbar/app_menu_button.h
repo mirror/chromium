@@ -12,6 +12,7 @@
 #include "base/scoped_observer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
 #include "chrome/browser/ui/toolbar/app_menu_icon_controller.h"
+#include "ui/views/animation/ink_drop.h"
 #include "ui/views/controls/animated_icon_view.h"
 #include "ui/views/controls/button/menu_button.h"
 #include "ui/views/controls/button/menu_button_listener.h"
@@ -47,6 +48,9 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
   void CloseMenu();
 
   AppMenu* app_menu_for_testing() { return menu_.get(); }
+
+  // Whether a shadow is needed when painting the app menu button.
+  void set_shadow_needed(bool shadow_needed) { shadow_needed_ = shadow_needed; }
 
   // Whether the app/hotdogs menu is currently showing.
   bool IsMenuShowing() const;
@@ -90,6 +94,7 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
   std::unique_ptr<views::LabelButtonBorder> CreateDefaultBorder()
       const override;
   gfx::Rect GetThemePaintRect() const override;
+  void PaintButtonContents(gfx::Canvas* canvas) override;
   bool GetDropFormats(
       int* formats,
       std::set<ui::Clipboard::FormatType>* format_types) override;
@@ -123,6 +128,9 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
 
   // True if the app menu should use the new animated icon.
   bool should_use_new_icon_ = false;
+
+  // True if the app menu button should have a shadow.
+  bool shadow_needed_ = false;
 
   // Any trailing margin to be applied. Used when the browser is in
   // a maximized state to extend to the full window width.
