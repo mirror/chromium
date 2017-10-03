@@ -16,6 +16,98 @@
       "revId": "a88f04142d8deb2299ce16f8fa6cb066c70560e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f236ae8f_9a50e357",
+        "filename": "content/browser/devtools/protocol/target_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:07:52Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 295,
+        "startChar": 49,
+        "endLine": 295,
+        "endChar": 72
+      },
+      "revId": "a88f04142d8deb2299ce16f8fa6cb066c70560e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df50f2ac_a43695fc",
+        "filename": "content/browser/devtools/protocol/target_handler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:07:52Z",
+      "side": 1,
+      "message": "nit: enable_begin_frame_control",
+      "range": {
+        "startLine": 66,
+        "startChar": 36,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "a88f04142d8deb2299ce16f8fa6cb066c70560e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da1fd900_5103ddbb",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:07:52Z",
+      "side": 1,
+      "message": "Don\u0027t want to turn this into a bikeshed but baking in the name \"experimental\" here seems unfortunate. Only alternative that comes to mind is \"headless_browser\". I\u0027ll leave this up to Pavel.",
+      "range": {
+        "startLine": 164,
+        "startChar": 3,
+        "endLine": 164,
+        "endChar": 24
+      },
+      "revId": "a88f04142d8deb2299ce16f8fa6cb066c70560e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "751bcda4_e9f7de0c",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:07:52Z",
+      "side": 1,
+      "message": "Please sample Now() just once in this function and store it in local to avoid issues with drift.",
+      "range": {
+        "startLine": 720,
+        "startChar": 53,
+        "endLine": 720,
+        "endChar": 56
+      },
+      "revId": "a88f04142d8deb2299ce16f8fa6cb066c70560e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
