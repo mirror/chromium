@@ -4441,8 +4441,8 @@ TEST_F(DiskCacheEntryTest, SimpleCacheCreateCollision) {
 class DiskCacheSimplePrefetchTest : public DiskCacheEntryTest {
  public:
   DiskCacheSimplePrefetchTest()
-      : field_trial_list_(base::MakeUnique<base::FieldTrialList>(
-            base::MakeUnique<base::MockEntropyProvider>())) {}
+      : field_trial_list_(std::make_unique<base::FieldTrialList>(
+            std::make_unique<base::MockEntropyProvider>())) {}
 
   enum { kEntrySize = 1024 };
 

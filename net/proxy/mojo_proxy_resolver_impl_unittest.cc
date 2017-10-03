@@ -8,7 +8,6 @@
 #include <utility>
 #include <vector>
 
-#include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "net/base/net_errors.h"
@@ -169,7 +168,7 @@ void MockProxyResolverV8Tracing::GetProxyForURL(
     const CompletionCallback& callback,
     std::unique_ptr<ProxyResolver::Request>* request,
     std::unique_ptr<Bindings> bindings) {
-  pending_jobs_.push_back(base::WrapUnique(new Job()));
+  pending_jobs_.push_back(std::make_unique<Job>());
   auto* pending_job = pending_jobs_.back().get();
   pending_job->url = url;
   pending_job->results = results;

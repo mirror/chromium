@@ -4,7 +4,6 @@
 
 #include "net/proxy/test_mojo_proxy_resolver_factory.h"
 
-#include "base/memory/ptr_util.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/proxy/mojo_proxy_resolver_factory_impl.h"
 
