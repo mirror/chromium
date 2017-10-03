@@ -94,7 +94,9 @@ class FakePaymentRequestDelegate
         personal_data_("en-US"),
         request_context_(new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get())),
-        payments_client_(request_context_.get(), this),
+        payments_client_(request_context_.get(),
+                         autofill_client_.GetPrefs(),
+                         this),
         full_card_request_(&autofill_client_,
                            &payments_client_,
                            &personal_data_) {}

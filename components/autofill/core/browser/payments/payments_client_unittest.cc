@@ -8,9 +8,11 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/browser/payments/payments_client.h"
 #include "components/autofill/core/common/autofill_switches.h"
@@ -53,6 +55,11 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
     return identity_provider_.get();
   }
 
+  void EnableAutofillSendBillingCustomerNumberExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillSendBillingCustomerNumber);
+  }
+
   void OnDidGetRealPan(AutofillClient::PaymentsRpcResult result,
                        const std::string& real_pan) override {
     result_ = result;
@@ -74,10 +81,13 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
   }
 
  protected:
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   void StartUnmasking() {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
     PaymentsClient::UnmaskRequestDetails request_details;
+    request_details.billing_customer_number = 1111222233334444;
     request_details.card = test::GetMaskedServerCard();
     request_details.user_response.cvc = base::ASCIIToUTF16("123");
     request_details.risk_data = "some risk data";
@@ -95,6 +105,7 @@ class PaymentsClientTest : public testing::Test, public PaymentsClientDelegate {
     token_service_->AddAccount("example@gmail.com");
     identity_provider_->LogIn("example@gmail.com");
     PaymentsClient::UploadRequestDetails request_details;
+    request_details.billing_customer_number = 1111222233334444;
     request_details.card = test::GetCreditCard();
     request_details.cvc = base::ASCIIToUTF16("123");
     request_details.context_token = base::ASCIIToUTF16("context token");
@@ -188,6 +199,28 @@ TEST_F(PaymentsClientTest, OAuthError) {
   EXPECT_TRUE(real_pan_.empty());
 }
 
+TEST_F(PaymentsClientTest,
+       UnmaskIncludeBillingCustomerNumberInRequestIfExperimentOn) {
+  EnableAutofillSendBillingCustomerNumberExperiment();
+
+  StartUnmasking();
+
+  // Verify that the billing customer number is included in the request.
+  EXPECT_TRUE(
+      GetUploadData().find("\"external_customer_id\":1111222233334444") !=
+      std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       UnmaskIncludeBillingCustomerNumberInRequestIfExperimentOff) {
+  StartUnmasking();
+
+  // Verify that the billing customer number is included in the request.
+  EXPECT_TRUE(
+      GetUploadData().find("\"external_customer_id\":1111222233334444") ==
+      std::string::npos);
+}
+
 TEST_F(PaymentsClientTest, UnmaskSuccess) {
   StartUnmasking();
   IssueOAuthToken();
@@ -265,6 +298,28 @@ TEST_F(PaymentsClientTest, UploadIncludesNonLocationData) {
   EXPECT_TRUE(GetUploadData().find("0162") != std::string::npos);
   EXPECT_TRUE(GetUploadData().find("834") != std::string::npos);
   EXPECT_TRUE(GetUploadData().find("0090") != std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       UploadIncludeBillingCustomerNumberInRequestIfExperimentOn) {
+  EnableAutofillSendBillingCustomerNumberExperiment();
+
+  StartUploading();
+
+  // Verify that the billing customer number is included in the request.
+  EXPECT_TRUE(
+      GetUploadData().find("\"external_customer_id\":1111222233334444") !=
+      std::string::npos);
+}
+
+TEST_F(PaymentsClientTest,
+       UploadIncludeBillingCustomerNumberInRequestIfExperimentOff) {
+  StartUploading();
+
+  // Verify that the billing customer number is included in the request.
+  EXPECT_TRUE(
+      GetUploadData().find("\"external_customer_id\":1111222233334444") ==
+      std::string::npos);
 }
 
 TEST_F(PaymentsClientTest, GetDetailsFollowedByUploadSuccess) {
