@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "057346c6_f12110af",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T00:07:52Z",
+      "side": 1,
+      "message": "nit: actually I meant\nif (current_divider_position \u003c mid_position \u003d\u003d\n    IsLeftWindowOnTopOrLeftOfScreen(screen_orientation_)) }\n}\n\nThis should work right?",
+      "range": {
+        "startLine": 553,
+        "startChar": 8,
+        "endLine": 553,
+        "endChar": 39
+      },
+      "revId": "bfa5e7177372c37661a608212d8bd33f4ac5296a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
