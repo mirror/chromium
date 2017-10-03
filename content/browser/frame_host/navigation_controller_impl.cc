@@ -42,6 +42,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"  // Temporary
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -62,6 +63,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"  // Temporary
 #include "content/browser/site_instance_impl.h"
 #include "content/common/frame_messages.h"
+#include "content/common/page_state_serialization.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
 #include "content/public/browser/browser_context.h"
@@ -948,7 +950,25 @@ bool NavigationControllerImpl::RendererDidNavigate(
   // We may not find a frame_entry in some cases; ignore the PageState if so.
   // TODO(creis): Remove the "if" once https://crbug.com/522193 is fixed.
   if (frame_entry) {
-    frame_entry->SetPageState(params.page_state);
+    // Subframes need to have the unique name stamped into the PageState.
+    if (rfh->GetParent()) {
+      // TODO(dcheng): In theory, this should just be a FrameState and this code
+      // shouldn't have to crack the encoded data open just to stamp on a unique
+      // name. Meh.
+      ExplodedPageState exploded_page_state;
+      bool result = DecodePageState(params.page_state.ToEncodedData(),
+                                    &exploded_page_state);
+      DCHECK(result);
+      DCHECK(exploded_page_state.top.children.empty());
+      exploded_page_state.top.target = base::NullableString16(
+          base::UTF8ToUTF16(rfh->frame_tree_node()->unique_name()), false);
+      std::string encoded_data_with_target;
+      EncodePageState(exploded_page_state, &encoded_data_with_target);
+      frame_entry->SetPageState(
+          PageState::CreateFromEncodedData(encoded_data_with_target));
+    } else {
+      frame_entry->SetPageState(params.page_state);
+    }
     frame_entry->set_redirect_chain(params.redirects);
   }
 

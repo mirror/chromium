@@ -3749,10 +3749,6 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
 
   // Update the current history item for this frame.
   current_history_item_ = item;
-  // Note: don't reference |item| after this point, as its value may not match
-  // |current_history_item_|.
-  current_history_item_.SetTarget(
-      blink::WebString::FromUTF8(unique_name_helper_.value()));
 
   InternalDocumentStateData* internal_data =
       InternalDocumentStateData::FromDocumentState(document_state);

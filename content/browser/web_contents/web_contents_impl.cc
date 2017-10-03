@@ -24,6 +24,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/process/process.h"
 #include "base/single_thread_task_runner.h"
+#include "base/strings/nullable_string16.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -5118,19 +5119,16 @@ void WebContentsImpl::UpdateStateForFrame(RenderFrameHost* render_frame_host,
   if (frame_entry->site_instance() != rfhi->GetSiteInstance())
     return;
 
-  if (page_state == frame_entry->page_state())
-    return;  // Nothing to update.
-
   DCHECK(page_state.IsValid()) << "Shouldn't set an empty PageState.";
+
+  ExplodedPageState exploded_state;
+  if (!DecodePageState(page_state.ToEncodedData(), &exploded_state))
+    return;
 
   // The document_sequence_number and item_sequence_number recorded in the
   // FrameNavigationEntry should not differ from the one coming with the update,
   // since it must come from the same document. Do not update it if a difference
   // is detected, as this indicates that |frame_entry| is not the correct one.
-  ExplodedPageState exploded_state;
-  if (!DecodePageState(page_state.ToEncodedData(), &exploded_state))
-    return;
-
   if (exploded_state.top.document_sequence_number !=
           frame_entry->document_sequence_number() ||
       exploded_state.top.item_sequence_number !=
@@ -5138,7 +5136,20 @@ void WebContentsImpl::UpdateStateForFrame(RenderFrameHost* render_frame_host,
     return;
   }
 
-  frame_entry->SetPageState(page_state);
+  if (rfhi->GetParent()) {
+    exploded_state.top.target = base::NullableString16(
+        base::UTF8ToUTF16(rfhi->frame_tree_node()->unique_name()), false);
+  }
+
+  std::string encoded_data_with_target;
+  EncodePageState(exploded_state, &encoded_data_with_target);
+  PageState page_state_with_target =
+      PageState::CreateFromEncodedData(encoded_data_with_target);
+
+  if (page_state_with_target == frame_entry->page_state())
+    return;  // Nothing to update.
+
+  frame_entry->SetPageState(page_state_with_target);
   controller_.NotifyEntryChanged(entry);
 }
 
