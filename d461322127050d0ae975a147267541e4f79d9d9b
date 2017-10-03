@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67e924b_beff4b05",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-03T20:51:10Z",
+      "side": 1,
+      "message": "Remove \"Blink\" prefix. Then you can have the logic to return an empty offset in this method.",
+      "revId": "d461322127050d0ae975a147267541e4f79d9d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1e1be0_c2898122",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-03T20:51:10Z",
+      "side": 1,
+      "message": "Per above, you can push this conditional down into the helper method.",
+      "revId": "d461322127050d0ae975a147267541e4f79d9d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
