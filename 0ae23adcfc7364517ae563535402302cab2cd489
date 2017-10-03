@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "523c92b9_107e0ba7",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-03T16:07:39Z",
+      "side": 1,
+      "message": "Can we drop this ifdef also?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 41
+      },
+      "revId": "0ae23adcfc7364517ae563535402302cab2cd489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
