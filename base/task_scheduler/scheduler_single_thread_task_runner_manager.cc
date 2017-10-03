@@ -79,6 +79,11 @@ class SchedulerWorkerDelegate : public SchedulerWorker::Delegate {
   SchedulerWorkerDelegate(const std::string& thread_name)
       : thread_name_(thread_name) {}
 
+  void set_worker(SchedulerWorker* worker) {
+    DCHECK(!worker_);
+    worker_ = worker;
+  }
+
   // SchedulerWorker::Delegate:
   void OnMainEntry(SchedulerWorker* worker) override {
     thread_ref_checker_.Set();
@@ -102,6 +107,7 @@ class SchedulerWorkerDelegate : public SchedulerWorker::Delegate {
       return;
 
     DCHECK_EQ(sequence, sequence_);
+    DCHECK(!has_work_);
     has_work_ = true;
   }
 
@@ -126,6 +132,12 @@ class SchedulerWorkerDelegate : public SchedulerWorker::Delegate {
     }
   }
 
+  void OnCanDispatchSequence(scoped_refptr<Sequence> sequence) override {
+    DCHECK(worker_);
+    ReEnqueueSequence(std::move(sequence));
+    worker_->WakeUp();
+  }
+
   // SchedulerWorkerDelegate:
 
   // Consumers should release their sequence reference as soon as possible to
@@ -137,6 +149,12 @@ class SchedulerWorkerDelegate : public SchedulerWorker::Delegate {
 
  private:
   const std::string thread_name_;
+
+  // The SchedulerWorker that has |this| as a delegate. Must be set before
+  // starting or posting a task to the SchedulerWorker, because it's used in
+  // OnMainEntry() and OnCanDispatchSequence() (called when a sequence held up
+  // by WillDispatchSequence() in PostTaskNow() can be scheduled).
+  SchedulerWorker* worker_ = nullptr;
 
   // Synchronizes access to |sequence_| and |has_work_|.
   SchedulerLock sequence_lock_;
@@ -342,8 +360,12 @@ class SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunner
 
     const bool sequence_was_empty = sequence->PushTask(std::move(task));
     if (sequence_was_empty) {
-      GetDelegate()->ReEnqueueSequence(std::move(sequence));
-      worker_->WakeUp();
+      sequence = outer_->task_tracker_->WillDispatchSequence(
+          std::move(sequence), GetDelegate());
+      if (sequence) {
+        GetDelegate()->ReEnqueueSequence(std::move(sequence));
+        worker_->WakeUp();
+      }
     }
   }
 
@@ -514,9 +536,13 @@ SchedulerSingleThreadTaskRunnerManager::CreateAndRegisterSchedulerWorker(
     ThreadPriority priority_hint) {
   lock_.AssertAcquired();
   int id = next_worker_id_++;
-  workers_.emplace_back(MakeRefCounted<SchedulerWorker>(
-      priority_hint, CreateSchedulerWorkerDelegate<DelegateType>(name, id),
-      task_tracker_));
+  std::unique_ptr<SchedulerWorkerDelegate> delegate =
+      CreateSchedulerWorkerDelegate<DelegateType>(name, id);
+  SchedulerWorkerDelegate* delegate_raw = delegate.get();
+  scoped_refptr<SchedulerWorker> worker = MakeRefCounted<SchedulerWorker>(
+      priority_hint, std::move(delegate), task_tracker_);
+  delegate_raw->set_worker(worker.get());
+  workers_.emplace_back(std::move(worker));
   return workers_.back().get();
 }
 
