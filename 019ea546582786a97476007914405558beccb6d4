@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55882071_401ad1dc",
+        "filename": "chrome/browser/feature_engagement/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T16:21:35Z",
+      "side": 1,
+      "message": "You shouldn\u0027t be including platform specific implementation files from this directory. The general pattern used is you define platform independent file in the ui directory (or this directory) and then platform specific files in the appropriate platform directory. For example, c/b/ui/browser uses BrowserWindow, which is defined in c/b/ui/browser_window. The views implementation of BrowserWindow is in c/b/ui/views/frame/browser_view.h.",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 43
+      },
+      "revId": "019ea546582786a97476007914405558beccb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
