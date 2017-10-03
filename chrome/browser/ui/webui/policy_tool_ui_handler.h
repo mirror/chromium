@@ -30,9 +30,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void HandleInitializedAdmin(const base::ListValue* args);
   void HandleLoadSession(const base::ListValue* args);
   void HandleUpdateSession(const base::ListValue* args);
-
+  void HandleExportLinux(const base::ListValue* args);
   std::string ReadOrCreateFileCallback();
-  void OnFileRead(const std::string& contents);
+  void OnSessionContentsReceived(const std::string& contents);
 
   void DoUpdateSession(const std::string& contents);
 
@@ -47,6 +47,20 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   base::ListValue GetSessionsList();
 
   void SetDefaultSessionName();
+
+  // Checks the policy type. A value is considered valid in 3 cases:
+  // 1. Chrome doesn't have the information about the policy type (e.g. the
+  // policy is unknown);
+  // 2. The value matches the actual type specifications;
+  // 3. The value is stringified JSON of a valid value. In this case the value
+  // is also unstringified.
+  //
+  // For invalid values, an additional field "invalid" with a value |true| is
+  // added to the policy information (on the same level as "value" field).
+  void CheckSinglePolicyType(const policy::Schema& policy_schema,
+                             const std::string& policy_name,
+                             base::Value* policy_info);
+  void CheckPolicyTypes(base::DictionaryValue* values);
 
   base::FilePath sessions_dir_;
   base::FilePath::StringType session_name_;
