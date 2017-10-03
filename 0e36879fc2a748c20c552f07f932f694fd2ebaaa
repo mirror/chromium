@@ -204,6 +204,30 @@
     },
     {
       "key": {
+        "uuid": "1d540b48_859d6e3e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T18:56:10Z",
+      "side": 1,
+      "message": "Hmm...then is this class name correct?  If we\u0027re showing it for all users, then should we be calling it something more \"generic\", TabbedModeSurveyController, or something.\n\nI should really stop using so many \"quotes\".",
+      "parentUuid": "8b24cb49_ea463772",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fe86a47_f5262eb9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 23
@@ -266,6 +290,29 @@
         "startChar": 24,
         "endLine": 100,
         "endChar": 46
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c62ca20_5e2f2782",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T18:56:10Z",
+      "side": 1,
+      "message": "Should we only be logging this if the user has interacted with the infobar?  Maybe we should file another bug with a TODO here to refine this logic.  My off the cuff thoughts would be:\n\n1.) Don\u0027t show the infobar if the user ever clicked the action before\n2.) If the user ignored the infobar, defer for a week or something sane.\n   * After 3 ignores, back off for a month",
+      "range": {
+        "startLine": 111,
+        "startChar": 17,
+        "endLine": 111,
+        "endChar": 36
       },
       "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
