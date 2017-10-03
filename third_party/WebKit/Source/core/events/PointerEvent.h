@@ -39,6 +39,35 @@ class CORE_EXPORT PointerEvent final : public MouseEvent {
   bool IsMouseEvent() const override;
   bool IsPointerEvent() const override;
 
+  // TODO(eirage): Remove these override of coordinates getter when mouse event
+  // is fractional;
+  double screenX() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(screen_location_.X())
+                                      : screen_location_.X();
+  }
+  double screenY() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(screen_location_.Y())
+                                      : screen_location_.Y();
+  }
+
+  double clientX() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(client_location_.X())
+                                      : client_location_.X();
+  }
+  double clientY() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(client_location_.Y())
+                                      : client_location_.Y();
+  }
+
+  double pageX() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(page_location_.X())
+                                      : page_location_.X();
+  }
+  double pageY() const override {
+    return (pointer_type_ == "mouse") ? static_cast<int>(page_location_.Y())
+                                      : page_location_.Y();
+  }
+
   EventDispatchMediator* CreateMediator() override;
   void ReceivedTarget() override;
 

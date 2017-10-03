@@ -361,8 +361,8 @@ bool BeginSmoothScroll(v8::Isolate* isolate,
         blink::WebInputEvent::kMouseMove, blink::WebInputEvent::kNoModifiers,
         ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
     mouseMove.SetPositionInWidget(
-        (contentRect.x + contentRect.width / 2) * page_scale_factor,
-        (contentRect.y + contentRect.height / 2) * page_scale_factor);
+        (contentRect.x + contentRect.width / 2.0) * page_scale_factor,
+        (contentRect.y + contentRect.height / 2.0) * page_scale_factor);
     context.web_view()->HandleInputEvent(
         blink::WebCoalescedInputEvent(mouseMove));
     context.web_view()->SetCursorVisibilityState(true);
