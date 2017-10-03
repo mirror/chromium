@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e408154_50fd1b24",
+        "filename": "third_party/WebKit/LayoutTests/fast/writing-mode/orthogonal-inline-block.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-03T16:17:02Z",
+      "side": 1,
+      "message": "You might want to add a title tag or short paragraph describing what the test does.",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef067cc_b2236333",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-03T16:17:02Z",
+      "side": 1,
+      "message": "How about a SetMargin method that takes a NGPhysicalBoxStrut object?",
+      "range": {
+        "startLine": 120,
+        "startChar": 30,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f22af35_f5adeedf",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-03T16:17:02Z",
+      "side": 1,
+      "message": "...and here. Using LayoutUnits directly for the four values bypasses the compile-time checks we get from having dedicated types and is more code.",
+      "range": {
+        "startLine": 286,
+        "startChar": 36,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "736abd4692d745ad4ae47d96eb8ec8830934c1b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
