@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d2e3471c_22c5ed7a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-03T15:31:09Z",
+      "side": 1,
+      "message": "OK, thank you.",
+      "parentUuid": "f40da4f0_5d414535",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "288635e3_da852aad",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
         "patchSetId": 1
@@ -66,6 +84,30 @@
       "writtenOn": "2017-10-03T14:51:49Z",
       "side": 1,
       "message": "Why change this to 0? `nullptr` or `NULL` instead ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d965bb53_87b77676",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-03T15:31:09Z",
+      "side": 1,
+      "message": "Using NULL or nullptr seems incorrect because selectors are not pointers?",
+      "parentUuid": "288635e3_da852aad",
       "range": {
         "startLine": 132,
         "startChar": 21,
