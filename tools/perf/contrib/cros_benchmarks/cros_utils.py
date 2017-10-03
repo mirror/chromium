@@ -10,11 +10,17 @@ import subprocess
 import py_utils
 
 from telemetry.core import exceptions
+from telemetry.core import cros_interface
 from telemetry.value import histogram_util
 
 
 def _RunRemoteCommand(dut_ip, cmd):
   return os.system('ssh root@%s %s' % (dut_ip, cmd))
+
+
+def _GetCommandOutput(dut_ip, cmd):
+  args = ['ssh', 'root@'+dut_ip] + cmd.split()
+  return cros_interface.GetAllCmdOutput(args)[0]
 
 
 def _GetTabSwitchHistogram(browser):
@@ -172,3 +178,42 @@ def NoScreenOff(dut_ip):
   """
   _RunRemoteCommand(dut_ip, 'set_power_policy --ac_screen_off_delay=3600')
   _RunRemoteCommand(dut_ip, 'set_power_policy --ac_screen_dim_delay=3600')
+
+
+def CrosMeminfo(dut_ip):
+  """Gets /proc/meminfo
+
+  Args:
+    dut_ip: DUT IP or hostname.
+  Returns:
+    A dictionary from item name to value
+  """
+  result = {}
+  output = _GetCommandOutput(dut_ip, 'cat /proc/meminfo')
+  for line in output.split('\n'):
+    if len(line) == 0:
+      continue
+    name, value, unit = line.split() # pylint: disable=unused-variable
+    name = name[:-1]
+    value = int(value)
+    result[name] = value
+  return result
+
+
+def CrosVmstat(dut_ip):
+  """Gets /proc/vmstat
+
+  Args:
+    dut_ip: DUT IP or hostname.
+  Returns:
+    A dictionary from item name to value
+  """
+  result = {}
+  output = _GetCommandOutput(dut_ip, 'cat /proc/vmstat')
+  for line in output.split('\n'):
+    if len(line) == 0:
+      continue
+    name, value = line.split()
+    value = int(value)
+    result[name] = value
+  return result
