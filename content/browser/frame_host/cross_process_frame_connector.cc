@@ -343,6 +343,11 @@ void CrossProcessFrameConnector::SetRect(const gfx::Rect& frame_rect) {
 
 RenderWidgetHostViewBase*
 CrossProcessFrameConnector::GetRootRenderWidgetHostView() {
+  // If we've already cached the root view pointer, return it here as it does
+  // not change for our lifetime.
+  if (root_view_weak_ptr_)
+    return root_view_weak_ptr_.get();
+
   // Tests may not have frame_proxy_in_parent_renderer_ set.
   if (!frame_proxy_in_parent_renderer_)
     return nullptr;
@@ -357,7 +362,11 @@ CrossProcessFrameConnector::GetRootRenderWidgetHostView() {
         GetOuterDelegateNode()->frame_tree()->root()->current_frame_host();
   }
 
-  return static_cast<RenderWidgetHostViewBase*>(top_host->GetView());
+  RenderWidgetHostViewBase* root_view =
+      static_cast<RenderWidgetHostViewBase*>(top_host->GetView());
+  if (root_view)
+    root_view_weak_ptr_ = root_view->GetWeakPtr();
+  return root_view;
 }
 
 RenderWidgetHostViewBase*
