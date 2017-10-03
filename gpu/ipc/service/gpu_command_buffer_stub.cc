@@ -30,7 +30,6 @@
 #include "gpu/command_buffer/service/logger.h"
 #include "gpu/command_buffer/service/mailbox_manager.h"
 #include "gpu/command_buffer/service/memory_tracking.h"
-#include "gpu/command_buffer/service/preemption_flag.h"
 #include "gpu/command_buffer/service/query_manager.h"
 #include "gpu/command_buffer/service/scheduler.h"
 #include "gpu/command_buffer/service/service_utils.h"
@@ -882,12 +881,7 @@ GpuCommandBufferStub::OnCommandBatchProcessed() {
   GpuWatchdogThread* watchdog = channel_->gpu_channel_manager()->watchdog();
   if (watchdog)
     watchdog->CheckArmed();
-  bool pause = false;
-  if (channel_->scheduler()) {
-    pause = channel_->scheduler()->ShouldYield(sequence_id_);
-  } else if (channel_->preempted_flag()) {
-    pause = channel_->preempted_flag()->IsSet();
-  }
+  bool pause = channel_->scheduler()->ShouldYield(sequence_id_);
   return pause ? kPauseExecution : kContinueExecution;
 }
 
