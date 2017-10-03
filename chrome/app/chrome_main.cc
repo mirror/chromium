@@ -9,6 +9,7 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_main_delegate.h"
+#include "chrome/app/profiler/stack_sampling_profiler_launcher.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "content/public/app/content_main.h"
@@ -92,7 +93,11 @@ int ChromeMain(int argc, const char** argv) {
   const base::CommandLine* command_line(base::CommandLine::ForCurrentProcess());
   ALLOW_UNUSED_LOCAL(command_line);
 
-  // Chrome-specific process modes.
+  // Start the sampling profiler as early as possible – namely, once the command
+  // line data is available.
+  StartStackSamplingProfilerIfEnabled();
+
+// Chrome-specific process modes.
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
   if (command_line->HasSwitch(switches::kHeadless)) {
 #if defined(OS_MACOSX)
