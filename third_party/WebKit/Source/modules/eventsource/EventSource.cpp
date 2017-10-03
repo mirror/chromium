@@ -212,12 +212,13 @@ void EventSource::close() {
     connect_timer_.Stop();
   }
 
+  state_ = kClosed;
+
   if (loader_) {
     loader_->Cancel();
     loader_ = nullptr;
   }
 
-  state_ = kClosed;
 }
 
 const AtomicString& EventSource::InterfaceName() const {
@@ -301,16 +302,25 @@ void EventSource::DidFinishLoading(unsigned long, double) {
 }
 
 void EventSource::DidFail(const ResourceError& error) {
-  DCHECK_NE(kClosed, state_);
   DCHECK(loader_);
+  if (error.IsCancellation() && state_ == kClosed) {
+    NetworkRequestEnded();
+    return;
+  }
+
+  DCHECK_NE(kClosed, state_);
 
   if (error.IsAccessCheck()) {
     AbortConnectionAttempt();
     return;
   }
 
-  if (error.IsCancellation())
-    state_ = kClosed;
+  if (error.IsCancellation()) {
+    // When the loading is cancelled from an external reason (e.g.,
+    // window.stop()), dispatch an error event and do not reconnect.
+    AbortConnectionAttempt();
+    return;
+  }
   NetworkRequestEnded();
 }
 
@@ -337,7 +347,7 @@ void EventSource::OnReconnectionTimeSet(unsigned long long reconnection_time) {
 }
 
 void EventSource::AbortConnectionAttempt() {
-  DCHECK_EQ(kConnecting, state_);
+  DCHECK_NE(kClosed, state_);
 
   loader_ = nullptr;
   state_ = kClosed;
