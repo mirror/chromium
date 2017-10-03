@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c326b0cc_1e1bc96c",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainter.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-10-03T21:44:57Z",
+      "side": 1,
+      "message": "alpha-sort",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "65e7f5501147366de606bf3d8b0581e43ad6b02d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
