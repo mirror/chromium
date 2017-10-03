@@ -34,6 +34,24 @@
       "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd00990_6f45ec54",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-10-03T03:30:39Z",
+      "side": 0,
+      "message": "OK, looks like \"Show All Tabs\" is a Safari-specific feature so this may be safe to remove (and there\u0027s no need to test on Chrome Mac).  Please also try switching back and forth with focused textbox on Linux Chrome, and follow up if any of the CQ dry run tests are consistently red.  Also, could you write a unit test (I suggest in WebViewTest.cpp) to make sure ShowVirtualKeyboard is called on focus?",
+      "parentUuid": "d0fd43c9_75833972",
+      "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
