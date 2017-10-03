@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f79939_844cb40a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-03T22:50:42Z",
+      "side": 1,
+      "message": "This only counts update files for webapps that have been deleted - it won\u0027t catch ones where we started an update, put the file on disk, and then the update was cancelled e.g. because Chrome was killed. I\u0027m more interested in the total number of files sitting there at any particular time.\n\nAlso, recording at the time we\u0027re cleaning up the directories is really past the point where this would be problematic for users.\n\nWhat about recording the total number of update files on disk at the time an update is triggered? That\u0027s more along the time when it would be a problem - we start an update and we already have lots of old files sitting around taking up space.",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
