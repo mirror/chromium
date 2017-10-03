@@ -3027,6 +3027,54 @@ TEST_F(DisplayManagerTest, DisconnectedInternalDisplayShouldUpdateDisplayInfo) {
   EXPECT_TRUE(has_default);
 }
 
+// It's difficult to test with full stack due to crbug.com/771178.
+// Improve the coverage once it is fixed.
+TEST_F(DisplayManagerTest, ForcedMirrorMode) {
+  constexpr int64_t external_id = 123;
+  const int64_t internal_id =
+      display::test::DisplayManagerTestApi(display_manager())
+          .SetFirstDisplayAsInternalDisplay();
+  display::Screen* screen = display::Screen::GetScreen();
+  DCHECK(screen);
+  Shell* shell = Shell::Get();
+  display::DisplayChangeObserver observer(shell->display_configurator(),
+                                          display_manager());
+  display::DisplayConfigurator::DisplayStateList outputs;
+  std::unique_ptr<display::DisplaySnapshot> internal_snapshot =
+      display::FakeDisplaySnapshot::Builder()
+          .SetId(internal_id)
+          .SetType(display::DISPLAY_CONNECTION_TYPE_INTERNAL)
+          .SetDPI(210)  // 1.6f
+          .SetNativeMode(MakeDisplayMode())
+          .Build();
+  EXPECT_FALSE(internal_snapshot->current_mode());
+
+  outputs.push_back(internal_snapshot.get());
+  std::unique_ptr<display::DisplaySnapshot> external_snapshot =
+      display::FakeDisplaySnapshot::Builder()
+          .SetId(external_id)
+          .SetNativeMode(MakeDisplayMode())
+          .AddMode(MakeDisplayMode())
+          .Build();
+  // "Connectd display" has the current mode.
+  external_snapshot->set_current_mode(external_snapshot->native_mode());
+
+  outputs.push_back(external_snapshot.get());
+
+  EXPECT_EQ(display::MULTIPLE_DISPLAY_STATE_DUAL_EXTENDED,
+            observer.GetStateForDisplayIds(outputs));
+
+  display_manager()->layout_store()->set_forced_mirror_mode(true);
+
+  EXPECT_EQ(display::MULTIPLE_DISPLAY_STATE_DUAL_MIRROR,
+            observer.GetStateForDisplayIds(outputs));
+
+  display_manager()->layout_store()->set_forced_mirror_mode(false);
+
+  EXPECT_EQ(display::MULTIPLE_DISPLAY_STATE_DUAL_EXTENDED,
+            observer.GetStateForDisplayIds(outputs));
+}
+
 namespace {
 
 class DisplayManagerOrientationTest : public DisplayManagerTest {
