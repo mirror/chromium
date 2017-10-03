@@ -91,6 +91,52 @@
       "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1cb9f7_e5108a96",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-03T00:43:55Z",
+      "side": 1,
+      "message": "I think this is only used for adding |ContextualSearchSelectionClient|, seems there is a TODO to enforce the usage for it, but can we just rename it to like |addContextualSearchSelectionClient| for now so we could have less confusing?",
+      "range": {
+        "startLine": 66,
+        "startChar": 9,
+        "endLine": 66,
+        "endChar": 27
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e96a3c_7cd75671",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionClientManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-03T00:43:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 30
+      },
+      "revId": "21331708c8568b8f3f68f28a4874f890a8c458ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
