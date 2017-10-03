@@ -87,6 +87,24 @@
       "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3859d56_5154ec50",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-03T19:38:39Z",
+      "side": 1,
+      "message": "Ok, I think I\u0027ll leave it as is for now. Makes it simpler to land that CL.",
+      "parentUuid": "9baddf10_ee9df099",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
