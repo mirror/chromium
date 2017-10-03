@@ -452,3 +452,20 @@ TEST(GoogleUtilTest, YoutubeDomains) {
                                   google_util::DISALLOW_SUBDOMAIN,
                                   google_util::DISALLOW_NON_STANDARD_PORTS));
 }
+
+TEST(GoogleUtilTest, GetGoogleCountryCode) {
+  EXPECT_EQ("us",
+            google_util::GetGoogleCountryCode(GURL("http://www.google.com")));
+  EXPECT_EQ("fr",
+            google_util::GetGoogleCountryCode(GURL("http://www.google.fr")));
+
+  // Extracting the country code from an invalid real Google URL is fatal.
+  EXPECT_DEBUG_DEATH(
+      google_util::GetGoogleCountryCode(GURL("http://localhost")), "");
+
+  // Extracting the country code from an invalid flag-specified Google URL is
+  // gracefully accepted.
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kGoogleBaseURL, "http://localhost");
+  EXPECT_EQ("us", google_util::GetGoogleCountryCode(GURL("http://localhost")));
+}
