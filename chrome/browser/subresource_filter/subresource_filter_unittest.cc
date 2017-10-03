@@ -294,11 +294,8 @@ TEST_F(SubresourceFilterTest, AbusiveEnforcement_NoMetadata) {
 }
 
 TEST_F(SubresourceFilterTest, NotifySafeBrowsing) {
-  const safe_browsing::ThreatPatternType pattern_types[]{
-      safe_browsing::ThreatPatternType::NONE,
-      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS,
-      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS,
-      safe_browsing::ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS};
+  // TODO
+  const safe_browsing::ThreatPatternType pattern_types[]{};
 
   const GURL url("https://example.test");
   for (const auto& pattern_type : pattern_types) {

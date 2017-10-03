@@ -32,15 +32,6 @@ enum class ThreatPatternType : int {
   SOCIAL_ENGINEERING_LANDING = 4,  // The match is a social engineering landing
                                    // page
   PHISHING = 5,                    // The match is a phishing page
-
-  // The match is a better ads standard violating page
-  SUBRESOURCE_FILTER_BETTER_ADS = 6,
-
-  // The match is an abusive ads violating page
-  SUBRESOURCE_FILTER_ABUSIVE_ADS = 7,
-
-  // The match violates both better ads standard and abusive policies
-  SUBRESOURCE_FILTER_ALL_ADS = 8,
   THREAT_PATTERN_TYPE_MAX_VALUE
 };
 
@@ -64,6 +55,10 @@ struct ThreatMetadata {
   // Set of permissions blocked. Used with threat_type API_ABUSE.
   // This will be empty if it wasn't present in the response.
   std::set<std::string> api_permissions;
+
+  // Set of list sub-types related to the SUBRESOURCE_FILTER threat type.
+  // Used instead of ThreatPatternType to allow multiple types at the same time.
+  std::set<std::string> subresource_filter_types;
 
   // Opaque base64 string used for user-population experiments in pver4.
   // This will be empty if it wasn't present in the response.
