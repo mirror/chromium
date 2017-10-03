@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f281a2_35765fe2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T22:37:14Z",
+      "side": 1,
+      "message": "Could you please clarify, more precisely, where this is used?  It looks like this internal CL is adding some automated test coverage.  Does that test coverage really need to use non-standard Google base URLs?",
+      "range": {
+        "startLine": 9,
+        "startChar": 86,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "64bccb60b0788b114fe6dabb3bce1ef312f72aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51266bc6_076c0762",
+        "filename": "components/google/core/browser/google_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T22:37:14Z",
+      "side": 1,
+      "message": "nit: I think you want DCHECK_IS_ON() here.",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 9
+      },
+      "revId": "64bccb60b0788b114fe6dabb3bce1ef312f72aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
