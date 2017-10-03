@@ -22,7 +22,10 @@ AppWindowLauncherItemController::AppWindowLauncherItemController(
     const ash::ShelfID& shelf_id)
     : ash::ShelfItemDelegate(shelf_id), observed_windows_(this) {}
 
-AppWindowLauncherItemController::~AppWindowLauncherItemController() {}
+AppWindowLauncherItemController::~AppWindowLauncherItemController() {
+  if (destroyed_callback_)
+    std::move(destroyed_callback_).Run();
+}
 
 void AppWindowLauncherItemController::AddWindow(ui::BaseWindow* app_window) {
   windows_.push_front(app_window);
@@ -122,6 +125,12 @@ void AppWindowLauncherItemController::ActivateIndexedApp(size_t index) {
   auto it = windows_.begin();
   std::advance(it, index);
   ShowAndActivateOrMinimize(*it);
+}
+
+void AppWindowLauncherItemController::SetDestroyedCallback(
+    DestroyedCallback destroyed_callback) {
+  DCHECK(!destroyed_callback_);
+  destroyed_callback_ = std::move(destroyed_callback);
 }
 
 ui::BaseWindow* AppWindowLauncherItemController::GetLastActiveWindow() {

@@ -70,6 +70,24 @@ ExtensionAppWindowLauncherController::ControllerForWindow(
   return controller_iter->second;
 }
 
+void ExtensionAppWindowLauncherController::OnItemControllerDestroyed(
+    AppWindowLauncherItemController* controller) {
+  AppControllerMap::iterator it =
+      app_controller_map_.find(controller->shelf_id());
+  if (it == app_controller_map_.end() || it->second != controller)
+    return;
+
+  VLOG(1) << "Item controller was released externally for the app "
+          << controller->shelf_id().app_id << ".";
+  app_controller_map_.erase(it);
+
+  for (ui::BaseWindow* base_window : controller->windows()) {
+    aura::Window* window = base_window->GetNativeWindow();
+    if (window)
+      UnregisterApp(window);
+  }
+}
+
 void ExtensionAppWindowLauncherController::OnAppWindowAdded(
     extensions::AppWindow* app_window) {
   RegisterApp(app_window);
@@ -137,6 +155,7 @@ void ExtensionAppWindowLauncherController::RegisterApp(AppWindow* app_window) {
     std::unique_ptr<ExtensionAppWindowLauncherItemController> controller =
         base::MakeUnique<ExtensionAppWindowLauncherItemController>(shelf_id);
     app_controller_map_[shelf_id] = controller.get();
+    SetItemControllerDestroyedCallback(controller.get());
 
     // Check for any existing pinned shelf item with a matching |shelf_id|.
     if (!owner()->GetItem(shelf_id)) {
@@ -163,16 +182,18 @@ void ExtensionAppWindowLauncherController::UnregisterApp(aura::Window* window) {
 
   AppControllerMap::iterator app_controller_iter =
       app_controller_map_.find(shelf_id);
-  DCHECK(app_controller_iter != app_controller_map_.end());
-  ExtensionAppWindowLauncherItemController* controller;
-  controller = app_controller_iter->second;
+  if (app_controller_iter == app_controller_map_.end())
+    return;
+
+  ExtensionAppWindowLauncherItemController* controller =
+      app_controller_iter->second;
 
   controller->RemoveWindow(controller->GetAppWindow(window));
   if (controller->window_count() == 0) {
     // If this is the last window associated with the app window shelf id,
     // close the shelf item.
-    owner()->CloseLauncherItem(shelf_id);
     app_controller_map_.erase(app_controller_iter);
+    owner()->CloseLauncherItem(shelf_id);
   }
 }
 

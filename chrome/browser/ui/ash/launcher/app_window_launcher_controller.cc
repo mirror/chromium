@@ -11,7 +11,7 @@
 
 AppWindowLauncherController::AppWindowLauncherController(
     ChromeLauncherController* owner)
-    : owner_(owner) {
+    : owner_(owner), weak_ptr_factory_(this) {
   if (ash::Shell::HasInstance()) {
     if (ash::Shell::Get()->GetPrimaryRootWindow()) {
       activation_client_ =
@@ -44,4 +44,12 @@ void AppWindowLauncherController::OnWindowActivated(
       ControllerForWindow(old_active);
   if (old_controller && old_controller != new_controller)
     owner_->SetItemStatus(old_controller->shelf_id(), ash::STATUS_RUNNING);
+}
+
+void AppWindowLauncherController::SetItemControllerDestroyedCallback(
+    AppWindowLauncherItemController* controller) {
+  DCHECK(controller);
+  controller->SetDestroyedCallback(
+      base::Bind(&AppWindowLauncherController::OnItemControllerDestroyed,
+                 weak_ptr_factory_.GetWeakPtr(), controller));
 }

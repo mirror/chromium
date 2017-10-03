@@ -9,6 +9,7 @@
 #include <string>
 
 #include "ash/public/cpp/shelf_item_delegate.h"
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "ui/aura/window_observer.h"
@@ -30,6 +31,7 @@ class BaseWindow;
 class AppWindowLauncherItemController : public ash::ShelfItemDelegate,
                                         public aura::WindowObserver {
  public:
+  using DestroyedCallback = base::OnceCallback<void()>;
   using WindowList = std::list<ui::BaseWindow*>;
 
   ~AppWindowLauncherItemController() override;
@@ -54,11 +56,13 @@ class AppWindowLauncherItemController : public ash::ShelfItemDelegate,
                                const void* key,
                                intptr_t old) override;
 
-  // Get the number of running applications/incarnations of this.
-  size_t window_count() const { return windows_.size(); }
-
   // Activates the window at position |index|.
   void ActivateIndexedApp(size_t index);
+
+  void SetDestroyedCallback(DestroyedCallback destroyed_callback);
+
+  // Get the number of running applications/incarnations of this.
+  size_t window_count() const { return windows_.size(); }
 
   const WindowList& windows() const { return windows_; }
 
@@ -96,6 +100,9 @@ class AppWindowLauncherItemController : public ash::ShelfItemDelegate,
 
   // Scoped list of observed windows (for removal on destruction)
   ScopedObserver<aura::Window, aura::WindowObserver> observed_windows_;
+
+  // Callback to be called on item destruction.
+  DestroyedCallback destroyed_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(AppWindowLauncherItemController);
 };

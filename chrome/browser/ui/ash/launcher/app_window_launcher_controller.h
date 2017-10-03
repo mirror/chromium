@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "ui/wm/public/activation_change_observer.h"
 
 class AppWindowLauncherItemController;
@@ -39,6 +40,9 @@ class AppWindowLauncherController : public wm::ActivationChangeObserver {
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
 
+  void SetItemControllerDestroyedCallback(
+      AppWindowLauncherItemController* controller);
+
  protected:
   explicit AppWindowLauncherController(ChromeLauncherController* owner);
 
@@ -46,11 +50,16 @@ class AppWindowLauncherController : public wm::ActivationChangeObserver {
 
   virtual AppWindowLauncherItemController* ControllerForWindow(
       aura::Window* window) = 0;
+  virtual void OnItemControllerDestroyed(
+      AppWindowLauncherItemController* controller) = 0;
 
  private:
   // Unowned pointers.
   ChromeLauncherController* owner_;
   wm::ActivationClient* activation_client_ = nullptr;
+
+  // Keep last.
+  base::WeakPtrFactory<AppWindowLauncherController> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(AppWindowLauncherController);
 };

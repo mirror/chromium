@@ -41,6 +41,8 @@ class ExtensionAppWindowLauncherController
   // AppWindowLauncherController:
   AppWindowLauncherItemController* ControllerForWindow(
       aura::Window* window) override;
+  void OnItemControllerDestroyed(
+      AppWindowLauncherItemController* controller) override;
 
   // Overridden from AppWindowRegistry::Observer:
   void OnAppWindowAdded(extensions::AppWindow* app_window) override;
