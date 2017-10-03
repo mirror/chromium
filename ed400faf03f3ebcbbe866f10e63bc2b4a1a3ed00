@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26143a88_444e6c69",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Would \"enable_library_cdm\" be better?",
+      "parentUuid": "b8cb12ad_df850597",
+      "range": {
+        "startLine": 3955,
+        "startChar": 6,
+        "endLine": 3955,
+        "endChar": 25
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3858263_fdaf154f",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
         "patchSetId": 6
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-30T05:54:41Z",
       "side": 1,
       "message": "I\u0027m not sure that WebContentsObserver is safe for use on other threads (all the callbacks will be invoked on the UI thread, in any case, and we certainly can\u0027t register it from a non-UI thread). What\u0027s the future plan for this code?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188f6fcb_f7ce81eb",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "My understanding is that BrowserThread will go away as part of the task scheduler migration. I guess this code will just follow that process.",
+      "parentUuid": "f3858263_fdaf154f",
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ad5d7c82_cd9c0495",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9119e5b1_7c8ce45a",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20f344f1_e1cb5ab9",
         "filename": "chrome/browser/media/output_protection_impl.cc",
         "patchSetId": 6
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-30T05:54:41Z",
       "side": 1,
       "message": "I\u0027m wondering if we still need routing IDs, given that this observes the lifetime of the RFH now.",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f14f085_bc5eda44",
+        "filename": "chrome/browser/media/output_protection_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "We are using the routing IDs here because OutputProtectionProxy needs it, which is because PepperOutputProtectionMessageFilter needs it. See https://cs.chromium.org/chromium/src/chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.cc?rcl\u003d7bcd8ebf585e65f1de1299858d3ddd37519ad186\u0026l\u003d68\n\nAfter we deprecate PPAPI, we should be able to get rid of the IDs.\n\nFiled crbug.com/770958 to track this.",
+      "parentUuid": "20f344f1_e1cb5ab9",
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "7c2adcd9_98bac995",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "hmm, what\u0027s the standard way of getting PrefService from RFH? For example, ChromeCast gets the ProfService from the CastBrowserProcess: https://cs.chromium.org/chromium/src/chromecast/browser/cast_content_browser_client.cc?rcl\u003d733580614ade43cb248eecdcb04642514b90925b\u0026l\u003d130",
+      "parentUuid": "1fa57639_63a5df43",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516dc941_42b34083",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 6
@@ -104,6 +200,24 @@
       "writtenOn": "2017-09-30T05:54:41Z",
       "side": 1,
       "message": "And can we also just use origin().Serialize() where it\u0027s needed, rather than doing this ahead of time?",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7e8935_cfe72fdd",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "|origin_string_| is used in 6 places in the file, so I feel it\u0027s probably worth it to have a dedicated class member for it. I could add a GetOrigin() helper function to do this lazily, but I don\u0027t feel it\u0027s necessary given the Serialize() operation isn\u0027t expensive, and after the construction of this class, the chance that we\u0027ll need the origin string is very large.",
+      "parentUuid": "516dc941_42b34083",
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +264,48 @@
     },
     {
       "key": {
+        "uuid": "94d2e393_bd61de88",
+        "filename": "content/browser/frame_host/frame_service_base_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "We need a mojom interface to create the FrameBaseService and it\u0027s not interesting which mojom interface it is. Hence, I don\u0027t feel we need ot test EchoString() in this test. The fact that disconnection causes the FrameBaseService object to be destroyed is enough to confirm that the mojo connection worked.",
+      "parentUuid": "c9f2c832_de1007c7",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 103,
+        "endChar": 16
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc06b45_0421232e",
+        "filename": "content/browser/frame_host/frame_service_base_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "I thought about that, but we have \n\nis_echo_impl_alive_ \u003d true;\n\nat the end of CreateEchoImpl() so I felt this check would be redundant...",
+      "parentUuid": "65a82694_3bd86865",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b194f456_8deb3d57",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 6
@@ -170,6 +326,30 @@
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f56639_98d88bae",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b194f456_8deb3d57",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 33
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +376,30 @@
     },
     {
       "key": {
+        "uuid": "3ee4a5d3_15cf842a",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59c096b8_ee15bb4b",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b70e303_20f43279",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 6
@@ -207,6 +411,30 @@
       "writtenOn": "2017-10-02T18:10:39Z",
       "side": 1,
       "message": "PlatformVerificationImpl needs this too. Should this be another property on this class?",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 29
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6364fe_4e49d29f",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Replaced with web_contents().",
+      "parentUuid": "3b70e303_20f43279",
       "range": {
         "startLine": 39,
         "startChar": 17,
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "e3afee26_fa386776",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17f998fb_e3d36dcf",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16777d0d_a19b5b4d",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 6
@@ -247,6 +493,30 @@
       "writtenOn": "2017-10-02T18:10:39Z",
       "side": 1,
       "message": "As this is initialized in the constructor, is this needed?",
+      "range": {
+        "startLine": 86,
+        "startChar": 46,
+        "endLine": 86,
+        "endChar": 53
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c00314_239fb9f0",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-03T00:41:44Z",
+      "side": 1,
+      "message": "In new code I do this for all POD types, just to avoid uninitialized class members altogether.",
+      "parentUuid": "16777d0d_a19b5b4d",
       "range": {
         "startLine": 86,
         "startChar": 46,
