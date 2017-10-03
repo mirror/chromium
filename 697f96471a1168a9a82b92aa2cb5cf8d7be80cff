@@ -52,6 +52,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfbe3ea8_fca980cb",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T17:37:48Z",
+      "side": 1,
+      "message": "Emitting warnings to use certain command-line flags doesn\u0027t really match what we do elsewhere in Blink (e.g. we don\u0027t ask people to run with the flag that uses dirpath for origin checks for file:// URLs if an access check to a file:// URL fails).\n\nIf it comes down to it, I\u0027d rather just remove the throttling code.",
+      "parentUuid": "664d4599_90958f13",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
