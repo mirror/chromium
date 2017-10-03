@@ -235,5 +235,7 @@ class MediaSourceExtensions(perf_benchmark.PerfBenchmark):
             'startup_test.html?testType=A&doNotWaitForBodyOnLoad=true',
             [story.expectations.ANDROID_WEBVIEW],
             'crbug.com/755639')
+        self.DisableBenchmark([story.expectations.ALL_ANDROID],
+                              'crbug.com/771385')
 
     return StoryExpectations()
