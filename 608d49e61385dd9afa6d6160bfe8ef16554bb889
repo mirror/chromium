@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4ab80107_a20287ce",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/ProbeSink.h.tmpl",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-03T22:10:28Z",
+      "side": 1,
+      "message": "Yup, looks like this:\n\ngen/blink/platform/PlatformProbeSink.h:30:19: error: enumerator value is not a constant expression\n    kWayTooMany \u003d 1u \u003c\u003c 32,\n                  ^~~~~~~\ngen/blink/platform/PlatformProbeSink.h:30:21: note: shift count 32 \u003e\u003d width of type \u0027int\u0027 (32 bits)\n    kWayTooMany \u003d 1u \u003c\u003c 32,\n                     ^",
+      "parentUuid": "c4675c34_e7f7f976",
+      "revId": "608d49e61385dd9afa6d6160bfe8ef16554bb889",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59aa059e_834f6402",
         "filename": "third_party/WebKit/Source/build/scripts/templates/ProbeSink.h.tmpl",
         "patchSetId": 8
