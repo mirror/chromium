@@ -225,7 +225,9 @@ bool ImageBuffer::CopyToPlatformTexture(SnapshotReason reason,
 
   // Get the texture ID, flushing pending operations if needed.
   const GrGLTextureInfo* texture_info = skia::GrBackendObjectToGrGLTextureInfo(
-      image->PaintImageForCurrentFrame().GetSkImage()->getTextureHandle(true));
+      image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+          .GetSkImage()
+          ->getTextureHandle(true));
   if (!texture_info || !texture_info->fID)
     return false;
 
@@ -393,8 +395,10 @@ bool ImageBuffer::GetImageData(Multiply multiplied,
   // unpremul must be done in gamma encoded color space.
   if (!RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
     info = info.makeColorSpace(nullptr);
-  snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-      info, result.Data(), bytes_per_pixel * rect.Width(), rect.X(), rect.Y());
+  snapshot->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+      .GetSkImage()
+      ->readPixels(info, result.Data(), bytes_per_pixel * rect.Width(),
+                   rect.X(), rect.Y());
   gpu_readback_invoked_in_current_frame_ = true;
   result.Transfer(contents);
   return true;
@@ -513,13 +517,15 @@ void ImageBuffer::SetSurface(std::unique_ptr<ImageBufferSurface> surface) {
     // Using a GPU-backed image with RecordingImageBufferSurface
     // will fail at playback time.
     sk_sp<SkImage> texture_image =
-        image->PaintImageForCurrentFrame().GetSkImage();
+        image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+            .GetSkImage();
     // Must tear down AcceleratedStaticBitmapImage before calling
     // makeNonTextureImage()
     image = nullptr;
     image = StaticBitmapImage::Create(texture_image->makeNonTextureImage());
   }
-  surface->Canvas()->drawImage(image->PaintImageForCurrentFrame(), 0, 0);
+  surface->Canvas()->drawImage(
+      image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode), 0, 0);
   surface->SetImageBuffer(this);
   if (client_)
     client_->RestoreCanvasMatrixClipStack(surface->Canvas());

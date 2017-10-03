@@ -190,7 +190,7 @@ void ImageLoader::DispatchDecodeRequestsIfComplete() {
       continue;
     Image* image = GetImage()->GetImage();
     frame->GetChromeClient().RequestDecode(
-        frame, image->PaintImageForCurrentFrame(),
+        frame, image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode),
         WTF::Bind(&ImageLoader::DecodeRequestFinished, WrapWeakPersistent(this),
                   request->request_id()));
     request->NotifyDecodeDispatched();

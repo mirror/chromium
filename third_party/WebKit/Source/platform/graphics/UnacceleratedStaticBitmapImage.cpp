@@ -54,12 +54,17 @@ void UnacceleratedStaticBitmapImage::Draw(PaintCanvas* canvas,
                                           const FloatRect& dst_rect,
                                           const FloatRect& src_rect,
                                           RespectImageOrientationEnum,
-                                          ImageClampingMode clamp_mode) {
+                                          ImageClampingMode clamp_mode,
+                                          ImageDecodingMode decode_mode) {
   StaticBitmapImage::DrawHelper(canvas, flags, dst_rect, src_rect, clamp_mode,
-                                PaintImageForCurrentFrame());
+                                PaintImageForCurrentFrame(decode_mode));
 }
 
-PaintImage UnacceleratedStaticBitmapImage::PaintImageForCurrentFrame() {
+PaintImage UnacceleratedStaticBitmapImage::PaintImageForCurrentFrame(
+    ImageDecodingMode) {
+  // TODO(vmpstr): We ignore the decoding mode here, since it would require us
+  // to make a copy of paint_image_ and it's unclear if we really need to
+  // support different decoding modes for this class.
   return paint_image_;
 }
 

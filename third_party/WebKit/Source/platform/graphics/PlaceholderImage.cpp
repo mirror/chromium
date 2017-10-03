@@ -26,27 +26,32 @@ PlaceholderImage::PlaceholderImage(ImageObserver* observer, const IntSize& size)
 
 PlaceholderImage::~PlaceholderImage() {}
 
-PaintImage PlaceholderImage::PaintImageForCurrentFrame() {
+PaintImage PlaceholderImage::PaintImageForCurrentFrame(
+    ImageDecodingMode decode_mode) {
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
   builder.set_completion_state(PaintImage::CompletionState::DONE);
 
   const IntRect dest_rect(0, 0, size_.Width(), size_.Height());
   if (paint_record_for_current_frame_) {
-    builder.set_paint_record(paint_record_for_current_frame_, dest_rect,
-                             paint_record_content_id_);
+    builder
+        .set_paint_record(paint_record_for_current_frame_, dest_rect,
+                          paint_record_content_id_)
+        .set_decoding_mode(ToPaintImageDecodingMode(decode_mode));
     return builder.TakePaintImage();
   }
 
   PaintRecorder paint_recorder;
   Draw(paint_recorder.beginRecording(FloatRect(dest_rect)), PaintFlags(),
        FloatRect(dest_rect), FloatRect(dest_rect),
-       kDoNotRespectImageOrientation, kClampImageToSourceRect);
+       kDoNotRespectImageOrientation, kClampImageToSourceRect, decode_mode);
 
   paint_record_for_current_frame_ = paint_recorder.finishRecordingAsPicture();
   paint_record_content_id_ = PaintImage::GetNextContentId();
-  builder.set_paint_record(paint_record_for_current_frame_, dest_rect,
-                           paint_record_content_id_);
+  builder
+      .set_paint_record(paint_record_for_current_frame_, dest_rect,
+                        paint_record_content_id_)
+      .set_decoding_mode(ToPaintImageDecodingMode(decode_mode));
   return builder.TakePaintImage();
 }
 
@@ -55,7 +60,8 @@ void PlaceholderImage::Draw(PaintCanvas* canvas,
                             const FloatRect& dest_rect,
                             const FloatRect& src_rect,
                             RespectImageOrientationEnum respect_orientation,
-                            ImageClampingMode image_clamping_mode) {
+                            ImageClampingMode image_clamping_mode,
+                            ImageDecodingMode decode_mode) {
   if (!src_rect.Intersects(FloatRect(0.0f, 0.0f,
                                      static_cast<float>(size_.Width()),
                                      static_cast<float>(size_.Height())))) {
@@ -93,7 +99,7 @@ void PlaceholderImage::Draw(PaintCanvas* canvas,
   // and is always drawn at the same size. This is so that placeholder icons are
   // visible (e.g. when replacing a large image that's scaled down to a small
   // area) and so that all placeholder images on the same page look consistent.
-  canvas->drawImageRect(icon_image->PaintImageForCurrentFrame(),
+  canvas->drawImageRect(icon_image->PaintImageForCurrentFrame(decode_mode),
                         IntRect(IntPoint::Zero(), icon_image->Size()),
                         icon_dest_rect, &base_flags,
                         PaintCanvas::kFast_SrcRectConstraint);
@@ -115,7 +121,8 @@ void PlaceholderImage::DrawPattern(GraphicsContext& context,
   // over the whole |dest_rect|. This is done in order to prevent repeated icons
   // from cluttering tiled background images.
   Draw(context.Canvas(), flags, dest_rect, src_rect,
-       kDoNotRespectImageOrientation, kClampImageToSourceRect);
+       kDoNotRespectImageOrientation, kClampImageToSourceRect,
+       kUnspecifiedDecode);
 }
 
 void PlaceholderImage::DestroyDecodedData() {

@@ -49,8 +49,9 @@ void ImageLayerBridge::SetImage(RefPtr<StaticBitmapImage> image) {
     // m_image->ensureMailbox() call of
     // ImageLayerBridge::PrepareTextureMailbox. To prevent a potential memory
     // leak we must flush the GrContext here.
-    image_->PaintImageForCurrentFrame().GetSkImage()->getTextureHandle(
-        true);  // GrContext flush.
+    image_->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+        .GetSkImage()
+        ->getTextureHandle(true);  // GrContext flush.
   }
   has_presented_since_last_set_image_ = false;
 }
@@ -92,7 +93,9 @@ bool ImageLayerBridge::PrepareTextureMailbox(
     if (!bitmap)
       return false;
 
-    sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().GetSkImage();
+    sk_sp<SkImage> sk_image =
+        image_->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+            .GetSkImage();
     if (!sk_image)
       return false;
 

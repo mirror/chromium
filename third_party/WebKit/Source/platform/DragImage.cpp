@@ -158,7 +158,8 @@ std::unique_ptr<DragImage> DragImage::Create(
   if (!image)
     return nullptr;
 
-  PaintImage paint_image = image->PaintImageForCurrentFrame();
+  PaintImage paint_image =
+      image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode);
   if (!paint_image)
     return nullptr;
 

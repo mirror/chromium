@@ -69,7 +69,7 @@ void GeneratedImage::DrawPattern(GraphicsContext& dest_context,
   dest_context.DrawRect(dest_rect, fill_flags);
 }
 
-PaintImage GeneratedImage::PaintImageForCurrentFrame() {
+PaintImage GeneratedImage::PaintImageForCurrentFrame(ImageDecodingMode) {
   return PaintImage();
 }
 

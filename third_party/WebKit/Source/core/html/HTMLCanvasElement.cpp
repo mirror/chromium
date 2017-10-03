@@ -578,7 +578,8 @@ void HTMLCanvasElement::NotifyListenersCanvasChanged() {
     if (status != kNormalSourceImageStatus)
       return;
     sk_sp<SkImage> image =
-        source_image->PaintImageForCurrentFrame().GetSkImage();
+        source_image->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+            .GetSkImage();
     for (CanvasDrawListener* listener : listeners_) {
       if (listener->NeedsNewFrame()) {
         listener->SendNewFrame(image);
@@ -613,7 +614,8 @@ void HTMLCanvasElement::Paint(GraphicsContext& context, const LayoutRect& r) {
 
   if (PlaceholderFrame()) {
     DCHECK(GetDocument().Printing());
-    context.DrawImage(PlaceholderFrame().get(), PixelSnappedIntRect(r));
+    context.DrawImage(PlaceholderFrame().get(), Image::kUnspecifiedDecode,
+                      PixelSnappedIntRect(r));
     return;
   }
 
@@ -695,9 +697,10 @@ ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
       if (snapshot) {
         SkImageInfo image_info = SkImageInfo::Make(
             width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-        snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-            image_info, image_data->data()->Data(), image_info.minRowBytes(), 0,
-            0);
+        snapshot->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+            .GetSkImage()
+            ->readPixels(image_info, image_data->data()->Data(),
+                         image_info.minRowBytes(), 0, 0);
       }
     }
     return image_data;
@@ -721,8 +724,10 @@ ImageData* HTMLCanvasElement::ToImageData(SourceDrawingBuffer source_buffer,
   if (snapshot) {
     SkImageInfo image_info = SkImageInfo::Make(
         width(), height(), kRGBA_8888_SkColorType, kUnpremul_SkAlphaType);
-    snapshot->PaintImageForCurrentFrame().GetSkImage()->readPixels(
-        image_info, image_data->data()->Data(), image_info.minRowBytes(), 0, 0);
+    snapshot->PaintImageForCurrentFrame(Image::kUnspecifiedDecode)
+        .GetSkImage()
+        ->readPixels(image_info, image_data->data()->Data(),
+                     image_info.minRowBytes(), 0, 0);
   }
 
   return image_data;

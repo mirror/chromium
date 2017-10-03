@@ -168,7 +168,8 @@ void AcceleratedStaticBitmapImage::CopyToTexture(
   dest_gl->DeleteTextures(1, &source_texture_id);
 }
 
-PaintImage AcceleratedStaticBitmapImage::PaintImageForCurrentFrame() {
+PaintImage AcceleratedStaticBitmapImage::PaintImageForCurrentFrame(
+    ImageDecodingMode decode_mode) {
   // TODO(ccameron): This function should not ignore |colorBehavior|.
   // https://crbug.com/672306
   CheckThread();
@@ -180,7 +181,8 @@ PaintImage AcceleratedStaticBitmapImage::PaintImageForCurrentFrame() {
   PaintImageBuilder builder;
   InitPaintImageBuilder(builder);
   builder.set_image(texture_holder_->GetSkImage())
-      .set_completion_state(PaintImage::CompletionState::DONE);
+      .set_completion_state(PaintImage::CompletionState::DONE)
+      .set_decoding_mode(ToPaintImageDecodingMode(decode_mode));
   return builder.TakePaintImage();
 }
 
@@ -189,8 +191,9 @@ void AcceleratedStaticBitmapImage::Draw(PaintCanvas* canvas,
                                         const FloatRect& dst_rect,
                                         const FloatRect& src_rect,
                                         RespectImageOrientationEnum,
-                                        ImageClampingMode image_clamping_mode) {
-  const auto& paint_image = PaintImageForCurrentFrame();
+                                        ImageClampingMode image_clamping_mode,
+                                        ImageDecodingMode decode_mode) {
+  const auto& paint_image = PaintImageForCurrentFrame(decode_mode);
   if (!paint_image)
     return;
   StaticBitmapImage::DrawHelper(canvas, flags, dst_rect, src_rect,
