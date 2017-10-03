@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f370aa_2c2c695a",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T06:09:26Z",
+      "side": 1,
+      "message": "nit: Factor -\u003e Factory",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baead16_df972d4a",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T06:09:26Z",
+      "side": 1,
+      "message": "nit: could you also note \u0027see the method comment for  StoragePartition::GetURLLoaderFactoryForBrowserProcess() for more details\u0027 ? (Felt a bit cryptic at first)",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689fc9d5_e8bcbd81",
+        "filename": "content/public/browser/storage_partition.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-03T06:09:26Z",
+      "side": 1,
+      "message": "Wondered if we should have some assertion to check if this isn\u0027t sent to child processes, while I\u0027m not sure if there\u0027s a good way to do so in mojo land.",
+      "revId": "143306760dbe501fba92bba7db3622041e6e939d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
