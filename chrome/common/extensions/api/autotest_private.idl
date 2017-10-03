@@ -75,6 +75,12 @@ namespace autotestPrivate {
 
   callback VoidCallback = void ();
 
+  dictionary LauncherApp {
+    DOMString id;
+    DOMString name;
+  };
+  callback LauncherAppsCallback = void (LauncherApp[] apps);
+
   interface Functions {
     // Logout of a user session.
     static void logout();
@@ -140,5 +146,9 @@ namespace autotestPrivate {
     // |enabled|: if set, enable the Play Store.
     // |callback|: Called when the operation has completed.
     static void setPlayStoreEnabled(boolean enabled, VoidCallback callback);
+
+    // Gets a list of all apps in the launcher.
+    // |callback|: Called with a list of apps.
+    static void getLauncherApps(LauncherAppsCallback callback);
   };
 };
