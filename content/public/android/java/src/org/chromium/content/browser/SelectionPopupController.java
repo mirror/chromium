@@ -44,12 +44,15 @@ import org.chromium.content.browser.input.LegacyPastePopupMenu;
 import org.chromium.content.browser.input.PastePopupMenu;
 import org.chromium.content.browser.input.PastePopupMenu.PastePopupMenuDelegate;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
+import org.chromium.content_public.browser.SelectionClient;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.touch_selection.SelectionEventType;
 
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 /**
  * A class that handles input-related web content selection UI like action mode
@@ -131,8 +134,8 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     private PastePopupMenu mPastePopupMenu;
     private boolean mWasPastePopupShowingOnInsertionDragStart;
 
-    // The client that processes textual selection, or null if none exists.
-    private SelectionClient mSelectionClient;
+    // The {@link SelectionClientManager} that processes textual selection.
+    private final SelectionClientManager mSelectionClientManager;
 
     // The classificaton result of the selected text if the selection exists and
     // SelectionClient was able to classify it, otherwise null.
@@ -193,6 +196,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         mResultCallback = new SmartSelectionCallback();
 
         mLastSelectedText = "";
+        mSelectionClientManager = new SelectionClientManager();
 
         if (initializeNative) nativeInit(webContents);
     }
@@ -232,7 +236,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     }
 
     public SelectionClient getSelectionClient() {
-        return mSelectionClient;
+        return mSelectionClientManager;
     }
 
     @Override
@@ -271,8 +275,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             }
 
             // Show menu if there is no updates from SelectionClient.
-            if (mSelectionClient == null
-                    || !mSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
+            if (!mSelectionClientManager.requestSelectionPopupUpdates(shouldSuggest)) {
                 showActionModeOrClearOnFailure();
             }
         } else {
@@ -1004,7 +1007,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 mHasSelection = false;
                 mUnselectAllOnDismiss = false;
                 mSelectionRect.setEmpty();
-                if (mSelectionClient != null) mSelectionClient.cancelAllRequests();
+                mSelectionClientManager.cancelAllRequests();
                 finishActionMode();
                 break;
 
@@ -1063,12 +1066,10 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 assert false : "Invalid selection event type.";
         }
 
-        if (mSelectionClient != null) {
-            final float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
-            int xAnchorPix = (int) (mSelectionRect.left * deviceScale);
-            int yAnchorPix = (int) (mSelectionRect.bottom * deviceScale);
-            mSelectionClient.onSelectionEvent(eventType, xAnchorPix, yAnchorPix);
-        }
+        final float deviceScale = mRenderCoordinates.getDeviceScaleFactor();
+        int xAnchorPix = (int) (mSelectionRect.left * deviceScale);
+        int yAnchorPix = (int) (mSelectionRect.bottom * deviceScale);
+        mSelectionClientManager.onSelectionEvent(eventType, xAnchorPix, yAnchorPix);
     }
 
     /**
@@ -1092,32 +1093,49 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
     @CalledByNative
     private void onSelectionChanged(String text) {
         mLastSelectedText = text;
-        if (mSelectionClient != null) {
-            mSelectionClient.onSelectionChanged(text);
-        }
+        mSelectionClientManager.onSelectionChanged(text);
     }
 
-    // The client that implements selection augmenting functionality, or null if none exists.
-    void setSelectionClient(SelectionClient selectionClient) {
-        mSelectionClient = selectionClient;
+    /**
+     * Sets the client that implements selection augmenting functionality, or null if none exists.
+     */
+    void setSelectionClient(@Nullable SelectionClient selectionClient) {
+        mSelectionClientManager.setSmartSelectionClient(selectionClient);
 
         mClassificationResult = null;
 
         assert !mHidden;
     }
 
+    /**
+     * Adds the given {@link SelectionClient} to the Selection Client Manager.
+     * @param selectionClientToAdd The {@link SelectionClient} to add.
+     */
+    @VisibleForTesting
+    public void addContextualSearchSelectionClient(SelectionClient selectionClientToAdd) {
+        mSelectionClientManager.addContextualSearchSelectionClient(selectionClientToAdd);
+    }
+
+    /** Removes the given {@link SelectionClient} from the {@link SelectionClientManager}. */
+    void removeContextualSearchSelectionClient(SelectionClient selectionClientToRemove) {
+        mSelectionClientManager.removeContextualSearchSelectionClient(selectionClientToRemove);
+    }
+
+    /**
+     * Gets the current {@link SelectionClientManager}.
+     */
+    public SelectionClientManager getSelectionClientManager() {
+        return mSelectionClientManager;
+    }
+
     @CalledByNative
     private void onShowUnhandledTapUIIfNeeded(int x, int y) {
-        if (mSelectionClient != null) {
-            mSelectionClient.showUnhandledTapUIIfNeeded(x, y);
-        }
+        mSelectionClientManager.showUnhandledTapUIIfNeeded(x, y);
     }
 
     @CalledByNative
     private void onSelectWordAroundCaretAck(boolean didSelect, int startAdjust, int endAdjust) {
-        if (mSelectionClient != null) {
-            mSelectionClient.selectWordAroundCaretAck(didSelect, startAdjust, endAdjust);
-        }
+        mSelectionClientManager.selectWordAroundCaretAck(didSelect, startAdjust, endAdjust);
     }
 
     void destroyActionModeAndUnselect() {
@@ -1159,7 +1177,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                 PackageManager.MATCH_DEFAULT_ONLY).size() > 0;
     }
 
-    // The callback class that delivers result from a SmartSelectionClient.
+    // The callback class that delivers the result from a SmartSelectionClient.
     private class SmartSelectionCallback implements SelectionClient.ResultCallback {
         @Override
         public void onClassified(SelectionClient.Result result) {
