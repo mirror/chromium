@@ -16,6 +16,24 @@
       "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f325afd4_aa3042d7",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-03T03:43:19Z",
+      "side": 1,
+      "message": "I actually did start to switch it over, but this is treated inherently as an integer in too many places that the conversion became verbose. I\u0027m also not opposed to using a class enum but I think it\u0027ll necessitate some other code changes in how we plumb these values in order to keep the code clean.",
+      "parentUuid": "9493b682_fba36585",
+      "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
