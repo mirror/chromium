@@ -14,7 +14,21 @@ window.onload = function() {
       return;
     }
     messageSource = event.source;
-    content.src = event.data;
+    switch (event.data.type) {
+      case 'html':
+        var xhr = new XMLHttpRequest;
+        xhr.open('GET', event.data.src, true);
+        xhr.onload = function() {
+          if (xhr.responseText) {
+            content.textContent = xhr.responseText;
+          }
+        };
+        xhr.send();
+        break;
+      default:
+        content.src = event.data.src;
+        break;
+    }
   });
 
   document.addEventListener('contextmenu', function(e) {
