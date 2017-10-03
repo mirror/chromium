@@ -32,9 +32,13 @@
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
 #include "chrome/browser/chromeos/system/input_device_settings.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/ui/app_list/app_list_syncable_service.h"
+#include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/user_manager/user_manager.h"
+#include "ui/app_list/app_list_item.h"
+#include "ui/app_list/app_list_model.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"
 #endif
@@ -434,6 +438,32 @@ AutotestPrivateSetPlayStoreEnabledFunction::Run() {
   }
 #endif
   return RespondNow(Error("ARC is not available for the current platform"));
+}
+
+ExtensionFunction::ResponseAction
+AutotestPrivateGetLauncherAppsFunction::Run() {
+  DVLOG(1) << "AutotestPrivateGetLauncherAppsFunction";
+#if defined(OS_CHROMEOS)
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  app_list::AppListModel* model =
+      app_list::AppListSyncableServiceFactory::GetForProfile(profile)
+          ->GetModel();
+  app_list::AppListItemList* list = model->top_level_item_list();
+
+  std::vector<api::autotest_private::LauncherApp> result_list;
+  for (size_t i = 0; i < list->item_count(); ++i) {
+    app_list::AppListItem* item = list->item_at(i);
+    api::autotest_private::LauncherApp result_item;
+    result_item.id = item->id();
+    result_item.name = item->name();
+    result_list.push_back(std::move(result_item));
+  }
+
+  return RespondNow(ArgumentList(
+      api::autotest_private::GetLauncherApps::Results::Create(result_list)));
+#elif
+  return RespondNow(Error("Not supported on the current platform"));
+#endif
 }
 
 static base::LazyInstance<BrowserContextKeyedAPIFactory<AutotestPrivateAPI>>::
