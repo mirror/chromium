@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "548f1735_d511c4eb",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbef7b09_b7382ef4",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a50edb3b_77ae2e13",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fde41f_0c518061",
+      "range": {
+        "startLine": 13,
+        "startChar": 61,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f972237a_b3e89621",
         "filename": "components/encrypted_messages/encrypted_message.proto",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1188a7f9_9ab1109b",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f972237a_b3e89621",
+      "range": {
+        "startLine": 15,
+        "startChar": 30,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fe5f8797_1752e65f",
+        "filename": "components/encrypted_messages/message_encrypter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done, that definitely makes more sense than propagating the strlen+1 to the new UMA/Finch code. Thanks!",
+      "parentUuid": "64bc19be_790334a9",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1637ac9_35d08463",
         "filename": "components/encrypted_messages/message_encrypter.h",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b069d315_88eef5e5",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done, right now no test uses it, so it is back to anonymous.",
+      "parentUuid": "c1637ac9_35d08463",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "297f1c2a_0830e867",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb9349f6_c374a1a4",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5331e5b_bfd79aaa",
         "filename": "components/encrypted_messages/message_encrypter.h",
         "patchSetId": 5
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "32214ac0_bc2203aa",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5331e5b_bfd79aaa",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d47b3abe_c5a987b7",
         "filename": "components/encrypted_messages/message_encrypter.h",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3604d978_6cff5a4e",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-03T23:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d47b3abe_c5a987b7",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
