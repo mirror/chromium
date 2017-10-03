@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf051747_8a362e36",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T20:13:30Z",
+      "side": 1,
+      "message": "I don\u0027t know either.\n \nBased on the code, the only writer that set platforms to \u0027*\u0027 is doc_writer:\nhttps://cs.chromium.org/chromium/src/components/policy/tools/template_writers/writers/doc_writer.py?l\u003d19\n\nI can only trace back this line till early 2012 in cl/27658547.\n\nMy best guess is when the code written, there was no writer for chrome_os except the one set platforms to \u0027*\u0027?\n\nI have removed this comment as clearly there are writers using chrome_os as platform attribution now and removing the comment doesn\u0027t confuse the reader.",
+      "parentUuid": "9982786f_7de4c405",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be500cb5_cea44377",
         "filename": "components/policy/tools/template_writers/writers/template_writer.py",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd04afa_2a425b65",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be500cb5_cea44377",
+      "range": {
+        "startLine": 121,
+        "startChar": 10,
+        "endLine": 121,
+        "endChar": 11
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "052b80fe_60331013",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T20:13:30Z",
+      "side": 1,
+      "message": "I\u0027m trying to handle two situations here:\n1) \u0027since_version\u0027 doesn\u0027t exist\n2) it exists but the value is None or empty string.\nAlso, I use -1 instead of None to make sure int() always success.\n\nI have changed the code to use None instead -1 here.",
+      "parentUuid": "082e75b3_c87bdf77",
+      "range": {
+        "startLine": 158,
+        "startChar": 63,
+        "endLine": 158,
+        "endChar": 71
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00803819_008288e5",
         "filename": "components/policy/tools/template_writers/writers/template_writer.py",
         "patchSetId": 6
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7ae09596_bd065576",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00803819_008288e5",
+      "range": {
+        "startLine": 159,
+        "startChar": 62,
+        "endLine": 159,
+        "endChar": 71
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6804d2c2_801cca84",
         "filename": "components/policy/tools/template_writers/writers/template_writer.py",
         "patchSetId": 6
@@ -137,6 +233,30 @@
       "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3418a287_3db72628",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T20:13:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6804d2c2_801cca84",
+      "range": {
+        "startLine": 160,
+        "startChar": 1,
+        "endLine": 162,
+        "endChar": 0
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
