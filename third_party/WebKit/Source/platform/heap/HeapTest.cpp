@@ -333,7 +333,7 @@ class TestGCScope {
   }
 
   ~TestGCScope() {
-    state_->PostGC(BlinkGC::kGCWithSweep);
+    state_->MarkPhaseEpilogue();
     state_->PreSweep(BlinkGC::kGCWithSweep);
   }
 
