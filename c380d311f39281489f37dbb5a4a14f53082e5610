@@ -33,6 +33,24 @@
       "revId": "c380d311f39281489f37dbb5a4a14f53082e5610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ffa15b_77eaf636",
+        "filename": "ash/system/tray/system_tray.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-03T16:52:26Z",
+      "side": 1,
+      "message": "Not, I don\u0027t know this behavior. Removed.",
+      "parentUuid": "0ad47a19_eba45c34",
+      "revId": "c380d311f39281489f37dbb5a4a14f53082e5610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
