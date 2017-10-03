@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "856eafea_2122d809",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-03T02:01:06Z",
+      "side": 1,
+      "message": "Nit: we have two methods that do very different things but have similar names.  How can we rename |presentBookmarkForTab:| in order to reduce confusion?\n\npresentBookmarkForBookmarkedTab, maybe?  Because that\u0027s the method you call when it\u0027s already bookmarked?",
+      "revId": "691d23d9683f608b3e6f15e87b9b0ec2f8e9bda4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
