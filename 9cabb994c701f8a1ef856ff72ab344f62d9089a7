@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec93ada8_337d0fc9",
+        "filename": "chrome/test/chromedriver/chrome/chrome_desktop_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-10-03T20:18:07Z",
+      "side": 1,
+      "message": "Just wondering whether this code could be shared with ChromeDesktopImpl::SetWindowSize above?\n\nMaybe have a shared util function for both.",
+      "range": {
+        "startLine": 315,
+        "startChar": 2,
+        "endLine": 331,
+        "endChar": 39
+      },
+      "revId": "9cabb994c701f8a1ef856ff72ab344f62d9089a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e5a8cf1_e1756228",
         "filename": "chrome/test/chromedriver/client/command_executor.py",
         "patchSetId": 5
