@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bde4a80_fee02889",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "The reverse check is in a follow-up CL @ https://chromium-review.googlesource.com/c/chromium/src/+/696270",
+      "range": {
+        "startLine": 13,
+        "startChar": 5,
+        "endLine": 13,
+        "endChar": 70
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9a52368_c5d2053c",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "These is just a fix for IWYU issues detected by |git cl lint|.",
+      "range": {
+        "startLine": 12,
+        "startChar": 9,
+        "endLine": 12,
+        "endChar": 17
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84273a7e_9b9a5e52",
+        "filename": "chrome/browser/chromeos/accessibility/accessibility_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "\u003cmost of the notes below can probably wait for a review by dmazzoni@\u003e\n\n\nBefore this CL, the following sequence of calls could have taken place when running the AccessibilityManagerUserTypeTest.EnableOnLoginScreenAndLogin test (|guid| was temporarily added to PostLoadChromeVox to help with ad-hoc debugging - the |guid| ties PostLoadChromeVox with the UpdateSpokenFeedbackFromPref call creating the callback):\n\nAccessibilityManager::SetProfile; this \u003d 0x29641e0efb00; profile \u003d 0x29641e805340\nAccessibilityManager::UpdateSpokenFeedbackFromPref; this \u003d 0x29641e0efb00; profile_ \u003d 0x29641e805340; guid \u003d 4c2f686b-610c-4ac3-b79d-b7e6434daf80\nAccessibilityManager::UpdateSpokenFeedbackFromPref; this \u003d 0x29641e0efb00; profile_ \u003d ***0x29641e805340***; guid \u003d 1b7b73be-31a2-44bc-a074-62d99e9b8343\nAccessibilityManager::SetProfile; this \u003d 0x29641e0efb00; profile \u003d 0x29641e80c280\nAccessibilityManager::UpdateSpokenFeedbackFromPref; this \u003d 0x29641e0efb00; profile_ \u003d 0x29641e805340; guid \u003d 416343b8-e9ee-4e3d-8526-67acd6225fdc\nAccessibilityManager::UpdateSpokenFeedbackFromPref; this \u003d 0x29641e0efb00; profile_ \u003d 0x29641e80c280; guid \u003d 20c955b6-e5eb-4aab-a32e-cccf9d658555\nAccessibilityManager::PostLoadChromeVox; this \u003d 0x29641e0efb00; profile_ \u003d ***0x29641e80c280***; guid \u003d 1b7b73be-31a2-44bc-a074-62d99e9b8343\n\nNote that when PostLoadChromeVox is called, the |this-\u003eprofile_| is different (profile_ \u003d 0x29641e80c280; guid \u003d 1b7b73be-31a2-44bc-a074-62d99e9b8343) from the time when |chromevox_loader_-\u003eLoad(profile_,...)| was called (profile_ \u003d 0x29641e805340; guid \u003d 1b7b73be-31a2-44bc-a074-62d99e9b8343).  This is problematic.\n\nOne specific problem is that because of the profiles confusion, extensions::ChromeContentBrowserClientExtensionsPart::SiteInstanceGotProcess(...) can be called *before* ExtensionRegistry::AddEnabled is called in the profile (before \u003d when constructing ChromeVoxPanel).  After this CL such wrong order would lead to a renderer kill in response to !CanCommitURL check.\n\n\nSo:\n\n- Do you agree that the above behavior (committing an extension URL before the ExtensionRegistry for the profile knows about the extension) is wrong and needs to be fixed?\n\n- Does the fix in this CL look okay?  Or should we only cancel/invalidate AccessibilityManager::PostLoadChromeVox callback?  FWIW, most of the affected callbacks dereference |profile_| and therefore it seems okay to cancel/invalidate all of them (ReceiveBrailleDisplayState ends up calling UpdateBrailleImeState which dereferences |profile_|;  PostLoadChromeVox passes |profile_| to the constructor of ChromeVoxPanel;  PostSwitchChromeVoxProfile calls ReloadChromeVoxPanel which passes |profile_| to the constructor of ChromeVoxPanel; the only GetWeakPtr-bound callback that doesn\u0027t dereference |profile_| is PostUnloadChromeVox).\n\n- Any thoughts on the PanelTest.LinkMenu chromevox_tests failure on linux_chromium_chromeos_rel_ng?  This failure was only observed once [1] and I haven\u0027t been able to repro the failure locally or on 3 subsequent try runs.\n\n- Any suggestions for how to test the changes here?  Is is possible to test on a linux machine (e.g. after building with target_os \u003d \"chromeos\")?  Is there a manual test that I should try (or do you think the tryjobs coverage should be sufficient)?\n\n[1] https://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_chromeos_rel_ng/builds/520395/steps/chromevox_tests%20%28with%20patch%29",
+      "range": {
+        "startLine": 1139,
+        "startChar": 2,
+        "endLine": 1139,
+        "endChar": 41
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea67d4e9_a5957221",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "Without this condition, this DCHECK would fail when running running ProcessManagementTest.NavigateToBlockedExtensionPageInNewTab test (after the CanCommitURL tightening done by this CL).",
+      "range": {
+        "startLine": 806,
+        "startChar": 2,
+        "endLine": 806,
+        "endChar": 48
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a76c8bd_e5feaa71",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1554,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "Alex mentioned that blocked pages should end up using a unique origin - I am trying to add a corresponding kill in a follow-up CL @ https://chromium-review.googlesource.com/#/c/chromium/src/+/692917.",
+      "range": {
+        "startLine": 1554,
+        "startChar": 7,
+        "endLine": 1554,
+        "endChar": 28
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c22e0be_17e9727a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "Without this change, the ProcessManagementTest.NavigateToBlockedExtensionPageInNewTab test would fail (even after changing/fixing the DCHECK in NavigationRequest::OnRequestFailed).",
+      "range": {
+        "startLine": 1561,
+        "startChar": 6,
+        "endLine": 1561,
+        "endChar": 32
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90635948_37047133",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-03T15:21:20Z",
+      "side": 1,
+      "message": "Without this early return, a bunch of WebViewTest.*, WebViewPluginTest.* and WebViewGuestScrollTouchTest.* tests would fail.",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
