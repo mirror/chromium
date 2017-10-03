@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0ba6e5ee_8151d381",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/orientation/page-visibility.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T18:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa07df33_66311331",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 5
+      },
+      "revId": "fbd60bc8e51a4d75225d98d35ab1ef5bf8d3bc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b35d0624_5da7ce30",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/orientation/page-visibility.html",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "873a1b9f_c923c659",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/orientation/page-visibility.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T18:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35d0624_5da7ce30",
+      "range": {
+        "startLine": 24,
+        "startChar": 22,
+        "endLine": 24,
+        "endChar": 36
+      },
+      "revId": "fbd60bc8e51a4d75225d98d35ab1ef5bf8d3bc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35754f96_5397e6c3",
         "filename": "third_party/WebKit/LayoutTests/device_orientation/orientation/updates.html",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "fbd60bc8e51a4d75225d98d35ab1ef5bf8d3bc1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd78d20_11b33665",
+        "filename": "third_party/WebKit/LayoutTests/device_orientation/orientation/updates.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-10-03T18:08:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35754f96_5397e6c3",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "fbd60bc8e51a4d75225d98d35ab1ef5bf8d3bc1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
