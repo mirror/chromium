@@ -18,6 +18,7 @@
 #include "chrome/browser/profiles/profiles_state.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/extensions/hosted_app_browser_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_header_painter_ash.h"
@@ -86,6 +87,9 @@ void BrowserNonClientFrameViewAsh::Init() {
   if (browser_view()->ShouldShowWindowIcon()) {
     window_icon_ = new TabIconView(this, nullptr);
     window_icon_->set_is_light(true);
+    window_icon_->set_show_default_favicon(
+        !extensions::HostedAppBrowserController::
+            IsForExperimentalHostedAppBrowser(browser_view()->browser()));
     AddChildView(window_icon_);
     window_icon_->Update();
   }
@@ -363,6 +367,12 @@ void BrowserNonClientFrameViewAsh::OnTabletModeEnded() {
 // TabIconViewModel:
 
 bool BrowserNonClientFrameViewAsh::ShouldTabIconViewAnimate() const {
+  // Hosted apps use their app icon and shouldn't show a throbber.
+  if (extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser_view()->browser())) {
+    return false;
+  }
+
   // This function is queried during the creation of the window as the
   // TabIconView we host is initialized, so we need to null check the selected
   // WebContents because in this condition there is not yet a selected tab.
