@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "260c9379_4985ce01",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-03T20:48:23Z",
+      "side": 1,
+      "message": "It turns out that C++ always sends some string for this, though it may be empty if the default destination is not found.",
+      "range": {
+        "startLine": 85,
+        "startChar": 17,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
