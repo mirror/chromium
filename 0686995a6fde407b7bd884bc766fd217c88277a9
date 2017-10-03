@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdeb3604_042a7c5f",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-03T19:26:25Z",
+      "side": 1,
+      "message": "What is unexpectedly deleting the item controller to necessitate this CL?\nIs it just ARC, or also Extension item delegates being deleted unexpectedly?\n\nCan you instead pass |controller| a pointer to |this|, and have ~ArcAppWindowLauncherItemController call some known ArcAppWindowLauncherController function on destruction? Or can the deletion code call through the ArcAppWindowLauncherController? \n\nEven better, can we fix this defect by removing ArcAppWindowLauncherController\u0027s custom item tracking (ie. |app_shelf_group_to_controller_map_|), and just rely on ShelfModel, ChromeLauncherController, and window properties to map between shelf ids, item delegates, and windows? (ditto for the extension side if possible) Overall, I think we should try to eliminate these controllers, and rely on ChromeLauncherController, individual item delegates, and window properties.\n\nIt would be very nice to avoid polluting the more general [item] controller interfaces with callback-on-destruction workarounds for some strange ARC corner-case behavior.",
+      "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
