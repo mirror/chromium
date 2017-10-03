@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5498541_3901d386",
+        "filename": "build/config/sanitizers/sanitizers.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-03T00:04:46Z",
+      "side": 1,
+      "message": "Isn\u0027t is_clang always true on Linux already? Why is that needed?",
+      "revId": "b7757a05d80cdf9cae0201bcdcdb6e1405548347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
