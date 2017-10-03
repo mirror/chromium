@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ab4ea80d_c7e0b8c2",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "Add a quick comment about the role of this function and document the structure of the return tuple",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b34668a4_fab29d43",
         "filename": "tools/fuchsia/run-swarmed.py",
         "patchSetId": 2
@@ -34,6 +51,97 @@
       "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02fc8e10_4a45cb06",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "Is this supposed to remain commented out?",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af347d05_8f851f8b",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "Put this stuff in the filter file?",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c9c0d2_9d8035f3",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "The lexical scoping of the \"file_suffix\" declaration feels weird here. Shouldn\u0027t we be declaring it above the \"if\"?\n\nObviously it must be valid given that it\u0027s not exploding, but gahh.\n\nCould we initialize it to \"\" and then set it to \".FAILED\" if exit_code !\u003d 0?",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76489b6f_17481897",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "indent right one space",
+      "range": {
+        "startLine": 111,
+        "startChar": 20,
+        "endLine": 111,
+        "endChar": 21
+      },
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589aa30a_e3e3b4a0",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-03T20:05:05Z",
+      "side": 1,
+      "message": "What\u0027s this ANSI code? Can we give it a name?",
+      "revId": "cb81049d7222a331cae8e093f86ec24872b575f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
