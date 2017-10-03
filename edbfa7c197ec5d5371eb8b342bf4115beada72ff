@@ -81,6 +81,53 @@
       "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5fd162_e60a9419",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-03T14:31:29Z",
+      "side": 1,
+      "message": "Yeah, we should replace those conversions so that it stays a LayoutPoint. e.g. on Line 261 you should add overloads for ContentsToRootFrame and RootFrameToContents that work on LayoutPoint so that we avoid losing precision. Did I understand your concern correctly?\n\nWhenever we do a conversion we\u0027re losing some precision so I\u0027d prefer if we convert once from FloatPoint to LayoutPoint and keep it a LayoutPoint throughout. The hit testing code will eventually convert to a LayoutPoint so we should start with a LayoutPoint.\n\nAs an aside: FloatPoint math is more precise when the numbers are close to 0 but the further you get the wider the error gets. With fixed point (i.e. LayoutPoint) the error stays constant regardless of the size of the number so we prefer it for more consistent results on large pages.",
+      "parentUuid": "7a122710_6ede47af",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6eb3be1_49f6efd3",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-03T14:31:29Z",
+      "side": 1,
+      "message": "While you\u0027re here, could you rename this to `main_content_point`. I got a little confused until I looked closer, I think this name is misleading.",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 34
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
