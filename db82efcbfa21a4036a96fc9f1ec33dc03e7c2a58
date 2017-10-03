@@ -69,6 +69,24 @@
       "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1920de2_fc817641",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-10-03T05:45:32Z",
+      "side": 1,
+      "message": "Wait, these already are static. I see what you\u0027re saying. OK, maybe I should move ResolveToPhysicalPropertyAPI onto CSSPropertyAPI base class, and expose CSSProperty::ResolveToPhysicalProperty.",
+      "parentUuid": "a298ffea_54fa26c4",
+      "revId": "db82efcbfa21a4036a96fc9f1ec33dc03e7c2a58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
