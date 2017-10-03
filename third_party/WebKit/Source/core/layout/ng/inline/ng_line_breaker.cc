@@ -176,6 +176,8 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       HandleOpenTag(item, item_result);
       state = LineBreakState::kNotBreakable;
+    } else if (item.Type() == NGInlineItem::kListMarker) {
+      state = HandleListMarker(item, item_result, *line_info);
     } else if (item.Type() == NGInlineItem::kFloating) {
       state = HandleFloat(item, item_result);
     } else if (item.Length()) {
@@ -513,6 +515,46 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   line_.position += item_result->inline_size;
   MoveToNextOf(item);
   return ComputeIsBreakableAfter(item_result);
+}
+
+
+NGLineBreaker::LineBreakState NGLineBreaker::HandleListMarker(
+  const NGInlineItem& item,
+  NGInlineItemResult* item_result,
+  const NGLineInfo& line_info) {
+  DCHECK_EQ(item.Type(), NGInlineItem::kListMarker);
+  line_.should_create_line_box = true;
+
+  LayoutBox* layout_box = ToLayoutBox(item.GetLayoutObject());
+  NGBlockNode node = NGBlockNode(layout_box);
+  const ComputedStyle& style = node.Style();
+
+  NGConstraintSpaceBuilder space_builder(constraint_space_);
+  // Request to compute baseline during the layout, except when we know the box
+  // would synthesize box-baseline.
+  if (NGBaseline::ShouldPropagateBaselines(layout_box)) {
+    space_builder.SetUseFirstLineStyle(line_info.UseFirstLineStyle());
+    space_builder.AddBaselineRequest(
+    { NGBaselineAlgorithmType::kAtomicInline,
+      IsHorizontalWritingMode(constraint_space_.WritingMode())
+      ? FontBaseline::kAlphabeticBaseline
+      : FontBaseline::kIdeographicBaseline });
+  }
+  RefPtr<NGConstraintSpace> constraint_space =
+    space_builder.SetIsNewFormattingContext(true)
+    .SetIsShrinkToFit(true)
+    .SetAvailableSize(constraint_space_.AvailableSize())
+    .SetPercentageResolutionSize(
+      constraint_space_.PercentageResolutionSize())
+    .SetTextDirection(style.Direction())
+    .ToConstraintSpace(FromPlatformWritingMode(style.GetWritingMode()));
+  item_result->layout_result = node.Layout(*constraint_space);
+
+  DCHECK(item_result->layout_result->PhysicalFragment());
+
+  MoveToNextOf(item);
+  item_result->prohibit_break_after = true;
+  return LineBreakState::kNotBreakable;
 }
 
 // Performs layout and positions a float.
