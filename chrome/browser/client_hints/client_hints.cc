@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/client_hints/client_hints.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/origin_util.h"
@@ -18,6 +19,31 @@
 #include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
 #include "third_party/WebKit/public/platform/WebClientHintsType.h"
 #include "url/gurl.h"
+
+namespace {
+
+bool IsJavaScriptAllowed(Profile* profile, const GURL& url) {
+  ContentSettingsForOneType host_javascript_settings;
+  HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_JAVASCRIPT, std::string(),
+      &host_javascript_settings);
+  ContentSettingsForOneType::const_iterator it;
+  LOG(WARNING) << "xxx IsJavaScriptAllowed cp0 url=" << url;
+  for (it = host_javascript_settings.begin();
+       it != host_javascript_settings.end(); ++it) {
+    if (it->primary_pattern.Matches(url) &&
+        it->secondary_pattern.Matches(url)) {
+      ContentSetting content_setting = it->GetContentSetting();
+      LOG(WARNING) << "xxx IsJavaScriptAllowed cp1 content_setting="
+                   << content_setting;
+      return content_setting == CONTENT_SETTING_ALLOW;
+    }
+  }
+  LOG(WARNING) << "xxx IsJavaScriptAllowed cp2 return=true";
+  return true;
+}
+
+}  // namespace
 
 namespace client_hints {
 
@@ -34,6 +60,10 @@ GetAdditionalNavigationRequestClientHintsHeaders(
   Profile* profile = Profile::FromBrowserContext(context);
   if (!profile)
     return nullptr;
+
+  if (!IsJavaScriptAllowed(profile, url)) {
+    return nullptr;
+  }
 
   ContentSettingsForOneType client_hints_host_settings;
   HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
