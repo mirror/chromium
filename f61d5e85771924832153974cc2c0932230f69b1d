@@ -87,6 +87,24 @@
       "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f59df8a_96bc6d01",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-03T14:27:10Z",
+      "side": 1,
+      "message": "OK. Thus far we don\u0027t have a solution for webui in the ash process, but I guess we might be able to use views::WebView.",
+      "parentUuid": "028f73c1_0ab18226",
+      "revId": "f61d5e85771924832153974cc2c0932230f69b1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
