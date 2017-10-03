@@ -110,8 +110,9 @@ bool CheckClientDownloadRequest::ShouldSampleUnsupportedFile(
 }
 
 void CheckClientDownloadRequest::Start() {
-  DVLOG(2) << "Starting SafeBrowsing download check for: "
-           << item_->DebugString(true);
+  VLOG(1) << __FUNCTION__ << ": request: " << this;
+  VLOG(1) << "Starting SafeBrowsing download check for: "
+          << item_->DebugString(true);
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (item_->GetBrowserContext()) {
     Profile* profile = Profile::FromBrowserContext(item_->GetBrowserContext());
@@ -648,6 +649,7 @@ bool CheckClientDownloadRequest::ShouldSampleWhitelistedDownload() {
 void CheckClientDownloadRequest::CheckUrlAgainstWhitelist() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_.get();
   if (!database_manager_.get()) {
     PostFinishTask(DownloadCheckResult::UNKNOWN, REASON_SB_DISABLED);
     return;

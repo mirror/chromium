@@ -53,7 +53,6 @@ source_set("chromeos") {
     "//chrome/browser:rlz",
     "//chrome/browser/devtools",
     "//chrome/browser/extensions",
-    "//chrome/browser/safe_browsing:chunk_proto",
     "//chrome/common",
     "//chrome/common/extensions/api",
     "//chrome/common/extensions/api:api_registration",

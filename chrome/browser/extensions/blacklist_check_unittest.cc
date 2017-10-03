@@ -31,7 +31,7 @@ class BlacklistCheckTest : public testing::Test {
   }
 
   void SetBlacklistState(BlacklistState state) {
-    test_blacklist_.SetBlacklistState(extension_->id(), state, /*notify=*/true);
+    test_blacklist_.SetBlacklistState(extension_->id(), state);
   }
 
   Blacklist* blacklist() { return &blacklist_; }

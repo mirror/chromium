@@ -20,6 +20,7 @@ namespace safe_browsing {
 // static
 std::unique_ptr<ServicesDelegate> ServicesDelegate::Create(
     SafeBrowsingService* safe_browsing_service) {
+  VLOG(1) << __FUNCTION__ << ": service: " << safe_browsing_service;
   return base::WrapUnique(
       new ServicesDelegateImpl(safe_browsing_service, nullptr));
 }
@@ -28,6 +29,7 @@ std::unique_ptr<ServicesDelegate> ServicesDelegate::Create(
 std::unique_ptr<ServicesDelegate> ServicesDelegate::CreateForTest(
     SafeBrowsingService* safe_browsing_service,
     ServicesDelegate::ServicesCreator* services_creator) {
+  VLOG(1) << __FUNCTION__ << ": service: " << safe_browsing_service;
   return base::WrapUnique(
       new ServicesDelegateImpl(safe_browsing_service, services_creator));
 }
@@ -37,6 +39,7 @@ ServicesDelegateImpl::ServicesDelegateImpl(
     ServicesDelegate::ServicesCreator* services_creator)
     : safe_browsing_service_(safe_browsing_service),
       services_creator_(services_creator) {
+  VLOG(1) << __FUNCTION__ << ": service: " << safe_browsing_service;
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 }
 
@@ -68,6 +71,7 @@ ServicesDelegateImpl::v4_local_database_manager() const {
 void ServicesDelegateImpl::Initialize(bool v4_enabled) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
+  VLOG(1) << __FUNCTION__ << ": v4_enabled: " << v4_enabled;
   if (v4_enabled) {
     v4_local_database_manager_ = V4LocalDatabaseManager::Create(
         SafeBrowsingService::GetBaseFilename(),
@@ -75,11 +79,16 @@ void ServicesDelegateImpl::Initialize(bool v4_enabled) {
                    base::Unretained(this)));
   }
 
+  VLOG(1) << __FUNCTION__ << ": services_creator_: " << services_creator_;
+  VLOG(1) << __FUNCTION__ << ": CanCreateDownloadProtectionService: "
+          << services_creator_->CanCreateDownloadProtectionService();
+  VLOG(1) << __FUNCTION__ << ": download_service_: " << download_service_.get();
   download_service_.reset(
       (services_creator_ &&
        services_creator_->CanCreateDownloadProtectionService())
           ? services_creator_->CreateDownloadProtectionService()
           : CreateDownloadProtectionService());
+  VLOG(1) << __FUNCTION__ << ": download_service_: " << download_service_.get();
   incident_service_.reset(
       (services_creator_ &&
        services_creator_->CanCreateIncidentReportingService())
@@ -154,6 +163,9 @@ DownloadProtectionService* ServicesDelegateImpl::GetDownloadService() {
 
 DownloadProtectionService*
 ServicesDelegateImpl::CreateDownloadProtectionService() {
+  VLOG(1) << __FUNCTION__ << ": service: " << safe_browsing_service_;
+  VLOG(1) << __FUNCTION__ << ": service->database_manager(): "
+          << safe_browsing_service_->database_manager();
   return new DownloadProtectionService(safe_browsing_service_);
 }
 
