@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6703fe2f_778b2271",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56737,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T01:22:16Z",
+      "side": 1,
+      "message": "nit: Please define and use a custom enum in enums.xml, that has semantically descriptive labels.",
+      "range": {
+        "startLine": 56737,
+        "startChar": 10,
+        "endLine": 56737,
+        "endChar": 17
+      },
+      "revId": "ba4e61fecdd62eceadd2622a756b4aa34591fd71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88136347_29c079c7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56741,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T01:22:16Z",
+      "side": 1,
+      "message": "nit: \"Whether the user\"",
+      "range": {
+        "startLine": 56741,
+        "startChar": 4,
+        "endLine": 56741,
+        "endChar": 11
+      },
+      "revId": "ba4e61fecdd62eceadd2622a756b4aa34591fd71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d975f8d1_95252393",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 56741,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-03T01:22:16Z",
+      "side": 1,
+      "message": "nit: \"the Safe\"",
+      "range": {
+        "startLine": 56741,
+        "startChar": 32,
+        "endLine": 56741,
+        "endChar": 36
+      },
+      "revId": "ba4e61fecdd62eceadd2622a756b4aa34591fd71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
