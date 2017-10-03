@@ -9,8 +9,7 @@
 
 namespace content {
 
-TestWebUI::TestWebUI() : web_contents_(nullptr) {
-}
+TestWebUI::TestWebUI() : web_contents_(nullptr), controller_(nullptr) {}
 
 TestWebUI::~TestWebUI() {
   ClearTrackedCalls();
@@ -25,7 +24,11 @@ WebContents* TestWebUI::GetWebContents() const {
 }
 
 WebUIController* TestWebUI::GetController() const {
-  return nullptr;
+  return controller_;
+}
+
+void TestWebUI::SetController(WebUIController* controller) {
+  controller_ = controller;
 }
 
 float TestWebUI::GetDeviceScaleFactor() const {
