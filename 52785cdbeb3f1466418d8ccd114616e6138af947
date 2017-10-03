@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dd7b414_31ccf775",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-03T21:48:14Z",
+      "side": 1,
+      "message": "That\u0027s fine with me, if you would prefer that; I will upload a new patch.",
+      "parentUuid": "0798401e_5ad44ee7",
+      "revId": "52785cdbeb3f1466418d8ccd114616e6138af947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6a9f62b_5302fcc3",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "65f1f755_e7e9dc8a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-03T21:48:14Z",
+      "side": 1,
+      "message": "ack",
+      "parentUuid": "c6a9f62b_5302fcc3",
+      "revId": "52785cdbeb3f1466418d8ccd114616e6138af947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0165b93d_a001b949",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-02T23:43:12Z",
       "side": 1,
       "message": "You could also explicitly check if item exists on the filesystem:\n\n    if self._tool.filesystem.exists(test_or_file):\n        with open(test_or_file) as fh: ...\n    else:\n        ...",
+      "revId": "52785cdbeb3f1466418d8ccd114616e6138af947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c08638_c6daf207",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-03T21:48:14Z",
+      "side": 1,
+      "message": "I don\u0027t really like that, I\u0027m afraid of inscrutable behaviors if, e.g., a test is added or subtracted by a CL.",
+      "parentUuid": "0165b93d_a001b949",
       "revId": "52785cdbeb3f1466418d8ccd114616e6138af947",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
