@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d9b53ee9_84639e75",
+        "filename": "base/metrics/histogram_functions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-03T19:29:37Z",
+      "side": 1,
+      "message": "\u003e \u003e You\u0027re right that we should be consistent, but I actually really dislike the phrasing on our best practices doc...\n\u003e \u003e \n\u003e \u003e \u003c_\u003c\n\u003e \u003e \u003e_\u003e\n\u003e \u003e \u003c_\u003c\n\u003e \u003e \n\u003e \u003e \n\u003e \u003e Maybe this is a good idea to update the phrasing there too? \u003d)  Here\u0027s a stab at coming up with something I\u0027m happier with:\n\u003e \u003e \n\u003e \u003e   // These values are persisted to logs, so it\u0027s important for their semantics\n\u003e \u003e   // to remain backward-compatible. It\u0027s safe to append additional enum values,\n\u003e \u003e   // and it\u0027s safe to deprecate existing values. However, it\u0027s not safe to\n\u003e \u003e   // change the meaning of an existing value. In particular, never insert a new\n\u003e \u003e   // enum value into the middle of the list (which would cause subsequent enum\n\u003e \u003e   // values to be renumbered), nor reuse a previously deprecated value.\n\u003e \u003e \n\u003e \u003e Okay, that\u0027s really really long.  Let me try to be more succinct:\n\u003e \u003e \n\u003e \u003e   // These values are persisted to logs; so once a value has been used, its\n\u003e \u003e   // meaning must never change. It\u0027s safe to add new values or to deprecate\n\u003e \u003e   // existing ones; but never renumber existing entries, nor reuse a\n\u003e \u003e   // previously-used value (even if it was deprecated).\n\u003e \u003e \n\u003e \u003e That\u0027s still twice the length of the existing text, but I think it\u0027s much much clearer.  Perhaps you can help me abbreviate it further, without sacrificing the clarity?\n\u003e \n\u003e I can\u0027t get it shorter if you indeed want all that explanation in it.\n\u003e \n\u003e Maybe:\n\u003e // These values are persisted to logs.  Entries cannot be renumbered or reused (even if deleted for a while before being reused).\n\u003e or\n\u003e // These values are persisted to logs.  Entries cannot be renumbered or reused (even if deleted beforehand).\n\u003e or even\n\u003e // These values are persisted to logs.  Entries cannot be renumbered; numeric values can never be reused.\n\nAcknowledged.  (I see you took a phrasing similar to my final suggestion.)",
+      "parentUuid": "840e5f32_f308676f",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 7
+      },
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d8f9815_1b370b0a",
         "filename": "base/metrics/histogram_macros.h",
         "patchSetId": 2
@@ -87,6 +111,24 @@
       "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0569c63_d217c63f",
+        "filename": "base/metrics/histogram_macros.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-03T19:29:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5d8f9815_1b370b0a",
+      "revId": "c257a588ec82df7316946943b1c66bab71d33fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
