@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4997d2c6_ee97af0a",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-03T16:25:44Z",
+      "side": 1,
+      "message": "That makes it so much better! Thanks for the idea!",
+      "parentUuid": "24d5d03d_64cd9077",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43bd6b5f_ced71369",
         "filename": "chrome/browser/vr/animation_player.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-12T13:00:49Z",
       "side": 1,
       "message": "I think it would simplify things to add ApproximatelyEqual to the various keyframe classes.",
+      "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924e2e5d_f6a468ef",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-03T16:25:44Z",
+      "side": 1,
+      "message": "Do you mean adding a static ApproximatelyEqual function to e.g. FloatKeyframe (https://cs.chromium.org/chromium/src/cc/animation/keyframed_animation_curve.h?rcl\u003d8e24d103b035c2a369c260b02ff47a9d3c77f554\u0026l\u003d59)?",
+      "parentUuid": "43bd6b5f_ced71369",
       "revId": "2e1ff5ba0fe3f416e479ff9db489e6b3ee86c126",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
