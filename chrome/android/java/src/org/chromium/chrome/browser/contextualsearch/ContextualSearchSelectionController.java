@@ -20,6 +20,8 @@ import org.chromium.ui.touch_selection.SelectionEventType;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Nullable;
+
 /**
  * Controls selection gesture interaction for Contextual Search.
  */
@@ -396,6 +398,7 @@ public class ContextualSearchSelectionController {
      * @return The Base Page's {@link ContentViewCore}, or {@code null} if there is no current tab.
      */
     @Deprecated
+    @Nullable
     ContentViewCore getBaseContentView() {
         Tab currentTab = mActivity.getActivityTab();
         return currentTab != null ? currentTab.getContentViewCore() : null;
@@ -405,6 +408,7 @@ public class ContextualSearchSelectionController {
      * @return The Base Page's {@link WebContents}, or {@code null} if there is no current tab or
      *         the current tab has no {@link ContentViewCore}.
      */
+    @Nullable
     WebContents getBaseWebContents() {
         Tab currentTab = mActivity.getActivityTab();
         if (currentTab == null) return null;
