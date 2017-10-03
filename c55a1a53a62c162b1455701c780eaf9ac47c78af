@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bed58027_22b4af88",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:12:39Z",
+      "side": 1,
+      "message": "nit: Not sure why IsPageVisible/IsCrossOrigin aren\u0027t pure-virtual while everything else is?",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 28
+      },
+      "revId": "c55a1a53a62c162b1455701c780eaf9ac47c78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff1d2c9_bb6e1ca6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:12:39Z",
+      "side": 1,
+      "message": "s/task/Task/",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "c55a1a53a62c162b1455701c780eaf9ac47c78af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
