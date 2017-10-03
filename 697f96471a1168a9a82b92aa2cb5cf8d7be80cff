@@ -70,6 +70,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09989af8_4281b74e",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1245945
+      },
+      "writtenOn": "2017-10-03T23:29:28Z",
+      "side": 1,
+      "message": "As mentioned above, we don\u0027t have to include the flag in the message. I\u0027m also fine with removing the throttling code until a more robust solution can be put in place.\n\nI\u0027ll wait for y\u0027all to come to a consensus before updating this again though.",
+      "parentUuid": "cfbe3ea8_fca980cb",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
