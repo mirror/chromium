@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e0849086_871050a9",
+        "filename": "ui/compositor/layer_animator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2027,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-03T20:37:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c06cc83d_4e00871a",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b53ab1_08bc9e7c",
         "filename": "ui/compositor/scoped_layer_animation_settings.cc",
         "patchSetId": 4
@@ -139,6 +157,24 @@
       "side": 1,
       "message": "#4 - if no Set##name is called, nothing would call StartAnimation",
       "parentUuid": "b01ad722_97661446",
+      "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "985748e8_68441857",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-10-03T20:37:09Z",
+      "side": 1,
+      "message": "#4, Right. plus the following case StartAnimation is not called.\nif (duration.is_zero() \u0026\u0026 delegate() \u0026\u0026 (preemption_strategy_ !\u003d ENQUEUE_NEW_ANIMATION))\nhttps://cs.chromium.org/chromium/src/ui/compositor/layer_animator.cc?l\u003d92\u0026rcl\u003d25dc0992a465742bf3a508d2f099e51fd56b1e15",
+      "parentUuid": "d4d72c10_a48d9f28",
       "revId": "0628c79023ccc2b494f447944ce50ae66bf0640c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
