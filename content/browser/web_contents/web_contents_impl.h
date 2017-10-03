@@ -12,6 +12,8 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
@@ -1016,7 +1018,7 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   };
 
   // See WebContents::Create for a description of these parameters.
-  WebContentsImpl(BrowserContext* browser_context);
+  explicit WebContentsImpl(BrowserContext* browser_context);
 
   // Add and remove observers for page navigation notifications. The order in
   // which notifications are sent to observers is undefined. Clients must be
@@ -1128,10 +1130,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void OnSetSelectedColorInColorChooser(RenderFrameHostImpl* source,
                                         int color_chooser_id,
                                         SkColor color);
-  void OnWebUISend(RenderViewHostImpl* source,
-                   const GURL& source_url,
-                   const std::string& name,
-                   const base::ListValue& args);
   void OnUpdatePageImportanceSignals(RenderFrameHostImpl* source,
                                      const PageImportanceSignals& signals);
 #if BUILDFLAG(ENABLE_PLUGINS)
