@@ -16,6 +16,24 @@
       "revId": "97bfda1aae898bc62265dfcba5b3060a46c9eb92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4223c0_8eb83264",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-10-03T16:19:49Z",
+      "side": 1,
+      "message": "Yes, this is part of the UIView implementation (I should move this to another file). Apple is OK with implementing this from UIViews: https://developer.apple.com/documentation/uikit/uitraitenvironment/1623516-traitcollectiondidchange?language\u003dobjc\nI also made sure this is called along the call in BVC. What I did forget was the super call, which I\u0027ll add.",
+      "parentUuid": "508929c2_6f5631d6",
+      "revId": "97bfda1aae898bc62265dfcba5b3060a46c9eb92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
