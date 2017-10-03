@@ -316,6 +316,30 @@
       "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a33a7b_37be5d55",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T20:44:00Z",
+      "side": 1,
+      "message": "He\u0027s right about volatile, nice catch Paul!  Just make this an Atomic32, and use (nobarrier) atomic methods to get/set it.  Volatile tells the compiler that the value may change on another thread without warning.  Atomic operations (Which use the volatile keyword, internally) also mean the value should be read in one go (e.g., some old systems could theoretically write memory 16 bits at a time or something, and could end up with half the value - no systems we run on actually do that anymore, though).\n\nThis will also prevent TSAN from complaining about accessing this on multiple threads without threading primitives protecting it.",
+      "parentUuid": "88b63627_9637e6c1",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
