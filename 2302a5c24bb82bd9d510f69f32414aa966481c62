@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "827b4d59_2f70ee0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:54:45Z",
+      "side": 1,
+      "message": "There is several different kinds of unregistering going on here. Can we come up with more precise terms for each? Maybe we should describe the states as TaskQueue can be in explicitly.",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab471d5c_1dce561d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:54:45Z",
+      "side": 1,
+      "message": "What happens to posted tasks after this? In the frame detach case, when is this called?",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74ec370f_0b609647",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
@@ -18,6 +64,52 @@
         "startChar": 2,
         "endLine": 136,
         "endChar": 16
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2502c6_7a912845",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:54:45Z",
+      "side": 1,
+      "message": "This seems oddly asymmetric -- you can get a TaskQueue from CreateTaskQueue but how is the client (not knowing any TaskQueue internals) supposed to call this?",
+      "range": {
+        "startLine": 160,
+        "startChar": 7,
+        "endLine": 160,
+        "endChar": 26
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ac6a11_616a0b85",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-03T05:54:45Z",
+      "side": 1,
+      "message": "Doesn\u0027t exist anymore?",
+      "range": {
+        "startLine": 326,
+        "startChar": 7,
+        "endLine": 326,
+        "endChar": 36
       },
       "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
