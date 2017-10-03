@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d35dcc36_f2e9d043",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-03T05:27:47Z",
+      "side": 1,
+      "message": "We probably can remove the the other two methods. The last one is used in tests a lot. If you agree, I can remove them in a separate CL.",
+      "revId": "ee89cd36c8ca7939f9ce24b417df16a3b2109614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
