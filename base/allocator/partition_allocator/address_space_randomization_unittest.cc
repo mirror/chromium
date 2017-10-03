@@ -22,11 +22,20 @@ namespace base {
 
 TEST(AddressSpaceRandomizationTest, GetRandomPageBase) {
   uintptr_t mask = internal::kASLRMask;
-#if defined(ARCH_CPU_64_BITS) && defined(OS_WIN)
+#if defined(OS_WIN)
+#if defined(ARCH_CPU_64_BITS)
   if (!IsWindows8Point1OrGreater()) {
     mask = internal::kASLRMaskBefore8_10;
   }
-#endif
+#else   // defined(ARCH_CPU_32_BITS)
+  // On 32 bit Windows, ASLR is disabled.
+  BOOL isWow64 = -1;
+  if (!IsWow64Process(GetCurrentProcess(), &isWow64))
+    isWow64 = FALSE;
+  if (!isWow64)
+    return;
+#endif  // defined(ARCH_CPU_32_BITS)
+#endif  // defined(OS_WIN)
   // Sample the first 100 addresses.
   std::set<uintptr_t> addresses;
   uintptr_t address_logical_sum = 0;
