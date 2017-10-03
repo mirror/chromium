@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd186db_e25d7ce5",
+        "filename": "components/printing/service/pdf_compositor_manifest.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T20:32:52Z",
+      "side": 1,
+      "message": "Don\u0027t mean to bikeshed, but the name here is pdf_compositor. I think we should either have the underscore in all the places, or none of the places (I have a preference for the underscore because I think pdf_compositor is more readable).",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30e4166_750bc82f",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T20:32:52Z",
+      "side": 1,
+      "message": "This looks copied from the utility process policy, but does this need to use the PPAPI one instead? Do you know if you need all of these, or can you trim the list to just whichever syscall you need?",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8204b2f4_b51c0446",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T20:32:52Z",
+      "side": 1,
+      "message": "I.e., depending on under_score or not, this file name should have one too.",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15db3470_3e363c9f",
+        "filename": "content/common/sandbox_linux/bpf_pdfcompositor_policy_linux.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T20:32:52Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "c6837a4bbb1fb4292aba71facb121b2df92a2f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
