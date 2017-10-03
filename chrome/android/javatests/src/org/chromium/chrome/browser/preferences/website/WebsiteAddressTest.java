@@ -12,14 +12,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.CommandLine;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
+import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 
 /**
  * Tests for WebsiteAddress.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
+@RunWith(ChromeJUnit4ClassRunner.class)
 public class WebsiteAddressTest {
     @Rule
     public final ChromeBrowserTestRule mBrowserTestRule = new ChromeBrowserTestRule();

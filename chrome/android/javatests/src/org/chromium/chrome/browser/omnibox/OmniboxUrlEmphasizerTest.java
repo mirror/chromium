@@ -22,7 +22,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ThreadUtils;
-import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.omnibox.OmniboxUrlEmphasizer.UrlEmphasisColorSpan;
@@ -30,6 +29,7 @@ import org.chromium.chrome.browser.omnibox.OmniboxUrlEmphasizer.UrlEmphasisSecur
 import org.chromium.chrome.browser.omnibox.OmniboxUrlEmphasizer.UrlEmphasisSpan;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
+import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 
 import java.util.Arrays;
@@ -39,7 +39,7 @@ import java.util.Comparator;
  * Unit tests for OmniboxUrlEmphasizer that ensure various types of URLs are
  * emphasized and colored correctly.
  */
-@RunWith(BaseJUnit4ClassRunner.class)
+@RunWith(ChromeJUnit4ClassRunner.class)
 public class OmniboxUrlEmphasizerTest {
     @Rule
     public final RuleChain mChain =
