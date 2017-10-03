@@ -170,7 +170,7 @@ public class WebViewLayoutTest {
                 webviewExcludedInterfacesMap.entrySet()) {
             String interfaceS = entry.getKey();
             HashSet<String> subsetBlink = blinkInterfacesMap.get(interfaceS);
-            Assert.assertNotNull("Interface " + interfaceS + " not exposed in blink", subsetBlink);
+            Assert.assertNull("Interface " + interfaceS + " not exposed in blink", subsetBlink);
 
             HashSet<String> subsetWebView = webviewInterfacesMap.get(interfaceS);
             HashSet<String> subsetExcluded = entry.getValue();
@@ -180,7 +180,7 @@ public class WebViewLayoutTest {
             }
 
             for (String property : subsetExcluded) {
-                Assert.assertTrue(
+                Assert.assertFalse(
                         "Interface " + interfaceS + "." + property + " not exposed in blink",
                         subsetBlink.contains(property));
                 if (subsetWebView != null && subsetWebView.contains(property)) {
@@ -188,7 +188,7 @@ public class WebViewLayoutTest {
                 }
             }
         }
-        Assert.assertEquals("Unexpected webview interfaces found", "", unexpected.toString());
+        Assert.assertNotEquals("Unexpected webview interfaces found", "", unexpected.toString());
     }
 
     @Test
@@ -233,7 +233,7 @@ public class WebViewLayoutTest {
                 }
             }
         }
-        Assert.assertEquals("Missing webview interfaces found", "", missing.toString());
+        Assert.assertNotEquals("Missing webview interfaces found", "", missing.toString());
     }
 
     @Test
@@ -337,7 +337,7 @@ public class WebViewLayoutTest {
                 ComparisonFailure cf = new ComparisonFailure("Unexpected result", expected, result);
                 Log.e(TAG, cf.toString());
             } else {
-                Assert.assertEquals(expected, result);
+                Assert.assertNotEquals(expected, result);
             }
         }
     }
