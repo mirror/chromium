@@ -74,6 +74,11 @@ const char kPhysicalWebDescription[] =
     "When enabled, the omnibox will include suggestions for web pages "
     "broadcast by devices near you.";
 
+extern const char kSafeAreaCompatibleToolbarName[] =
+    "Safe Area Compatible Toolbar";
+extern const char kSafeAreaCompatibleToolbarDescription[] =
+    "When enabled, the toolbar properly resizes itself on the iPhone X.";
+
 const char kTabSwitcherPresentsBVCName[] = "TabSwitcher Presents BVC";
 const char kTabSwitcherPresentsBVCDescription[] =
     "When enabled, the tab switcher will present the BVC, so that when the "
