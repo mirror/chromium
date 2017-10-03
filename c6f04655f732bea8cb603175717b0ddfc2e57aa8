@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e18bcc8e_cac149b0",
+        "filename": "chrome/test/base/tracing.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T23:59:33Z",
+      "side": 1,
+      "message": "Are you intentionally removing the comma from the !empty case?",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858798e5_e6e1902c",
+        "filename": "chrome/test/base/tracing.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T23:59:33Z",
+      "side": 1,
+      "message": "DCHECK(chunk)?",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
