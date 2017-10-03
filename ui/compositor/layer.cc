@@ -1143,7 +1143,11 @@ void Layer::SetBoundsFromAnimation(const gfx::Rect& bounds) {
 }
 
 void Layer::SetTransformFromAnimation(const gfx::Transform& transform) {
+  if (delegate_)
+    delegate_->OnLayerTransforming();
   cc_layer_->SetTransform(transform);
+  if (delegate_)
+    delegate_->OnLayerTransformed();
 }
 
 void Layer::SetOpacityFromAnimation(float opacity) {

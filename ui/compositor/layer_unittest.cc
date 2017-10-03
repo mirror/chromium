@@ -316,6 +316,8 @@ class TestLayerDelegate : public LayerDelegate {
     device_scale_factor_ = new_device_scale_factor;
   }
 
+  MOCK_METHOD0(OnLayerTransforming, void());
+  MOCK_METHOD0(OnLayerTransformed, void());
   MOCK_METHOD2(OnLayerOpacityChanged, void(float, float));
 
   void reset() {
@@ -2274,6 +2276,45 @@ TEST(LayerDelegateTest, DelegatedFrameDamage) {
   layer->OnDelegatedFrameDamage(damage_rect);
   EXPECT_TRUE(delegate.delegated_frame_damage_called());
   EXPECT_EQ(damage_rect, delegate.delegated_frame_damage_rect());
+}
+
+TEST(LayerDelegateTest, OnLayerTransformingAndTransformed) {
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  gfx::Transform transform;
+  transform.Skew(10.0f, 5.0f);
+  EXPECT_CALL(delegate, OnLayerTransforming());
+  EXPECT_CALL(delegate, OnLayerTransformed());
+  layer->SetTransform(transform);
+}
+
+TEST(LayerDelegateTest, OnLayerTransformingAndTransformedAnimation) {
+  ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
+      ScopedAnimationDurationScaleMode::NORMAL_DURATION);
+  LayerAnimatorTestController test_controller(
+      LayerAnimator::CreateImplicitAnimator());
+  LayerAnimator* const animator = test_controller.animator();
+
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  layer->SetAnimator(animator);
+  gfx::Transform target_transform;
+  target_transform.Skew(10.0f, 5.0f);
+  layer->SetTransform(target_transform);
+
+  const base::TimeTicks start_time = animator->last_step_time();
+  const base::TimeDelta duration = animator->GetTransitionDuration();
+  LOG(ERROR) << duration;
+  LOG(ERROR) << start_time;
+
+  EXPECT_CALL(delegate, OnLayerTransforming());
+  EXPECT_CALL(delegate, OnLayerTransformed());
+  animator->Step(start_time + duration / 2);
+  gfx::Transform step_transform;
+  step_transform.Skew(5.0f, 2.5f);
+  EXPECT_TRUE(layer->transform().ApproximatelyEqual(step_transform));
 }
 
 TEST(LayerDelegateTest, OnLayerOpacityChanged) {
