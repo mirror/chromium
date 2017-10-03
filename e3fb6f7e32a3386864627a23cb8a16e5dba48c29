@@ -46,6 +46,30 @@
       "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26a5179e_beb63c6c",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-03T17:25:43Z",
+      "side": 0,
+      "message": "Thanks! This should work, I will give it a try. But what I\u0027m trying to understand here is what is wrong with the current approach. It seems less plumbing.",
+      "parentUuid": "79be4f74_0d77115f",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
