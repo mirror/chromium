@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "629329db_45cea510",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-03T15:39:31Z",
+      "side": 1,
+      "message": "Yes.  Good call. \n\nDone",
+      "parentUuid": "fa88cca5_0895e6cb",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e764da85_f3fa0a4c",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952465a1_b6a9359d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-03T15:39:31Z",
+      "side": 1,
+      "message": "Yeah, thanks.  I had wondered if it was trying to say too much in one sentence.  The next patch breaks things up in an attempt to make it clearer.\n\nDone",
+      "parentUuid": "e764da85_f3fa0a4c",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2e36f308_57f243ba",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-03T15:39:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab98ef73_f2205b37",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "998670dd_e8cf7a78",
         "filename": "components/viz/service/hit_test/hit_test_manager.h",
         "patchSetId": 14
@@ -85,6 +139,24 @@
       "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5978fbf6_02ee2deb",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-10-03T15:39:31Z",
+      "side": 1,
+      "message": "Good call.  These are now private and TestHitTestManager is a friend so that it can inspect the map. \n\nDone",
+      "parentUuid": "998670dd_e8cf7a78",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
