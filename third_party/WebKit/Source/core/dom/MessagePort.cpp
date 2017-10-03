@@ -90,6 +90,7 @@ void MessagePort::postMessage(ScriptState* script_state,
 
 MessagePortChannel MessagePort::Disentangle() {
   DCHECK(!IsNeutered());
+  channel_.ClearCallback();
   auto result = std::move(channel_);
   channel_ = MessagePortChannel();
   return result;
@@ -129,6 +130,7 @@ void MessagePort::close() {
   // A closed port should not be neutered, so don't disconnect the message pipe.
   // TODO(crbug.com/673526): Make sure that transfering a closed port keeps the
   // port closed.
+  channel_.ClearCallback();
   closed_ = true;
 }
 
