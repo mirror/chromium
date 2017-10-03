@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9836d224_abc80833",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-03T03:54:01Z",
+      "side": 1,
+      "message": "I don\u0027t see this method called from anywhere. According to the 2nd fix in the CL description, the deep copy is needed. Am I missing anything?",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 25
+      },
+      "revId": "79e754387c23b9906d559b03a97c4f428ab98204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc27f2f_da24926f",
+        "filename": "gpu/ipc/service/gpu_vsync_provider_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-10-03T03:54:01Z",
+      "side": 1,
+      "message": "Is there a need to call this method somewhere to null the pointer?",
+      "range": {
+        "startLine": 259,
+        "startChar": 21,
+        "endLine": 259,
+        "endChar": 28
+      },
+      "revId": "79e754387c23b9906d559b03a97c4f428ab98204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
