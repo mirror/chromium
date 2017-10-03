@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "128aada9_0629e3d9",
+        "filename": "breakpad/src",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-03T11:29:15Z",
+      "side": 1,
+      "message": "Remove this change.",
+      "revId": "a4896d2d07014bf6023b7f12974226aae0925430",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
