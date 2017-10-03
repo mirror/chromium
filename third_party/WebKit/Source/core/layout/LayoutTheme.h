@@ -41,9 +41,9 @@ class FileList;
 class Font;
 class FontDescription;
 class HTMLInputElement;
-class LayoutObject;
 class LengthSize;
 class Locale;
+class Node;
 class PlatformChromeClient;
 class Theme;
 class ThemePainter;
@@ -92,11 +92,11 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
   virtual String ExtraQuirksStyleSheet();
   virtual String ExtraFullscreenStyleSheet();
 
-  // A method to obtain the baseline position for a "leaf" control. This will
-  // only be used if a baseline position cannot be determined by examining child
-  // content. Checkboxes and radio buttons are examples of controls that need to
-  // do this.
-  virtual LayoutUnit BaselinePosition(const LayoutObject*) const;
+  // A method to obtain the baseline position adjustment needed for a "leaf"
+  // control. This will only be used if a baseline position cannot be determined
+  // by examining child content.
+  // Checkboxes and radio buttons are examples of controls that need to do this.
+  LayoutUnit BaselinePositionAdjustment(const ComputedStyle&) const;
 
   // A method for asking if a control is a container or not.  Leaf controls have
   // to have some special behavior (like the baseline position API above).
@@ -108,15 +108,17 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
 
   // Some controls may spill out of their containers (e.g., the check on an OSX
   // 10.9 checkbox). Add this "visual overflow" to the object's border box rect.
-  virtual void AddVisualOverflow(const LayoutObject&, IntRect& border_box);
+  virtual void AddVisualOverflow(Node*,
+                                 const ComputedStyle&,
+                                 IntRect& border_box);
 
   // This method is called whenever a control state changes on a particular
   // themed object, e.g., the mouse becomes pressed or a control becomes
   // disabled. The ControlState parameter indicates which state has changed
   // (from having to not having, or vice versa).
-  bool ControlStateChanged(LayoutObject&, ControlState) const;
+  bool ControlStateChanged(Node*, const ComputedStyle&, ControlState) const;
 
-  bool ShouldDrawDefaultFocusRing(const LayoutObject&) const;
+  bool ShouldDrawDefaultFocusRing(Node*, const ComputedStyle&) const;
 
   // A method asking if the theme's controls actually care about redrawing when
   // hovered.
@@ -272,17 +274,17 @@ class CORE_EXPORT LayoutTheme : public RefCounted<LayoutTheme> {
 
  public:
   // Methods for state querying
-  static ControlStates ControlStatesForLayoutObject(const LayoutObject&);
-  static bool IsActive(const LayoutObject&);
-  static bool IsChecked(const LayoutObject&);
-  static bool IsIndeterminate(const LayoutObject&);
-  static bool IsEnabled(const LayoutObject&);
-  static bool IsFocused(const LayoutObject&);
-  static bool IsPressed(const LayoutObject&);
-  static bool IsSpinUpButtonPartPressed(const LayoutObject&);
-  static bool IsHovered(const LayoutObject&);
-  static bool IsSpinUpButtonPartHovered(const LayoutObject&);
-  static bool IsReadOnlyControl(const LayoutObject&);
+  static ControlStates ControlStatesForNode(Node*, const ComputedStyle&);
+  static bool IsActive(Node*);
+  static bool IsChecked(Node*);
+  static bool IsIndeterminate(Node*);
+  static bool IsEnabled(Node*);
+  static bool IsFocused(Node*);
+  static bool IsPressed(Node*);
+  static bool IsSpinUpButtonPartPressed(Node*);
+  static bool IsHovered(Node*);
+  static bool IsSpinUpButtonPartHovered(Node*);
+  static bool IsReadOnlyControl(Node*);
 
  private:
   // This function is to be implemented in your platform-specific theme

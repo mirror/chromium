@@ -30,7 +30,8 @@ namespace blink {
 
 class IntRect;
 class LayoutObject;
-
+class Node;
+class ComputedStyle;
 struct PaintInfo;
 
 class ThemePainter {
@@ -44,8 +45,14 @@ class ThemePainter {
   // rendered by the engine itself.  The boolean return value indicates whether
   // the CSS border/background should also be painted.
   bool Paint(const LayoutObject&, const PaintInfo&, const IntRect&);
-  bool PaintBorderOnly(const LayoutObject&, const PaintInfo&, const IntRect&);
-  bool PaintDecorations(const LayoutObject&, const PaintInfo&, const IntRect&);
+  bool PaintBorderOnly(Node*,
+                       const ComputedStyle&,
+                       const PaintInfo&,
+                       const IntRect&);
+  bool PaintDecorations(Node*,
+                        const ComputedStyle&,
+                        const PaintInfo&,
+                        const IntRect&);
 
   virtual bool PaintCapsLockIndicator(const LayoutObject&,
                                       const PaintInfo&,
@@ -55,42 +62,50 @@ class ThemePainter {
   void PaintSliderTicks(const LayoutObject&, const PaintInfo&, const IntRect&);
 
  protected:
-  virtual bool PaintCheckbox(const LayoutObject&,
+  virtual bool PaintCheckbox(Node*,
+                             const ComputedStyle&,
                              const PaintInfo&,
                              const IntRect&) {
     return true;
   }
-  virtual bool PaintRadio(const LayoutObject&,
+  virtual bool PaintRadio(Node*,
+                          const ComputedStyle&,
                           const PaintInfo&,
                           const IntRect&) {
     return true;
   }
-  virtual bool PaintButton(const LayoutObject&,
+  virtual bool PaintButton(Node*,
+                           const ComputedStyle&,
                            const PaintInfo&,
                            const IntRect&) {
     return true;
   }
-  virtual bool PaintInnerSpinButton(const LayoutObject&,
+  virtual bool PaintInnerSpinButton(Node*,
+                                    const ComputedStyle&,
                                     const PaintInfo&,
                                     const IntRect&) {
     return true;
   }
-  virtual bool PaintTextField(const LayoutObject&,
+  virtual bool PaintTextField(Node*,
+                              const ComputedStyle&,
                               const PaintInfo&,
                               const IntRect&) {
     return true;
   }
-  virtual bool PaintTextArea(const LayoutObject&,
+  virtual bool PaintTextArea(Node*,
+                             const ComputedStyle&,
                              const PaintInfo&,
                              const IntRect&) {
     return true;
   }
-  virtual bool PaintMenuList(const LayoutObject&,
+  virtual bool PaintMenuList(Node*,
+                             const ComputedStyle&,
                              const PaintInfo&,
                              const IntRect&) {
     return true;
   }
-  virtual bool PaintMenuListButton(const LayoutObject&,
+  virtual bool PaintMenuListButton(Node* node,
+                                   const ComputedStyle&,
                                    const PaintInfo&,
                                    const IntRect&) {
     return true;
@@ -105,12 +120,14 @@ class ThemePainter {
                                 const IntRect&) {
     return true;
   }
-  virtual bool PaintSliderThumb(const LayoutObject&,
+  virtual bool PaintSliderThumb(Node*,
+                                const ComputedStyle&,
                                 const PaintInfo&,
                                 const IntRect&) {
     return true;
   }
-  virtual bool PaintSearchField(const LayoutObject&,
+  virtual bool PaintSearchField(Node*,
+                                const ComputedStyle&,
                                 const PaintInfo&,
                                 const IntRect&) {
     return true;
@@ -121,13 +138,16 @@ class ThemePainter {
     return true;
   }
 
-  bool PaintUsingFallbackTheme(const LayoutObject&,
+  bool PaintUsingFallbackTheme(Node*,
+                               const ComputedStyle&,
                                const PaintInfo&,
                                const IntRect&);
-  bool PaintCheckboxUsingFallbackTheme(const LayoutObject&,
+  bool PaintCheckboxUsingFallbackTheme(Node*,
+                                       const ComputedStyle&,
                                        const PaintInfo&,
                                        const IntRect&);
-  bool PaintRadioUsingFallbackTheme(const LayoutObject&,
+  bool PaintRadioUsingFallbackTheme(Node*,
+                                    const ComputedStyle&,
                                     const PaintInfo&,
                                     const IntRect&);
 };
