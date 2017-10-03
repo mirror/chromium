@@ -185,6 +185,10 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   // network quality estimation.
   void SetUseSmallResponsesForTesting(bool use_small_responses);
 
+  int hanging_request_duration_http_rtt_multiplier() const {
+    return hanging_request_duration_http_rtt_multiplier_;
+  }
+
  private:
   // Map containing all field trial parameters related to
   // NetworkQualityEstimator field trial.
@@ -203,6 +207,8 @@ class NET_EXPORT NetworkQualityEstimatorParams {
   const base::TimeDelta increase_in_transport_rtt_logging_interval_;
   const base::TimeDelta recent_time_threshold_;
   const base::TimeDelta historical_time_threshold_;
+
+  const int hanging_request_duration_http_rtt_multiplier_;
 
   bool use_small_responses_;
 
