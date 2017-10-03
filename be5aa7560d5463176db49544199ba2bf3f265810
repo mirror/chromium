@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "88d6a8b2_a96a44c2",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t get it...\n\nShouldn\u0027t Position::BeforeAnchor(\"foo\") and Position(\"foo\", 0) two different positions? Why should equality hold in this case?",
+      "parentUuid": "deedbba1_760c0b2b",
+      "revId": "be5aa7560d5463176db49544199ba2bf3f265810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d99ade7_e586935a",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
         "patchSetId": 6

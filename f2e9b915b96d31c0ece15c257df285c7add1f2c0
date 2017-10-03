@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24a45335_55621e56",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Could you add a TODO here?\n\nTODO(xiaochengh): Use LayoutNG offset mapping instead of TextIterator.",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba965681_0b0a0767",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "|node_after_position| can be null, when |position| is the \"after-children\" position in its container.",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 33
+      },
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af42703f_0f8bb1de",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Equality seems fine, when the position is the one after all children.",
+      "range": {
+        "startLine": 177,
+        "startChar": 21,
+        "endLine": 177,
+        "endChar": 23
+      },
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fd54bf_1cd0b588",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "This part seems to be verifying the structure of the AX tree instead of AXPosition. I don\u0027t think we need it here.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 19
+      },
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d663913_232cd75d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "We should also verify if |offset_| is out of range for text positions.",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c3a9fe_09619e83",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "How about adding one more DCHECK of Document::IsActive?",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1372ac_77f6715e",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXPosition.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Could you add a TODO here?\n\nTODO(xiaochengh): Use LayoutNG offset mapping instead of TextIterator.",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852d6989_38b765fe",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Is it better to DCHECK(IsValid()), so that the behavior is more predictable?\n\nOr adding DCHECK before this return, if we don\u0027t want to crash the Release build.",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 11
+      },
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "075803fd_38e674d7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea536104_6cea0636",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1976b5ac_c151a507",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRange.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-03T17:29:23Z",
+      "side": 1,
+      "message": "Please use a more specific name or make it private.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "f2e9b915b96d31c0ece15c257df285c7add1f2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
