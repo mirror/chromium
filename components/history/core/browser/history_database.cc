@@ -127,8 +127,8 @@ sql::InitStatus HistoryDatabase::Init(const base::FilePath& history_name) {
   if (!meta_table_.Init(&db_, GetCurrentVersion(), kCompatibleVersionNumber))
     return LogInitFailure(InitStep::META_TABLE_INIT);
   if (!CreateURLTable(false) || !InitVisitTable() ||
-      !InitKeywordSearchTermsTable() || !InitDownloadTable() ||
-      !InitSegmentTables() || !InitSyncTable())
+      !InitKeywordSearchTermsTable() || !InitKnownIntranetDomainsTable() ||
+      !InitDownloadTable() || !InitSegmentTables() || !InitSyncTable())
     return LogInitFailure(InitStep::CREATE_TABLES);
   CreateMainURLIndex();
   CreateKeywordSearchTermsIndices();
@@ -321,6 +321,11 @@ bool HistoryDatabase::RecreateAllTablesButURL() {
   if (!DropKeywordSearchTermsTable())
     return false;
   if (!InitKeywordSearchTermsTable())
+    return false;
+
+  if (!DropKnownIntranetDomainsTable())
+    return false;
+  if (!InitKnownIntranetDomainsTable())
     return false;
 
   if (!DropSegmentTables())

@@ -40,8 +40,7 @@ bool URLDatabase::URLEnumerator::GetNextURL(URLRow* r) {
 }
 
 URLDatabase::URLDatabase()
-    : has_keyword_search_terms_(false) {
-}
+    : has_keyword_search_terms_(false), has_known_intranet_domains_(false) {}
 
 URLDatabase::~URLDatabase() {
 }
@@ -190,6 +189,10 @@ bool URLDatabase::DeleteURLRow(URLID id) {
   if (!statement.Run())
     return false;
 
+  // And delete any known intranet domains.
+  if (has_known_intranet_domains_)
+    RemoveIntranetDomainFromURLId(id);
+
   // And delete any keyword visits.
   return !has_keyword_search_terms_ || DeleteKeywordSearchTermForURL(id);
 }
@@ -309,6 +312,18 @@ bool URLDatabase::IsTypedHost(const std::string& host) {
       return true;
   }
   return false;
+}
+
+bool URLDatabase::IsKnownIntranetDomain(const std::string& intranet_domain) {
+  DCHECK(!intranet_domain.empty());
+
+  sql::Statement select_statement(
+      GetDB().GetCachedStatement(SQL_FROM_HERE,
+                                 "SELECT url_id FROM known_intranet_domains "
+                                 "WHERE intranet_domain=? LIMIT 1"));
+  select_statement.BindString(0, intranet_domain);
+
+  return select_statement.Step();
 }
 
 bool URLDatabase::FindShortestURLFromBase(const std::string& base,
@@ -553,6 +568,62 @@ bool URLDatabase::DeleteKeywordSearchTermForURL(URLID url_id) {
       SQL_FROM_HERE, "DELETE FROM keyword_search_terms WHERE url_id=?"));
   statement.BindInt64(0, url_id);
   return statement.Run();
+}
+
+bool URLDatabase::InitKnownIntranetDomainsTable() {
+  has_known_intranet_domains_ = true;
+  if (!GetDB().DoesTableExist("known_intranet_domains")) {
+    if (!GetDB().Execute(
+            "CREATE TABLE known_intranet_domains ("
+            "intranet_domain LONGVARCHAR,"  // The name of the intranet domain.
+            "url_id INTEGER NOT NULL)"))    // The url corresponding to this
+                                            // intranet domain entry.
+      return false;
+  }
+  return true;
+}
+
+bool URLDatabase::DropKnownIntranetDomainsTable() {
+  return GetDB().Execute("DROP TABLE known_intranet_domains");
+}
+
+bool URLDatabase::AddKnownIntranetDomain(const std::string& intranet_domain,
+                                         URLID url_id) {
+  DCHECK(url_id && !intranet_domain.empty());
+
+  if (IsKnownIntranetDomain(intranet_domain))
+    return UpdateKnownIntranetDomain(intranet_domain, url_id);
+
+  sql::Statement insert_statement(GetDB().GetCachedStatement(
+      SQL_FROM_HERE,
+      "INSERT INTO known_intranet_domains (intranet_domain, url_id) "
+      "VALUES (?,?)"));
+  insert_statement.BindString(0, intranet_domain);
+  insert_statement.BindInt64(1, url_id);
+  return insert_statement.Run();
+}
+
+bool URLDatabase::UpdateKnownIntranetDomain(const std::string& intranet_domain,
+                                            URLID url_id) {
+  DCHECK(url_id && !intranet_domain.empty());
+
+  sql::Statement update_statement(GetDB().GetCachedStatement(
+      SQL_FROM_HERE,
+      "UPDATE known_intranet_domains SET url_id=? WHERE intranet_domain=?"));
+  update_statement.BindInt64(0, url_id);
+  update_statement.BindString(1, intranet_domain);
+  // Maybe return true;
+  return update_statement.Run() && GetDB().GetLastChangeCount() > 0;
+}
+
+void URLDatabase::RemoveIntranetDomainFromURLId(URLID url_id) {
+  DCHECK(url_id);
+
+  sql::Statement delete_statement(GetDB().GetCachedStatement(
+      SQL_FROM_HERE, "DELETE FROM known_intranet_domains WHERE url_id=?"));
+  delete_statement.BindInt64(0, url_id);
+
+  delete_statement.Run();
 }
 
 bool URLDatabase::DropStarredIDFromURLs() {
