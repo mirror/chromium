@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5eda7cf2_de7f5e88",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "This looks thread unsafe, can we add a DCHECK that we\u0027re on the right thread here?  What about the other functions in this class?",
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1733149e_17d9406a",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "I love this explicit ownership.",
+      "range": {
+        "startLine": 54,
+        "startChar": 71,
+        "endLine": 54,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594e9e53_3d008ab7",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "can we add static asserts to verify every one of these is the same as net::ConnectionType?  (I assume not in this file, but some C++ file.)",
+      "range": {
+        "startLine": 7,
+        "startChar": 61,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af29665_b95e0ba8",
+        "filename": "content/public/common/network_change_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "Can we link to the comment in network_change_notifier.h?",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf13f04f_357ac06d",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "Why isn\u0027t this method thread-safe?  When used on different threads at exactly the same time it should return the same value.  I think the type of a device\u0027s default network connection is inherently potentially stale, unless you\u0027re checking on the same thread as the system\u0027s connectivity service.",
+      "range": {
+        "startLine": 46,
+        "startChar": 52,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b103fff5_71b3f009",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "any particular reason this isn\u0027t a simple getter with name get_connection_type and inlined?",
+      "range": {
+        "startLine": 47,
+        "startChar": 50,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a62ccd9_fd95d55b",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-03T14:44:34Z",
+      "side": 1,
+      "message": "should this be volatile as it\u0027s read and written on different threads?",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
