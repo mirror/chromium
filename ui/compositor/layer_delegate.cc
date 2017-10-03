@@ -8,6 +8,10 @@ namespace ui {
 
 void LayerDelegate::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {}
 
+void LayerDelegate::OnLayerTransforming() {}
+
+void LayerDelegate::OnLayerTransformed() {}
+
 void LayerDelegate::OnLayerOpacityChanged(float old_opacity,
                                           float new_opacity) {}
 
