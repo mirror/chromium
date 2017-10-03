@@ -28,4 +28,5 @@ enum PropertyType {
   kVisible,
   kURL,
   kUKMSourceId,
+  kLaunchTime,
 };
