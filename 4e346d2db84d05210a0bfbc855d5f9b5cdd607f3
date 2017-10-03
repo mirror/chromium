@@ -22,6 +22,30 @@
       "revId": "4e346d2db84d05210a0bfbc855d5f9b5cdd607f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca900a30_64c0fb80",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-03T21:50:57Z",
+      "side": 1,
+      "message": "Got rid of the params here and in ContentController, right now it\u0027s just true, but very shortly we\u0027ll be able to use flags as you suggested.",
+      "parentUuid": "3cd2dbc3_72ed6d11",
+      "range": {
+        "startLine": 717,
+        "startChar": 12,
+        "endLine": 717,
+        "endChar": 42
+      },
+      "revId": "4e346d2db84d05210a0bfbc855d5f9b5cdd607f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

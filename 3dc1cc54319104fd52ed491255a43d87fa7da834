@@ -117,6 +117,30 @@
       "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2939f42f_78bd2bba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-03T21:50:57Z",
+      "side": 1,
+      "message": "Made sure to apply the padding for placeholder and omnibox suggestions.\n\nSimilar to your suggestion, I decided to just move #applyPaddingToContent to BottomSheetPaddingUtils, and pass in the BottomSheet to try to keep all the logic in one place.",
+      "parentUuid": "f52683b8_32bf6bac",
+      "range": {
+        "startLine": 408,
+        "startChar": 8,
+        "endLine": 411,
+        "endChar": 9
+      },
+      "revId": "3dc1cc54319104fd52ed491255a43d87fa7da834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

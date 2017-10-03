@@ -22,6 +22,30 @@
       "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c424c874_d16bab03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-03T21:50:57Z",
+      "side": 0,
+      "message": "As discussed in person, we\u0027ll still need to apply padding to the internal elements or we\u0027ll lose the scrollable content underneath the bottom nav.",
+      "parentUuid": "5decad94_4de3aa49",
+      "range": {
+        "startLine": 701,
+        "startChar": 16,
+        "endLine": 701,
+        "endChar": 20
+      },
+      "revId": "96e48af52beed52e443c8368392ebdd8878a2d14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
