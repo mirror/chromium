@@ -777,7 +777,10 @@ std::pair<URLID, VisitID> HistoryBackend::AddPageVisit(
     VisitID referring_visit,
     ui::PageTransition transition,
     VisitSource visit_source) {
+  //  LOG(ERROR) << "new url = " << url.spec();
   // Top-level frame navigations are visible, everything else is hidden
+  //  transition = ui::PageTransitionFromInt(transition |
+  //  ui::PageTransition::PAGE_TRANSITION_TYPED);
   bool new_hidden = !ui::PageTransitionIsMainFrame(transition);
 
   // NOTE: This code must stay in sync with
