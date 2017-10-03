@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36310f2c_80c2400f",
+        "filename": "chrome/browser/chromeos/device/input_service_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a250d9b4_9c452bcc",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "478bd38e_fef5d047",
         "filename": "chrome/browser/chromeos/device/input_service_test_helper.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeac8647_733e02bb",
+        "filename": "chrome/browser/chromeos/device/input_service_test_helper.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "478bd38e_fef5d047",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "bdec935f_2dd107fa",
+        "filename": "chrome/browser/chromeos/login/hid_detection_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb16fcb2_0f9beb15",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f8476b1_df34ede7",
         "filename": "device/hid/input_service_linux.cc",
         "patchSetId": 7
@@ -79,6 +139,30 @@
       "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5aef26_0d29171a",
+        "filename": "device/hid/input_service_linux.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8476b1_df34ede7",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 35
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "c3afd5ea_7f3dfc63",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63851d88_029832d4",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4752033_d8e3bd50",
         "filename": "device/hid/input_service_linux.h",
         "patchSetId": 7
@@ -119,6 +227,24 @@
       "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17361660_f577bfbf",
+        "filename": "device/hid/input_service_linux.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-03T14:32:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4752033_d8e3bd50",
+      "revId": "ecab7b941a79308f4618f3ac37d17129a91bbbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
