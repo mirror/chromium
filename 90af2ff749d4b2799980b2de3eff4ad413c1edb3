@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "976d305a_8cd59058",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:13:46Z",
+      "side": 1,
+      "message": "nit: Rather than 1, 2, and 3 it\u0027d be better to name this what they represent, i.e. composited_animations_frames, main_thread_animations_frames, main_thread_compositable_animations_frames",
+      "revId": "90af2ff749d4b2799980b2de3eff4ad413c1edb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d6ce7f6_4e87a595",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:13:46Z",
+      "side": 1,
+      "message": "We should split this up into discrete test cases, like composited animations, ensuring we only count subsequent frames with animations, main thread animations with compositor draws between them, both main and composited.\n\nIt seems like you\u0027re missing testing coverage of frames where a new active tree is not used which should generate values for composited animates and not contribute to the inter-frame times on main thread animations.",
+      "revId": "90af2ff749d4b2799980b2de3eff4ad413c1edb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d5a4cd_520c74b2",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:13:46Z",
+      "side": 1,
+      "message": "Seems like it would be clearer to just write the expectations directly, e.g.\nhistogram_tester.ExpectBucketCount(\"Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2\", 230, 1);",
+      "revId": "90af2ff749d4b2799980b2de3eff4ad413c1edb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57164e53_9ce01e9c",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:13:46Z",
+      "side": 1,
+      "message": "This is unexpected and probably worth calling out, but shouldn\u0027t be a significant source of error in the data. There wasn\u0027t a compositable animation in the previous main frame so it shouldn\u0027t be reporting an interframe time for a compositable animation.",
+      "range": {
+        "startLine": 339,
+        "startChar": 43,
+        "endLine": 339,
+        "endChar": 44
+      },
+      "revId": "90af2ff749d4b2799980b2de3eff4ad413c1edb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed38cbc_498457a4",
+        "filename": "cc/scheduler/compositor_timing_history_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T21:13:46Z",
+      "side": 1,
+      "message": "You said this frame has no main thread animation but it did, just a compositable one.",
+      "revId": "90af2ff749d4b2799980b2de3eff4ad413c1edb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
