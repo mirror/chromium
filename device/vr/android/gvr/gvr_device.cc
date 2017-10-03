@@ -183,9 +183,9 @@ void GvrDevice::ExitPresent() {
   OnExitPresent();
 }
 
-void GvrDevice::GetNextMagicWindowPose(
+void GvrDevice::GetPose(
     VRDisplayImpl* display,
-    mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) {
+    mojom::VRMagicWindowProvider::GetPoseCallback callback) {
   GvrDelegateProvider* delegate_provider = GetGvrDelegateProvider();
   if (!delegate_provider) {
     std::move(callback).Run(nullptr);

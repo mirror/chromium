@@ -33,9 +33,9 @@ class DEVICE_VR_EXPORT VRDevice {
       mojom::VRPresentationProviderRequest request,
       mojom::VRDisplay::RequestPresentCallback callback) = 0;
   virtual void ExitPresent() = 0;
-  virtual void GetNextMagicWindowPose(
+  virtual void GetPose(
       VRDisplayImpl* display,
-      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) = 0;
+      mojom::VRMagicWindowProvider::GetPoseCallback callback) = 0;
 
   void AddDisplay(VRDisplayImpl* display);
   void RemoveDisplay(VRDisplayImpl* display);
