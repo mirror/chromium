@@ -225,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "4acb1d35_c112fb4e",
+        "filename": "media/filters/source_buffer_range_by_pts.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T08:04:05Z",
+      "side": 1,
+      "message": "I actually think GetFirstKeyFrameAtOrBefore is busted. Or I need sleep. \n\nLets say you\u0027ve got a range containing a single GOP, starting at time 10. \nYou request a seek to some time earlier than your first key frame, say 5.\n\nGetFirstKeyFrameAtOrBefore will use std::lower_bound to find the KF \u003e\u003d time. So in this case, it will find the KF at time 10. This happens to also be the key_frame_map_.begin(), so it simply returns there, giving a key frame that is not AT nor BEFORE the specified time. \n\nIf I have this right, its a bug we should fix sooner than later. Please file p1 if you agree.",
+      "parentUuid": "1722a813_f4bc96cc",
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abba9b0f_f84eb1df",
         "filename": "media/filters/source_buffer_range_by_pts.cc",
         "patchSetId": 36
@@ -786,6 +804,53 @@
       "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3d9e7db_e2af7f25",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T08:04:05Z",
+      "side": 1,
+      "message": "Thanks",
+      "parentUuid": "940d7987_a4abbf0b",
+      "range": {
+        "startLine": 937,
+        "startChar": 2,
+        "endLine": 937,
+        "endChar": 26
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e23645a6_24e47fdc",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 5177,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-10-03T08:04:05Z",
+      "side": 1,
+      "message": "Why is the CFG start different for by PTS? You seem to be testing different inputs with to get the same output - sort of reverse of the usual.",
+      "range": {
+        "startLine": 5177,
+        "startChar": 46,
+        "endLine": 5177,
+        "endChar": 62
+      },
+      "revId": "87bf8d38734c97c993f1c018ce33b152f775f072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
