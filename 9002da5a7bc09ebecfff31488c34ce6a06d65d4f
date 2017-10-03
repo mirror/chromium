@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "feb2b0e6_b0d73284",
+        "filename": "third_party/WebKit/Source/modules/bluetooth/BluetoothError.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-03T15:00:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd58fd8_27b18a72",
+      "revId": "9002da5a7bc09ebecfff31488c34ce6a06d65d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0b21620_eabb3545",
         "filename": "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "9002da5a7bc09ebecfff31488c34ce6a06d65d4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05629335_619303db",
+        "filename": "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-03T15:00:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b21620_eabb3545",
+      "revId": "9002da5a7bc09ebecfff31488c34ce6a06d65d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
