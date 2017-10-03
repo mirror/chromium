@@ -70,6 +70,24 @@
       "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb504e5_32c89bb6",
+        "filename": "components/arc/ime/arc_ime_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T17:10:33Z",
+      "side": 1,
+      "message": "It\u0027d be not that big, but not trivial than expected, IMO.\n\nDiscussed offline with yhanada@, and the migration to gfx.mojom would have more higher bar,\nso although it is ideal, it\u0027s unlikely happening soon.\nConsidering that, we agreed to merge these types under components/arc.\nI\u0027ll work on it.",
+      "parentUuid": "34e681df_a6e679b7",
+      "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
