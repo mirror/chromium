@@ -23,6 +23,7 @@ class URLRequest;
 namespace content {
 
 class DevToolsAgentHostImpl;
+class DevToolsNetworkConditions;
 class RenderFrameHostImpl;
 struct BeginNavigationParams;
 struct CommonNavigationParams;
@@ -129,6 +130,9 @@ class NetworkHandler : public DevToolsDomainHandler,
   bool ShouldCancelNavigation(const GlobalRequestID& global_request_id);
 
  private:
+  void SetNetworkConditions(
+      std::unique_ptr<DevToolsNetworkConditions> conditions);
+
   std::unique_ptr<Network::Frontend> frontend_;
   RenderFrameHostImpl* host_;
   bool enabled_;

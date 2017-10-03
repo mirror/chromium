@@ -50,6 +50,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                             mojom::NetworkContextParamsPtr params) override;
   void DisableQuic() override;
   void SetRawHeadersAccess(uint32_t process_id, bool allow) override;
+  void SetNetworkConditions(const std::string& profile_id,
+                            mojom::NetworkConditionsPtr conditions) override;
 
   bool quic_disabled() const { return quic_disabled_; }
   bool HasRawHeadersAccess(uint32_t process_id) const;
