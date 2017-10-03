@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc0cdd14_91498aff",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T18:44:17Z",
+      "side": 1,
+      "message": "Since we aren\u0027t actually initializing this, or using it anywhere, could we move the chrome/ changes to another CL?  I don\u0027t think we get anything by landing a non-functional API in this CL.",
+      "range": {
+        "startLine": 585,
+        "startChar": 19,
+        "endLine": 585,
+        "endChar": 20
+      },
+      "revId": "f28de6f4cd31bff61246e8f95b9209e5c6ab16cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71bb5094_d35804fe",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T18:44:17Z",
+      "side": 1,
+      "message": "We don\u0027t actually need the registry.  Maybe just take a bool instead?  create_network_change_notifier or in_network_service or something?",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "f28de6f4cd31bff61246e8f95b9209e5c6ab16cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0051bb_698fa533",
+        "filename": "content/network/network_change_manager_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T18:44:17Z",
+      "side": 1,
+      "message": "Could this just be GetNumClientsForTesting, and return a size_t?  Make it clearer what we need it for, and exposes a bit less of the internal implementation details.  Should also de-inline it, then, since calling size() is a bit more complicated than returning a const ref to a class member.",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 31
+      },
+      "revId": "f28de6f4cd31bff61246e8f95b9209e5c6ab16cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91949d88_eda1567f",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-03T18:44:17Z",
+      "side": 1,
+      "message": "Should this be called network_change_manager_for_testing()?",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 61
+      },
+      "revId": "f28de6f4cd31bff61246e8f95b9209e5c6ab16cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
