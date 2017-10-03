@@ -17,6 +17,11 @@ void NewWindowController::BindRequest(
   bindings_.AddBinding(this, std::move(request));
 }
 
+void NewWindowController::ShowKeyboardOverlay() {
+  if (client_)
+    client_->ShowKeyboardOverlay();
+}
+
 void NewWindowController::NewTab() {
   if (client_)
     client_->NewTab();
@@ -45,11 +50,6 @@ void NewWindowController::OpenGetHelp() {
 void NewWindowController::RestoreTab() {
   if (client_)
     client_->RestoreTab();
-}
-
-void NewWindowController::ShowKeyboardOverlay() {
-  if (client_)
-    client_->ShowKeyboardOverlay();
 }
 
 void NewWindowController::ShowTaskManager() {
