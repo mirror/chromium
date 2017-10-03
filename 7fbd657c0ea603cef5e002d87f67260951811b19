@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "765646c9_64502c06",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-03T18:07:12Z",
+      "side": 1,
+      "message": "flush?",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "7fbd657c0ea603cef5e002d87f67260951811b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7365c4b_f05ebffa",
+        "filename": "net/http/http_server_properties_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-03T18:07:12Z",
+      "side": 1,
+      "message": "Please remove, because it is redundant with the one on line 992.",
+      "range": {
+        "startLine": 1113,
+        "startChar": 2,
+        "endLine": 1113,
+        "endChar": 53
+      },
+      "revId": "7fbd657c0ea603cef5e002d87f67260951811b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
