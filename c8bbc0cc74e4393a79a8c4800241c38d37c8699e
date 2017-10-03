@@ -94,6 +94,30 @@
       "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779a377e_e7843e64",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-10-03T02:50:15Z",
+      "side": 1,
+      "message": "we could just remove CreateSubframeWebUI() now that it\u0027s unused\nhttps://chromium-review.googlesource.com/c/chromium/src/+/688233",
+      "parentUuid": "546a3945_9dcf307c",
+      "range": {
+        "startLine": 111,
+        "startChar": 24,
+        "endLine": 111,
+        "endChar": 25
+      },
+      "revId": "c8bbc0cc74e4393a79a8c4800241c38d37c8699e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
