@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6eecbc20_6d855009",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-03T18:58:09Z",
+      "side": 1,
+      "message": "do we distinguish between setup abandoned by the user or due to error?",
+      "revId": "ecb5b37efc1fc353fa805b206bcc304c0b9539f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b4eedc_a2ff3914",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-03T18:58:09Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "ecb5b37efc1fc353fa805b206bcc304c0b9539f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
