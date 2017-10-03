@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ff46e08_40d0df66",
+        "filename": "content/public/test/test_web_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-03T01:03:13Z",
+      "side": 1,
+      "message": "Note: if changing these files is an issue, can instead store a PrintPreviewUI* in TestPrintPreviewHandler and override PrintPreviewHandler::print_preview_ui().",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "64b2733e69f55873860d82281770f359434b8a2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
