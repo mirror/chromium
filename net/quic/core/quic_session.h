@@ -15,6 +15,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "net/base/int128.h"
 #include "net/quic/core/quic_connection.h"
 #include "net/quic/core/quic_crypto_stream.h"
 #include "net/quic/core/quic_packet_creator.h"
@@ -394,6 +395,10 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // derived class's own implementation.
   virtual void HandleRstOnValidNonexistentStream(
       const QuicRstStreamFrame& frame);
+
+  // Returns a stateless reset token which will be included in the public reset
+  // packet.
+  virtual uint128 GetStatelessResetToken() const;
 
  private:
   friend class test::QuicSessionPeer;

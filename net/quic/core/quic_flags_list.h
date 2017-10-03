@@ -181,3 +181,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_tls13_cipher_suites, false)
 QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label,
           false)
+
+// If true, send stateless reset token in SHLO. This token is used in IETF
+// public reset packet.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo, false)

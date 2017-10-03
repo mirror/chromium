@@ -20,6 +20,14 @@ using std::string;
 
 namespace net {
 
+namespace {
+
+// Stateless reset token used in IETF public reset packet.
+// TODO(fayang): use a real stateless reset token instead of a hard code one.
+const uint128 kStatelessResetToken = 1010101;
+
+}  // namespace
+
 #define ENDPOINT \
   (perspective() == Perspective::IS_SERVER ? "Server: " : "Client: ")
 
@@ -488,6 +496,11 @@ void QuicSession::OnConfigNegotiated() {
       if (ContainsQuicTag(config_.ReceivedConnectionOptions(), kIFWA)) {
         AdjustInitialFlowControlWindows(1024 * 1024);
       }
+    }
+
+    if (FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo) {
+      QUIC_FLAG_COUNT(quic_reloadable_flag_quic_send_reset_token_in_shlo);
+      config_.SetStatelessResetTokenToSend(GetStatelessResetToken());
     }
   }
 
@@ -966,6 +979,10 @@ bool QuicSession::WriteStreamData(QuicStreamId id,
     return false;
   }
   return stream->WriteStreamData(offset, data_length, writer);
+}
+
+uint128 QuicSession::GetStatelessResetToken() const {
+  return kStatelessResetToken;
 }
 
 }  // namespace net
