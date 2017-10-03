@@ -53,7 +53,7 @@ Polymer({
   },
 
   observers: [
-    'customTimesChanged_(prefs.ash.night_light.custom_start_time.*, ' +
+    'updateKnobs_(prefs.ash.night_light.custom_start_time.*, ' +
         'prefs.ash.night_light.custom_end_time.*)',
     'hourFormatChanged_(prefs.settings.clock.use_24hour_clock.*)',
   ],
@@ -73,6 +73,9 @@ Polymer({
   /** @override */
   attached: function() {
     this.isRTL_ = window.getComputedStyle(this).direction == 'rtl';
+    this.async(function() {
+      this.updateKnobs_();
+    });
   },
 
   /** @override */
@@ -98,7 +101,7 @@ Polymer({
         this.getPref('settings.clock.use_24hour_clock').value);
 
     // Refresh the slider.
-    this.customTimesChanged_();
+    this.updateKnobs_();
   },
 
   /**
@@ -276,10 +279,11 @@ Polymer({
   },
 
   /**
-   * Handles changes in the start and end times prefs.
+   * Using the current start and end times prefs, this function updates the
+   * knobs and their label bubbles and refreshes the slider.
    * @private
    */
-  customTimesChanged_: function() {
+  updateKnobs_: function() {
     var startOffsetMinutes = /** @type {number} */ (
         this.getPref('ash.night_light.custom_start_time').value);
     this.startTime_ = this.offsetMinutesToTimeString_(startOffsetMinutes);
