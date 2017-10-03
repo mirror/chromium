@@ -4,247 +4,109 @@
 
 #include "chrome/browser/installable/installable_metrics.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "chrome/browser/installable/bucket.h"
 
-namespace {
+namespace installable {
 
-void WriteMenuOpenHistogram(InstallabilityCheckStatus status, int count) {
-  for (int i = 0; i < count; ++i) {
-    UMA_HISTOGRAM_ENUMERATION("Webapp.InstallabilityCheckStatus.MenuOpen",
-                              status, InstallabilityCheckStatus::COUNT);
-  }
-}
-
-void WriteMenuItemAddToHomescreenHistogram(InstallabilityCheckStatus status,
-                                           int count) {
-  for (int i = 0; i < count; ++i) {
-    UMA_HISTOGRAM_ENUMERATION(
-        "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen", status,
-        InstallabilityCheckStatus::COUNT);
-  }
-}
-
-void WriteAddToHomescreenHistogram(AddToHomescreenTimeoutStatus status,
-                                   int count) {
-  for (int i = 0; i < count; ++i) {
-    UMA_HISTOGRAM_ENUMERATION(
-        "Webapp.InstallabilityCheckStatus.AddToHomescreenTimeout", status,
-        AddToHomescreenTimeoutStatus::COUNT);
-  }
-}
-
-// Buffers metrics calls until we have resolved whether a site is a PWA.
-class AccumulatingRecorder : public InstallableMetrics::Recorder {
+// A Bucket in a histogram with InstallabilityCheckStatus elements.
+class InstallabilityCheckBucket : public Bucket {
  public:
-  AccumulatingRecorder()
-      : InstallableMetrics::Recorder(),
-        menu_open_count_(0),
-        menu_item_add_to_homescreen_count_(0),
-        add_to_homescreen_manifest_timeout_count_(0),
-        add_to_homescreen_installability_timeout_count_(0),
-        started_(false) {}
+  InstallabilityCheckBucket(const std::string& hist_name,
+                            InstallabilityCheckStatus status)
+      : hist_name_(hist_name), status_(status) {}
 
-  ~AccumulatingRecorder() override {
-    DCHECK_EQ(0, menu_open_count_);
-    DCHECK_EQ(0, menu_item_add_to_homescreen_count_);
-    DCHECK_EQ(0, add_to_homescreen_manifest_timeout_count_);
-    DCHECK_EQ(0, add_to_homescreen_installability_timeout_count_);
+  void Increment() override {
+    UMA_HISTOGRAM_ENUMERATION(hist_name_, status_,
+                              InstallabilityCheckStatus::COUNT);
   }
-
-  void Resolve(bool check_passed) override {
-    // Resolve queued metrics to their appropriate state based on whether or not
-    // we passed the installability check.
-    if (check_passed) {
-      WriteMetricsAndResetCounts(
-          InstallabilityCheckStatus::IN_PROGRESS_PROGRESSIVE_WEB_APP,
-          AddToHomescreenTimeoutStatus::
-              TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP,
-          AddToHomescreenTimeoutStatus::
-              TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP);
-    } else {
-      WriteMetricsAndResetCounts(
-          InstallabilityCheckStatus::IN_PROGRESS_NON_PROGRESSIVE_WEB_APP,
-          AddToHomescreenTimeoutStatus::
-              TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP,
-          AddToHomescreenTimeoutStatus::
-              TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP);
-    }
-  }
-
-  void Flush(bool waiting_for_service_worker) override {
-    InstallabilityCheckStatus status =
-        started_ ? InstallabilityCheckStatus::IN_PROGRESS_UNKNOWN
-                 : InstallabilityCheckStatus::NOT_STARTED;
-
-    if (waiting_for_service_worker)
-      status = InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP;
-
-    WriteMetricsAndResetCounts(
-        status, AddToHomescreenTimeoutStatus::TIMEOUT_MANIFEST_FETCH_UNKNOWN,
-        AddToHomescreenTimeoutStatus::TIMEOUT_INSTALLABILITY_CHECK_UNKNOWN);
-  }
-
-  void RecordMenuOpen() override {
-    if (started_)
-      ++menu_open_count_;
-    else
-      WriteMenuOpenHistogram(InstallabilityCheckStatus::NOT_STARTED, 1);
-  }
-
-  void RecordMenuItemAddToHomescreen() override {
-    if (started_) {
-      ++menu_item_add_to_homescreen_count_;
-    } else {
-      WriteMenuItemAddToHomescreenHistogram(
-          InstallabilityCheckStatus::NOT_STARTED, 1);
-    }
-  }
-
-  void RecordAddToHomescreenNoTimeout() override {
-    // If this class is instantiated and there is no timeout, we must have
-    // failed the installability check early.
-    WriteAddToHomescreenHistogram(
-        AddToHomescreenTimeoutStatus::NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP, 1);
-  }
-
-  void RecordAddToHomescreenManifestAndIconTimeout() override {
-    ++add_to_homescreen_manifest_timeout_count_;
-  }
-
-  void RecordAddToHomescreenInstallabilityTimeout() override {
-    ++add_to_homescreen_installability_timeout_count_;
-  }
-
-  void Start() override { started_ = true; }
 
  private:
-  void WriteMetricsAndResetCounts(
-      InstallabilityCheckStatus status,
-      AddToHomescreenTimeoutStatus manifest_status,
-      AddToHomescreenTimeoutStatus installability_status) {
-    WriteMenuOpenHistogram(status, menu_open_count_);
-    WriteMenuItemAddToHomescreenHistogram(status,
-                                          menu_item_add_to_homescreen_count_);
-    WriteAddToHomescreenHistogram(manifest_status,
-                                  add_to_homescreen_manifest_timeout_count_);
-    WriteAddToHomescreenHistogram(
-        installability_status, add_to_homescreen_installability_timeout_count_);
-
-    menu_open_count_ = 0;
-    menu_item_add_to_homescreen_count_ = 0;
-    add_to_homescreen_manifest_timeout_count_ = 0;
-    add_to_homescreen_installability_timeout_count_ = 0;
-  }
-
-  // Counts for the number of queued requests of the menu and add to homescreen
-  // menu item there have been whilst the installable check is running.
-  int menu_open_count_;
-  int menu_item_add_to_homescreen_count_;
-
-  // Counts for the number of times the add to homescreen dialog times out at
-  // different stages of the installable check.
-  int add_to_homescreen_manifest_timeout_count_;
-  int add_to_homescreen_installability_timeout_count_;
-
-  // True if we have started working yet.
-  bool started_;
+  std::string hist_name_;
+  InstallabilityCheckStatus status_;
 };
 
-// Directly writes metrics calls with the current page's PWA status.
-class DirectRecorder : public InstallableMetrics::Recorder {
+// A Bucket in the Webapp.InstallabilityCheckStatus.AddToHomescreenTimeout
+// histogram.
+class A2HSTimeoutBucket : public Bucket {
  public:
-  explicit DirectRecorder(bool check_passed)
-      : InstallableMetrics::Recorder(),
-        installability_check_status_(
-            check_passed
-                ? InstallabilityCheckStatus::COMPLETE_PROGRESSIVE_WEB_APP
-                : InstallabilityCheckStatus::COMPLETE_NON_PROGRESSIVE_WEB_APP),
-        no_timeout_status_(
-            check_passed
-                ? AddToHomescreenTimeoutStatus::NO_TIMEOUT_PROGRESSIVE_WEB_APP
-                : AddToHomescreenTimeoutStatus::
-                      NO_TIMEOUT_NON_PROGRESSIVE_WEB_APP),
-        manifest_timeout_status_(
-            check_passed ? AddToHomescreenTimeoutStatus::
-                               TIMEOUT_MANIFEST_FETCH_PROGRESSIVE_WEB_APP
-                         : AddToHomescreenTimeoutStatus::
-                               TIMEOUT_MANIFEST_FETCH_NON_PROGRESSIVE_WEB_APP),
-        installability_timeout_status_(
-            check_passed
-                ? AddToHomescreenTimeoutStatus::
-                      TIMEOUT_INSTALLABILITY_CHECK_PROGRESSIVE_WEB_APP
-                : AddToHomescreenTimeoutStatus::
-                      TIMEOUT_INSTALLABILITY_CHECK_NON_PROGRESSIVE_WEB_APP) {}
+  explicit A2HSTimeoutBucket(AddToHomescreenTimeoutStatus status)
+      : status_(status) {}
 
-  ~DirectRecorder() override {}
-
-  void Resolve(bool check_passed) override {}
-  void Flush(bool waiting_for_service_worker) override {}
-  void Start() override {}
-  void RecordMenuOpen() override {
-    WriteMenuOpenHistogram(installability_check_status_, 1);
+  void Increment() override {
+    UMA_HISTOGRAM_ENUMERATION(
+        "Webapp.InstallabilityCheckStatus.AddToHomescreenTimeout", status_,
+        AddToHomescreenTimeoutStatus::COUNT);
   }
 
-  void RecordMenuItemAddToHomescreen() override {
-    WriteMenuItemAddToHomescreenHistogram(installability_check_status_, 1);
-  }
-
-  void RecordAddToHomescreenNoTimeout() override {
-    WriteAddToHomescreenHistogram(no_timeout_status_, 1);
-  }
-
-  void RecordAddToHomescreenManifestAndIconTimeout() override {
-    WriteAddToHomescreenHistogram(manifest_timeout_status_, 1);
-  }
-
-  void RecordAddToHomescreenInstallabilityTimeout() override {
-    WriteAddToHomescreenHistogram(installability_timeout_status_, 1);
-  }
-
-  InstallabilityCheckStatus installability_check_status_;
-  AddToHomescreenTimeoutStatus no_timeout_status_;
-  AddToHomescreenTimeoutStatus manifest_timeout_status_;
-  AddToHomescreenTimeoutStatus installability_timeout_status_;
+ private:
+  AddToHomescreenTimeoutStatus status_;
 };
 
-}  // anonymous namespace
-
-InstallableMetrics::InstallableMetrics()
-    : recorder_(base::MakeUnique<AccumulatingRecorder>()) {}
-
-InstallableMetrics::~InstallableMetrics() {}
-
-void InstallableMetrics::RecordMenuOpen() {
-  recorder_->RecordMenuOpen();
+void BucketSet::RecordMenuOpen() {
+  menu_open_->Increment();
 }
 
-void InstallableMetrics::RecordMenuItemAddToHomescreen() {
-  recorder_->RecordMenuItemAddToHomescreen();
+void BucketSet::RecordMenuItemAddToHomescreen() {
+  menu_item_a2hs_->Increment();
 }
 
-void InstallableMetrics::RecordAddToHomescreenNoTimeout() {
-  recorder_->RecordAddToHomescreenNoTimeout();
+void BucketSet::RecordAddToHomescreenNoTimeout() {
+  a2hs_no_timeout_->Increment();
 }
 
-void InstallableMetrics::RecordAddToHomescreenManifestAndIconTimeout() {
-  recorder_->RecordAddToHomescreenManifestAndIconTimeout();
+void BucketSet::RecordAddToHomescreenManifestAndIconTimeout() {
+  a2hs_manifest_and_icon_timeout_->Increment();
 }
 
-void InstallableMetrics::RecordAddToHomescreenInstallabilityTimeout() {
-  recorder_->RecordAddToHomescreenInstallabilityTimeout();
+void BucketSet::RecordAddToHomescreenInstallabilityTimeout() {
+  a2hs_installability_timeout_->Increment();
 }
 
-void InstallableMetrics::Resolve(bool check_passed) {
-  recorder_->Resolve(check_passed);
-  recorder_ = base::MakeUnique<DirectRecorder>(check_passed);
+std::unique_ptr<Bucket> MenuOpenBucket(InstallabilityCheckStatus status) {
+  return base::MakeUnique<InstallabilityCheckBucket>(
+      "Webapp.InstallabilityCheckStatus.MenuOpen", status);
 }
 
-void InstallableMetrics::Start() {
-  recorder_->Start();
+std::unique_ptr<ResolvableBucket> MenuOpenBucket(
+    InstallabilityCheckStatus pwa_yes,
+    InstallabilityCheckStatus pwa_no,
+    InstallabilityCheckStatus pwa_unknown) {
+  return base::MakeUnique<ResolvableBucket>(
+      std::unique_ptr<Bucket>(MenuOpenBucket(pwa_yes)),
+      std::unique_ptr<Bucket>(MenuOpenBucket(pwa_no)),
+      std::unique_ptr<Bucket>(MenuOpenBucket(pwa_unknown)));
 }
 
-void InstallableMetrics::Flush(bool waiting_for_service_worker) {
-  recorder_->Flush(waiting_for_service_worker);
-  recorder_ = base::MakeUnique<AccumulatingRecorder>();
+std::unique_ptr<Bucket> MenuItemAddToHomescreenBucket(
+    InstallabilityCheckStatus status) {
+  return base::MakeUnique<InstallabilityCheckBucket>(
+      "Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen", status);
 }
+
+std::unique_ptr<ResolvableBucket> MenuItemAddToHomescreenBucket(
+    InstallabilityCheckStatus pwa_yes,
+    InstallabilityCheckStatus pwa_no,
+    InstallabilityCheckStatus pwa_unknown) {
+  return base::MakeUnique<ResolvableBucket>(
+      MenuItemAddToHomescreenBucket(pwa_yes),
+      MenuItemAddToHomescreenBucket(pwa_no),
+      MenuItemAddToHomescreenBucket(pwa_unknown));
+}
+
+std::unique_ptr<Bucket> AddToHomescreenTimeoutBucket(
+    AddToHomescreenTimeoutStatus status) {
+  return base::MakeUnique<A2HSTimeoutBucket>(status);
+}
+
+std::unique_ptr<ResolvableBucket> AddToHomescreenTimeoutBucket(
+    AddToHomescreenTimeoutStatus pwa_yes,
+    AddToHomescreenTimeoutStatus pwa_no,
+    AddToHomescreenTimeoutStatus pwa_unknown) {
+  return base::MakeUnique<ResolvableBucket>(
+      AddToHomescreenTimeoutBucket(pwa_yes),
+      AddToHomescreenTimeoutBucket(pwa_no),
+      AddToHomescreenTimeoutBucket(pwa_unknown));
+}
+
+}  // namespace installable

@@ -6,6 +6,9 @@
 #define CHROME_BROWSER_INSTALLABLE_INSTALLABLE_METRICS_H_
 
 #include <memory>
+#include <string>
+
+#include "chrome/browser/installable/bucket.h"
 
 // This enum backs a UMA histogram and must be treated as append-only.
 enum class InstallabilityCheckStatus {
@@ -31,30 +34,26 @@ enum class AddToHomescreenTimeoutStatus {
   COUNT,
 };
 
-class InstallableMetrics {
- public:
-  class Recorder {
-   public:
-    virtual ~Recorder() {}
-    virtual void Resolve(bool check_passed) {}
-    virtual void Flush(bool waiting_for_service_worker) {}
+namespace installable {
 
-    virtual void RecordMenuOpen() = 0;
-    virtual void RecordMenuItemAddToHomescreen() = 0;
-    virtual void RecordAddToHomescreenNoTimeout() = 0;
-    virtual void RecordAddToHomescreenManifestAndIconTimeout() = 0;
-    virtual void RecordAddToHomescreenInstallabilityTimeout() = 0;
-    virtual void Start() = 0;
-  };
+// This contains types and helper functions for storing, incrementing
+// and creating the UMA buckets that are used by InstallableManager.
 
-  InstallableMetrics();
-  ~InstallableMetrics();
+// BucketSet contains a bucket for each of the histograms we care about.
+struct BucketSet {
+  // The following fields point to the current bucket of each of the
+  // histograms.
+  Bucket* menu_open_;
+  Bucket* menu_item_a2hs_;
+  Bucket* a2hs_no_timeout_;
+  Bucket* a2hs_manifest_and_icon_timeout_;
+  Bucket* a2hs_installability_timeout_;
 
-  // This records the state of the installability check when the Android menu is
+  // Records the state of the installability check when the Android menu is
   // opened.
   void RecordMenuOpen();
 
-  // This records the state of the installability check when the add to
+  // Records the state of the installability check when the add to
   // homescreen menu item on Android is tapped.
   void RecordMenuItemAddToHomescreen();
 
@@ -69,19 +68,41 @@ class InstallableMetrics {
   // Called to record the add to homescreen dialog timing out on the service
   // worker + installability check.
   void RecordAddToHomescreenInstallabilityTimeout();
-
-  // Called to resolve any queued metrics from incomplete tasks.
-  void Resolve(bool check_passed);
-
-  // Called to save any queued metrics.
-  void Flush(bool waiting_for_service_worker);
-
-  // Called to indicate that the InstallableManager has started working on the
-  // current page.
-  void Start();
-
- private:
-  std::unique_ptr<Recorder> recorder_;
 };
+
+// Constructs a menu-open Bucket which increments |status|.
+std::unique_ptr<Bucket> MenuOpenBucket(InstallabilityCheckStatus status);
+
+// Constructs a menu-open ResolvableBucket which resolves to one of
+// the supplied |InstallabilityCheckStatus|es.
+std::unique_ptr<ResolvableBucket> MenuOpenBucket(
+    InstallabilityCheckStatus pwa_yes,
+    InstallabilityCheckStatus pwa_no,
+    InstallabilityCheckStatus pwa_unknown);
+
+// Constructs a menu-item-add-to-homescreen Bucket which increments
+// |status|.
+std::unique_ptr<Bucket> MenuItemAddToHomescreenBucket(
+    InstallabilityCheckStatus status);
+
+// Constructs a menu-item-add-to-homescreen ResolvableBucket which
+// resolves to one of the supplied |InstallabilityCheckStatus|es.
+std::unique_ptr<ResolvableBucket> MenuItemAddToHomescreenBucket(
+    InstallabilityCheckStatus pwa_yes,
+    InstallabilityCheckStatus pwa_no,
+    InstallabilityCheckStatus pwa_unknown);
+
+// Constructs a Bucket which increments |status|.
+std::unique_ptr<Bucket> AddToHomescreenTimeoutBucket(
+    AddToHomescreenTimeoutStatus status);
+
+// Constructs a ResolvableBucket which resolves to one of the supplied
+// |AddToHomescreenTimeoutStatus|es.
+std::unique_ptr<ResolvableBucket> AddToHomescreenTimeoutBucket(
+    AddToHomescreenTimeoutStatus pwa_yes,
+    AddToHomescreenTimeoutStatus pwa_no,
+    AddToHomescreenTimeoutStatus pwa_unknown);
+
+}  // namespace installable
 
 #endif  // CHROME_BROWSER_INSTALLABLE_INSTALLABLE_METRICS_H_
