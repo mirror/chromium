@@ -170,6 +170,13 @@ class URLDatabase {
   // the provided hostname.
   bool IsTypedHost(const std::string& host);
 
+  // Returns true if the database contains 'domain' as a known intranet domain.
+  bool IsKnownIntranetDomain(const std::string& domain);
+
+  // Add a line in the known intranet domains table with the given information.
+  // Returns false iff the operation failed.
+  bool AddKnownIntranetDomain(const std::string& intranet_domain, URLID url_id);
+
   // Tries to find the shortest URL beginning with |base| that strictly
   // prefixes |url|, and has minimum visit_ and typed_counts as specified.
   // If found, fills in |info| and returns true; otherwise returns false,
@@ -225,6 +232,21 @@ class URLDatabase {
 
   // Deletes all searches matching |term|.
   bool DeleteKeywordSearchTerm(const base::string16& term);
+
+  // Ensures the known intranet domains table exists.
+  bool InitKnownIntranetDomainsTable();
+
+  // Deletes the known intranet domains table.
+  bool DropKnownIntranetDomainsTable();
+
+  // Given an already-existing row in the known intranet domains table, updates
+  // that entry's corresponding url. This can not change the known intranet
+  // domain.  Returns true on success.
+  bool UpdateKnownIntranetDomain(const std::string& intranet_domain,
+                                 URLID url_id);
+
+  // Removes any known intranet domain corresponding to the given URL id.
+  void RemoveIntranetDomainFromURLId(URLID url_id);
 
   // Deletes any search corresponding to |url_id|.
   bool DeleteKeywordSearchTermForURL(URLID url_id);
@@ -297,6 +319,10 @@ class URLDatabase {
   // True if InitKeywordSearchTermsTable() has been invoked. Not all subclasses
   // have keyword search terms.
   bool has_keyword_search_terms_;
+
+  // True if InitKnownIntranetDomainsTable() has been invoked. Not all
+  // subclasses have known intranet domains.
+  bool has_known_intranet_domains_;
 
   query_parser::QueryParser query_parser_;
 

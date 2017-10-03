@@ -73,6 +73,7 @@ class URLDatabaseTest : public testing::Test,
     CreateURLTable(false);
     CreateMainURLIndex();
     InitKeywordSearchTermsTable();
+    InitKnownIntranetDomainsTable();
     CreateKeywordSearchTermsIndices();
   }
   void TearDown() override { db_.Close(); }
@@ -457,6 +458,49 @@ TEST_F(URLDatabaseTest, MigrationURLTableForAddingAUTOINCREMENT) {
   EXPECT_TRUE(IsURLRowEqual(url_info5, info5));
   // Verify the id is not re-used.
   EXPECT_NE(info4.id(), info5.id());
+}
+
+// Tests adding, querying and deleting known intranet domains.
+TEST_F(URLDatabaseTest, KnownIntranetDomains) {
+  URLRow url_info1(GURL("http://foo.company.lan/"));
+  url_info1.set_title(base::UTF8ToUTF16("Company lan page - foo"));
+  url_info1.set_visit_count(4);
+  url_info1.set_typed_count(2);
+  url_info1.set_last_visit(Time::Now() - TimeDelta::FromDays(1));
+  url_info1.set_hidden(false);
+  URLID url_id1 = AddURL(url_info1);
+  ASSERT_NE(0, url_id1);
+
+  // Add a known intranet domain.
+  std::string intranet_domain = "lan";
+  ASSERT_TRUE(AddKnownIntranetDomain(intranet_domain, url_id1));
+
+  // Make sure we get it back.
+  ASSERT_TRUE(IsKnownIntranetDomain(intranet_domain));
+
+  URLRow url_info2(GURL("http://bar.company.lan/"));
+  url_info2.set_title(base::UTF8ToUTF16("Company lan page - bar"));
+  url_info2.set_visit_count(3);
+  url_info2.set_typed_count(2);
+  url_info2.set_last_visit(Time::Now() - TimeDelta::FromDays(1));
+  url_info2.set_hidden(false);
+  URLID url_id2 = AddURL(url_info2);
+  ASSERT_NE(0, url_id2);
+
+  // Update a known intranet domain with a new corresponding url_id2.
+  ASSERT_TRUE(UpdateKnownIntranetDomain(intranet_domain, url_id2));
+
+  // Attempt to remove domain corresponding to initial url_id1.
+  RemoveIntranetDomainFromURLId(url_id1);
+
+  // Make sure the domain is still known.
+  ASSERT_TRUE(IsKnownIntranetDomain(intranet_domain));
+
+  // Attempt to remove domain corresponding to latest url_id2.
+  RemoveIntranetDomainFromURLId(url_id2);
+
+  // Make sure the domain is no longer known.
+  ASSERT_FALSE(IsKnownIntranetDomain(intranet_domain));
 }
 
 }  // namespace history
