@@ -960,19 +960,19 @@ std::unique_ptr<ProxyService> ProxyService::CreateUsingSystemProxyResolver(
     return CreateWithoutProxyResolver(std::move(proxy_config_service), net_log);
   }
 
-  return base::WrapUnique(new ProxyService(
+  return std::make_unique<ProxyService>(
       std::move(proxy_config_service),
       std::make_unique<ProxyResolverFactoryForSystem>(kDefaultNumPacThreads),
-      net_log));
+      net_log);
 }
 
 // static
 std::unique_ptr<ProxyService> ProxyService::CreateWithoutProxyResolver(
     std::unique_ptr<ProxyConfigService> proxy_config_service,
     NetLog* net_log) {
-  return base::WrapUnique(new ProxyService(
+  return std::make_unique<ProxyService>(
       std::move(proxy_config_service),
-      base::WrapUnique(new ProxyResolverFactoryForNullResolver), net_log));
+      std::make_unique<ProxyResolverFactoryForNullResolver>(), net_log);
 }
 
 // static
@@ -999,9 +999,9 @@ std::unique_ptr<ProxyService> ProxyService::CreateDirect() {
 std::unique_ptr<ProxyService> ProxyService::CreateDirectWithNetLog(
     NetLog* net_log) {
   // Use direct connections.
-  return base::WrapUnique(new ProxyService(
-      base::WrapUnique(new ProxyConfigServiceDirect),
-      base::WrapUnique(new ProxyResolverFactoryForNullResolver), net_log));
+  return std::make_unique<ProxyService>(
+      std::make_unique<ProxyConfigServiceDirect>(),
+      std::make_unique<ProxyResolverFactoryForNullResolver>(), net_log);
 }
 
 // static
@@ -1012,9 +1012,9 @@ std::unique_ptr<ProxyService> ProxyService::CreateFixedFromPacResult(
   std::unique_ptr<ProxyConfigService> proxy_config_service(
       new ProxyConfigServiceFixed(ProxyConfig::CreateAutoDetect()));
 
-  return base::WrapUnique(new ProxyService(
+  return std::make_unique<ProxyService>(
       std::move(proxy_config_service),
-      std::make_unique<ProxyResolverFactoryForPacResult>(pac_string), NULL));
+      std::make_unique<ProxyResolverFactoryForPacResult>(pac_string), nullptr);
 }
 
 int ProxyService::ResolveProxy(const GURL& raw_url,
@@ -1496,7 +1496,7 @@ ProxyService::CreateSystemProxyConfigService(
   LOG(ERROR) << "ProxyConfigService for ChromeOS should be created in "
              << "profile_io_data.cc::CreateProxyConfigService and this should "
              << "be used only for examples.";
-  return base::WrapUnique(new UnsetProxyConfigService);
+  return std::make_unique<UnsetProxyConfigService>();
 #elif defined(OS_LINUX)
   std::unique_ptr<ProxyConfigServiceLinux> linux_config_service(
       new ProxyConfigServiceLinux());

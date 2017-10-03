@@ -87,7 +87,7 @@ void TestURLRequestContext::Init() {
   }
   if (!ct_policy_enforcer()) {
     context_storage_.set_ct_policy_enforcer(
-        base::WrapUnique(new CTPolicyEnforcer));
+        std::make_unique<CTPolicyEnforcer>());
   }
   if (!ssl_config_service())
     context_storage_.set_ssl_config_service(new SSLConfigServiceDefaults());
