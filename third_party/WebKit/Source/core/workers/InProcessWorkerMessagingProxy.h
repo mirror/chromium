@@ -37,6 +37,7 @@
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Optional.h"
 #include "platform/wtf/RefPtr.h"
+#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
 
 namespace blink {
 
@@ -84,6 +85,9 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
 
   // Whether Atomics.wait (a blocking function call) is allowed on this thread.
   virtual bool IsAtomicsWaitAllowed() { return false; }
+
+  virtual service_manager::mojom::blink::InterfaceProviderPtrInfo
+  ConnectToWorkerInterfaceProvider(const RefPtr<SecurityOrigin>& script_origin);
 
  private:
   friend class InProcessWorkerMessagingProxyForTest;

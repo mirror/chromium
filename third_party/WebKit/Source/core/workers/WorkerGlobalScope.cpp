@@ -358,6 +358,11 @@ bool WorkerGlobalScope::IsSecureContext(String& error_message) const {
   return false;
 }
 
+service_manager::InterfaceProvider* WorkerGlobalScope::GetInterfaceProvider()
+    const {
+  return interface_provider_.get();
+}
+
 ExecutionContext* WorkerGlobalScope::GetExecutionContext() const {
   return const_cast<WorkerGlobalScope*>(this);
 }
@@ -380,7 +385,9 @@ WorkerGlobalScope::WorkerGlobalScope(
       event_queue_(WorkerEventQueue::Create(this)),
       timers_(TaskRunnerHelper::Get(TaskType::kJavascriptTimer, this)),
       time_origin_(time_origin),
-      font_selector_(OffscreenFontSelector::Create()) {
+      font_selector_(OffscreenFontSelector::Create()),
+      interface_provider_(
+          WTF::MakeUnique<service_manager::InterfaceProvider>()) {
   InstanceCounters::IncrementCounter(
       InstanceCounters::kWorkerGlobalScopeCounter);
   SetSecurityOrigin(SecurityOrigin::Create(url));
@@ -410,6 +417,15 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
         policy_and_type.first, policy_and_type.second,
         kContentSecurityPolicyHeaderSourceHTTP);
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
+}
+
+void WorkerGlobalScope::BindInterfaceProvider(
+    service_manager::mojom::blink::InterfaceProviderPtrInfo
+        interface_provider_ptr) {
+  interface_provider_->Bind(
+      mojo::MakeProxy(service_manager::mojom::InterfaceProviderPtrInfo(
+          interface_provider_ptr.PassHandle(),
+          service_manager::mojom::InterfaceProvider::Version_)));
 }
 
 void WorkerGlobalScope::SetWorkerSettings(

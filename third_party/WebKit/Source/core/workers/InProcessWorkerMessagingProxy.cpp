@@ -100,13 +100,15 @@ void InProcessWorkerMessagingProxy::StartWorkerGlobalScope(
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
 
+  auto worker_security_origin = SecurityOrigin::Create(script_url);
   auto global_scope_creation_params =
       WTF::MakeUnique<GlobalScopeCreationParams>(
           script_url, user_agent, source_code, nullptr, start_mode,
           csp->Headers().get(), referrer_policy, starter_origin,
           ReleaseWorkerClients(), document->AddressSpace(),
           OriginTrialContext::GetTokens(document).get(),
-          std::move(worker_settings), kV8CacheOptionsDefault);
+          std::move(worker_settings), kV8CacheOptionsDefault,
+          ConnectToWorkerInterfaceProvider(worker_security_origin));
 
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
@@ -202,6 +204,12 @@ DEFINE_TRACE(InProcessWorkerMessagingProxy) {
 bool InProcessWorkerMessagingProxy::HasPendingActivity() const {
   DCHECK(IsParentContextThread());
   return !AskedToTerminate();
+}
+
+service_manager::mojom::blink::InterfaceProviderPtrInfo
+InProcessWorkerMessagingProxy::ConnectToWorkerInterfaceProvider(
+    const RefPtr<SecurityOrigin>& script_origin) {
+  return {};
 }
 
 }  // namespace blink

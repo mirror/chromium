@@ -4,9 +4,14 @@
 
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 
+#include <memory>
+
+#include "core/dom/Document.h"
+#include "core/frame/LocalFrame.h"
 #include "core/workers/DedicatedWorkerThread.h"
 #include "core/workers/WorkerClients.h"
-#include <memory>
+#include "services/service_manager/public/interfaces/interface_provider.mojom-blink.h"
+#include "third_party/WebKit/public/platform/dedicated_worker_factory.mojom-blink.h"
 
 namespace blink {
 
@@ -38,6 +43,21 @@ std::unique_ptr<WorkerThread>
 DedicatedWorkerMessagingProxy::CreateWorkerThread() {
   return DedicatedWorkerThread::Create(CreateThreadableLoadingContext(),
                                        WorkerObjectProxy());
+}
+
+service_manager::mojom::blink::InterfaceProviderPtrInfo
+DedicatedWorkerMessagingProxy::ConnectToWorkerInterfaceProvider(
+    const RefPtr<SecurityOrigin>& script_origin) {
+  auto* frame = ToDocument(GetExecutionContext())->GetFrame();
+  if (!frame)
+    return {};
+
+  mojom::blink::DedicatedWorkerFactoryPtr worker_factory;
+  frame->GetInterfaceProvider().GetInterface(&worker_factory);
+  service_manager::mojom::blink::InterfaceProviderPtrInfo interface_provider;
+  worker_factory->CreateDedicatedWorker(script_origin->IsUnique(),
+                                        mojo::MakeRequest(&interface_provider));
+  return interface_provider;
 }
 
 }  // namespace blink
