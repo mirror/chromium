@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "daf0b0e5_c7e5f75b",
+        "filename": "content/browser/dedicated_worker/dedicated_worker_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T07:57:24Z",
+      "side": 1,
+      "message": "Could you add an OWNERS file under content/browser/dedicated_worker/ like this?\n\nnhiroki@chromium.org\n... (if someone wants to have ownership)\n\n# TEAM: worker-dev@chromium.org\n# COMPONENT: Blink\u003eWorkers",
+      "range": {
+        "startLine": 5,
+        "startChar": 24,
+        "endLine": 5,
+        "endChar": 40
+      },
+      "revId": "15767b26ae24c47f19b2035073239f81bdcea1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "430cd549_311478fc",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-03T07:57:24Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 390,
+        "startChar": 10,
+        "endLine": 390,
+        "endChar": 25
+      },
+      "revId": "15767b26ae24c47f19b2035073239f81bdcea1ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
