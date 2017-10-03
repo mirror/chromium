@@ -52,6 +52,24 @@
       "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e681df_a6e679b7",
+        "filename": "components/arc/ime/arc_ime_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-03T05:07:04Z",
+      "side": 1,
+      "message": "Isn\u0027t the representation identical? Shouldn\u0027t that make it a fairly trivial change?",
+      "parentUuid": "10fff173_d80df980",
+      "revId": "5eef5b0aac3f50e5a1b41c3a5ebb5c266aae2b71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
