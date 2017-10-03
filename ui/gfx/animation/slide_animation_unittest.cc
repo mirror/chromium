@@ -92,4 +92,30 @@ TEST_F(SlideAnimationTest, DontNotifyOnDelete) {
   EXPECT_FALSE(delegate.canceled());
 }
 
+// Tests that the duration of the animation stays constant when
+// constant_duration is true.
+TEST_F(SlideAnimationTest, ConstantAnimationDuration) {
+  SlideAnimation animation(nullptr, true /*constant duration*/);
+  AnimationTestApi test_api(&animation);
+  const int duration = 10;
+  animation.SetSlideDuration(duration);
+  animation.Show();
+  // Advance the animation to halfway done.
+  test_api.SetStartTime(base::TimeTicks());
+  test_api.Step(base::TimeTicks() +
+                base::TimeDelta::FromMilliseconds(duration / 2));
+
+  // Reverse the animation when it is halfway done.
+  animation.Hide();
+  test_api.SetStartTime(base::TimeTicks());
+  test_api.Step(base::TimeTicks() +
+                base::TimeDelta::FromMilliseconds(duration / 2));
+
+  // The animation should be near 0.25 because the duration should  not have
+  // adjusted.
+  const double epsilon = 0.05;
+  EXPECT_LT(.25 - epsilon, animation.GetCurrentValue());
+  EXPECT_GT(0.25 + epsilon, animation.GetCurrentValue());
+}
+
 }  // namespace gfx

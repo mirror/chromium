@@ -17,8 +17,7 @@ PaginationModel::PaginationModel()
       transition_(-1, 0),
       pending_selected_page_(-1),
       transition_duration_ms_(0),
-      overscroll_transition_duration_ms_(0),
-      last_overscroll_target_page_(0) {}
+      overscroll_transition_duration_ms_(0) {}
 
 PaginationModel::~PaginationModel() {}
 
@@ -43,22 +42,6 @@ void PaginationModel::SelectPage(int page, bool animate) {
     if (!transition_animation_) {
       if (page == selected_page_)
         return;
-
-      // Suppress over scroll animation if the same one happens too fast.
-      if (!is_valid_page(page)) {
-        const base::TimeTicks now = base::TimeTicks::Now();
-
-        if (page == last_overscroll_target_page_) {
-          const int kMinOverScrollTimeGapInMs = 500;
-          const base::TimeDelta time_elapsed =
-              now - last_overscroll_animation_start_time_;
-          if (time_elapsed.InMilliseconds() < kMinOverScrollTimeGapInMs)
-            return;
-        }
-
-        last_overscroll_target_page_ = page;
-        last_overscroll_animation_start_time_ = now;
-      }
 
       // Creates an animation if there is not one.
       StartTransitionAnimation(Transition(page, 0));
@@ -239,7 +222,7 @@ void PaginationModel::StartTransitionAnimation(const Transition& transition) {
   NotifyTransitionStarted();
   SetTransition(transition);
 
-  transition_animation_.reset(new gfx::SlideAnimation(this));
+  transition_animation_.reset(new gfx::SlideAnimation(this, true));
   transition_animation_->SetTweenType(gfx::Tween::FAST_OUT_SLOW_IN);
   transition_animation_->Reset(transition_.progress);
 
