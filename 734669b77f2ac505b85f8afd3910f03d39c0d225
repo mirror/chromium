@@ -22,6 +22,30 @@
       "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986d60ec_49ae2948",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-03T18:10:10Z",
+      "side": 1,
+      "message": "Just to make sure I understand, do you mean something like below?:\nEXPECT_EQ(StartupTabProviderImpl::GetOboardingtabs(params_for_incognito),\n          output);\nI personally do no like this as I think using the production code to compute the expected value and then check the actual value against the computed expected valid does not really test anything.\n\nThis new test actually tests that StartupTabProviderImpl().GetOnboardingTabs does not crash in incognito. I thought it was better to actually test the output. If you think this is an overkill, then I can remove the EXPECT here.",
+      "parentUuid": "a55292e8_14d4846a",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 6
+      },
+      "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
