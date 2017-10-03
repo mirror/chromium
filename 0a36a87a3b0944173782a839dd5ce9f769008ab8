@@ -16,6 +16,24 @@
       "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90465a97_314e5cd6",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-10-03T17:45:07Z",
+      "side": 1,
+      "message": "There\u0027s very few uses of base::Optional for \"scoped\" member variables. (https://cs.chromium.org/search/?q\u003dbase::optional.*scoped\u0026type\u003dcs)\n\nI\u0027ll keep it as-is.",
+      "parentUuid": "34613238_29f346c4",
+      "revId": "0a36a87a3b0944173782a839dd5ce9f769008ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
