@@ -34,6 +34,24 @@
       "revId": "d80d55f619d7a4d8b5522d40d575e868c101501b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09af78a8_b20b0c16",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 1819,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-03T21:37:26Z",
+      "side": 1,
+      "message": "I suppose it would be nice if lld could print an error message if it requires this flag to make --gdb-index work.",
+      "parentUuid": "9a6cba47_825a2e81",
+      "revId": "d80d55f619d7a4d8b5522d40d575e868c101501b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
