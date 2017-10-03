@@ -215,7 +215,6 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       needs_scrollbars_update_(false),
       suppress_adjust_view_size_(false),
       allows_layout_invalidation_after_layout_clean_(true),
-      forcing_layout_parent_view_(false),
       needs_intersection_observation_(false),
       main_thread_scrolling_reasons_(0),
       paint_frame_count_(0),
@@ -901,42 +900,6 @@ void LocalFrameView::CountObjectsNeedingLayout(unsigned& needs_layout_objects,
   }
 }
 
-inline void LocalFrameView::ForceLayoutParentViewIfNeeded() {
-  AutoReset<bool> prevent_update_layout(&forcing_layout_parent_view_, true);
-  LayoutEmbeddedContentItem owner_layout_item = frame_->OwnerLayoutItem();
-  if (owner_layout_item.IsNull() || !owner_layout_item.GetFrame())
-    return;
-
-  LayoutReplaced* content_box = EmbeddedReplacedContent();
-  if (!content_box)
-    return;
-
-  LayoutSVGRoot* svg_root = ToLayoutSVGRoot(content_box);
-  if (svg_root->EverHadLayout() && !svg_root->NeedsLayout())
-    return;
-
-  // If the embedded SVG document appears the first time, the ownerLayoutObject
-  // has already finished layout without knowing about the existence of the
-  // embedded SVG document, because LayoutReplaced embeddedReplacedContent()
-  // returns 0, as long as the embedded document isn't loaded yet. Before
-  // bothering to lay out the SVG document, mark the ownerLayoutObject needing
-  // layout and ask its LocalFrameView for a layout. After that the
-  // LayoutEmbeddedObject (ownerLayoutObject) carries the correct size, which
-  // LayoutSVGRoot::computeReplacedLogicalWidth/Height rely on, when laying out
-  // for the first time, or when the LayoutSVGRoot size has changed dynamically
-  // (eg. via <script>).
-  LocalFrameView* frame_view = owner_layout_item.GetFrame()->View();
-
-  // Mark the owner layoutObject as needing layout.
-  owner_layout_item.SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
-      LayoutInvalidationReason::kUnknown);
-
-  // Synchronously enter layout, to layout the view containing the host
-  // object/embed/iframe.
-  DCHECK(frame_view);
-  frame_view->UpdateLayout();
-}
-
 void LocalFrameView::PerformPreLayoutTasks() {
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::performPreLayoutTasks");
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPreLayout);
@@ -1029,7 +992,7 @@ std::unique_ptr<TracedValue> LocalFrameView::AnalyzerCounters() {
 #define PERFORM_LAYOUT_TRACE_CATEGORIES \
   "blink,benchmark,rail," TRACE_DISABLED_BY_DEFAULT("blink.debug.layout")
 
-bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
+void LocalFrameView::PerformLayout(bool in_subtree_layout) {
   DCHECK(in_subtree_layout || layout_subtree_root_list_.IsEmpty());
 
   int contents_height_before_layout =
@@ -1050,13 +1013,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
     DCHECK(!layout_subtree_root_list_.IsEmpty());
     ScheduleOrthogonalWritingModeRootsForLayout();
   }
-
-  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
-  // that happens, abandon layout.
-  bool was_attached = is_attached_;
-  ForceLayoutParentViewIfNeeded();
-  if (was_attached && !is_attached_)
-    return false;
 
   DCHECK(!IsInPerformLayout());
   Lifecycle().AdvanceTo(DocumentLifecycle::kInPerformLayout);
@@ -1101,7 +1057,6 @@ bool LocalFrameView::PerformLayout(bool in_subtree_layout) {
       .MarkNextPaintAsMeaningfulIfNeeded(
           layout_object_counter_, contents_height_before_layout,
           GetLayoutViewItem().DocumentRect().Height(), VisibleHeight());
-  return true;
 }
 
 void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
@@ -1136,12 +1091,8 @@ void LocalFrameView::UpdateLayout() {
 
   ScriptForbiddenScope forbid_script;
 
-  // forcing_layout_parent_view_ means that we got here recursively via a call
-  // to ForceLayoutParentViewIfNeeded.  In that case, we don't do anything
-  // here, since the original call to UpdateLayout will do its work.  This is
-  // not just an optimization: SVG document size negotiation relies on this.
   if (IsInPerformLayout() || ShouldThrottleRendering() ||
-      forcing_layout_parent_view_ || !frame_->GetDocument()->IsActive())
+      !frame_->GetDocument()->IsActive())
     return;
 
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::layout");
@@ -1273,12 +1224,7 @@ void LocalFrameView::UpdateLayout() {
 
     IntSize old_size(Size());
 
-    if (!PerformLayout(in_subtree_layout)) {
-      TRACE_EVENT_END0("devtools.timeline", "Layout");
-      DCHECK(nested_layout_count_);
-      nested_layout_count_--;
-      return;
-    }
+    PerformLayout(in_subtree_layout);
 
     UpdateScrollbars();
     UpdateParentScrollableAreaSet();

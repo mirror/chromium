@@ -186,6 +186,15 @@ void HTMLFrameOwnerElement::DispatchLoad() {
   DispatchScopedEvent(Event::Create(EventTypeNames::load));
 }
 
+void HTMLFrameOwnerElement::RequestSizeNegotiation() {
+  LayoutEmbeddedContent* layout_embedded_content = GetLayoutEmbeddedContent();
+  if (!layout_embedded_content || !layout_embedded_content->IsEmbeddedObject())
+    return;
+  layout_embedded_content
+      ->SetNeedsLayoutAndPrefWidthsRecalcAndFullPaintInvalidation(
+          LayoutInvalidationReason::kSizeChanged);
+}
+
 const WebParsedFeaturePolicy& HTMLFrameOwnerElement::ContainerPolicy() const {
   return container_policy_;
 }

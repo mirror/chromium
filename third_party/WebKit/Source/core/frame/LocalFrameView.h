@@ -965,9 +965,8 @@ class CORE_EXPORT LocalFrameView final
 
   bool ContentsInCompositedLayer() const;
 
-  void ForceLayoutParentViewIfNeeded();
   void PerformPreLayoutTasks();
-  bool PerformLayout(bool in_subtree_layout);
+  void PerformLayout(bool in_subtree_layout);
   void ScheduleOrPerformPostLayoutTasks();
   void PerformPostLayoutTasks();
 
@@ -1227,7 +1226,6 @@ class CORE_EXPORT LocalFrameView final
   bool needs_scrollbars_update_;
   bool suppress_adjust_view_size_;
   bool allows_layout_invalidation_after_layout_clean_;
-  bool forcing_layout_parent_view_;
   bool needs_intersection_observation_;
 
   Member<ElementVisibilityObserver> visibility_observer_;

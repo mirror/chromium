@@ -212,6 +212,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/resize_observer/ResizeObserverController.h"
 #include "core/svg/SVGDocumentExtensions.h"
+#include "core/svg/SVGSVGElement.h"
 #include "core/svg/SVGScriptElement.h"
 #include "core/svg/SVGTitleElement.h"
 #include "core/svg/SVGUseElement.h"
@@ -3200,15 +3201,34 @@ void Document::ImplicitClose() {
     return;
   }
 
+  bool update_style = false;
+  bool update_layout = false;
+  if (!LocalOwner()) {
+    update_style = true;
+    update_layout = true;
+  } else if (IsSVGDocument() && IsSVGSVGElement(documentElement())) {
+    // If this is an SVG document that is embedded, invoke style
+    // recalc so that we will be able to provide intrinsic dimensions
+    // to the embedding element. Performing a layout at this point in
+    // time will generally be a waste of time, because we don't know
+    // if we are the correct size yet.
+    update_style = true;
+    update_layout = false;
+  } else if (LocalOwner()->GetLayoutObject() &&
+             !LocalOwner()->GetLayoutObject()->NeedsLayout()) {
+    update_style = true;
+    update_layout = true;
+  }
+
   // We used to force a synchronous display and flush here.  This really isn't
   // necessary and can in fact be actively harmful if pages are loading at a
   // rate of > 60fps
   // (if your platform is syncing flushes and limiting them to 60fps).
-  if (!LocalOwner() || (LocalOwner()->GetLayoutObject() &&
-                        !LocalOwner()->GetLayoutObject()->NeedsLayout())) {
+  if (update_style)
     UpdateStyleAndLayoutTree();
 
-    // Always do a layout after loading if needed.
+  // Always do a layout after loading if needed.
+  if (update_layout) {
     if (View() && !GetLayoutViewItem().IsNull() &&
         (!GetLayoutViewItem().FirstChild() ||
          GetLayoutViewItem().NeedsLayout()))

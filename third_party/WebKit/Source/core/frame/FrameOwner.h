@@ -39,6 +39,10 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
   virtual bool CanRenderFallbackContent() const = 0;
   virtual void RenderFallbackContent() = 0;
 
+  // Request that a size (re)negotiation take place for this frame. This is
+  // relevant for SVG documents that are embedded via <object> or <embed>.
+  virtual void RequestSizeNegotiation() = 0;
+
   // Returns the 'name' content attribute value of the browsing context
   // container.
   // https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container
@@ -74,6 +78,7 @@ class CORE_EXPORT DummyFrameOwner
   void DispatchLoad() override {}
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
+  void RequestSizeNegotiation() override {}
   AtomicString BrowsingContextContainerName() const override {
     return AtomicString();
   }

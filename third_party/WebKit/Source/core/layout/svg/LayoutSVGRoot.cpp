@@ -23,6 +23,7 @@
 
 #include "core/layout/svg/LayoutSVGRoot.h"
 
+#include "core/frame/FrameOwner.h"
 #include "core/frame/LocalFrame.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
@@ -251,6 +252,38 @@ void LayoutSVGRoot::WillBeDestroyed() {
   LayoutReplaced::WillBeDestroyed();
 }
 
+bool LayoutSVGRoot::IntrinsicSizeIsFontMetricsDependent() const {
+  const SVGSVGElement& svg = ToSVGSVGElement(*GetNode());
+  return svg.width()->CurrentValue()->IsFontRelative() ||
+         svg.height()->CurrentValue()->IsFontRelative();
+}
+
+bool LayoutSVGRoot::StyleChangeAffectsIntrinsicSize(
+    const ComputedStyle& old_style) const {
+  const ComputedStyle& style = StyleRef();
+  // If the writing mode changed from a horizontal mode to a vertical
+  // mode, or vice versa, then our intrinsic dimensions will have
+  // changed.
+  if (old_style.IsHorizontalWritingMode() != style.IsHorizontalWritingMode())
+    return true;
+  // If our intrinsic dimensions depend on font metrics (by using 'em', 'ex' or
+  // any other font-relative unit), any changes to the font may change said
+  // dimensions.
+  if (IntrinsicSizeIsFontMetricsDependent() &&
+      old_style.GetFont() != style.GetFont())
+    return true;
+  return false;
+}
+
+void LayoutSVGRoot::IntrinsicSizingInfoChanged() const {
+  // Ignore changes to intrinsic dimensions if the <svg> is not in an SVG
+  // document, or not embedded in a way that supports/allows size negotiation.
+  if (!IsEmbeddedThroughFrameContainingSVGDocument())
+    return;
+  if (FrameOwner* frame_owner = GetFrame()->Owner())
+    frame_owner->RequestSizeNegotiation();
+}
+
 void LayoutSVGRoot::StyleDidChange(StyleDifference diff,
                                    const ComputedStyle* old_style) {
   if (diff.NeedsFullLayout())
@@ -259,6 +292,12 @@ void LayoutSVGRoot::StyleDidChange(StyleDifference diff,
     // Box decorations may have appeared/disappeared - recompute status.
     has_box_decoration_background_ = StyleRef().HasBoxDecorationBackground();
   }
+
+  // If we previously didn't have any computed style, we wouldn't have been
+  // able to determine our intrinsic dimensions, so in that case always
+  // initiate a size negotiation.
+  if (!old_style || StyleChangeAffectsIntrinsicSize(*old_style))
+    IntrinsicSizingInfoChanged();
 
   LayoutReplaced::StyleDidChange(diff, old_style);
   SVGResourcesCache::ClientStyleChanged(this, diff, StyleRef());
