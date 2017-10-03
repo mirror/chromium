@@ -42,7 +42,6 @@ void GenerateFrameStateFromItem(const WebHistoryItem& item,
   state->url_string = WebString::ToNullableString16(item.UrlString());
   state->referrer = WebString::ToNullableString16(item.GetReferrer());
   state->referrer_policy = item.GetReferrerPolicy();
-  state->target = WebString::ToNullableString16(item.Target());
   if (!item.StateObject().IsNull()) {
     state->state_object =
         WebString::ToNullableString16(item.StateObject().ToString());
@@ -65,29 +64,12 @@ void GenerateFrameStateFromItem(const WebHistoryItem& item,
   }
 }
 
-void RecursivelyGenerateFrameState(
-    HistoryEntry::HistoryNode* node,
-    ExplodedFrameState* state,
-    std::vector<base::NullableString16>* referenced_files) {
-  GenerateFrameStateFromItem(node->item(), state);
-  ToNullableString16Vector(node->item().GetReferencedFilePaths(),
-                           referenced_files);
-
-  std::vector<HistoryEntry::HistoryNode*> children = node->children();
-  state->children.resize(children.size());
-  for (size_t i = 0; i < children.size(); ++i) {
-    RecursivelyGenerateFrameState(children[i], &state->children[i],
-                                  referenced_files);
-  }
-}
-
 void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
                                     HistoryEntry::HistoryNode* node) {
   WebHistoryItem item;
   item.Initialize();
   item.SetURLString(WebString::FromUTF16(state.url_string));
   item.SetReferrer(WebString::FromUTF16(state.referrer), state.referrer_policy);
-  item.SetTarget(WebString::FromUTF16(state.target));
   if (!state.state_object.is_null()) {
     item.SetStateObject(WebSerializedScriptValue::FromString(
         WebString::FromUTF16(state.state_object)));
@@ -127,16 +109,6 @@ void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
 }
 
 }  // namespace
-
-PageState HistoryEntryToPageState(HistoryEntry* entry) {
-  ExplodedPageState state;
-  RecursivelyGenerateFrameState(entry->root_history_node(), &state.top,
-                                &state.referenced_files);
-
-  std::string encoded_data;
-  EncodePageState(state, &encoded_data);
-  return PageState::CreateFromEncodedData(encoded_data);
-}
 
 PageState SingleHistoryItemToPageState(const WebHistoryItem& item) {
   ExplodedPageState state;

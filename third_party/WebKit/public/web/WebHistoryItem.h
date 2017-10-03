@@ -82,9 +82,6 @@ class WebHistoryItem {
   BLINK_EXPORT WebReferrerPolicy GetReferrerPolicy() const;
   BLINK_EXPORT void SetReferrer(const WebString&, WebReferrerPolicy);
 
-  BLINK_EXPORT const WebString& Target() const;
-  BLINK_EXPORT void SetTarget(const WebString&);
-
   BLINK_EXPORT WebFloatPoint VisualViewportScrollOffset() const;
   BLINK_EXPORT void SetVisualViewportScrollOffset(const WebFloatPoint&);
 
@@ -127,8 +124,6 @@ class WebHistoryItem {
 
  private:
   WebPrivatePtr<HistoryItem> private_;
-  // TODO(dcheng): Remove this, since unique name is no longer a Blink concept.
-  WebString target_;
 };
 
 }  // namespace blink

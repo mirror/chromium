@@ -50,12 +50,10 @@ void WebHistoryItem::Initialize() {
 
 void WebHistoryItem::Reset() {
   private_.Reset();
-  target_.Reset();
 }
 
 void WebHistoryItem::Assign(const WebHistoryItem& other) {
   private_ = other.private_;
-  target_ = other.target_;
 }
 
 WebString WebHistoryItem::UrlString() const {
@@ -79,14 +77,6 @@ void WebHistoryItem::SetReferrer(const WebString& referrer,
                                  WebReferrerPolicy referrer_policy) {
   private_->SetReferrer(
       Referrer(referrer, static_cast<ReferrerPolicy>(referrer_policy)));
-}
-
-const WebString& WebHistoryItem::Target() const {
-  return target_;
-}
-
-void WebHistoryItem::SetTarget(const WebString& target) {
-  target_ = target;
 }
 
 WebFloatPoint WebHistoryItem::VisualViewportScrollOffset() const {
