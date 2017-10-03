@@ -15,7 +15,9 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
+#include "base/win/windows_version.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/profiles/profile_io_data.h"
@@ -412,6 +414,13 @@ void ProtocolHandlerRegistry::InitProtocolSettings() {
       ProtocolHandler handler = p->second;
       delegate_->RegisterWithOSAsDefaultClient(handler.protocol(), this);
     }
+// TODO(chengx) : Remove this UMA metric after crbug/449569 is fixed.
+#if defined(OS_WIN)
+    if (base::win::GetVersion() < base::win::VERSION_WIN8) {
+      UMA_HISTOGRAM_COUNTS_100("ProtocolHandler.DefaultHandlerCountWin7",
+                               default_handlers_.size());
+    }
+#endif
   }
 }
 
