@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "370d8acd_f2900258",
+        "filename": "ios/chrome/common/physical_web/physical_web_scanner.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-03T19:36:25Z",
+      "side": 1,
+      "message": "nit: static_cast instead of C-style cast",
+      "range": {
+        "startLine": 243,
+        "startChar": 11,
+        "endLine": 243,
+        "endChar": 34
+      },
+      "revId": "1d0bee034e9a439d70b284e07857aa9771852124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
