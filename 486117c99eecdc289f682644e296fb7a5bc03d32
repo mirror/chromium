@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d353ffa4_a626adf4",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 2902,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-03T14:56:42Z",
+      "side": 0,
+      "message": "So looks like this chunk of tests are always failing on Mac 10.12. Some of them are pixel tests and probably need to be rebaselined if we want to remove these expectations. The script seems unable to handle them correctly?",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
