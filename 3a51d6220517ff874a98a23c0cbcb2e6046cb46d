@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "07da5d71_fd8a1e73",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1130,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T16:41:14Z",
+      "side": 1,
+      "message": "I meant;\n\nthe first return value is string and the second one is bool on D-Bus method interface (at L1124).\nOn the other hand, this callback\u0027s first arg is bool, and the second one is string (original callback had same order, so I just kept it as is).",
+      "parentUuid": "88f85cb1_d1050a76",
+      "range": {
+        "startLine": 1130,
+        "startChar": 44,
+        "endLine": 1130,
+        "endChar": 68
+      },
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a387a7d_558cd515",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 1
@@ -63,6 +87,24 @@
       "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05973d60_8cff5524",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-03T16:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a387a7d_558cd515",
+      "revId": "3a51d6220517ff874a98a23c0cbcb2e6046cb46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
