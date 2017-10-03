@@ -9,6 +9,9 @@
 
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
+#include "ui/views/widget/widget_observer.h"
+
+class NewTabPromoBubbleView;
 
 namespace feature_engagement {
 
@@ -24,7 +27,7 @@ namespace feature_engagement {
 // - The user has navigated away from the start home screen.
 // - The omnibox is in focus, which implies the user is intending on navigating
 //   to a new page.
-class NewTabTracker : public FeatureTracker {
+class NewTabTracker : public FeatureTracker, public views::WidgetObserver {
  public:
   NewTabTracker(Profile* profile,
                 SessionDurationUpdater* session_duration_updater);
@@ -50,13 +53,26 @@ class NewTabTracker : public FeatureTracker {
   ~NewTabTracker() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, ShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerEventTest, TestOnSessionTimeMet);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldNotShowPromo);
   FRIEND_TEST_ALL_PREFIXES(NewTabTrackerTest, TestShouldShowPromo);
-  FRIEND_TEST_ALL_PREFIXES(NewTabTrackerBrowserTest, TestShowPromo);
+
+  // views::WidgetObserver:
+  void OnWidgetDestroying(views::Widget* widget) override;
+
+  NewTabPromoBubbleView* new_tab_promo() { return new_tab_promo_; }
 
   // FeatureTracker:
   void OnSessionTimeMet() override;
+
+  // Promotional UI that appears next to the NewTabButton and encourages its
+  // use. Owned by its NativeWidget.
+  NewTabPromoBubbleView* new_tab_promo_ = nullptr;
+
+  // Observes the |incognito_promo_|'s Widget. Used to tell whether the promo
+  // is open and is called back when it closes.
+  ScopedObserver<views::Widget, WidgetObserver> new_tab_promo_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(NewTabTracker);
 };
