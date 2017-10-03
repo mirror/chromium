@@ -42,6 +42,29 @@
     },
     {
       "key": {
+        "uuid": "7af64634_21f445e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:46:51Z",
+      "side": 1,
+      "message": "This should be prefixed with chrome_home_ to disambiguate between other (potential future) types of survey info bars.",
+      "range": {
+        "startLine": 29,
+        "startChar": 61,
+        "endLine": 29,
+        "endChar": 86
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d26d321_a2a86cf2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 23
@@ -81,6 +104,29 @@
         "startChar": 8,
         "endLine": 63,
         "endChar": 26
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665e8d71_f68e1aab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:46:51Z",
+      "side": 1,
+      "message": "nit: these are only really going to be used in one place (the new helper method to call #showSurveyInfoBar() and store the SharedPreference), so let\u0027s just in-line them rather than storing them in variables.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 51
       },
       "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -157,6 +203,52 @@
     },
     {
       "key": {
+        "uuid": "82c8aa77_e57bc8d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:46:51Z",
+      "side": 1,
+      "message": "Combine these two calls into a helper method so that it\u0027s more obvious for folks who didn\u0027t write/review this code that they have to be called together.",
+      "range": {
+        "startLine": 98,
+        "startChar": 24,
+        "endLine": 100,
+        "endChar": 46
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192376a6_7f8730a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:46:51Z",
+      "side": 1,
+      "message": "Does this actually cause a StrictMode violation? Per Ted\u0027s comment on your CL to add the Chrome Home enabled date, \"apply() shouldn\u0027t block the UI for writes.\"",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 74
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "874957a6_919281bf",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 23
@@ -173,6 +265,29 @@
         "startChar": 12,
         "endLine": 122,
         "endChar": 32
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6dac78_e9dd1066",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/OWNERS",
+        "patchSetId": 23
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:46:51Z",
+      "side": 1,
+      "message": "It\u0027s atypical for non-committers to be OWNERS. I think that for now this should just be me -- or me and Matt, or me and Matt.\n\nAlso, let\u0027s end this file with comments indicating the correct component and OS:\n\n# COMPONENT: UI\u003eBrowser\u003eMobile\n# OS: Android",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 23
       },
       "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
