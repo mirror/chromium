@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "8a6a084e_a36ec604",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a96cf34_b6996bc5",
+      "range": {
+        "startLine": 249,
+        "startChar": 15,
+        "endLine": 249,
+        "endChar": 28
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afe5d5dd_e241a73c",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 45
@@ -278,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "ff9d2888_3a9aaf19",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Then the documentation should be updated, specifically the first paragraph \"Invoked when writers has completed writing to the cache\".  Maybe add \"if any of the below paths is desired\"?\n\nBut I\u0027d like to talk this through in F2F.",
+      "parentUuid": "cf5a7df9_16d9a4d8",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df4694e9_9e801bfe",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -313,6 +361,30 @@
       "side": 1,
       "message": "This is set for the following cases:\n- partial_do_not_truncate_ \u003d\u003d true, do not truncate\n- truncation can successfully proceed",
       "parentUuid": "df4694e9_9e801bfe",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc1c62b_fd85b84b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Not what I mean.  The lines before this are returning if !should_keep_entry_.  Therefore, should_keep_entry_ must be true and this line is redundant.  Isn\u0027t it?",
+      "parentUuid": "36c7d26a_4079bd68",
       "range": {
         "startLine": 268,
         "startChar": 2,
@@ -369,6 +441,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9ae0d3_405dd605",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2270600e_9c3dd1ff",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 21
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -431,6 +527,30 @@
       "side": 1,
       "message": "I am now invoking AboutToBeRemovedFromWriters from all places except this one. This is special in a way that the transaction is still going to be a part of entry as readers and that would lead to invoke DoneWithEntry when its actually completed reading/destroyed. So in that case we will end up calling RecordHistograms twice.",
       "parentUuid": "c4c8a3d2_a2f5908a",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 52
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20707115_2ab125a4",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Would it make sense to change the name of the routine to \"WriterAboutToBeRemovedFromEntry\" then?",
+      "parentUuid": "75cc286f_8ba6f182",
       "range": {
         "startLine": 618,
         "startChar": 20,
@@ -631,6 +751,29 @@
     },
     {
       "key": {
+        "uuid": "426f8d10_6c4e39d7",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "Are there tests for each of the three branches in the state diagram/call graph through which TruncateEntry() can be called?  (Through OnDataReceived, through OnNetworkReadFailure, through RemoveTransaction()).",
+      "range": {
+        "startLine": 624,
+        "startChar": 20,
+        "endLine": 624,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6affda12_76946b1c",
         "filename": "net/http/http_cache_writers_unittest.cc",
         "patchSetId": 45
@@ -671,6 +814,29 @@
         "startChar": 20,
         "endLine": 637,
         "endChar": 38
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4a6b40_7d10a3e3",
+        "filename": "net/http/http_transaction.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-03T18:56:45Z",
+      "side": 1,
+      "message": "nit: \"may or may not\"",
+      "range": {
+        "startLine": 127,
+        "startChar": 56,
+        "endLine": 127,
+        "endChar": 61
       },
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
