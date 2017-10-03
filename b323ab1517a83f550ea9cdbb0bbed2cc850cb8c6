@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "900cde81_37045d5d",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T23:38:13Z",
+      "side": 1,
+      "message": "Since this is returning a ThrottleMethod type, it should be named throttle_method().",
+      "revId": "b323ab1517a83f550ea9cdbb0bbed2cc850cb8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b801dec6_a98e28cd",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T23:38:13Z",
+      "side": 1,
+      "message": "Same here, throttle_method_.",
+      "revId": "b323ab1517a83f550ea9cdbb0bbed2cc850cb8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d679d39d_62d89424",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T23:38:13Z",
+      "side": 1,
+      "message": "There is no implementation of this at this point.",
+      "revId": "b323ab1517a83f550ea9cdbb0bbed2cc850cb8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438a049a_f0fbdabf",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T23:38:13Z",
+      "side": 1,
+      "message": "Awesome comment!",
+      "revId": "b323ab1517a83f550ea9cdbb0bbed2cc850cb8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7930265_3b757e0e",
+        "filename": "content/public/test/test_navigation_throttle.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-03T23:38:13Z",
+      "side": 1,
+      "message": "nit: Technically you don\u0027t need it to be base::Optional. base::Callback has is_null() method, which you can use to check validity or not.",
+      "revId": "b323ab1517a83f550ea9cdbb0bbed2cc850cb8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
