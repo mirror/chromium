@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "177bea20_380f95b6",
+        "filename": "base/trace_event/trace_log.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T13:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72e60462_2b63919a",
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d514b46_f9c20a7e",
         "filename": "components/net_log/net_export_file_writer_unittest.cc",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4068106d_ba579713",
+        "filename": "components/net_log/net_export_file_writer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T13:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d514b46_f9c20a7e",
+      "range": {
+        "startLine": 418,
+        "startChar": 1,
+        "endLine": 418,
+        "endChar": 10
+      },
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "5cf4cb77_c16dd520",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T13:56:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "384e000c_837bdbcb",
+      "range": {
+        "startLine": 58,
+        "startChar": 32,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72d897db_24a5e384",
         "filename": "net/log/trace_net_log_observer_unittest.cc",
         "patchSetId": 5
@@ -93,6 +159,30 @@
       "writtenOn": "2017-10-02T20:53:34Z",
       "side": 1,
       "message": "I think this can be moved up to the anonymous namespace, too?  It wasn\u0027t declared static before, but it could have been.",
+      "range": {
+        "startLine": 121,
+        "startChar": 7,
+        "endLine": 121,
+        "endChar": 23
+      },
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a895d57_f4a30bb5",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T13:56:22Z",
+      "side": 1,
+      "message": "Ack. I can\u0027t move this one because it binds a member function of the test class in Flush() callback.",
+      "parentUuid": "72d897db_24a5e384",
       "range": {
         "startLine": 121,
         "startChar": 7,
@@ -137,6 +227,24 @@
       "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb9cf44_4a26e703",
+        "filename": "net/log/trace_net_log_observer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-03T13:56:22Z",
+      "side": 1,
+      "message": "Done. I added a comment. I decided to keep it here.",
+      "parentUuid": "de20f002_528a4124",
+      "revId": "529cbb20bd268b3868e68a4d7b295ae98d48d64a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
