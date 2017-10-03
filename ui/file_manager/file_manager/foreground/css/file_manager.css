@@ -293,12 +293,12 @@ body.check-select .dialog-header button paper-ripple {
 }
 
 .dialog-header
-    button:focus:not(.using-mouse):not([tabindex='-1']):not(:active) {
+    button:focus:not([tabindex='-1']):not(:active) {
   background-color: rgba(255, 255, 255, 0.20);
 }
 
 body.check-select .dialog-header
-    button:focus:not(.using-mouse):not([tabindex='-1']):not(:active) {
+    button:focus:not([tabindex='-1']):not(:active) {
   background-color: rgba(153, 153, 153, 0.20);
 }
 
