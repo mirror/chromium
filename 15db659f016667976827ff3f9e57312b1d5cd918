@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "63b2507e_29c490ac",
+        "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-03T15:39:42Z",
+      "side": 1,
+      "message": "objc/objc.h disagrees:\n\n  /// An opaque type that represents a method selector.\n  typedef struct objc_selector *SEL;\n\nApple do nil for setAction: in WebKit:\nhttps://github.com/WebKit/webkit/blob/c637754ee7dfca6142e441d2040026903fee0c1f/Source/WebKit/UIProcess/mac/WebColorPickerMac.mm#L171\n\nAnd in Chromium we prefer nil for as well:\n\nhttps://cs.chromium.org/search/?q\u003dsetAction:%5B%5E@%5D+file:mm$\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "d965bb53_87b77676",
+      "range": {
+        "startLine": 132,
+        "startChar": 21,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00eca535_3eb3c4aa",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
         "patchSetId": 1
