@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fca787cf_9e7c58be",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Oops. Fixed!",
+      "parentUuid": "c69137b2_3e0d3604",
+      "range": {
+        "startLine": 179,
+        "startChar": 47,
+        "endLine": 179,
+        "endChar": 48
+      },
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f386248a_8d7c7657",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e98832_31b2e925",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f386248a_8d7c7657",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "49b45252_14aea5b4",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "This statement was removed.",
+      "parentUuid": "34661e82_2bf560f7",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff770fab_6778cec9",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c406614_315ae9ab",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff770fab_6778cec9",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "5d599527_da61caa1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/serviceworker/fetch-sync-tags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066c3918_92029c0a",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd5781aa_d83b6ba4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/serviceworker/fetch-sync-tags.js",
         "patchSetId": 2
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "8a7af382_87210b83",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector-protocol/serviceworker/fetch-sync-tags.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd5781aa_d83b6ba4",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48656b5c_84c19f26",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -121,6 +235,24 @@
       "writtenOn": "2017-09-29T18:51:32Z",
       "side": 1,
       "message": "Are we going to use all of these?\nI\u0027d say getSyncTags which returns an array of strings is easier :)",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c104ff_da7e3ea7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4055,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "We are not using it initially, but there\u0027s little difference between fetching \u0027just\u0027 a list of tags vs more detailed info.",
+      "parentUuid": "48656b5c_84c19f26",
       "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "26497183_ebc10f7c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4068,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "I suggest \"BackgroundSyncInfo\". Original class name came from the bacground sync code, but I don\u0027t think endusers actually ever see that term.",
+      "parentUuid": "8805d21b_29690810",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea84fb7a_e0763aca",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -158,6 +308,24 @@
       "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbd4986_af90937f",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4147,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-10-03T00:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea84fb7a_e0763aca",
+      "revId": "ca9e06bcb0dea45b7756259b840df2e67053d872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
