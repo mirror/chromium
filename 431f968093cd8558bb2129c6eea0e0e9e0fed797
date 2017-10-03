@@ -592,6 +592,30 @@
       "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad6e320_8c20b2ff",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T15:58:50Z",
+      "side": 1,
+      "message": "\u003e I agree on 1) (I\u0027ve added a big warning to addAccountHolderExplicitly), but not sure about 2)-4), sorry.\n\u003e \n\u003e Since currently downstream code under test uses standalone delegate instead of AccountManagerFacade, 2) doesn\u0027t make much sense to me, as doing so will increase difference between test infrastructure and real environment for the code under test. And 3) doesn\u0027t make sense without 2).\n\u003e \n\u003e \n\u003e However, there\u0027s another thing that I don\u0027t like about addAccountHolderBlocking - it creates a circular dependency between AccountManager and it\u0027s FakeAccountManagerDelegate.\n\u003e \n\u003e Ideally, I would like SigninTestUtil to be moved to org.chromium.components.signin.test.util and addAccountHolderBlocking to be implemented there (and converted to a test rule as part of https://crbug.com/738533). Then we could still use the delegate as a standalone entity (for cases like downstream code), remove the circular dependency and have a designated place for convenience methods related to signin.\n\nOK, that sounds like a good plan. It might still be good to have an idempotent way to set up the AccountManagerFacade so it can be used by the downstream class as well, but that is a yak for some other time to shave.",
+      "parentUuid": "9cc883c9_239feac2",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

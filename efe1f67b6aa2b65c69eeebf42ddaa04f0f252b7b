@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed044377_4b0a2544",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-03T15:58:50Z",
+      "side": 1,
+      "message": "Can you add a comment here that we\u0027re ignoring account changes that have been posted before the account holder has been added?",
+      "range": {
+        "startLine": 236,
+        "startChar": 12,
+        "endLine": 236,
+        "endChar": 94
+      },
+      "revId": "efe1f67b6aa2b65c69eeebf42ddaa04f0f252b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
