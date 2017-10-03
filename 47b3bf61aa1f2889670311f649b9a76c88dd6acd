@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f3be856_a0387083",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2646,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-03T22:02:00Z",
+      "side": 1,
+      "message": "nit: Shutdown (lowercase d)",
+      "revId": "47b3bf61aa1f2889670311f649b9a76c88dd6acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0d8651_2815d484",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 5805,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-03T22:02:00Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "revId": "47b3bf61aa1f2889670311f649b9a76c88dd6acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
