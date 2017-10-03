@@ -22,6 +22,30 @@
       "revId": "15d828ce45b4e79484df7dc579fabbc43d80b6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2714c76f_8e70bf8c",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1242012
+      },
+      "writtenOn": "2017-10-03T05:18:34Z",
+      "side": 1,
+      "message": "Thanks for your review, I will try to submit this change with my next CL.",
+      "parentUuid": "de22a9dc_f44b4b4d",
+      "range": {
+        "startLine": 95,
+        "startChar": 6,
+        "endLine": 95,
+        "endChar": 26
+      },
+      "revId": "15d828ce45b4e79484df7dc579fabbc43d80b6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
