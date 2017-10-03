@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee347ee3_66974f48",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-03T21:40:37Z",
+      "side": 1,
+      "message": "This comment is redundant.",
+      "range": {
+        "startLine": 347,
+        "startChar": 14,
+        "endLine": 347,
+        "endChar": 24
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ae1f4f_185d2831",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-03T21:40:37Z",
+      "side": 1,
+      "message": "browser_view_?",
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0599dc_51be6a76",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-03T21:40:37Z",
+      "side": 1,
+      "message": "I really dislike that this is lining up the find bar with the omnibox \"on accident.\" If we make the find bar a proper bubble like Evan suggested, I assume we get the proper alignment for free. Can we do that instead?",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f30ed46_25740175",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 8
@@ -145,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "3adb4034_8c3c8701",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-03T21:40:37Z",
+      "side": 1,
+      "message": "I do think the find bar should be a bubble in principle. And if it lets us get rid of the stuff in BrowserViewLayout then I think it\u0027s worth the time to do it properly.\n\nIf the UX folks are saying they don\u0027t want clicking the icon to close the bar and that\u0027s in disagreement with all other bubbles, I would push back about that.",
+      "parentUuid": "ef74101b_b3cf013e",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c09f7a4_519d6f16",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 8
@@ -227,6 +314,30 @@
       "side": 1,
       "message": "Could probably just call RefreshFindBarIcon() here... Although that\u0027s a lot of machinations just to set visible to false... and we already know it\u0027s not visible at this point.",
       "parentUuid": "1d27ea65_c207f2f0",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f1fc5ba_39e42582",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-03T21:40:37Z",
+      "side": 1,
+      "message": "I agree with Evan, add a helper AddIcon function or something so all of these are one line instead of four.",
+      "parentUuid": "0468ba92_e4edf8aa",
       "range": {
         "startLine": 250,
         "startChar": 2,
