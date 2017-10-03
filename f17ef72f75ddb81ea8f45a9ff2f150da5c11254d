@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a839684d_27eafd68",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T17:27:06Z",
+      "side": 1,
+      "message": "nit: GetFontListForLabel or something since this is specific to kLabelFontSize.",
+      "revId": "f17ef72f75ddb81ea8f45a9ff2f150da5c11254d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
