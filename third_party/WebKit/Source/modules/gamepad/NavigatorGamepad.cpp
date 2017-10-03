@@ -47,6 +47,7 @@ static void SampleGamepad(unsigned index,
   gamepad.SetMapping(device_gamepad.mapping);
   gamepad.SetAxes(device_gamepad.axes_length, device_gamepad.axes);
   gamepad.SetButtons(device_gamepad.buttons_length, device_gamepad.buttons);
+  gamepad.SetVibrationActuator(device_gamepad.vibration_actuator);
   gamepad.SetPose(device_gamepad.pose);
   gamepad.SetHand(device_gamepad.hand);
   gamepad.SetDisplayId(device_gamepad.display_id);
