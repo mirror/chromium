@@ -350,4 +350,45 @@ TEST_F(LayoutBoxTest, ContentsVisualOverflowPropagation) {
   EXPECT_EQ(LayoutRect(-70, 0, 230, 210), a->VisualOverflowRect());
 }
 
+TEST_F(LayoutBoxTest, LocalVisualRectWithNoBoxDecorationsOrBackground) {
+  SetBodyInnerHTML(
+      "<div id=target style='width: 100px; height: 100px; padding-top: 500px;'>"
+      "</div>");
+
+  LayoutBox* target = ToLayoutBox(GetLayoutObjectByElementId("target"));
+  EXPECT_EQ(LayoutRect(0, 500, 100, 100), target->LocalVisualRect());
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return;
+  EXPECT_EQ(LayoutRect(8, 508, 100, 100), target->VisualRect());
+}
+
+TEST_F(LayoutBoxTest, LocalVisualRectWithBorder) {
+  SetBodyInnerHTML(
+      "<div id=target style='width: 100px; height: 100px; padding-top: 500px;"
+      "    border: 1px solid black'>"
+      "</div>");
+
+  LayoutBox* target = ToLayoutBox(GetLayoutObjectByElementId("target"));
+  EXPECT_EQ(LayoutRect(0, 0, 102, 602), target->LocalVisualRect());
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return;
+  EXPECT_EQ(LayoutRect(8, 8, 102, 602), target->VisualRect());
+}
+
+TEST_F(LayoutBoxTest, LocalVisualRectWithBackground) {
+  SetBodyInnerHTML(
+      "<div id=target style='width: 100px; height: 100px; padding-top: 500px;"
+      "    background: lightblue'>"
+      "</div>");
+
+  LayoutBox* target = ToLayoutBox(GetLayoutObjectByElementId("target"));
+  EXPECT_EQ(LayoutRect(0, 0, 100, 600), target->LocalVisualRect());
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    return;
+  EXPECT_EQ(LayoutRect(8, 8, 100, 600), target->VisualRect());
+}
+
 }  // namespace blink
