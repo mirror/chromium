@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da3bf99_f61cbe39",
+        "filename": "device/u2f/fake_hid_impl_for_testing.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "GetDevices(std::move(callback));",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 50
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf9b82c_5ccf677d",
+        "filename": "device/u2f/fake_hid_impl_for_testing.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Strongly binds an",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ceff5cf_2b00b83f",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "nit: Keep this together with AddDevice and RemoveDevice below.",
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9d2867_356caf7a",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Add a comment explaining why it is safe to hold this raw pointer.",
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8f57b4_ddeb3ea4",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Use auto here.",
+      "range": {
+        "startLine": 212,
+        "startChar": 2,
+        "endLine": 212,
+        "endChar": 33
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e6df81_df03aea4",
+        "filename": "device/u2f/u2f_hid_device_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Use auto here.",
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876d1e79_e8a811ed",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Given that this class owns all the U2fDevice instances it creates it is safe to share |hid_manager_| with them instead of creating a new connection for every device. Just add a comment explaining this in U2fHidDevice.",
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7068eb8c_5d4a2df0",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Use auto here.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13672af3_5e35e5b1",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Use auto here.",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 146,
+        "endChar": 33
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a739ca1_7169d1c0",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 1,
+      "message": "Use auto here.",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 33
+      },
+      "revId": "f03888eaca3900df425b4779be859a112f7634e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

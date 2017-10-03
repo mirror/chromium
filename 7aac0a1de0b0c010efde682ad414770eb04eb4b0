@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9fec74b_2ab001ce",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-03T16:38:51Z",
+      "side": 0,
+      "message": "This is an unrelated change. Please make a separate patch.",
+      "range": {
+        "startLine": 262,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 34
+      },
+      "revId": "7aac0a1de0b0c010efde682ad414770eb04eb4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
