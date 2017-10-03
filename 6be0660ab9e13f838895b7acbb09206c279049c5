@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9aa0485e_bf53daf3",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2180,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T03:37:07Z",
+      "side": 1,
+      "message": "Yeah, I think removing it is fine.",
+      "parentUuid": "c659ef7b_3c9b2ba9",
+      "range": {
+        "startLine": 2180,
+        "startChar": 6,
+        "endLine": 2180,
+        "endChar": 31
+      },
+      "revId": "6be0660ab9e13f838895b7acbb09206c279049c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38897c9e_e2baabd4",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 14
