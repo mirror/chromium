@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4749f738_cf8725a1",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-03T22:12:58Z",
+      "side": 1,
+      "message": "I\u0027ve added checks for inline styles as well.",
+      "revId": "7c3013b492a6c987f1a5fc921d0666cfa9f29e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb58796_d9b77d30",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1919,
+      "author": {
+        "id": 1241183
+      },
+      "writtenOn": "2017-10-03T22:12:58Z",
+      "side": 1,
+      "message": "Of course we must apply normal user rules before normal author rules.",
+      "revId": "7c3013b492a6c987f1a5fc921d0666cfa9f29e68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
