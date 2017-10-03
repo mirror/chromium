@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfde818_bf67e456",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-03T20:55:53Z",
+      "side": 1,
+      "message": "I think you should check the style of ClippingContainer instead, to catch cases when\nthe border-radius is not local.",
+      "revId": "6fc84cc92ce0df09efd09aafdf4a0156c598fadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
