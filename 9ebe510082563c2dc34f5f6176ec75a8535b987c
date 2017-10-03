@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06f4001b_540ae015",
+        "filename": "content/browser/webrtc/webrtc_audio_debug_recordings_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-03T09:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641e6b06_3810498e",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d407832c_9477923f",
         "filename": "media/audio/BUILD.gn",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a30c6fb7_e21d4515",
+        "filename": "media/audio/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-03T09:36:04Z",
+      "side": 1,
+      "message": "Done. Note that I couldn\u0027t build Chrome to test, since the \"no webrtc\" build is already broken :).",
+      "parentUuid": "d407832c_9477923f",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9553b77_660f588a",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe18234d_fbb29bbe",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-03T09:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9553b77_660f588a",
+      "revId": "9ebe510082563c2dc34f5f6176ec75a8535b987c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "9da284ba7ab742893cba73c1078908eac5d3a6d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dc6eab8_145155c1",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-03T09:36:04Z",
+      "side": 0,
+      "message": "AddFilter takes ownership of the AudioInputRendererHost, and will keep it alive as long as needed. I have updates the CL description.",
+      "parentUuid": "3796c437_65131816",
+      "revId": "9da284ba7ab742893cba73c1078908eac5d3a6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
