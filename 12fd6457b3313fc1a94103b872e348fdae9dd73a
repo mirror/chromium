@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d1fed6_04edd128",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T19:23:07Z",
+      "side": 1,
+      "message": "Can you file a bug and put the list in the bug, rather than in the commit message here?",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857056ed_22f8613e",
+        "filename": "chrome/installer/linux/debian/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T19:23:07Z",
+      "side": 1,
+      "message": "Do we want to add a flag for official-ness and only suppress this for non-official builds?",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7fbbc4_2039bd5c",
+        "filename": "chrome/installer/linux/debian/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T19:23:07Z",
+      "side": 1,
+      "message": "Is the str() needed?",
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82031cf_3a63ede0",
+        "filename": "chrome/installer/linux/rpm/lint_package.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-03T19:23:07Z",
+      "side": 1,
+      "message": "Why check differently here vs line 57?",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "12fd6457b3313fc1a94103b872e348fdae9dd73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
