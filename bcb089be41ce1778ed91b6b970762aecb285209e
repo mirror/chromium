@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa93f606_69813b34",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-03T23:38:29Z",
+      "side": 1,
+      "message": "https://html.spec.whatwg.org/multipage/webappapis.html#script-fetch-options",
+      "revId": "bcb089be41ce1778ed91b6b970762aecb285209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f246326_779a9a37",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
         "patchSetId": 1
@@ -19,6 +36,40 @@
         "endLine": 63,
         "endChar": 17
       },
+      "revId": "bcb089be41ce1778ed91b6b970762aecb285209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10fa68a_d8c37fff",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-03T23:38:29Z",
+      "side": 1,
+      "message": "Are these referer-related members non-specced?",
+      "revId": "bcb089be41ce1778ed91b6b970762aecb285209e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb618308_6c49e04f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptFetchRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-03T23:38:29Z",
+      "side": 1,
+      "message": "How about integrity metadata?\nhttps://html.spec.whatwg.org/multipage/webappapis.html#concept-script-fetch-options-integrity",
       "revId": "bcb089be41ce1778ed91b6b970762aecb285209e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
