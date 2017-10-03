@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf06ea86_d16a244b",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "Test cases for\n1) invalid dict/list. i.e  \u0027[a,b\u0027 or {\u0027a\u0027: }.\n2) empty string.",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d583c204_e5d8be07",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "Is \u0027true\u0027 case sensitive or not?",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1059ae75_5143f686",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "Maybe \u0027parse\u0027?",
+      "range": {
+        "startLine": 242,
+        "startChar": 12,
+        "endLine": 242,
+        "endChar": 23
+      },
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618c5e8c_42b8ef1d",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "I prefer valid:false here.\nEven they are similar but invalid:true/false sometimes may confuse ppl.",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408130c4_55149dc1",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "value-\u003eClone() will create a new base::Value instance.\nAssign a value to a pointer without new is an undefined behavior based on my knowledge.\n(If you find out there\u0027s new rule of standard, let me know)\n\nYou could assign the value-\u003eClone to a local variable or unique_ptr so that\nit will be deleted in the end of function.",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b0dc20_1ef557d3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "I think the code here is very similar with line 286-295 below.\nThe only difference are namespace and policy value dict. \nMaybe refactor here?",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 279,
+        "endChar": 3
+      },
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8571f3a7_6fff62df",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "for (const auto\u0026",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb555c7c_d451f678",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1142256
+      },
+      "writtenOn": "2017-10-03T23:28:02Z",
+      "side": 1,
+      "message": "Not in this CL but I think once you cover all error msg, we don\u0027t need this anymore, right?\nIf so, please delete it (and the associated javascript) later.",
+      "revId": "f5bed7741c6b652bfe4c55c50104678127eb086a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
