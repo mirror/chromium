@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36fde41f_0c518061",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "Since we\u0027re exposing this proto more broadly, let\u0027s expand on this comment a little bit; I suggest adding the following sentence:\n\n\"Messages are encrypted with a secret derived from a client key pair (which should be generated fresh randomly for each message) and a server public key. The remote message recipient can decrypt the message by performing the same key exchange using the included client public key to recover the shared secret.\"",
+      "range": {
+        "startLine": 13,
+        "startChar": 61,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbef7b09_b7382ef4",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "nit: period at end",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 61
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f972237a_b3e89621",
+        "filename": "components/encrypted_messages/encrypted_message.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "ditto (I know it was missing one before, might as well add it now)",
+      "range": {
+        "startLine": 15,
+        "startChar": 30,
+        "endLine": 15,
+        "endChar": 37
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bc19be_790334a9",
+        "filename": "components/encrypted_messages/message_encrypter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "Hmmm... I wonder if it might be less confusing to change this function and the Encrypt function to take base::StringPieces as the label argument instead of const char*. Then we can move the mistake into the \"certificate report\" label: the code that uses the \"certificate report\" label can pass in a StringPiece with an extra \\0 on the end, and the new code for UMA uploads doesn\u0027t need to repeat the \\0 mistake. Then the TODO to fix the \\0 mistake can be in the certificate reporting code rather than in here.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1637ac9_35d08463",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "Can this remain a helper function inside an anonymous namespace in the corresponding .cc file?\n\nIf we need to expose it for testing, I think we should expose it as GetHkdfSubkeySecretForTesting to keep the public interface clean (in other words, so users of this component will realize that they\u0027re not supposed to use this function directly in production code).",
+      "range": {
+        "startLine": 15,
+        "startChar": 5,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9349f6_c374a1a4",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment to this method about how it encrypts the message, similar to the proto. Also, I think we should perhaps rename |hkdf_label| to |label| (less jargon-y) and mention in the comment that it should describe the message and give an example (like \"certificate report\" or \"client metrics report\").",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 29
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5331e5b_bfd79aaa",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "const char*",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47b3abe_c5a987b7",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-03T17:50:39Z",
+      "side": 1,
+      "message": "If this is used only for tests, let\u0027s call it DecryptMessageForTesting. (I think there\u0027s some build magic whereby *ForTesting methods don\u0027t get compiled into non-testing builds, plus the naming convention makes it clear that the method isn\u0027t designed for use in production code.)",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "88abab51dd65aeeec4cf14268b3362ac65ea9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
