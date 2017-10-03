@@ -235,7 +235,7 @@ RenderFrameHostImpl* RenderFrameHostManager::Navigate(
       // A new RenderFrame was created and there is a navigating WebUI which
       // never interacted with it. So notify the WebUI using
       // RenderFrameCreated.
-      GetNavigatingWebUI()->RenderFrameCreated(dest_render_frame_host);
+      GetNavigatingWebUI()->WebUIRenderFrameCreated(dest_render_frame_host);
     }
 
     // Now that we've created a new renderer, be sure to hide it if it isn't
@@ -795,7 +795,7 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
       // created WebUI has just been committed by CommitPending, so
       // GetNavigatingWebUI() below will return false).
       if (notify_webui_of_rf_creation && render_frame_host_->web_ui()) {
-        render_frame_host_->web_ui()->RenderFrameCreated(
+        render_frame_host_->web_ui()->WebUIRenderFrameCreated(
             render_frame_host_.get());
         notify_webui_of_rf_creation = false;
       }
@@ -835,7 +835,7 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
   // TODO(crbug.com/713313): Make WebUI objects always be per-frame instead.
   if (notify_webui_of_rf_creation && GetNavigatingWebUI() &&
       frame_tree_node_->IsMainFrame()) {
-    GetNavigatingWebUI()->RenderFrameCreated(navigation_rfh);
+    GetNavigatingWebUI()->WebUIRenderFrameCreated(navigation_rfh);
   }
 
   return navigation_rfh;
@@ -976,9 +976,9 @@ void RenderFrameHostManager::RenderProcessGone(SiteInstanceImpl* instance) {
 
 void RenderFrameHostManager::CancelPendingIfNecessary(
     RenderFrameHostImpl* render_frame_host) {
-  if (render_frame_host == pending_render_frame_host_.get())
+  if (render_frame_host == pending_render_frame_host_.get()) {
     CancelPending();
-  else if (render_frame_host == speculative_render_frame_host_.get()) {
+  } else if (render_frame_host == speculative_render_frame_host_.get()) {
     // TODO(nasko, clamy): This should just clean up the speculative RFH
     // without canceling the request.  See https://crbug.com/636119.
     if (frame_tree_node_->navigation_request() &&
@@ -2353,7 +2353,7 @@ RenderFrameHostImpl* RenderFrameHostManager::UpdateStateForNavigate(
     // well as the RenderFrame, and they never interacted. So notify the WebUI
     // using RenderFrameCreated.
     if (pending_render_frame_host_->web_ui()) {
-      pending_render_frame_host_->web_ui()->RenderFrameCreated(
+      pending_render_frame_host_->web_ui()->WebUIRenderFrameCreated(
           pending_render_frame_host_.get());
     }
 
@@ -2454,7 +2454,7 @@ void RenderFrameHostManager::UpdatePendingWebUIOnCurrentFrameHost(
     } else {
       // If this is a new WebUI it has never interacted with the existing
       // RenderFrame so call RenderFrameCreated.
-      render_frame_host_->pending_web_ui()->RenderFrameCreated(
+      render_frame_host_->pending_web_ui()->WebUIRenderFrameCreated(
           render_frame_host_.get());
     }
   }

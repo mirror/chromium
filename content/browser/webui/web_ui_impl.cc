@@ -6,6 +6,9 @@
 
 #include <stddef.h>
 
+#include <string>
+#include <utility>
+
 #include "base/debug/dump_without_crashing.h"
 #include "base/json/json_writer.h"
 #include "base/strings/utf_string_conversions.h"
@@ -19,39 +22,17 @@
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/browser/web_contents/web_contents_view.h"
 #include "content/browser/webui/web_ui_controller_factory_registry.h"
-#include "content/common/view_messages.h"
+#include "content/common/frame_messages.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
-#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "content/public/browser/web_ui_message_handler.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/common/content_client.h"
 
 namespace content {
-
-class WebUIImpl::MainFrameNavigationObserver : public WebContentsObserver {
- public:
-  MainFrameNavigationObserver(WebUIImpl* web_ui, WebContents* contents)
-      : WebContentsObserver(contents), web_ui_(web_ui) {}
-  ~MainFrameNavigationObserver() override {}
-
- private:
-  void DidFinishNavigation(NavigationHandle* navigation_handle) override {
-    // Only disallow JavaScript on cross-document navigations in the main frame.
-    if (!navigation_handle->IsInMainFrame() ||
-        !navigation_handle->HasCommitted() ||
-        navigation_handle->IsSameDocument()) {
-      return;
-    }
-
-    web_ui_->DisallowJavascriptOnAllHandlers();
-  }
-
-  WebUIImpl* web_ui_;
-};
 
 const WebUI::TypeID WebUI::kNoWebUI = NULL;
 
@@ -77,9 +58,8 @@ base::string16 WebUI::GetJavascriptCall(
 }
 
 WebUIImpl::WebUIImpl(WebContents* contents, const std::string& frame_name)
-    : bindings_(BINDINGS_POLICY_WEB_UI),
-      web_contents_(contents),
-      web_contents_observer_(new MainFrameNavigationObserver(this, contents)),
+    : WebContentsObserver(contents),
+      bindings_(BINDINGS_POLICY_WEB_UI),
       frame_name_(frame_name) {
   DCHECK(contents);
 }
@@ -92,30 +72,44 @@ WebUIImpl::~WebUIImpl() {
 
 // WebUIImpl, public: ----------------------------------------------------------
 
-bool WebUIImpl::OnMessageReceived(const IPC::Message& message) {
+bool WebUIImpl::OnMessageReceived(const IPC::Message& message,
+                                  RenderFrameHost* sender) {
   bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(WebUIImpl, message)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_WebUISend, OnWebUISend)
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(WebUIImpl, message, sender)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_WebUISend, OnWebUISend)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
 }
 
-void WebUIImpl::OnWebUISend(const GURL& source_url,
+void WebUIImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
+  // Only disallow JavaScript on cross-document navigations in the main frame.
+  if (!navigation_handle->IsInMainFrame() ||
+      !navigation_handle->HasCommitted() ||
+      navigation_handle->IsSameDocument()) {
+    return;
+  }
+
+  DisallowJavascriptOnAllHandlers();
+}
+
+void WebUIImpl::OnWebUISend(RenderFrameHost* sender,
                             const std::string& message,
                             const base::ListValue& args) {
-  if (!ChildProcessSecurityPolicyImpl::GetInstance()->
-          HasWebUIBindings(web_contents_->GetRenderProcessHost()->GetID()) ||
+  GURL source_url = sender->GetLastCommittedURL();
+  if (!ChildProcessSecurityPolicyImpl::GetInstance()->HasWebUIBindings(
+          sender->GetProcess()->GetID()) ||
       !WebUIControllerFactoryRegistry::GetInstance()->IsURLAcceptableForWebUI(
-          web_contents_->GetBrowserContext(), source_url)) {
-    NOTREACHED() << "Blocked unauthorized use of WebUIBindings.";
+          web_contents()->GetBrowserContext(), source_url)) {
+    bad_message::ReceivedBadMessage(
+        sender->GetProcess(), bad_message::WEBUI_IPC_FROM_UNAUTHORIZED_PROCESS);
     return;
   }
 
   ProcessWebUIMessage(source_url, message, args);
 }
 
-void WebUIImpl::RenderFrameCreated(RenderFrameHost* render_frame_host) {
+void WebUIImpl::WebUIRenderFrameCreated(RenderFrameHost* render_frame_host) {
   controller_->RenderFrameCreated(render_frame_host);
 }
 
@@ -131,11 +125,11 @@ void WebUIImpl::RenderFrameHostSwappingOut() {
 }
 
 WebContents* WebUIImpl::GetWebContents() const {
-  return web_contents_;
+  return web_contents();
 }
 
 float WebUIImpl::GetDeviceScaleFactor() const {
-  return GetScaleFactorForView(web_contents_->GetRenderWidgetHostView());
+  return GetScaleFactorForView(web_contents()->GetRenderWidgetHostView());
 }
 
 const base::string16& WebUIImpl::GetOverriddenTitle() const {
@@ -281,9 +275,9 @@ void WebUIImpl::ExecuteJavascript(const base::string16& javascript) {
 
 RenderFrameHost* WebUIImpl::TargetFrame() {
   if (frame_name_.empty())
-    return web_contents_->GetMainFrame();
+    return web_contents()->GetMainFrame();
 
-  FrameTreeNode* frame_tree_node = static_cast<WebContentsImpl*>(web_contents_)
+  FrameTreeNode* frame_tree_node = static_cast<WebContentsImpl*>(web_contents())
                                        ->GetFrameTree()
                                        ->FindByName(frame_name_);
   if (frame_tree_node)
