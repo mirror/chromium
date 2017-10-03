@@ -8,14 +8,18 @@
 #include "bindings/core/v8/NativeValueTraitsImpl.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/V8ObjectBuilder.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "bindings/modules/v8/V8AudioParamDescriptor.h"
+#include "core/typed_arrays/DOMTypedArray.h"
 #include "core/dom/ExceptionCode.h"
 #include "modules/webaudio/CrossThreadAudioWorkletProcessorInfo.h"
 #include "modules/webaudio/AudioBuffer.h"
 #include "modules/webaudio/AudioParamDescriptor.h"
 #include "modules/webaudio/AudioWorkletProcessor.h"
 #include "modules/webaudio/AudioWorkletProcessorDefinition.h"
+#include "platform/audio/AudioBus.h"
+#include "platform/audio/AudioUtilities.h"
 #include "platform/bindings/V8BindingMacros.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -46,7 +50,9 @@ AudioWorkletGlobalScope::AudioWorkletGlobalScope(
                                  std::move(security_origin),
                                  isolate,
                                  thread,
-                                 worker_clients) {}
+                                 worker_clients),
+      current_time_(0.0),
+      sample_rate_(0.0) {}
 
 AudioWorkletGlobalScope::~AudioWorkletGlobalScope() {}
 
@@ -144,16 +150,24 @@ void AudioWorkletGlobalScope::registerProcessor(
 }
 
 AudioWorkletProcessor* AudioWorkletGlobalScope::CreateInstance(
-    const String& name) {
+    const String& name,
+    float sample_rate) {
   DCHECK(IsContextThread());
+
+  if (sample_rate_ <= 0.0)
+    sample_rate_ = sample_rate;
+  DCHECK_EQ(sample_rate_, sample_rate);
 
   AudioWorkletProcessorDefinition* definition = FindDefinition(name);
   if (!definition)
     return nullptr;
 
+  ScriptState* script_state = ScriptController()->GetScriptState();
+  ScriptState::Scope scope(script_state);
+
   // V8 object instance construction: this construction process is here to make
   // the AudioWorkletProcessor class a thin wrapper of V8::Object instance.
-  v8::Isolate* isolate = ScriptController()->GetScriptState()->GetIsolate();
+  v8::Isolate* isolate = script_state->GetIsolate();
   v8::Local<v8::Object> instance_local;
   if (!V8ObjectConstructor::NewInstance(isolate,
                                         definition->ConstructorLocal(isolate))
@@ -170,23 +184,74 @@ AudioWorkletProcessor* AudioWorkletGlobalScope::CreateInstance(
   return processor;
 }
 
-bool AudioWorkletGlobalScope::Process(AudioWorkletProcessor* processor,
-                                      AudioBuffer* input_buffer,
-                                      AudioBuffer* output_buffer) {
-  CHECK(input_buffer);
-  CHECK(output_buffer);
+bool AudioWorkletGlobalScope::Process(
+    AudioWorkletProcessor* processor,
+    Vector<AudioBus*>* inputBuses,
+    Vector<AudioBus*>* outputBuses,
+    HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map,
+    double current_time) {
+  CHECK_GE(inputBuses->size(), 0u);
+  CHECK_GE(outputBuses->size(), 0u);
+
+  if (current_time_ < current_time)
+    current_time_ = current_time;
+  DCHECK_EQ(current_time_, current_time);
 
   ScriptState* script_state = ScriptController()->GetScriptState();
   ScriptState::Scope scope(script_state);
 
   v8::Isolate* isolate = script_state->GetIsolate();
   AudioWorkletProcessorDefinition* definition =
-      FindDefinition(processor->GetName());
+      FindDefinition(processor->Name());
   DCHECK(definition);
 
+  // To expose AudioBuffer on JS side, we have to repackage |Vector<AudioBus*>|
+  // to |sequence<sequence<Float32Array>>|.
+  HeapVector<HeapVector<Member<DOMFloat32Array>>> inputs;
+  HeapVector<HeapVector<Member<DOMFloat32Array>>> outputs;
+
+  for (unsigned i = 0; i < inputBuses->size(); ++i) {
+    AudioBus* inputBus = inputBuses->at(i);
+    HeapVector<Member<DOMFloat32Array>> input;
+    for (unsigned c = 0; c < inputBus->NumberOfChannels(); ++c) {
+      DOMFloat32Array* channel_data_array =
+          DOMFloat32Array::CreateOrNull(inputBus->length());
+      memcpy(channel_data_array->Data(),
+             inputBus->Channel(c)->Data(),
+             inputBus->length() * sizeof(float));
+      input.push_back(channel_data_array);
+    }
+    inputs.push_back(input);
+  }
+
+  for (unsigned o = 0; o < outputBuses->size(); ++o) {
+    AudioBus* outputBus = outputBuses->at(o);
+    HeapVector<Member<DOMFloat32Array>> output;
+    for (unsigned c = 0; c < outputBus->NumberOfChannels(); ++c) {
+      output.push_back(
+          DOMFloat32Array::CreateOrNull(outputBus->length()));
+    }
+    outputs.push_back(output);
+  }
+
+  V8ObjectBuilder param_values(script_state);
+  for (const auto& param_name : param_value_map->Keys()) {
+    const AudioFloatArray* source_param_array = param_value_map->at(param_name);
+    DOMFloat32Array* param_array =
+        DOMFloat32Array::CreateOrNull(source_param_array->size());
+    memcpy(param_array->Data(),
+           source_param_array->Data(),
+           sizeof(float) * source_param_array->size());
+    param_values.Add(
+        StringView(param_name),
+        ToV8(param_array, script_state->GetContext()->Global(), isolate));
+  }
+
   v8::Local<v8::Value> argv[] = {
-      ToV8(input_buffer, script_state->GetContext()->Global(), isolate),
-      ToV8(output_buffer, script_state->GetContext()->Global(), isolate)};
+    ToV8(inputs, script_state->GetContext()->Global(), isolate),
+    ToV8(outputs, script_state->GetContext()->Global(), isolate),
+    param_values.V8Value()
+  };
 
   // TODO(hongchan): Catch exceptions thrown in the process method. The verbose
   // options forces the TryCatch object to save the exception location. The
@@ -200,6 +265,21 @@ bool AudioWorkletGlobalScope::Process(AudioWorkletProcessor* processor,
   V8ScriptRunner::CallFunction(
       definition->ProcessLocal(isolate), ExecutionContext::From(script_state),
       processor->InstanceLocal(isolate), WTF_ARRAY_LENGTH(argv), argv, isolate);
+
+  // TODO(hongchan): Sanity check on length, number of channels, and object
+  // type.
+
+  // Copy |sequence<sequence<Float32Array>>| back to the original
+  // |Vector<AudioBus*>|.
+  for (unsigned o = 0; o < outputBuses->size(); ++o) {
+    HeapVector<Member<DOMFloat32Array>> output = outputs.at(o);
+    AudioBus* original_output_bus = outputBuses->at(o);
+    for (unsigned c = 0; c < original_output_bus->NumberOfChannels(); ++c) {
+      memcpy(original_output_bus->Channel(c)->MutableData(),
+             output.at(c)->Data(),
+             sizeof(float) * original_output_bus->length());
+    }
+  }
 
   return !block.HasCaught();
 }
