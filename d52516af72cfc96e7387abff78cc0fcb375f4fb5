@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a760727b_52078206",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-03T16:43:02Z",
+      "side": 1,
+      "message": "I realize this is a one liner, but is it possible to share the exact same call that cc does? I\u0027m suggesting cc has some call such as ScaleRect() that both views and cc call into. That way the two remain in sync.",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 76
+      },
+      "revId": "d52516af72cfc96e7387abff78cc0fcb375f4fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9da32a9_f45f0e3f",
         "filename": "ui/views/view_unittest.cc",
         "patchSetId": 21
