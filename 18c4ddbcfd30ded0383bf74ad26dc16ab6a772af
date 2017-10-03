@@ -16,6 +16,57 @@
       "revId": "18c4ddbcfd30ded0383bf74ad26dc16ab6a772af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2cd1ce5_5372aaf8",
+        "filename": "ui/compositor/layer_animator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T19:06:10Z",
+      "side": 1,
+      "message": "Nit: maybe just a lambda here rather than a full blown class?\n[animation_observer](const std::unique_ptr\u003cImplicitAnimationObserver\u003e\u0026 other) { return other.get() \u003d\u003d animation_observer; }",
+      "revId": "18c4ddbcfd30ded0383bf74ad26dc16ab6a772af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7909c8_558d0e7b",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T19:06:10Z",
+      "side": 1,
+      "message": "nit: you can use auto",
+      "revId": "18c4ddbcfd30ded0383bf74ad26dc16ab6a772af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d105a3_57ced732",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-03T19:06:10Z",
+      "side": 1,
+      "message": "nit: auto",
+      "revId": "18c4ddbcfd30ded0383bf74ad26dc16ab6a772af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
