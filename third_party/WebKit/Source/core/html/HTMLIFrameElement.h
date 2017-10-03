@@ -33,6 +33,8 @@
 
 namespace blink {
 
+class Policy;
+
 class CORE_EXPORT HTMLIFrameElement final
     : public HTMLFrameElementBase,
       public Supplementable<HTMLIFrameElement> {
@@ -48,6 +50,8 @@ class CORE_EXPORT HTMLIFrameElement final
   Vector<WebParsedFeaturePolicyDeclaration> ConstructContainerPolicy(
       Vector<String>* /* messages */,
       bool* /* old_syntax */) const override;
+
+  Policy* policy() const;
 
  private:
   explicit HTMLIFrameElement(Document&);

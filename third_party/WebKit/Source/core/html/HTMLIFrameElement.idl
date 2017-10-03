@@ -40,6 +40,7 @@ interface HTMLIFrameElement : HTMLElement {
     // Feature Policy allow attribute
     // https://wicg.github.io/feature-policy/
     [RuntimeEnabled=FeaturePolicy, CEReactions, Reflect] attribute DOMString allow;
+    [RuntimeEnabled=FeaturePolicy] readonly attribute Policy policy;
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLIFrameElement-partial
     [CEReactions, Reflect] attribute DOMString align;

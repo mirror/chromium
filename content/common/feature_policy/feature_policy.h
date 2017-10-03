@@ -127,6 +127,12 @@ class CONTENT_EXPORT FeaturePolicy : public blink::WebFeaturePolicy {
     // Returns true if the given origin has been added to the whitelist.
     bool Contains(const url::Origin& origin) const;
 
+    // Returns the value of matches_all_origins_.
+    bool MatchesAllOrigins() const;
+
+    // Returns the value of origins_.
+    std::vector<url::Origin> Origins() const;
+
    private:
     bool matches_all_origins_;
     std::vector<url::Origin> origins_;
@@ -166,11 +172,12 @@ class CONTENT_EXPORT FeaturePolicy : public blink::WebFeaturePolicy {
 
   // WebFeaturePolicy implementation
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) const override;
-
-  // Returns whether or not the given feature is enabled by this policy for a
-  // specific origin.
   bool IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature feature,
-                                 const url::Origin& origin) const;
+                                 const url::Origin& origin) const override;
+  bool IsFeatureEnabledForAll(
+      blink::WebFeaturePolicyFeature feature) const override;
+  std::vector<url::Origin> GetOriginsForFeature(
+      blink::WebFeaturePolicyFeature feature) const override;
 
   // Sets the declared policy from the parsed Feature-Policy HTTP header.
   // Unrecognized features will be ignored.

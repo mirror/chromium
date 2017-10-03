@@ -10,6 +10,7 @@
 #include "WebSecurityOrigin.h"
 #include "WebString.h"
 #include "WebVector.h"
+#include "url/origin.h"
 
 namespace blink {
 
@@ -33,6 +34,13 @@ class BLINK_PLATFORM_EXPORT WebFeaturePolicy {
   // Returns whether or not the given feature is enabled for the origin of the
   // document that owns the policy.
   virtual bool IsFeatureEnabled(blink::WebFeaturePolicyFeature) const = 0;
+  // Returns whether or not the given feature is enabled by this policy for a
+  // specific origin.
+  virtual bool IsFeatureEnabledForOrigin(blink::WebFeaturePolicyFeature,
+                                         const url::Origin&) const = 0;
+  virtual std::vector<url::Origin> GetOriginsForFeature(
+      blink::WebFeaturePolicyFeature) const = 0;
+  virtual bool IsFeatureEnabledForAll(blink::WebFeaturePolicyFeature) const = 0;
 };
 
 }  // namespace blink
