@@ -73,6 +73,23 @@
       "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fecc6e77_a4edbc6a",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-03T17:00:47Z",
+      "side": 1,
+      "message": "Maybe it\u0027s better to have a separate class that manages unified desktop layout and put utilities function together there. You don\u0027t have to do it now but that\u0027s something you may want as a cleanup.",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
