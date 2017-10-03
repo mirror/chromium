@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3093c340_d6233a16",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T14:29:40Z",
+      "side": 1,
+      "message": "Ack; will try and reproduce outside this CL and investigate another fix if necessary.",
+      "parentUuid": "a88fc141_cb53d717",
+      "revId": "81c35ed26bc666cb0993d82217701d2c1747f83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991d60a0_3c6ebbb7",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T22:22:48Z",
       "side": 1,
       "message": "nit: This is only returning the offset if the compositor is responsible for applying it, otherwise we return a zero offset. I\u0027m not sure if there\u0027s a better name for this, maybe OffsetForCompositedStickyPosition and an appropriate comment.",
+      "revId": "81c35ed26bc666cb0993d82217701d2c1747f83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf0c76ad_501250c2",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T14:29:40Z",
+      "side": 1,
+      "message": "Refactored so that this isn\u0027t an issue.",
+      "parentUuid": "991d60a0_3c6ebbb7",
       "revId": "81c35ed26bc666cb0993d82217701d2c1747f83d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

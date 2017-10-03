@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a41f682_59493926",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMappingTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-03T14:29:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this doesn\u0027t work. I\u0027ve looked at the BUILD.gn and the unittests rely on \"core\", so it should work afaik. I need to dig in more.",
+      "revId": "c7c66bf7a4ebe3947cb3a440fb8787e4a54fe4c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
