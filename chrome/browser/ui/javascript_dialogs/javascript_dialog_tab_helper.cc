@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/feature_list.h"
@@ -93,7 +95,7 @@ void JavaScriptDialogTabHelper::RunJavaScriptDialog(
     content::JavaScriptDialogType dialog_type,
     const base::string16& message_text,
     const base::string16& default_prompt_text,
-    const DialogClosedCallback& callback,
+    DialogClosedCallback callback,
     bool* did_suppress_message) {
   SiteEngagementService* site_engagement_service = SiteEngagementService::Get(
       Profile::FromBrowserContext(alerting_web_contents->GetBrowserContext()));
@@ -168,7 +170,7 @@ void JavaScriptDialogTabHelper::RunJavaScriptDialog(
 
   base::string16 title = AppModalDialogManager()->GetTitle(
       alerting_web_contents, alerting_frame_url);
-  dialog_callback_ = callback;
+  dialog_callback_ = std::move(callback);
   dialog_type_ = dialog_type;
   dialog_ = JavaScriptDialog::Create(
       parent_web_contents, alerting_web_contents, title, dialog_type,
@@ -211,7 +213,7 @@ void SaveUnloadUmaStats(
                              engagement_score);
   }
 
-  callback.Run(success, user_input);
+  std::move(callback).Run(success, user_input);
 }
 
 }  // namespace
@@ -219,7 +221,7 @@ void SaveUnloadUmaStats(
 void JavaScriptDialogTabHelper::RunBeforeUnloadDialog(
     content::WebContents* web_contents,
     bool is_reload,
-    const DialogClosedCallback& callback) {
+    DialogClosedCallback callback) {
   // onbeforeunload dialogs are always handled with an app-modal dialog, because
   // - they are critical to the user not losing data
   // - they can be requested for tabs that are not foremost
@@ -233,7 +235,8 @@ void JavaScriptDialogTabHelper::RunBeforeUnloadDialog(
 
   return AppModalDialogManager()->RunBeforeUnloadDialog(
       web_contents, is_reload,
-      base::Bind(&SaveUnloadUmaStats, engagement_score, callback));
+      base::BindOnce(&SaveUnloadUmaStats, engagement_score,
+                     std::move(callback)));
 }
 
 bool JavaScriptDialogTabHelper::HandleJavaScriptDialog(
@@ -327,9 +330,8 @@ void JavaScriptDialogTabHelper::CloseDialog(DismissalCause cause,
 
   if (cause != DismissalCause::DIALOG_BUTTON_CLICKED)
     dialog_->CloseDialogWithoutCallback();
-  dialog_callback_.Run(success, user_input);
+  std::move(dialog_callback_).Run(success, user_input);
 
   dialog_.reset();
-  dialog_callback_.Reset();
   BrowserList::RemoveObserver(this);
 }
