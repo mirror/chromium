@@ -22,6 +22,30 @@
       "revId": "eec949335ba4bddfb5de6219a637201c3c552e75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59981d99_a44534a8",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1860,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-03T23:21:04Z",
+      "side": 1,
+      "message": "Done, here and elsewhere.  Thanks!",
+      "parentUuid": "f9cf2316_1dd7ed7c",
+      "range": {
+        "startLine": 1860,
+        "startChar": 14,
+        "endLine": 1860,
+        "endChar": 22
+      },
+      "revId": "eec949335ba4bddfb5de6219a637201c3c552e75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
