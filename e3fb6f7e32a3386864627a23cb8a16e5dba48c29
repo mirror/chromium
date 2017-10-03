@@ -70,6 +70,30 @@
       "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82152d1e_95ed4dc6",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-03T17:36:06Z",
+      "side": 0,
+      "message": "This was confusing. hourFormatChanged_ is already getting called, and, based on the name of the method, it is called correctly. The dependency on \u0027ready\u0027 was uncelar (which is why it got removed).",
+      "parentUuid": "26a5179e_beb63c6c",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 7
+      },
+      "revId": "e3fb6f7e32a3386864627a23cb8a16e5dba48c29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
