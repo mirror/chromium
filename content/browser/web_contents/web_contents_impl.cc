@@ -794,7 +794,6 @@ bool WebContentsImpl::OnMessageReceived(RenderViewHostImpl* render_view_host,
                         OnPageScaleFactorChanged)
     IPC_MESSAGE_HANDLER(ViewHostMsg_EnumerateDirectory, OnEnumerateDirectory)
     IPC_MESSAGE_HANDLER(ViewHostMsg_AppCacheAccessed, OnAppCacheAccessed)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_WebUISend, OnWebUISend)
 #if BUILDFLAG(ENABLE_PLUGINS)
     IPC_MESSAGE_HANDLER(ViewHostMsg_RequestPpapiBrokerPermission,
                         OnRequestPpapiBrokerPermission)
@@ -4196,20 +4195,6 @@ void WebContentsImpl::OnSetSelectedColorInColorChooser(
     color_chooser_info_->chooser->SetSelectedColor(color);
 }
 
-// This exists for render views that don't have a WebUI, but do have WebUI
-// bindings enabled.
-void WebContentsImpl::OnWebUISend(RenderViewHostImpl* source,
-                                  const GURL& source_url,
-                                  const std::string& name,
-                                  const base::ListValue& args) {
-  // TODO(nick): Should we consider |source| here or pass it to the delegate?
-  // TODO(nick): Should FilterURL be applied to |source_url|?
-  // TODO(nick): This IPC should be ported to FrameHostMsg_, and |source_url|
-  // should be eliminated (use last_committed_url() on the RFH instead).
-  if (delegate_)
-    delegate_->WebUISend(this, source_url, name, args);
-}
-
 #if BUILDFLAG(ENABLE_PLUGINS)
 void WebContentsImpl::OnPepperInstanceCreated(RenderFrameHostImpl* source,
                                               int32_t pp_instance) {
@@ -5847,7 +5832,7 @@ void WebContentsImpl::DecrementBluetoothConnectedDeviceCount() {
     return;
   }
   // Notify for UI updates if the state changes.
-  DCHECK(bluetooth_connected_device_count_ != 0);
+  DCHECK_NE(bluetooth_connected_device_count_, 0u);
   bluetooth_connected_device_count_--;
   if (bluetooth_connected_device_count_ == 0) {
     NotifyNavigationStateChanged(INVALIDATE_TYPE_TAB);
