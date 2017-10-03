@@ -613,6 +613,12 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
     case WebFeature::kWebAudioDezipperBiquadFilterNodeGain:
       return DeprecatedWebAudioDezippering("BiquadFilterNode.gain");
 
+    case WebFeature::kSpeechRecognitionInsecureOrigin:
+      return "Speech recognition no longer works on insecure origins. To use "
+             "this feature, you should consider switching your application to "
+             "a secure origin, such as HTTPS. See https://goo.gl/rStTGz for "
+             "more details.";
+
     // Features that aren't deprecated don't have a deprecation message.
     default:
       return String();

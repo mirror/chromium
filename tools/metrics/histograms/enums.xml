@@ -16422,6 +16422,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2158" label="FileReaderResultBeforeCompletion"/>
   <int value="2159" label="SyncXhrInPageDismissal"/>
   <int value="2160" label="AsyncXhrInPageDismissal"/>
+  <int value="2161" label="SpeechRecognitionSecureOrigin"/>
+  <int value="2162" label="SpeechRecognitionInsecureOrigin"/>
 </enum>
 
 <enum name="FeedbackSource">
