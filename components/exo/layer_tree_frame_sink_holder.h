@@ -9,7 +9,13 @@
 
 #include "base/containers/flat_map.h"
 #include "cc/trees/layer_tree_frame_sink_client.h"
+#include "components/viz/common/quads/compositor_frame.h"
 #include "components/viz/common/resources/release_callback.h"
+#include "ui/aura/env_observer.h"
+
+namespace aura {
+class Env;
+}
 
 namespace cc {
 class LayerTreeFrameSink;
@@ -20,19 +26,26 @@ class SurfaceTreeHost;
 
 // This class talks to CompositorFrameSink and keeps track of references to
 // the contents of Buffers.
-class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
+class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient,
+                                 public aura::EnvObserver {
  public:
   LayerTreeFrameSinkHolder(SurfaceTreeHost* surface_tree_host,
                            std::unique_ptr<cc::LayerTreeFrameSink> frame_sink);
   ~LayerTreeFrameSinkHolder() override;
+
+  // Destroy frame sink after having reclaimed and called all resource
+  // release callbacks.
+  static void DestroyWhenLastResourceHasBeenReclaimed(
+      std::unique_ptr<LayerTreeFrameSinkHolder> holder);
+
+  void SubmitCompositorFrame(viz::CompositorFrame frame);
+  void DidNotProduceFrame(const viz::BeginFrameAck& ack);
 
   bool HasReleaseCallbackForResource(viz::ResourceId id);
   void SetResourceReleaseCallback(viz::ResourceId id,
                                   const viz::ReleaseCallback& callback);
   int AllocateResourceId();
   base::WeakPtr<LayerTreeFrameSinkHolder> GetWeakPtr();
-
-  cc::LayerTreeFrameSink* frame_sink() { return frame_sink_.get(); }
 
   // Overridden from cc::LayerTreeFrameSinkClient:
   void SetBeginFrameSource(viz::BeginFrameSource* source) override;
@@ -49,7 +62,13 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
       const gfx::Rect& viewport_rect,
       const gfx::Transform& transform) override {}
 
+  // Overridden from aura::EnvObserver:
+  void OnWindowInitialized(aura::Window* window) override {}
+  void OnWillDestroyEnv() override;
+
  private:
+  void DeleteHolder();
+
   // A collection of callbacks used to release resources.
   using ResourceReleaseCallbackMap =
       base::flat_map<viz::ResourceId, viz::ReleaseCallback>;
@@ -57,11 +76,15 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
 
   SurfaceTreeHost* surface_tree_host_;
   std::unique_ptr<cc::LayerTreeFrameSink> frame_sink_;
+  aura::Env* env_ = nullptr;
 
   // The next resource id the buffer is attached to.
   int next_resource_id_ = 1;
 
-  base::WeakPtrFactory<LayerTreeFrameSinkHolder> weak_factory_;
+  gfx::Size last_frame_size_in_pixels_;
+  float last_frame_device_scale_factor_ = 1.0f;
+
+  base::WeakPtrFactory<LayerTreeFrameSinkHolder> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeFrameSinkHolder);
 };
