@@ -2370,6 +2370,9 @@ void Document::UpdateStyleAndLayout() {
   if (frame_view->NeedsLayout())
     frame_view->UpdateLayout();
 
+  if (goto_anchor_needed_after_stylesheets_load_)
+    frame_view->ProcessUrlFragment(url_);
+
   if (Lifecycle().GetState() < DocumentLifecycle::kLayoutClean)
     Lifecycle().AdvanceTo(DocumentLifecycle::kLayoutClean);
 
@@ -3890,9 +3893,6 @@ void Document::DidLoadAllScriptBlockingResources() {
     // For non-HTML there is no body so resume as soon as the sheets are loaded.
     BeginLifecycleUpdatesIfRenderingReady();
   }
-
-  if (goto_anchor_needed_after_stylesheets_load_ && View())
-    View()->ProcessUrlFragment(url_);
 }
 
 void Document::ExecuteScriptsWaitingForResources() {
