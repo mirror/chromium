@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Locks WebIDL tests</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/w3c/resources/WebIDLParser.js"></script>
+<script src="/w3c/resources/idlharness.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  const response = await fetch('interfaces.idl');
+  const idls = await response.text();
+
+  const idlArray = new IdlArray();
+
+  // https://html.spec.whatwg.org/multipage/browsers.html#window
+  idlArray.add_untested_idls("[PrimaryGlobal] interface Window { };");
+
+  // https://html.spec.whatwg.org/multipage/webappapis.html#windoworworkerglobalscope-mixin
+  idlArray.add_untested_idls(`[NoInterfaceObject, Exposed=(Window,Worker)]
+                                interface WindowOrWorkerGlobalScope {};`);
+  idlArray.add_untested_idls("Window implements WindowOrWorkerGlobalScope;");
+
+  idlArray.add_idls(idls);
+  idlArray.add_objects({
+    Lock: [],
+  });
+
+  idlArray.test();
+});
+</script>

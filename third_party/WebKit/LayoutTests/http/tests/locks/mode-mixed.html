@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<title>Web Locks API: Mixed Modes</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  let unblock;
+  const blocked = new Promise(r => { unblock = r; });
+
+  const granted = [];
+
+  // These should be granted immediately, and held until unblocked.
+  requestLock('a', async lock => { granted.push('as1'); await blocked; }, {mode: 'shared'});
+  requestLock('a', async lock => { granted.push('as2'); await blocked; }, {mode: 'shared'});
+  requestLock('a', async lock => { granted.push('as3'); await blocked; }, {mode: 'shared'});
+
+
+  // This should be blocked.
+  let exclusive_lock;
+  const exclusive_request = requestLock('a', async lock => {
+    granted.push('ae');
+    exclusive_lock = lock;
+  });
+
+  // This should be granted immediately (different scope).
+  await requestLock('b', lock => { granted.push('bs'); }, {mode: 'shared'});
+
+  assert_array_equals(granted, ['as1', 'as2', 'as3', 'bs']);
+
+  // Release the shared locks granted above.
+  unblock();
+
+  // Now the blocked request can be granted.
+  await exclusive_request;
+  assert_equals(exclusive_lock.mode, 'exclusive');
+
+  assert_array_equals(granted, ['as1', 'as2', 'as3', 'bs', 'ae']);
+
+}, 'Lock requests are granted in order');
+
+</script>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<title>Web Locks API: ifAvailable option</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  let was_granted = false;
+  await requestLock('s', async lock => {
+    was_granted = true;
+  }, {ifAvailable: true});
+  assert_true(was_granted, 'lock should be granted');
+}, 'Lock request with ifAvailable - lock available');
+
+promise_test(async t => {
+  let was_aborted = false;
+  await requestLock('s', async lock => {
+    try {
+      // Request would time out if |ifAvailable| was not specified.
+      await requestLock('s', async lock => {
+        assert_unreached('lock should not have been granted');
+      }, {ifAvailable: true});
+    } catch (ex) {
+      assert_equals(ex.name, 'AbortError', 'request should have aborted');
+      was_aborted = true;
+    }
+  });
+  assert_true(was_aborted, 'request should be aborted');
+}, 'Lock request with ifAvailable - lock not available');
+
+promise_test(async t => {
+  let was_granted = false;
+  await requestLock('s', async lock => {
+    // Request with a different scope - should be grantable.
+    await requestLock('x', async lock => {
+      was_granted = true;
+    }, {ifAvailable: true});
+  });
+  assert_true(was_granted, 'lock should be granted');
+}, 'Lock request with ifAvailable - unrelated lock held');
+
+promise_test(async t => {
+  let was_granted = false;
+  await requestLock('s', async lock => {
+    await requestLock('s', async lock => {
+      was_granted = true;
+    }, {mode: 'shared', ifAvailable: true});
+  }, {mode: 'shared'});
+  assert_true(was_granted, 'lock should be granted');
+}, 'Shared lock request with ifAvailable - shared lock held');
+
+promise_test(async t => {
+  let was_aborted = true;
+  await requestLock('s', async lock => {
+    try {
+      // Request would time out if |ifAvailable| was not specified.
+      await requestLock('s', async lock => {
+        assert_unreached('lock should not have been granted');
+      }, {ifAvailable: true});
+    } catch (ex) {
+      assert_equals(ex.name, 'AbortError', 'request should have aborted');
+      was_aborted = true;
+    }
+  }, {mode: 'shared'});
+  assert_true(was_aborted, 'request should be aborted');
+}, 'Exclusive lock request with ifAvailable - shared lock held');
+
+promise_test(async t => {
+  let was_aborted = true;
+  await requestLock('s', async lock => {
+    try {
+      // Request would time out if |ifAvailable| was not specified.
+      await requestLock('s', async lock => {
+        assert_unreached('lock should not have been granted');
+      }, {mode: 'shared', ifAvailable: true});
+    } catch (ex) {
+      assert_equals(ex.name, 'AbortError', 'request should have aborted');
+      was_aborted = true;
+    }
+  });
+  assert_true(was_aborted, 'request should be aborted');
+}, 'Shared lock request with ifAvailable - exclusive lock held');
+
+</script>

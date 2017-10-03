@@ -27,6 +27,7 @@
 #include "modules/EventModulesNames.h"
 #include "modules/EventTargetModulesNames.h"
 #include "modules/IndexedDBNames.h"
+#include "modules/LocksNames.h"
 #include "modules/accessibility/AXObjectCacheImpl.h"
 #include "modules/accessibility/InspectorAccessibilityAgent.h"
 #include "modules/app_banner/AppBannerController.h"
@@ -94,13 +95,14 @@ void ModulesInitializer::Initialize() {
   const unsigned kModulesStaticStringsCount =
       EventNames::EventModulesNamesCount +
       EventTargetNames::EventTargetModulesNamesCount +
-      IndexedDBNames::IndexedDBNamesCount;
+      LocksNames::LocksNamesCount + IndexedDBNames::IndexedDBNamesCount;
   StringImpl::ReserveStaticStringsCapacityForSize(kModulesStaticStringsCount);
 
   EventNames::initModules();
   EventTargetNames::initModules();
   Document::RegisterEventFactory(EventModulesFactory::Create());
   ModuleBindingsInitializer::Init();
+  LocksNames::init();
   IndexedDBNames::init();
   AXObjectCache::Init(AXObjectCacheImpl::Create);
   DraggedIsolatedFileSystem::Init(
