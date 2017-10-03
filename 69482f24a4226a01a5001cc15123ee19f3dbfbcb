@@ -22,6 +22,23 @@
       "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd00810_41f5233c",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-03T21:08:46Z",
+      "side": 1,
+      "message": "Instead of slightly changing the name of this field from \"previewModifiable\" to \"isDocumentModifiable\", would it be easier to update the JS code to use previewModifiable directly?\n\nIt would  require updating this line only (I think)\nhttps://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.js?type\u003dcs\u0026l\u003d661 and we would not need kDocumentModifiable constant anymore.\n\nSame question for other fields in this dictionary. Basically do you think is worth reusing as many pre-existing printing::* constants already defined by updating the JS, instead of defining new ones here?",
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
