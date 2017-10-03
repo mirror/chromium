@@ -592,7 +592,7 @@ WebPagePopup* WebPagePopup::Create(WebWidgetClient* client) {
   //    WebPagePopupImpl to close.
   // We need them because the closing operation is asynchronous and the widget
   // can be closed while the WebViewImpl is unaware of it.
-  return WTF::AdoptRef(new WebPagePopupImpl(client)).LeakRef();
+  return LeakRef(WTF::AdoptRef(new WebPagePopupImpl(client)));
 }
 
 }  // namespace blink
