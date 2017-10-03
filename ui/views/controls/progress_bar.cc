@@ -122,13 +122,12 @@ void ProgressBar::SetValue(double value) {
 
 SkColor ProgressBar::GetForegroundColor() const {
   return GetNativeTheme()->GetSystemColor(
-      ui::NativeTheme::kColorId_ProminentButtonColor);
+      ui::NativeTheme::kColorId_ProgressBarForeground);
 }
 
 SkColor ProgressBar::GetBackgroundColor() const {
-  // The default foreground is GoogleBlue500, and the default background is
-  // that color but 80% lighter.
-  return color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC);
+  return GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_ProgressBarBackground);
 }
 
 void ProgressBar::AnimationProgressed(const gfx::Animation* animation) {

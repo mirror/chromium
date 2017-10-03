@@ -24,6 +24,14 @@ component("native_theme") {
     "native_theme_observer.h",
   ]
 
+  if (is_linux) {
+    sources += [ "native_theme_linux.cc" ]
+  }
+
+  if (is_chromecast) {
+    sources += [ "native_theme_cast.cc" ]
+  }
+
   if (use_aura) {
     sources += [
       "native_theme_aura.cc",
