@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "034c84d3_253cb306",
+        "filename": "chromeos/components/tether/ble_synchronizer_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-03T17:33:48Z",
+      "side": 1,
+      "message": "Making this a pure virtual method would prevent clients from accidentally using a half-implemented BaseBleSynchronizer, and makes it clear to subclasses which methods need to be overridden. I\u0027m not convinced that it\u0027s undue work for the test double to implement this since it\u0027s an empty method body (and was already being done before this CL). It seems like a small change which makes each class\u0027s role more clear.",
+      "parentUuid": "7276bb56_c63eeaa9",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 38
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58500a5e_487d1286",
         "filename": "chromeos/components/tether/ble_synchronizer_base.h",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b149f9e_4861a00d",
+        "filename": "chromeos/components/tether/ble_synchronizer_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-10-03T17:33:48Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "b4d8ae49_c9a8065b",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "5c476f29b5a1a15e98ccfea19e181a3db8f6996e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
