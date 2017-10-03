@@ -7,7 +7,9 @@
 #include <memory>
 #include "base/bind.h"
 #include "base/memory/memory_pressure_listener.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sys_info.h"
+#include "third_party/leveldatabase/env_chromium.h"
 
 using MemoryPressureLevel = base::MemoryPressureListener::MemoryPressureLevel;
 using leveldb::Cache;
@@ -59,6 +61,22 @@ class Globals {
     web_block_cache()->Prune();
   }
 
+  void UpdateHistograms() {
+    leveldb_env::DBTracker::GetInstance()->UpdateHistograms();
+
+    // leveldb limits the read cache size to 1GB, but its default value is 8MB,
+    // and Chrome uses either 1MB or 8MB.
+    if (GetSharedWebBlockCache() == GetSharedBrowserBlockCache()) {
+      UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.Unified",
+                               browser_block_cache_->TotalCharge());
+      return;
+    }
+    UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.Web",
+                             web_block_cache_->TotalCharge());
+    UMA_HISTOGRAM_COUNTS_10M("LevelDB.SharedCache.BytesUsed.Browser",
+                             browser_block_cache_->TotalCharge());
+  }
+
  private:
   ~Globals() {}
 
@@ -83,6 +101,10 @@ Cache* GetSharedWebBlockCache() {
 
 Cache* GetSharedBrowserBlockCache() {
   return Globals::GetInstance()->browser_block_cache();
+}
+
+void UpdateHistograms() {
+  return Globals::GetInstance()->UpdateHistograms();
 }
 
 }  // namespace leveldb_chrome

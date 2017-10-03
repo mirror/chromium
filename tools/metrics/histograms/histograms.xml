@@ -29576,6 +29576,20 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The result of an open attempt of a leveldb.</summary>
 </histogram>
 
+<histogram name="LevelDB.SharedCache.BytesUsed" enum="LevelDBSharedCache"
+    units="Bytes">
+  <owner>cmumford@chromium.org</owner>
+  <summary>The estimated size (in bytes) of the leveldb shared cache.</summary>
+</histogram>
+
+<histogram name="LevelDB.SharedCache.Users" enum="LevelDBSharedCache"
+    units="count">
+  <owner>cmumford@chromium.org</owner>
+  <summary>
+    The number of databases currently using the shared block cache.
+  </summary>
+</histogram>
+
 <histogram name="LevelDBEnv.All.SafeThreadAccess" units="accesses">
   <obsolete>
     Deprecated 2013-10. No thread-unsafety was found.

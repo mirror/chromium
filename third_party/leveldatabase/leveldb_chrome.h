@@ -17,6 +17,9 @@ extern leveldb::Cache* GetSharedWebBlockCache();
 // *does not* own the returned instance.
 extern leveldb::Cache* GetSharedBrowserBlockCache();
 
+// Report leveldb UMA values.
+extern void UpdateHistograms();
+
 }  // namespace leveldb_chrome
 
 #endif  // THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_

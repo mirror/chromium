@@ -22765,6 +22765,12 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="21" label="NewAppendableFile"/>
 </enum>
 
+<enum name="LevelDBSharedCache">
+  <int value="0" label="Browser"/>
+  <int value="1" label="Web"/>
+  <int value="2" label="Unified"/>
+</enum>
+
 <enum name="LevelDBStatus">
   <int value="0" label="OK"/>
   <int value="1" label="Not Found"/>
