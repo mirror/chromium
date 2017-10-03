@@ -180,6 +180,53 @@
     },
     {
       "key": {
+        "uuid": "8b24cb49_ea463772",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:51:20Z",
+      "side": 1,
+      "message": "True is correct.\n\nWe want to show surveys to both Chrome Home and non-Chrome Home users. For Chrome Home users, this method is checking that they have had Chrome Home for at least a week.",
+      "parentUuid": "46aa26c9_90063b94",
+      "range": {
+        "startLine": 75,
+        "startChar": 60,
+        "endLine": 75,
+        "endChar": 64
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe86a47_f5262eb9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-03T18:51:20Z",
+      "side": 1,
+      "message": "This should return false",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "0e36879fc2a748c20c552f07f932f694fd2ebaaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaed2756_e73359a1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 23
