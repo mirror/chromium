@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a88fc141_cb53d717",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-03T13:20:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it\u0027s an issue, and if it is we would have the same issue without this patch but I have a suspicion that if you have a composited sticky position element which shifts this sticky box we may need to account for the ancestor\u0027s sticky position offset as well.",
+      "revId": "81c35ed26bc666cb0993d82217701d2c1747f83d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "991d60a0_3c6ebbb7",
         "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.h",
         "patchSetId": 4
