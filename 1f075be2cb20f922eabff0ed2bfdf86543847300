@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "fa88cca5_0895e6cb",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T13:53:28Z",
+      "side": 1,
+      "message": "Could it be const HTM*?",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e764da85_f3fa0a4c",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T13:53:28Z",
+      "side": 1,
+      "message": "nit: runon sentence.",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "497650a6_d4e870f3",
         "filename": "components/viz/service/hit_test/hit_test_manager.h",
         "patchSetId": 14
@@ -13,6 +47,41 @@
       "writtenOn": "2017-10-02T22:03:57Z",
       "side": 1,
       "message": "nit: traditionally the cc team has preferred making these overrides public (to signify that you can\u0027t reduce visibility of overrides because you can always cast to the base type and call) whereas the UI team has preferred making them private (to signify that these are implementation details).\n\nGiven Viz internal details is a GPU team project, it seems appropriate to keep these public.",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab98ef73_f2205b37",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T13:53:28Z",
+      "side": 1,
+      "message": "also: \"protected\" is lightly discouraged.",
+      "parentUuid": "497650a6_d4e870f3",
+      "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998670dd_e8cf7a78",
+        "filename": "components/viz/service/hit_test/hit_test_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-10-03T13:53:28Z",
+      "side": 1,
+      "message": "Can these be private?",
       "revId": "1f075be2cb20f922eabff0ed2bfdf86543847300",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
