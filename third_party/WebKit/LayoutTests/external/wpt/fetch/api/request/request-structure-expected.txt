@@ -8,7 +8,6 @@ PASS Request has text method
 PASS Check method attribute
 PASS Check url attribute
 PASS Check headers attribute
-FAIL Check type attribute assert_true: request has type attribute expected true got false
 FAIL Check destination attribute assert_true: request has destination attribute expected true got false
 PASS Check referrer attribute
 PASS Check referrerPolicy attribute
