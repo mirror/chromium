@@ -16,23 +16,6 @@
 
 namespace blink {
 
-// Note: The current implementation is based on a mixture of the HTML specs
-// of a little different versions, in order to incrementally update the code
-// structure and the behavior.
-//
-// The followings are based on the spec BEFORE
-// https://github.com/whatwg/html/pull/2991:
-// - The cited spec statements of [IMSGF] and [FD].
-// - The behavior (of the whole module script implementation in Blink).
-//
-// The followings are based on the spec AFTER that spec PR:
-// - The cited spec statements of [FDaI] and [FFPE].
-// - The code structure of Instantiate() and FindFirstParseError().
-//   These methods are written based on the structure of the latest spec but
-//   emunates the old behavior.
-//
-// TODO(hiroshige): The things based on the old spec should be updated shortly.
-
 ModuleTreeLinker* ModuleTreeLinker::Fetch(
     const ModuleScriptFetchRequest& request,
     Modulator* modulator,
@@ -136,7 +119,16 @@ void ModuleTreeLinker::AdvanceState(State new_state) {
 
     registry_->ReleaseFinishedFetcher(this);
 
-    // [IMSGF] Step 7. When the appropriate algorithm asynchronously completes
+    // |result_| should be either:
+    // - nullptr (fetch error),
+    // - module script with an error to rethrow (parse/instantiation error), or
+    // - module script ready for evaluation (instantiated, evaluated, or
+    //   evaluation error).
+    DCHECK(!result_ || result_->IsReadyForEvaluationForAssert())
+        << "NotifyModuleTreeLoadFinished was unexpectedly notified "
+        << *result_;
+
+    // [IMSGF] Step 6. When the appropriate algorithm asynchronously completes
     // with final result, asynchronously complete this algorithm with final
     // result.
     client_->NotifyModuleTreeLoadFinished(result_);
@@ -237,15 +229,23 @@ void ModuleTreeLinker::NotifyModuleLoadFinished(ModuleScript* module_script) {
   // is called once after all descendants are fetched, which corresponds to
   // the single invocation of "fetch the descendants of and instantiate".
 
-  // [IMSGF] Steps 4 and 5 are merged to FetchDescendants().
+  // [IMSGF] Step 4. If result is null, asynchronously complete this algorithm
+  // with null, and abort these steps.
+  if (!module_script) {
+    result_ = nullptr;
+    AdvanceState(State::kFinished);
+    return;
+  }
 
-  // [IMSGF] Step 6. If the top-level module fetch flag is set, fetch the
+  // [IMSGF] Step 5. If the top-level module fetch flag is set, fetch the
   // descendants of and instantiate result given destination and visited set.
   // Otherwise, fetch the descendants of result given the same arguments.
   FetchDescendants(module_script);
 }
 
 void ModuleTreeLinker::FetchDescendants(ModuleScript* module_script) {
+  DCHECK(module_script);
+
   // [nospec] Abort the steps if the browsing context is discarded.
   if (!modulator_->HasValidContext()) {
     result_ = nullptr;
@@ -253,14 +253,13 @@ void ModuleTreeLinker::FetchDescendants(ModuleScript* module_script) {
     return;
   }
 
-  // [FD] Step 1. If module script is errored or has instantiated,
-  // asynchronously complete this algorithm with module script, and abort these
-  // steps.
-  //
-  // [IMSGF] Step 4. If result is null, is errored, or has instantiated,
-  // asynchronously complete this algorithm with result, and abort these steps.
-  if (!module_script || module_script->IsErrored()) {
-    found_error_ = true;
+  // [FD] Step 2. Let record be module script's record.
+  ScriptModule record = module_script->Record();
+
+  // [FD] Step 1. If module script's record is null, then asynchronously
+  // complete this algorithm with module script and abort these steps.
+  if (record.IsNull()) {
+    found_parse_error_ = true;
     // We don't early-exit here and wait until all module scripts to be
     // loaded, because we might be not sure which error to be reported.
     //
@@ -270,19 +269,7 @@ void ModuleTreeLinker::FetchDescendants(ModuleScript* module_script) {
     // implementation might be high, and optimizing error cases with the
     // implementation cost might be not worth doing.
     FinalizeFetchDescendantsForOneModuleScript();
-    return;
   }
-  if (module_script->HasInstantiated()) {
-    FinalizeFetchDescendantsForOneModuleScript();
-    return;
-  }
-
-  // [IMSGF] Step 5. Assert: result's record's [[Status]] is "uninstantiated".
-  DCHECK_EQ(ScriptModuleState::kUninstantiated, module_script->RecordStatus());
-
-  // [FD] Step 2. Let record be module script's record.
-  ScriptModule record = module_script->Record();
-  DCHECK(!record.IsNull());
 
   // [FD] Step 3. If record.[[RequestedModules]] is empty, asynchronously
   // complete this algorithm with module script.
@@ -356,8 +343,8 @@ void ModuleTreeLinker::FetchDescendants(ModuleScript* module_script) {
 void ModuleTreeLinker::FinalizeFetchDescendantsForOneModuleScript() {
   // [FD] of a single module script is completed here:
   //
-  // [FD] Step 6. Wait for all invocations of the internal module script graph
-  // fetching procedure to asynchronously complete, ...
+  // [FD] Step 6. Otherwise, wait until all of the internal module script graph
+  // fetching procedure invocations have asynchronously completed. ...
 
   // And, if |num_incomplete_fetches_| is 0, all the invocations of [FD]
   // (called from [FDaI] Step 2) of the root module script is completed here
@@ -384,31 +371,23 @@ void ModuleTreeLinker::Instantiate() {
   // [FDaI] Step 5. Let parse error be the result of finding the first parse
   // error given result.
   //
-  // [Optimization] If |found_error_| is false (i.e. no errors were found during
-  // fetching), we are sure that |parse error| is null and thus skip
-  // FindFirstParseError() call.
-  if (found_error_) {
+  // [Optimization] If |found_parse_error_| is false (i.e. no parse errors were
+  // found during fetching), we are sure that |parse error| is null and thus
+  // skip FindFirstParseError() call.
+  if (found_parse_error_) {
     // [FFPE] Step 2. If discoveredSet was not given, let it be an empty set.
     HeapHashSet<Member<ModuleScript>> discovered_set;
-    bool found_first_error = FindFirstParseError(result_, &discovered_set);
-    DCHECK(found_first_error);
-    DCHECK(!result_ || result_->IsErrored());
-  }
+    ScriptValue parse_error = FindFirstParseError(result_, &discovered_set);
+    DCHECK(!parse_error.IsEmpty());
 
-  // [FDaI] Step 6. If parse error is null, then:
-  //
-  // [FDaI] Step 7. Otherwise, set result's error to rethrow to parse error.
-  //
-  // [old spec] TODO(hiroshige): Update this.
-  if (!result_ || result_->IsErrored()) {
+    result_->SetErrorToRethrow(parse_error);
+
+    // [FDaI] Step 7. Otherwise, set result's error to rethrow to parse error.
     AdvanceState(State::kFinished);
     return;
   }
 
-  // In the case of parse error is not null:
-
-  DCHECK(result_);
-  DCHECK(!found_error_);
+  // [FDaI] Step 6. If parse error is null, then:
   AdvanceState(State::kInstantiating);
 
   // [FDaI] Step 6.1. Let record be result's record.
@@ -416,7 +395,9 @@ void ModuleTreeLinker::Instantiate() {
 
   // [FDaI] Step 6.2. Perform record.Instantiate(). If this throws an
   // exception, set result's error to rethrow to that exception.
-  modulator_->InstantiateModule(record);
+  ScriptValue instantiation_error = modulator_->InstantiateModule(record);
+  if (!instantiation_error.IsEmpty())
+    result_->SetErrorToRethrow(instantiation_error);
 
   // [FDaI] Step 8. Asynchronously complete this algorithm with result.
   AdvanceState(State::kFinished);
@@ -424,20 +405,14 @@ void ModuleTreeLinker::Instantiate() {
 
 // [FFPE] https://html.spec.whatwg.org/#finding-the-first-parse-error
 //
-// TODO(hiroshige): The code structure below aligns the spec after
-// https://github.com/whatwg/html/pull/2991, but the behavior aligns the
-// spec before that PR (that originates from Step 6.1. of [FD]), and thus
-// contains [old spec] statements.
-// Update the behavior according to the PR.
-//
-// This returns true if an error is found, and updates |result_| or
-// |result_|'s error accordingly.
-//
-// TODO(hiroshige): This is also because the behavior is based on the old spec.
-// Make FindFirstParseError to return ScriptValue once the behavior is updated.
-bool ModuleTreeLinker::FindFirstParseError(
+// This returns non-empty ScriptValue iff a parse error is found.
+ScriptValue ModuleTreeLinker::FindFirstParseError(
     ModuleScript* module_script,
-    HeapHashSet<Member<ModuleScript>>* discovered_set) {
+    HeapHashSet<Member<ModuleScript>>* discovered_set) const {
+  // FindFirstParseError() is called only when there is no fetch errors, i.e.
+  // all module scripts in the graph are non-null.
+  DCHECK(module_script);
+
   // [FFPE] Step 1. Let moduleMap be moduleScript's settings object's module
   // map.
   //
@@ -445,31 +420,16 @@ bool ModuleTreeLinker::FindFirstParseError(
 
   // [FFPE] Step 2 is done before calling this in Instantiate().
 
-  // [old spec] [FD] Step 6.1. If result is null, asynchronously complete this
-  // algorithm with null, aborting these steps.
-  if (!module_script) {
-    result_ = nullptr;
-    return true;
-  }
-
   // [FFPE] Step 3. Append moduleScript to discoveredSet.
   discovered_set->insert(module_script);
 
   // [FFPE] Step 4. If moduleScript's record is null, then return moduleScript's
-  // parse error.
-  //
-  // [old spec] [FD] Step 6.2. If result is errored, then set the
-  // pre-instantiation error for module script to result's error. Asynchronously
-  // complete this algorithm with module script, aborting these steps.
-  if (module_script->IsErrored()) {
-    result_->SetErrorAndClearRecord(modulator_->GetError(module_script));
-    return true;
-  }
+  ScriptModule record = module_script->Record();
+  if (record.IsNull())
+    return module_script->CreateParseError();
 
   // [FFPE] Step 5. Let childSpecifiers be the value of moduleScript's record's
   // [[RequestedModules]] internal slot.
-  ScriptModule record = module_script->Record();
-  DCHECK(!record.IsNull());
   Vector<Modulator::ModuleRequest> child_specifiers =
       modulator_->ModuleRequestsFromScriptModule(record);
 
@@ -491,26 +451,24 @@ bool ModuleTreeLinker::FindFirstParseError(
     //
     // [FFPE] Step 8. For each childModule of childModules:
     ModuleScript* child_module = modulator_->GetFetchedModuleScript(child_url);
+    DCHECK(child_module);
 
     // [FFPE] Step 8.2. If discoveredSet already contains childModule, continue.
-    //
-    // TODO(hiroshige): if |child_module| is null, we skip Contains() call
-    // because HashSet forbids nullptr. Anyway |child_module| can be nullptr
-    // because this is based on the [old spec], so remove this hack once we
-    // update the behavior.
-    if (child_module && discovered_set->Contains(child_module))
+    if (discovered_set->Contains(child_module))
       continue;
 
     // [FFPE] Step 8.3. Let childParseError be the result of finding the first
     // parse error given childModule and discoveredSet.
-    //
+    ScriptValue child_parse_error =
+        FindFirstParseError(child_module, discovered_set);
+
     // [FFPE] Step 8.4. If childParseError is not null, return childParseError.
-    if (FindFirstParseError(child_module, discovered_set))
-      return true;
+    if (!child_parse_error.IsEmpty())
+      return child_parse_error;
   }
 
   // [FFPE] Step 9. Return null.
-  return false;
+  return ScriptValue();
 }
 
 }  // namespace blink
