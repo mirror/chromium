@@ -81,9 +81,10 @@ void RenderWidgetHostInputEventRouter::OnRenderWidgetHostViewBaseDestroyed(
   if (view == touchpad_gesture_target_.target)
     touchpad_gesture_target_.target = nullptr;
 
-  if (view == bubbling_gesture_scroll_target_.target ||
-      view == first_bubbling_scroll_target_.target) {
+  if (view == bubbling_gesture_scroll_target_.target) {
     bubbling_gesture_scroll_target_.target = nullptr;
+    first_bubbling_scroll_target_.target = nullptr;
+  } else if (view == first_bubbling_scroll_target_.target) {
     first_bubbling_scroll_target_.target = nullptr;
   }
 
@@ -317,6 +318,20 @@ void RenderWidgetHostInputEventRouter::RouteMouseWheelEvent(
         transformed_point = gfx::Point(event->PositionInWidget().x,
                                        event->PositionInWidget().y) +
                             wheel_target_.delta;
+      } else if ((event->phase == blink::WebMouseWheelEvent::kPhaseEnded ||
+                  event->momentum_phase ==
+                      blink::WebMouseWheelEvent::kPhaseEnded) &&
+                 bubbling_gesture_scroll_target_.target) {
+        // Send a GSE to the bubbling target and cancel scroll bubbling since
+        // the wheel target view is destroyed and the wheel end event won't get
+        // processed.
+        blink::WebGestureEvent fake_scroll_update =
+            DummyGestureScrollUpdate(event->TimeStampSeconds());
+        fake_scroll_update.source_device = blink::kWebGestureDeviceTouchpad;
+        SendGestureScrollEnd(bubbling_gesture_scroll_target_.target,
+                             fake_scroll_update);
+        bubbling_gesture_scroll_target_.target = nullptr;
+        first_bubbling_scroll_target_.target = nullptr;
       }
     }
 
@@ -640,10 +655,6 @@ void RenderWidgetHostInputEventRouter::BubbleScrollEvent(
          event.GetType() == blink::WebInputEvent::kGestureScrollUpdate ||
          event.GetType() == blink::WebInputEvent::kGestureScrollEnd ||
          event.GetType() == blink::WebInputEvent::kGestureFlingStart);
-  // DCHECK_XNOR the current and original bubble targets. Both should be set
-  // if a bubbling gesture scroll is in progress.
-  DCHECK(!first_bubbling_scroll_target_.target ==
-         !bubbling_gesture_scroll_target_.target);
 
   ui::LatencyInfo latency_info =
       ui::WebInputEventTraits::CreateLatencyInfoForWebGestureEvent(event);
@@ -697,6 +708,13 @@ void RenderWidgetHostInputEventRouter::BubbleScrollEvent(
   }
 
   DCHECK(!target_view->wheel_scroll_latching_enabled());
+
+  if (!first_bubbling_scroll_target_.target)
+    bubbling_gesture_scroll_target_.target = nullptr;
+  // DCHECK_XNOR the current and original bubble targets. Both should be set
+  // if a bubbling gesture scroll is in progress.
+  DCHECK(!first_bubbling_scroll_target_.target ==
+         !bubbling_gesture_scroll_target_.target);
 
   // If target_view is already set up for bubbled scrolls, we forward
   // the event to the current scroll target without further consideration.
