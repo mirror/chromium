@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4c35ffa0_1aa85886",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-03T19:09:55Z",
+      "side": 1,
+      "message": "Re: creating a unittest, the test is failing because the NSColorPanel doesn\u0027t get removed from the test\u0027s list of initial windows (it gets created after the test gets set up). There is no API for adding a window to that list, and there is no overridable method to create the NSColorPanel before the initial window list gets created. I want to test with an actual NSColorPanel because I want to make sure its target and delegate are correctly nil\u0027ed out. Do you have a suggestion for solving this problem?",
+      "parentUuid": "d2e3471c_22c5ed7a",
+      "revId": "15db659f016667976827ff3f9e57312b1d5cd918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "288635e3_da852aad",
         "filename": "chrome/browser/ui/cocoa/color_chooser_mac.mm",
         "patchSetId": 1
