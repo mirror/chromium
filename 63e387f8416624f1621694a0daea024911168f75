@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "9416f184_8a42c9cf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "Any reason to not call saveTabListAsynchronously directly?",
+      "parentUuid": "144f7a85_b04d4183",
+      "range": {
+        "startLine": 107,
+        "startChar": 26,
+        "endLine": 107,
+        "endChar": 43
+      },
+      "revId": "63e387f8416624f1621694a0daea024911168f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa93d5d_05105441",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 4

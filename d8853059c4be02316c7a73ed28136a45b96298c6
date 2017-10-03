@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1cac0cc_aed87ca4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "Let\u0027s rename this to browserActionsInitialized\n\nActually, should we just have a boolean like hasBrowserActionTabs that is the checks you have below. \n\nboolean hasBrowserActionTabs \u003d BrowserActionsTabModelSelector.isInitialized()\n        \u0026\u0026 BrowserActionsTabModelSelector.getInstance().getTotalTabCount() !\u003d 0;\n\nThat seems like what we could use in both of these conditions below.",
+      "range": {
+        "startLine": 1041,
+        "startChar": 20,
+        "endLine": 1041,
+        "endChar": 33
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96242b7_18693e65",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1088,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "I wouldn\u0027t pass the selector...instead I\u0027d pass a boolean like shouldSelectTab and then we can hide the logic of that in the above call.",
+      "range": {
+        "startLine": 1088,
+        "startChar": 45,
+        "endLine": 1088,
+        "endChar": 75
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387ca2f7_dd99e972",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "This comment still applies:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/633867/4/chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java#1077\n\nYou can\u0027t use the current model.  You have to explicitly use the non-incognito model here.  You could be incorrectly adding non-incognito tabs to the incognito model as you can\u0027t be sure that getCurrentModel() doesn\u0027t return incognito.\n\nSo, I would pull out a local variable to the function that is TabModel normalTabModel \u003d getTabModelSelector().getModel(false);  then use it instead of getCurrentModel().",
+      "range": {
+        "startLine": 1094,
+        "startChar": 12,
+        "endLine": 1094,
+        "endChar": 31
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d102da9_4f8c7d29",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "Add a blank line above",
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "270a7cb3_443324f4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/browseractions/BrowserActionActivityTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-03T17:50:15Z",
+      "side": 1,
+      "message": "should we be assert what the selected index of the model is?  should the selected tab be updated in this flow?",
+      "range": {
+        "startLine": 427,
+        "startChar": 45,
+        "endLine": 427,
+        "endChar": 57
+      },
+      "revId": "d8853059c4be02316c7a73ed28136a45b96298c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
