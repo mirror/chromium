@@ -148,7 +148,8 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 // Returns whether the omnibox popup is currently displayed.
 - (BOOL)showingOmniboxPopup;
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection;
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection;
 
 @end
 
