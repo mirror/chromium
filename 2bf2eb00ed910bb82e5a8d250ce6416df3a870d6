@@ -46,6 +46,30 @@
       "revId": "2bf2eb00ed910bb82e5a8d250ce6416df3a870d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c694e14_2e66b73c",
+        "filename": "ui/views/controls/progress_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-03T06:38:12Z",
+      "side": 1,
+      "message": "\u003e New approach with base::Optional should fix this issue, and I added tests.\n\u003e \n\u003e I took a look at NativeTheme after reading this and I guess since my issue is actually with the background color, I still want to be able to override the default behavior of blending toward the opposite luma, rather than simply change the foreground color.\n\nNote I\u0027m leaning towards adding new color IDs for progress bars for this. It\u0027s a bit obscure that ProgressBar uses the prominent button color, and just makes it lighter for the background. That\u0027s the approach I used in my exploration in https://chromium-review.googlesource.com/c/chromium/src/+/696825",
+      "parentUuid": "03336870_bcab9acc",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "2bf2eb00ed910bb82e5a8d250ce6416df3a870d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
