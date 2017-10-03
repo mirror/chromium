@@ -412,6 +412,8 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   void didUpdateMainThreadScrollingReasons() override;
   void didChangeScrollbarsHidden(bool) override;
   void DidChangeLayerOpacity(float old_opacity, float new_opacity) override;
+  void WillChangeLayerTransform() override;
+  void DidChangeLayerTransform() override;
 
   // Triggers a call to SwitchToLayer.
   void SwitchCCLayerForTest();
