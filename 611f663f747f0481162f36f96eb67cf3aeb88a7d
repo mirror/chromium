@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8de5d65_2426f81a",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-03T18:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c8c4f8b_df4de6b8",
+      "revId": "611f663f747f0481162f36f96eb67cf3aeb88a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f68a89c9_59f324a2",
         "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "611f663f747f0481162f36f96eb67cf3aeb88a7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46b18cf_7c309802",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharness.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-03T18:29:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f68a89c9_59f324a2",
+      "revId": "611f663f747f0481162f36f96eb67cf3aeb88a7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
