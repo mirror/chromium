@@ -22,6 +22,30 @@
       "revId": "efa9d5a8348aab3bcf0cc27b2e6c276d5280a951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ea2b2e_0292bffb",
+        "filename": "cc/layers/render_surface_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-04T17:05:38Z",
+      "side": 1,
+      "message": "VerifyQuadsExactlyCoverRect could make sure that the right quads are there without having this test depend on the tile size.",
+      "parentUuid": "17e160b4_9bd57d36",
+      "range": {
+        "startLine": 156,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "efa9d5a8348aab3bcf0cc27b2e6c276d5280a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
