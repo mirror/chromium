@@ -22,6 +22,30 @@
       "revId": "f2f28a4b95b4c50cc9337b99b2c6fdcc6ca34fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfa4ffe_0fc5b713",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 3
+      },
+      "lineNbr": 3720,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:45:14Z",
+      "side": 1,
+      "message": "Sorry about the typo. I wanted to mean 771492...",
+      "parentUuid": "9b9ce762_fdd6c5e8",
+      "range": {
+        "startLine": 3720,
+        "startChar": 10,
+        "endLine": 3720,
+        "endChar": 16
+      },
+      "revId": "f2f28a4b95b4c50cc9337b99b2c6fdcc6ca34fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
