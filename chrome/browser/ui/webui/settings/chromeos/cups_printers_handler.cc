@@ -840,7 +840,7 @@ void CupsPrintersHandler::HandleGetPrinterPpdManufacturerAndModel(
     return;
   }
 
-  ppd_provider_->ReverseLookup(
+  ppd_provider_->ReverseIndex(
       printer->ppd_reference().effective_make_and_model,
       base::Bind(&CupsPrintersHandler::OnGetPrinterPpdManufacturerAndModel,
                  weak_factory_.GetWeakPtr(), callback_id));
