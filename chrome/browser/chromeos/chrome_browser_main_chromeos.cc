@@ -714,6 +714,10 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   chromeos::ResourceReporter::GetInstance()->StartMonitoring(
       task_manager::TaskManagerInterface::GetTaskManager());
 
+  // Makes mojo request to TabletModeController in ash.
+  tablet_mode_client_ = std::make_unique<TabletModeClient>();
+  tablet_mode_client_->Init();
+
   ChromeBrowserMainPartsLinux::PreMainMessageLoopRun();
 }
 
@@ -813,10 +817,6 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
 
   // NOTE: Initializes ash::Shell.
   ChromeBrowserMainPartsLinux::PreProfileInit();
-
-  // Makes mojo request to TabletModeController in ash.
-  tablet_mode_client_ = std::make_unique<TabletModeClient>();
-  tablet_mode_client_->Init();
 
   if (lock_screen_apps::StateController::IsEnabled()) {
     lock_screen_apps_state_controller_ =

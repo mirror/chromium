@@ -6,7 +6,9 @@
 
 #include <utility>
 
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/interfaces/constants.mojom.h"
+#include "base/command_line.h"
 #include "chrome/browser/ui/ash/tablet_mode_client_observer.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -18,7 +20,10 @@ TabletModeClient* g_instance = nullptr;
 
 }  // namespace
 
-TabletModeClient::TabletModeClient() : binding_(this) {
+TabletModeClient::TabletModeClient()
+    : auto_hide_title_bars_(!base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ash::switches::kAshDisableTabletAutohideTitlebars)),
+      binding_(this) {
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -53,6 +58,14 @@ void TabletModeClient::AddObserver(TabletModeClientObserver* observer) {
 
 void TabletModeClient::RemoveObserver(TabletModeClientObserver* observer) {
   observers_.RemoveObserver(observer);
+}
+
+bool TabletModeClient::ShouldAutoHideTitlebars() {
+  return tablet_mode_enabled_ && CanAutoHideTitlebars();
+}
+
+bool TabletModeClient::CanAutoHideTitlebars() {
+  return auto_hide_title_bars_;
 }
 
 void TabletModeClient::OnTabletModeToggled(bool enabled) {

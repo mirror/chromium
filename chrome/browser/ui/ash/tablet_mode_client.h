@@ -35,6 +35,13 @@ class TabletModeClient : public ash::mojom::TabletModeClient {
 
   void RemoveObserver(TabletModeClientObserver* observer);
 
+  // Returns whether we should auto hide the titlebars (whether the feature is
+  // enabled and we're in tablet mode).
+  bool ShouldAutoHideTitlebars();
+
+  // Returns whether the title bar hiding feature is enabled.
+  bool CanAutoHideTitlebars();
+
   // ash::mojom::TabletModeClient:
   void OnTabletModeToggled(bool enabled) override;
 
@@ -46,6 +53,9 @@ class TabletModeClient : public ash::mojom::TabletModeClient {
   void BindAndSetClient();
 
   bool tablet_mode_enabled_ = false;
+
+  // Whether title bars should be shown be auto hidden in tablet mode.
+  const bool auto_hide_title_bars_;
 
   // Binds to the client interface in ash.
   mojo::Binding<ash::mojom::TabletModeClient> binding_;

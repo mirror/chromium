@@ -30,6 +30,8 @@
 #include "ui/aura/window.h"
 #include "ui/views/controls/webview/webview.h"
 
+// Next idea: port this to a browsertest.
+
 class ImmersiveModeControllerAshTest : public TestWithBrowserView {
  public:
   ImmersiveModeControllerAshTest()
