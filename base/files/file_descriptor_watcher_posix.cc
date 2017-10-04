@@ -4,12 +4,15 @@
 
 #include "base/files/file_descriptor_watcher_posix.h"
 
+#include <fcntl.h>
+
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/synchronization/lock.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_local.h"
@@ -25,20 +28,34 @@ LazyInstance<ThreadLocalPointer<MessageLoopForIO>>::Leaky
 
 }  // namespace
 
-FileDescriptorWatcher::Controller::~Controller() {
-  DCHECK(sequence_checker_.CalledOnValidSequence());
+class FileDescriptorWatcher::Controller::CancellationFlag
+    : public base::RefCountedThreadSafe<CancellationFlag> {
+ public:
+  CancellationFlag() = default;
 
-  // Delete |watcher_| on the MessageLoopForIO.
-  //
-  // If the MessageLoopForIO is deleted before Watcher::StartWatching() runs,
-  // |watcher_| is leaked. If the MessageLoopForIO is deleted after
-  // Watcher::StartWatching() runs but before the DeleteSoon task runs,
-  // |watcher_| is deleted from Watcher::WillDestroyCurrentMessageLoop().
-  message_loop_for_io_task_runner_->DeleteSoon(FROM_HERE, watcher_.release());
+  Lock& lock() { return lock_; }
 
-  // Since WeakPtrs are invalidated by the destructor, RunCallback() won't be
-  // invoked after this returns.
-}
+  void set_cancelled() {
+    AutoLock auto_lock(lock_);
+    DCHECK(!is_cancelled_);
+    is_cancelled_ = true;
+  }
+
+  bool is_cancelled() const {
+    lock_.AssertAcquired();
+    return is_cancelled_;
+  }
+
+ private:
+  friend class base::RefCountedThreadSafe<CancellationFlag>;
+
+  ~CancellationFlag() = default;
+
+  Lock lock_;
+  bool is_cancelled_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(CancellationFlag);
+};
 
 class FileDescriptorWatcher::Controller::Watcher
     : public MessageLoopForIO::Watcher,
@@ -85,6 +102,9 @@ class FileDescriptorWatcher::Controller::Watcher
   // MessageLoopForIO thread.
   bool registered_as_destruction_observer_ = false;
 
+  // Indicates whether the watch was cancelled.
+  const scoped_refptr<CancellationFlag> cancellation_flag_;
+
   DISALLOW_COPY_AND_ASSIGN(Watcher);
 };
 
@@ -95,7 +115,8 @@ FileDescriptorWatcher::Controller::Watcher::Watcher(
     : file_descriptor_watcher_(FROM_HERE),
       controller_(controller),
       mode_(mode),
-      fd_(fd) {
+      fd_(fd),
+      cancellation_flag_(controller_.get()->cancellation_flag_) {
   DCHECK(callback_task_runner_);
   thread_checker_.DetachFromThread();
 }
@@ -108,12 +129,22 @@ FileDescriptorWatcher::Controller::Watcher::~Watcher() {
 void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!MessageLoopForIO::current()->WatchFileDescriptor(
-          fd_, false, mode_, &file_descriptor_watcher_, this)) {
-    // TODO(wez): Ideally we would [D]CHECK here, or propagate the failure back
-    // to the caller, but there is no guarantee that they haven't already
-    // closed |fd_| on another thread, so the best we can do is Debug-log.
-    DLOG(ERROR) << "Failed to watch fd=" << fd_;
+  {
+    AutoLock auto_lock(cancellation_flag_->lock());
+    if (cancellation_flag_->is_cancelled())
+      return;
+
+    // Try to detect when |fd_| is closed before the watch starts.
+    // Unfortunately, this DCHECK will not fail if |fd_| is reused after being
+    // closed.
+    DCHECK(fcntl(fd_, F_GETFD) >= 0 || errno != EBADF);
+
+    // Hold |cancellation_flag_->lock()| to during the call to
+    // WatchFileDescriptor() to prevent |fd_| from being closed.
+    const bool watch_file_destructor_success =
+        MessageLoopForIO::current()->WatchFileDescriptor(
+            fd_, false, mode_, &file_descriptor_watcher_, this);
+    DCHECK(watch_file_destructor_success) << "Failed to watch fd=" << fd_;
   }
 
   if (!registered_as_destruction_observer_) {
@@ -161,11 +192,32 @@ FileDescriptorWatcher::Controller::Controller(MessageLoopForIO::Mode mode,
     : callback_(callback),
       message_loop_for_io_task_runner_(
           tls_message_loop_for_io.Get().Get()->task_runner()),
+      cancellation_flag_(MakeRefCounted<CancellationFlag>()),
       weak_factory_(this) {
   DCHECK(!callback_.is_null());
   DCHECK(message_loop_for_io_task_runner_);
   watcher_ = std::make_unique<Watcher>(weak_factory_.GetWeakPtr(), mode, fd);
   StartWatching();
+}
+
+FileDescriptorWatcher::Controller::~Controller() {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+
+  // Set a cancellation flag to prevent the watch from being started on another
+  // thread after this Controller has been deleted (this is important because
+  // the file descriptor may be closed after the Controller is deleted).
+  cancellation_flag_->set_cancelled();
+
+  // Delete |watcher_| on the MessageLoopForIO.
+  //
+  // If the MessageLoopForIO is deleted before Watcher::StartWatching() runs,
+  // |watcher_| is leaked. If the MessageLoopForIO is deleted after
+  // Watcher::StartWatching() runs but before the DeleteSoon task runs,
+  // |watcher_| is deleted from Watcher::WillDestroyCurrentMessageLoop().
+  message_loop_for_io_task_runner_->DeleteSoon(FROM_HERE, watcher_.release());
+
+  // Since WeakPtrs are invalidated by the destructor, RunCallback() won't be
+  // invoked after this returns.
 }
 
 void FileDescriptorWatcher::Controller::StartWatching() {

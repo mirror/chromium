@@ -51,7 +51,10 @@ class FileDescriptorWatcherTest
                                         MESSAGE_LOOP_FOR_IO_ON_MAIN_THREAD
                           ? new MessageLoopForIO
                           : new MessageLoop),
-        other_thread_("FileDescriptorWatcherTest_OtherThread") {}
+        other_thread_("FileDescriptorWatcherTest_OtherThread"),
+        pause_other_thread_event_(
+            base::WaitableEvent::ResetPolicy::AUTOMATIC,
+            base::WaitableEvent::InitialState::NOT_SIGNALED) {}
   ~FileDescriptorWatcherTest() override = default;
 
   void SetUp() override {
@@ -84,8 +87,7 @@ class FileDescriptorWatcherTest
     // Ensure that OtherThread is done processing before closing fds.
     other_thread_.Stop();
 
-    EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[0])));
-    EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[1])));
+    CloseFileDescriptors();
   }
 
  protected:
@@ -95,7 +97,39 @@ class FileDescriptorWatcherTest
   // Waits for a short delay and run pending tasks.
   void WaitAndRunPendingTasks() {
     PlatformThread::Sleep(TestTimeouts::tiny_timeout());
-    RunLoop().RunUntilIdle();
+    if (GetParam() ==
+        FileDescriptorWatcherTestType::MESSAGE_LOOP_FOR_IO_ON_OTHER_THREAD) {
+      RunLoop run_loop;
+      other_thread_.task_runner()->PostTask(FROM_HERE,
+                                            run_loop.QuitWhenIdleClosure());
+      run_loop.Run();
+    } else {
+      RunLoop().RunUntilIdle();
+    }
+  }
+
+  void PauseOtherThread() {
+    if (GetParam() ==
+        FileDescriptorWatcherTestType::MESSAGE_LOOP_FOR_IO_ON_OTHER_THREAD) {
+      other_thread_.task_runner()->PostTask(
+          FROM_HERE, BindOnce(&WaitableEvent::Wait,
+                              Unretained(&pause_other_thread_event_)));
+    }
+  }
+
+  void RestartOtherThread() { pause_other_thread_event_.Signal(); }
+
+  void CreateFileDescriptors() { ASSERT_EQ(0, pipe(pipe_fds_)); }
+
+  void CloseFileDescriptors() {
+    if (pipe_fds_[0] != -1) {
+      EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[0])));
+      pipe_fds_[0] = -1;
+    }
+    if (pipe_fds_[1] != -1) {
+      EXPECT_EQ(0, IGNORE_EINTR(close(pipe_fds_[1])));
+      pipe_fds_[1] = -1;
+    }
   }
 
   // Registers ReadableCallback() to be called on |mock_| when
@@ -106,11 +140,6 @@ class FileDescriptorWatcherTest
             read_file_descriptor(),
             Bind(&Mock::ReadableCallback, Unretained(&mock_)));
     EXPECT_TRUE(controller);
-
-    // Unless read_file_descriptor() was readable before the callback was
-    // registered, this shouldn't do anything.
-    WaitAndRunPendingTasks();
-
     return controller;
   }
 
@@ -155,6 +184,9 @@ class FileDescriptorWatcherTest
   // which callbacks are registered on the main thread.
   std::unique_ptr<FileDescriptorWatcher> file_descriptor_watcher_;
 
+  // Used to pause running tasks on |other_thread_|.
+  WaitableEvent pause_other_thread_event_;
+
   // Watched file descriptors.
   int pipe_fds_[2];
 
@@ -179,6 +211,7 @@ TEST_P(FileDescriptorWatcherTest, WatchWritable) {
 
 TEST_P(FileDescriptorWatcherTest, WatchReadableOneByte) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Write 1 byte to the pipe, making it readable without blocking. Expect one
   // call to ReadableCallback() which will read 1 byte from the pipe.
@@ -198,6 +231,7 @@ TEST_P(FileDescriptorWatcherTest, WatchReadableOneByte) {
 
 TEST_P(FileDescriptorWatcherTest, WatchReadableTwoBytes) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Write 2 bytes to the pipe. Expect two calls to ReadableCallback() which
   // will each read 1 byte from the pipe.
@@ -219,6 +253,7 @@ TEST_P(FileDescriptorWatcherTest, WatchReadableTwoBytes) {
 
 TEST_P(FileDescriptorWatcherTest, WatchReadableByteWrittenFromCallback) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Write 1 byte to the pipe. Expect one call to ReadableCallback() from which
   // 1 byte is read and 1 byte is written to the pipe. Then, expect another call
@@ -243,6 +278,7 @@ TEST_P(FileDescriptorWatcherTest, WatchReadableByteWrittenFromCallback) {
 
 TEST_P(FileDescriptorWatcherTest, DeleteControllerFromCallback) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Write 1 byte to the pipe. Expect one call to ReadableCallback() from which
   // |controller| is deleted.
@@ -264,6 +300,7 @@ TEST_P(FileDescriptorWatcherTest, DeleteControllerFromCallback) {
 TEST_P(FileDescriptorWatcherTest,
        DeleteControllerBeforeFileDescriptorReadable) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Cancel the watch.
   controller = nullptr;
@@ -277,6 +314,7 @@ TEST_P(FileDescriptorWatcherTest,
 
 TEST_P(FileDescriptorWatcherTest, DeleteControllerAfterFileDescriptorReadable) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Write 1 byte to the pipe to make it readable without blocking.
   WriteByte();
@@ -290,6 +328,7 @@ TEST_P(FileDescriptorWatcherTest, DeleteControllerAfterFileDescriptorReadable) {
 
 TEST_P(FileDescriptorWatcherTest, DeleteControllerAfterDeleteMessageLoopForIO) {
   auto controller = WatchReadable();
+  WaitAndRunPendingTasks();
 
   // Delete the MessageLoopForIO.
   if (GetParam() ==
@@ -302,6 +341,91 @@ TEST_P(FileDescriptorWatcherTest, DeleteControllerAfterDeleteMessageLoopForIO) {
   // Deleting |controller| shouldn't crash even though that causes a task to be
   // posted to the MessageLoopForIO thread.
   controller = nullptr;
+}
+
+// Verify that no crash occurs if a watched file descriptor is closed after the
+// controller has been deleted but before the watch has started on the
+// MessageLoopForIO.
+TEST_P(FileDescriptorWatcherTest, CloseFileDescriptorBeforeWatchRegistered) {
+  PauseOtherThread();
+  { auto controller = WatchReadable(); }
+  CloseFileDescriptors();
+  RestartOtherThread();
+  WaitAndRunPendingTasks();
+}
+
+// Verify that no crash occurs if a watched file descriptor is closed before the
+// watch is stopped on the MessageLoopForIO.
+TEST_P(FileDescriptorWatcherTest, CloseFileDescriptorBeforeWatchStopped) {
+  {
+    auto controller = WatchReadable();
+    WaitAndRunPendingTasks();
+    PauseOtherThread();
+  }
+  CloseFileDescriptors();
+  RestartOtherThread();
+  WaitAndRunPendingTasks();
+}
+
+// Verify that no crash occurs and that no notification is sent when a watched
+// file descriptor is closed and reused before the watch is stopped on the
+// MessageLoopForIO.
+TEST_P(FileDescriptorWatcherTest, ReusePreviouslyWatchedFileDescriptor) {
+  const int old_read_file_descriptor = read_file_descriptor();
+  {
+    auto controller = WatchReadable();
+    WaitAndRunPendingTasks();
+    PauseOtherThread();
+  }
+  CloseFileDescriptors();
+  CreateFileDescriptors();
+  EXPECT_EQ(old_read_file_descriptor,
+            dup2(read_file_descriptor(), old_read_file_descriptor));
+  RestartOtherThread();
+  WaitAndRunPendingTasks();
+  WriteByte();
+  WaitAndRunPendingTasks();
+
+  if (old_read_file_descriptor != read_file_descriptor())
+    EXPECT_EQ(0, IGNORE_EINTR(close(old_read_file_descriptor)));
+}
+
+// Start watching a file descriptor with controller A. Destroy controller A.
+// Before the watch is cancelled on the MessageLoopForIO, close the file
+// descriptor, reuse it, rewatch it with controller B and make it readable
+// without blocking. Verify that the notification is sent to controller B, not
+// controller A.
+TEST_P(FileDescriptorWatcherTest, RewatchPreviouslyWatchedFileDescriptor) {
+  const int old_read_file_descriptor = read_file_descriptor();
+  {
+    auto controller_a = WatchReadable();
+    WaitAndRunPendingTasks();
+    PauseOtherThread();
+  }
+  {
+    CloseFileDescriptors();
+    CreateFileDescriptors();
+    EXPECT_EQ(old_read_file_descriptor,
+              dup2(read_file_descriptor(), old_read_file_descriptor));
+    testing::StrictMock<Mock> mock_b;
+    auto controller_b = FileDescriptorWatcher::WatchReadable(
+        old_read_file_descriptor,
+        Bind(&Mock::ReadableCallback, Unretained(&mock_b)));
+    ASSERT_TRUE(controller_b);
+    WriteByte();
+    RestartOtherThread();
+    RunLoop run_loop;
+    EXPECT_CALL(mock_b, ReadableCallback())
+        .WillOnce(testing::Invoke([this, &run_loop]() {
+          ReadByte();
+          run_loop.Quit();
+        }));
+    run_loop.Run();
+    WaitAndRunPendingTasks();
+  }
+
+  if (old_read_file_descriptor != read_file_descriptor())
+    EXPECT_EQ(0, IGNORE_EINTR(close(old_read_file_descriptor)));
 }
 
 INSTANTIATE_TEST_CASE_P(
