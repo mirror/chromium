@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "016ed436_0dcd0521",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-04T20:11:35Z",
+      "side": 1,
+      "message": "Thanks for putting this together. Looking at this, it\u0027s going to get unmaintainable pretty quickly - and sort of is already. Could you please try this:\n\n1) Define a variable like WIN_NVIDIA_GEFORCE_610_STABLE_DRIVER at the top of the file\n2) Reference that instead of \u002710de:104a-21.21.13.7254\u0027 in the swarming_dimensions of all of the testers\n3) Define another variable like WIN_NVIDIA_GEFORCE_610_ALL_DRIVERS containing \u002710de:104a-*\u0027\n4) Reference that variable in the swarming_dimensions of all of the tests\n5) Modify the matching rules in matches_swarming_dimensions to do a more complex match. It can\u0027t simply use issubset any more, but needs to iterate down dimensions.items() and see whether it ends in \u0027*\u0027, and if so, do a prefix match on the entries in cur_dims.\n\nThanks.",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 8
+      },
+      "revId": "be1314e2d162e86664158be7985b5eb8f736aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
