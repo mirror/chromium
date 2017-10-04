@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a99a227a_940a14cb",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-04T17:38:38Z",
+      "side": 1,
+      "message": "nit: client_id_mismatch_reported",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 33
+      },
+      "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c674a99b_6b529537",
         "filename": "components/arc/arc_util.cc",
         "patchSetId": 1
@@ -42,6 +65,29 @@
         "startChar": 6,
         "endLine": 60,
         "endChar": 34
+      },
+      "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb15900_1c233e37",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-04T17:38:38Z",
+      "side": 1,
+      "message": "nit:\n\n static bool client_id_mismatch_reported \u003d false;  // to avoid declaring it at the top.\n VLOG_IF(1, !client_id_mismatch_reported) \u003c\u003c \" ...\";\n client_id_mismatch_reported \u003d true;",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 5
       },
       "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
