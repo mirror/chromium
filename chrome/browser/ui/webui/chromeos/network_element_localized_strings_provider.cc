@@ -220,6 +220,8 @@ void AddConfigLocalizedStrings(content::WebUIDataSource* html_source) {
       {"networkConfigSaveCredentials",
        IDS_SETTINGS_INTERNET_CONFIG_SAVE_CREDENTIALS},
       {"networkConfigShare", IDS_SETTINGS_INTERNET_CONFIG_SHARE},
+      {"hidePassword", IDS_SETTINGS_PASSWORD_HIDE},
+      {"showPassword", IDS_SETTINGS_PASSWORD_SHOW},
   };
   for (const auto& entry : localized_strings)
     html_source->AddLocalizedString(entry.name, entry.id);
