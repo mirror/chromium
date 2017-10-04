@@ -716,10 +716,31 @@ void AutofillMetrics::LogServerQueryMetric(ServerQueryMetric metric) {
 }
 
 // static
-void AutofillMetrics::LogUserHappinessMetric(UserHappinessMetric metric) {
+void AutofillMetrics::LogUserHappinessMetric(UserHappinessMetric metric,
+                                             FieldTypeGroup field_type_group) {
+  LogUserHappinessMetric(
+      metric, {FormTypes::FieldTypeGroupToFormType(field_type_group)});
+}
+
+// static
+void AutofillMetrics::LogUserHappinessMetric(
+    UserHappinessMetric metric,
+    const std::unordered_set<FormType>& form_types) {
   DCHECK_LT(metric, NUM_USER_HAPPINESS_METRICS);
   UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness", metric,
                             NUM_USER_HAPPINESS_METRICS);
+  if (form_types.find(CREDIT_CARD_FORM) != form_types.end())
+    UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness.CreditCard", metric,
+                              NUM_USER_HAPPINESS_METRICS);
+  if (form_types.find(ADDRESS_FORM) != form_types.end())
+    UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness.Address", metric,
+                              NUM_USER_HAPPINESS_METRICS);
+  if (form_types.find(PASSWORD_FORM) != form_types.end())
+    UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness.Password", metric,
+                              NUM_USER_HAPPINESS_METRICS);
+  if (form_types.find(UNKNOWN_FORM_TYPE) != form_types.end())
+    UMA_HISTOGRAM_ENUMERATION("Autofill.UserHappiness.UnknownFormType", metric,
+                              NUM_USER_HAPPINESS_METRICS);
 }
 
 // static
