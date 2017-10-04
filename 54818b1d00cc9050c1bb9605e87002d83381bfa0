@@ -22,6 +22,30 @@
       "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1db7b6_c6952c48",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1193261
+      },
+      "writtenOn": "2017-10-04T16:18:34Z",
+      "side": 1,
+      "message": "V8\u0027s --harmony-function-tostring changes the whitespace in Function.prototype.toString(). The new test results in this CL are what it will look like with --harmony-function-tostring enabled. There is a V8 CL pending that will enable --harmony-function-tostring once this CL lands. Then I will revert all the changes to this TestResults file, and everything should be back to normal.",
+      "parentUuid": "2b5709fa_197e461c",
+      "range": {
+        "startLine": 3440,
+        "startChar": 50,
+        "endLine": 3440,
+        "endChar": 71
+      },
+      "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
