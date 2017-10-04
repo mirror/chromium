@@ -65,22 +65,18 @@ namespace {
 using InstallOnBlockingTaskRunnerCompleteCallback =
     base::Callback<void(int error_category, int error_code, int extra_code1)>;
 
-CrxInstaller::Result DoInstallOnBlockingTaskRunner(
+void InstallComplete(
+    const scoped_refptr<base::SingleThreadTaskRunner>& main_task_runner,
+    const InstallOnBlockingTaskRunnerCompleteCallback callback,
     const base::FilePath& unpack_path,
-    const std::string& fingerprint,
-    const scoped_refptr<CrxInstaller>& installer) {
-  if (static_cast<int>(fingerprint.size()) !=
-      base::WriteFile(
-          unpack_path.Append(FILE_PATH_LITERAL("manifest.fingerprint")),
-          fingerprint.c_str(), base::checked_cast<int>(fingerprint.size()))) {
-    return CrxInstaller::Result(InstallError::FINGERPRINT_WRITE_FAILED);
-  }
-
-  std::unique_ptr<base::DictionaryValue> manifest = ReadManifest(unpack_path);
-  if (!manifest)
-    return CrxInstaller::Result(InstallError::BAD_MANIFEST);
-
-  return installer->Install(std::move(manifest), unpack_path);
+    const CrxInstaller::Result& result) {
+  base::DeleteFile(unpack_path, true);
+  const ErrorCategory error_category =
+      result.error ? ErrorCategory::kInstallError : ErrorCategory::kErrorNone;
+  main_task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(callback, static_cast<int>(error_category),
+                     static_cast<int>(result.error), result.extended_error));
 }
 
 void InstallOnBlockingTaskRunner(
@@ -90,16 +86,32 @@ void InstallOnBlockingTaskRunner(
     const scoped_refptr<CrxInstaller>& installer,
     InstallOnBlockingTaskRunnerCompleteCallback callback) {
   DCHECK(base::DirectoryExists(unpack_path));
-  const auto result =
-      DoInstallOnBlockingTaskRunner(unpack_path, fingerprint, installer);
-  base::DeleteFile(unpack_path, true);
 
-  const ErrorCategory error_category =
-      result.error ? ErrorCategory::kInstallError : ErrorCategory::kErrorNone;
-  main_task_runner->PostTask(
-      FROM_HERE,
-      base::BindOnce(callback, static_cast<int>(error_category),
-                     static_cast<int>(result.error), result.extended_error));
+  if (static_cast<int>(fingerprint.size()) !=
+      base::WriteFile(
+          unpack_path.Append(FILE_PATH_LITERAL("manifest.fingerprint")),
+          fingerprint.c_str(), base::checked_cast<int>(fingerprint.size()))) {
+    CrxInstaller::Result result(InstallError::FINGERPRINT_WRITE_FAILED);
+    main_task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(callback, static_cast<int>(ErrorCategory::kInstallError),
+                       static_cast<int>(result.error), result.extended_error));
+    return;
+  }
+
+  std::unique_ptr<base::DictionaryValue> manifest = ReadManifest(unpack_path);
+  if (!manifest) {
+    CrxInstaller::Result result(InstallError::BAD_MANIFEST);
+    main_task_runner->PostTask(
+        FROM_HERE,
+        base::BindOnce(callback, static_cast<int>(ErrorCategory::kInstallError),
+                       static_cast<int>(result.error), result.extended_error));
+    return;
+  }
+
+  installer->Install(
+      std::move(manifest), unpack_path,
+      base::Bind(&InstallComplete, main_task_runner, callback, unpack_path));
 }
 
 void UnpackCompleteOnBlockingTaskRunner(
