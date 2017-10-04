@@ -22,6 +22,30 @@
       "revId": "50042a88756c6eca426704b30b3948112fad1cb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424c6aaa_a1082aea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-04T18:21:30Z",
+      "side": 1,
+      "message": "\u003e s/debug/release/ I think?\n\nerr, yep, done",
+      "parentUuid": "2d0619d5_b852b8e3",
+      "range": {
+        "startLine": 9,
+        "startChar": 47,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "50042a88756c6eca426704b30b3948112fad1cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
