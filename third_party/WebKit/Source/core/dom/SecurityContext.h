@@ -40,6 +40,7 @@
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebURLRequest.h"
+#include "platform/bindings/TraceWrapperMember.h" 
 
 #include <memory>
 
@@ -110,7 +111,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
 
  private:
   RefPtr<SecurityOrigin> security_origin_;
-  Member<ContentSecurityPolicy> content_security_policy_;
+  TraceWrapperMember<ContentSecurityPolicy> content_security_policy_;
   std::unique_ptr<WebFeaturePolicy> feature_policy_;
 
   SandboxFlags sandbox_flags_;
