@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329a6a5e_eb68ec49",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "As discussed, let\u0027s not name this unsafe_id() or anything of the like.\n\nMy preference is to rename id() to developer_id(), and rename job_guid() to unique_id(). Beyond the IPC check for validating that this is a GUID, I\u0027d like all of this code to just treat it as \"something opaque\". There\u0027s no reason for Blink to know that it\u0027s a GUID.",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9fdd7d6_a8d570b1",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "The number of active registrations will be low. Can we opt for simplicity and just iterate over registrations_ checking their state or similar?",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea346d76_91d51fdd",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "There\u0027s no funny values in these IDs :(",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2806d799_1ed351d2",
+        "filename": "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this have to be testable?",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df99b438_60d03892",
+        "filename": "content/browser/background_fetch/background_fetch_registration_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "Please split this into two paragraphs (below too) - one to identify what it is, one to explain its peculiarities.",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b773dd9b_fa22d13f",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "nit: tiny preference for flipping this around, so that the success case is the end of the function\u0027s control flow",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c513f991_0fc36a68",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchedEvent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "I find this check less clear than the registration_ one.",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9ce3414_e911a18d",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:08:30Z",
+      "side": 1,
+      "message": "Surely we can drop |id| here now? Below too.",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
