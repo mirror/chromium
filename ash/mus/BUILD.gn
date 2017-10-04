@@ -85,6 +85,7 @@ source_set("lib") {
 
   public_deps = [
     "//ash",
+    "//ash/arc",
     "//ash/public/cpp:ash_public_cpp",
     "//base",
     "//base:i18n",
