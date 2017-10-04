@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c01be906_74620be8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3151,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-04T00:02:40Z",
+      "side": 1,
+      "message": "nit: Perhaps something like \"Didn\u0027t click through\"?",
+      "range": {
+        "startLine": 3151,
+        "startChar": 24,
+        "endLine": 3151,
+        "endChar": 43
+      },
+      "revId": "d0e737afb7c2eed2bb30f949db351a42ef88a7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
