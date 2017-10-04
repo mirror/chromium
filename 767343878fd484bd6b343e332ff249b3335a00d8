@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "942d2f19_82f81b70",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/DrawingBuffer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-10-04T01:44:35Z",
+      "side": 1,
+      "message": "nit: we should probably rename these to producerGL, consumerGL or sourceGL, destGL etc.",
+      "range": {
+        "startLine": 792,
+        "startChar": 2,
+        "endLine": 792,
+        "endChar": 4
+      },
+      "revId": "767343878fd484bd6b343e332ff249b3335a00d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
