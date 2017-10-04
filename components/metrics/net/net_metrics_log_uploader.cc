@@ -7,6 +7,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/metrics/metrics_log_uploader.h"
+#include "components/metrics/proto/reporting_info.pb.h"
 #include "net/base/load_flags.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_fetcher.h"
@@ -113,13 +114,16 @@ NetMetricsLogUploader::~NetMetricsLogUploader() {
 }
 
 void NetMetricsLogUploader::UploadLog(const std::string& compressed_log_data,
-                                      const std::string& log_hash) {
-  UploadLogToURL(compressed_log_data, log_hash, GURL(server_url_));
+                                      const std::string& log_hash,
+                                      const ReportingInfo& reporting_info) {
+  UploadLogToURL(compressed_log_data, log_hash, reporting_info,
+                 GURL(server_url_));
 }
 
 void NetMetricsLogUploader::UploadLogToURL(
     const std::string& compressed_log_data,
     const std::string& log_hash,
+    const ReportingInfo& reporting_info,
     const GURL& url) {
   current_fetch_ =
       net::URLFetcher::Create(url, net::URLFetcher::POST, this,
@@ -145,6 +149,11 @@ void NetMetricsLogUploader::UploadLogToURL(
 
   DCHECK(!log_hash.empty());
   current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-Log-SHA1: " + log_hash);
+
+  std::string reporting_info_string;
+  DCHECK(reporting_info.SerializeToString(&reporting_info_string));
+  current_fetch_->AddExtraRequestHeader("X-Chrome-UMA-ReportingInfo:" +
+                                        reporting_info_string);
 
   // Drop cookies and auth data.
   current_fetch_->SetLoadFlags(net::LOAD_DO_NOT_SAVE_COOKIES |

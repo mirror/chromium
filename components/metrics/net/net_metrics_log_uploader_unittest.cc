@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/macros.h"
+#include "components/metrics/proto/reporting_info.pb.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -21,13 +22,14 @@ class NetMetricsLogUploaderTest : public testing::Test {
         NULL, "http://dummy_server", "dummy_mime", MetricsLogUploader::UMA,
         base::Bind(&NetMetricsLogUploaderTest::OnUploadCompleteReuseUploader,
                    base::Unretained(this))));
-    uploader_->UploadLog("initial_dummy_data", "initial_dummy_hash");
+    uploader_->UploadLog("initial_dummy_data", "initial_dummy_hash",
+                         ReportingInfo());
   }
 
   void OnUploadCompleteReuseUploader(int response_code, int error_code) {
     ++on_upload_complete_count_;
     if (on_upload_complete_count_ == 1)
-      uploader_->UploadLog("dummy_data", "dummy_hash");
+      uploader_->UploadLog("dummy_data", "dummy_hash", ReportingInfo());
   }
 
   int on_upload_complete_count() const {
