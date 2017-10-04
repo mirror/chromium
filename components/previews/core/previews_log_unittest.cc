@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_log_observer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace previews {
@@ -18,7 +19,31 @@ namespace {
 const char kPreviewsNavigationEventType[] = "Navigation";
 const size_t kMaximumMessageLogs = 10;
 
-}  // namespace
+// Mock class to test correct MessageLog is passed back to the
+// mojo::InterventionsInternalsPagePtr.
+class TestMessageLogObserver : public MessageLogObserver {
+ public:
+  TestMessageLogObserver()
+      : new_message_log_added_called_(false), message_(nullptr) {}
+
+  // MessageLogObserver:
+  void OnNewMessageLogAdded(PreviewsLogger::MessageLog message) override {
+    new_message_log_added_called_ = true;
+    message_ = base::MakeUnique<PreviewsLogger::MessageLog>(message);
+  }
+
+  // Check if the mocked OnNewMessageLogAdded is called.
+  bool OnNewMessageLogAddedCalled() { return new_message_log_added_called_; }
+
+  // Expose the passed in MessageLog for testing.
+  PreviewsLogger::MessageLog* message() { return message_.get(); }
+
+ private:
+  bool new_message_log_added_called_;
+
+  // The passed in MessageLog in OnNewMessageLogAdded.
+  std::unique_ptr<PreviewsLogger::MessageLog> message_;
+};
 
 class PreviewsLoggerTest : public testing::Test {
  public:
@@ -115,5 +140,53 @@ TEST_F(PreviewsLoggerTest, PreviewsLoggerOnlyKeepsCertainNumberOfMessageLogs) {
 
   EXPECT_EQ(kMaximumMessageLogs, logger_->log_messages().size());
 }
+
+TEST_F(PreviewsLoggerTest, AddNewObserversToLogger) {
+  EXPECT_EQ(size_t(0), logger_->observers().size());
+
+  TestMessageLogObserver* observers[] = {
+      new TestMessageLogObserver(), new TestMessageLogObserver(),
+      new TestMessageLogObserver(),
+  };
+
+  for (auto* obs : observers) {
+    logger_->AddObserver(obs);
+  }
+
+  const size_t expected_size = 3;
+  EXPECT_EQ(expected_size, logger_->observers().size());
+
+  size_t index = 0;
+  for (auto* obs : logger_->observers()) {
+    EXPECT_EQ(observers[index++], obs);
+  }
+}
+
+TEST_F(PreviewsLoggerTest, ObserversOnNewMessageIsCalledWithCorrectParams) {
+  TestMessageLogObserver* observers[] = {
+      new TestMessageLogObserver(), new TestMessageLogObserver(),
+      new TestMessageLogObserver(),
+  };
+
+  for (auto* obs : observers) {
+    logger_->AddObserver(obs);
+  }
+
+  std::string type = "Event";
+  std::string description = "Some description";
+  GURL url("http://www.url_.com/url_");
+  base::Time now = base::Time::Now();
+  logger_->LogMessage(type, description, url, now);
+
+  for (auto* obs : observers) {
+    EXPECT_TRUE(obs->OnNewMessageLogAddedCalled());
+    EXPECT_EQ(type, obs->message()->event_type);
+    EXPECT_EQ(description, obs->message()->event_description);
+    EXPECT_EQ(url, obs->message()->url);
+    EXPECT_EQ(now, obs->message()->time);
+  }
+}
+
+}  // namespace
 
 }  // namespace previews

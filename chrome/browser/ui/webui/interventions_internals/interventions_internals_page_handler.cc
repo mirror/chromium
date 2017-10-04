@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 
+#include "base/strings/stringprintf.h"
 #include "components/previews/core/previews_experiments.h"
 
 namespace {
@@ -20,6 +21,15 @@ const char kAmpRedirectionDescription[] = "AMP Previews";
 const char kClientLoFiDescription[] = "Client LoFi Previews";
 const char kOfflineDesciption[] = "Offline Previews";
 
+// Get the string representation of the time in the "d/M/y - h:m::s" format.
+std::string ConvertTimeToString(base::Time time) {
+  base::Time::Exploded exploded;
+  time.LocalExplode(&exploded);
+  return base::StringPrintf("%d/%d/%d - %d:%d:%d", exploded.month,
+                            exploded.day_of_month, exploded.year, exploded.hour,
+                            exploded.minute, exploded.second);
+}
+
 }  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
@@ -27,6 +37,23 @@ InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     : binding_(this, std::move(request)) {}
 
 InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
+
+void InterventionsInternalsPageHandler::SetClientPage(
+    mojom::InterventionsInternalsPagePtr page) {
+  page_ = std::move(page);
+}
+
+void InterventionsInternalsPageHandler::OnNewMessageLogAdded(
+    previews::PreviewsLogger::MessageLog message) {
+  mojom::MessageLogPtr mojo_message_ptr(mojom::MessageLog::New());
+
+  mojo_message_ptr->type = message.event_type;
+  mojo_message_ptr->description = message.event_description;
+  mojo_message_ptr->url = message.url.spec();
+  mojo_message_ptr->time = ConvertTimeToString(message.time);
+
+  page_->LogNewMessage(std::move(mojo_message_ptr));
+}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {
