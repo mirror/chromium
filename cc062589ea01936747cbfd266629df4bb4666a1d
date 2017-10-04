@@ -22,6 +22,30 @@
       "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7cd0cc_a198003e",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-04T17:28:35Z",
+      "side": 1,
+      "message": "Based on implementation it does not cover case when client id is set by command line.\nWDYT?",
+      "parentUuid": "c674a99b_6b529537",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
