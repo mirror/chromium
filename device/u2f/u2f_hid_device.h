@@ -32,7 +32,7 @@ class U2fHidDevice : public U2fDevice {
   // Send a wink command if supported
   void TryWink(const WinkCallback& callback) final;
   // Use a string identifier to compare to other devices
-  std::string GetId() final;
+  std::string GetId() const final;
   // Command line flag to enable tests on actual U2f HID hardware
   static bool IsTestEnabled();
 

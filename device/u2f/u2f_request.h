@@ -5,30 +5,40 @@
 #ifndef DEVICE_U2F_U2F_REQUEST_H_
 #define DEVICE_U2F_U2F_REQUEST_H_
 
+#include <list>
+#include <memory>
+
 #include "base/cancelable_callback.h"
 #include "base/scoped_observer.h"
 #include "device/hid/hid_device_filter.h"
 #include "device/hid/hid_service.h"
 #include "device/hid/public/interfaces/hid.mojom.h"
-#include "u2f_device.h"
+#include "device/u2f/u2f_device.h"
+#include "device/u2f/u2f_discovery.h"
 
 namespace device {
 
-// TODO(crbug/763303): Factor out HidService::Observer to make this class
-// transport agnostic, so that BLE devices could take part in requests as well.
-class U2fRequest : HidService::Observer {
+class U2fRequest {
  public:
   using ResponseCallback =
       base::Callback<void(U2fReturnCode status_code,
                           const std::vector<uint8_t>& response)>;
 
-  U2fRequest(const ResponseCallback& callback);
+  U2fRequest(std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
+             ResponseCallback callback);
   virtual ~U2fRequest();
 
   void Start();
-  void AddDeviceForTesting(std::unique_ptr<U2fDevice> device);
 
- protected:
+  std::vector<std::unique_ptr<U2fDiscovery>>& discoveries() {
+    return discoveries_;
+  };
+
+  const std::vector<std::unique_ptr<U2fDiscovery>>& discoveries() const {
+    return discoveries_;
+  };
+
+  // protected:
   enum class State {
     INIT,
     BUSY,
@@ -43,27 +53,27 @@ class U2fRequest : HidService::Observer {
 
   std::unique_ptr<U2fDevice> current_device_;
   State state_;
+  std::vector<std::unique_ptr<U2fDiscovery>> discoveries_;
   ResponseCallback cb_;
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(U2fRequestTest, TestAddRemoveDevice);
   FRIEND_TEST_ALL_PREFIXES(U2fRequestTest, TestIterateDevice);
-  FRIEND_TEST_ALL_PREFIXES(U2fRequestTest, TestBasicMachine);
 
-  void Enumerate();
+  void OnStarted(bool success);
+  void OnDeviceDiscovered(std::unique_ptr<U2fDevice> device,
+                          U2fDiscovery::DeviceStatus status);
+
   void IterateDevice();
   void OnWaitComplete();
+
   void AddDevice(std::unique_ptr<U2fDevice> device);
-  void OnDeviceAdded(device::mojom::HidDeviceInfoPtr device_info) override;
-  void OnDeviceRemoved(device::mojom::HidDeviceInfoPtr device_info) override;
-  void OnEnumerate(HidService* hid_service,
-                   std::vector<device::mojom::HidDeviceInfoPtr> devices);
+  void RemoveDevice(std::unique_ptr<U2fDevice> device);
 
   std::list<std::unique_ptr<U2fDevice>> devices_;
   std::list<std::unique_ptr<U2fDevice>> attempted_devices_;
   base::CancelableClosure delay_callback_;
-  HidDeviceFilter filter_;
-  ScopedObserver<HidService, HidService::Observer> hid_service_observer_;
+  size_t started_count_ = 0;
+
   base::WeakPtrFactory<U2fRequest> weak_factory_;
 };
 

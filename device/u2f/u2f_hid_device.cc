@@ -330,7 +330,7 @@ void U2fHidDevice::OnTimeout(const DeviceCallback& callback) {
   Transition(nullptr, callback);
 }
 
-std::string U2fHidDevice::GetId() {
+std::string U2fHidDevice::GetId() const {
   std::ostringstream id("hid:", std::ios::ate);
   id << device_info_->guid;
   return id.str();

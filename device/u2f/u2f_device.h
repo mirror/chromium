@@ -47,7 +47,7 @@ class U2fDevice {
             const std::vector<uint8_t>& key_handle,
             const MessageCallback& callback);
   virtual void TryWink(const WinkCallback& callback) = 0;
-  virtual std::string GetId() = 0;
+  virtual std::string GetId() const = 0;
 
  protected:
   static constexpr uint8_t kWinkCapability = 0x01;

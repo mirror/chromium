@@ -10,8 +10,9 @@ namespace device {
 
 U2fRegister::U2fRegister(const std::vector<uint8_t>& challenge_hash,
                          const std::vector<uint8_t>& app_param,
+                         std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
                          const ResponseCallback& cb)
-    : U2fRequest(cb),
+    : U2fRequest(std::move(discoveries), cb),
       challenge_hash_(challenge_hash),
       app_param_(app_param),
       weak_factory_(this) {}
@@ -22,9 +23,10 @@ U2fRegister::~U2fRegister() {}
 std::unique_ptr<U2fRequest> U2fRegister::TryRegistration(
     const std::vector<uint8_t>& challenge_hash,
     const std::vector<uint8_t>& app_param,
+    std::vector<std::unique_ptr<U2fDiscovery>> discoveries,
     const ResponseCallback& cb) {
-  std::unique_ptr<U2fRequest> request =
-      std::make_unique<U2fRegister>(challenge_hash, app_param, cb);
+  std::unique_ptr<U2fRequest> request = std::make_unique<U2fRegister>(
+      challenge_hash, app_param, std::move(discoveries), cb);
   request->Start();
   return request;
 }
