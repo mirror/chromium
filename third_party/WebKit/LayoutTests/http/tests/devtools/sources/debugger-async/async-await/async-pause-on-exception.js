@@ -55,7 +55,7 @@
 
   function step1() {
     TestRunner.DebuggerAgent.setPauseOnExceptions(SDK.DebuggerModel.PauseOnExceptionsState.PauseOnUncaughtExceptions);
-    SourcesTestRunner.showScriptSource('async-pause-on-exception.js', step2);
+    SourcesTestRunner.showScriptSource('async-pause-on-exception.js@evaluation0', step2);
   }
 
   function step2() {
