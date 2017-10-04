@@ -30,6 +30,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void HandleInitializedAdmin(const base::ListValue* args);
   void HandleLoadSession(const base::ListValue* args);
   void HandleUpdateSession(const base::ListValue* args);
+  void HandleDeleteSession(const base::ListValue* args);
+
+  void OnSessionDeleted(bool is_successful);
 
   std::string ReadOrCreateFileCallback();
   void OnFileRead(const std::string& contents);
@@ -45,6 +48,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   // Returns the current list of all sessions sorted by last access time in
   // decreasing order.
   base::ListValue GetSessionsList();
+
+  // Updates the sessions list in the UI. A parameter indicates whether
+  void UpdateSessionsList(bool successful);
 
   void OnSessionsListReceived(base::ListValue list);
 
