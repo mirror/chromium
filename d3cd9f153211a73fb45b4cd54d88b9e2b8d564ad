@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdb48ce4_b9ccd401",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-10-04T14:34:45Z",
+      "side": 1,
+      "message": "nit: It\u0027d be nice to have a comment here explaining why we need to keep bubbling_gesture_scroll_target_ around in the nested case.",
+      "revId": "d3cd9f153211a73fb45b4cd54d88b9e2b8d564ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
