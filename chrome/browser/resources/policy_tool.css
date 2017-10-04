@@ -23,3 +23,7 @@ tbody.value-editing-on .edit-button,
 tbody.value-editing-on .value {
   display: none;
 }
+
+#session-list {
+  background: white;
+}
