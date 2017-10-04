@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "579b5326_f042692b",
+        "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T00:34:59Z",
+      "side": 1,
+      "message": "Adding this is just going to make my merge harder :P (It\u0027s fine)",
+      "revId": "35918e34542398304746ba4e5924bffb0ac02266",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
