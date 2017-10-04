@@ -10,6 +10,7 @@
 #include <string>
 
 #include "extensions/browser/api/socket/socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 // This looks like it should be forward-declarable, but it does some tricky
 // moves that make it easier to just include it.
@@ -37,7 +38,8 @@ class TCPSocket : public Socket {
   int Bind(const std::string& address, uint16_t port) override;
   void Read(int count, const ReadCompletionCallback& callback) override;
   void RecvFrom(int count, const RecvFromCompletionCallback& callback) override;
-  void SendTo(scoped_refptr<net::IOBuffer> io_buffer,
+  void SendTo(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+              scoped_refptr<net::IOBuffer> io_buffer,
               int byte_count,
               const net::IPEndPoint& address,
               const CompletionCallback& callback) override;
@@ -77,7 +79,8 @@ class TCPSocket : public Socket {
   bool HasPendingRead() const;
 
  protected:
-  int WriteImpl(net::IOBuffer* io_buffer,
+  int WriteImpl(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                net::IOBuffer* io_buffer,
                 int io_buffer_size,
                 const net::CompletionCallback& callback) override;
 

@@ -18,6 +18,7 @@
 #include "net/socket/socket.h"
 #include "net/socket/stream_socket.h"
 #include "net/ssl/openssl_ssl_util.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/boringssl/src/include/openssl/bio.h"
 
 namespace net {
@@ -248,7 +249,8 @@ void SocketBIOAdapter::SocketWrite() {
     int write_size =
         std::min(write_buffer_used_, write_buffer_->RemainingCapacity());
     int result =
-        socket_->Write(write_buffer_.get(), write_size, write_callback_);
+        socket_->Write(NetworkTrafficAnnotationTag(traffic_annotation_),
+                       write_buffer_.get(), write_size, write_callback_);
     if (result == ERR_IO_PENDING) {
       write_error_ = ERR_IO_PENDING;
       return;

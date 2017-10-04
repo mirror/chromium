@@ -27,6 +27,7 @@
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -218,6 +219,18 @@ struct QUIC_EXPORT_PRIVATE SerializedPacket {
   SerializedPacket(SerializedPacket&& other);
   ~SerializedPacket();
 
+  bool HasTrafficAnnotation() { return traffic_annotation.has_value(); }
+
+  NetworkTrafficAnnotationTag GetTrafficAnnotation() {
+    return NetworkTrafficAnnotationTag(traffic_annotation);
+  }
+
+  void SetTrafficAnnotation(
+      const NetworkTrafficAnnotationTag& traffic_annotation) {
+    this->traffic_annotation =
+        MutableNetworkTrafficAnnotationTag(traffic_annotation);
+  }
+
   // Not owned.
   const char* encrypted_buffer;
   QuicPacketLength encrypted_length;
@@ -240,6 +253,8 @@ struct QUIC_EXPORT_PRIVATE SerializedPacket {
 
   // Optional notifiers which will be informed when this packet has been ACKed.
   std::list<AckListenerWrapper> listeners;
+
+  MutableNetworkTrafficAnnotationTag traffic_annotation;
 };
 
 // Deletes and clears all the frames and the packet from serialized packet.

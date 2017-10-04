@@ -57,10 +57,15 @@
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/ssl_cipher_suite_names.h"
 #include "net/ssl/ssl_connection_status_flags.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
 namespace {
+
+// TODO(rhalavati): General annotation for internal calls.
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotation =
+    NO_TRAFFIC_ANNOTATION_YET;
 
 const int kReadBufferSize = 8 * 1024;
 const int kDefaultConnectionAtRiskOfLossSeconds = 10;
@@ -927,10 +932,12 @@ bool SpdySession::VerifyDomainAuthentication(const SpdyString& domain) {
 void SpdySession::EnqueueStreamWrite(
     const base::WeakPtr<SpdyStream>& stream,
     SpdyFrameType frame_type,
-    std::unique_ptr<SpdyBufferProducer> producer) {
+    std::unique_ptr<SpdyBufferProducer> producer,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(frame_type == SpdyFrameType::HEADERS ||
          frame_type == SpdyFrameType::DATA);
-  EnqueueWrite(stream->priority(), frame_type, std::move(producer), stream);
+  EnqueueWrite(stream->priority(), frame_type, std::move(producer), stream,
+               traffic_annotation);
 }
 
 std::unique_ptr<SpdySerializedFrame> SpdySession::CreateHeaders(
@@ -1782,7 +1789,7 @@ void SpdySession::EnqueuePriorityFrame(SpdyStreamId stream_id,
   EnqueueWrite(HIGHEST, SpdyFrameType::PRIORITY,
                std::make_unique<SimpleBufferProducer>(
                    std::make_unique<SpdyBuffer>(std::move(frame))),
-               base::WeakPtr<SpdyStream>());
+               base::WeakPtr<SpdyStream>(), kTrafficAnnotation);
 }
 
 void SpdySession::PumpReadLoop(ReadState expected_read_state, int result) {
@@ -1985,14 +1992,17 @@ int SpdySession::DoWrite() {
   CHECK(in_io_loop_);
 
   DCHECK(buffered_spdy_framer_);
+  MutableNetworkTrafficAnnotationTag traffic_annotation;
   if (in_flight_write_) {
     DCHECK_GT(in_flight_write_->GetRemainingSize(), 0u);
+    traffic_annotation = MutableNetworkTrafficAnnotationTag(kTrafficAnnotation);
   } else {
     // Grab the next frame to send.
     SpdyFrameType frame_type = SpdyFrameType::DATA;
     std::unique_ptr<SpdyBufferProducer> producer;
     base::WeakPtr<SpdyStream> stream;
-    if (!write_queue_.Dequeue(&frame_type, &producer, &stream)) {
+    if (!write_queue_.Dequeue(&frame_type, &producer, &stream,
+                              &traffic_annotation)) {
       write_state_ = WRITE_STATE_IDLE;
       return ERR_IO_PENDING;
     }
@@ -2037,7 +2047,8 @@ int SpdySession::DoWrite() {
   scoped_refptr<IOBuffer> write_io_buffer =
       in_flight_write_->GetIOBufferForRemainingData();
   return connection_->socket()->Write(
-      write_io_buffer.get(), in_flight_write_->GetRemainingSize(),
+      NetworkTrafficAnnotationTag(traffic_annotation), write_io_buffer.get(),
+      in_flight_write_->GetRemainingSize(),
       base::Bind(&SpdySession::PumpWriteLoop, weak_factory_.GetWeakPtr(),
                  WRITE_STATE_DO_WRITE_COMPLETE));
 }
@@ -2327,17 +2338,20 @@ void SpdySession::EnqueueSessionWrite(
   auto buffer = std::make_unique<SpdyBuffer>(std::move(frame));
   EnqueueWrite(priority, frame_type,
                std::make_unique<SimpleBufferProducer>(std::move(buffer)),
-               base::WeakPtr<SpdyStream>());
+               base::WeakPtr<SpdyStream>(), kTrafficAnnotation);
 }
 
-void SpdySession::EnqueueWrite(RequestPriority priority,
-                               SpdyFrameType frame_type,
-                               std::unique_ptr<SpdyBufferProducer> producer,
-                               const base::WeakPtr<SpdyStream>& stream) {
+void SpdySession::EnqueueWrite(
+    RequestPriority priority,
+    SpdyFrameType frame_type,
+    std::unique_ptr<SpdyBufferProducer> producer,
+    const base::WeakPtr<SpdyStream>& stream,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   if (availability_state_ == STATE_DRAINING)
     return;
 
-  write_queue_.Enqueue(priority, frame_type, std::move(producer), stream);
+  write_queue_.Enqueue(priority, frame_type, std::move(producer), stream,
+                       traffic_annotation);
   MaybePostWriteLoop();
 }
 

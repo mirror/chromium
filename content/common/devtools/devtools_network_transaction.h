@@ -53,6 +53,7 @@ class CONTENT_EXPORT DevToolsNetworkTransaction : public net::HttpTransaction {
 
   // HttpTransaction methods:
   int Start(const net::HttpRequestInfo* request,
+            const net::NetworkTrafficAnnotationTag& traffic_annotation,
             const net::CompletionCallback& callback,
             const net::NetLogWithSource& net_log) override;
   int RestartIgnoringLastError(

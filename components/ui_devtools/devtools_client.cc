@@ -5,6 +5,14 @@
 #include "components/ui_devtools/devtools_client.h"
 
 #include "components/ui_devtools/devtools_server.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
+
+namespace {
+
+constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    NO_TRAFFIC_ANNOTATION_YET;
+
+}  // namespace
 
 namespace ui_devtools {
 
@@ -54,13 +62,15 @@ void UiDevToolsClient::sendProtocolResponse(
     int callId,
     std::unique_ptr<protocol::Serializable> message) {
   if (connected())
-    server_->SendOverWebSocket(connection_id_, message->serialize());
+    server_->SendOverWebSocket(connection_id_, message->serialize(),
+                               kTrafficAnnotation);
 }
 
 void UiDevToolsClient::sendProtocolNotification(
     std::unique_ptr<protocol::Serializable> message) {
   if (connected())
-    server_->SendOverWebSocket(connection_id_, message->serialize());
+    server_->SendOverWebSocket(connection_id_, message->serialize(),
+                               kTrafficAnnotation);
 }
 
 void UiDevToolsClient::flushProtocolNotifications() {

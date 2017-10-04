@@ -28,6 +28,7 @@
 #include "net/spdy/platform/api/spdy_estimate_memory_usage.h"
 #include "net/spdy/platform/api/spdy_string_piece.h"
 #include "net/spdy/platform/api/spdy_string_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -626,6 +627,7 @@ int SpdyStream::OnDataSent(size_t frame_size) {
     return ERR_IO_PENDING;
   } else {
     pending_send_data_ = NULL;
+    pending_traffic_annotation_.clear();
     return OK;
   }
 }
@@ -686,8 +688,10 @@ base::WeakPtr<SpdyStream> SpdyStream::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
-                                   SpdySendStatus send_status) {
+int SpdyStream::SendRequestHeaders(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    SpdyHeaderBlock request_headers,
+    SpdySendStatus send_status) {
   CHECK_NE(type_, SPDY_PUSH_STREAM);
   CHECK_EQ(pending_send_status_, MORE_DATA_TO_SEND);
   CHECK(!request_headers_valid_);
@@ -699,13 +703,16 @@ int SpdyStream::SendRequestHeaders(SpdyHeaderBlock request_headers,
   pending_send_status_ = send_status;
   session_->EnqueueStreamWrite(
       GetWeakPtr(), SpdyFrameType::HEADERS,
-      std::make_unique<HeadersBufferProducer>(GetWeakPtr()));
+      std::make_unique<HeadersBufferProducer>(GetWeakPtr()),
+      traffic_annotation);
   return ERR_IO_PENDING;
 }
 
-void SpdyStream::SendData(IOBuffer* data,
-                          int length,
-                          SpdySendStatus send_status) {
+void SpdyStream::SendData(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* data,
+    int length,
+    SpdySendStatus send_status) {
   CHECK_NE(type_, SPDY_PUSH_STREAM);
   CHECK_EQ(pending_send_status_, MORE_DATA_TO_SEND);
   CHECK(io_state_ == STATE_OPEN ||
@@ -713,6 +720,8 @@ void SpdyStream::SendData(IOBuffer* data,
   CHECK(!pending_send_data_.get());
   pending_send_data_ = new DrainableIOBuffer(data, length);
   pending_send_status_ = send_status;
+  pending_traffic_annotation_ =
+      MutableNetworkTrafficAnnotationTag(traffic_annotation);
   QueueNextDataFrame();
 }
 
@@ -832,6 +841,7 @@ void SpdyStream::QueueNextDataFrame() {
         io_state_ == STATE_HALF_CLOSED_REMOTE) << io_state_;
   CHECK_GT(stream_id_, 0u);
   CHECK(pending_send_data_.get());
+  CHECK(pending_traffic_annotation_.has_value());
   // Only the final fame may have a length of 0.
   if (pending_send_status_ == NO_MORE_DATA_TO_SEND) {
     CHECK_GE(pending_send_data_->BytesRemaining(), 0);
@@ -866,7 +876,8 @@ void SpdyStream::QueueNextDataFrame() {
 
   session_->EnqueueStreamWrite(
       GetWeakPtr(), SpdyFrameType::DATA,
-      std::make_unique<SimpleBufferProducer>(std::move(data_buffer)));
+      std::make_unique<SimpleBufferProducer>(std::move(data_buffer)),
+      NetworkTrafficAnnotationTag(pending_traffic_annotation_));
 }
 
 void SpdyStream::SaveResponseHeaders(const SpdyHeaderBlock& response_headers) {
