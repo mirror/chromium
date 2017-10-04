@@ -188,6 +188,9 @@ struct PasswordForm {
   // for possible passwords. Contains all possible passwords. Optional.
   std::vector<base::string16> other_possible_passwords;
 
+  // TODO
+  bool passwords_has_autofilled_value;
+
   // The name of the input element corresponding to the current password.
   // Optional (improves scoring).
   //

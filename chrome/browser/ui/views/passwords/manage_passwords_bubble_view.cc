@@ -8,6 +8,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -545,6 +546,17 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ &&
+      parent_->model()->pending_password().passwords_has_autofilled_value) {
+    bool authenticated = true;
+#if defined(OS_WIN)
+    authenticated =
+        password_manager_util_win::AuthenticateUser(parent_->parent_window());
+//        parent_->web_contents()->GetNativeView());
+#endif
+    if (!authenticated)
+      return;
+  }
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);
