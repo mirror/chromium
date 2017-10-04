@@ -332,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "94971197_a3f887eb",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T13:23:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0cb3c88_2f668886",
+      "range": {
+        "startLine": 204,
+        "startChar": 36,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ddf5997_2cf5887d",
         "filename": "components/ntp_tiles/tile_impression.h",
         "patchSetId": 3
