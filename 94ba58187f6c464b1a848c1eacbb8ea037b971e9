@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "618b9dad_e11a1761",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "I checked and it is safe but I\u0027ll just use the GLFence class instead, I didn\u0027t realize that it had no dependencies on cmd decoders.",
+      "parentUuid": "fbc109df_22379cdf",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a331e2c_db58838f",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T22:20:33Z",
       "side": 1,
       "message": "nit: get_next_error\n\nWhy a lambda rather than a regular method?",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248901bb_27657e46",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done.  I wanted to scope it so that nobody accidentally calls a GetNextError function and bypasses the internal error handling.",
+      "parentUuid": "8a331e2c_db58838f",
       "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "69b5f992_f6a91edc",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "464d4481_1ae612d0",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "111b1c59_e9a8a17f",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8d01fc_f8395be8",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1017,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "111b1c59_e9a8a17f",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e6966471_e14c2e5c",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53dca815_12028e03",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee5db679_da0e1987",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ee8085_f52f550e",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2025,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5db679_da0e1987",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5374bc95_cff6b390",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_doers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3031,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60f2288_644578d4",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "066f8214_966ffa27",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5fe28b2e_f9450345",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "066f8214_966ffa27",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81ef5a08_a40cecb5",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
         "patchSetId": 6
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-03T22:20:33Z",
       "side": 1,
       "message": "I don\u0027t think we should be looking at the unpack buffer...\nasync ReadPixels is only defined when there is no pack buffer bound, so the pack buffer is what you should be looking at.",
+      "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd76479c_7f455e28",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough_handlers.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-10-04T21:03:12Z",
+      "side": 1,
+      "message": "Fixed, my mistake on mixing them up.  Added a test.",
+      "parentUuid": "81ef5a08_a40cecb5",
       "revId": "94ba58187f6c464b1a848c1eacbb8ea037b971e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
