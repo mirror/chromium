@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bd203b_2a931e5a",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:45:55Z",
+      "side": 1,
+      "message": "Ahhh in WAITUNTIL_REJECTED case, both OnResponse and OnFetchEventFinished are called?\n\nI\u0027d write this more verbosely as something like:\n\n// Status OK and WAIT_UNTIL_REJECTED are expected statuses. If status is OK, then OnResponse*() or OnFallback() was already called. If status is WAIT_UNTIL_REJECTED, OnResponse() was already called with an error about the rejected promise.\nif (status \u003d\u003d OK || status \u003d\u003d WAIT_UNTIL_REJECTED)\n  return;\n// Otherwise, we have an unexpected error: fetch event dispatch failed. Return network error.\nweak_factory_.InvalidWeakPtrs();\nCommitCompleted(FAILED);\n\n(I\u0027m wondering if we can just remove the WAIT_UNTIL_REJECTED enum value... will investigate)",
+      "revId": "f08dd4d78005c5b80e207ac7f3a94fd8a63a2c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
