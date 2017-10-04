@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c75d81d9_94609019",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T14:57:16Z",
+      "side": 1,
+      "message": "const char* const",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4328c143_3991014e",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T14:57:16Z",
+      "side": 1,
+      "message": "FYI, we can use CR_DEFINE_STATIC_LOCAL (https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_classifier.cc?rcl\u003da3322f51ec07d17e014a0938a78f87ab418d8273\u0026l\u003d141). Then, we wouldn\u0027t create string and WebString for every constant.\n\nFor \"autocomplete\", it would make a difference.",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 33
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e75544b4_329e2989",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T14:57:16Z",
+      "side": 1,
+      "message": "FYI, \u0027current-password\u0027 may be a substring. Not sure if it produce any issues for this project.",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
