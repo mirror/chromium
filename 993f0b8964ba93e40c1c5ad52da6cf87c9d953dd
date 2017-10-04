@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8213f006_8a455207",
+        "filename": "cc/tiles/checker_image_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-04T23:57:21Z",
+      "side": 1,
+      "message": "Don\u0027t comment it out, since we need to keep the count the same. Or use the same comment as line 30 and assign 11 to the count.",
+      "revId": "993f0b8964ba93e40c1c5ad52da6cf87c9d953dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
