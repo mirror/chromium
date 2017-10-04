@@ -94,6 +94,30 @@
       "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f925c73a_6ed9c2e0",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:47:03Z",
+      "side": 1,
+      "message": "That to me says a better test is that ShouldUseWin10OnboardingTabs returns non-zero for the case you care about. I\u0027m ok with that test too.",
+      "parentUuid": "31a66ccd_c87bb2f1",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 6
+      },
+      "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
