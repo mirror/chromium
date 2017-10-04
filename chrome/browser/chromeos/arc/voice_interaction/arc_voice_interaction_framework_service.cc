@@ -200,6 +200,7 @@ ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
   ArcSessionManager::Get()->AddObserver(this);
   session_manager::SessionManager::Get()->AddObserver(this);
   chromeos::CrasAudioHandler::Get()->AddAudioObserver(this);
+  highlighter_client_ = std::make_unique<HighlighterControllerClient>(this);
 }
 
 ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
@@ -228,12 +229,13 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
     }
   }
 
-  highlighter_client_ = std::make_unique<HighlighterControllerClient>(this);
+  highlighter_client_->Attach();
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  highlighter_client_.reset();
+  binding_.Close();
+  highlighter_client_->Detach();
 }
 
 void ArcVoiceInteractionFrameworkService::CaptureFullscreen(

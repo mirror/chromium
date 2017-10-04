@@ -127,6 +127,8 @@ class ArcVoiceInteractionFrameworkService
   static const char kArcServiceName[];
 
  private:
+  friend class ArcVoiceInteractionFrameworkServiceTest;
+
   void NotifyMetalayerStatusChanged(bool visible);
 
   bool InitiateUserInteraction(bool is_toggle);
