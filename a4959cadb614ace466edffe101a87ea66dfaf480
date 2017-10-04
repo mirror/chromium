@@ -46,6 +46,30 @@
       "revId": "a4959cadb614ace466edffe101a87ea66dfaf480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8fcb83_a730a51a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:51:26Z",
+      "side": 1,
+      "message": "I think we should only show it one time on cold start regardless of whether the user clicks \"Ok\", taps out-side the dialog to dismiss, or hits the back button.",
+      "parentUuid": "ffa7b670_5aac560e",
+      "range": {
+        "startLine": 355,
+        "startChar": 17,
+        "endLine": 355,
+        "endChar": 59
+      },
+      "revId": "a4959cadb614ace466edffe101a87ea66dfaf480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
