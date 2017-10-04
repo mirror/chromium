@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/chromeos/settings/device_settings_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
@@ -170,7 +171,9 @@ SessionControllerClient::SessionControllerClient()
       prefs::kSessionLengthLimit,
       base::Bind(&SessionControllerClient::SendSessionLengthLimit,
                  base::Unretained(this)));
-
+  chromeos::DeviceSettingsService::Get()
+      ->device_off_hours_controller()
+      ->AddObserver(this);
   DCHECK(!g_instance);
   g_instance = this;
 }
@@ -187,6 +190,9 @@ SessionControllerClient::~SessionControllerClient() {
   SessionManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveObserver(this);
   UserManager::Get()->RemoveSessionStateObserver(this);
+  chromeos::DeviceSettingsService::Get()
+      ->device_off_hours_controller()
+      ->RemoveObserver(this);
 }
 
 void SessionControllerClient::Init() {
@@ -196,6 +202,7 @@ void SessionControllerClient::Init() {
   session_controller_->SetClient(std::move(client));
   SendSessionInfoIfChanged();
   SendSessionLengthLimit();
+  SendOffHoursEndTime();
   // User sessions and their order will be sent via UserSessionStateObserver
   // even for crash-n-restart.
 }
@@ -507,6 +514,14 @@ void SessionControllerClient::OnLoginUserProfilePrepared(Profile* profile) {
                      weak_ptr_factory_.GetWeakPtr(), profile));
 }
 
+void SessionControllerClient::OnOffHoursModeChanged() {
+  SendOffHoursEndTime();
+}
+
+void SessionControllerClient::OnOffHoursEndTimeChanged() {
+  SendOffHoursEndTime();
+}
+
 void SessionControllerClient::SendUserSessionForProfile(Profile* profile) {
   DCHECK(profile);
   const User* user = chromeos::ProfileHelper::Get()->GetUserByProfile(profile);
@@ -585,8 +600,59 @@ void SessionControllerClient::SendSessionLengthLimit() {
         local_state->GetInt64(prefs::kSessionStartTime));
   }
 
-  // Send even if both values are zero because enterprise policy could turn
-  // the feature off in the middle of the session.
+  // If |session_length_limit| is zero or |session_start_time| is null then
+  // SessionLengthLimit policy is unset.
+  bool session_length_limit_policy_set =
+      !session_length_limit.is_zero() && !session_start_time.is_null();
+
+  // If "OffHours" policy session limit is set and "OffHours" mode will end
+  // earlier than SessionLengthLimit then there is nothing to do.
+  if (session_limit_policy_ == OFF_HOURS_POLICY &&
+      session_length_limit_policy_set &&
+      session_end_time_ < session_start_time + session_length_limit) {
+    return;
+  }
+  if (!session_length_limit_policy_set) {
+    if (session_limit_policy_ != SESSION_LENGTH_LIMIT)
+      return;
+    session_limit_policy_ = LIMIT_NONE;
+  } else {
+    session_limit_policy_ = SESSION_LENGTH_LIMIT;
+  }
+  session_end_time_ = session_start_time + session_length_limit;
   session_controller_->SetSessionLengthLimit(session_length_limit,
                                              session_start_time);
+}
+
+void SessionControllerClient::SendOffHoursEndTime() {
+  policy::DeviceOffHoursController* off_hours_controller =
+      chromeos::DeviceSettingsService::Get()->device_off_hours_controller();
+  base::TimeTicks policy_off_hours_end_time =
+      off_hours_controller->GetOffHoursEndTime();
+
+  // If |policy_off_hours_end_time| is null then "OffHours" policy mode is off.
+
+  // If SessionLengthLimit policy session limit is set and it will end earlier
+  // than "OffHours" mode then there is nothing to do.
+  if (session_limit_policy_ == SESSION_LENGTH_LIMIT &&
+      !policy_off_hours_end_time.is_null() &&
+      session_end_time_ < policy_off_hours_end_time) {
+    return;
+  }
+  if (policy_off_hours_end_time.is_null()) {
+    if (session_limit_policy_ != OFF_HOURS_POLICY)
+      return;
+    session_limit_policy_ = LIMIT_NONE;
+    session_controller_->SetSessionLengthLimit(base::TimeDelta(),
+                                               policy_off_hours_end_time);
+    return;
+  } else {
+    session_limit_policy_ = OFF_HOURS_POLICY;
+  }
+  session_end_time_ = policy_off_hours_end_time;
+  base::TimeTicks policy_off_hours_start_time = base::TimeTicks::Now();
+  base::TimeDelta policy_off_hours_length_limit =
+      policy_off_hours_end_time - policy_off_hours_start_time;
+  session_controller_->SetSessionLengthLimit(policy_off_hours_length_limit,
+                                             policy_off_hours_start_time);
 }

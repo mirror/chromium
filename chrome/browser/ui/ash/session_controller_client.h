@@ -12,6 +12,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/policy/device_off_hours_controller.h"
 #include "chrome/browser/supervised_user/supervised_user_service_observer.h"
 #include "components/session_manager/core/session_manager_observer.h"
 #include "components/user_manager/user_manager.h"
@@ -39,8 +40,16 @@ class SessionControllerClient
       public user_manager::UserManager::Observer,
       public session_manager::SessionManagerObserver,
       public SupervisedUserServiceObserver,
-      public content::NotificationObserver {
+      public content::NotificationObserver,
+      public policy::DeviceOffHoursController::Observer {
  public:
+  // Actual session limit policy.
+  enum SessionLimitPolicy {
+    LIMIT_NONE,
+    OFF_HOURS_POLICY,
+    SESSION_LENGTH_LIMIT
+  };
+
   SessionControllerClient();
   ~SessionControllerClient() override;
 
@@ -98,6 +107,10 @@ class SessionControllerClient
                const content::NotificationSource& source,
                const content::NotificationDetails& details) override;
 
+  // DeviceOffHoursController::Observer:
+  void OnOffHoursModeChanged() override;
+  void OnOffHoursEndTimeChanged() override;
+
   // TODO(xiyuan): Remove after SessionStateDelegateChromeOS is gone.
   static bool CanLockScreen();
   static bool ShouldLockScreenAutomatically();
@@ -134,8 +147,16 @@ class SessionControllerClient
   // Sends the order of user sessions to ash.
   void SendUserSessionOrder();
 
-  // Sends the session length time limit to ash.
+  // Sends the session length time limit to ash considering current "OffHours"
+  // policy mode. Send the session length limit if "OffHours" mode is off now or
+  // if the session will be ended earlier than "OffHours" mode.
   void SendSessionLengthLimit();
+
+  // Sends "OffHours" policy mode end time to ash considering current
+  // "SessionLengthLimit" policy. Send the session length limit if
+  // "SessionLengthLimit" policy is unset or if "OffHours" mode will be ended
+  // earlier than "SessionLengthLimit" policy session.
+  void SendOffHoursEndTime();
 
   // Binds to the client interface.
   mojo::Binding<ash::mojom::SessionControllerClient> binding_;
@@ -164,6 +185,14 @@ class SessionControllerClient
   // Used to suppress duplicate IPCs to ash.
   ash::mojom::SessionInfoPtr last_sent_session_info_;
   ash::mojom::UserSessionPtr last_sent_user_session_;
+
+  // There is two policies which restrics session length.
+  // |session_limit_policy_| shows current session limit policy.
+  SessionLimitPolicy session_limit_policy_ = LIMIT_NONE;
+
+  // Actual end time of current session for UI notification. When
+  // |SessionLimitState| is LIMIT_NONE the value is null.
+  base::TimeTicks session_end_time_;
 
   base::WeakPtrFactory<SessionControllerClient> weak_ptr_factory_;
 
