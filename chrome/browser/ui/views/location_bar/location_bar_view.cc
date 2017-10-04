@@ -29,6 +29,8 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/content_settings/content_setting_bubble_model.h"
+#include "chrome/browser/ui/find_bar/find_bar.h"
+#include "chrome/browser/ui/find_bar/find_bar_controller.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/omnibox/chrome_omnibox_client.h"
 #include "chrome/browser/ui/passwords/manage_passwords_ui_controller.h"
@@ -37,6 +39,7 @@
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/content_setting_image_view.h"
+#include "chrome/browser/ui/views/location_bar/find_bar_icon.h"
 #include "chrome/browser/ui/views/location_bar/keyword_hint_view.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_layout.h"
 #include "chrome/browser/ui/views/location_bar/location_icon_view.h"
@@ -59,6 +62,7 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/toolbar/toolbar_model.h"
+#include "components/toolbar/vector_icons.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/variations/variations_associated_data.h"
 #include "components/zoom/zoom_controller.h"
@@ -109,7 +113,6 @@
 
 using content::WebContents;
 using views::View;
-
 
 // LocationBarView -----------------------------------------------------------
 
@@ -222,29 +225,20 @@ void LocationBarView::Init() {
     AddChildView(image_view);
   }
 
-  zoom_view_ = new ZoomView(delegate_);
-  zoom_view_->Init();
-  AddChildView(zoom_view_);
+  auto AddIcon = [this](BubbleIconView* icon_view) -> void {
+    icon_view->Init();
+    icon_view->SetVisible(false);
+    AddChildView(icon_view);
+  };
 
-  manage_passwords_icon_view_ = new ManagePasswordsIconViews(command_updater());
-  manage_passwords_icon_view_->Init();
-  AddChildView(manage_passwords_icon_view_);
-
-  save_credit_card_icon_view_ =
-      new autofill::SaveCardIconView(command_updater(), browser_);
-  save_credit_card_icon_view_->Init();
-  save_credit_card_icon_view_->SetVisible(false);
-  AddChildView(save_credit_card_icon_view_);
-
-  translate_icon_view_ = new TranslateIconView(command_updater());
-  translate_icon_view_->Init();
-  translate_icon_view_->SetVisible(false);
-  AddChildView(translate_icon_view_);
-
-  star_view_ = new StarView(command_updater(), browser_);
-  star_view_->Init();
-  star_view_->SetVisible(false);
-  AddChildView(star_view_);
+  AddIcon(zoom_view_ = new ZoomView(delegate_));
+  AddIcon(manage_passwords_icon_view_ =
+              new ManagePasswordsIconViews(command_updater()));
+  AddIcon(save_credit_card_icon_view_ =
+              new autofill::SaveCardIconView(command_updater(), browser_));
+  AddIcon(translate_icon_view_ = new TranslateIconView(command_updater()));
+  AddIcon(find_bar_icon_ = new FindBarIcon());
+  AddIcon(star_view_ = new StarView(command_updater(), browser_));
 
   clear_all_button_ = views::CreateVectorImageButton(this);
   clear_all_button_->SetTooltipText(
@@ -523,6 +517,10 @@ void LocationBarView::Layout() {
     trailing_decorations.AddDecoration(vertical_padding, location_height,
                                        star_view_);
   }
+  if (find_bar_icon_->visible()) {
+    trailing_decorations.AddDecoration(vertical_padding, location_height,
+                                       find_bar_icon_);
+  }
   if (translate_icon_view_->visible()) {
     trailing_decorations.AddDecoration(vertical_padding, location_height,
                                        translate_icon_view_);
@@ -768,6 +766,15 @@ bool LocationBarView::RefreshSaveCreditCardIconView() {
   return was_visible != save_credit_card_icon_view_->visible();
 }
 
+bool LocationBarView::RefreshFindBarIcon() {
+  if (!find_bar_icon_)
+    return false;
+  const bool was_visible = find_bar_icon_->visible();
+  find_bar_icon_->SetVisible(
+      browser_->GetFindBarController()->find_bar()->IsFindBarVisible());
+  return was_visible != find_bar_icon_->visible();
+}
+
 void LocationBarView::RefreshTranslateIcon() {
   WebContents* web_contents = GetWebContents();
   if (!web_contents)
@@ -885,6 +892,17 @@ void LocationBarView::UpdateManagePasswordsIconAndBubble() {
 void LocationBarView::UpdateSaveCreditCardIcon() {
   if (RefreshSaveCreditCardIconView()) {
     Layout();
+    SchedulePaint();
+  }
+}
+
+void LocationBarView::UpdateFindBarIconVisibility() {
+  if (RefreshFindBarIcon()) {
+    Layout();
+    find_bar_icon_->AnimateInkDrop(find_bar_icon_->visible()
+                                       ? views::InkDropState::ACTIVATED
+                                       : views::InkDropState::HIDDEN,
+                                   nullptr);
     SchedulePaint();
   }
 }
