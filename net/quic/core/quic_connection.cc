@@ -34,6 +34,7 @@
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
 #include "net/quic/platform/api/quic_text_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
@@ -1063,9 +1064,10 @@ void QuicConnection::SendVersionNegotiationPacket() {
   std::unique_ptr<QuicEncryptedPacket> version_packet(
       packet_generator_.SerializeVersionNegotiationPacket(
           framer_.supported_versions()));
+  // TODO(rhalavati): Annotation Origin?
   WriteResult result = writer_->WritePacket(
       version_packet->data(), version_packet->length(), self_address().host(),
-      peer_address(), per_packet_options_);
+      peer_address(), NO_TRAFFIC_ANNOTATION_YET, per_packet_options_);
 
   if (result.status == WRITE_STATUS_ERROR) {
     OnWriteError(result.error_code);
@@ -1083,6 +1085,7 @@ void QuicConnection::SendVersionNegotiationPacket() {
 }
 
 QuicConsumedData QuicConnection::SendStreamData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStreamId id,
     QuicIOVector iov,
     QuicStreamOffset offset,
@@ -1109,10 +1112,11 @@ QuicConsumedData QuicConnection::SendStreamData(
       iov.total_length > kMaxPacketSize && state != FIN_AND_PADDING) {
     // Use the fast path to send full data packets.
     return packet_generator_.ConsumeDataFastPath(
-        id, iov, offset, state != NO_FIN, 0, ack_listener);
+        traffic_annotation, id, iov, offset, state != NO_FIN, 0, ack_listener);
   }
-  return packet_generator_.ConsumeData(
-      id, iov, offset, state, std::move(ack_listener), flag_run_fast_path);
+  return packet_generator_.ConsumeData(traffic_annotation, id, iov, offset,
+                                       state, std::move(ack_listener),
+                                       flag_run_fast_path);
 }
 
 void QuicConnection::SendRstStream(QuicStreamId id,
@@ -1587,7 +1591,7 @@ bool QuicConnection::WritePacket(SerializedPacket* packet) {
   QuicTime packet_send_time = clock_->Now();
   WriteResult result = writer_->WritePacket(
       packet->encrypted_buffer, encrypted_length, self_address().host(),
-      peer_address(), per_packet_options_);
+      peer_address(), packet->GetTrafficAnnotation(), per_packet_options_);
   if (result.error_code == ERR_IO_PENDING) {
     DCHECK_EQ(WRITE_STATUS_BLOCKED, result.status);
   }
@@ -1797,6 +1801,10 @@ void QuicConnection::SendOrQueuePacket(SerializedPacket* packet) {
   // If there are already queued packets, queue this one immediately to ensure
   // it's written in sequence number order.
   if (!queued_packets_.empty() || !WritePacket(packet)) {
+    // TODO(rhalavati): An alternative solution is to change SerializedPacket to
+    // to class, and make |encrypted_buffer| private, and ensure that the
+    // setting it requireds setting the annotation as well.
+    CHECK(packet->HasTrafficAnnotation());
     // Take ownership of the underlying encrypted packet.
     packet->encrypted_buffer = CopyBuffer(*packet);
     queued_packets_.push_back(*packet);

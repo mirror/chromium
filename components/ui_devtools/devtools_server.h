@@ -34,7 +34,10 @@ class UI_DEVTOOLS_EXPORT UiDevToolsServer : public net::HttpServer::Delegate {
   static std::vector<NameUrlPair> GetClientNamesAndUrls();
 
   void AttachClient(std::unique_ptr<UiDevToolsClient> client);
-  void SendOverWebSocket(int connection_id, const String& message);
+  void SendOverWebSocket(
+      int connection_id,
+      const String& message,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
  private:
   explicit UiDevToolsServer(

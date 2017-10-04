@@ -12,6 +12,7 @@
 #include "net/quic/core/quic_types.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -44,16 +45,19 @@ struct QUIC_EXPORT_PRIVATE QuicStreamFrame {
   QuicStreamFrame(QuicStreamId stream_id,
                   bool fin,
                   QuicStreamOffset offset,
-                  QuicStringPiece data);
+                  QuicStringPiece data,
+                  const NetworkTrafficAnnotationTag& traffic_annotation);
   QuicStreamFrame(QuicStreamId stream_id,
                   bool fin,
                   QuicStreamOffset offset,
                   QuicPacketLength data_length,
-                  UniqueStreamBuffer buffer);
+                  UniqueStreamBuffer buffer,
+                  const NetworkTrafficAnnotationTag& traffic_annotation);
   QuicStreamFrame(QuicStreamId stream_id,
                   bool fin,
                   QuicStreamOffset offset,
-                  QuicPacketLength data_length);
+                  QuicPacketLength data_length,
+                  const NetworkTrafficAnnotationTag& traffic_annotation);
   ~QuicStreamFrame();
 
   friend QUIC_EXPORT_PRIVATE std::ostream& operator<<(std::ostream& os,
@@ -71,13 +75,17 @@ struct QUIC_EXPORT_PRIVATE QuicStreamFrame {
   // nullptr when the QuicStreamFrame is received, and non-null when sent.
   UniqueStreamBuffer buffer;
 
+  // Flag indicating that the network traffic anntoation is recieved.
+  bool has_traffic_annotation;
+
  private:
   QuicStreamFrame(QuicStreamId stream_id,
                   bool fin,
                   QuicStreamOffset offset,
                   const char* data_buffer,
                   QuicPacketLength data_length,
-                  UniqueStreamBuffer buffer);
+                  UniqueStreamBuffer buffer,
+                  bool has_traffic_annotation);
 
   DISALLOW_COPY_AND_ASSIGN(QuicStreamFrame);
 };

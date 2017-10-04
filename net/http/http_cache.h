@@ -33,6 +33,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_transaction_factory.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 class GURL;
 
@@ -163,7 +164,8 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
                      RequestPriority priority,
                      base::Time expected_response_time,
                      IOBuffer* buf,
-                     int buf_len);
+                     int buf_len,
+                     const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Get/Set the cache's mode.
   void set_mode(Mode value) { mode_ = value; }

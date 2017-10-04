@@ -24,6 +24,7 @@
 #include "net/base/request_priority.h"
 #include "net/http/http_raw_request_headers.h"
 #include "net/ssl/token_binding.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace crypto {
 class ECPrivateKey;
@@ -72,6 +73,7 @@ class NET_EXPORT_PRIVATE HttpStream {
   // the HttpStream is destroyed. There's typically only one set of
   // headers, except in the case of 1xx responses (See ReadResponseHeaders).
   virtual int SendRequest(const HttpRequestHeaders& request_headers,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           HttpResponseInfo* response,
                           const CompletionCallback& callback) = 0;
 

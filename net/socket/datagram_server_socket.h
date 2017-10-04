@@ -11,6 +11,7 @@
 #include "net/base/net_export.h"
 #include "net/socket/datagram_socket.h"
 #include "net/socket/diff_serv_code_point.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -50,7 +51,8 @@ class NET_EXPORT DatagramServerSocket : public DatagramSocket {
   // Returns a net error code, or ERR_IO_PENDING if the IO is in progress.
   // If ERR_IO_PENDING is returned, the caller must keep |buf| and |address|
   // alive until the callback is called.
-  virtual int SendTo(IOBuffer* buf,
+  virtual int SendTo(const NetworkTrafficAnnotationTag& traffic_annotation,
+                     IOBuffer* buf,
                      int buf_len,
                      const IPEndPoint& address,
                      const CompletionCallback& callback) = 0;

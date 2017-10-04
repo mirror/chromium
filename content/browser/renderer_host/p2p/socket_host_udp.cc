@@ -21,6 +21,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/log/net_log_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/webrtc/media/base/rtputils.h"
 
 namespace {
@@ -346,15 +347,15 @@ void P2PSocketHostUdp::DoSend(const PendingPacket& packet) {
   auto callback_binding =
       base::Bind(&P2PSocketHostUdp::OnSend, base::Unretained(this), packet.id,
                  packet.packet_options.packet_id, send_time);
-  int result = socket_->SendTo(packet.data.get(), packet.size, packet.to,
-                               callback_binding);
+  int result = socket_->SendTo(NO_TRAFFIC_ANNOTATION_YET, packet.data.get(),
+                               packet.size, packet.to, callback_binding);
 
   // sendto() may return an error, e.g. if we've received an ICMP Destination
   // Unreachable message. When this happens try sending the same packet again,
   // and just drop it if it fails again.
   if (IsTransientError(result)) {
-    result = socket_->SendTo(packet.data.get(), packet.size, packet.to,
-                             callback_binding);
+    result = socket_->SendTo(NO_TRAFFIC_ANNOTATION_YET, packet.data.get(),
+                             packet.size, packet.to, callback_binding);
   }
 
   if (result == net::ERR_IO_PENDING) {

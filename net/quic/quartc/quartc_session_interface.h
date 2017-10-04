@@ -13,6 +13,7 @@
 #include "net/quic/core/quic_types.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_stream_interface.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -80,7 +81,9 @@ class QUIC_EXPORT_PRIVATE QuartcSessionInterface {
 
     // Called by the QuartcPacketWriter when writing packets to the network.
     // Return the number of written bytes. Return 0 if the write is blocked.
-    virtual int Write(const char* buffer, size_t buf_len) = 0;
+    virtual int Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+                      const char* buffer,
+                      size_t buf_len) = 0;
   };
 
   // Called when CanWrite() changes from false to true.

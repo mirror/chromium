@@ -16,6 +16,7 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_types.h"
 #include "net/socket/datagram_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -33,15 +34,21 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
 
     size_t capacity() const { return capacity_; }
     size_t size() const { return size_; }
+    NetworkTrafficAnnotationTag traffic_annotation() {
+      return NetworkTrafficAnnotationTag(traffic_annotation_);
+    }
 
     // Does memcpy from |buffer| into this->data(). |buf_len <=
     // capacity()| must be true, |HasOneRef()| must be true.
-    void Set(const char* buffer, size_t buf_len);
+    void Set(const char* buffer,
+             size_t buf_len,
+             const NetworkTrafficAnnotationTag& traffic_annotation);
 
    private:
     ~ReusableIOBuffer() override;
     size_t capacity_;
     size_t size_;
+    MutableNetworkTrafficAnnotationTag traffic_annotation_;
   };
   // Delegate interface which receives notifications on socket write events.
   class NET_EXPORT_PRIVATE Delegate {
@@ -80,6 +87,7 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
                           size_t buf_len,
                           const QuicIpAddress& self_address,
                           const QuicSocketAddress& peer_address,
+                          const NetworkTrafficAnnotationTag& traffic_annotation,
                           PerPacketOptions* options) override;
   bool IsWriteBlockedDataBuffered() const override;
   bool IsWriteBlocked() const override;
@@ -90,7 +98,9 @@ class NET_EXPORT_PRIVATE QuicChromiumPacketWriter : public QuicPacketWriter {
   void OnWriteComplete(int rv);
 
  private:
-  void SetPacket(const char* buffer, size_t buf_len);
+  void SetPacket(const char* buffer,
+                 size_t buf_len,
+                 const NetworkTrafficAnnotationTag& traffic_annotation);
   WriteResult WritePacketToSocketImpl();
   DatagramClientSocket* socket_;  // Unowned.
   Delegate* delegate_;  // Unowned.

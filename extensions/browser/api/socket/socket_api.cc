@@ -34,6 +34,7 @@
 #include "net/base/network_interfaces.h"
 #include "net/base/url_util.h"
 #include "net/log/net_log_with_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
 
@@ -552,8 +553,7 @@ void SocketWriteFunction::AsyncWorkStart() {
     return;
   }
 
-  socket->Write(io_buffer_,
-                io_buffer_size_,
+  socket->Write(NO_TRAFFIC_ANNOTATION_YET, io_buffer_, io_buffer_size_,
                 base::Bind(&SocketWriteFunction::OnCompleted, this));
 }
 
@@ -674,7 +674,8 @@ void SocketSendToFunction::StartSendTo() {
     return;
   }
 
-  socket->SendTo(io_buffer_, io_buffer_size_, addresses_.front(),
+  socket->SendTo(NO_TRAFFIC_ANNOTATION_YET, io_buffer_, io_buffer_size_,
+                 addresses_.front(),
                  base::Bind(&SocketSendToFunction::OnCompleted, this));
 }
 

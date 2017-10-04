@@ -111,6 +111,7 @@ int BidirectionalStreamSpdyImpl::ReadData(IOBuffer* buf, int buf_len) {
 }
 
 void BidirectionalStreamSpdyImpl::SendvData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool end_stream) {

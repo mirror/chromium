@@ -50,6 +50,7 @@
 #include "net/quic/core/quic_sent_packet_manager.h"
 #include "net/quic/core/quic_types.h"
 #include "net/quic/platform/api/quic_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -97,6 +98,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
   // added after stream frames. If current constructed packet cannot
   // accommodate, the padding will overflow to the next packet(s).
   QuicConsumedData ConsumeData(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicStreamId id,
       QuicIOVector iov,
       QuicStreamOffset offset,
@@ -110,6 +112,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
   // In case we access this method from ConsumeData, total_bytes_consumed
   // keeps track of how many bytes have already been consumed.
   QuicConsumedData ConsumeDataFastPath(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicStreamId id,
       const QuicIOVector& iov,
       QuicStreamOffset offset,

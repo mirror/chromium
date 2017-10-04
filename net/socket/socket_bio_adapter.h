@@ -9,6 +9,7 @@
 #include "base/memory/weak_ptr.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/boringssl/src/include/openssl/base.h"
 
 namespace net {
@@ -81,6 +82,16 @@ class NET_EXPORT_PRIVATE SocketBIOAdapter {
   // Returns the allocation size estimate in bytes.
   size_t GetAllocationSize() const;
 
+  void SetTrafficAnnotation(
+      const NetworkTrafficAnnotationTag& traffic_annotation) {
+    traffic_annotation_ =
+        MutableNetworkTrafficAnnotationTag(traffic_annotation);
+  }
+
+  void ClearTrafficAnnotation() { traffic_annotation_.clear(); }
+
+  bool HasTrafficAnnotation() { return traffic_annotation_.has_value(); }
+
  private:
   int BIORead(char* out, int len);
   void HandleSocketReadResult(int result);
@@ -135,6 +146,8 @@ class NET_EXPORT_PRIVATE SocketBIOAdapter {
   int write_error_;
 
   Delegate* delegate_;
+
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   base::WeakPtrFactory<SocketBIOAdapter> weak_factory_;
 

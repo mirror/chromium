@@ -25,6 +25,7 @@
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/spdy/core/spdy_framer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -106,6 +107,7 @@ class QUIC_EXPORT_PRIVATE QuicSpdyStream : public QuicStream {
 
   // Sends |data| to the peer, or buffers if it can't be sent immediately.
   void WriteOrBufferBody(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       const std::string& data,
       bool fin,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
