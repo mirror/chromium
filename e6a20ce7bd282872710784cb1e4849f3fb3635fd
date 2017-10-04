@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3b4f8f13_2052860e",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-04T05:32:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e22ef10_30aa18ea",
+      "revId": "e6a20ce7bd282872710784cb1e4849f3fb3635fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd17693_95801a53",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_media_webview_content.js",
         "patchSetId": 3
