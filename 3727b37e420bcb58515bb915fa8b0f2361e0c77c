@@ -16,6 +16,24 @@
       "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0eb61b_9978ac71",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T07:46:06Z",
+      "side": 1,
+      "message": "Humm. I think so too.\n\nkinuko@\nDo you know why?",
+      "parentUuid": "a31a1312_28fcfc5b",
+      "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
