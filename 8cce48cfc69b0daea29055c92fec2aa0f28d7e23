@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "610553a9_5bc22bfa",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2135,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "Can we use a more explicit name? Something like \"blink_harfbuzz_shaper_fuzzer\"?",
+      "range": {
+        "startLine": 2135,
+        "startChar": 13,
+        "endLine": 2135,
+        "endChar": 27
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e9a7f4_8d6cff8c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "nit: 2017 and no copyright\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#file-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 22
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb750929_9ae6988b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "Can you move this to the beginning of LLVMFuzzerTestOneInput please, as most of other fuzz targets do: https://cs.chromium.org/search/?q\u003d%22%3D+BlinkFuzzerTestSupport()%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nLLVMFuzzerInitialize is not actually required unless there is a need to do anything with argc / argv.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb11791_74c6b14c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "can you add your name or other reference (e.g. bug number) as per: https://google.github.io/styleguide/cppguide.html#TODO_Comments",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 39
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89bf9b37_73bcb0b5",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "would it makes sense to initialize memory here, e.g. \" \u003d { 0 };\"?",
+      "range": {
+        "startLine": 29,
+        "startChar": 52,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52f9715_161dc19d",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "that doesn\u0027t look good... maybe \"sizeof(UChar32)\"?",
+      "range": {
+        "startLine": 35,
+        "startChar": 24,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4239aa_e17a8523",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T15:22:01Z",
+      "side": 1,
+      "message": "Could you please add a comment why do we use this particular value?",
+      "range": {
+        "startLine": 42,
+        "startChar": 35,
+        "endLine": 42,
+        "endChar": 40
+      },
+      "revId": "8cce48cfc69b0daea29055c92fec2aa0f28d7e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
