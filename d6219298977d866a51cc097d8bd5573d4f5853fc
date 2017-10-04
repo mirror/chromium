@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "06c8a722_5f56625d",
+        "filename": "content/network/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T18:18:24Z",
+      "side": 1,
+      "message": "Yea, I\u0027d rather we move it that over to network/ (or network/foo).  I just don\u0027t want to add any more work on the plate of whoever eventually splits out the network service.",
+      "parentUuid": "b115d554_ce7bc2c0",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ec69df_b87fc21d",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 1
