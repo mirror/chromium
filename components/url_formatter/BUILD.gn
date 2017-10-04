@@ -55,8 +55,4 @@ source_set("unit_tests") {
     "//ui/gfx",
     "//url",
   ]
-
-  if (is_android) {
-    deps -= [ "//ui/gfx" ]
-  }
 }
