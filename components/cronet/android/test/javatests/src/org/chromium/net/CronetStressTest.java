@@ -62,9 +62,11 @@ public class CronetStressTest {
             byte[] b = new byte[kNumUploadBytes];
             builder.setUploadDataProvider(
                     UploadDataProviders.create(b, 0, kNumUploadBytes), callback.getExecutor());
-            builder.build().start();
+            UrlRequest request = builder.build();
+            request.start();
             callback.blockForDone();
             assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+            request.cancel();
         }
     }
 }
