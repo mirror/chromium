@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3bffae00_ae785831",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T19:29:45Z",
+      "side": 1,
+      "message": "Added native code to immediately call uninstall after installing JavaExceptionReporter.",
+      "parentUuid": "26ac6721_f40e0141",
+      "range": {
+        "startLine": 519,
+        "startChar": 12,
+        "endLine": 519,
+        "endChar": 36
+      },
+      "revId": "a47166231b57bc3f3a2d17d8d1a15d0a05b886d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c8f2937_1ceb7e9d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "a47166231b57bc3f3a2d17d8d1a15d0a05b886d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436e5060_866804e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T19:29:45Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t want to change AsyncInitializationActivity\u0027s onCreate, so maybeDispatchLaunchIntent is probably early enough.",
+      "parentUuid": "1c8f2937_1ceb7e9d",
+      "range": {
+        "startLine": 1382,
+        "startChar": 8,
+        "endLine": 1382,
+        "endChar": 32
+      },
+      "revId": "a47166231b57bc3f3a2d17d8d1a15d0a05b886d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
