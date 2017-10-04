@@ -37,7 +37,7 @@ bool StructTraits<network::mojom::HttpRequestHeadersDataView,
     net::HttpRequestHeaders::HeaderKeyValuePair pair;
     if (!data_view.Read(i, &pair))
       return false;
-    headers->SetHeader(pair.key, pair.value);
+    headers->SetHeader(std::move(pair.key), std::move(pair.value));
   }
   return true;
 }
