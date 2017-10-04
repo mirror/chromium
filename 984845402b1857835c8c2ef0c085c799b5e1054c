@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c35587_217d6bd3",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T08:57:10Z",
+      "side": 1,
+      "message": "nit: Let\u0027s format HTML with indentation.\n\n[\n  \u0027\u003cdiv id\u003d\"d\" style\u003d\"...\"\u003e\u0027,\n  \u0027\u003ctextarea ...\u003e\n  ...\n  \u0027\u003c/div\u003e\u0027\n]",
+      "revId": "984845402b1857835c8c2ef0c085c799b5e1054c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bc32eb_5287d866",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T08:57:10Z",
+      "side": 1,
+      "message": "nit: Could you make all lines to fit \u003c80 chars?",
+      "revId": "984845402b1857835c8c2ef0c085c799b5e1054c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ecb4105_4fc6f805",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/return-key-in-hidden-field.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T08:57:10Z",
+      "side": 1,
+      "message": "nit: Let\u0027s format HTML with indentation.\n\n[\n  \u0027\u003cdiv id\u003d\"d\" style\u003d\"...\"\u003e\u0027,\n  \u0027\u003ctextarea ...\u003e\n  ...\n  \u0027\u003c/div\u003e\u0027\n]",
+      "revId": "984845402b1857835c8c2ef0c085c799b5e1054c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
