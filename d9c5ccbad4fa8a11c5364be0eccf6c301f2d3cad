@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "35b01038_31aa463c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1192879
+      },
+      "writtenOn": "2017-10-04T09:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1681b48_2b8f8c89",
+      "range": {
+        "startLine": 672,
+        "startChar": 12,
+        "endLine": 672,
+        "endChar": 17
+      },
+      "revId": "d9c5ccbad4fa8a11c5364be0eccf6c301f2d3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e4ee34c_61e378a7",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 2
@@ -94,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "068c0f02_41bbf215",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1192879
+      },
+      "writtenOn": "2017-10-04T09:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e4ee34c_61e378a7",
+      "range": {
+        "startLine": 928,
+        "startChar": 55,
+        "endLine": 928,
+        "endChar": 57
+      },
+      "revId": "d9c5ccbad4fa8a11c5364be0eccf6c301f2d3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e590ac_23d36dbc",
         "filename": "build/toolchain/linux/BUILD.gn",
         "patchSetId": 2
@@ -105,6 +153,30 @@
       "writtenOn": "2017-09-22T01:10:59Z",
       "side": 1,
       "message": "I don\u0027t think set toolprefix is right.\nGCC Target is mips64el-redhat-linux or mips64el-unkown-linux on loongson3a platform \nSo, not set toolprefix and get cc from system gcc is good to me.",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 12
+      },
+      "revId": "d9c5ccbad4fa8a11c5364be0eccf6c301f2d3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09305c6_66e659ab",
+        "filename": "build/toolchain/linux/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1192879
+      },
+      "writtenOn": "2017-10-04T09:57:19Z",
+      "side": 1,
+      "message": "I cannot address your comment. mips64el-redhat-linux is loongson specific, whereas out-of-the-box V8 compiles with debian rootfs and on debian MIPS crosscompile toolchain has mips64el-linux-gnuabi64- prefix.",
+      "parentUuid": "10e590ac_23d36dbc",
       "range": {
         "startLine": 200,
         "startChar": 2,
