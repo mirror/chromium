@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f2d913f7_d0399ffc",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-04T01:57:49Z",
+      "side": 1,
+      "message": "+tzik FYI closure usage. I don\u0027t think we have a better way handling this.",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35222eb9_94780d36",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 6
@@ -30,6 +53,46 @@
       "writtenOn": "2017-10-04T00:31:26Z",
       "side": 1,
       "message": "Could you add ()s, i.e.\n\nready_state_ \u003d\u003d kReadyStreaming ||\n  ((ready_state_ \u003d\u003d kWaitingForResource ||\n  ready_state_ \u003d\u003d kWaitingForStreaming) \u0026\u0026\n     streamer_)\n\nfor clarity?\n\nhttps://softwareengineering.stackexchange.com/questions/201175/should-i-use-parentheses-in-logical-statements-even-where-not-necessary",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a658deb6_49bdde1f",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-04T01:57:49Z",
+      "side": 1,
+      "message": "Can we make all is_currently_streaming_ flag read (from .cpp) to use this?\nmark final if you are concerned about virtual call overhead.",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4e25c4_b351ddc2",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-10-04T01:57:49Z",
+      "side": 1,
+      "message": "Would you add a comment why this needs to be tracked?\n(similar to prefinalizer_called_ comment below.)\n\nIn a comment, would you describe why should this be tracked outside ReadyState?",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 0
+      },
       "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
