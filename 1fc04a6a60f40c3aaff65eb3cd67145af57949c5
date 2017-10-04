@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6113de58_5d4a5559",
+        "filename": "services/network/public/interfaces/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-04T19:22:41Z",
+      "side": 1,
+      "message": "We unfortunately do. The iOS build fails otherwise.\n\n$ gn gen out/Debug-iphonesimulator/\nERROR at //services/network/public/interfaces/BUILD.gn:26:27: Assignment had no effect.\n    export_header_blink \u003d \"third_party/WebKit/public/platform/WebCommon.h\"\n                          ^-----------------------------------------------\nYou set the variable \"export_header_blink\" here and it was unused before it went\nout of scope.\nSee //mojo/public/tools/bindings/mojom.gni:340:17: which caused the file to be included.\n      deps +\u003d [ \"${name}__is_mojom(${toolchain})\" ]\n                ^--------------------------------",
+      "parentUuid": "8b4b0f2d_1831cad0",
+      "revId": "1fc04a6a60f40c3aaff65eb3cd67145af57949c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0efcf0a3_158514eb",
         "filename": "third_party/WebKit/Source/core/loader/BUILD.gn",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "1fc04a6a60f40c3aaff65eb3cd67145af57949c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eca25fe_f6d0aa6f",
+        "filename": "third_party/WebKit/Source/core/loader/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-04T19:22:41Z",
+      "side": 1,
+      "message": "Done.\n\nI was thinking that the comment would help us switch back to the proper dependency when we figure out the right architecture. At this point, the information in our collective memories.",
+      "parentUuid": "0efcf0a3_158514eb",
+      "revId": "1fc04a6a60f40c3aaff65eb3cd67145af57949c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
