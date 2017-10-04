@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dd57f02_5a005e68",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40692,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-10-04T01:44:05Z",
+      "side": 1,
+      "message": "Each of these features can be supported or unsupported, right?",
+      "revId": "e54d4cd4d44206d7454e315a6993d07178885826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
