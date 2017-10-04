@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364e33da_90f53bcc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T09:54:39Z",
+      "side": 1,
+      "message": "A thought for a future patch: at the moment we do not start tracing when renderer scheduler is created. Explicitly mentioning all tracers in the constructor doesn\u0027t feel right.\n\nShall we integrate tracing concepts as first-class citizens: let\u0027s introduce TracedValue class and replace normal fields with it?\n\nSo it would look like TracedValue\u003cUseCase, kTracingCategoryNameDefault\u003e use_case (we can provide tracing name and a function to convert these values to strings in the constructor) and every time we set a use case assignment operator for this class would automatically sort out tracing.\n\nWDYT?",
+      "range": {
+        "startLine": 608,
+        "startChar": 4,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "2bbf69bdd3b101eaeef959e41a5e4ea74d67b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
