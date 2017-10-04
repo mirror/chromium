@@ -16,6 +16,24 @@
       "revId": "05a612a88b7eb768feba2c068d266dff02274263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b7a05c_26baaeb2",
+        "filename": "components/viz/service/display/display_scheduler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-04T11:21:06Z",
+      "side": 1,
+      "message": "Ah, I forgot I had to add these. They are to ignore out-of-order acknowledgments, thus preventing us from accidentally updating the surface state with an older ack\u0027s sequence number. I\u0027ve added a comment and pulled this change out into a separate patch, too:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/700554",
+      "parentUuid": "32c84536_4de9fd44",
+      "revId": "05a612a88b7eb768feba2c068d266dff02274263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
