@@ -46,6 +46,30 @@
       "revId": "2bbf69bdd3b101eaeef959e41a5e4ea74d67b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2dc56917_a23075df",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-04T22:10:45Z",
+      "side": 1,
+      "message": "This basically sounds fine but let\u0027s be careful about adding tracing work that happens even when tracing is disabled. The macros used to handle this automatically but if we start burying the logic into a helper class there\u0027s a risk of losing that advantage.",
+      "parentUuid": "d0988391_6eddf0d1",
+      "range": {
+        "startLine": 608,
+        "startChar": 4,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "2bbf69bdd3b101eaeef959e41a5e4ea74d67b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
