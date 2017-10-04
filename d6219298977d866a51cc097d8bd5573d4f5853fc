@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b115d554_ce7bc2c0",
+        "filename": "content/network/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T17:10:02Z",
+      "side": 1,
+      "message": "All it has now is the throttling support. Would you be fine with making it more specific, i.e. moving the stuff under content/common/devtools/throttling? The reason it\u0027s under common now is that it\u0027s shared with the legacy implementation, once the transition to network service is complete, it can be moved under the network service.",
+      "parentUuid": "8dc5b9f3_0d9580b0",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ec69df_b87fc21d",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 1
