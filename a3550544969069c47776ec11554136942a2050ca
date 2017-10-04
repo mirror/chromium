@@ -377,6 +377,24 @@
     },
     {
       "key": {
+        "uuid": "595c2b30_d0a27233",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T19:59:43Z",
+      "side": 1,
+      "message": "You can use SCOPED_TRACE to work around that, I think.\n\n(Also, you could refactor this to a method that returns a number of successful fetch attempts, and have:\n  EXPECT_EQ(10, CountSuccessfullFetchAttempts(manager, LOG_SOURCE_UILATEST,\n                                              11 /*max_attempts*/)));\n)\n\nThough, it\u0027s probably not that big of a deal.",
+      "parentUuid": "6ed05683_dff6bef4",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f56dfce2_ef7ecdbd",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
         "patchSetId": 3
