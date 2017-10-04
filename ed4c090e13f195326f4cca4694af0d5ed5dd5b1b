@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02dae157_00c6f732",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "nit: Update",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b6292d_55df9f75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 11,
+        "startChar": 45,
+        "endLine": 11,
+        "endChar": 51
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b28a902_79cd0005",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "nit: submitted",
+      "range": {
+        "startLine": 457,
+        "startChar": 59,
+        "endLine": 457,
+        "endChar": 65
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57bdb4b_125383aa",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "nit: \"might have been released and needs to be updated.\" ?",
+      "range": {
+        "startLine": 458,
+        "startChar": 69,
+        "endLine": 459,
+        "endChar": 38
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71259fe5_496bae35",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "nit: only set this to true \"if (state_.alpha)\"",
+      "range": {
+        "startLine": 475,
+        "startChar": 6,
+        "endLine": 475,
+        "endChar": 36
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b984a97_dc30e8fd",
+        "filename": "components/exo/surface_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:20:38Z",
+      "side": 1,
+      "message": "nit: updated",
+      "range": {
+        "startLine": 768,
+        "startChar": 30,
+        "endLine": 768,
+        "endChar": 38
+      },
+      "revId": "ed4c090e13f195326f4cca4694af0d5ed5dd5b1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
