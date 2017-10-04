@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c139fb_91011fa6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_layout_algorithm.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-04T15:18:00Z",
+      "side": 1,
+      "message": "How about breaking the list specific logic and api into a new file? ng_list_algorithm perhaps?",
+      "revId": "c5d2532e3987fea5d8ff9e0c2c2db208a2b2921f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d21f938_432bf834",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-04T15:18:00Z",
+      "side": 1,
+      "message": "Do we really need special logic in the line breaker for list items? It would be nice if we could treat them as regular atomic inlines.\n\nI\u0027m a bit worried about us having to add special case logic for a bunch of layout types.",
+      "revId": "c5d2532e3987fea5d8ff9e0c2c2db208a2b2921f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
