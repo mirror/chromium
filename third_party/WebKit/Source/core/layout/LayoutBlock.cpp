@@ -993,7 +993,7 @@ void LayoutBlock::RemovePositionedObjects(
         // invalidation container.
         // Invalidate it (including non-compositing descendants) on its original
         // paint invalidation container.
-        if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+        if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
           // This valid because we need to invalidate based on the current
           // status.
           DisableCompositingQueryAsserts compositing_disabler;

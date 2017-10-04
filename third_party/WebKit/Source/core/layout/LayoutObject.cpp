@@ -1638,11 +1638,11 @@ void LayoutObject::SetStyle(RefPtr<ComputedStyle> style) {
                     diff.BackdropFilterChanged() || diff.CssClipChanged())) {
     SetNeedsPaintPropertyUpdate();
 
-    // We don't need to invalidate paint of objects on SPv2 when only paint
+    // We don't need to invalidate paint of objects on SPv175 when only paint
     // property or paint order change. Mark the painting layer needing repaint
     // for changed paint property or paint order. Raster invalidation will be
     // issued if needed during paint.
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
         !ShouldDoFullPaintInvalidation())
       ObjectPaintInvalidator(*this).SlowSetPaintingLayerNeedsRepaint();
   }
@@ -3416,7 +3416,7 @@ void LayoutObject::ClearPaintInvalidationFlags() {
 #if DCHECK_IS_ON()
   DCHECK(!ShouldCheckForPaintInvalidation() || PaintInvalidationStateIsDirty());
 #endif
-  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+  if (rare_paint_data_ && !RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     rare_paint_data_->SetPartialInvalidationRect(LayoutRect());
   ClearShouldDoFullPaintInvalidation();
   bitfields_.SetMayNeedPaintInvalidation(false);

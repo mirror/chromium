@@ -665,8 +665,13 @@ void PaintLayerCompositor::PaintInvalidationOnCompositingChange(
   // We have to do immediate paint invalidation because compositing will change.
   DisablePaintInvalidationStateAsserts paint_invalidation_assertisabler;
 
-  ObjectPaintInvalidator(layer->GetLayoutObject())
-      .InvalidatePaintIncludingNonCompositingDescendants();
+  ObjectPaintInvalidator invalidator(layer->GetLayoutObject());
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
+    invalidator.InvalidateDisplayItemClientsIncludingNonCompositingDescendants(
+        PaintInvalidationReason::kSubtree);
+  } else {
+    invalidator.InvalidatePaintIncludingNonCompositingDescendants();
+  }
 }
 
 void PaintLayerCompositor::FrameViewDidChangeLocation(

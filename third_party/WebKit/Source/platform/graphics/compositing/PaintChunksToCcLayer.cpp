@@ -373,7 +373,8 @@ void PaintChunksToCcLayer::ConvertInto(
     const PropertyTreeState& layer_state,
     const gfx::Vector2dF& layer_offset,
     const DisplayItemList& display_items,
-    cc::DisplayItemList& cc_list) {
+    cc::DisplayItemList& cc_list,
+    RasterUnderInvalidationCheckingParams* under_invalidation_checking_params) {
   bool need_translate = !layer_offset.IsZero();
   if (need_translate) {
     cc_list.StartPaint();
@@ -386,17 +387,6 @@ void PaintChunksToCcLayer::ConvertInto(
 
   if (need_translate)
     AppendRestore(cc_list, 1);
-}
-
-scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
-    const Vector<const PaintChunk*>& paint_chunks,
-    const PropertyTreeState& layer_state,
-    const gfx::Vector2dF& layer_offset,
-    const DisplayItemList& display_items,
-    cc::DisplayItemList::UsageHint hint,
-    RasterUnderInvalidationCheckingParams* under_invalidation_checking_params) {
-  auto cc_list = base::MakeRefCounted<cc::DisplayItemList>(hint);
-  ConvertInto(paint_chunks, layer_state, layer_offset, display_items, *cc_list);
 
   if (under_invalidation_checking_params) {
     auto& params = *under_invalidation_checking_params;
@@ -413,12 +403,23 @@ scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
                                             recorder.finishRecordingAsPicture(),
                                             params.interest_rect);
     if (auto record = params.tracking.under_invalidation_record) {
-      cc_list->StartPaint();
-      cc_list->push<cc::DrawRecordOp>(record);
-      cc_list->EndPaintOfUnpaired(g_large_rect);
+      cc_list.StartPaint();
+      cc_list.push<cc::DrawRecordOp>(record);
+      cc_list.EndPaintOfUnpaired(g_large_rect);
     }
   }
+}
 
+scoped_refptr<cc::DisplayItemList> PaintChunksToCcLayer::Convert(
+    const Vector<const PaintChunk*>& paint_chunks,
+    const PropertyTreeState& layer_state,
+    const gfx::Vector2dF& layer_offset,
+    const DisplayItemList& display_items,
+    cc::DisplayItemList::UsageHint hint,
+    RasterUnderInvalidationCheckingParams* under_invalidation_checking_params) {
+  auto cc_list = base::MakeRefCounted<cc::DisplayItemList>(hint);
+  ConvertInto(paint_chunks, layer_state, layer_offset, display_items, *cc_list,
+              under_invalidation_checking_params);
   cc_list->Finalize();
   return cc_list;
 }

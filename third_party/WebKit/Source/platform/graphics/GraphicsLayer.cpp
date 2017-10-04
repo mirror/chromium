@@ -484,6 +484,12 @@ void GraphicsLayer::SetTracksRasterInvalidations(
     bool tracks_raster_invalidations) {
   ResetTrackedRasterInvalidations();
   is_tracking_raster_invalidations_ = tracks_raster_invalidations;
+
+  if (layer_state_) {
+    DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+    layer_state_->raster_invalidator.SetTracksRasterInvalidations(
+        tracks_raster_invalidations);
+  }
 }
 
 void GraphicsLayer::ResetTrackedRasterInvalidations() {
@@ -515,8 +521,12 @@ void GraphicsLayer::TrackRasterInvalidation(const DisplayItemClient& client,
   if (!IsTrackingOrCheckingRasterInvalidations() || rect.IsEmpty())
     return;
 
+  // For SPv175, this only tracks invalidations that the WebLayer is fully
+  // invalidated directly, e.g. from SetContentsNeedsDisplay(), etc.
   RasterInvalidationTracking& tracking =
-      GetRasterInvalidationTrackingMap().Add(this);
+      RuntimeEnabledFeatures::SlimmingPaintV175Enabled()
+          ? *layer_state_->raster_invalidator.GetRasterInvalidationTracking()
+          : GetRasterInvalidationTrackingMap().Add(this);
 
   if (is_tracking_raster_invalidations_) {
     RasterInvalidationInfo info;
@@ -1081,13 +1091,14 @@ void GraphicsLayer::SetNeedsDisplay() {
   if (!DrawsContent())
     return;
 
-  // TODO(chrishtr): Stop invalidating the rects once
-  // FrameView::paintRecursively() does so.
+  GetPaintController().InvalidateAll();
+
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return;
+
   layer_->Layer()->Invalidate();
   for (size_t i = 0; i < link_highlights_.size(); ++i)
     link_highlights_[i]->Invalidate();
-  GetPaintController().InvalidateAll();
-
   TrackRasterInvalidation(*this, IntRect(IntPoint(), ExpandedIntSize(size_)),
                           PaintInvalidationReason::kFull);
 }
@@ -1097,18 +1108,26 @@ void GraphicsLayer::SetNeedsDisplayInRect(
     const IntRect& rect,
     PaintInvalidationReason invalidation_reason,
     const DisplayItemClient& client) {
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   if (!DrawsContent())
     return;
 
   if (!ScopedSetNeedsDisplayInRectForTrackingOnly::s_enabled_) {
-    layer_->Layer()->InvalidateRect(rect);
+    SetNeedsDisplayInRectInternal(rect);
+    // TODO(wangxianzhu): Need equivalence for SPv175/SPv2.
     if (FirstPaintInvalidationTracking::IsEnabled())
       debug_info_.AppendAnnotatedInvalidateRect(rect, invalidation_reason);
-    for (size_t i = 0; i < link_highlights_.size(); ++i)
-      link_highlights_[i]->Invalidate();
   }
 
   TrackRasterInvalidation(client, rect, invalidation_reason);
+}
+
+void GraphicsLayer::SetNeedsDisplayInRectInternal(const IntRect& rect) {
+  DCHECK(DrawsContent());
+
+  layer_->Layer()->InvalidateRect(rect);
+  for (size_t i = 0; i < link_highlights_.size(); ++i)
+    link_highlights_[i]->Invalidate();
 }
 
 void GraphicsLayer::SetContentsRect(const IntRect& rect) {
@@ -1249,9 +1268,14 @@ sk_sp<PaintRecord> GraphicsLayer::CaptureRecord() {
 
 void GraphicsLayer::SetLayerState(PropertyTreeState&& layer_state,
                                   const IntPoint& layer_offset) {
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
+
   if (!layer_state_) {
     layer_state_ = std::make_unique<LayerState>(
-        LayerState{std::move(layer_state), layer_offset});
+        std::move(layer_state), layer_offset,
+        [this](const IntRect& r) { SetNeedsDisplayInRectInternal(r); });
+    if (is_tracking_raster_invalidations_)
+      layer_state_->raster_invalidator.SetTracksRasterInvalidations(true);
     return;
   }
   layer_state_->state = std::move(layer_state);
@@ -1301,11 +1325,25 @@ void GraphicsLayer::PaintContents(WebDisplayItemList* web_display_item_list,
     for (const auto& chunk : paint_controller.GetPaintArtifact().PaintChunks())
       all_chunks.push_back(&chunk);
 
+    IntRect layer_bounds(layer_state_->offset, ExpandedIntSize(Size()));
+    layer_state_->raster_invalidator.Generate(
+        paint_controller.GetPaintArtifact(), layer_bounds, all_chunks,
+        layer_state_->state);
+
+    Optional<RasterUnderInvalidationCheckingParams> params;
+    if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
+      params.emplace(
+          *layer_state_->raster_invalidator.GetRasterInvalidationTracking(),
+          IntRect(0, 0, layer_bounds.Width(), layer_bounds.Height()),
+          all_chunks[0]->id.client.DebugName());
+    }
+
     PaintChunksToCcLayer::ConvertInto(
         all_chunks, layer_state_->state,
         gfx::Vector2dF(layer_state_->offset.X(), layer_state_->offset.Y()),
         paint_controller.GetPaintArtifact().GetDisplayItemList(),
-        *web_display_item_list->GetCcDisplayItemList());
+        *web_display_item_list->GetCcDisplayItemList(),
+        params ? &*params : nullptr);
   } else {
     paint_controller.GetPaintArtifact().AppendToWebDisplayItemList(
         OffsetFromLayoutObjectWithSubpixelAccumulation(),

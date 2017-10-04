@@ -58,7 +58,8 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
                           const PropertyTreeState& layer_state,
                           const gfx::Vector2dF& layer_offset,
                           const DisplayItemList&,
-                          cc::DisplayItemList&);
+                          cc::DisplayItemList&,
+                          RasterUnderInvalidationCheckingParams* = nullptr);
 
   // Similar to ConvertInto(), but returns a finalized new list instead of
   // appending converted items to an existing list.
