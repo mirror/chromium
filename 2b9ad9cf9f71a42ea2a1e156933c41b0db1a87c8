@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a835451_27b838a5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "can we dump actual values here, or is [object Object] intentional?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812c2e75_451ea441",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "nit: dumping entries count is redundant here",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426045b1_38451013",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "consider extracting dumping of entries into a function.",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35694dfc_f2a0e3af",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "await indexedDBModel.once(Resources.IndexedDBModel.Events.DatabaseAdded) should do what you want, I think.",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b45943e_d636a286",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "should this rather be select()?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0908002f_2a0e0458",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "That\u0027s a bit too much of a hack, can you do it with just node.select()?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575f079b_bca39300",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "why do we need to wait twice? looks fishy!",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7715e68b_0cb1a34d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "as above?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689c59be_3cce26f4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "Can we also test for a failure here? E.g. what happens if we try to delete an entry twice? I would assume the second request should fail?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4d7a92_12859725",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/indexeddb/delete-entry.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "again, why do we have two updates here?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427b5098_e99bde23",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 2116,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "\"description\": \"Range of entry keys to delete.\"?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446ae983_6fab3df2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "nit: can we make keyRangeFromIDBKeyRange() expect a non-null key change and return a non-null range, and keep the null check on the only existent call site of this function?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01554065_671e6116",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "Let\u0027s just inline this.",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf0e820_1760dea1",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/InspectorIndexedDBAgent.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-04T22:17:24Z",
+      "side": 1,
+      "message": "Should this rather be \"Failed to delete specified entries\"?",
+      "revId": "2b9ad9cf9f71a42ea2a1e156933c41b0db1a87c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
