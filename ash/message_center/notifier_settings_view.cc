@@ -58,13 +58,12 @@ using message_center::NotifierSettingsProvider;
 namespace {
 
 const SkColor kSettingsBackgroundColor = SkColorSetRGB(0xFF, 0xFF, 0xFF);
-const SkColor kEntrySeparatorColor = SkColorSetARGB(0.1 * 255, 0, 0, 0);
-const int kEntryHeight = 45;
-const int kEntrySeparatorHeight = 1;
-const int kHorizontalMargin = 10;
-const int kEntryIconSize = 16;
-const int kInternalHorizontalSpacing = 10;
-const int kCheckboxSizeWithPadding = 24;
+const int kEntryHeight = 48;
+const int kHorizontalMargin = 12;
+const int kEntryIconSize = 20;
+const int kInternalHorizontalSpacing = 16;
+const int kSmallerInternalHorizontalSpacing = 12;
+const int kCheckboxSizeWithPadding = 28;
 
 // The width of the settings pane in pixels.
 const int kWidth = 360;
@@ -96,11 +95,9 @@ std::unique_ptr<views::Painter> CreateFocusPainter() {
       message_center::kFocusBorderColor, gfx::Insets(1, 2, 3, 2));
 }
 
-// TODO(tetsui): Give more general names and remove kEntryHeight, kEntryIconSize
-// etc.
+// TODO(tetsui): Give more general names and remove kEntryHeight, etc.
 constexpr gfx::Insets kTopLabelPadding(16, 18, 15, 0);
 const int kQuietModeViewSpacing = 18;
-const int kQuietModeIconSize = 20;
 
 constexpr gfx::Insets kHeaderViewPadding(4, 0, 4, 0);
 constexpr gfx::Insets kQuietModeViewPadding(16, 18, 15, 14);
@@ -213,10 +210,14 @@ NotifierSettingsView::NotifierButton::NotifierButton(
       notifier_(std::move(notifier)),
       icon_view_(new views::ImageView()),
       name_view_(new views::Label(notifier_->name)),
-      checkbox_(new views::Checkbox(base::string16())),
+      checkbox_(new views::Checkbox(base::string16(), true /* force_md */)),
       learn_more_(nullptr) {
   DCHECK(provider_);
   DCHECK(notifier_);
+
+  name_view_->SetAutoColorReadabilityEnabled(false);
+  name_view_->SetEnabledColor(kLabelColor);
+  name_view_->SetFontList(GetFontListForLabel());
 
   checkbox_->SetChecked(notifier_->enabled);
   checkbox_->set_listener(this);
@@ -340,7 +341,7 @@ void NotifierSettingsView::NotifierButton::GridChanged(bool has_learn_more) {
   // Add a column for the icon.
   cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0, GridLayout::FIXED,
                 kEntryIconSize, 0);
-  cs->AddPaddingColumn(0, kInternalHorizontalSpacing);
+  cs->AddPaddingColumn(0, kSmallerInternalHorizontalSpacing);
 
   // Add a column for the name.
   cs->AddColumn(GridLayout::LEADING, GridLayout::CENTER, 0,
@@ -395,7 +396,7 @@ NotifierSettingsView::NotifierSettingsView(NotifierSettingsProvider* provider)
   views::ImageView* quiet_mode_icon = new views::ImageView();
   quiet_mode_icon->SetImage(
       gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOffIcon,
-                            kQuietModeIconSize, kQuietModeIconColor));
+                            kEntryIconSize, kQuietModeIconColor));
   quiet_mode_view->AddChildView(quiet_mode_icon);
 
   views::Label* quiet_mode_label = new views::Label(l10n_util::GetStringUTF16(
@@ -489,16 +490,6 @@ void NotifierSettingsView::UpdateContentsView(
         new NotifierButton(provider_, std::move(notifiers[i]), this);
     EntryView* entry = new EntryView(button);
 
-    // This code emulates separators using borders.  We will create an invisible
-    // border on the last notifier, as the spec leaves a space for it.
-    std::unique_ptr<views::Border> entry_border;
-    if (i == notifier_count - 1) {
-      entry_border = views::CreateEmptyBorder(0, 0, kEntrySeparatorHeight, 0);
-    } else {
-      entry_border = views::CreateSolidSidedBorder(0, 0, kEntrySeparatorHeight,
-                                                   0, kEntrySeparatorColor);
-    }
-    entry->SetBorder(std::move(entry_border));
     entry->SetFocusBehavior(FocusBehavior::ALWAYS);
     contents_view->AddChildView(entry);
     buttons_.insert(button);
