@@ -22,6 +22,30 @@
       "revId": "711164e182a3129f6510d466ecf895774f107f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff28fb5b_a9bfc4a7",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T17:58:31Z",
+      "side": 1,
+      "message": "The current behavior is to treat a secondary user like the primary user for network configuration. This was discussed at length at the time and was determined to be acceptable. The alternatives are not great.",
+      "parentUuid": "ba4c1c33_104fdff0",
+      "range": {
+        "startLine": 411,
+        "startChar": 24,
+        "endLine": 411,
+        "endChar": 44
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
