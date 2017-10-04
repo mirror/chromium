@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6d87cad0_999eb57d",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-04T20:19:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f1098b9_4f76c6a3",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "110907d2_22ad5f3f",
         "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
         "patchSetId": 8
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "Yup, BookmarkAppNavigationThrottle does it in this method. For PlatformAppNavigationThrottle this is done in chrome_content_browser_client.cc[1].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chrome_content_browser_client.cc?q\u003dchrome_content_browser_client.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d3235",
       "parentUuid": "a4cdc7e3_17de7b3c",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ab021ab_470d2106",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-04T20:19:26Z",
+      "side": 1,
+      "message": "Yay for having logic living in disparate places. This is why I prefer the pattern of MaybeCreateFooThrottle method, being static on the throttle which encapsulates the logic of when to create one, so it is all within one file and one location that people need to read. Just ideas for future changes :)",
+      "parentUuid": "82927944_b92b110d",
       "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
