@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30ab7da1_be15973b",
+        "filename": "device/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "These tests no longer depend on HID so they can move into the main sources list above.",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 33
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71395363_363ee157",
+        "filename": "device/u2f/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "You should be able to move these files back up into the main sources list now.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 19
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4774d91a_8f23fcb1",
+        "filename": "device/u2f/mock_u2f_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "const DeviceStatusCallback\u0026",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 22
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d188ac7f_56bc3c86",
+        "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "{}",
+      "range": {
+        "startLine": 51,
+        "startChar": 49,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d16226_533cdc3a",
+        "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "RunUntilIdle is generally discouraged. Instead create a base::RunLoop and run its QuitClosure when the expected condition (in this case OnDeviceDiscovered being called) is met.",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296d379f_6bf81b07",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "Since you are using a MockU2fDiscovery can you remove this HidService?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 44
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3f602d_9bf89179",
+        "filename": "device/u2f/u2f_request_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T22:53:43Z",
+      "side": 1,
+      "message": "Is there a callback that will be run when the expected condition is reached?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 43
+      },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
