@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f29c35_b356daed",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-04T17:10:31Z",
+      "side": 1,
+      "message": "Could you add a note that this is only recording the current behavior, which might be revised in the future?",
+      "revId": "0d6a0de3f0bf3e6e4d9fde93869614fd0ed47e16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
