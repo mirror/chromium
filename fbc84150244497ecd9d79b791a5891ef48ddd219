@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a2f3fc8_4b03554a",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967f34b9_b963c072",
+      "range": {
+        "startLine": 71,
+        "startChar": 41,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfc85d73_5be151da",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "cca53def_2586db2c",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfc85d73_5be151da",
+      "range": {
+        "startLine": 128,
+        "startChar": 20,
+        "endLine": 128,
+        "endChar": 27
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02cf3052_dd4c7343",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6621acb0_367e0de7",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02cf3052_dd4c7343",
+      "range": {
+        "startLine": 129,
+        "startChar": 55,
+        "endLine": 129,
+        "endChar": 73
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "8baf95d1_1dd2d023",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed2a6bc_7bb63077",
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96a7986_e89f09c9",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -126,6 +216,30 @@
       "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fb1d7dc_7b1b84d8",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96a7986_e89f09c9",
+      "range": {
+        "startLine": 211,
+        "startChar": 63,
+        "endLine": 211,
+        "endChar": 66
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "4722ceab_6b3485a3",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd1afdba_aa6137ca",
+      "range": {
+        "startLine": 212,
+        "startChar": 33,
+        "endLine": 212,
+        "endChar": 60
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda8d3da_74a5ea4c",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -175,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "6f3eb3d0_8d9983ad",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda8d3da_74a5ea4c",
+      "range": {
+        "startLine": 475,
+        "startChar": 10,
+        "endLine": 475,
+        "endChar": 41
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcaea386_24f8fe37",
         "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
         "patchSetId": 2
@@ -186,6 +348,30 @@
       "writtenOn": "2017-10-03T22:43:31Z",
       "side": 1,
       "message": "Do you intend to leave this?  Also, endl is unnecessary.",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 36
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fc0c6d_8740aa7c",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-04T23:49:13Z",
+      "side": 1,
+      "message": "I did want to leave that in as a general purpose debug message. Should it be LOG(DEBUG)?",
+      "parentUuid": "bcaea386_24f8fe37",
       "range": {
         "startLine": 479,
         "startChar": 8,
