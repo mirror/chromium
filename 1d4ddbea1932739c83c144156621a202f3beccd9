@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729eab07_187fa646",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T16:22:32Z",
+      "side": 1,
+      "message": "At first glance, I think maybe we should allocate a bitmap, then use the GL call to write into it.  Something like:  \n\nSkBitmap bitmap;\nCHECK(bitmap.tryAllocN32Pixels(size.width(), size.height(), false));\nSkPixmap pixmap;\nCHECK(bitmap.peekPixels(\u0026pixmap));\nglReadPixels( ...., pixmap.writable_addr())\n\nWould this work?",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63c07e1_130e6b15",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T16:22:32Z",
+      "side": 1,
+      "message": "Since this is a test and we can afford a bit of memory, would it be easier to just generate a second buffer with rows reversed?  Or if not, what about using PixMap::writable_addr(int x, int y)?  At least then you don\u0027t have to worry as much about stride - you can just iterate on row and column.",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1b6d43_10c2d24b",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T16:22:32Z",
+      "side": 1,
+      "message": "std::swap()",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
