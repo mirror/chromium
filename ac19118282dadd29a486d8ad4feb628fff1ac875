@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28d16e69_64e0c96a",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-04T19:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db957899_82d85806",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9f91be9_cd1b2750",
         "filename": "chrome/installer/linux/rpm/chrome.spec.template",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T18:56:30Z",
       "side": 1,
       "message": "These 2 are going to be duplicates for non-stable channels, right?",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7041863_97c21b34",
+        "filename": "chrome/installer/linux/rpm/chrome.spec.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-04T19:00:32Z",
+      "side": 1,
+      "message": "yes, but that\u0027s ok.  Added a comment to clarify this",
+      "parentUuid": "a9f91be9_cd1b2750",
       "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5417698c_ef2a616c",
+        "filename": "chrome/installer/linux/rpm/lint_package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-04T19:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284c8bdd_4a923e79",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
