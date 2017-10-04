@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "550d7fd0_c0b929b2",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T03:09:58Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "d88ece2105bc1b631aa6ec0f5240d97a1589b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
