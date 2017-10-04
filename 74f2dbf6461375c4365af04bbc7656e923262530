@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8d557fe_4c6c5472",
+        "filename": "headless/lib/browser/headless_browser_context_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:18:55Z",
+      "side": 1,
+      "message": "I suggest you to not reuse this structure (as it will move to network service soon), but rather have your own struct in headless/lib to be consumed by client.",
+      "revId": "74f2dbf6461375c4365af04bbc7656e923262530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
