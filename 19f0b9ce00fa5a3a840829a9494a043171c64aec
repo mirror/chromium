@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afc47474_89577c85",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-10-04T09:22:47Z",
+      "side": 1,
+      "message": "In these cases there will be no search engine branding at all. Could we update BottomSheetNewTabController#shouldShowGoogleGInLocationBar to perform the same checks, and show the Google G? At least on small screens. Not sure whether it would be understandable to the user if we have so many variations on larger screens depending on new-tab-with-other-tabs, new-tab-without-other-tabs, and not-a-new-tab.\n\nAlso I think we may need to pull in PM / UX for some more refinements in M64, it feels there is room for improvement.",
+      "range": {
+        "startLine": 331,
+        "startChar": 27,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "19f0b9ce00fa5a3a840829a9494a043171c64aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
