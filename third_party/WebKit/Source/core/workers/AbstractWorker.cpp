@@ -43,11 +43,12 @@ AbstractWorker::AbstractWorker(ExecutionContext* context)
 
 AbstractWorker::~AbstractWorker() {}
 
-KURL AbstractWorker::ResolveURL(const String& url,
+// static
+KURL AbstractWorker::ResolveURL(ExecutionContext* execution_context,
+                                const String& url,
                                 ExceptionState& exception_state,
                                 WebURLRequest::RequestContext request_context) {
-  // FIXME: This should use the dynamic global scope (bug #27887)
-  KURL script_url = GetExecutionContext()->CompleteURL(url);
+  KURL script_url = execution_context->CompleteURL(url);
   if (!script_url.IsValid()) {
     exception_state.ThrowDOMException(kSyntaxError,
                                       "'" + url + "' is not a valid URL.");
@@ -58,21 +59,19 @@ KURL AbstractWorker::ResolveURL(const String& url,
   // happen synchronously before redirection. JavaScript receives no new
   // information.
   if (!script_url.ProtocolIsData() &&
-      !GetExecutionContext()->GetSecurityOrigin()->CanRequestNoSuborigin(
+      !execution_context->GetSecurityOrigin()->CanRequestNoSuborigin(
           script_url)) {
     exception_state.ThrowSecurityError(
         "Script at '" + script_url.ElidedString() +
         "' cannot be accessed from origin '" +
-        GetExecutionContext()->GetSecurityOrigin()->ToString() + "'.");
+        execution_context->GetSecurityOrigin()->ToString() + "'.");
     return KURL();
   }
 
-  if (GetExecutionContext()->GetContentSecurityPolicy() &&
-      !(GetExecutionContext()
-            ->GetContentSecurityPolicy()
+  if (execution_context->GetContentSecurityPolicy() &&
+      !(execution_context->GetContentSecurityPolicy()
             ->AllowRequestWithoutIntegrity(request_context, script_url) &&
-        GetExecutionContext()
-            ->GetContentSecurityPolicy()
+        execution_context->GetContentSecurityPolicy()
             ->AllowWorkerContextFromSource(script_url))) {
     exception_state.ThrowSecurityError(
         "Access to the script at '" + script_url.ElidedString() +
