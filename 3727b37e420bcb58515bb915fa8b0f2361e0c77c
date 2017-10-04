@@ -34,6 +34,24 @@
       "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c819f881_c42ab4bf",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T08:09:57Z",
+      "side": 1,
+      "message": "Yeah good point. I think I wrongly introduced this code from SWURLLoaderJob, where we fallback to the network because it\u0027s for main resource load.  Here we\u0027re always subresource load so we should just deliver error response...",
+      "parentUuid": "a31a1312_28fcfc5b",
+      "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
