@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04ce084c_9097046c",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T16:43:29Z",
+      "side": 1,
+      "message": "Keep these methods together without spaces. Also overloading AddBinding is fine. No need for an artificially unique method name.",
+      "revId": "03a5b407d78d99e27979d5de5181f32cab2a125a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
