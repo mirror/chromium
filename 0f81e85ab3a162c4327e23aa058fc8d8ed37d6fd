@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "006fe9a4_5557a561",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:29:17Z",
+      "side": 1,
+      "message": "WDYT? \"PDF Viewer: more precise bookmark navigation.\"",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49cac16_653b1498",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:29:17Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s better to have a separate event, or just the same event with an optional y-value.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8f30d8_a474beae",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 10
