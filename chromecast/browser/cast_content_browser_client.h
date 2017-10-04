@@ -113,6 +113,10 @@ class CastContentBrowserClient : public content::ContentBrowserClient {
   // on browser startup.
   virtual bool EnableRemoteDebuggingImmediately();
 
+  // Create device cert/key
+  virtual scoped_refptr<net::X509Certificate> DeviceCert();
+  virtual scoped_refptr<net::SSLPrivateKey> DeviceKey();
+
   // content::ContentBrowserClient implementation:
   content::BrowserMainParts* CreateBrowserMainParts(
       const content::MainFunctionParams& parameters) override;

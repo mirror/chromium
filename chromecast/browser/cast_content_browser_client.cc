@@ -265,6 +265,14 @@ bool CastContentBrowserClient::EnableRemoteDebuggingImmediately() {
   return true;
 }
 
+scoped_refptr<net::X509Certificate> CastContentBrowserClient::DeviceCert() {
+  return nullptr;
+}
+
+scoped_refptr<net::SSLPrivateKey> CastContentBrowserClient::DeviceKey() {
+  return nullptr;
+}
+
 content::BrowserMainParts* CastContentBrowserClient::CreateBrowserMainParts(
     const content::MainFunctionParams& parameters) {
   DCHECK(!cast_browser_main_parts_);
@@ -497,9 +505,7 @@ void CastContentBrowserClient::SelectClientCertificateOnIOThread(
   if (network_delegate->IsWhitelisted(requesting_url, render_process_id,
                                       false)) {
     original_runner->PostTask(
-        FROM_HERE,
-        base::Bind(continue_callback, CastNetworkDelegate::DeviceCert(),
-                   CastNetworkDelegate::DeviceKey()));
+        FROM_HERE, base::Bind(continue_callback, DeviceCert(), DeviceKey()));
     return;
   } else {
     LOG(ERROR) << "Invalid host for client certificate request: "
