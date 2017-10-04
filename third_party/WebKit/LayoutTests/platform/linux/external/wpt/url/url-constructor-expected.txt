@@ -26,7 +26,7 @@ PASS Parsing: <http://f: /c> against <http://example.org/foo/bar>
 PASS Parsing: <http://f:\n/c> against <http://example.org/foo/bar>
 PASS Parsing: <http://f:fifty-two/c> against <http://example.org/foo/bar>
 PASS Parsing: <http://f:999999/c> against <http://example.org/foo/bar>
-FAIL Parsing: <non-special://f:999999/c> against <http://example.org/foo/bar> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <non-special://f:999999/c> against <http://example.org/foo/bar> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://f: 21 / b ? d # e > against <http://example.org/foo/bar>
 PASS Parsing: <> against <http://example.org/foo/bar>
 PASS Parsing: <  	> against <http://example.org/foo/bar>
@@ -260,11 +260,11 @@ PASS Parsing: <file:...> against <http://www.example.com/test>
 PASS Parsing: <file:..> against <http://www.example.com/test>
 PASS Parsing: <file:a> against <http://www.example.com/test>
 PASS Parsing: <http://ExAmPlE.CoM> against <http://other.com/>
-FAIL Parsing: <http://example example.com> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <http://Goo%20 goo%7C|.com> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://example example.com> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://Goo%20 goo%7C|.com> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://[]> against <http://other.com/>
 PASS Parsing: <http://[:]> against <http://other.com/>
-FAIL Parsing: <http://GOO 　goo.com> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://GOO 　goo.com> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://GOO​⁠﻿goo.com> against <http://other.com/>
 PASS Parsing: <\0 http://example.com/ \r > against <about:blank>
 PASS Parsing: <http://www.foo。bar.com> against <http://other.com/>
@@ -274,8 +274,8 @@ PASS Parsing: <https://�> against <about:blank>
 PASS Parsing: <https://%EF%BF%BD> against <about:blank>
 FAIL Parsing: <https://x/�?�#�> against <about:blank> assert_equals: href expected "https://x/%EF%BF%BD?%EF%BF%BD#%EF%BF%BD" but got "https://x/%EF%BF%BD?%EF%BF%BD#\ufffd"
 PASS Parsing: <http://Ｇｏ.com> against <http://other.com/>
-FAIL Parsing: <http://％４１.com> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <http://%ef%bc%85%ef%bc%94%ef%bc%91.com> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://％４１.com> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://%ef%bc%85%ef%bc%94%ef%bc%91.com> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://％００.com> against <http://other.com/>
 PASS Parsing: <http://%ef%bc%85%ef%bc%90%ef%bc%90.com> against <http://other.com/>
 PASS Parsing: <http://你好你好> against <http://other.com/>
@@ -288,8 +288,8 @@ PASS Parsing: <http://%30%78%63%30%2e%30%32%35%30.01> against <http://other.com/
 PASS Parsing: <http://%30%78%63%30%2e%30%32%35%30.01%2e> against <http://other.com/>
 PASS Parsing: <http://192.168.0.257> against <http://other.com/>
 PASS Parsing: <http://%3g%78%63%30%2e%30%32%35%30%2E.01> against <http://other.com/>
-FAIL Parsing: <http://192.168.0.1 hello> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <https://x x:12> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://192.168.0.1 hello> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <https://x x:12> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://０Ｘｃ０．０２５０．０１> against <http://other.com/>
 PASS Parsing: <http://./> against <about:blank>
 PASS Parsing: <http://../> against <about:blank>
@@ -297,9 +297,9 @@ PASS Parsing: <http://0..0x300/> against <about:blank>
 PASS Parsing: <http://[www.google.com]/> against <about:blank>
 PASS Parsing: <http://[google.com]> against <http://other.com/>
 PASS Parsing: <http://[::1.2.3.4x]> against <http://other.com/>
-FAIL Parsing: <http://[::1.2.3.]> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <http://[::1.2.]> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <http://[::1.]> against <http://other.com/> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://[::1.2.3.]> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://[::1.2.]> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <http://[::1.]> against <http://other.com/> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <http://foo:💩@example.com/bar> against <http://other.com/>
 PASS Parsing: <#> against <test:test>
 PASS Parsing: <#x> against <mailto:x@x.com>
@@ -343,16 +343,16 @@ FAIL Parsing: <javascript:/../> against <about:blank> assert_equals: href expect
 FAIL Parsing: <mailto:/../> against <about:blank> assert_equals: href expected "mailto:/" but got "mailto:/../"
 FAIL Parsing: <sc://ñ.test/> against <about:blank> assert_equals: host expected "%C3%B1.test" but got ""
 FAIL Parsing: <sc://!"$&'()*+,-.;<=>^_`{|}~/> against <about:blank> assert_equals: host expected "%1F!\"$&'()*+,-.;<=>^_`{|}~" but got ""
-FAIL Parsing: <sc://\0/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc:// /> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://\0/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc:// /> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 FAIL Parsing: <sc://%/> against <about:blank> assert_equals: host expected "%" but got ""
-FAIL Parsing: <sc://@/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://te@s:t@/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://:/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://:12/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://[/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://\/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
-FAIL Parsing: <sc://]/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://@/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://te@s:t@/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://:/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://:12/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://[/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://\/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <sc://]/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 FAIL Parsing: <x> against <sc://ñ> Failed to construct 'URL': Invalid URL
 PASS Parsing: <sc:\../> against <about:blank>
 PASS Parsing: <sc::a@example.net> against <about:blank>
@@ -482,7 +482,7 @@ FAIL Parsing: <non-special://H%4fSt/path> against <about:blank> assert_equals: h
 FAIL Parsing: <non-special://[1:2:0:0:5:0:0:0]/> against <about:blank> assert_equals: href expected "non-special://[1:2:0:0:5::]/" but got "non-special://[1:2:0:0:5:0:0:0]/"
 FAIL Parsing: <non-special://[1:2:0:0:0:0:0:3]/> against <about:blank> assert_equals: href expected "non-special://[1:2::3]/" but got "non-special://[1:2:0:0:0:0:0:3]/"
 FAIL Parsing: <non-special://[1:2::3]:80/> against <about:blank> assert_equals: host expected "[1:2::3]:80" but got ""
-FAIL Parsing: <non-special://[:80/> against <about:blank> assert_throws: function "function () {\n          bURL(expected.input, expected.base)\n        }" did not throw
+FAIL Parsing: <non-special://[:80/> against <about:blank> assert_throws: function "function() {\n          bURL(expected.input, expected.base)\n        }" did not throw
 PASS Parsing: <blob:https://example.com:443/> against <about:blank>
 PASS Parsing: <blob:d3958f5c-0777-0845-9dcf-2cb28783acaf> against <about:blank>
 PASS Parsing: <http://0177.0.0.0189> against <about:blank>
