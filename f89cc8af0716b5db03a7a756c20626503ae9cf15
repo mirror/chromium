@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc57a926_58be60e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-04T09:08:54Z",
+      "side": 1,
+      "message": "Yes, we were discussing triggering Scroll To Load when an item is removed through NewTabPageAdapters#onItemRangeRemoved, which got triggered a once or twice (depending on whether you had suggestions) when you opened the Bottom Sheet.\n\nSince onItemRangeRemoved calls updateAllDismissedVisibilty, this is a related issue. Although I assume there is a reason we do not know what suggestions there are when we originally create the NewTabPageAdapter.",
+      "parentUuid": "295cce46_a63621a5",
+      "range": {
+        "startLine": 15,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 11
+      },
+      "revId": "f89cc8af0716b5db03a7a756c20626503ae9cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e80d3677_84eb4a7c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-03T17:07:18Z",
       "side": 1,
       "message": "This is an interface now, so you can use a lambda 😊",
+      "range": {
+        "startLine": 27,
+        "startChar": 12,
+        "endLine": 27,
+        "endChar": 44
+      },
+      "revId": "f89cc8af0716b5db03a7a756c20626503ae9cf15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ae32f5c_728dcff2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/AllDismissedItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-04T09:08:54Z",
+      "side": 1,
+      "message": "Done! Though I hit this issue which I hadn\u0027t come across before: https://stackoverflow.com/q/24509441",
+      "parentUuid": "e80d3677_84eb4a7c",
       "range": {
         "startLine": 27,
         "startChar": 12,
