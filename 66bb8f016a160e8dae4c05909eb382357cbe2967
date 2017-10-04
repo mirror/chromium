@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e92d87_4a7c096f",
+        "filename": "extensions/renderer/message_target.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T20:31:59Z",
+      "side": 1,
+      "message": "I thought about having fun and using a union here, or going with a full class hierarchy (ExtensionMessageTarget, AppMessageTarget, TabMessageTarget), but both came out significantly over-architected.  This was far simpler, even though the \"valid only for TYPE::\" comments are a bit of a shame.",
+      "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
