@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd0c0d18_304a992a",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-04T20:43:27Z",
+      "side": 1,
+      "message": "is this an optional protobuf entry? I\u0027d prefer to not populate it if we don\u0027t have it, e.g. using base::Optional or any other method like that.",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26abe62_29a71cc4",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-04T20:43:27Z",
+      "side": 1,
+      "message": "can we check to make sure this has a reasonable value? e.g. between 0 and 1000s seconds",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38238ed7_903c3e1c",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-04T20:43:27Z",
+      "side": 1,
+      "message": "does it make sense to call this with nullptr connection? Is that ever possible? Maybe just DCHECK?",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f8abee_d932c6e1",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-04T20:43:27Z",
+      "side": 1,
+      "message": "you don\u0027t need this - that\u0027s only if you want the gpu process to get an interfaceptr to the ProcessCU.",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
