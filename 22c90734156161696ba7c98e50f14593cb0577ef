@@ -22,6 +22,30 @@
       "revId": "22c90734156161696ba7c98e50f14593cb0577ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a4e0209_aab08026",
+        "filename": "testing/libfuzzer/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-04T15:09:11Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "9d77ef3c_914faf15",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 66
+      },
+      "revId": "22c90734156161696ba7c98e50f14593cb0577ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
