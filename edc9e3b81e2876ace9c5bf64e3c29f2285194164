@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea92ff99_2555f1b3",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T16:22:06Z",
+      "side": 1,
+      "message": "Oops, definitely. Done.",
+      "parentUuid": "cbb87e58_96201052",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be358dbe_4e0dc730",
         "filename": "components/arc/common/voice_interaction_arc_home.mojom",
         "patchSetId": 1
@@ -57,6 +81,24 @@
       "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec34dcd_698fb0c1",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T16:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3395a0bb_fdafb209",
+      "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
