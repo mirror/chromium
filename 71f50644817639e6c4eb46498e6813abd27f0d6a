@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acca2182_6b8dd93c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceEntry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "This nested ternary is pretty hard to parse. Maybe expand it into an if statement or two?",
+      "range": {
+        "startLine": 92,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 60
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f674b0_a10811b7",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceEntry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "Should these be size_t?",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 10
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6777742a_7097a9fb",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceEntry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "Maybe max_index_?",
+      "range": {
+        "startLine": 116,
+        "startChar": 18,
+        "endLine": 116,
+        "endChar": 33
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d5a0348_542a3af5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "namespace {\nINSERT BLANK LINE\n...\nINSERT BLANK LINE\n} // namespace",
+      "range": {
+        "startLine": 19,
+        "startChar": 9,
+        "endLine": 19,
+        "endChar": 11
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4f4775_09f6afe2",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "Forward -\u003e Advance",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 14
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149fb259_3661a52a",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "Add a comment describing why we need this test, and possibly linking to the bug.",
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9291bbe6_c3645bc5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "We don\u0027t use C style casts, so use static_cast\u003cint\u003e instead.\n\nAlthough, in this case, I think you really just want:\nEXPECT_EQ(17U, entries.size())",
+      "range": {
+        "startLine": 204,
+        "startChar": 16,
+        "endLine": 204,
+        "endChar": 21
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96732760_03753c29",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T18:56:27Z",
+      "side": 1,
+      "message": "This is awkwardly specific. Why?\nCan we just use EXPECT_NEAR?",
+      "range": {
+        "startLine": 207,
+        "startChar": 21,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "71f50644817639e6c4eb46498e6813abd27f0d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
