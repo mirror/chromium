@@ -344,8 +344,14 @@ ServiceManagerContext::ServiceManagerContext() {
 
   // Pipe embedder-supplied API key through to GeolocationProvider.
   // TODO(amoylan): Once GeolocationProvider hangs off DeviceService
-  // (https://crbug.com/709301), pass this via CreateDeviceService above
+  // (https://crbug.com/709301), pass these via CreateDeviceService above
   // instead.
+  // TODO(amoylan): Confirm the following empirical observation:
+  // GetContentClient()->browser() is owned by a ContentMainDelegate that is
+  // scoped to main().
+  device::GeolocationProvider::SetRequestContextProducer(
+      base::BindRepeating(&ContentBrowserClient::GetGeolocationRequestContext,
+                          base::Unretained(GetContentClient()->browser())));
   device::GeolocationProvider::SetApiKey(
       GetContentClient()->browser()->GetGeolocationApiKey());
 
