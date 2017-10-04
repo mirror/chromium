@@ -33,6 +33,8 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/gpu/interfaces/gpu_host.mojom.h"
 #include "services/ui/gpu/interfaces/gpu_main.mojom.h"
+#include "services/ui/public/interfaces/gpu.mojom.h"
+#include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
 #include "services/viz/privileged/interfaces/gl/gpu_service.mojom.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/gpu_memory_buffer.h"
@@ -53,6 +55,7 @@ struct SyncToken;
 
 namespace content {
 class BrowserChildProcessHostImpl;
+class GpuFoo;
 
 class GpuProcessHost : public BrowserChildProcessHostDelegate,
                        public IPC::Sender,
@@ -147,6 +150,12 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const gpu::SyncToken& sync_token);
+
+  // Connects to FrameSinkManager in viz process.
+  void ConnectFrameSinkManager(viz::mojom::FrameSinkManagerRequest request,
+                               viz::mojom::FrameSinkManagerClientPtr client);
+
+  void BindGpuRequest(ui::mojom::GpuRequest request);
 
   void RequestGPUInfo(RequestGPUInfoCallback request_cb);
 
@@ -309,6 +318,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   viz::mojom::GpuServicePtr gpu_service_ptr_;
   mojo::Binding<ui::mojom::GpuHost> gpu_host_binding_;
   gpu::GpuProcessHostActivityFlags activity_flags_;
+
+  std::unique_ptr<GpuFoo> gpu_foo_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 

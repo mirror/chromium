@@ -32,6 +32,7 @@
 #include "content/browser/field_trial_recorder.h"
 #include "content/browser/gpu/compositor_util.h"
 #include "content/browser/gpu/gpu_data_manager_impl.h"
+#include "content/browser/gpu/gpu_foo.h"
 #include "content/browser/gpu/gpu_main_thread_factory.h"
 #include "content/browser/gpu/shader_cache_factory.h"
 #include "content/browser/service_manager/service_manager_context.h"
@@ -80,7 +81,6 @@
 #if defined(OS_WIN)
 #include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
-#include "ui/gfx/switches.h"
 #include "ui/gfx/win/rendering_window_manager.h"
 #endif
 
@@ -736,6 +736,19 @@ void GpuProcessHost::DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                                             const gpu::SyncToken& sync_token) {
   TRACE_EVENT0("gpu", "GpuProcessHost::DestroyGpuMemoryBuffer");
   gpu_service_ptr_->DestroyGpuMemoryBuffer(id, client_id, sync_token);
+}
+
+void GpuProcessHost::ConnectFrameSinkManager(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtr client) {
+  TRACE_EVENT0("gpu", "GpuProcessHost::ConnectFrameSinkManager");
+  gpu_main_ptr_->CreateFrameSinkManager(std::move(request), std::move(client));
+}
+
+void GpuProcessHost::BindGpuRequest(ui::mojom::GpuRequest request) {
+  if (!gpu_foo_)
+    gpu_foo_ = std::make_unique<GpuFoo>();
+  gpu_foo_->BindGpuRequest(std::move(request));
 }
 
 void GpuProcessHost::RequestGPUInfo(RequestGPUInfoCallback request_cb) {

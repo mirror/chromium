@@ -15,7 +15,7 @@ namespace content {
 
 class GpuClient : public ui::mojom::Gpu {
  public:
-  explicit GpuClient(int render_process_id);
+  explicit GpuClient(int render_process_id, bool privileged = false);
   ~GpuClient() override;
 
   void Add(ui::mojom::GpuRequest request);
@@ -48,6 +48,7 @@ class GpuClient : public ui::mojom::Gpu {
                               const gpu::SyncToken& sync_token) override;
 
   const int render_process_id_;
+  const bool privileged_;
   mojo::BindingSet<ui::mojom::Gpu> bindings_;
   base::WeakPtrFactory<GpuClient> weak_factory_;
 
