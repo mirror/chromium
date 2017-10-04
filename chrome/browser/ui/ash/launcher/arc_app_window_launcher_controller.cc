@@ -502,6 +502,35 @@ ArcAppWindowLauncherController::ControllerForWindow(aura::Window* window) {
   return nullptr;
 }
 
+AppWindowLauncherItemController*
+ArcAppWindowLauncherController::ControllerForShelfId(const ash::ShelfID& id) {
+  for (auto& it : task_id_to_app_window_info_) {
+    ArcAppWindow* app_window = it.second->app_window();
+    if (app_window && app_window->shelf_id() == id)
+      return app_window->controller();
+  }
+  return nullptr;
+}
+
+void ArcAppWindowLauncherController::OnItemControllerDiscarded(
+    AppWindowLauncherItemController* controller) {
+  for (auto& it : task_id_to_app_window_info_) {
+    ArcAppWindow* app_window = it.second->app_window();
+    if (!app_window || app_window->controller() != controller)
+      continue;
+
+    VLOG(1) << "Item controller was released externally for the app "
+            << controller->shelf_id().app_id << ".";
+
+    auto it_controller =
+        app_shelf_group_to_controller_map_.find(app_window->app_shelf_id());
+    if (it_controller != app_shelf_group_to_controller_map_.end())
+      app_shelf_group_to_controller_map_.erase(it_controller);
+
+    UnregisterApp(it.second.get());
+  }
+}
+
 void ArcAppWindowLauncherController::OnArcOptInManagementCheckStarted() {
   // In case of retry this time is updated and we measure only successful run.
   opt_in_management_check_start_time_ = base::Time::Now();

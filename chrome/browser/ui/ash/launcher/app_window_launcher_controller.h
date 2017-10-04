@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "ash/public/cpp/shelf_model_observer.h"
 #include "base/macros.h"
 #include "ui/wm/public/activation_change_observer.h"
 
@@ -22,7 +23,8 @@ namespace wm {
 class ActivationClient;
 }
 
-class AppWindowLauncherController : public wm::ActivationChangeObserver {
+class AppWindowLauncherController : public wm::ActivationChangeObserver,
+                                    public ash::ShelfModelObserver {
  public:
   ~AppWindowLauncherController() override;
 
@@ -46,11 +48,26 @@ class AppWindowLauncherController : public wm::ActivationChangeObserver {
 
   virtual AppWindowLauncherItemController* ControllerForWindow(
       aura::Window* window) = 0;
+  virtual AppWindowLauncherItemController* ControllerForShelfId(
+      const ash::ShelfID& id) = 0;
+  virtual void OnItemControllerDiscarded(
+      AppWindowLauncherItemController* controller) = 0;
 
  private:
   // Unowned pointers.
   ChromeLauncherController* owner_;
   wm::ActivationClient* activation_client_ = nullptr;
+
+  // ash::ShelfModelObserver:
+  void ShelfItemAdded(int model_index) override;
+  void ShelfItemRemoved(int model_index,
+                        const ash::ShelfItem& old_item) override;
+  void ShelfItemChanged(int model_index,
+                        const ash::ShelfItem& old_item) override;
+  void ShelfItemMoved(int start_index, int target_index) override;
+  void ShelfItemDelegateChanged(const ash::ShelfID& id,
+                                ash::ShelfItemDelegate* old_delegate,
+                                ash::ShelfItemDelegate* delegate) override;
 
   DISALLOW_COPY_AND_ASSIGN(AppWindowLauncherController);
 };

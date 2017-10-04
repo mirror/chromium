@@ -30,8 +30,10 @@ class ASH_PUBLIC_EXPORT ShelfModelObserver {
   // Invoked after an item changes. |old_item| is the item before the change.
   virtual void ShelfItemChanged(int index, const ShelfItem& old_item) = 0;
 
-  // Invoked after a delegate changes. |delegate| is the new value.
+  // Invoked after a delegate changes. |delegate| is the new value and
+  // |old_delegate| is the previous value.
   virtual void ShelfItemDelegateChanged(const ShelfID& id,
+                                        ShelfItemDelegate* old_delegate,
                                         ShelfItemDelegate* delegate) = 0;
 
  protected:
