@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b6c62722_39c745cb",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T14:07:24Z",
+      "side": 1,
+      "message": "These calls are from other processes, through the mojo API, through the bindings (Which are added in AddRequest).  Since bindings are only created on the main thread, all calls to this will also be on the main thread.  I don\u0027t think there\u0027s a need to add sequence checkers to every class dealing with Mojo in the network process, and I don\u0027t think that this one is special in any way that makes it more of a concern.",
+      "parentUuid": "dab3cd63_a3c2cfbf",
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1733149e_17d9406a",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 12
