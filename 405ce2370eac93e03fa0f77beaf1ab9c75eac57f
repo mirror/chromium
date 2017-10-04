@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85aa3a12_eceb5587",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-04T23:55:08Z",
+      "side": 1,
+      "message": "Change this to 8 seconds. Empirical evidence shows that bluez may take up to 6 seconds for GATT service discovery so 6+2 seconds timeout should be safe enough.",
+      "range": {
+        "startLine": 43,
+        "startChar": 50,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "405ce2370eac93e03fa0f77beaf1ab9c75eac57f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d23dd31_79a19d12",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1181214
+      },
+      "writtenOn": "2017-10-04T23:55:08Z",
+      "side": 1,
+      "message": "s/waitingn/waiting/",
+      "range": {
+        "startLine": 122,
+        "startChar": 15,
+        "endLine": 122,
+        "endChar": 23
+      },
+      "revId": "405ce2370eac93e03fa0f77beaf1ab9c75eac57f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
