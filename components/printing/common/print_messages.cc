@@ -41,7 +41,7 @@ PrintMsg_Print_Params::PrintMsg_Print_Params()
       printable_area(),
       margin_top(0),
       margin_left(0),
-      dpi(0),
+      dpi(),
       scale_factor(1.0f),
       rasterize_pdf(false),
       document_cookie(0),
@@ -69,7 +69,7 @@ void PrintMsg_Print_Params::Reset() {
   printable_area = gfx::Rect();
   margin_top = 0;
   margin_left = 0;
-  dpi = 0;
+  dpi = gfx::Size();
   scale_factor = 1.0f;
   rasterize_pdf = false;
   document_cookie = 0;
