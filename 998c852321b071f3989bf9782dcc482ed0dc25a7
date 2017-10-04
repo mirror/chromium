@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e4d71d_5319876f",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-10-04T08:25:30Z",
+      "side": 1,
+      "message": "This line appears to be causing presubmit errors for me on my CL, https://chromium-review.googlesource.com/c/chromium/src/+/699023. The failing build is https://build.chromium.org/p/tryserver.chromium.linux/builders/chromium_presubmit/builds/555378. My CL doesn\u0027t add anything with this configuration.",
+      "revId": "998c852321b071f3989bf9782dcc482ed0dc25a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
