@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db957899_82d85806",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T18:56:30Z",
+      "side": 1,
+      "message": "Do we want to gzip first, and then chmod the .gz file?",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f91be9_cd1b2750",
+        "filename": "chrome/installer/linux/rpm/chrome.spec.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T18:56:30Z",
+      "side": 1,
+      "message": "These 2 are going to be duplicates for non-stable channels, right?",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284c8bdd_4a923e79",
+        "filename": "chrome/installer/linux/rpm/lint_package.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T18:56:30Z",
+      "side": 1,
+      "message": "No longer used.",
+      "revId": "ac19118282dadd29a486d8ad4feb628fff1ac875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
