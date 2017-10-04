@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ac6721_f40e0141",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-04T18:34:37Z",
+      "side": 1,
+      "message": "hmm, i like the idea of keeping install/uninstall in one place but there\u0027s still a risk of double-reporting so I think I like how you had it before where installing new handler replaces the other (of course, it has the downside of tying us to current impl by coupling the native reporter to the early one)",
+      "range": {
+        "startLine": 519,
+        "startChar": 12,
+        "endLine": 519,
+        "endChar": 36
+      },
+      "revId": "a47166231b57bc3f3a2d17d8d1a15d0a05b886d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8f2937_1ceb7e9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-04T18:34:37Z",
+      "side": 1,
+      "message": "think this is still too late. We want to capture earlier exceptions during app init (e.g. we recently had a crash in the code checking to see whether we shoudl trigger first-run)",
+      "range": {
+        "startLine": 1382,
+        "startChar": 8,
+        "endLine": 1382,
+        "endChar": 32
+      },
+      "revId": "a47166231b57bc3f3a2d17d8d1a15d0a05b886d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
