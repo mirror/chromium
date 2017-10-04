@@ -1285,6 +1285,9 @@ extern const char kDisableLockScreenAppsDescription[];
 extern const char kDisableNewVirtualKeyboardBehaviorName[];
 extern const char kDisableNewVirtualKeyboardBehaviorDescription[];
 
+extern const char kDisableTabletAutohideTitlebarsName[];
+extern const char kDisableTabletAutohideTitlebarsDescription[];
+
 extern const char kDisableSystemTimezoneAutomaticDetectionName[];
 extern const char kDisableSystemTimezoneAutomaticDetectionDescription[];
 

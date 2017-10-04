@@ -21,6 +21,7 @@ ASH_EXPORT extern const char kAshCopyHostBackgroundAtBoot[];
 ASH_EXPORT extern const char kAshDebugShortcuts[];
 ASH_EXPORT extern const char kAshDeveloperShortcuts[];
 ASH_EXPORT extern const char kAshDisableSmoothScreenRotation[];
+ASH_EXPORT extern const char kAshDisableTabletAutohideTitlebars[];
 ASH_EXPORT extern const char kAshDisableTouchExplorationMode[];
 ASH_EXPORT extern const char kAshEnableMagnifierKeyScroller[];
 ASH_EXPORT extern const char kAshEnableNightLight[];

@@ -2033,9 +2033,14 @@ const char kDisableLockScreenAppsDescription[] =
 
 const char kFirstRunUiTransitionsName[] =
     "Animated transitions in the first-run tutorial";
-
 const char kFirstRunUiTransitionsDescription[] =
     "Transitions during first-run tutorial are animated.";
+
+const char kDisableTabletAutohideTitlebarsName[] =
+    "Disable autohide titlebars in tablet mode";
+const char kDisableTabletAutohideTitlebarsDescription[] =
+    "Disable tablet mode autohide titlebars functionality. The user will be "
+    "able to see the titlebar in tablet mode.";
 
 #endif  // defined(OS_CHROMEOS)
 
