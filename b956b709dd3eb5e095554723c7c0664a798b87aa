@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1e66d7b_4235ed9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "Do we need this check since we\u0027re already doing it above?\n\nAlso, we fire nativeDisplayActivate when setListeningForWebVrActivate is called. Is that going to be a problem? I assume not because we haven\u0027t lost focus due to DON?",
+      "range": {
+        "startLine": 761,
+        "startChar": 24,
+        "endLine": 761,
+        "endChar": 46
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fec1a306_5fb9b4c4",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "We don\u0027t need to post here because we haven\u0027t lost focus and onPause won\u0027t be called? I wonder if we could just post regardless.",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 27
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5c1eff_0dc6efc2",
+        "filename": "chrome/browser/vr/service/vr_display_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "this logic seems new? Was adding this in CL intentional?",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f39375_c10d9bae",
+        "filename": "chrome/browser/vr/service/vr_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "nit: add helper to call from OnWebContents[Focused|LostFocus]?",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaf9d6c_f1cbcd11",
+        "filename": "device/vr/android/gvr/gvr_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "should not be public.",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5023aca_47af3304",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-10-04T03:58:07Z",
+      "side": 1,
+      "message": "nit: this in its current state sounds like a boolean.",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 40
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
