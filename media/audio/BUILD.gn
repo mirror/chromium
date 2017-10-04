@@ -405,6 +405,7 @@ source_set("unit_tests") {
 
     if (use_cras) {
       sources += [
+        "cras/audio_manager_cras_unittest.cc",
         "cras/cras_input_unittest.cc",
         "cras/cras_unified_unittest.cc",
       ]
