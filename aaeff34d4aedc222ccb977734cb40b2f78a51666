@@ -335,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "442898ef_d3ab6c81",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:07:27Z",
+      "side": 1,
+      "message": "I misunderstood your question. It\u0027s rather hard to attempt to consistently order these functions in a way that relates to that of WindowTree. So, I\u0027m going to leave this as is.",
+      "parentUuid": "2d472e4e_18e224c4",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9fd810b_56775509",
         "filename": "services/ui/ws/window_tree_client_unittest.cc",
         "patchSetId": 2
@@ -346,6 +364,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "nit: block comment, like \"Schedule an embed for client3 on [the root|wt_client1\u0027s] WindowTree.\"",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49be4de3_b597550b",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:07:27Z",
+      "side": 1,
+      "message": "Updated.",
+      "parentUuid": "c9fd810b_56775509",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

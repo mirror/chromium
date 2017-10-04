@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d978641_1e1332cb",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:07:27Z",
+      "side": 1,
+      "message": "The current security model is that only the client embedded in a window can parent windows to the embed window and its descendants (which the embedded client created). If an embedded client embeds another client in one of it\u0027s windows, then similarly only the newly embedded client can parent windows to the embedded embed point.\nFor example. Consider the hierarchy:\nA1\n|\nA2\n|\nA3\n\nA3 is a child of A2 and A2 is a child A1. If client A embeds client B in A2, then this implicitly removes A3 from A2, resulting in (A3 has no parent at this point):\n\nA1\n|\nA2\n\nAny attempts by client A to parent one its windows in A2 fails (because client B is embedded in it). B is the only client that can now parent windows to A2. So, if client B adds B1 to A2 we end up with:\n\nA1\n|\nA2\n|\nB1\n\nclient A (assuming its not the window manager) does not see B1 as a child of A2. In fact client A doesn\u0027t even know about B1.\n\nSo, to your question, the only way to get what you are outlining to work would be to change the security policy and potentially change the ownership as well.",
+      "parentUuid": "1667315c_82a04a34",
+      "revId": "142d7494ccc37d126fa33b83c6e324a82d07d4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70334911_33e1381b",
         "filename": "services/ui/ws/window_tree_client_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "142d7494ccc37d126fa33b83c6e324a82d07d4b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9eae17_bda20c8b",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:07:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70334911_33e1381b",
+      "revId": "142d7494ccc37d126fa33b83c6e324a82d07d4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
