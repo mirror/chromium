@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b6c1842_041dc508",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-04T18:51:41Z",
+      "side": 1,
+      "message": "The indicies should be correct as the space gets its own inline text box node. We need to take a look at the accessibility tree for your specific example.",
+      "revId": "eaea5ae96e19e95cb9561c6f0abad8c19953b34e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
