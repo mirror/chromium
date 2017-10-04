@@ -112,7 +112,7 @@ void DynamicImportTreeClient::NotifyModuleTreeLoadFinished(
 
   // Step 2.c. "Assert: ModuleEvaluation has already been invoked on
   // moduleRecord and successfully completed." [spec text]
-  DCHECK_EQ(ScriptModuleState::kEvaluated, modulator_->GetRecordStatus(record));
+  DCHECK_EQ(ScriptModuleState::kEvaluated, record.Status(script_state));
 
   // Step 2.d. "Let namespace be GetModuleNamespace(moduleRecord)." [spec text]
   v8::Local<v8::Value> module_namespace = record.V8Namespace(isolate);

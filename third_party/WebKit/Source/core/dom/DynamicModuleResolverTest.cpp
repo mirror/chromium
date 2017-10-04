@@ -73,19 +73,6 @@ class DynamicModuleResolverTestModulator final : public DummyModulator {
                                             CaptureEvalErrorFlag::kCapture);
   }
 
-  ScriptModuleState GetRecordStatus(ScriptModule script_module) final {
-    ScriptState::Scope scope(script_state_.get());
-    return script_module.Status(script_state_.get());
-  }
-
-  ScriptValue GetError(const ModuleScript* module_script) final {
-    ScriptState::Scope scope(script_state_.get());
-    ScriptModule record = module_script->Record();
-    DCHECK(!record.IsNull());
-    return ScriptValue(script_state_.get(),
-                       record.ErrorCompletion(script_state_.get()));
-  }
-
   RefPtr<ScriptState> script_state_;
   Member<ModuleTreeClient> pending_client_;
 };
@@ -215,8 +202,7 @@ TEST(DynamicModuleResolverTest, ResolveSuccess) {
   ModuleScript* module_script = ModuleScript::CreateForTest(
       modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
       WebURLRequest::kFetchCredentialsModeOmit);
-  record.Instantiate(scope.GetScriptState());
-  EXPECT_FALSE(module_script->IsErrored());
+  EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 
   v8::MicrotasksScope::PerformCheckpoint(scope.GetIsolate());
@@ -297,8 +283,7 @@ TEST(DynamicModuleResolverTest, ExceptionThrown) {
   ModuleScript* module_script = ModuleScript::CreateForTest(
       modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
       WebURLRequest::kFetchCredentialsModeOmit);
-  record.Instantiate(scope.GetScriptState());
-  EXPECT_FALSE(module_script->IsErrored());
+  EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 
   v8::MicrotasksScope::PerformCheckpoint(scope.GetIsolate());
@@ -336,8 +321,7 @@ TEST(DynamicModuleResolverTest, ResolveWithNullReferrerScriptSuccess) {
   ModuleScript* module_script = ModuleScript::CreateForTest(
       modulator, record, TestDependencyURL(), "nonce", kNotParserInserted,
       WebURLRequest::kFetchCredentialsModeOmit);
-  record.Instantiate(scope.GetScriptState());
-  EXPECT_FALSE(module_script->IsErrored());
+  EXPECT_TRUE(record.Instantiate(scope.GetScriptState()).IsEmpty());
   modulator->ResolveTreeFetch(module_script);
 
   v8::MicrotasksScope::PerformCheckpoint(scope.GetIsolate());
