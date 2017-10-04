@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "035a02aa_c28d2b02",
+        "filename": "chrome/browser/usb/usb_chooser_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T20:04:13Z",
+      "side": 1,
+      "message": "Can we hard-code an expected name here? Otherwise breakage in FormatUsbDeviceName won\u0027t be detected.",
+      "revId": "f441a8cecb45ade61d7a7fa6d12f1f57da2dc981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
