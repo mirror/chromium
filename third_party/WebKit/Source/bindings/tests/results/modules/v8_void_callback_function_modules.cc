@@ -30,13 +30,10 @@ V8VoidCallbackFunctionModules* V8VoidCallbackFunctionModules::Create(ScriptState
 }
 
 V8VoidCallbackFunctionModules::V8VoidCallbackFunctionModules(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8VoidCallbackFunctionModules) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8VoidCallbackFunctionModules::call(ScriptWrappable* scriptWrappable) {
