@@ -42,6 +42,15 @@ bool IsAccountManaged(Profile* profile);
 // Returns true if ARC is disabled by --enterprise-diable-arc flag.
 bool IsArcDisabledForEnterprise();
 
+// Returns the default ecryptfs migration action.
+// |managed_user| specifies if the user is managed by policy.
+// |active_directory_user| specifies if the user authenticates with active
+// directory. We have a separate default for active directory users, as these
+// are assumed to be enterprise users.
+EcryptfsMigrationAction GetDefaultEcryptfsMigrationAction(
+    bool managed_user,
+    bool active_directory_user);
+
 }  // namespace policy_util
 }  // namespace arc
 
