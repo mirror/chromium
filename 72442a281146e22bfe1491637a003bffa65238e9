@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e881ae05_f9d0aee5",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-04T19:50:09Z",
+      "side": 1,
+      "message": "Nit: maybe mention in a comment that INT_MAX is used by tests?",
+      "range": {
+        "startLine": 473,
+        "startChar": 32,
+        "endLine": 473,
+        "endChar": 62
+      },
+      "revId": "72442a281146e22bfe1491637a003bffa65238e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
