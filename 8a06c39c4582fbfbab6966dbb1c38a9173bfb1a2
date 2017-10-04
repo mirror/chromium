@@ -16,6 +16,24 @@
       "revId": "8a06c39c4582fbfbab6966dbb1c38a9173bfb1a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30c9151d_9bd15a73",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-04T16:54:44Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "81ec6c50_1c8e2de2",
+      "revId": "8a06c39c4582fbfbab6966dbb1c38a9173bfb1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
