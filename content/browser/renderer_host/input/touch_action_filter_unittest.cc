@@ -715,6 +715,31 @@ TEST(TouchActionFilterTest, TouchActionResetsOnResetTouchAction) {
   EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
 }
 
+TEST(TouchActionFilterTest, PinchAfterOneFingerScroll) {
+  TouchActionFilter filter;
+
+  WebGestureEvent scroll_begin =
+      SyntheticWebGestureEventBuilder::BuildScrollBegin(2, 3, kSourceDevice);
+  WebGestureEvent scroll_update =
+      SyntheticWebGestureEventBuilder::BuildScrollUpdate(0, 5, 0,
+                                                         kSourceDevice);
+  WebGestureEvent pinch_begin = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGesturePinchBegin, kSourceDevice);
+  WebGestureEvent pinch_update =
+      SyntheticWebGestureEventBuilder::BuildPinchUpdate(1.2f, 5, 5, 0,
+                                                        kSourceDevice);
+  WebGestureEvent pinch_end = SyntheticWebGestureEventBuilder::Build(
+      WebInputEvent::kGesturePinchEnd, kSourceDevice);
+
+  filter.ResetTouchAction();
+  filter.OnSetTouchAction(cc::kTouchActionPan);
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_begin));
+  EXPECT_FALSE(filter.FilterGestureEvent(&scroll_update));
+  EXPECT_TRUE(filter.FilterGestureEvent(&pinch_begin));
+  EXPECT_TRUE(filter.FilterGestureEvent(&pinch_update));
+  EXPECT_TRUE(filter.FilterGestureEvent(&pinch_end));
+}
+
 TEST(TouchActionFilterTest, TouchActionResetMidSequence) {
   TouchActionFilter filter;
 

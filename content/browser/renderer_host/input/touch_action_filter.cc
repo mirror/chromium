@@ -104,6 +104,8 @@ bool TouchActionFilter::FilterGestureEvent(WebGestureEvent* gesture_event) {
     case WebInputEvent::kGesturePinchBegin:
     case WebInputEvent::kGesturePinchUpdate:
     case WebInputEvent::kGesturePinchEnd:
+      suppress_manipulation_events_ =
+          ((allowed_touch_action_ & cc::kTouchActionPinchZoom) == 0);
       ReportGestureEventFiltered(suppress_manipulation_events_);
       return suppress_manipulation_events_;
 
