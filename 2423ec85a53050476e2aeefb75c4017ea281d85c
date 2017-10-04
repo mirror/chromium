@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77ba5f72_3d3a8956",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-04T17:00:12Z",
+      "side": 1,
+      "message": "-loadModel gets called when we return from a PaymentRequestSelectionCoordinator (e.g. credit_card_edit_coordinator.mm, in -billingAddressSelectionCoordinator:didSelectBillingAddress:). This ensures we display validation errors when the model gets reloaded.",
+      "parentUuid": "add3d5dd_8037fa6d",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 3
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf62134_a25c99e4",
         "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T15:33:42Z",
       "side": 1,
       "message": "Why can\u0027t you set field.pristine \u003d NO; at the end of this method and have a pristine check around [self validateField:field];?\nThat way the first time around the field doesn\u0027t get validated but the following times it will.",
+      "range": {
+        "startLine": 574,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 27
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31c056e_ea91a63f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-04T17:00:12Z",
+      "side": 1,
+      "message": "It would be weird for the field to be validated on second change, no? We only enter this method after first change, so I think the current implementation works.",
+      "parentUuid": "5bf62134_a25c99e4",
       "range": {
         "startLine": 574,
         "startChar": 2,
@@ -68,6 +116,30 @@
       "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f377da_af4e30b8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1115957
+      },
+      "writtenOn": "2017-10-04T17:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ff8b68_97336190",
+      "range": {
+        "startLine": 676,
+        "startChar": 0,
+        "endLine": 679,
+        "endChar": 72
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
