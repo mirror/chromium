@@ -150,6 +150,12 @@ webrtc::EncodedImageCallback::Result WebrtcDummyVideoEncoder::SendEncodedFrame(
     vp9_info->spatial_idx = webrtc::kNoSpatialIdx;
     vp9_info->tl0_pic_idx = webrtc::kNoTl0PicIdx;
     vp9_info->picture_id = webrtc::kNoPictureId;
+  } else if (codec_type_ == webrtc::kVideoCodecH264) {
+    // TODO(zijiehe): Set correct codec specific information.
+    webrtc::CodecSpecificInfoH264* h264_info =
+        &codec_specific_info.codecSpecific.H264;
+    h264_info->packetization_mode =
+        webrtc::H264PacketizationMode::NonInterleaved;
   } else {
     NOTREACHED();
   }

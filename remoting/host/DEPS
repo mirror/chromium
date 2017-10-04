@@ -6,6 +6,8 @@ include_rules = [
   "+extensions/browser/api/messaging",
   "+google_apis",
   "+jingle/glue",
+  # Checks the availibility of hardware encoder on Windows.
+  "+media/gpu",
   "+mojo/public",
   "+mojo/edk/embedder",
   "+net",
