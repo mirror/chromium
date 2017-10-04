@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "242b03e5_0465a248",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-04T00:39:16Z",
+      "side": 1,
+      "message": "Done for the comment, added a TODO for the DCHECK. I can follow up on the DCHECK as well, but would want to land it as a separate change, just in case it actually finds something, so that the browser_tests.exe DPI change isn\u0027t gated on this.\n\nFor the follow-up DCHECK I can add you + the earlier person as reviewer, sounds good?",
+      "parentUuid": "0a77a843_e097e072",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f648b7_4ee4e86b",
         "filename": "base/win/win_util.cc",
         "patchSetId": 8
@@ -105,6 +123,24 @@
       "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a0fa2d_6e12cedf",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126912
+      },
+      "writtenOn": "2017-10-04T00:39:16Z",
+      "side": 1,
+      "message": "Done, thanks I understand these failure cases better now.",
+      "parentUuid": "9681f33e_18816e06",
+      "revId": "ba63e7756305a5747b3dc637dd9a06d112bb4e84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
