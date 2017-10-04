@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878a5561_930db4b3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-04T12:43:42Z",
+      "side": 1,
+      "message": "I think you actually meant the opposite of this. You meant to say fill if the frame was independent, but here you\u0027re filling if the frame was *not* independent.\n\nA test would have caught this.\n\nI think this line (even corrected) is unnecessary, though. rows_decoded will be set to image_info.height() if there was a required frame, so we\u0027ll call ZeroFillFrameRect with an empty rect, which will (correctly) do nothing.",
+      "range": {
+        "startLine": 287,
+        "startChar": 6,
+        "endLine": 287,
+        "endChar": 58
+      },
+      "revId": "a6fe8635a878ab82c4c3f051d9ff852fc2e98d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
