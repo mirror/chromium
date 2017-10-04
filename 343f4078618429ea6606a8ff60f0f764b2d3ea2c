@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96bf3479_646fab2c",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:04:48Z",
+      "side": 1,
+      "message": "Maybe add a comment why we need to include these separately:\n// We also include drag_and_drop_handler.js and shortcut_util.js, which are\n// shared between the old and MD versions of the page.",
+      "revId": "343f4078618429ea6606a8ff60f0f764b2d3ea2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
