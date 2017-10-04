@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/message_loop/message_loop.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
@@ -50,6 +51,8 @@ class CoordinationUnitTestHarness : public testing::Test {
 
   TestCoordinationUnitWrapper CreateCoordinationUnit(CoordinationUnitID cu_id);
   TestCoordinationUnitWrapper CreateCoordinationUnit(CoordinationUnitType type);
+  static void SetPageCoordinationUnitClock(CoordinationUnitBase* page_cu,
+                                           base::SimpleTestTickClock* clock);
 
  protected:
   service_manager::ServiceContextRefFactory* service_context_ref_factory() {
