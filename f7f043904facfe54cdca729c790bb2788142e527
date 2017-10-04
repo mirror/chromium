@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5fcbea2_d07c67bf",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T16:52:30Z",
+      "side": 1,
+      "message": "I need to look into the current text diff a bit more - the diff is unexpectedly in history dump, not in the console messages.\n\nStill, I think that landing the test exceptions is okay - we know that we haven\u0027t regressed (just changed test-harness-related failure mode from crash to text-diff) and keeping the bot green will help catch future regressions.",
+      "range": {
+        "startLine": 69,
+        "startChar": 85,
+        "endLine": 69,
+        "endChar": 96
+      },
+      "revId": "f7f043904facfe54cdca729c790bb2788142e527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99032983_f95547d0",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T16:52:30Z",
+      "side": 0,
+      "message": "These 2 expectations are changed to [Failure] and moved lower / associated with crbug.com/602497",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 115
+      },
+      "revId": "d0917b6dd875967d5e1d1a3275abdda0a7381163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33c6e7be_6e3c5559",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/site-per-process",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T16:52:30Z",
+      "side": 0,
+      "message": "I am just reordering/moving this line so that mojo/non-mojo tests are listed in the same order.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 125
+      },
+      "revId": "d0917b6dd875967d5e1d1a3275abdda0a7381163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
