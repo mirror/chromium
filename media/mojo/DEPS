@@ -5,6 +5,7 @@ include_rules = [
   "+mojo/converters",
   "+mojo/logging",
   "+mojo/public",
+  "+sandbox/mac",  # Required on mac to use SeatbeltExtension.
   "+services/metrics",
   "+services/service_manager",
 
