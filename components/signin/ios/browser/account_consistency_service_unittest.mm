@@ -120,6 +120,12 @@ class TestWebState : public web::TestWebState {
 }  // namespace
 
 class AccountConsistencyServiceTest : public PlatformTest {
+ public:
+  void RemoveCookieDone() {
+    EXPECT_FALSE(remove_cookie_callback_called_);
+    remove_cookie_callback_called_ = true;
+  }
+
  protected:
   void SetUp() override {
     PlatformTest::SetUp();
@@ -181,7 +187,16 @@ class AccountConsistencyServiceTest : public PlatformTest {
     signin_manager_->SignIn("12345", "user@gmail.com", "password");
   }
 
-  void SignOut() { signin_manager_->ForceSignOut(); }
+  void SignOut() {
+    signin_manager_->ForceSignOut();
+    // Simulate the action of the action GaiaCookieManagerService to cleanup
+    // the cookies once the sign-out is done.
+    remove_cookie_callback_called_ = false;
+    account_consistency_service_->RemoveChromeConnectedCookies(
+        base::BindOnce(&AccountConsistencyServiceTest::RemoveCookieDone,
+                       base::Unretained(this)));
+    EXPECT_TRUE(remove_cookie_callback_called_);
+  }
 
   id GetMockWKWebView() { return account_consistency_service_->GetWKWebView(); }
   id GetNavigationDelegate() {
@@ -216,6 +231,7 @@ class AccountConsistencyServiceTest : public PlatformTest {
   std::unique_ptr<MockGaiaCookieManagerService> gaia_cookie_manager_service_;
   scoped_refptr<HostContentSettingsMap> settings_map_;
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
+  bool remove_cookie_callback_called_;
 };
 
 // Tests whether the WKWebView is actually stopped when the browser state is
