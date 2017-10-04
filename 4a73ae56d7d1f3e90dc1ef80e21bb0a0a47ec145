@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd84933d_e33f1bca",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T22:11:14Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "4a73ae56d7d1f3e90dc1ef80e21bb0a0a47ec145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
