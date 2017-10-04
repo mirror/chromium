@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "246e2cf4_0ababbf9",
+        "filename": "chrome/gpu/chrome_content_gpu_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-04T00:41:18Z",
+      "side": 1,
+      "message": "Can you add a comment mentioning that the call stack profile collection is initiated in ChromeMain?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 65
+      },
+      "revId": "180391dda20b5e3d4977a471297fe5709df7998a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
