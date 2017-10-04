@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a1b7ba5_a1ce10c4",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: can GetDefaultDeviceScaleFactor() handle this?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866c872a_901598a0",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: default_device_scale_factor",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 62
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dff50f3_b61e6f72",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: DCHECK here instead and have GetDefaultDeviceScaleFactor make sure the value is greater than 1",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 21
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3952c7_4122331f",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: s/;/./",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91b4744_526e290d",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: double as that\u0027s what SetScale takes. or make everything float if that makes more sense for some reason as long as we\u0027re consistent..",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a40a353b_c376762a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: the",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7645eed7_4aa7268b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: remote shell clients",
+      "range": {
+        "startLine": 155,
+        "startChar": 40,
+        "endLine": 155,
+        "endChar": 61
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58d00e7_f860316a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: used",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 36
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0fc82ca_b8df5003",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: s/float/double/",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 5
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f37073_42eec136",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: move to exo::wayland::switches namespace and rename to kForceRemoteShellScale",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 40
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a5dd68_17ce82bc",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "std::max(1.0, scale) here?",
+      "range": {
+        "startLine": 165,
+        "startChar": 13,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef357e07_5f6f2cc3",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2182,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: double",
+      "range": {
+        "startLine": 2182,
+        "startChar": 6,
+        "endLine": 2182,
+        "endChar": 11
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbb8073_82a2743a",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:34:43Z",
+      "side": 1,
+      "message": "nit: double",
+      "range": {
+        "startLine": 2455,
+        "startChar": 2,
+        "endLine": 2455,
+        "endChar": 8
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
