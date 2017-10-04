@@ -162,7 +162,7 @@ class PLATFORM_EXPORT TaskQueueImpl {
   // Implementation of TaskQueue::SetObserver.
   void SetOnNextWakeUpChangedCallback(OnNextWakeUpChangedCallback callback);
 
-  void UnregisterTaskQueue(scoped_refptr<TaskQueue> task_queue);
+  void UnregisterTaskQueue();
 
   // Returns true if a (potentially hypothetical) task with the specified
   // |enqueue_order| could run on the queue. Must be called from the main
@@ -263,6 +263,12 @@ class PLATFORM_EXPORT TaskQueueImpl {
                        base::TimeTicks end);
   bool RequiresTaskTiming() const;
 
+  base::WeakPtr<TaskQueueManager> GetTaskQueueManagerWeakPtr();
+
+  // Returns true if this queue is unregistered or task queue manager is deleted
+  // and this queue can be safely deleted on any thread.
+  bool IsUnregistered() const;
+
   // Disables queue for testing purposes, when a QueueEnabledVoter can't be
   // constructed due to not having TaskQueue.
   void SetQueueEnabledForTest(bool enabled);
@@ -307,6 +313,7 @@ class PLATFORM_EXPORT TaskQueueImpl {
     int is_enabled_refcount;
     int voter_refcount;
     base::trace_event::BlameContext* blame_context;  // Not owned.
+    bool blame_context_entered;
     EnqueueOrder current_fence;
     base::Optional<base::TimeTicks> scheduled_time_domain_wake_up;
     OnTaskStartedHandler on_task_started_handler;

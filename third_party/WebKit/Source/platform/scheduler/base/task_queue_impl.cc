@@ -124,23 +124,24 @@ TaskQueueImpl::MainThreadOnly::MainThreadOnly(
       is_enabled_refcount(0),
       voter_refcount(0),
       blame_context(nullptr),
+      blame_context_entered(false),
       current_fence(0),
       is_enabled_for_test(true) {}
 
 TaskQueueImpl::MainThreadOnly::~MainThreadOnly() {}
 
-void TaskQueueImpl::UnregisterTaskQueue(scoped_refptr<TaskQueue> task_queue) {
+void TaskQueueImpl::UnregisterTaskQueue() {
   base::AutoLock lock(any_thread_lock_);
   base::AutoLock immediate_incoming_queue_lock(immediate_incoming_queue_lock_);
   if (main_thread_only().time_domain)
     main_thread_only().time_domain->UnregisterQueue(this);
+
   if (!any_thread().task_queue_manager)
     return;
 
   main_thread_only().on_task_completed_handler = OnTaskCompletedHandler();
   any_thread().time_domain = nullptr;
   main_thread_only().time_domain = nullptr;
-  any_thread().task_queue_manager->UnregisterTaskQueue(task_queue);
 
   any_thread().task_queue_manager = nullptr;
   main_thread_only().task_queue_manager = nullptr;
@@ -514,8 +515,10 @@ void TaskQueueImpl::RemoveTaskObserver(
 void TaskQueueImpl::NotifyWillProcessTask(
     const base::PendingTask& pending_task) {
   DCHECK(should_notify_observers_);
-  if (main_thread_only().blame_context)
+  if (main_thread_only().blame_context) {
     main_thread_only().blame_context->Enter();
+    main_thread_only().blame_context_entered = true;
+  }
   for (auto& observer : main_thread_only().task_observers)
     observer.WillProcessTask(pending_task);
 }
@@ -525,8 +528,10 @@ void TaskQueueImpl::NotifyDidProcessTask(
   DCHECK(should_notify_observers_);
   for (auto& observer : main_thread_only().task_observers)
     observer.DidProcessTask(pending_task);
-  if (main_thread_only().blame_context)
+  if (main_thread_only().blame_context) {
     main_thread_only().blame_context->Leave();
+    main_thread_only().blame_context_entered = false;
+  }
 }
 
 void TaskQueueImpl::SetTimeDomain(TimeDomain* time_domain) {
@@ -564,7 +569,12 @@ TimeDomain* TaskQueueImpl::GetTimeDomain() const {
 
 void TaskQueueImpl::SetBlameContext(
     base::trace_event::BlameContext* blame_context) {
+  if (main_thread_only().blame_context &&
+      main_thread_only().blame_context_entered) {
+    main_thread_only().blame_context->Leave();
+  }
   main_thread_only().blame_context = blame_context;
+  main_thread_only().blame_context_entered = false;
 }
 
 void TaskQueueImpl::InsertFence(TaskQueue::InsertFencePosition position) {
@@ -915,6 +925,15 @@ void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
 bool TaskQueueImpl::RequiresTaskTiming() const {
   return !main_thread_only().on_task_started_handler.is_null() ||
          !main_thread_only().on_task_completed_handler.is_null();
+}
+
+bool TaskQueueImpl::IsUnregistered() const {
+  base::AutoLock lock(any_thread_lock_);
+  return !any_thread().task_queue_manager;
+}
+
+base::WeakPtr<TaskQueueManager> TaskQueueImpl::GetTaskQueueManagerWeakPtr() {
+  return main_thread_only().task_queue_manager->GetWeakPtr();
 }
 
 void TaskQueueImpl::SetQueueEnabledForTest(bool enabled) {

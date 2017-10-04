@@ -91,6 +91,8 @@ class TaskQueueManagerTest : public ::testing::Test {
   void DeleteTaskQueueManager() { manager_.reset(); }
 
  protected:
+  void TearDown() { manager_.reset(); }
+
   scoped_refptr<TestTaskQueue> CreateTaskQueueWithSpec(TaskQueue::Spec spec) {
     return manager_->CreateTaskQueue<TestTaskQueue>(spec);
   }
@@ -2211,6 +2213,34 @@ TEST_F(TaskQueueManagerTestWithTracing, BlameContextAttribution) {
     blame_context.Initialize();
     queue->SetBlameContext(&blame_context);
     queue->PostTask(FROM_HERE, base::Bind(&NopTask));
+    base::RunLoop().RunUntilIdle();
+  }
+  StopTracing();
+  std::unique_ptr<trace_analyzer::TraceAnalyzer> analyzer =
+      CreateTraceAnalyzer();
+
+  trace_analyzer::TraceEventVector events;
+  Query q = Query::EventPhaseIs(TRACE_EVENT_PHASE_ENTER_CONTEXT) ||
+            Query::EventPhaseIs(TRACE_EVENT_PHASE_LEAVE_CONTEXT);
+  analyzer->FindEvents(q, &events);
+
+  EXPECT_EQ(2u, events.size());
+}
+
+TEST_F(TaskQueueManagerTestWithTracing,
+       BlameContextAttribution_TaskQueueUnregistered) {
+  using trace_analyzer::Query;
+
+  InitializeWithRealMessageLoop(1u);
+  scoped_refptr<TestTaskQueue> queue = runners_[0].get();
+
+  StartTracing();
+  {
+    base::trace_event::BlameContext blame_context("cat", "name", "type",
+                                                  "scope", 0, nullptr);
+    blame_context.Initialize();
+    queue->SetBlameContext(&blame_context);
+    queue->PostTask(FROM_HERE, base::Bind(&UnregisterQueue, queue));
     base::RunLoop().RunUntilIdle();
   }
   StopTracing();
