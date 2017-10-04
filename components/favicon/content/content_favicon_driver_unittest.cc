@@ -65,6 +65,8 @@ class ContentFaviconDriverTest : public content::RenderViewHostTestHarness {
         ContentFaviconDriver::FromWebContents(web_contents());
     web_contents_tester()->NavigateAndCommit(page_url);
     static_cast<content::WebContentsObserver*>(favicon_driver)
+        ->DocumentOnLoadCompletedInMainFrame();
+    static_cast<content::WebContentsObserver*>(favicon_driver)
         ->DidUpdateFaviconURL(candidates);
     base::RunLoop().RunUntilIdle();
   }
@@ -137,14 +139,13 @@ TEST_F(ContentFaviconDriverTest, FaviconUpdateNoLastCommittedEntry) {
 TEST_F(ContentFaviconDriverTest, RecordsHistorgramsForCandidates) {
   const std::vector<gfx::Size> kSizes16x16and32x32({{16, 16}, {32, 32}});
   base::HistogramTester tester;
-  content::WebContentsObserver* driver_as_observer =
-      ContentFaviconDriver::FromWebContents(web_contents());
 
   // Navigation to a page updating one icon.
-  NavigateAndCommit(GURL("http://www.youtube.com"));
-  driver_as_observer->DidUpdateFaviconURL({content::FaviconURL(
-      GURL("http://www.youtube.com/favicon.ico"),
-      content::FaviconURL::IconType::kFavicon, kSizes16x16and32x32)});
+  TestFetchFaviconForPage(
+      GURL("http://www.youtube.com"),
+      {content::FaviconURL(GURL("http://www.youtube.com/favicon.ico"),
+                           content::FaviconURL::IconType::kFavicon,
+                           kSizes16x16and32x32)});
 
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesCount"),
               ElementsAre(base::Bucket(/*min=*/1, /*count=*/1)));
@@ -165,10 +166,8 @@ TEST_F(ContentFaviconDriverTest, RecordsHistorgramsForCandidates) {
                           kEmptyIconSizes)};
 
   // Double navigation to a page with 3 different icons.
-  NavigateAndCommit(GURL("http://www.google.ca"));
-  driver_as_observer->DidUpdateFaviconURL(favicon_urls);
-  NavigateAndCommit(GURL("http://www.google.ca"));
-  driver_as_observer->DidUpdateFaviconURL(favicon_urls);
+  TestFetchFaviconForPage(GURL("http://www.google.ca"), favicon_urls);
+  TestFetchFaviconForPage(GURL("http://www.google.ca"), favicon_urls);
 
   EXPECT_THAT(tester.GetAllSamples("Favicons.CandidatesCount"),
               ElementsAre(base::Bucket(/*min=*/1, /*count=*/1),
