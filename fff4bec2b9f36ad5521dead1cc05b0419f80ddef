@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c35b0d_86f0ff90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T16:06:04Z",
+      "side": 1,
+      "message": "The scheme may also be chrome-native:// (CHROME_NATIVE_SCHEME)",
+      "range": {
+        "startLine": 921,
+        "startChar": 12,
+        "endLine": 921,
+        "endChar": 62
+      },
+      "revId": "fff4bec2b9f36ad5521dead1cc05b0419f80ddef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
