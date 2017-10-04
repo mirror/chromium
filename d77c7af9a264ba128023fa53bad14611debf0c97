@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "439d6be0_ed73e1d0",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-04T22:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a66a01_e80d4422",
+      "revId": "d77c7af9a264ba128023fa53bad14611debf0c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cccd71e_ed99343a",
         "filename": "content/common/sandbox_init_mac.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d77c7af9a264ba128023fa53bad14611debf0c97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc6bed3_58d7d2aa",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-04T22:55:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cccd71e_ed99343a",
+      "revId": "d77c7af9a264ba128023fa53bad14611debf0c97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
