@@ -39,6 +39,30 @@
       "revId": "655455f5888c86012775a618180eca2cf4be5781",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702633fb_424a5e5c",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-04T21:23:41Z",
+      "side": 1,
+      "message": "The wire protocol should be unchanged since both types serialize into exactly the same byte stream.",
+      "parentUuid": "0576d8c3_96f779cd",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "655455f5888c86012775a618180eca2cf4be5781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
