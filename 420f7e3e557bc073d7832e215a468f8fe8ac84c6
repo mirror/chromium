@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a75ba19a_54061043",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:14:48Z",
+      "side": 1,
+      "message": "Well, I added that to prevent casual use of this outside of LockStateController, but I guess the comment will suffice.",
+      "parentUuid": "cbe84528_dd2e0cf8",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a75d3fc_325960d1",
         "filename": "ash/session/test_session_controller_client.cc",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "f5a60043_1e3f30df",
+        "filename": "ash/session/test_session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:14:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a75d3fc_325960d1",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5906717c_745a0256",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-04T22:05:02Z",
       "side": 1,
       "message": "Why do we need to wrap SessionController call here instead of letting call sites to call it directly?",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51372162_d3cc3f7c",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:14:48Z",
+      "side": 1,
+      "message": "a) It\u0027s easier to test (we can test SignoutRequested(), similarly to how we use ShutdownRequested(), I\u0027ll use that elsewhere).\nb) Eventually this doesn\u0027t seem like something that Chrome should handle and this seems like a reasonable place to handle it.\n\nIn a follow-up I\u0027ll be replacing four instances of shell_delegate()-\u003eExit() with this call as well (it does the same thing), e.g.\nhttps://cs.chromium.org/chromium/src/ash/shelf/login_shelf_view.cc?type\u003dcs\u0026q\u003dLoginShelfView::ButtonPressed\u0026sq\u003dpackage:chromium\u0026l\u003d164\n\nI could be convinced that we don\u0027t need this and we can call into session_controller directly.",
+      "parentUuid": "5906717c_745a0256",
       "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
