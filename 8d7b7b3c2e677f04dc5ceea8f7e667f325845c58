@@ -34,6 +34,24 @@
       "revId": "8d7b7b3c2e677f04dc5ceea8f7e667f325845c58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb1a88e_7c94bd0e",
+        "filename": "components/viz/service/display/display_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T16:18:28Z",
+      "side": 1,
+      "message": "Ah, I see it. Thanks. DisplayScheduler::UpdateHasPendingSurfaces would say has_pending_surfaces_ cuz the ack isnt the current begin frame args, and the surface\u0027s active frame was drawn? Can you add a comment on this expect explaining what you did for me?",
+      "parentUuid": "8993799b_56906653",
+      "revId": "8d7b7b3c2e677f04dc5ceea8f7e667f325845c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
