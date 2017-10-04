@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7147b24e_aa5872ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T00:47:54Z",
+      "side": 1,
+      "message": "Remove left-over logging",
+      "range": {
+        "startLine": 357,
+        "startChar": 8,
+        "endLine": 360,
+        "endChar": 61
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3741d321_1c2855c3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T00:47:54Z",
+      "side": 1,
+      "message": "What does this do?",
+      "range": {
+        "startLine": 330,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 22
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063439ef_1564e4fa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T00:47:54Z",
+      "side": 1,
+      "message": "nit: Let\u0027s mention crbug.com/767238 in the comment.\n\nAlso, a nit on the explanation - I\u0027m not sure the supervised user is saved in a preference. HistoryAdapter should be listening for changes to the preferences associated with #canDeleteBrowsingData() and #isIncognitoModeEnabled(). Can we make the comment something like:\n\n\"Preference changes associate with a supervised user being signed in happen asynchronously after #onSignInStateChange() has been called. Poll until the preferences are changed, then update the UI.\nTODO(twellington): Remove this once HistoryAdapter has been updated to properly listen for preference changes (crbug.com/767238).\"",
+      "range": {
+        "startLine": 398,
+        "startChar": 76,
+        "endLine": 398,
+        "endChar": 83
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32050da2_3d464be2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T00:47:54Z",
+      "side": 1,
+      "message": "Instead of polling here, let\u0027s add a block at the end of #signinToSupervisedUser() that waits until !PrefService#canDeleteBrowsingHistory() and !PrefService#isIncognitoModeEnabled(). After the criteria is met, we can call HistoryAdapter#onSigninStateChange() again. Calling #onSigninStateChange() is more robust than calling a new #updateClearBrowsingDataButtonVisibilityForTest().",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 58
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
