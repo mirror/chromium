@@ -22,6 +22,30 @@
       "revId": "d51e08e3b7705c16be315df9272a858737b798ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b0e3c0_1f8db3af",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-04T02:27:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79507b16_e4d205e9",
+      "range": {
+        "startLine": 862,
+        "startChar": 80,
+        "endLine": 862,
+        "endChar": 89
+      },
+      "revId": "d51e08e3b7705c16be315df9272a858737b798ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
