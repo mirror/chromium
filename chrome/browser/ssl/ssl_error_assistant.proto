@@ -16,6 +16,7 @@ message CaptivePortalCert {
   //
   // NOTE: Only leaf certs must be added here.
   optional string sha256_hash = 1;
+  optional string cert_sha256_hash = 2;
 }
 
 // The MITMSoftware list is used to match potential MITM software certificates.
