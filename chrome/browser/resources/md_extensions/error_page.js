@@ -65,26 +65,6 @@ cr.define('extensions', function() {
           return null;
         },
       },
-
-      /** @private */
-      isRuntimeError_: {
-        type: Boolean,
-        computed: 'computeIsRuntimeError_(selectedError_)',
-      },
-
-      shownStackTrace_: {
-        type: Array,
-        computed: 'computeShownStackTrace_(selectedError_)',
-        observer: 'onShownStackTraceChanged_'
-      },
-
-      /** @private */
-      stackTraceExpanded_: {
-        type: Boolean,
-        value: function() {
-          return false;
-        },
-      },
     },
 
     observers: [
@@ -108,8 +88,6 @@ cr.define('extensions', function() {
      * @private
      */
     calculateShownItems_: function() {
-      // Render iron-list correctly after data changes.
-      setTimeout(() => this.$['errors-list'].fire('iron-resize'));
       return this.data.manifestErrors.concat(this.data.runtimeErrors);
     },
 
@@ -190,9 +168,8 @@ cr.define('extensions', function() {
       });
     },
 
-    computeIsRuntimeError_: function() {
-      return this.selectedError_ &&
-          this.selectedError_.type == chrome.developerPrivate.ErrorType.RUNTIME;
+    computeIsRuntimeError_: function(item) {
+      return item.type == chrome.developerPrivate.ErrorType.RUNTIME;
     },
 
     computeShownStackTrace_: function() {
@@ -294,11 +271,6 @@ cr.define('extensions', function() {
       });
     },
 
-    /** @private */
-    onStackTraceTap_: function() {
-      this.stackTraceExpanded_ = !this.stackTraceExpanded_;
-    },
-
     /**
      * Computes the class name for the error item depending on whether its
      * the currently selected error.
@@ -309,6 +281,10 @@ cr.define('extensions', function() {
      */
     computeErrorClass_: function(selectedError, error) {
       return selectedError == error ? 'selected' : '';
+    },
+
+    isEqual_: function(selected, current) {
+      return selected == current;
     },
 
     /**
