@@ -88,6 +88,24 @@
       "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42e24f1_88dfc747",
+        "filename": "third_party/WebKit/Source/core/frame/History.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-04T05:12:01Z",
+      "side": 1,
+      "message": "Sounds like dcheng@ and palmer@ should chat about which direction to go.\n\nMy preference is including the message but not mentioning the flag in it, while keeping the throttling for now.  However, I don\u0027t feel strongly, and I suspect the throttling will have a short useful life anyway, since it\u0027s not very comprehensive.",
+      "parentUuid": "09989af8_4281b74e",
+      "revId": "697f96471a1168a9a82b92aa2cb5cf8d7be80cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
