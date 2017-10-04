@@ -508,23 +508,16 @@ void RenderText::SetDisplayRect(const Rect& r) {
 }
 
 void RenderText::SetCursorPosition(size_t position) {
-  MoveCursorTo(position, false);
+  MoveCursorToPosition(position, false);
 }
 
 void RenderText::MoveCursor(BreakType break_type,
                             VisualCursorDirection direction,
                             SelectionBehavior selection_behavior) {
-  SelectionModel cursor(cursor_position(), selection_model_.caret_affinity());
+  SelectionModel cursor = NextSelectionEnd(direction, selection_behavior);
   // Cancelling a selection moves to the edge of the selection.
   if (break_type != LINE_BREAK && !selection().is_empty() &&
       selection_behavior == SELECTION_NONE) {
-    SelectionModel selection_start = GetSelectionModelForSelectionStart();
-    int start_x = GetCursorBounds(selection_start, true).x();
-    int cursor_x = GetCursorBounds(cursor, true).x();
-    // Use the selection start if it is left (when |direction| is CURSOR_LEFT)
-    // or right (when |direction| is CURSOR_RIGHT) of the selection end.
-    if (direction == CURSOR_RIGHT ? start_x > cursor_x : start_x < cursor_x)
-      cursor = selection_start;
     // Use the nearest word boundary in the proper |direction| for word breaks.
     if (break_type == WORD_BREAK)
       cursor = GetAdjacentSelectionModel(cursor, break_type, direction);
@@ -569,10 +562,10 @@ void RenderText::MoveCursor(BreakType break_type,
       break;
   }
 
-  MoveCursorTo(cursor);
+  MoveCursorTo(cursor, true);
 }
 
-bool RenderText::MoveCursorTo(const SelectionModel& model) {
+bool RenderText::MoveCursorTo(const SelectionModel& model, bool directed) {
   // Enforce valid selection model components.
   size_t text_length = text().length();
   Range range(std::min(model.selection().start(),
@@ -587,11 +580,11 @@ bool RenderText::MoveCursorTo(const SelectionModel& model) {
   return changed;
 }
 
-bool RenderText::MoveCursorTo(const gfx::Point& point, bool select) {
+bool RenderText::MoveCursorToPoint(const gfx::Point& point, bool select) {
   gfx::SelectionModel model = FindCursorPosition(point);
   if (select)
     model.set_selection_start(selection().start());
-  return MoveCursorTo(model);
+  return MoveCursorTo(model, false);
 }
 
 bool RenderText::SelectRange(const Range& range) {
@@ -1037,10 +1030,15 @@ SelectionModel RenderText::LineSelectionModel(size_t line_index,
                               CURSOR_BACKWARD);
 }
 
-void RenderText::SetSelectionModel(const SelectionModel& model) {
+void RenderText::SetSelectionModel(const SelectionModel& model, bool directed) {
   DCHECK_LE(model.selection().GetMax(), text().length());
   selection_model_ = model;
   cached_bounds_and_offset_valid_ = false;
+
+  // If the selection is directed, the caller is responsible for determining the
+  // direction, which sets has_directed_selection_.
+  DCHECK(!directed || has_directed_selection_);
+  has_directed_selection_ = directed;
 }
 
 void RenderText::OnTextColorChanged() {
@@ -1329,12 +1327,32 @@ int RenderText::DetermineBaselineCenteringText(const int display_height,
   return baseline + std::max(min_shift, std::min(max_shift, baseline_shift));
 }
 
-void RenderText::MoveCursorTo(size_t position, bool select) {
+SelectionModel RenderText::NextSelectionEnd(
+    VisualCursorDirection direction,
+    SelectionBehavior selection_behavior) {
+  SelectionModel end(cursor_position(), selection_model_.caret_affinity());
+  if (has_directed_selection_ && selection_behavior != SELECTION_NONE)
+    return end;
+
+  SelectionModel start = GetSelectionModelForSelectionStart();
+  int start_x = GetCursorBounds(start, true).x();
+  int end_x = GetCursorBounds(end, true).x();
+
+  // Use the selection start if it is left (when |direction| is CURSOR_LEFT)
+  // or right (when |direction| is CURSOR_RIGHT) of the selection end.
+  if (direction == CURSOR_RIGHT ? start_x > end_x : start_x < end_x)
+    return start;
+  return end;
+}
+
+void RenderText::MoveCursorToPosition(size_t position, bool select) {
   size_t cursor = std::min(position, text().length());
-  if (IsValidCursorIndex(cursor))
-    SetSelectionModel(SelectionModel(
-        Range(select ? selection().start() : cursor, cursor),
-        (cursor == 0) ? CURSOR_FORWARD : CURSOR_BACKWARD));
+  if (IsValidCursorIndex(cursor)) {
+    SetSelectionModel(
+        SelectionModel(Range(select ? selection().start() : cursor, cursor),
+                       (cursor == 0) ? CURSOR_FORWARD : CURSOR_BACKWARD),
+        false);
+  }
 }
 
 void RenderText::OnTextAttributeChanged() {
