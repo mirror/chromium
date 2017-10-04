@@ -131,6 +131,11 @@ void LayoutTableCell::ColSpanOrRowSpanChanged() {
       LayoutInvalidationReason::kAttributeChanged);
   if (Parent() && Section())
     Section()->SetNeedsCellRecalc();
+
+  // Clear cached collapsed border values so that we'll always treat borders
+  // as changed in UpdateCollapsedBorderValues().
+  collapsed_border_values_ = nullptr;
+  InvalidateCollapsedBorderValues();
 }
 
 Length LayoutTableCell::LogicalWidthFromColumns(
@@ -1097,9 +1102,15 @@ void LayoutTableCell::UpdateCollapsedBorderValues() const {
     }
   }
 
-  // Invalidate the row which will paint the collapsed borders.
-  if (changed)
-    Row()->SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kStyle);
+  if (!changed)
+    return;
+
+  // Invalidate the rows which will paint the collapsed borders.
+  auto row_span = RowSpan();
+  for (auto r = RowIndex(); r < RowIndex() + row_span; ++r) {
+    if (auto* row = Section()->RowLayoutObjectAt(r))
+      row->SetShouldDoFullPaintInvalidation(PaintInvalidationReason::kStyle);
+  }
 }
 
 void LayoutTableCell::PaintBoxDecorationBackground(
