@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "881631cf_86468e46",
+        "filename": "chrome/test/data/webui/settings/settings_subpage_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-04T01:29:17Z",
+      "side": 1,
+      "message": "No need to access the inner input element, since settings-subpage-search exposes a public API for both setting and getting the text value. Using the existing public API is preferred over accessing the internal DOM of a child element of the element being unit tested.\n\nvar search \u003d subpage.$$(\u0027settings-subpage-search\u0027);\n...\nsearch.setValue(\u0027\u0027);\n...\nassertEquals(\u0027\u0027, search.getValue());\n\nSee https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_search_field/cr_search_field_behavior.js?l\u003d44,54.",
+      "revId": "9cd6f220a8949cb7d5cba6dc222221007dbe154c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
