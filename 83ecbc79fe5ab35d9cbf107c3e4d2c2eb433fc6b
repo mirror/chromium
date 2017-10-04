@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e1a56e7_416e2635",
+        "filename": "ash/public/cpp/shelf_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T21:26:25Z",
+      "side": 1,
+      "message": "This ShelfModel function could keep the old delegate alive momentarily and pass raw pointer to the observers. It\u0027d be nice to keep aligned with the current observer pattern. WDYT?",
+      "revId": "83ecbc79fe5ab35d9cbf107c3e4d2c2eb433fc6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
