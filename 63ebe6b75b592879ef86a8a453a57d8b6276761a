@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18d146fe_9f41ebb9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T15:35:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "182f0547_c4358e5f",
+      "revId": "63ebe6b75b592879ef86a8a453a57d8b6276761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c054fc62_6652e027",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "63ebe6b75b592879ef86a8a453a57d8b6276761a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6403be13_47bf3634",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T15:35:44Z",
+      "side": 1,
+      "message": "I think ERR_BLOCKED_BY_CLIENT is sufficient - I assume that this is the only error that currently commits in the old process \u003d the only error where the normal CanCommitURL checks are skipped \u003d the only error that needs extra verification (by requiring unique origin).\n\nWDYT?",
+      "parentUuid": "c054fc62_6652e027",
+      "revId": "63ebe6b75b592879ef86a8a453a57d8b6276761a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
