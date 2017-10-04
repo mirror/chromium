@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d47840_4667b900",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetUrlRequest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-04T22:09:33Z",
+      "side": 1,
+      "message": "Can you change it to |this|?",
+      "range": {
+        "startLine": 187,
+        "startChar": 73,
+        "endLine": 187,
+        "endChar": 94
+      },
+      "revId": "bf929fdbb790aa4d02dc64967ad4abde80bbf4b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
