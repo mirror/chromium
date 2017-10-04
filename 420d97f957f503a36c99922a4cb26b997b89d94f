@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f992c526_fe2f0ebb",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T03:58:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "195d198d_c74a6f9f",
+      "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faaaa9ed_3b3eea46",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T14:01:01Z",
       "side": 1,
       "message": "Why is ProduceResult being given a Consume* option?",
+      "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c34fc21b_ebc5a66a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T03:58:02Z",
+      "side": 1,
+      "message": "Ah, this should be kProduceParserCache.",
+      "parentUuid": "faaaa9ed_3b3eea46",
       "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8432e99b_15d6de99",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T03:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c328d5f6_77f0e792",
+      "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edde4143_c7be0234",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.h",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ee8521_93079da1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T03:58:02Z",
+      "side": 1,
+      "message": "I think we can\u0027t use \"base/optional.h\" in core/.\n\n** Presubmit ERRORS **\nYou added one or more #includes that violate checkdeps rules.\n  third_party/WebKit/Source/core/inspector/InspectorTraceEvents.h\n      Illegal include: \"base/optional.h\"\n    Because of \"-base\" from third_party\u0027s include_rules.",
+      "parentUuid": "edde4143_c7be0234",
+      "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
