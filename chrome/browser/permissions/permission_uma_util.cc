@@ -6,11 +6,13 @@
 
 #include <utility>
 
+#include "base/android/jni_string.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_functions.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
+#include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
 #include "chrome/browser/permissions/permission_decision_auto_blocker.h"
@@ -29,6 +31,7 @@
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/origin_util.h"
+#include "jni/PermissionUmaUtil_jni.h"
 #include "url/gurl.h"
 
 // UMA keys need to be statically initialized so plain function would not
@@ -303,6 +306,10 @@ void PermissionUmaUtil::PermissionGranted(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptAcceptedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
+#if defined(OS_ANDROID)
+  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
+    RecordWithBatteryBucket("Permissions.Battery.GeolocationAccepted");
+#endif
 }
 
 void PermissionUmaUtil::PermissionDenied(
@@ -321,6 +328,10 @@ void PermissionUmaUtil::PermissionDenied(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDeniedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
+#if defined(OS_ANDROID)
+  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
+    RecordWithBatteryBucket("Permissions.Battery.GeolocationDenied");
+#endif
 }
 
 void PermissionUmaUtil::PermissionDismissed(
@@ -339,6 +350,10 @@ void PermissionUmaUtil::PermissionDismissed(
   RecordPermissionPromptPriorCount(
       permission, kPermissionsPromptDismissedPriorIgnoreCountPrefix,
       autoblocker->GetIgnoreCount(requesting_origin, permission));
+#if defined(OS_ANDROID)
+  if (permission == CONTENT_SETTINGS_TYPE_GEOLOCATION)
+    RecordWithBatteryBucket("Permissions.Battery.GeolocationDismissed");
+#endif
 }
 
 void PermissionUmaUtil::PermissionIgnored(
@@ -619,6 +634,14 @@ void PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
                    << " not accounted for";
   }
 }
+
+#if defined(OS_ANDROID)
+void PermissionUmaUtil::RecordWithBatteryBucket(const std::string& histogram) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_PermissionUmaUtil_recordWithBatteryBucket(
+      env, base::android::ConvertUTF8ToJavaString(env, histogram));
+}
+#endif
 
 void PermissionUmaUtil::FakeOfficialBuildForTest() {
   gIsFakeOfficialBuildForTest = true;
