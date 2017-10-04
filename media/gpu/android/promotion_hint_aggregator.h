@@ -9,6 +9,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "media/gpu/media_gpu_export.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace media {
 
@@ -24,10 +25,13 @@ class MEDIA_GPU_EXPORT PromotionHintAggregator {
     int y = 0;
     int width = 0;
     int height = 0;
+    // TODO(liberato); remove the above.
+    gfx::Rect screen_rect;
     bool is_promotable = false;
   };
 
-  using NotifyPromotionHintCB = base::Callback<void(const Hint& hint)>;
+  // Pass the hint by value to permit thread-hopping.
+  using NotifyPromotionHintCB = base::Callback<void(Hint hint)>;
 
   virtual ~PromotionHintAggregator() = default;
 
