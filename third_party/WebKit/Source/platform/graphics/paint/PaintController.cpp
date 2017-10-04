@@ -276,17 +276,15 @@ void PaintController::ProcessNewItem(DisplayItem& display_item) {
     bool chunk_added =
         new_paint_chunks_.IncrementDisplayItemIndex(display_item);
 
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-      if (chunk_added && last_chunk_index != kNotFound) {
-        DCHECK(last_chunk_index != new_paint_chunks_.LastChunkIndex());
-        GenerateRasterInvalidations(
-            new_paint_chunks_.PaintChunkAt(last_chunk_index));
-      }
-
-      new_paint_chunks_.LastChunk().outset_for_raster_effects =
-          std::max(new_paint_chunks_.LastChunk().outset_for_raster_effects,
-                   display_item.OutsetForRasterEffects().ToFloat());
+    if (chunk_added && last_chunk_index != kNotFound) {
+      DCHECK(last_chunk_index != new_paint_chunks_.LastChunkIndex());
+      GenerateRasterInvalidations(
+          new_paint_chunks_.PaintChunkAt(last_chunk_index));
     }
+
+    new_paint_chunks_.LastChunk().outset_for_raster_effects =
+        std::max(new_paint_chunks_.LastChunk().outset_for_raster_effects,
+                 display_item.OutsetForRasterEffects().ToFloat());
   }
 
 #if DCHECK_IS_ON()
@@ -591,7 +589,7 @@ void PaintController::CommitNewDisplayItems() {
   new_display_item_indices_by_client_.clear();
 #endif
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled() &&
       !new_display_item_list_.IsEmpty())
     GenerateRasterInvalidations(new_paint_chunks_.LastChunk());
 
@@ -606,7 +604,7 @@ void PaintController::CommitNewDisplayItems() {
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
       item.Client().ClearPartialInvalidationRect();
 
     if (item.IsCacheable()) {
@@ -686,7 +684,7 @@ void PaintController::AppendDebugDrawingAfterCommit(
     const DisplayItemClient& display_item_client,
     sk_sp<PaintRecord> record,
     const FloatRect& record_bounds) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   DCHECK(new_display_item_list_.IsEmpty());
   DrawingDisplayItem& display_item =
       current_paint_artifact_.GetDisplayItemList()
@@ -697,7 +695,7 @@ void PaintController::AppendDebugDrawingAfterCommit(
 }
 
 void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
   if (new_chunk.begin_index >=
       current_cached_subsequence_begin_index_in_new_list_)
     return;
@@ -780,7 +778,7 @@ void PaintController::TrackRasterInvalidation(const DisplayItemClient& client,
 void PaintController::GenerateRasterInvalidationsComparingChunks(
     PaintChunk& new_chunk,
     const PaintChunk& old_chunk) {
-  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
+  DCHECK(RuntimeEnabledFeatures::SlimmingPaintV175Enabled());
 
   // TODO(wangxianzhu): Optimize paint offset change.
 

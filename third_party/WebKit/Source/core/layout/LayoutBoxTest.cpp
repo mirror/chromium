@@ -233,9 +233,6 @@ TEST_F(LayoutBoxTest, ControlClip) {
 }
 
 TEST_F(LayoutBoxTest, LocalVisualRectWithMask) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    return;
-
   SetBodyInnerHTML(
       "<div id='target' style='-webkit-mask-image: url(#a);"
       "     width: 100px; height: 100px; background: blue'>"
@@ -249,9 +246,6 @@ TEST_F(LayoutBoxTest, LocalVisualRectWithMask) {
 }
 
 TEST_F(LayoutBoxTest, LocalVisualRectWithMaskAndOverflowClip) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    return;
-
   SetBodyInnerHTML(
       "<div id='target' style='-webkit-mask-image: url(#a); overflow: hidden;"
       "     width: 100px; height: 100px; background: blue'>"
@@ -266,9 +260,6 @@ TEST_F(LayoutBoxTest, LocalVisualRectWithMaskAndOverflowClip) {
 }
 
 TEST_F(LayoutBoxTest, LocalVisualRectWithMaskWithOutset) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    return;
-
   SetBodyInnerHTML(
       "<div id='target' style='-webkit-mask-box-image-source: url(#a); "
       "-webkit-mask-box-image-outset: 10px 20px;"
@@ -283,9 +274,6 @@ TEST_F(LayoutBoxTest, LocalVisualRectWithMaskWithOutset) {
 }
 
 TEST_F(LayoutBoxTest, LocalVisualRectWithMaskWithOutsetAndOverflowClip) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
-    return;
-
   SetBodyInnerHTML(
       "<div id='target' style='-webkit-mask-box-image-source: url(#a); "
       "-webkit-mask-box-image-outset: 10px 20px; overflow: hidden;"

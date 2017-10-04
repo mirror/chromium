@@ -657,7 +657,7 @@ TEST_P(GeometryMapperTest, SiblingTransformsWithClip) {
   // Fails, because the clip of the destination state is not an ancestor of the
   // clip of the source state. A known bug in SPv1 would make such query,
   // in such case, no clips are applied.
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     EXPECT_FALSE(success);
   } else {
     EXPECT_TRUE(success);
@@ -746,7 +746,7 @@ TEST_P(GeometryMapperTest, ReflectionWithPaintOffset) {
 }
 
 TEST_P(GeometryMapperTest, InvertedClip) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
     return;
 
   RefPtr<ClipPaintPropertyNode> clip = ClipPaintPropertyNode::Create(

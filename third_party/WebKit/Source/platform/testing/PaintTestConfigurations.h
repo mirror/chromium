@@ -33,13 +33,20 @@ class PaintTestConfigurations
 };
 
 static const unsigned kDefaultPaintTestConfigurations[] = {
-    // TODO(wangxianzhu): Add SPv175 configurations.
-    0, kSlimmingPaintV2, kRootLayerScrolling,
+    0,
+    kSlimmingPaintV175,
+    kSlimmingPaintV2,
+    kRootLayerScrolling,
+    kSlimmingPaintV175 | kRootLayerScrolling,
     kSlimmingPaintV2 | kRootLayerScrolling,
 };
 
 static unsigned kSlimmingPaintV2TestConfigurations[] = {
     kSlimmingPaintV2, kSlimmingPaintV2 | kRootLayerScrolling,
+};
+
+static const unsigned kSlimmingPaintVersions[] = {
+    0, kSlimmingPaintV175, kSlimmingPaintV2,
 };
 
 }  // namespace blink

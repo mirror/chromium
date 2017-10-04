@@ -17,11 +17,9 @@
 
 namespace blink {
 
-using PaintControllerPaintTestForSlimmingPaintV1AndV2 =
-    PaintControllerPaintTest;
 INSTANTIATE_TEST_CASE_P(All,
-                        PaintControllerPaintTestForSlimmingPaintV1AndV2,
-                        ::testing::Values(0, kSlimmingPaintV2));
+                        PaintControllerPaintTest,
+                        ::testing::ValuesIn(kSlimmingPaintVersions));
 
 using PaintControllerPaintTestForSlimmingPaintV2 = PaintControllerPaintTest;
 INSTANTIATE_TEST_CASE_P(
@@ -29,8 +27,7 @@ INSTANTIATE_TEST_CASE_P(
     PaintControllerPaintTestForSlimmingPaintV2,
     ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
-       FullDocumentPaintingWithCaret) {
+TEST_P(PaintControllerPaintTest, FullDocumentPaintingWithCaret) {
   SetBodyInnerHTML(
       "<div id='div' contentEditable='true' style='outline:none'>XYZ</div>");
   GetDocument().GetPage()->GetFocusController().SetActive(true);
@@ -39,7 +36,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
   InlineTextBox& text_inline_box =
       *ToLayoutText(div.firstChild()->GetLayoutObject())->FirstTextBox();
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     EXPECT_DISPLAY_LIST(
         RootPaintController().GetDisplayItemList(), 2,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
@@ -54,7 +51,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
   div.focus();
   GetDocument().View()->UpdateAllLifecyclePhases();
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     EXPECT_DISPLAY_LIST(
         RootPaintController().GetDisplayItemList(), 3,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
@@ -71,7 +68,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
   }
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2, InlineRelayout) {
+TEST_P(PaintControllerPaintTest, InlineRelayout) {
   SetBodyInnerHTML(
       "<div id='div' style='width:100px; height: 200px'>AAAAAAAAAA "
       "BBBBBBBBBB</div>");
@@ -81,7 +78,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2, InlineRelayout) {
   LayoutText& text = *ToLayoutText(div_block.FirstChild());
   InlineTextBox& first_text_box = *text.FirstTextBox();
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     EXPECT_DISPLAY_LIST(
         RootPaintController().GetDisplayItemList(), 2,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
@@ -100,7 +97,7 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2, InlineRelayout) {
   InlineTextBox& new_first_text_box = *new_text.FirstTextBox();
   InlineTextBox& second_text_box = *new_text.FirstTextBox()->NextTextBox();
 
-  if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
     EXPECT_DISPLAY_LIST(
         RootPaintController().GetDisplayItemList(), 3,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
@@ -115,7 +112,10 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2, InlineRelayout) {
   }
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
+TEST_P(PaintControllerPaintTest, ChunkIdClientCacheFlag) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return;
+
   SetBodyInnerHTML(
       "<div id='div' style='width: 200px; height: 200px; opacity: 0.5'>"
       "  <div style='width: 100px; height: 100px; background-color: "
@@ -152,7 +152,10 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
   EXPECT_TRUE(RootPaintController().ClientCacheIsValid(sub_div));
 }
 
-TEST_P(PaintControllerPaintTestForSlimmingPaintV2, CompositingNoFold) {
+TEST_P(PaintControllerPaintTest, CompositingNoFold) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return;
+
   SetBodyInnerHTML(
       "<div id='div' style='width: 200px; height: 200px; opacity: 0.5'>"
       "  <div style='width: 100px; height: 100px; background-color: "
