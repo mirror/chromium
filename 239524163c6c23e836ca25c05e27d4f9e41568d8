@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e0820fd_eabbce22",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T21:25:51Z",
+      "side": 1,
+      "message": "nit: newline after this include",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "239524163c6c23e836ca25c05e27d4f9e41568d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb51e380_aa8b40b1",
+        "filename": "content/common/cursors/webcursor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T21:25:51Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 19
+      },
+      "revId": "239524163c6c23e836ca25c05e27d4f9e41568d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c23826b_aeda3d05",
+        "filename": "content/renderer/history_serialization.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T21:25:51Z",
+      "side": 1,
+      "message": "nit: alphabetize",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "239524163c6c23e836ca25c05e27d4f9e41568d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
