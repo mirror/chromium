@@ -34,6 +34,24 @@
       "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ce79e4e_6ba4111b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T20:27:25Z",
+      "side": 1,
+      "message": "Oh, right, I missed that! Thanks.\n\nI am also not sure how this interacts with virtual time control and whether they should be a single thing or not. And since we are introducing HeadlessExperimental domain, does it make sense to move virtual time there?",
+      "parentUuid": "873c6c9d_4357c5f1",
+      "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
