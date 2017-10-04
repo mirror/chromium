@@ -37,10 +37,10 @@ public final class CronetUploadDataStream extends UploadDataSink {
     // These are never changed, once a request starts.
     private final Executor mExecutor;
     private final VersionSafeCallbacks.UploadDataProviderWrapper mDataProvider;
+    private final CronetUrlRequest mRequest;
     private long mLength;
     private long mRemainingLength;
     private long mByteBufferLimit;
-    private CronetUrlRequest mRequest;
 
     // Reusable read task, to reduce redundant memory allocation.
     private final Runnable mReadTask = new Runnable() {
@@ -98,9 +98,11 @@ public final class CronetUploadDataStream extends UploadDataSink {
      * @param dataProvider the UploadDataProvider to read data from.
      * @param executor the Executor to execute UploadDataProvider tasks.
      */
-    public CronetUploadDataStream(UploadDataProvider dataProvider, Executor executor) {
+    public CronetUploadDataStream(
+            UploadDataProvider dataProvider, Executor executor, CronetUrlRequest request) {
         mExecutor = executor;
         mDataProvider = new VersionSafeCallbacks.UploadDataProviderWrapper(dataProvider);
+        mRequest = request;
     }
 
     /**
@@ -146,9 +148,7 @@ public final class CronetUploadDataStream extends UploadDataSink {
     }
 
     private void checkCallingThread() {
-        if (mRequest != null) {
-            mRequest.checkCallingThread();
-        }
+        mRequest.checkCallingThread();
     }
 
     @GuardedBy("mLock")
@@ -338,7 +338,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
      */
     void initializeWithRequest(final CronetUrlRequest urlRequest) {
         synchronized (mLock) {
-            mRequest = urlRequest;
             mInWhichUserCallback = UserCallback.GET_LENGTH;
         }
         try {
