@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "088df376_c72d0ec0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 1885,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T17:33:29Z",
+      "side": 1,
+      "message": "I don\u0027t know why we use \"chromeos\" and not \"is_chromeos\", but this is consistent through all our grd files.",
+      "revId": "705ee9170ecd7dc986376ef181c0d061b1771330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
