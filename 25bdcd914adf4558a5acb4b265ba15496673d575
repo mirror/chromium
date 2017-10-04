@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cb4394b_4e5afebf",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocumentTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T15:27:17Z",
+      "side": 0,
+      "message": "This makes it seem like these tests run with ViewportEnabled on Android. They don\u0027t.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 11
+      },
+      "revId": "25bdcd914adf4558a5acb4b265ba15496673d575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
