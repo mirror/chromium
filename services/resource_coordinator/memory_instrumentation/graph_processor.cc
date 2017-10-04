@@ -56,7 +56,8 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
     Node* node;
     auto node_iterator = global_graph->nodes_by_guid().find(dump.guid());
     if (node_iterator == global_graph->nodes_by_guid().end()) {
-      node = graph->CreateNode(dump.guid(), path);
+      bool is_weak = dump.flags() & MemoryAllocatorDump::Flags::WEAK;
+      node = graph->CreateNode(dump.guid(), path, is_weak);
     } else {
       node = node_iterator->second;
 
