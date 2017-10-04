@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0b1a7a2f_51f97cb5",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-04T06:58:17Z",
+      "side": 1,
+      "message": "k, I\u0027ll think about it.",
+      "parentUuid": "ef515e26_3dc9e84f",
+      "range": {
+        "startLine": 3955,
+        "startChar": 6,
+        "endLine": 3955,
+        "endChar": 25
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3858263_fdaf154f",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
         "patchSetId": 6
@@ -231,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "c647a99c_5a791b57",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-04T06:58:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2db27a8b_8bb1352f",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "516dc941_42b34083",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 6
@@ -281,6 +323,24 @@
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc37ea8_75390810",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-04T06:58:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23e289b_728984de",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
