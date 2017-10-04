@@ -16,6 +16,24 @@
       "revId": "f56cedb22482b06bdb44db348734e25cb9000875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7d6e231_07e7ebfb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-04T19:20:58Z",
+      "side": 1,
+      "message": "Fedora has gzipped man pages. Haven\u0027t tested any others.  I think this might be a bug in rpmlint:\nhttps://bugzilla.redhat.com/show_bug.cgi?id\u003d750250",
+      "parentUuid": "771488ca_2a16e961",
+      "revId": "f56cedb22482b06bdb44db348734e25cb9000875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
