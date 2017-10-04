@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "4ac3dfb3_da407bf5",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-04T23:20:43Z",
+      "side": 1,
+      "message": "Per our offline discussion it sounds like this change might have been motivated by some #ifdef AURA code in gpu_data_manager_impl_private.cc, but might also have just been an oversight, so it should be removed from the final patch. Thanks for discussing this with me.",
+      "parentUuid": "dfeac02e_a4cef6ee",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ba0d4ad_8504ad18",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 7
