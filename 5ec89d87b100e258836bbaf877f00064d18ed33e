@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f62402_8926fc7f",
+        "filename": "ios/web_view/internal/web_view_browser_state.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-10-04T07:52:26Z",
+      "side": 1,
+      "message": "Sorry to snipe:\n\nI\u0027ve stumbled across this patch because I\u0027m also adding functionality to iOS web views. I\u0027m not a web view dev, but I thought I\u0027d ask: is there a danger using service factories without calling BrowserStateDependencyManager::DestroyBrowserStateServices? I worry that their Shutdown methods won\u0027t be called.",
+      "range": {
+        "startLine": 113,
+        "startChar": 66,
+        "endLine": 113,
+        "endChar": 0
+      },
+      "revId": "5ec89d87b100e258836bbaf877f00064d18ed33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
