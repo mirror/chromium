@@ -13,6 +13,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
+#include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_switches.h"
 #include "gpu/command_buffer/service/texture_definition.h"
 #include "gpu/config/gpu_switches.h"
@@ -1321,6 +1322,11 @@ void FeatureInfo::InitializeFeatures() {
     validators_.render_buffer_format.AddValue(GL_RG8_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RED_EXT);
     validators_.texture_unsized_internal_format.AddValue(GL_RG_EXT);
+
+    if (feature_flags_.ext_texture_storage) {
+      validators_.texture_internal_format_storage.AddValue(GL_R8_EXT);
+      validators_.texture_internal_format_storage.AddValue(GL_RG8_EXT);
+    }
   }
   UMA_HISTOGRAM_BOOLEAN("GPU.TextureRG", feature_flags_.ext_texture_rg);
 
