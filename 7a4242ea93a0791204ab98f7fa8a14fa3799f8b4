@@ -46,6 +46,30 @@
       "revId": "7a4242ea93a0791204ab98f7fa8a14fa3799f8b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "66c20a29_f2c73026",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-04T14:31:28Z",
+      "side": 1,
+      "message": "I\u0027m not aware of that, and it doesn\u0027t sound good :( Our builders were broken several times due to changes in WebRTC, and now the issue spreads in the opposite direction: our change breaks your stuff. Maybe there is a way to manage DEPS better?",
+      "parentUuid": "88abc90c_792a072a",
+      "range": {
+        "startLine": 377,
+        "startChar": 106,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "7a4242ea93a0791204ab98f7fa8a14fa3799f8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
