@@ -75,8 +75,9 @@ SharedWorker* SharedWorker::Create(ExecutionContext* context,
     return nullptr;
   }
 
-  KURL script_url = worker->ResolveURL(
-      url, exception_state, WebURLRequest::kRequestContextSharedWorker);
+  KURL script_url =
+      worker->ResolveURL(context, url, exception_state,
+                         WebURLRequest::kRequestContextSharedWorker);
   if (script_url.IsEmpty())
     return nullptr;
 

@@ -21,6 +21,7 @@ class DedicatedWorkerMessagingProxy;
 class ExceptionState;
 class ExecutionContext;
 class ScriptState;
+class WorkerOptions;
 class WorkerScriptLoader;
 
 // Implementation of the Worker interface defined in the WebWorker HTML spec:
@@ -40,6 +41,7 @@ class CORE_EXPORT DedicatedWorker final
  public:
   static DedicatedWorker* Create(ExecutionContext*,
                                  const String& url,
+                                 const WorkerOptions&,
                                  ExceptionState&);
 
   ~DedicatedWorker() override;
@@ -63,8 +65,8 @@ class CORE_EXPORT DedicatedWorker final
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  explicit DedicatedWorker(ExecutionContext*);
-  bool Initialize(ExecutionContext*, const String&, ExceptionState&);
+  DedicatedWorker(ExecutionContext*, const KURL& script_url);
+  void Start(const WorkerOptions&);
 
   // Creates a proxy to allow communicating with the worker's global scope.
   // DedicatedWorker does not take ownership of the created proxy. The proxy
@@ -72,14 +74,20 @@ class CORE_EXPORT DedicatedWorker final
   // terminateWorkerGlobalScope().
   DedicatedWorkerMessagingProxy* CreateMessagingProxy(ExecutionContext*);
 
-  // Callbacks for |script_loader_|.
+  // Loads a worker script as a classic script.
+  void LoadClassicScript();
   void OnResponse();
   void OnFinished();
+
+  void StartWorkerGlobalScope(const String& source_text,
+                              const String& referrer_policy);
 
   // Implements EventTarget (via AbstractWorker -> EventTargetWithInlineData).
   const AtomicString& InterfaceName() const final;
 
   RefPtr<WorkerScriptLoader> script_loader_;
+
+  const KURL script_url_;
 
   Member<DedicatedWorkerMessagingProxy> context_proxy_;
 };
