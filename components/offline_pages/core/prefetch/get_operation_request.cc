@@ -22,7 +22,8 @@ GetOperationRequest::GetOperationRequest(
     const PrefetchRequestFinishedCallback& callback)
     : callback_(callback) {
   fetcher_ = PrefetchRequestFetcher::CreateForGet(
-      GetOperationRequestURL(name, channel), request_context_getter,
+      GetOperationRequestURL(name, channel), PrefetchExperimentHeader(),
+      request_context_getter,
       base::Bind(&GetOperationRequest::OnCompleted,
                  // Fetcher is owned by this instance.
                  base::Unretained(this)));

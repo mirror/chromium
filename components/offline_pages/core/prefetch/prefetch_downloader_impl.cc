@@ -107,6 +107,13 @@ void PrefetchDownloaderImpl::StartDownload(
   params.scheduling_params.battery_requirements =
       download::SchedulingParams::BatteryRequirements::BATTERY_SENSITIVE;
   params.request_params.url = PrefetchDownloadURL(download_location, channel_);
+
+  std::string experiment_header = PrefetchExperimentHeader();
+  if (!experiment_header.empty()) {
+    params.request_params.request_headers.AddHeaderFromString(
+        experiment_header);
+  }
+
   // The download service can queue the download even if it is not fully up yet.
   download_service_->StartDownload(params);
 }

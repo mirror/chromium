@@ -25,14 +25,18 @@ class PrefetchRequestFetcher : public net::URLFetcherDelegate {
                                                const std::string& data)>;
 
   // Creates a fetcher that will sends a GET request to the server.
+  // |extra_header| will be added if it is not empty.
   static std::unique_ptr<PrefetchRequestFetcher> CreateForGet(
       const GURL& url,
+      const std::string& extra_header,
       net::URLRequestContextGetter* request_context_getter,
       const FinishedCallback& callback);
 
   // Creates a fetcher that will sends a POST request to the server.
+  // |extra_header| will be added if it is not empty.
   static std::unique_ptr<PrefetchRequestFetcher> CreateForPost(
       const GURL& url,
+      const std::string& extra_header,
       const std::string& message,
       net::URLRequestContextGetter* request_context_getter,
       const FinishedCallback& callback);
@@ -46,6 +50,7 @@ class PrefetchRequestFetcher : public net::URLFetcherDelegate {
   // If |message| is empty, the GET request is sent. Otherwise, the POST request
   // is sent with |message| as post data.
   PrefetchRequestFetcher(const GURL& url,
+                         const std::string& extra_header,
                          const std::string& message,
                          net::URLRequestContextGetter* request_context_getter,
                          const FinishedCallback& callback);
