@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93f9bc07_a70f4737",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T19:15:06Z",
+      "side": 1,
+      "message": "We need tab for isAllowedToDownloadPage() and getProfile() functions. We might be able to pass a non-null Activity and get the tab from the activity, but we still need the right tab which might be null in some cases. I prefer this check instead.",
+      "revId": "7b27f3764f4d1399f798b55f0dbe2f3f49bac49c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
