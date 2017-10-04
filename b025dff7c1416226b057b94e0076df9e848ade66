@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66dbfe0c_fcd8d209",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-04T12:25:04Z",
+      "side": 1,
+      "message": "nit: Can you add a bug or a CL that references it?",
+      "range": {
+        "startLine": 9,
+        "startChar": 36,
+        "endLine": 9,
+        "endChar": 52
+      },
+      "revId": "b025dff7c1416226b057b94e0076df9e848ade66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
