@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f615028_540d28ce",
+        "filename": "base/files/file_descriptor_watcher_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-04T14:56:21Z",
+      "side": 1,
+      "message": "\u003e If the caller tears down their Controller while we\u0027re processing StartWatching(), and then close()s the FD, then (potentially) the moment we release the cancellation-flag lock, the FD can become invalid, such that the sequence tear-down of the Watcher will attempt to cancel a watch on a closed (and potentially even re-used) FD.\n\u003e \n\u003e So I don\u0027t think this implementation addresses the failure case you\u0027ll see if you apply https://chromium-review.googlesource.com/c/chromium/src/+/575108\n\nI had in mind that closing a file descriptor before stopping the watch was safe, but it turns out that it isn\u0027t in the case where there are duplicates of the watched file descriptor (see Q6 at http://man7.org/linux/man-pages/man7/epoll.7.html and https://cs.chromium.org/chromium/src/base/third_party/libevent/epoll.c?l\u003d356). I added a unit test for this use case and wrote a new impl that works with it.\n\n\u003e \n\u003e The only way to make this class work correctly with its current API would be for tear-down of Controllers to be synchronous (i.e. wait for the background thread to complete stopping watching), which seems unfortunate.\n\nOn the plus side, the service thread isn\u0027t very busy (it only dispatches FileDescriptorWatcher notifications and schedules delayed tasks), so that shouldn\u0027t take too long and shouldn\u0027t cause deadlocks.\n\n\u003e \n\u003e The alternative (alas, with an API change) would be to actually pass the FD off to the FileDescriptorWatcher to close, rather than closing it on the calling Sequence.\n\nThat would work perfectly in cases like https://cs.chromium.org/chromium/src/device/serial/serial_io_handler_posix.cc?l\u003d381\u0026rcl\u003da3322f51ec07d17e014a0938a78f87ab418d8273 or https://cs.chromium.org/chromium/src/device/hid/hid_connection_linux.cc?l\u003d58\u0026rcl\u003da3322f51ec07d17e014a0938a78f87ab418d8273, but would be hard in cases where the object that owns the FileDescriptorWatcher::Controller doesn\u0027t own the file descriptor https://cs.chromium.org/chromium/src/dbus/bus.cc?l\u003d69\u0026rcl\u003da3322f51ec07d17e014a0938a78f87ab418d8273.",
+      "parentUuid": "a11d83ff_b8b0a2b2",
+      "revId": "8796a714d2b15e422e4d43209e0b02999176f4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da7b396d_121a7f8c",
         "filename": "base/files/file_descriptor_watcher_posix_unittest.cc",
         "patchSetId": 3
