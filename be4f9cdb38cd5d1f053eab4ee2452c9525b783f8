@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "405571d9_6e009921",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "nit: to shorten and as OfflinePages is already mentioned in the start of the histogram name I\u0027d suggest renaming the two histograms to \nOfflinePages.Prefetching.ServiceGetOperationStatus\nand\nOfflinePages.Prefetching.ServiceGetPageBundleStatus",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94177f49_d32819f5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "// Have the test system callback into GetOperationRequestDone with an error\n// code that will cause the SHOULD_SUSPEND response.",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 73
+      },
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91710133_b5009b56",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment.",
+      "range": {
+        "startLine": 222,
+        "startChar": 5,
+        "endLine": 223,
+        "endChar": 35
+      },
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77268ed9_5018f4e5",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "Could also test that GetAllOperationNamesRequested returns empty and that FindGetOperationRequestByName doesn\u0027t find the operation.",
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21032a78_fb8b2acf",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "SHOULD_RETRY_WITHOUT_BACKOFF",
+      "range": {
+        "startLine": 248,
+        "startChar": 49,
+        "endLine": 248,
+        "endChar": 63
+      },
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c824afca_92461c2e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "Could also test that GetAllUrlsRequested returns empty.",
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

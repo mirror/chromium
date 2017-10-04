@@ -207,6 +207,23 @@
     },
     {
       "key": {
+        "uuid": "50f8390d_1f4e9455",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_operation_response_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "IIUC the operation name will be set to something (kTestOperationName maybe). Can\u0027t we keep checking for that (here in the the other tests below)? \n\nAnd specifically for this test, should it be renamed or does \"EmptyOperation\" still makes sense?",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66f94055_4ee82df4",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1

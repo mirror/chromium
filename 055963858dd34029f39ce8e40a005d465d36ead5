@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7576c69b_9c67277a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T01:13:21Z",
+      "side": 1,
+      "message": "Better to keep these private and add protected getters.\nAlso, why expose |task_runner_handle_| if it\u0027s not currently needed?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "055963858dd34029f39ce8e40a005d465d36ead5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
