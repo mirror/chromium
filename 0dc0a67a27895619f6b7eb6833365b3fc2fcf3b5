@@ -422,6 +422,30 @@
       "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570fdc51_ecc7b8ee",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:34:39Z",
+      "side": 1,
+      "message": "That\u0027s a good idea, thanks!",
+      "parentUuid": "23048e0c_bc9260d1",
+      "range": {
+        "startLine": 286,
+        "startChar": 64,
+        "endLine": 286,
+        "endChar": 68
+      },
+      "revId": "0dc0a67a27895619f6b7eb6833365b3fc2fcf3b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

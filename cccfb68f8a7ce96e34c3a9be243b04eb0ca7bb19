@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf6a278_e4fe10d5",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:34:39Z",
+      "side": 1,
+      "message": "Nit: This is a bit difficult to understand. How about:\n\n  Escapes a string for use in a regular expression.\n  @param {string} string The string to escape.\n  @return {string} A regular expression pattern that will match exactly the string.",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 61
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51024d9d_514774f2",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:34:39Z",
+      "side": 1,
+      "message": "Hm... if at this point we\u0027re just looking for a string literal, we could lowercase |flag| (if it isn\u0027t already anyway, but I\u0027m not sure that\u0027s guaranteed), and then use plain old indexOf() and substrings to split |flag| up? Sorry if I\u0027m flipflopping a bit here.",
+      "range": {
+        "startLine": 279,
+        "startChar": 21,
+        "endLine": 279,
+        "endChar": 31
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9be6736_a28fe0e0",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:34:39Z",
+      "side": 1,
+      "message": "Sorry, I overlooked this... the last two times 😉: Can you just write that as `if (...) { matches++; }?",
+      "range": {
+        "startLine": 326,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 28
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4113e4cb_c40ffaaa",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:34:39Z",
+      "side": 1,
+      "message": "Nit: \"change\"",
+      "range": {
+        "startLine": 348,
+        "startChar": 47,
+        "endLine": 348,
+        "endChar": 54
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
