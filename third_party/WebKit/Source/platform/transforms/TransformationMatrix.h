@@ -506,7 +506,10 @@ class PLATFORM_EXPORT TransformationMatrix {
   }
 
   void CheckAlignment() {
-#if defined(TRANSFORMATION_MATRIX_USE_X86_64_SSE2)
+// VS 2017 (_MSC_VER==1911) and beyond don't require 16-byte alignment even
+// when generating SSE code.
+#if defined(TRANSFORMATION_MATRIX_USE_X86_64_SSE2) && \
+    (!defined(_MSC_VER) || _MSC_VER < 1911)
     // m_matrix can cause this class to require higher than usual alignment.
     // Make sure the allocator handles this.
     DCHECK_EQ((reinterpret_cast<uintptr_t>(this) &
