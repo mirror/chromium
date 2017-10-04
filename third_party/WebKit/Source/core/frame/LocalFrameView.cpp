@@ -1219,8 +1219,7 @@ void LocalFrameView::UpdateLayout() {
         SetScrollbarsSuppressed(true);
 
         first_layout_ = false;
-        last_viewport_size_ = GetLayoutSize(kIncludeScrollbars);
-        last_zoom_factor_ = GetLayoutViewItem().Style()->Zoom();
+        SendResizeEventIfNeeded();
 
         // Set the initial vMode to AlwaysOn if we're auto.
         if (v_mode == kScrollbarAuto) {
