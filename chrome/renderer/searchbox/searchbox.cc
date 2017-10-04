@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <utility>
 
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
@@ -244,21 +245,13 @@ void SearchBox::LogEvent(NTPLoggingEventType event) {
 }
 
 void SearchBox::LogMostVisitedImpression(
-    int position,
-    ntp_tiles::TileTitleSource tile_title_source,
-    ntp_tiles::TileSource tile_source,
-    ntp_tiles::TileVisualType tile_type) {
-  embedded_search_service_->LogMostVisitedImpression(
-      page_seq_no_, position, tile_title_source, tile_source, tile_type);
+    const ntp_tiles::NTPTileImpression& impression) {
+  embedded_search_service_->LogMostVisitedImpression(page_seq_no_, impression);
 }
 
 void SearchBox::LogMostVisitedNavigation(
-    int position,
-    ntp_tiles::TileTitleSource tile_title_source,
-    ntp_tiles::TileSource tile_source,
-    ntp_tiles::TileVisualType tile_type) {
-  embedded_search_service_->LogMostVisitedNavigation(
-      page_seq_no_, position, tile_title_source, tile_source, tile_type);
+    const ntp_tiles::NTPTileImpression& impression) {
+  embedded_search_service_->LogMostVisitedNavigation(page_seq_no_, impression);
 }
 
 void SearchBox::CheckIsUserSignedInToChromeAs(const base::string16& identity) {
