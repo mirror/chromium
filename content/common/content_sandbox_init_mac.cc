@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/sandbox_init_mac.h"
+#include "content/common/content_sandbox_init_mac.h"
 
 #include "base/callback.h"
 #include "base/command_line.h"

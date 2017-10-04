@@ -12,13 +12,13 @@
 #include "base/logging.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/memory/shared_memory.h"
-#include "content/common/mac/font_descriptor.h"
-#include "content/common/mac/font_loader.h"
-#include "content/common/sandbox_mac_unittest_helper.h"
+#include "service_manager/common/mac/font_descriptor.h"
+#include "service_manager/common/mac/font_loader.h"
+#include "service_manager/common/sandbox_mac_unittest_helper.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace content {
+namespace service_manager {
 
 class FontLoadingTestCase : public MacSandboxTestCase {
  public:
@@ -31,7 +31,6 @@ class FontLoadingTestCase : public MacSandboxTestCase {
   size_t font_data_length_;
 };
 REGISTER_SANDBOX_TEST_CASE(FontLoadingTestCase);
-
 
 // Load raw font data into shared memory object.
 bool FontLoadingTestCase::BeforeSandboxInit() {
@@ -59,7 +58,7 @@ bool FontLoadingTestCase::BeforeSandboxInit() {
   }
 
   memcpy(font_shmem_->memory(), font_data.c_str(), font_data_length_);
-  if (!font_shmem_->Unmap())  {
+  if (!font_shmem_->Unmap()) {
     LOG(ERROR) << "SharedMemory::Unmap failed";
     return false;
   }
@@ -130,4 +129,4 @@ TEST_F(MacSandboxTest, FontLoadingTest) {
   ASSERT_TRUE(base::DeleteFile(temp_file_path, false));
 }
 
-}  // namespace content
+}  // namespace service_manager

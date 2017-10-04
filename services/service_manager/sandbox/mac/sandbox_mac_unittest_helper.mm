@@ -31,7 +31,7 @@ const char* kTestDataKey = "CHROMIUM_SANDBOX_USER_DATA";
 // Support infrastructure for REGISTER_SANDBOX_TEST_CASE macro.
 namespace internal {
 
-typedef std::map<std::string,MacSandboxTestCase*> SandboxTestMap;
+typedef std::map<std::string, MacSandboxTestCase*> SandboxTestMap;
 
 // A function that returns a common map from string -> test case class.
 SandboxTestMap& GetSandboxTestMap() {
@@ -104,7 +104,7 @@ void MacSandboxTestCase::SetTestData(const char* test_data) {
 
 // Given a test name specified by |name| return that test case.
 // If no test case is found for the given name, return NULL.
-MacSandboxTestCase *SandboxTestForName(const char* name) {
+MacSandboxTestCase* SandboxTestForName(const char* name) {
   using internal::SandboxTestMap;
   using internal::GetSandboxTestMap;
 

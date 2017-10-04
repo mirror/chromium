@@ -12,4 +12,13 @@ source_set("sandbox") {
     "//services/service_manager/sandbox",
     "//testing/gtest",
   ]
+  if (is_mac) {
+    sources += [
+      "sandbox_mac_diraccess_unittest.mm",
+      "sandbox_mac_fontloading_unittest.mm",
+      "sandbox_mac_system_access_unittest.mm",
+      "sandbox_mac_unittest_helper.h",
+      "sandbox_mac_unittest_helper.mm",
+    ]
+  }
 }

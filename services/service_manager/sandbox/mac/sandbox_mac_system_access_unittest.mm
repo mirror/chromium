@@ -10,14 +10,14 @@
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
 #include "base/strings/sys_string_conversions.h"
-#include "content/common/sandbox_mac.h"
-#include "content/common/sandbox_mac_unittest_helper.h"
 #include "crypto/openssl_util.h"
+#include "services/service_manager/sandbox/mac/sandbox_mac.h"
+#include "services/service_manager/sandbox/mac/sandbox_mac_unittest_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/boringssl/src/include/openssl/rand.h"
 #import "ui/base/clipboard/clipboard_util_mac.h"
 
-namespace content {
+namespace service_manager {
 
 //--------------------- Clipboard Sandboxing ----------------------
 // Test case for checking sandboxing of clipboard access.
@@ -36,8 +36,8 @@ class MacSandboxedClipboardTestCase : public MacSandboxTestCase {
 
 REGISTER_SANDBOX_TEST_CASE(MacSandboxedClipboardTestCase);
 
-MacSandboxedClipboardTestCase::MacSandboxedClipboardTestCase() :
-    clipboard_name_(nil) {}
+MacSandboxedClipboardTestCase::MacSandboxedClipboardTestCase()
+    : clipboard_name_(nil) {}
 
 MacSandboxedClipboardTestCase::~MacSandboxedClipboardTestCase() {
   [clipboard_name_ release];
@@ -147,4 +147,4 @@ TEST_F(MacSandboxTest, OpenSSLAccess) {
   EXPECT_TRUE(RunTestInAllSandboxTypes("MacSandboxedOpenSSLTestCase", NULL));
 }
 
-}  // namespace content
+}  // namespace service_manager
