@@ -134,7 +134,6 @@ class CC_ANIMATION_EXPORT ElementAnimations
   bool ScrollOffsetAnimationWasInterrupted() const;
 
   void SetNeedsPushProperties();
-  bool needs_push_properties() const { return needs_push_properties_; }
 
   void UpdateClientAnimationState();
 

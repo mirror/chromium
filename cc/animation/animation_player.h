@@ -108,7 +108,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   // Returns true if there are any animations at all to process.
   bool has_any_animation() const;
 
-  bool needs_push_properties() const { return needs_push_properties_; }
   void SetNeedsPushProperties();
 
   // Make animations affect active elements if and only if they affect
