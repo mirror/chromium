@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "base/strings/string_util.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/controller.h"
 #include "components/download/internal/logger_impl.h"
 #include "components/download/internal/startup_status.h"
@@ -20,9 +21,14 @@ DownloadServiceImpl::DownloadServiceImpl(std::unique_ptr<Configuration> config,
       logger_(std::move(logger)),
       controller_(std::move(controller)),
       service_config_(config_.get()),
-      startup_completed_(false) {
-  controller_->Initialize(base::Bind(
-      &DownloadServiceImpl::OnControllerInitialized, base::Unretained(this)));
+      startup_completed_(false),
+      weak_ptr_factory_(this) {
+  // Initialize after a delay to wait for network stack ready.
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&DownloadServiceImpl::Initialize,
+                 weak_ptr_factory_.GetWeakPtr()),
+      config_->start_up_delay);
 }
 
 DownloadServiceImpl::~DownloadServiceImpl() = default;
@@ -138,6 +144,11 @@ void DownloadServiceImpl::ChangeDownloadCriteria(
 
 Logger* DownloadServiceImpl::GetLogger() {
   return logger_.get();
+}
+
+void DownloadServiceImpl::Initialize() {
+  controller_->Initialize(base::Bind(
+      &DownloadServiceImpl::OnControllerInitialized, base::Unretained(this)));
 }
 
 void DownloadServiceImpl::OnControllerInitialized() {
