@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "81f09d04_04479887",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "From discussion with msw@, moving this elision functionality into RenderText doesn\u0027t make sense.  Alternatively, we can change these algorithms to use their own forced-LTR measurement algorithm.",
+      "parentUuid": "e0051f57_9c0c53b1",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "0a17074e_2c900643",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b51104b_a3e87506",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626b3643_bb9ddc73",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 2
@@ -104,6 +140,24 @@
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bc01fbe_f4f2d15a",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "626b3643_bb9ddc73",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "68e70003_feb5898d",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b67b3248_ccad0d48",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4576da97_118a4039",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 2
@@ -138,6 +210,24 @@
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002c0a75_a2c48891",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4576da97_118a4039",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "cea21071_0f642c07",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2bf2b7_8e736d95",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef12ce8b_8011d12f",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 2
@@ -169,6 +277,24 @@
       "writtenOn": "2017-08-28T23:03:51Z",
       "side": 1,
       "message": "Nit: |path_elision| would be better, since we only use this as the trailing elision when it\u0027s to elide the full path.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361de9a9_19fe968a",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "This string covers path, ref and query though, not just path.",
+      "parentUuid": "ef12ce8b_8011d12f",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -192,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "c6292126_e657acab",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5509942_7540fd4b",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ebe00a_9ef6fa88",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 2
@@ -203,6 +347,24 @@
       "writtenOn": "2017-08-28T23:03:51Z",
       "side": 1,
       "message": "Nit: Casting end() to size_t instead would be safer.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7400c1a_745522e8",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done, in a better way.",
+      "parentUuid": "a7ebe00a_9ef6fa88",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -238,6 +400,24 @@
       "side": 1,
       "message": "This will look different in a follow on patch set, when I add the Parsed support.",
       "parentUuid": "02cd4fec_3e85d345",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c3ba90_6f693954",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Coming back to this, I think things are clearest this way.  A loop or helper method approach both hurt readability to save only a few lines.",
+      "parentUuid": "59afde10_a3ffb94f",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -308,6 +488,24 @@
       "writtenOn": "2017-08-28T23:03:51Z",
       "side": 1,
       "message": "Nit: Or just return this value directly.\n\nCan collapse into a ?:, but probably not in few lines due to the length of the condition.",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2821f6_93455c13",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-04T17:24:49Z",
+      "side": 1,
+      "message": "Done (no longer applicable).",
+      "parentUuid": "e7ec1f7c_9f6f48c1",
       "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
