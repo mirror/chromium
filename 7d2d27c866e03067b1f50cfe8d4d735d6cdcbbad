@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a241ff3b_615adcc3",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T21:35:57Z",
+      "side": 1,
+      "message": "nit: base::ContainsKey() encapsulates container.find() !\u003d container.end()",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bb4671_5a1e355b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T21:35:57Z",
+      "side": 1,
+      "message": "put braces around multi-line \u0027then\u0027 statement bodies. i.e.\n\n  // OK.\n  if (foo)\n    FitsInALine();  // Ok.\n\n  if (foo) {\n    LongFuncCallThatNeedsToBeWrapped(\n        params, ...);\n  }\n\n  if (foo)\n    LongFuncCallThatNeedsToBeWrapped(\n        params, ...);  // Not OK",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570fc543_d12881c4",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T21:35:57Z",
+      "side": 1,
+      "message": "this doesn\u0027t pick up an address event from the first and last name fields?",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
