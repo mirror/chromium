@@ -16,6 +16,24 @@
       "revId": "461e8a105a2202598180c631194ab2e8a23df9cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae94af8_2f5a1008",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-04T23:17:36Z",
+      "side": 1,
+      "message": "OK, let\u0027s do \"test://evaluations/console-filter-test.js@evaluation15\" - a lot of places (e.g. stack traces) only show filename and it\u0027s nice for other people to have context on what the integer means.\n\nI\u0027m a bit concerned about how much churn this could cause in our expectation files. ~Half our tests diff\u0027ed because of this change and a lot of test helper methods like TestRunner.loadHTML are using evaluateInPage internally. I don\u0027t have a better alternative, but something to keep in mind.",
+      "parentUuid": "07346e3c_44846bb3",
+      "revId": "461e8a105a2202598180c631194ab2e8a23df9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
