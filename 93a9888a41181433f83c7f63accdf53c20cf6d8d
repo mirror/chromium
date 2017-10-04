@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "330e3609_205d148a",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T06:41:55Z",
+      "side": 1,
+      "message": "I guess the type for the html file is \u0027document\u0027 (and subtype is \u0027html\u0027)?",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be274d18_f0cddcaf",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T06:41:55Z",
+      "side": 1,
+      "message": "As the body has 8px margin by default, the body\u0027s height is now ({100% of viewport\u0027s height} + 8px * 2).\nIt will result in that the bottom of the content will be clipped from the viewport?",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b608ee43_3b9af0da",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T06:41:55Z",
+      "side": 1,
+      "message": "pre?",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
