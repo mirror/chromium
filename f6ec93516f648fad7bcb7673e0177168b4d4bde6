@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f4d30a5b_2aec15d8",
+        "filename": "tools/binary_size/libsupersize/concurrent.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "join() waits for the workers to finish. We don\u0027t want to do that. close() just ensures we can\u0027t enqueue more jobs.",
+      "parentUuid": "74ce8aa6_2c9934a1",
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f69b2d_1a6a5d18",
         "filename": "tools/binary_size/libsupersize/concurrent_test.py",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "99cd40af_5fa8907c",
+        "filename": "tools/binary_size/libsupersize/concurrent_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87f69b2d_1a6a5d18",
+      "range": {
+        "startLine": 19,
+        "startChar": 44,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f4701e_5d77d431",
         "filename": "tools/binary_size/libsupersize/concurrent_test.py",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb7e448_c6e53582",
+        "filename": "tools/binary_size/libsupersize/concurrent_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1f4701e_5d77d431",
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ffcb364c_fb3d7f34",
+        "filename": "tools/binary_size/libsupersize/concurrent_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f0a0d4_d132ce4c",
+      "range": {
+        "startLine": 27,
+        "startChar": 59,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2389fec_da41628a",
         "filename": "tools/binary_size/libsupersize/concurrent_test.py",
         "patchSetId": 2
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e5e636f9_d5298728",
+        "filename": "tools/binary_size/libsupersize/concurrent_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2389fec_da41628a",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 69
+      },
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "528749a4_60f61221",
         "filename": "tools/binary_size/libsupersize/concurrent_test.py",
         "patchSetId": 2
@@ -125,6 +233,30 @@
       "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc62a0ab_ec7c82e4",
+        "filename": "tools/binary_size/libsupersize/concurrent_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-04T19:34:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "528749a4_60f61221",
+      "range": {
+        "startLine": 51,
+        "startChar": 23,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "f6ec93516f648fad7bcb7673e0177168b4d4bde6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
