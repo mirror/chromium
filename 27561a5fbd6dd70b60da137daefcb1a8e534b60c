@@ -322,6 +322,30 @@
     },
     {
       "key": {
+        "uuid": "0e2ad911_1a99087d",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T21:37:46Z",
+      "side": 1,
+      "message": "\u003e The find bar is much more persistent than most other views. No amount of clicking or focus changes will dismiss it. Only clicking the close(x) or hitting escape (and only if it\u0027s focused) will close it. I think the UX folks are looking to preserve that behavior.\n\u003e \n\u003e Many (most? all?) of the bubble will be dismissed if they lose focus or, as I mentioned, when the icon is clicked again.\n\nClicking the icon definitely should remove the bubble (and I\u0027m happy to discuss with UX about that) but regardless, overriding that behavior is no doubt easy. I also think it is easy to control whether bubbles dismiss when they lose focus. See BubbleDialogDelegate::close_on_deactivate_\n\n\u003e Where does the bubble go when the OmniBox is hidden by policy or other? I\u0027m concerned that we\u0027ll be fighting the inherent behavior of the bubbles.\n\nWhen the omnibox is hidden? Is that possible?",
+      "parentUuid": "ec20b1be_5bcf6228",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c09f7a4_519d6f16",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 8
