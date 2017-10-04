@@ -185,8 +185,6 @@ void LoginPasswordView::Backspace() {
                                   ui::DomCode::BACKSPACE, ui::EF_NONE));
 }
 
-void LoginPasswordView::Submit() {}
-
 void LoginPasswordView::SetPlaceholderText(
     const base::string16& placeholder_text) {
   textfield_->set_placeholder_text(placeholder_text);

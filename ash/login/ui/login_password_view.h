@@ -77,9 +77,6 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   // Erase the last entered value.
   void Backspace();
 
-  // Dispatch a submit event.
-  void Submit();
-
   // Set password field placeholder. The password view cannot set the text by
   // itself because it doesn't know which auth methods are enabled.
   void SetPlaceholderText(const base::string16& placeholder_text);
