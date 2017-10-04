@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1d816813_8fc095be",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b7c08e5_15a2b11a",
+      "range": {
+        "startLine": 99,
+        "startChar": 32,
+        "endLine": 99,
+        "endChar": 35
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a496d42_301ed1f9",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -59,6 +83,30 @@
       "writtenOn": "2017-10-04T18:51:15Z",
       "side": 1,
       "message": "Should we have entry-\u003escheduling_params.priority \u003c\u003d SchedulingParams::Priority::NORMAL?\nThe same condition should be updated in ShouldBlockDownloadOnNavigation() too.",
+      "range": {
+        "startLine": 824,
+        "startChar": 6,
+        "endLine": 825,
+        "endChar": 74
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d69f108_82902d3e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "Updated this to use \u003c\u003d like ShouldBlockDownloadOnNavigation() does.  Is that what you meant?",
+      "parentUuid": "4a496d42_301ed1f9",
       "range": {
         "startLine": 824,
         "startChar": 6,
@@ -118,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "13c6ab4a_8afb6abc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "Ah yeah if the download is running we shouldn\u0027t actually count this.  Good point!",
+      "parentUuid": "d164e0a8_40461e68",
+      "range": {
+        "startLine": 840,
+        "startChar": 52,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12504d8c_874fa75c",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
@@ -129,6 +201,30 @@
       "writtenOn": "2017-10-04T18:51:15Z",
       "side": 1,
       "message": "It seems like we are incrementing attempt_count every time we resume for a download those that have can_resume\u003dfalse.\n\nWe can get paused due to any number of reasons and very frequently too (due to navigations, external downloads etc). Technically we didn\u0027t fail. Should we do something else for those downloads?\n\nMay be have this on OnDownloadFailed() instead?\n\nFor the case where can_resume\u003dtrue, do we ever call driver_-\u003eStart() after a failure? Or maybe driver_-\u003eResume() will take care of it? But in that case we never increment attempt_count?",
+      "range": {
+        "startLine": 841,
+        "startChar": 6,
+        "endLine": 841,
+        "endChar": 11
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7e0fd9_8c892341",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "The issue is we don\u0027t want to not count the attempt on startup.  But your comment here and above is a good one.  It\u0027s free (and we have to) call Resume() again (it\u0027ll do nothing if we\u0027re not paused and can resume).  But we shouldn\u0027t decrement this count.",
+      "parentUuid": "12504d8c_874fa75c",
       "range": {
         "startLine": 841,
         "startChar": 6,
@@ -158,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "6a8374f3_d9f1abca",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "can_resume really means \"can resume without restarting.\"  Maybe I need to rename it :(. Calling Resume() here could restart the download if it has to.",
+      "parentUuid": "8df06503_3fa1e891",
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c00d8a6_3eb4d3c5",
         "filename": "components/download/internal/driver_entry.h",
         "patchSetId": 1
@@ -178,6 +292,30 @@
       "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c79b1e4_82d15149",
+        "filename": "components/download/internal/driver_entry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T22:11:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c00d8a6_3eb4d3c5",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
