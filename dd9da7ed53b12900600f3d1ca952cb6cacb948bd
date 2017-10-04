@@ -674,6 +674,30 @@
     },
     {
       "key": {
+        "uuid": "04b0bd28_6f07c7ff",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T19:00:23Z",
+      "side": 1,
+      "message": "As discussed f2f it seems the combination of partial_ and !truncated \u003d\u003e sparse",
+      "parentUuid": "a28d5b94_0c67342d",
+      "range": {
+        "startLine": 270,
+        "startChar": 23,
+        "endLine": 270,
+        "endChar": 43
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b7ac09_528fab12",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 46
