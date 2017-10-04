@@ -5,6 +5,8 @@
 #ifndef UI_BASE_WINDOW_OPEN_DISPOSITION_H_
 #define UI_BASE_WINDOW_OPEN_DISPOSITION_H_
 
+#include <string>
+
 #include "ui/base/ui_base_export.h"
 
 // DEPRECATED: Instead of introducing new references to this enum, use
@@ -41,6 +43,9 @@ UI_BASE_EXPORT WindowOpenDisposition DispositionFromClick(bool middle_button,
 // For example, a middle click would mean to open a background tab.
 // event_flags are the flags as understood by ui::MouseEvent.
 UI_BASE_EXPORT WindowOpenDisposition DispositionFromEventFlags(int event_flags);
+
+UI_BASE_EXPORT std::string DispositionToString(
+    WindowOpenDisposition disposition);
 
 }  // namespace ui
 
