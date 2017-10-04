@@ -17,11 +17,14 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.CollectionUtil;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.FadingShadow;
 import org.chromium.chrome.browser.widget.FadingShadowView;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
+
+import java.util.List;
 
 /**
  * Provides content to be displayed inside the Home tab of the bottom sheet in incognito mode.
@@ -139,6 +142,11 @@ public class IncognitoBottomSheetContent extends IncognitoNewTabPage implements 
     @Override
     public View getContentView() {
         return getView();
+    }
+
+    @Override
+    public List<View> getViewsForPadding() {
+        return CollectionUtil.newArrayList(mScrollView);
     }
 
     @Override
