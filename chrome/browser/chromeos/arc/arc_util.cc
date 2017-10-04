@@ -30,6 +30,7 @@
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "google_apis/google_api_keys.h"
 
 namespace arc {
 
@@ -217,6 +218,16 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   if (!user_flow || !user_flow->CanStartArc()) {
     VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
         << "ARC is not allowed in the current user flow.";
+    return false;
+  }
+
+  if (!google_apis::IsGoogleChromeAPIKeyUsed()) {
+    // TEMP, To get bot error.
+    LOG(ERROR) << "Non-Google client: '" +
+                      google_apis::GetOAuth2ClientID(google_apis::CLIENT_MAIN) +
+                      "'";
+    VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
+        << "ARC is not supported for non-google client.";
     return false;
   }
 
