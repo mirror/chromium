@@ -109,6 +109,23 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
                          gfx::Rect* damage_rect_in_quad_space,
                          bool* damage_rect_in_quad_space_valid);
 
+  void EmitFallbackSurface(const SurfaceDrawQuad* primary_surface_quad,
+                           const gfx::Rect& primary_rect,
+                           const gfx::Transform& target_transform,
+                           const ClipData& clip_rect,
+                           RenderPass* dest_pass,
+                           bool ignore_undamaged,
+                           gfx::Rect* damage_rect_in_quad_space,
+                           bool* damage_rect_in_quad_space_valid);
+
+  void EmitDefaultBackgroundColorQuad(const SurfaceDrawQuad* surface_quad,
+                                      const gfx::Transform& target_transform,
+                                      const ClipData& clip_rect,
+                                      RenderPass* dest_pass);
+
+  void ReportMissingFallbackSurface(const SurfaceId& fallback_surface_id,
+                                    const Surface* fallback_surface);
+
   SharedQuadState* CopySharedQuadState(const SharedQuadState* source_sqs,
                                        const gfx::Transform& target_transform,
                                        const ClipData& clip_rect,

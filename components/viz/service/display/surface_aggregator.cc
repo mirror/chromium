@@ -196,56 +196,15 @@ void SurfaceAggregator::HandleSurfaceQuad(
   // a cycle in the graph and should be dropped.
   if (referenced_surfaces_.count(surface_id))
     return;
+
   Surface* surface = manager_->GetSurfaceForId(surface_id);
   if (!surface || !surface->HasActiveFrame()) {
-    if (surface_quad->fallback_quad) {
-      HandleSurfaceQuad(surface_quad->fallback_quad, primary_rect,
-                        target_transform, clip_rect, dest_pass,
-                        ignore_undamaged, damage_rect_in_quad_space,
+    EmitFallbackSurface(surface_quad, primary_rect, target_transform, clip_rect,
+                        dest_pass, ignore_undamaged, damage_rect_in_quad_space,
                         damage_rect_in_quad_space_valid);
-    } else {
-      SkColor background_color = surface_quad->default_background_color;
-      // If this is a fallback SurfaceDrawQuad and it doesn't have a
-      // CompositorFrame then that's an error.
-      if (surface_quad->surface_draw_quad_type ==
-          SurfaceDrawQuadType::FALLBACK) {
-#if DCHECK_IS_ON()
-        // Pick a very bright and obvious color for the SolidColorDrawQuad so
-        // developers notice there's an error when debugging.
-        background_color = SK_ColorMAGENTA;
-#endif
-        std::stringstream error_stream;
-        error_stream << surface_id;
-#if DCHECK_IS_ON()
-        std::string frame_sink_debug_label(
-            manager_->GetFrameSinkDebugLabel(surface_id.frame_sink_id()));
-        if (!frame_sink_debug_label.empty())
-          error_stream << " [" << frame_sink_debug_label << "]";
-#endif
-        if (!surface) {
-          error_stream << " is missing during aggregation";
-          ++uma_stats_.missing_surface;
-        } else {
-          error_stream << " has no active frame during aggregation";
-          ++uma_stats_.no_active_frame;
-        }
-        DLOG(ERROR) << error_stream.str();
-      }
-      // This is a primary SurfaceDrawQuad and there is no fallback
-      // SurfaceDrawQuad so create a SolidColorDrawQuad with the default
-      // background color.
-      auto* shared_quad_state =
-          CopySharedQuadState(surface_quad->shared_quad_state, target_transform,
-                              clip_rect, dest_pass);
-      auto* solid_color_quad =
-          dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
-      solid_color_quad->SetNew(shared_quad_state, surface_quad->rect,
-                               surface_quad->visible_rect, background_color,
-                               false);
-    }
-
     return;
   }
+
   ++uma_stats_.valid_surface;
 
   const CompositorFrame& frame = surface->GetActiveFrame();
@@ -437,6 +396,87 @@ void SurfaceAggregator::HandleSurfaceQuad(
 
   // Need to re-query since referenced_surfaces_ iterators are not stable.
   referenced_surfaces_.erase(referenced_surfaces_.find(surface_id));
+}
+
+void SurfaceAggregator::EmitFallbackSurface(
+    const SurfaceDrawQuad* primary_surface_quad,
+    const gfx::Rect& primary_rect,
+    const gfx::Transform& target_transform,
+    const ClipData& clip_rect,
+    RenderPass* dest_pass,
+    bool ignore_undamaged,
+    gfx::Rect* damage_rect_in_quad_space,
+    bool* damage_rect_in_quad_space_valid) {
+  SurfaceId fallback_surface_id =
+      primary_surface_quad->fallback_surface_id.has_value()
+          ? *primary_surface_quad->fallback_surface_id
+          : SurfaceId();
+  Surface* fallback_surface = manager_->GetSurfaceForId(fallback_surface_id);
+
+  if (!fallback_surface || !fallback_surface->HasActiveFrame()) {
+    if (fallback_surface_id.is_valid())
+      ReportMissingFallbackSurface(fallback_surface_id, fallback_surface);
+    EmitDefaultBackgroundColorQuad(primary_surface_quad, target_transform,
+                                   clip_rect, dest_pass);
+    return;
+  }
+
+  gfx::Rect quad_rect(fallback_surface->GetActiveFrame().size_in_pixels());
+  quad_rect = gfx::IntersectRects(quad_rect, primary_surface_quad->rect);
+  gfx::Rect visible_quad_rect(primary_surface_quad->visible_rect);
+  visible_quad_rect = gfx::IntersectRects(quad_rect, visible_quad_rect);
+  SurfaceDrawQuad fallback_surface_draw_quad;
+  fallback_surface_draw_quad.SetNew(
+      primary_surface_quad->shared_quad_state, quad_rect, visible_quad_rect,
+      fallback_surface_id, fallback_surface_id, SurfaceDrawQuadType::FALLBACK,
+      primary_surface_quad->default_background_color);
+  HandleSurfaceQuad(&fallback_surface_draw_quad, primary_rect, target_transform,
+                    clip_rect, dest_pass, ignore_undamaged,
+                    damage_rect_in_quad_space, damage_rect_in_quad_space_valid);
+}
+
+void SurfaceAggregator::EmitDefaultBackgroundColorQuad(
+    const SurfaceDrawQuad* surface_quad,
+    const gfx::Transform& target_transform,
+    const ClipData& clip_rect,
+    RenderPass* dest_pass) {
+  // The primary surface is unavailable and there is no fallback
+  // surface specified so create a SolidColorDrawQuad with the default
+  // background color.
+  SkColor background_color = surface_quad->default_background_color;
+#if DCHECK_IS_ON()
+  // Pick a very bright and obvious color for the SolidColorDrawQuad so
+  // developers notice there's an error when debugging.
+  background_color = SK_ColorMAGENTA;
+#endif
+  auto* shared_quad_state = CopySharedQuadState(
+      surface_quad->shared_quad_state, target_transform, clip_rect, dest_pass);
+  auto* solid_color_quad =
+      dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  solid_color_quad->SetNew(shared_quad_state, surface_quad->rect,
+                           surface_quad->visible_rect, background_color, false);
+}
+
+void SurfaceAggregator::ReportMissingFallbackSurface(
+    const SurfaceId& fallback_surface_id,
+    const Surface* fallback_surface) {
+  // If the fallback surface is unavailable then that's an error.
+  std::stringstream error_stream;
+  error_stream << fallback_surface_id;
+#if DCHECK_IS_ON()
+  std::string frame_sink_debug_label(
+      manager_->GetFrameSinkDebugLabel(fallback_surface_id.frame_sink_id()));
+  if (!frame_sink_debug_label.empty())
+    error_stream << " [" << frame_sink_debug_label << "]";
+#endif
+  if (!fallback_surface) {
+    error_stream << " is missing during aggregation";
+    ++uma_stats_.missing_surface;
+  } else {
+    error_stream << " has no active frame during aggregation";
+    ++uma_stats_.no_active_frame;
+  }
+  DLOG(ERROR) << error_stream.str();
 }
 
 void SurfaceAggregator::AddColorConversionPass() {
@@ -811,6 +851,11 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
         child_surfaces.emplace_back(surface_quad->surface_id,
                                     in_moved_pixel_pass, remapped_pass_id,
                                     target_to_surface_transform);
+        if (surface_quad->fallback_surface_id.has_value()) {
+          child_surfaces.emplace_back(*surface_quad->fallback_surface_id,
+                                      in_moved_pixel_pass, remapped_pass_id,
+                                      target_to_surface_transform);
+        }
       } else if (quad->material == DrawQuad::RENDER_PASS) {
         const auto* render_pass_quad = RenderPassDrawQuad::MaterialCast(quad);
         if (in_moved_pixel_pass) {
