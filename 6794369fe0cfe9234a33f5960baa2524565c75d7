@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90477a11_7c586332",
+        "filename": "chrome/browser/vr/service/vr_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T00:26:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to interpret this. Isn\u0027t device::VRDisplayImpl in the same process (since as have a pointer to it)? What is the difference?",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e634f8_f4074548",
+        "filename": "chrome/browser/vr/service/vr_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T00:26:19Z",
+      "side": 1,
+      "message": "It\u0027s confusing that this is called \"host\" but isn\u0027t implementing a host interface. Please rename either the mojo interface (my preference) or the impl in a followup (which will require changing Blink class names too then to make things consistent throughout the chain).",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d3d134_13a0266d",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T00:26:19Z",
+      "side": 1,
+      "message": "I don\u0027t think this can be null? It\u0027s not specified as optional in the mojom",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
