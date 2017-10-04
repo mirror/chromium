@@ -22,6 +22,30 @@
       "revId": "2bbf69bdd3b101eaeef959e41a5e4ea74d67b6a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0988391_6eddf0d1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1149089
+      },
+      "writtenOn": "2017-10-04T09:57:57Z",
+      "side": 1,
+      "message": "I had exactly the same idea :P\nThanks for approving it!",
+      "parentUuid": "364e33da_90f53bcc",
+      "range": {
+        "startLine": 608,
+        "startChar": 4,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "2bbf69bdd3b101eaeef959e41a5e4ea74d67b6a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
