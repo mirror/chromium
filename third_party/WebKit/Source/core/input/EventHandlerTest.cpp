@@ -441,17 +441,15 @@ TEST_F(EventHandlerTest, ReadOnlyInputDoesNotInheritUserSelect) {
       ToElement(GetDocument().body()->firstChild()->firstChild());
   ShadowRoot* const shadow_root = field->UserAgentShadowRoot();
 
-  Element* const text = shadow_root->getElementById("inner-editor");
+  Node* const text = shadow_root->getElementById("inner-editor")->firstChild();
   LayoutPoint location = text->GetLayoutObject()->VisualRect().Center();
   HitTestResult hit =
       GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
           location);
   EXPECT_TRUE(text->CanStartSelection());
-
-  // TODO(crbug.com/764661): Show I-beam because field is selectable.
-  // EXPECT_TRUE(
-  //   GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(field,
-  //                                                                      hit));
+  EXPECT_TRUE(
+      GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(text,
+                                                                         hit));
 }
 
 TEST_F(EventHandlerTest, ImagesCannotStartSelection) {
