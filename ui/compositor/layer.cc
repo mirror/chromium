@@ -1162,6 +1162,9 @@ void Layer::SetVisibilityFromAnimation(bool visible) {
 
   visible_ = visible;
   cc_layer_->SetHideLayerAndSubtree(!visible_);
+
+  if (delegate_)
+    delegate_->OnLayerVisibilityChanged();
 }
 
 void Layer::SetBrightnessFromAnimation(float brightness) {

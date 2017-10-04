@@ -6,6 +6,8 @@
 
 namespace ui {
 
+void LayerDelegate::OnLayerVisibilityChanged() {}
+
 void LayerDelegate::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {}
 
 void LayerDelegate::OnLayerTransformed() {}

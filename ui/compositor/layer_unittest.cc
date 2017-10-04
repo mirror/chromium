@@ -316,6 +316,7 @@ class TestLayerDelegate : public LayerDelegate {
     device_scale_factor_ = new_device_scale_factor;
   }
 
+  MOCK_METHOD0(OnLayerVisibilityChanged, void());
   MOCK_METHOD0(OnLayerTransformed, void());
   MOCK_METHOD2(OnLayerOpacityChanged, void(float, float));
 
@@ -2275,6 +2276,59 @@ TEST(LayerDelegateTest, DelegatedFrameDamage) {
   layer->OnDelegatedFrameDamage(damage_rect);
   EXPECT_TRUE(delegate.delegated_frame_damage_called());
   EXPECT_EQ(damage_rect, delegate.delegated_frame_damage_rect());
+}
+
+TEST(LayerDelegateTest, OnLayerVisibilityChanged) {
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  ASSERT_TRUE(layer->visible());
+
+  EXPECT_CALL(delegate, OnLayerVisibilityChanged())
+      .WillOnce(
+          testing::Invoke([&layer]() { EXPECT_FALSE(layer->visible()); }));
+  layer->SetVisible(false);
+  testing::Mock::VerifyAndClear(&delegate);
+
+  EXPECT_CALL(delegate, OnLayerVisibilityChanged())
+      .WillOnce(testing::Invoke([&layer]() { EXPECT_TRUE(layer->visible()); }));
+  layer->SetVisible(true);
+}
+
+TEST(LayerDelegateTest, OnLayerVisibilityDidNotChange) {
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  ASSERT_TRUE(layer->visible());
+  // Since |delegate| is a StrictMock, the test will fail if the observer is
+  // notified.
+  layer->SetVisible(true);
+}
+
+TEST(LayerDelegateTest, OnLayerVisibilityChangedAnimation) {
+  ScopedAnimationDurationScaleMode scoped_animation_duration_scale_mode(
+      ScopedAnimationDurationScaleMode::NORMAL_DURATION);
+  LayerAnimatorTestController test_controller(
+      LayerAnimator::CreateImplicitAnimator());
+  LayerAnimator* const animator = test_controller.animator();
+  const base::TimeDelta duration = animator->GetTransitionDuration();
+
+  auto layer = std::make_unique<Layer>(LAYER_TEXTURED);
+  testing::StrictMock<TestLayerDelegate> delegate;
+  layer->set_delegate(&delegate);
+  layer->SetAnimator(animator);
+  ASSERT_TRUE(layer->visible());
+
+  // Start the animation.
+  layer->SetVisible(false);
+
+  // Play the animation
+  test_controller.Step(duration / 2);
+
+  EXPECT_CALL(delegate, OnLayerVisibilityChanged())
+      .WillOnce(
+          testing::Invoke([&layer]() { EXPECT_FALSE(layer->visible()); }));
+  test_controller.Step(duration / 2);
 }
 
 TEST(LayerDelegateTest, OnLayerTransformed) {

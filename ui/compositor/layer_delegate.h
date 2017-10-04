@@ -28,6 +28,9 @@ class COMPOSITOR_EXPORT LayerDelegate {
   virtual void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                           float new_device_scale_factor) = 0;
 
+  // Invoked when the layer's visibility has changed.
+  virtual void OnLayerVisibilityChanged();
+
   // Invoked when the bounds have changed.
   virtual void OnLayerBoundsChanged(const gfx::Rect& old_bounds);
 
