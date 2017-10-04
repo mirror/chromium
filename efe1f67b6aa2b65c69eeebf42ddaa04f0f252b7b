@@ -22,6 +22,30 @@
       "revId": "efe1f67b6aa2b65c69eeebf42ddaa04f0f252b7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb50bdb4_2d401c64",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-04T10:35:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed044377_4b0a2544",
+      "range": {
+        "startLine": 236,
+        "startChar": 12,
+        "endLine": 236,
+        "endChar": 94
+      },
+      "revId": "efe1f67b6aa2b65c69eeebf42ddaa04f0f252b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
