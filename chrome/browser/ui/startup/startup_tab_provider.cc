@@ -71,13 +71,15 @@ StartupTabs StartupTabProviderImpl::GetOnboardingTabs(Profile* profile) const {
       prefs && prefs->GetBoolean(prefs::kHasSeenWelcomePage);
   standard_params.is_signin_allowed = profile->IsSyncAllowed();
   SigninManager* signin_manager = SigninManagerFactory::GetForProfile(profile);
-  standard_params.is_signed_in = signin_manager->IsAuthenticated();
-  standard_params.is_signin_in_progress = signin_manager->AuthInProgress();
+  standard_params.is_signed_in =
+      signin_manager && signin_manager->IsAuthenticated();
+  standard_params.is_signin_in_progress =
+      signin_manager && signin_manager->AuthInProgress();
   standard_params.is_supervised_user = profile->IsSupervised();
 
 #if defined(OS_WIN)
   // Windows 10 has unique onboarding policies and content.
-  if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
+  if (ShouldUseWin10OnboardingTabs()) {
     Win10OnboardingTabsParams win10_params;
     PrefService* local_state = g_browser_process->local_state();
     const shell_integration::DefaultWebClientState web_client_state =
@@ -317,4 +319,13 @@ GURL StartupTabProviderImpl::GetWin10WelcomePageUrl(
 GURL StartupTabProviderImpl::GetTriggeredResetSettingsUrl() {
   return GURL(
       chrome::GetSettingsUrl(chrome::kTriggeredResetProfileSettingsSubPage));
+}
+
+// static
+bool StartupTabProviderImpl::ShouldUseWin10OnboardingTabs() {
+#if defined(OS_WIN)
+  return base::win::GetVersion() >= base::win::VERSION_WIN10;
+#else
+  return false;
+#endif
 }
