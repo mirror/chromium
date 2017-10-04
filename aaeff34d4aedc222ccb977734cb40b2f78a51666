@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ea180de_afc5f80a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "It could call anything on the WindowTree interface handle it has, which includes creating/destroying windows and other tree like operations. None of the operations should effect other WindowTreeClients (well, if the renderer deletes a window that another renderer is embedded in, then the other renderer can\u0027t render anymore).",
+      "parentUuid": "9f7ede2a_03d60922",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1cbb99ec_4b88480f",
         "filename": "services/ui/public/interfaces/window_tree.mojom",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "q: Why is the return token optional?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed41ec8b_1963b7eb",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Good point. I thought the token would be null if the scheduling failed, but it never fails so no point in the optional. Changed.",
+      "parentUuid": "1cbb99ec_4b88480f",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b86f326c_2f598dc2",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3184fa45_74359839",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f40b996_ff83a8f6",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "aside: WindowTrees can own themselves?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e385ed1f_c0706522",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Updated based on early out for window-manager.",
+      "parentUuid": "2f40b996_ff83a8f6",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0fb328d3_ea0b7bdb",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e23caa1e_3144caaa",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0d2cde3_65d3d0c7",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "24ea2789_de4d84e6",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0d2cde3_65d3d0c7",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "647e4863_fc753287",
         "filename": "services/ui/ws/window_tree.h",
         "patchSetId": 2
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "Can you explain this part a bit more? Why defer to the parent? Is this because the parent or an ancestor (the browser) is going to be calling ScheduleEmbed?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37dcf32_c903f3c7",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Exactly. There is really no point in the client calling ScheduleEmbed() and then EmbedUsingToken. In such a scenario the client would already have a handle to the WindowTreeclient and could just as well call Embed() that takes the WindowTreeclient.",
+      "parentUuid": "647e4863_fc753287",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "976c54d3_d689e92e",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "No real reason. Updated.",
+      "parentUuid": "c94ce369_ab802530",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac0a0678_e7bb9ff6",
         "filename": "services/ui/ws/window_tree_client_unittest.cc",
         "patchSetId": 2
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "optional nit: order this first like WindowTree and the order of operations.",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6f14c6_0f52f697",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "I went with this order because style guide says out params should be last.",
+      "parentUuid": "ac0a0678_e7bb9ff6",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "1560d6d6_7de86bcf",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c816ebd4_24de3453",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf17796_113d8b42",
         "filename": "services/ui/ws/window_tree_client_unittest.cc",
         "patchSetId": 2
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "836844de_b1b20304",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf17796_113d8b42",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "586b608a_6bb9909e",
         "filename": "ui/aura/mus/window_port_mus.h",
         "patchSetId": 2
@@ -217,6 +415,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "optional nit: use |const mojom::WindowTree::ScheduleEmbedCallback\u0026 callback| here and elsewhere if you drop the base::optional?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cffd047_4ee4c8e6",
+        "filename": "ui/aura/mus/window_port_mus.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "I\u0027m leaving this as is to make easier to convert to OnceCallback. Once we make the mojom generate OnceCallback then this function can be updated.",
+      "parentUuid": "586b608a_6bb9909e",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +456,24 @@
     },
     {
       "key": {
+        "uuid": "4941dd91_9e0ff19a",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "As ScheduleEmbed() never fails, this function has been removed.",
+      "parentUuid": "d62350aa_5fa26350",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fb060ef_f2f4e7d3",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 2
@@ -251,6 +485,24 @@
       "writtenOn": "2017-10-04T01:25:04Z",
       "side": 1,
       "message": "Why AdaptCallbackForRepeating? Aren\u0027t mojo callbacks OnceCallbacks?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3dc1d47_fbc2bebb",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Not once, which necessitates the adapter. Once we make the mojom generate OnceCallback the adapter can be removed.",
+      "parentUuid": "2fb060ef_f2f4e7d3",
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -271,6 +523,24 @@
       "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0520833_93729b2d",
+        "filename": "ui/aura/mus/window_tree_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5901183f_57b9b01f",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
