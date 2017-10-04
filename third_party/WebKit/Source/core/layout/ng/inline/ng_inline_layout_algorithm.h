@@ -57,6 +57,17 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
                                       const NGLineInfo&,
                                       LayoutUnit position,
                                       NGLineBoxFragmentBuilder*);
+  void PlaceLayoutResult(NGInlineItemResult*,
+                         LayoutUnit position,
+                         NGInlineBoxState*,
+                         NGLineBoxFragmentBuilder*);
+  void PlaceListMarker(const NGInlineItem&,
+                       NGInlineItemResult*,
+                       const NGLineInfo&,
+                       NGLineBoxFragmentBuilder*);
+  void AdjustListMarkerPosition(const NGLineInfo&,
+                                LayoutUnit inline_size,
+                                NGLineBoxFragmentBuilder*);
 
   void ApplyTextAlign(const NGLineInfo&,
                       ETextAlign,
@@ -80,6 +91,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
 
   unsigned is_horizontal_writing_mode_ : 1;
   unsigned quirks_mode_ : 1;
+  unsigned has_list_marker_ : 1;
 
   std::unique_ptr<NGExclusionSpace> exclusion_space_;
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
