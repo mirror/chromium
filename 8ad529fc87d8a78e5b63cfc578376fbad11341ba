@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a9b403_b64127e1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T03:31:40Z",
+      "side": 1,
+      "message": "nit: let\u0027s update this comment.",
+      "revId": "8ad529fc87d8a78e5b63cfc578376fbad11341ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc22cfd3_621af241",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T03:31:40Z",
+      "side": 1,
+      "message": "nit: prefer CreateHandlers or SetUpHandlers\n\nCould you also comment that this is virtual only for testing?",
+      "revId": "8ad529fc87d8a78e5b63cfc578376fbad11341ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c18de7_042453ad",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T03:31:40Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "8ad529fc87d8a78e5b63cfc578376fbad11341ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
