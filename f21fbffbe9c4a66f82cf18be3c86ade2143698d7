@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89c04014_5033596d",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_external_protocol_dialog.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8001b489_f8c14a7a",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ec4ce52_cfa44587",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-29T22:27:11Z",
       "side": 1,
       "message": "I guess\n\n    case CloseReason::DIALOG_DEACTIVATED:\n    case CloseReason::CHROME_PRESSED:\n    case CloseReason::CHROME_PREFERRED_PRESSED:\n\nmay hit NOTREACHED() if the following happens:\n\n1) the user clicks a URL\n2) the bubble is shown\n3) before HTTP redirect happens, the user quickly clicks [Stay in Chrome] or just dismiss the bubble.\n4) this function is called.\n\nIf my guess is correct, these 3 cases shouldn\u0027t have NOTREACHED() and should just break;. WDYT?",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7fcee3_cf4817a1",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "But ArcNavigationThrottle is not informed about the user\u0027s decision, the throttle just knows that an attempt to show the UI was done, this intent can result in either CloseReason::PREFERRED_ACTIVITY_FOUND or CloseReason::ERROR (CloseReason::INVALID is the initial value), all the other states are irrelevant for the throttle itself. \n\nHowever, after the UI is closed the user\u0027s action is recorded via ArcNavigationThrottle::AsyncOnIntentPickerClosed, but then again this is a static function and doesn\u0027t interferes at all with the state of the throttle.",
+      "parentUuid": "7ec4ce52_cfa44587",
       "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9fa84fbf_75163706",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "What I wanted to say with this flag |ui_displayed_| was: \"either the picker UI or an App are launched\" and I try to unblock the navigation as fast as possible, this is why I keep a flag and execute Resume() right after that. Probably is just not the best name for the variable, moving to L258 would mean that the picker can be shown even if we have a preferred app, that could happen upon the throttle executing a redirection (via WillRedirectRequest() ), I don\u0027t want to support that behavior, that may be wrong to me, WDYT?",
+      "parentUuid": "98832f8a_11b82033",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85921a03_4ef19f3c",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca3e743_e3079898",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85921a03_4ef19f3c",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1372f88f_c9ae8b56",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "Working on this now, as we discussed earlier having a short-lived icon should be fine for now.",
+      "parentUuid": "139f83f1_ba2ca26a",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b9662ca_24bc094b",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31bd063_5cac76a5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-04T21:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b9662ca_24bc094b",
+      "revId": "f21fbffbe9c4a66f82cf18be3c86ade2143698d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
