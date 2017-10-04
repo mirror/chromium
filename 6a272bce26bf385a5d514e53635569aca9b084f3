@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1442b19f_fbea8ec5",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T23:33:50Z",
+      "side": 1,
+      "message": "can you link an issue to whitelist these?",
+      "range": {
+        "startLine": 142,
+        "startChar": 54,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "6a272bce26bf385a5d514e53635569aca9b084f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
