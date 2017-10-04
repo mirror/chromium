@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bef528f_0e087a0a",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Can we move this code to MarkPhaseEpilogue as well?",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f1a9b7_cffd5f46",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "I\u0027m okay with removing this.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f8afbdd_f9b255db",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "I\u0027m okay with removing this.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d13451af_2e14fe88",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Would you inline PreGC() here?\n\nIt doesn\u0027t make much sense to have MarkPhasePrologue and PreGC separately.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919f6ff7_a72f6c11",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t remember why the safe point scope is needed here. You don\u0027t need to remove it in this CL though.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37c98ab_4ad271dc",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Can we move line 1568 - 1571 to MarkingPhaseEpilogue?",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68859c80_6aede953",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "I\u0027m okay with removing this.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecd4baa_468f3cf6",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ae0a76_f1ff0ece",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Can we resert current_gc_data_ here? I don\u0027t really want to hold the GCData unnecessarily long.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b423a1f2_80e15b7f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T02:46:43Z",
+      "side": 1,
+      "message": "Move this to PreSweep.",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
