@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4d516fe7_8c7aa601",
+        "filename": "extensions/renderer/bindings/api_request_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-10-04T13:23:22Z",
+      "side": 1,
+      "message": "Not terribly expensive, but enough to matter in hot code paths. On the order of a memory allocation, as I recall, but I don\u0027t have numbers in front of me.",
+      "parentUuid": "5e0251c3_edd96f4f",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72c2e230_0114fda8",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 7
