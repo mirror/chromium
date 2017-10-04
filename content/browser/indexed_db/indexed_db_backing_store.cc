@@ -2956,8 +2956,10 @@ Status IndexedDBBackingStore::CleanUpBlobJournal(
   ClearBlobJournal(journal_transaction.get(), level_db_key);
   s = journal_transaction->Commit();
   // Notify blob files cleaned even if commit fails, as files could still be
-  // deleted.
-  indexed_db_factory_->BlobFilesCleaned(origin_);
+  // deleted. |indexed_db_factory_| is null when we're an in-memory backing
+  // store.
+  if (indexed_db_factory_)
+    indexed_db_factory_->BlobFilesCleaned(origin_);
   return s;
 }
 
