@@ -25,6 +25,16 @@ class CONTENT_EXPORT AccessibilityTreeFormatterBrowser
   std::unique_ptr<base::DictionaryValue> BuildAccessibilityTree(
       BrowserAccessibility* root) override;
 
+  std::unique_ptr<base::DictionaryValue> BuildAccessibilityTree(
+      base::ProcessId pid) override {
+    return nullptr;
+  }
+
+  std::unique_ptr<base::DictionaryValue> BuildAccessibilityTree(
+      gfx::AcceleratedWidget widget) {
+    return nullptr;
+  }
+
  protected:
   void RecursiveBuildAccessibilityTree(const BrowserAccessibility& node,
                                        base::DictionaryValue* dict);
