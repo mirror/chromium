@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6818b547_b35b2675",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-04T16:57:55Z",
+      "side": 1,
+      "message": "Why is not setting collapsed_border_values_valid_ to false sufficient?\nThis is what InvalidateCollapsedBorderValues does. Alternatively, why\nis there a collapsed_border_values_valid_ field at all? Can that just be setting\ncollapsed_border_values_ to nullptr?\n\nApologies if this is a repeat of comments in earlier patches, it\u0027s hard to remember\nall these details over time.",
+      "revId": "8e903035e09abc344404ae592da836acea12dbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "688bca54_31065993",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 3
