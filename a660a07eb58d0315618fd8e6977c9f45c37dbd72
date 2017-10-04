@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3de3abb4_3914c4eb",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-04T10:45:07Z",
+      "side": 1,
+      "message": "this will ref/deref at every call. Could be \u0027const ScopedComPtr\u0026 sensor_manager() const;\u0027",
+      "revId": "a660a07eb58d0315618fd8e6977c9f45c37dbd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199fdd78_0b1e71bb",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-10-04T10:45:07Z",
+      "side": 1,
+      "message": "DCHECK(!sensor_thread_) ? or we expect it?",
+      "revId": "a660a07eb58d0315618fd8e6977c9f45c37dbd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
