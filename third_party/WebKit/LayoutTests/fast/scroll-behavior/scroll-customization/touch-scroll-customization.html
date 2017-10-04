@@ -17,6 +17,10 @@
   height: 0 !important;
 }
 
+div {
+  scroll-customization: auto;
+}
+
 #a {
   height:400px;
   width:400px;
@@ -79,6 +83,7 @@ var elements = [
 var scrollableElements = [elements[1], elements[3], elements[4]];
 
 document.scrollingElement.id = "scrollingElement";
+document.scrollingElement.style.scrollCustomization = 'auto';
 
 function reset() {
   for (var i = 0; i < elements.length; ++i) {
