@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f426162b_b0204ebe",
+        "filename": "third_party/WebKit/Source/core/dom/BlinkMessagePortMessageStructTraits.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-04T18:25:06Z",
+      "side": 1,
+      "message": "Yes, see comments on an earlier version of this CL. Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d770862 to change GetWireData to just return a base::span",
+      "parentUuid": "bb435119_77c9423b",
+      "revId": "b960756df0f8ad4debf488908650d8691ff2ecad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4319fae9_08fd7455",
         "filename": "third_party/WebKit/common/message_port/message_port_channel.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c52ba6e9_3d1f727d",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-04T18:25:06Z",
+      "side": 1,
+      "message": "Filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d771702",
+      "parentUuid": "4319fae9_08fd7455",
+      "revId": "b960756df0f8ad4debf488908650d8691ff2ecad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "159f530a_08214ff2",
         "filename": "third_party/WebKit/common/message_port/message_port_channel.cc",
         "patchSetId": 13
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-03T07:19:06Z",
       "side": 1,
       "message": "Nit: pass by ref",
+      "range": {
+        "startLine": 97,
+        "startChar": 53,
+        "endLine": 97,
+        "endChar": 54
+      },
+      "revId": "b960756df0f8ad4debf488908650d8691ff2ecad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74ed9bc_8d6ad8f2",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-04T18:25:06Z",
+      "side": 1,
+      "message": "Hmm? WebKit/common/README.md says to use chromiums coding style, which forbids pass-by-ref for this?",
+      "parentUuid": "159f530a_08214ff2",
       "range": {
         "startLine": 97,
         "startChar": 53,
