@@ -22,6 +22,30 @@
       "revId": "19f0b9ce00fa5a3a840829a9494a043171c64aec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955e836c_20e0b28a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T15:03:22Z",
+      "side": 1,
+      "message": "I don\u0027t think we can (sent an email). I\u0027d like to land this now, since this is currently broken on small screens, and update BottomSheetNewTabController#.. in a follow-up if it turns out that we can show the \u0027G\u0027.\n\nI thought we\u0027d sorted out a good plan for 64, but if that\u0027s not the case, let\u0027s discuss on the bug and assign back to hannahs@ if necessary.",
+      "parentUuid": "afc47474_89577c85",
+      "range": {
+        "startLine": 331,
+        "startChar": 27,
+        "endLine": 331,
+        "endChar": 40
+      },
+      "revId": "19f0b9ce00fa5a3a840829a9494a043171c64aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
