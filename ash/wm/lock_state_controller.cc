@@ -141,6 +141,10 @@ bool LockStateController::ShutdownRequested() {
   return shutting_down_;
 }
 
+bool LockStateController::SignoutRequested() {
+  return signout_requested_;
+}
+
 bool LockStateController::CanCancelLockAnimation() {
   return can_cancel_lock_animation_;
 }
@@ -203,6 +207,13 @@ void LockStateController::RequestShutdown(ShutdownReason reason) {
   StartRealShutdownTimer(true);
 }
 
+void LockStateController::RequestSignOut() {
+  if (signout_requested_)
+    return;
+  signout_requested_ = true;
+  Shell::Get()->session_controller()->CallClientRequestSignOut();
+}
+
 void LockStateController::OnLockScreenHide(base::OnceClosure callback) {
   StartUnlockAnimationBeforeUIDestroyed(std::move(callback));
 }
@@ -214,7 +225,7 @@ void LockStateController::SetLockScreenDisplayedCallback(
 }
 
 void LockStateController::OnHostCloseRequested(aura::WindowTreeHost* host) {
-  Shell::Get()->shell_delegate()->Exit();
+  RequestSignOut();
 }
 
 void LockStateController::OnChromeTerminating() {

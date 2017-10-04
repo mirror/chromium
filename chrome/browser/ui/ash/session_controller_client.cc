@@ -22,6 +22,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
@@ -277,6 +278,10 @@ void SessionControllerClient::ShowMultiProfileLogin() {
       chromeos::UserAddingScreen::Get()->Start();
     }
   }
+}
+
+void SessionControllerClient::RequestSignOut() {
+  chrome::AttemptUserExit();
 }
 
 // static

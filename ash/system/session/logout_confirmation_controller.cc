@@ -12,7 +12,7 @@
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
 #include "ash/system/session/logout_confirmation_dialog.h"
-#include "ash/system/tray/system_tray_controller.h"
+#include "ash/wm/lock_state_controller.h"
 #include "base/callback.h"
 #include "base/location.h"
 #include "base/time/default_tick_clock.h"
@@ -30,7 +30,7 @@ const int kLastWindowClosedContainerIds[] = {
     kShellWindowId_DefaultContainer, kShellWindowId_AlwaysOnTopContainer};
 
 void SignOut() {
-  Shell::Get()->system_tray_controller()->SignOut();
+  Shell::Get()->lock_state_controller()->RequestSignOut();
 }
 
 }  // namespace

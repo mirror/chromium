@@ -17,7 +17,6 @@
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/system_tray.h"
-#include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_popup_item_style.h"
 #include "ash/system/tray/tray_popup_utils.h"
@@ -25,6 +24,7 @@
 #include "ash/system/user/login_status.h"
 #include "ash/system/user/rounded_image_view.h"
 #include "ash/system/user/user_card_view.h"
+#include "ash/wm/lock_state_controller.h"
 #include "base/memory/ptr_util.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_info.h"
@@ -260,7 +260,7 @@ void UserView::ButtonPressed(views::Button* sender, const ui::Event& event) {
   if (sender == logout_button_) {
     Shell::Get()->metrics()->RecordUserMetricsAction(UMA_STATUS_AREA_SIGN_OUT);
     HideUserDropdownWidget();
-    Shell::Get()->system_tray_controller()->SignOut();
+    Shell::Get()->lock_state_controller()->RequestSignOut();
   } else if (sender == user_card_container_ && IsUserDropdownEnabled()) {
     ToggleUserDropdownWidget();
   } else if (user_dropdown_widget_ &&

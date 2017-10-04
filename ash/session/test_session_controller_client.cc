@@ -208,4 +208,8 @@ void TestSessionControllerClient::CycleActiveUser(
 
 void TestSessionControllerClient::ShowMultiProfileLogin() {}
 
+void TestSessionControllerClient::RequestSignOut() {
+  controller_->ClearUserSessionsForTest();
+}
+
 }  // namespace ash

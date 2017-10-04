@@ -12,10 +12,10 @@
 #include "ash/shell.h"
 #include "ash/system/session/logout_confirmation_controller.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/user/login_status.h"
+#include "ash/wm/lock_state_controller.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -72,7 +72,7 @@ void LogoutButtonTray::ButtonPressed(views::Button* sender,
 
   if (dialog_duration_ <= base::TimeDelta()) {
     // Sign out immediately if |dialog_duration_| is non-positive.
-    Shell::Get()->system_tray_controller()->SignOut();
+    Shell::Get()->lock_state_controller()->RequestSignOut();
   } else if (Shell::Get()->logout_confirmation_controller()) {
     Shell::Get()->logout_confirmation_controller()->ConfirmLogout(
         base::TimeTicks::Now() + dialog_duration_);

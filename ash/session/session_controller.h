@@ -135,6 +135,11 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   // Show the multi-profile login UI to add another user to this session.
   void ShowMultiProfileLogin();
 
+  // Requests signing out all users, ending the current sessiono.
+  // NOTE: This should only be called from LockStateController, other callers
+  // should use LockStateController::RequestSignOut() instead.
+  void CallClientRequestSignOut();
+
   // Returns the PrefService used at the signin screen, which is tied to an
   // incognito profile in chrome and is valid until the browser exits.
   PrefService* GetSigninScreenPrefService() const;

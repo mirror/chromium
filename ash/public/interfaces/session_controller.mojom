@@ -193,4 +193,7 @@ interface SessionControllerClient {
 
   // Show the multi-profile login UI to add another user to this session.
   ShowMultiProfileLogin();
+
+  // Requests signing out all users, ending the current session.
+  RequestSignOut();
 };

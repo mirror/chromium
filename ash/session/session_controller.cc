@@ -223,6 +223,11 @@ void SessionController::ShowMultiProfileLogin() {
     client_->ShowMultiProfileLogin();
 }
 
+void SessionController::CallClientRequestSignOut() {
+  if (client_)
+    client_->RequestSignOut();
+}
+
 PrefService* SessionController::GetSigninScreenPrefService() const {
   return signin_screen_prefs_.get();
 }
