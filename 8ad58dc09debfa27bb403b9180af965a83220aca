@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b14cf9d_8361cd00",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-04T22:42:54Z",
+      "side": 1,
+      "message": "I think this is one more level of indirection than necessary, in the worst case, you could have\nSelectionClientManager -\u003e SelectionClientBridge -\u003e actual implementation.\n\nYou only really one level of indirection to deal with potentially having two clients.",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de2a075_ab215628",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-04T22:42:54Z",
+      "side": 1,
+      "message": "don\u0027t import this, and qualify as SelectionClient.ResultCallback below",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f004f67_e4dd8477",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-04T22:42:54Z",
+      "side": 1,
+      "message": "again, this shouldn\u0027t be imported/called directly by content embedder. probably should just add a SmartSelectionClientFactory in content_public that has a static create method that returns SelectionClient type",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
