@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5c5ad158_bb60a877",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T10:32:01Z",
+      "side": 1,
+      "message": "1) unit test child processes\n2) using non-shared memory for histograms is still legit",
+      "parentUuid": "d0ff8597_8dc52ad1",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7094441_76b3951f",
         "filename": "content/child/child_histogram_impl.cc",
         "patchSetId": 19
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T08:10:46Z",
       "side": 1,
       "message": "Do we expect this to fail in practice?",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e282f3f9_494dcd6d",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T10:32:01Z",
+      "side": 1,
+      "message": "When the handle is uninitialized, and this can happen when it\u0027s optional.",
+      "parentUuid": "c7094441_76b3951f",
       "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e95f8d48_c33135fe",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T10:32:01Z",
+      "side": 1,
+      "message": "Don\u0027t know. I ported the code from the old file.",
+      "parentUuid": "f517c42a_502aa4f1",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7f01a0c_0f9b2e97",
         "filename": "content/child/child_histogram_impl.h",
         "patchSetId": 19
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "90708e8c_9a7de907",
+        "filename": "content/child/child_histogram_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T10:32:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d7f01a0c_0f9b2e97",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702c8eea_ad244096",
         "filename": "content/common/child_histogram.mojom",
         "patchSetId": 19
@@ -81,6 +153,30 @@
       "writtenOn": "2017-10-04T08:10:46Z",
       "side": 1,
       "message": "Why optional? Is there a point to calling this if we don\u0027t pass down a shm handle??",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b118dc_32965458",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T10:32:01Z",
+      "side": 1,
+      "message": "This enforces that you can\u0027t set the shared memory for histograms after you\u0027ve started using them. I think it\u0027s better this way.",
+      "parentUuid": "702c8eea_ad244096",
       "range": {
         "startLine": 10,
         "startChar": 23,
