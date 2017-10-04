@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c4f42e3_289b8000",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T13:56:53Z",
+      "side": 1,
+      "message": "Does it relate to two declarations below or what? what do you \"flag\"?",
+      "range": {
+        "startLine": 384,
+        "startChar": 2,
+        "endLine": 385,
+        "endChar": 25
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94360cfd_f50eb47c",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T13:56:53Z",
+      "side": 1,
+      "message": "why?",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 71
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49db12b2_9133c12a",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T13:56:53Z",
+      "side": 1,
+      "message": "signature \u003d\u003d \u0027T\u0027? Looks like magic constant :) Can we have a declared constant with more descriptive name?",
+      "range": {
+        "startLine": 406,
+        "startChar": 47,
+        "endLine": 406,
+        "endChar": 50
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
