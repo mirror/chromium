@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dc5b9f3_0d9580b0",
+        "filename": "content/network/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T16:56:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to add such an intrusive dependency.  Eventually this will need to move to its own service (Which can\u0027t depend on content).",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ec69df_b87fc21d",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T16:56:28Z",
+      "side": 1,
+      "message": "This needs docs.",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 59
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
