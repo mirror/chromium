@@ -233,8 +233,8 @@ void ResourcePrefetcher::FinishRequest(net::URLRequest* request) {
 void ResourcePrefetcher::ReadFullResponse(net::URLRequest* request) {
   int bytes_read = 0;
   do {
-    scoped_refptr<net::IOBuffer> buffer(new net::IOBuffer(
-        kResourceBufferSizeBytes));
+    scoped_refptr<net::IOBuffer> buffer =
+        base::MakeRefCounted<net::IOBuffer>(kResourceBufferSizeBytes);
     bytes_read = request->Read(buffer.get(), kResourceBufferSizeBytes);
     if (bytes_read == net::ERR_IO_PENDING) {
       return;
