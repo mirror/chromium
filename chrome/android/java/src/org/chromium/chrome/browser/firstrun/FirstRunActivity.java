@@ -59,21 +59,6 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         void onAbortFirstRunExperience();
     }
 
-    // Incoming parameters:
-    public static final String EXTRA_COMING_FROM_CHROME_ICON = "Extra.ComingFromChromeIcon";
-    public static final String EXTRA_CHROME_LAUNCH_INTENT = "Extra.FreChromeLaunchIntent";
-
-    static final String SHOW_WELCOME_PAGE = "ShowWelcome";
-    static final String SHOW_DATA_REDUCTION_PAGE = "ShowDataReduction";
-    static final String SHOW_SEARCH_ENGINE_PAGE = "ShowSearchEnginePage";
-    static final String SHOW_SIGNIN_PAGE = "ShowSignIn";
-
-    // Outgoing results:
-    public static final String EXTRA_FIRST_RUN_ACTIVITY_RESULT = "Extra.FreActivityResult";
-    public static final String EXTRA_FIRST_RUN_COMPLETE = "Extra.FreComplete";
-
-    public static final boolean DEFAULT_METRICS_AND_CRASH_REPORTING = true;
-
     // UMA constants.
     private static final int SIGNIN_SETTINGS_DEFAULT_ACCOUNT = 0;
     private static final int SIGNIN_SETTINGS_ANOTHER_ACCOUNT = 1;
@@ -158,21 +143,21 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
 
         boolean notifyAdapter = false;
         // An optional Data Saver page.
-        if (mFreProperties.getBoolean(SHOW_DATA_REDUCTION_PAGE)) {
+        if (mFreProperties.getBoolean(FirstRunActivityBase.SHOW_DATA_REDUCTION_PAGE)) {
             mPages.add(pageOf(DataReductionProxyFirstRunFragment.class));
             mFreProgressStates.add(FRE_PROGRESS_DATA_SAVER_SHOWN);
             notifyAdapter = true;
         }
 
         // An optional page to select a default search engine.
-        if (mFreProperties.getBoolean(SHOW_SEARCH_ENGINE_PAGE)) {
+        if (mFreProperties.getBoolean(FirstRunActivityBase.SHOW_SEARCH_ENGINE_PAGE)) {
             mPages.add(pageOf(DefaultSearchEngineFirstRunFragment.class));
             mFreProgressStates.add(FRE_PROGRESS_DEFAULT_SEARCH_ENGINE_SHOWN);
             notifyAdapter = true;
         }
 
         // An optional sign-in page.
-        if (mFreProperties.getBoolean(SHOW_SIGNIN_PAGE)) {
+        if (mFreProperties.getBoolean(FirstRunActivityBase.SHOW_SIGNIN_PAGE)) {
             mPages.add(pageOf(AccountFirstRunFragment.class));
             mFreProgressStates.add(FRE_PROGRESS_SIGNIN_SHOWN);
             notifyAdapter = true;
@@ -305,7 +290,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(
-                FirstRunActivity.EXTRA_COMING_FROM_CHROME_ICON, mLaunchedFromChromeIcon);
+                FirstRunActivityBase.EXTRA_COMING_FROM_CHROME_ICON, mLaunchedFromChromeIcon);
     }
 
     @Override
@@ -448,7 +433,8 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     @Override
     public void acceptTermsOfService(boolean allowCrashUpload) {
         // If default is true then it corresponds to opt-out and false corresponds to opt-in.
-        UmaUtils.recordMetricsReportingDefaultOptIn(!DEFAULT_METRICS_AND_CRASH_REPORTING);
+        UmaUtils.recordMetricsReportingDefaultOptIn(
+                !FirstRunActivityBase.DEFAULT_METRICS_AND_CRASH_REPORTING);
         FirstRunUtils.acceptTermsOfService(allowCrashUpload);
         FirstRunStatus.setSkipWelcomePage(true);
         flushPersistentData();
@@ -465,7 +451,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
             readFrom = getIntent().getExtras();
         }
         mLaunchedFromChromeIcon =
-                readFrom.getBoolean(FirstRunActivity.EXTRA_COMING_FROM_CHROME_ICON);
+                readFrom.getBoolean(FirstRunActivityBase.EXTRA_COMING_FROM_CHROME_ICON);
     }
 
     /**
