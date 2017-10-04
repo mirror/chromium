@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "959f54cb_c9257ec7",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T23:32:57Z",
+      "side": 1,
+      "message": "You could call it something else I guess... ChildHistogramInitializer? I don\u0027t care too strongly either way.",
+      "parentUuid": "9eeea3ef_a0e93a88",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7094441_76b3951f",
         "filename": "content/child/child_histogram_impl.cc",
         "patchSetId": 19
