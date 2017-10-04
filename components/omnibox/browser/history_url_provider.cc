@@ -381,9 +381,25 @@ HistoryURLProvider::VisitClassifier::VisitClassifier(
        !input.parts().path.is_nonempty()))
     return;
 
+  // Check if the url database has canonical url.
   if (db_->GetRowForURL(url, &url_row_)) {
     type_ = VISITED;
     return;
+  }
+
+  // If the autocomplete input does not start with 'http://' but the canonical
+  // URL is HTTP, check if changing the scheme corresponds to an entry in the
+  // url database.
+  if (url.SchemeIs(url::kHttpScheme) &&
+      !base::StartsWith(input.text(), base::ASCIIToUTF16(url::kHttpScheme),
+                        base::CompareCase::INSENSITIVE_ASCII)) {
+    GURL::Replacements replacements;
+    replacements.SetSchemeStr(url::kHttpsScheme);
+    GURL alternative_scheme_url = url.ReplaceComponents(replacements);
+    if (db_->GetRowForURL(alternative_scheme_url, &url_row_)) {
+      type_ = VISITED;
+      return;
+    }
   }
 
   if (provider_->CanFindIntranetURL(db_, input)) {
@@ -883,6 +899,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
     const VisitClassifier& classifier,
     HistoryURLProviderParams* params) const {
   MatchType type = INLINE_AUTOCOMPLETE;
+
   switch (classifier.type()) {
     case VisitClassifier::INVALID:
       return false;
@@ -894,6 +911,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
       // We have data for this match, use it.
       params->what_you_typed_match.deletable = true;
       params->what_you_typed_match.description = classifier.url_row().title();
+      params->what_you_typed_match.destination_url = classifier.url_row().url();
       RecordAdditionalInfoFromUrlRow(classifier.url_row(),
                                      &params->what_you_typed_match);
       params->what_you_typed_match.description_class = ClassifyDescription(
