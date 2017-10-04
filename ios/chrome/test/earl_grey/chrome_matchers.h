@@ -168,8 +168,18 @@ id<GREYMatcher> ClearCacheButton();
 // panel.
 id<GREYMatcher> ClearSavedPasswordsButton();
 
-// Returns matcher for the collection view of content suggestion.
+// Returns matcher for the warning message while filling in payment requests.
+id<GREYMatcher> WarningMessageView();
+
+// Returns matcher for the payment picker cell.
+id<GREYMatcher> PaymentRequestPickerRow();
+
+// Returns matcher for the payment request search bar.
+id<GREYMatcher> PaymentRequestPickerSearchBar();
+
+// Returns matcher for content suggestion view.
 id<GREYMatcher> ContentSuggestionCollectionView();
+
 }  // namespace chrome_test_util
 
 #endif  // IOS_CHROME_TEST_EARL_GREY_CHROME_MATCHERS_H_
