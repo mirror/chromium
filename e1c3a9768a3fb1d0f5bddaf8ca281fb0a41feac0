@@ -22,6 +22,30 @@
       "revId": "e1c3a9768a3fb1d0f5bddaf8ca281fb0a41feac0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269d6fb0_920071be",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-10-04T05:36:31Z",
+      "side": 1,
+      "message": "I\u0027ve found it can be distinguished by sourceCapabilities.",
+      "parentUuid": "37ead870_a51cf5d0",
+      "range": {
+        "startLine": 216,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "e1c3a9768a3fb1d0f5bddaf8ca281fb0a41feac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
