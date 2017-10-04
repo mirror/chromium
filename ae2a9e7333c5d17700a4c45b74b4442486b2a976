@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56fa8675_67541abd",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-04T14:26:45Z",
+      "side": 1,
+      "message": "Could you add a test for this?\n\nWe\u0027d now end up with something like:\n\n\u003cactions\u003e\n  \u003cinput id\u003d\"\" type\u003d\"text\" placeholder\u003d\"\" /\u003e\n  \u003caction type\u003d\"\" content\u003d\"\" arguments\u003d\"\" /\u003e\n\u003c/actions\u003e\n\nReading their blog post, that seems OK:\nhttps://blogs.msdn.microsoft.com/tiles_and_toasts/2015/07/02/adaptive-and-interactive-toast-notifications-for-windows-10/\n\nHowever, a few points:\n\n*** We can end up including multiple \u003cinput\u003e elements if there are multiple buttons with type\u003dTEXT. We need to make sure we only write the \u003cinput\u003e once, *before* any of the \u003caction\u003e elements.\n\nThat may need a separate iteration over the |buttons| in AddActions() to predetermine whether the \u003cinput\u003e is necessary. I\u0027d use the placeholder string for the *first* button that is of type\u003dTEXT when multiple are defined.\n\n*** Maybe s/kTextBox/kUserResponse/? It\u0027s the name of the variable we get in the receive path, together with the @arguments attribute of the \u003caction\u003e that the user pressed on, if any.",
+      "revId": "ae2a9e7333c5d17700a4c45b74b4442486b2a976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
