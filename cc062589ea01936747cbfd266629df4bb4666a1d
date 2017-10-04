@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c36217ab_567c3756",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T17:50:42Z",
+      "side": 1,
+      "message": "We should fix the impl if it is an issue. I don\u0027t like the fact that we put the official key in open source code as that defeats the purpose of having the keys in internal repo.",
+      "parentUuid": "3a7cd0cc_a198003e",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "cc062589ea01936747cbfd266629df4bb4666a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bb15900_1c233e37",
         "filename": "components/arc/arc_util.cc",
         "patchSetId": 1
