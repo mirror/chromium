@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2d145f30_a3a1ae0a",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T16:09:14Z",
+      "side": 1,
+      "message": "the second const means that pointer can\u0027t be changed, [] basically means the same (pointer which corresponds to array can\u0027t be changed.).",
+      "parentUuid": "c75d81d9_94609019",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4328c143_3991014e",
         "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97f7fb9b_a8ea0238",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T16:09:14Z",
+      "side": 1,
+      "message": "Thanks, it makes sense. There are a lot of such places in this file, that was created before. I\u0027ll do in the next CL.",
+      "parentUuid": "4328c143_3991014e",
+      "range": {
+        "startLine": 105,
+        "startChar": 27,
+        "endLine": 105,
+        "endChar": 33
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e75544b4_329e2989",
         "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-04T14:57:16Z",
       "side": 1,
       "message": "FYI, \u0027current-password\u0027 may be a substring. Not sure if it produce any issues for this project.",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 46
+      },
+      "revId": "660e98f01ba89f69791796377a1c400fed3b9620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3c8e67a_657d2f09",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T16:09:14Z",
+      "side": 1,
+      "message": "Yeah, I know. I\u0027ll fix it in the next CL (it\u0027s going to be pretty big change).",
+      "parentUuid": "e75544b4_329e2989",
       "range": {
         "startLine": 117,
         "startChar": 12,
