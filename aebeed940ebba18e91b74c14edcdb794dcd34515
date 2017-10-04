@@ -34,6 +34,24 @@
       "revId": "aebeed940ebba18e91b74c14edcdb794dcd34515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf84358_6d425eb1",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-04T16:58:18Z",
+      "side": 1,
+      "message": "IIUC, the |response_info_| member of URLRequest is default initialized which will set its |was_cached_| field to false. So even if the request is not started or cancel early, the value should be correct? Is that understanding correct?\n\nIf the answer to the question above is \"no\", is there anyway to check that the URLRequest has got a response, other than adding a boolean variable and setting it to true in OnResponseStarted()? (It is not a big deal, but it would be nice if I could avoid adding one more member variable.)",
+      "parentUuid": "cf1c64b3_02aaace9",
+      "revId": "aebeed940ebba18e91b74c14edcdb794dcd34515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
