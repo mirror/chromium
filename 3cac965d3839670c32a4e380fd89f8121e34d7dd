@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3cddfa22_fe205afb",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T06:08:17Z",
+      "side": 1,
+      "message": "\u003e // I wonder if we could remove the kSendingRequestedScript state.\n\nMy motivation is to avoid cyclic state transition. It\u0027s hard for me to follow such the state transition...",
+      "parentUuid": "75f69636_3cfcbab8",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 47
+      },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516cf0e6_7750d9eb",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 4
