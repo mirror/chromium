@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ca3917_bbc99646",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T20:42:43Z",
+      "side": 1,
+      "message": "Nit: comments should be normal complete sentences (ending in a period).\nNit: remove the first \"the\" -- I think that improves readability.",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cf1a1e_5fb81c9e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T20:42:43Z",
+      "side": 1,
+      "message": "This is OK, but it might be better and easier to add two calls down below where this method is being called.",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ee4829_81617f81",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5354,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T20:42:43Z",
+      "side": 1,
+      "message": "Nit: one \"n\" in opening.",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a38d38_0e391daf",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5639,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T20:42:43Z",
+      "side": 1,
+      "message": "Nit: typo",
+      "range": {
+        "startLine": 5639,
+        "startChar": 20,
+        "endLine": 5639,
+        "endChar": 28
+      },
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb660cd1_26e1f5dc",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5818,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T20:42:43Z",
+      "side": 1,
+      "message": "and here...and below?",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
