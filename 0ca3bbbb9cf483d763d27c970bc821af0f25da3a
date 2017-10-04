@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d24e8b4_8be6d02e",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921b42b4_552899f0",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e635757_f856013a",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Should this call a base class impl before/after the shadow? I guess AppMenuButton is coincidentally a no-op because it specifies false for |show_menu_marker|, but it might be worthwhile to future-proof this.",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a24de48_7ba42416",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Instead of duplicating the code from NewTabButton::PaintButtonContents, extract a helper function that both buttons can call (as well as other buttons in the future that might want to call attention to themselves). This is pretty gnarly for one-off copy-pasta. Ditto for CreateShadowDrawLooper.",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3887f0db_990307cd",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Where does this multiplier come from? If there\u0027s some arbitrary value that we\u0027re targeting, just make that a separate local constant.",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90b3a30_2c4bd5a8",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "q: Why static_cast here vs use saturated_cast above?",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d1120f_f326e3f9",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Why is this added?",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c02496_ea693564",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Simple accessors usually don\u0027t need comments if the member has a good comment.",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d58877_fbcee9a9",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:42:41Z",
+      "side": 1,
+      "message": "Explain what shadow this is this talking about; buttons don\u0027t usually have shadows.",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
