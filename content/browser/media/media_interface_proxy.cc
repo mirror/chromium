@@ -31,9 +31,33 @@
 #include "content/public/browser/cdm_registry.h"
 #include "content/public/common/cdm_info.h"
 #include "media/base/key_system_names.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+// Mac specific!
+#include "sandbox/mac/seatbelt_extension.h"
 #endif
 
 namespace content {
+
+namespace {
+
+class SeatbeltExtensionTokenProviderImpl
+    : public media::mojom::SeatbeltExtensionTokenProvider {
+ public:
+  explicit SeatbeltExtensionTokenProviderImpl(const base::FilePath& path)
+      : path_(path) {}
+  void GetSeatbeltExtensionToken(
+      GetSeatbeltExtensionTokenCallback callback) final {
+    auto token = sandbox::SeatbeltExtension::Issue(
+        sandbox::SeatbeltExtension::FILE_READ, path_.value());
+    std::move(callback).Run(std::move(*token));
+  }
+
+ private:
+  base::FilePath path_;
+};
+
+}  // namespace
 
 MediaInterfaceProxy::MediaInterfaceProxy(
     RenderFrameHost* render_frame_host,
@@ -234,7 +258,12 @@ media::mojom::InterfaceFactory* MediaInterfaceProxy::ConnectToCdmService(
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   // LoadCdm() should always be called before CreateInterfaceFactory().
-  media_service->LoadCdm(cdm_path);
+  media::mojom::SeatbeltExtensionTokenProviderPtr token_provider_ptr;
+  mojo::MakeStrongBinding(
+      std::make_unique<SeatbeltExtensionTokenProviderImpl>(cdm_path),
+      mojo::MakeRequest(&token_provider_ptr));
+
+  media_service->LoadCdm(cdm_path, std::move(token_provider_ptr));
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
   InterfaceFactoryPtr interface_factory_ptr;

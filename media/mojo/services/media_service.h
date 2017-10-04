@@ -45,7 +45,9 @@ class MEDIA_MOJO_EXPORT MediaService : public service_manager::Service,
   void Create(mojom::MediaServiceRequest request);
 
   // mojom::MediaService implementation.
-  void LoadCdm(const base::FilePath& cdm_path) final;
+  void LoadCdm(const base::FilePath& cdm_path,
+               mojom::SeatbeltExtensionTokenProviderPtr
+                   seatbelt_extension_token_provider) final;
   void CreateInterfaceFactory(
       mojom::InterfaceFactoryRequest request,
       service_manager::mojom::InterfaceProviderPtr host_interfaces) final;

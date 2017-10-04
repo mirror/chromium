@@ -4,6 +4,7 @@
 
 #include "media/mojo/services/media_service.h"
 
+#include <unistd.h>
 #include <utility>
 
 #include "base/memory/ptr_util.h"
@@ -16,6 +17,8 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "media/cdm/cdm_module.h"
+// Mac specific!
+#include "sandbox/mac/seatbelt_extension.h"
 #endif
 
 namespace media {
@@ -57,7 +60,9 @@ void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void MediaService::LoadCdm(const base::FilePath& cdm_path) {
+void MediaService::LoadCdm(const base::FilePath& cdm_path,
+                           mojom::SeatbeltExtensionTokenProviderPtr
+                               seatbelt_extension_token_provider) {
   DVLOG(1) << __func__ << ": cdm_path = " << cdm_path.value();
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   if (is_cdm_loaded_) {
@@ -65,7 +70,34 @@ void MediaService::LoadCdm(const base::FilePath& cdm_path) {
     return;
   }
 
+  // Without consuming the extension, file access is denied.
+  errno = 0;
+  base::ScopedFD fd(open(cdm_path.value().data(), O_RDONLY));
+  CHECK_EQ(-1, fd.get());
+  CHECK_EQ(EPERM, errno);
+
+  sandbox::SeatbeltExtensionToken token;
+  CHECK(seatbelt_extension_token_provider->GetSeatbeltExtensionToken(&token));
+  LOG(ERROR) << "token: " << token.token();
+
+  auto extension = sandbox::SeatbeltExtension::FromToken(std::move(token));
+  CHECK(extension->ConsumePermanently());  // If I call Consume() without
+                                           // Revoke(), I'll hit a DCHECK in
+                                           // SeatbeltExtension dtor.
+
+  // After consuming the extension, file access is still denied for writing.
+  errno = 0;
+  fd.reset(open(cdm_path.value().data(), O_RDWR));
+  CHECK_EQ(-1, fd.get());
+  CHECK_EQ(EPERM, errno);
+
+  // ... but it is allowed to read.
+  errno = 0;
+  fd.reset(open(cdm_path.value().data(), O_RDONLY));
+  PCHECK(fd.get() > 0);  // PCHECK fired!!!
+
   CdmModule::GetInstance()->Initialize(cdm_path);
+
   is_cdm_loaded_ = true;
 #endif
 
