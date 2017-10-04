@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9693d4b2_30d8ad8b",
+        "filename": "chrome/browser/ui/webui/chromeos/login/wait_for_container_ready_screen_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T21:26:44Z",
+      "side": 1,
+      "message": "Is this the right way to dismiss the screen? It seems we try to start StartVoiceInteractionSetupWizard() after this screen. Should this happen for this case?\n\nIt is confusing that we call OnContainerReady when an error occurs.",
+      "revId": "f3ca56d64c2fdd6e62e6db5d7c385e9827f6a51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
