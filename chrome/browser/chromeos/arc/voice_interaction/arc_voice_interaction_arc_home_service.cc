@@ -68,10 +68,9 @@ mojom::VoiceInteractionStructurePtr CreateVoiceInteractionStructure(
   structure->rect = view_structure.rect;
 
   if (view_structure.has_selection) {
-    auto selection = mojom::TextSelection::New();
-    selection->start_selection = view_structure.start_selection;
-    selection->end_selection = view_structure.end_selection;
-    structure->selection = std::move(selection);
+    structure->selection = base::Optional<gfx::Range>(
+        base::in_place, view_structure.start_selection,
+        view_structure.end_selection);
   }
 
   for (auto& child : view_structure.children)
