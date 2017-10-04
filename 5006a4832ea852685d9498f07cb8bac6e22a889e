@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c01b7e_f67299ab",
+        "filename": "ash/login/lock_screen_apps_focus_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "very optional: I would also be OK with making this a generic LockScreenControllerObserver, especially if you think there will be more observer methods in the future.",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecfaad8_53e13ebf",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "nit: {} not needed",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd302bbb_150fe060",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "optional: This might be clearer if you reversed the if() condition",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5633110e_6e34e5be",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "Which interface are you waiting for? LockScreenController? If you know which interface, I prefer adding a FlushForTesting() method to it that flushes the mojo binding. Then the test code becomes self-documenting.",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d23d5c_4fb41005",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fbe0a1_17a82f26",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "CloseNow()?",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94222490_ae1848fb",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "optional; You may wish to use SCOPED_TRACE() so you know which piece of code failed if ExpectFocused() fails an expectation. kaznacheev has used this nicely in palette/stylus code.",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "271f1422_3947202d",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "Wait, who owns the widget here? If the caller really owns it, this should return unique_ptr\u003c\u003e.\n\nI think it\u0027s pretty confusing that there are two methods here related to creating widgets, especially since they have different ownership patterns. Consider not adding this method here and adding a utility method in the test that needs it.\n\nIf you think it\u0027s clearer here, make this method static.",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9283ac73_b57f7d9b",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "Who deletes this widget?",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48268e07_c6f87e7d",
+        "filename": "chrome/browser/ui/ash/lock_screen_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "nit: {} not needed",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4caf3a_4c26cb0a",
+        "filename": "chrome/browser/ui/ash/lock_screen_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what\u0027s going on here. This could use a comment.",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e73866_8f4a4580",
+        "filename": "chrome/browser/ui/ash/lock_screen_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "Not for this CL: Why does this have to have a delegate? Can\u0027t it just call directly into ViewsScreenLocker?",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dac9eb6c_c3ef3c21",
+        "filename": "chrome/browser/ui/ash/lock_screen_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T01:16:54Z",
+      "side": 1,
+      "message": "nit: document what the return value means",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
