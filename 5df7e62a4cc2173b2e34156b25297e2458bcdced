@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6b3dd311_3e37538a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T13:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e1074e_b6aaa02f",
+      "range": {
+        "startLine": 20,
+        "startChar": 7,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f47826_3d8cfc6e",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b134ff71_8226dce0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T13:37:27Z",
+      "side": 1,
+      "message": "Removed locking for the main thread, still have one for the other threads.",
+      "parentUuid": "d5f47826_3d8cfc6e",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 38
+      },
+      "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "780e8583_03b0264a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T13:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b09c0c7_f9bbfe01",
+      "range": {
+        "startLine": 256,
+        "startChar": 21,
+        "endLine": 256,
+        "endChar": 37
+      },
+      "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14cd6b3c_719d7bee",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b4a53a2_899d9479",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T13:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14cd6b3c_719d7bee",
+      "range": {
+        "startLine": 261,
+        "startChar": 34,
+        "endLine": 261,
+        "endChar": 53
+      },
+      "revId": "5df7e62a4cc2173b2e34156b25297e2458bcdced",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
