@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "727d1468_fb86cd3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-04T17:03:26Z",
+      "side": 1,
+      "message": "Could you mention that the change is for FirstPositionInOrBeforeNode and LastPositionInOrAfterNode?",
+      "revId": "e23c4188d9ce4d7cb74c4aae48f2863d02c76480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
