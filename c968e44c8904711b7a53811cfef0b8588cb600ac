@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8097ed63_1c6fc341",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T19:22:30Z",
+      "side": 1,
+      "message": "Let\u0027s add a bit more detail on the potential attack here. The concern is that someone could get some text into a state where it paints if it hasn\u0027t been visited, but doesn\u0027t otherwise, enabling this API to be used to sniff whether a link has been visited.",
+      "range": {
+        "startLine": 11,
+        "startChar": 8,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "c968e44c8904711b7a53811cfef0b8588cb600ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da22fe7_adff8d30",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/paint-timing/paint-visited.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T19:22:30Z",
+      "side": 1,
+      "message": "We generally have a space after commas in parameter lists (as you do below).",
+      "range": {
+        "startLine": 16,
+        "startChar": 25,
+        "endLine": 16,
+        "endChar": 26
+      },
+      "revId": "c968e44c8904711b7a53811cfef0b8588cb600ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
