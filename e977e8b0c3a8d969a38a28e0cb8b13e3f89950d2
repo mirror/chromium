@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c7af00_6977e62c",
+        "filename": "extensions/renderer/messaging_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "nit: Can you clarify this sentence a bit? It sounds like JSON.stringify always fails or returns undefined.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea260740_54ad0f1e",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "Not obvious to me: I don\u0027t see anything using this method (other than test file). Is this CL only exposing this and you plan to use it later?",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6df486a_183fd8ae",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "ExtensionId, self documenting type ftw.",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 43
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2a9208_4aa22c85",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "Can these be OnceCallback?",
+      "range": {
+        "startLine": 48,
+        "startChar": 37,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4667d7fc_5ed56ecd",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "nit: garbage collected?",
+      "range": {
+        "startLine": 241,
+        "startChar": 70,
+        "endLine": 241,
+        "endChar": 79
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c66310_5c5d92df",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "nitty-nit: not sure if this pattern is increasing readability or creating slight confusion as it makes readers scan for places where this is set to true... Since this value is not complicated, consider:\n\nconstexpr bool kNotHandled \u003d false;\nconstexpr bool kHandled \u003d true;\nand use return kNotHandled/kHandled.\n\nNot strong on this though.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27be8b7d_e53c78fd",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "const OneTimeOpener\u0026",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709aad0b_5ce4f829",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "When can this be -1? Can you add a comment in OneTimeOpener::request_id?\nAlso, replace -1 with a meaningful const.",
+      "range": {
+        "startLine": 340,
+        "startChar": 25,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23921a8a_7e5a95cd",
+        "filename": "extensions/renderer/one_time_message_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-04T23:29:39Z",
+      "side": 1,
+      "message": "can you add which one corresponds to which API? i.e.\nON_MESSAGE,  // For chrome.runtime.sendMessage.\nON_REQUEST,  // For chrome.extension.sendRequest.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
