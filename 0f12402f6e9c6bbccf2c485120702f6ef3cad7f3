@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c521d6e_52082f74",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8GlobalValueMap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-04T22:54:07Z",
+      "side": 1,
+      "message": "FWIW this change is needed because the blink variant of the broadcast channel mojo bindings somehow indirectly ends up including this file, but without v8/include/ in its include path...",
+      "revId": "0f12402f6e9c6bbccf2c485120702f6ef3cad7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
