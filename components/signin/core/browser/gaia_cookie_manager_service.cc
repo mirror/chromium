@@ -480,7 +480,7 @@ void GaiaCookieManagerService::LogOutAllAccounts(const std::string& source) {
     if (requests_.size() == 1) {
       fetcher_retries_ = 0;
       signin_client_->DelayNetworkCall(
-          base::Bind(&GaiaCookieManagerService::StartFetchingLogOut,
+          base::Bind(&GaiaCookieManagerService::CleanupAndFetchLogOut,
                      base::Unretained(this)));
     }
   }
@@ -756,7 +756,7 @@ void GaiaCookieManagerService::OnLogOutFailure(
         FROM_HERE, fetcher_backoff_.GetTimeUntilRelease(),
         base::Bind(&SigninClient::DelayNetworkCall,
                    base::Unretained(signin_client_),
-                   base::Bind(&GaiaCookieManagerService::StartFetchingLogOut,
+                   base::Bind(&GaiaCookieManagerService::CleanupAndFetchLogOut,
                               base::Unretained(this))));
     return;
   }
@@ -792,9 +792,15 @@ void GaiaCookieManagerService::StartFetchingMergeSession() {
       external_cc_result_fetcher_.GetExternalCcResult());
 }
 
-void GaiaCookieManagerService::StartFetchingLogOut() {
+void GaiaCookieManagerService::CleanupAndFetchLogOut() {
   DCHECK(requests_.front().request_type() == GaiaCookieRequestType::LOG_OUT);
-  VLOG(1) << "GaiaCookieManagerService::StartFetchingLogOut";
+  VLOG(1) << "GaiaCookieManagerService::CleanupAndFetchLogOut";
+
+  signin_client_->PreGaiaLogout(base::BindOnce(
+      &GaiaCookieManagerService::StartFetchingLogOut, base::Unretained(this)));
+}
+
+void GaiaCookieManagerService::StartFetchingLogOut() {
   gaia_auth_fetcher_ = signin_client_->CreateGaiaAuthFetcher(
       this, GetSourceForRequest(requests_.front()),
       signin_client_->GetURLRequestContext());
@@ -839,7 +845,7 @@ void GaiaCookieManagerService::HandleNextRequest() {
         break;
       case GaiaCookieRequestType::LOG_OUT:
         signin_client_->DelayNetworkCall(
-            base::Bind(&GaiaCookieManagerService::StartFetchingLogOut,
+            base::Bind(&GaiaCookieManagerService::CleanupAndFetchLogOut,
                        base::Unretained(this)));
         break;
       case GaiaCookieRequestType::LIST_ACCOUNTS:

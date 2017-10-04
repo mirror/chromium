@@ -277,6 +277,10 @@ class GaiaCookieManagerService : public KeyedService,
   // Virtual for testing purposes.
   virtual void StartFetchingListAccounts();
 
+  // Removes CHROME-CONNECTED cookies and then starts fetching log out.
+  void CleanupAndFetchLogOut();
+
+  // Starts fetching log out.
   // Virtual for testing purpose.
   virtual void StartFetchingLogOut();
 
