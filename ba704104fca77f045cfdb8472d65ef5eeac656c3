@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7950bcd9_55259e90",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8797,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-04T13:13:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73afa236_b3653c88",
+      "range": {
+        "startLine": 8797,
+        "startChar": 441,
+        "endLine": 8797,
+        "endChar": 464
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b8b4a92_db060100",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e18fb6_4710f30f",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8817,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-04T13:13:14Z",
+      "side": 1,
+      "message": "Ack - double-checked and it indeed looks like they are key-based, yes.\nhttps://developer.android.com/work/managed-configurations.html#define-configuration",
+      "parentUuid": "1a08d555_3b5af70c",
+      "range": {
+        "startLine": 8817,
+        "startChar": 80,
+        "endLine": 8817,
+        "endChar": 102
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
