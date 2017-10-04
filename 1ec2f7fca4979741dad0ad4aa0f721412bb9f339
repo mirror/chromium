@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b54d2fe2_2690a9db",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:11:45Z",
+      "side": 1,
+      "message": "Now there\u0027s no point in returning a std::unique_ptr\u003cPrinterHandler\u003e and then casting the raw pointer inside back to a TestPrinterHandler* on line 186. Just get rid of this and call make_unique directly? The the call site just becomes:\n\nauto printer_handler \u003d\n    std::make_unique\u003cprinting::TestPrinterHandler\u003e(printers_);\nprinter_handler_ \u003d printer_handler.get();",
+      "revId": "1ec2f7fca4979741dad0ad4aa0f721412bb9f339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c89abd_b571096d",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:11:45Z",
+      "side": 1,
+      "message": "Probably good to consistently add DISALLOW_COPY_AND_ASSIGN() to all classes by default, unless the class does require assignment.",
+      "revId": "1ec2f7fca4979741dad0ad4aa0f721412bb9f339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b073a737_4bda3b92",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler_unittest.cc",
         "patchSetId": 10
