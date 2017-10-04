@@ -102,8 +102,7 @@ void MouseEventManager::Clear() {
   last_known_mouse_global_position_ = FloatPoint();
   mouse_pressed_ = false;
   click_count_ = 0;
-  click_element_ = nullptr;
-  mouse_down_element_ = nullptr;
+  SetClickElement(nullptr);
   mouse_down_pos_ = IntPoint();
   mouse_down_timestamp_ = TimeTicks();
   mouse_down_ = WebMouseEvent();
@@ -415,7 +414,7 @@ void MouseEventManager::NodeChildrenWillBeRemoved(ContainerNode& container) {
     return;
   if (!container.IsShadowIncludingInclusiveAncestorOf(click_element_.Get()))
     return;
-  click_element_ = nullptr;
+  SetClickElement(nullptr);
 
   // TODO(crbug.com/716694): Do not reset mouse_down_element_ for the purpose of
   // gathering data.
@@ -426,7 +425,7 @@ void MouseEventManager::NodeWillBeRemoved(Node& node_to_be_removed) {
           click_element_.Get())) {
     // We don't dispatch click events if the mousedown node is removed
     // before a mouseup event. It is compatible with IE and Firefox.
-    click_element_ = nullptr;
+    SetClickElement(nullptr);
 
     // TODO(crbug.com/716694): Do not reset mouse_down_element_ for the purpose
     // of gathering data.
@@ -1100,8 +1099,7 @@ bool MouseEventManager::HandleSvgPanIfNeeded(bool is_release_event) {
 
 void MouseEventManager::InvalidateClick() {
   click_count_ = 0;
-  click_element_ = nullptr;
-  mouse_down_element_ = nullptr;
+  SetClickElement(nullptr);
 }
 
 bool MouseEventManager::MousePressed() {
