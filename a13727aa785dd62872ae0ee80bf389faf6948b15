@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aa08bdd_734ff97c",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-04T20:47:13Z",
+      "side": 1,
+      "message": "nit: Should this be now errorEditingDisabled?",
+      "range": {
+        "startLine": 243,
+        "startChar": 28,
+        "endLine": 243,
+        "endChar": 48
+      },
+      "revId": "a13727aa785dd62872ae0ee80bf389faf6948b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3f8cc0_e385bee3",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-04T20:47:13Z",
+      "side": 1,
+      "message": "Discussed offline, this logic makes sense. I would reword this as follows:\n\nClear the current session name to insure that we force a reload of the active session. This is important in case the user has deleted the current active session, in which case a new one is selected.",
+      "range": {
+        "startLine": 256,
+        "startChar": 25,
+        "endLine": 256,
+        "endChar": 34
+      },
+      "revId": "a13727aa785dd62872ae0ee80bf389faf6948b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c128d2_baa4755b",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-04T20:47:13Z",
+      "side": 1,
+      "message": "nit: incomplete comment.",
+      "range": {
+        "startLine": 52,
+        "startChar": 64,
+        "endLine": 52,
+        "endChar": 71
+      },
+      "revId": "a13727aa785dd62872ae0ee80bf389faf6948b15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
