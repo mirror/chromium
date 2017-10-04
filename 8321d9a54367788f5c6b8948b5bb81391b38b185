@@ -16,6 +16,24 @@
       "revId": "8321d9a54367788f5c6b8948b5bb81391b38b185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b446ea84_acb111c2",
+        "filename": "components/translate/content/common/translate_struct_traits.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-10-04T10:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29f6759c_4979bb9e",
+      "revId": "8321d9a54367788f5c6b8948b5bb81391b38b185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
