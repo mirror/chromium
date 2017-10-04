@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdcb5c7e_2aca8498",
+        "filename": "chrome/browser/download/download_path_reservation_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-04T00:47:05Z",
+      "side": 1,
+      "message": "nit: Same comments for this enum.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "42053a4c05ec86b5e8e016525f9fce993ac1a253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184bf346_88aae4aa",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-04T00:47:05Z",
+      "side": 1,
+      "message": "Please document that these enum values are persisted to logs, and hence entries should not be renumbered and numeric values should never be reused: https://chromium.googlesource.com/chromium/src/+/HEAD/tools/metrics/histograms/README.md#enum-histograms",
+      "range": {
+        "startLine": 77,
+        "startChar": 77,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "42053a4c05ec86b5e8e016525f9fce993ac1a253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67142570_113e2dc0",
+        "filename": "chrome/browser/download/download_stats.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-04T00:47:05Z",
+      "side": 1,
+      "message": "nit: I\u0027d suggest \"COUNT\" rather than \"MAX\", as \"MAX\" is typically used as an alias for the last item in an enum.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 5
+      },
+      "revId": "42053a4c05ec86b5e8e016525f9fce993ac1a253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f763b3_c607abcd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 96032,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-04T00:47:05Z",
+      "side": 1,
+      "message": "nit: Did you mean to list both histograms here?",
+      "range": {
+        "startLine": 96032,
+        "startChar": 60,
+        "endLine": 96032,
+        "endChar": 0
+      },
+      "revId": "42053a4c05ec86b5e8e016525f9fce993ac1a253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
