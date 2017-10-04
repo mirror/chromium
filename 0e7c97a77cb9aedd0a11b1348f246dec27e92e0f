@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "6987a511_ec152dae",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T22:32:54Z",
+      "side": 1,
+      "message": "I sitll don\u0027t understand why |index| exists. Isn\u0027t the value of |index| always the same as |i|?",
+      "parentUuid": "00cf5de5_d5f8b279",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff84d68_2188342b",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 10
@@ -400,6 +418,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "bff84d68_2188342b",
+      "range": {
+        "startLine": 175,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "201cd34a_0121c010",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T22:32:54Z",
+      "side": 1,
+      "message": "vendor_capability_out-\u003eGetList() should receive the same treatment.",
+      "parentUuid": "31fc9fa8_1fce6202",
       "range": {
         "startLine": 175,
         "startChar": 25,

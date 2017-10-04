@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b067ea14_85e34f9a",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T22:32:54Z",
+      "side": 1,
+      "message": "Is there an empty() method available?",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0292f06f_1ae1d76f",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T22:32:54Z",
+      "side": 1,
+      "message": "You can use range-based for loops here.",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bd86eb_52f63629",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T22:32:54Z",
+      "side": 1,
+      "message": "Do you need to check the FindPathOfType() return value here, and really, everywhere? Unless there is some guarantee that it won\u0027t return a nullptr. But then again, this is a function to sanitize CDDs, so I\u0027m extremely paranoid here.",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
