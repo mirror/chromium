@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "36f13902_766ae04a",
+        "filename": "chrome/browser/vr/service/vr_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-04T14:30:01Z",
+      "side": 1,
+      "message": "It\u0027s currently in the same process, but it won\u0027t be soon because on Windows the device implementation won\u0027t live in the browser process. (I\u0027m working on https://bugs.chromium.org/p/chromium/issues/detail?id\u003d769373)\n\nAlso, in https://chromium-review.googlesource.com/c/chromium/src/+/698374 I add deps on content/browser here, which device/ can\u0027t depend on.",
+      "parentUuid": "90477a11_7c586332",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07e634f8_f4074548",
         "filename": "chrome/browser/vr/service/vr_display_host.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "00dd21bc_950701b8",
+        "filename": "chrome/browser/vr/service/vr_display_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-04T14:30:01Z",
+      "side": 1,
+      "message": "Renamed the interface to VRDisplayHost",
+      "parentUuid": "07e634f8_f4074548",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59d3d134_13a0266d",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6aeb522_f0eee6fe",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-04T14:30:01Z",
+      "side": 1,
+      "message": "Removed the check. It should never be null.",
+      "parentUuid": "59d3d134_13a0266d",
+      "revId": "6794369fe0cfe9234a33f5960baa2524565c75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
