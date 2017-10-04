@@ -318,8 +318,7 @@ int PDFiumPage::GetCharCount() {
   return FPDFText_CountChars(GetTextPage());
 }
 
-PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link,
-                                           LinkTarget* target) const {
+PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link, LinkTarget* target) {
   FPDF_DEST dest = FPDFLink_GetDest(engine_->doc(), link);
   if (dest)
     return GetDestinationTarget(dest, target);
@@ -349,11 +348,19 @@ PDFiumPage::Area PDFiumPage::GetLinkTarget(FPDF_LINK link,
 }
 
 PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
-                                                  LinkTarget* target) const {
+                                                  LinkTarget* target) {
   if (!target)
     return DOCLINK_AREA;
 
   target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  GetPageYTarget(destination, target);
+
+  return DOCLINK_AREA;
+}
+
+bool PDFiumPage::GetPageYTarget(FPDF_DEST destination, LinkTarget* target) {
+  if (!target)
+    return false;
 
   FPDF_BOOL has_x_coord;
   FPDF_BOOL has_y_coord;
@@ -364,13 +371,13 @@ PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
   FPDF_BOOL success = FPDFDest_GetLocationInPage(
       destination, &has_x_coord, &has_y_coord, &has_zoom, &x, &y, &zoom);
 
-  if (success && has_x_coord && has_y_coord) {
-    pp::FloatRect page_rect(x, y, 0, 0);
-    pp::FloatRect pixel_rect(FloatPageRectToPixelRect(page_, page_rect));
-    target->y_in_pixels = pixel_rect.y();
-  }
+  if (!success || !has_x_coord || !has_y_coord)
+    return false;
 
-  return DOCLINK_AREA;
+  pp::FloatRect page_rect(x, y, 0, 0);
+  pp::FloatRect pixel_rect(FloatPageRectToPixelRect(GetPage(), page_rect));
+  target->y_in_pixels = pixel_rect.y();
+  return true;
 }
 
 PDFiumPage::Area PDFiumPage::GetURITarget(FPDF_ACTION uri_action,
