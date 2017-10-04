@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb7e417_c9fe7490",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8797,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-04T12:43:23Z",
+      "side": 1,
+      "message": "nit: Is this necessary?\nThe app could have been installed manually by the user too, then i assume it will also be uninstalled (will it?).",
+      "range": {
+        "startLine": 8797,
+        "startChar": 441,
+        "endLine": 8797,
+        "endChar": 464
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8b4a92_db060100",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8817,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-04T12:43:23Z",
+      "side": 1,
+      "message": "nit: Just checking: These are really key-value pairs and not another json schema defined in the manifest?",
+      "range": {
+        "startLine": 8817,
+        "startChar": 80,
+        "endLine": 8817,
+        "endChar": 102
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
