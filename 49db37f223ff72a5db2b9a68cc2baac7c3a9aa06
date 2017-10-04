@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ca5114_558b6dcd",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T04:37:17Z",
+      "side": 1,
+      "message": "talking about MIME type seems like a distraction here",
+      "revId": "49db37f223ff72a5db2b9a68cc2baac7c3a9aa06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
