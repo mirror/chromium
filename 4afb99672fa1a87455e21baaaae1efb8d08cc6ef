@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "30497cd0_23fb9136",
+        "filename": "content/child/child_histogram_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T19:20:23Z",
+      "side": 1,
+      "message": "Please fix though \u003d)",
+      "parentUuid": "90708e8c_9a7de907",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702c8eea_ad244096",
         "filename": "content/common/child_histogram.mojom",
         "patchSetId": 19
@@ -177,6 +195,30 @@
       "side": 1,
       "message": "This enforces that you can\u0027t set the shared memory for histograms after you\u0027ve started using them. I think it\u0027s better this way.",
       "parentUuid": "702c8eea_ad244096",
+      "range": {
+        "startLine": 10,
+        "startChar": 23,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1123af_1645e914",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T19:20:23Z",
+      "side": 1,
+      "message": "OK, thanks for helping me understand how this works. Do you mind updating this to mention that |shm_handle| not being set means that we won\u0027t get the persistent UMAs? +bcwhite as well, maybe if there\u0027s overall documentation (that\u0027s not too stale) for the child UMA stuff, it would be useful to link to that here as well.",
+      "parentUuid": "e7b118dc_32965458",
       "range": {
         "startLine": 10,
         "startChar": 23,
