@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebefc88b_2d73fa5e",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-04T19:56:15Z",
+      "side": 1,
+      "message": "nit: usually use auto with base::MakeUnique to avoid type punning.",
+      "range": {
+        "startLine": 421,
+        "startChar": 4,
+        "endLine": 421,
+        "endChar": 19
+      },
+      "revId": "ef457fde6474ccdd8f4275448098a5f096282923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
