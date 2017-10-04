@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "base/task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -430,6 +431,8 @@ void BluetoothLowEnergyWeaveClientConnection::OnSetConnectionLatencyError() {
 void BluetoothLowEnergyWeaveClientConnection::OnCreateGattConnectionError(
     device::BluetoothDevice::ConnectErrorCode error_code) {
   DCHECK(sub_status_ == SubStatus::WAITING_GATT_CONNECTION);
+  RecordGattConnectionResult(
+      BluetoothDeviceConnectErrorCodeToGattConnectionResult(error_code));
   PA_LOG(WARNING) << "Error creating GATT connection to "
                   << GetDeviceInfoLogString() << ". Error code: " << error_code;
   DestroyConnection();
@@ -438,6 +441,8 @@ void BluetoothLowEnergyWeaveClientConnection::OnCreateGattConnectionError(
 void BluetoothLowEnergyWeaveClientConnection::OnGattConnectionCreated(
     std::unique_ptr<device::BluetoothGattConnection> gatt_connection) {
   DCHECK(sub_status() == SubStatus::WAITING_GATT_CONNECTION);
+  RecordGattConnectionResult(
+      GattConnectionResult::GATT_CONNECTION_RESULT_SUCCESS);
 
   gatt_connection_ = std::move(gatt_connection);
   SetSubStatus(SubStatus::WAITING_CHARACTERISTICS);
@@ -537,6 +542,8 @@ void BluetoothLowEnergyWeaveClientConnection::StartNotifySession() {
 void BluetoothLowEnergyWeaveClientConnection::OnNotifySessionStarted(
     std::unique_ptr<device::BluetoothGattNotifySession> notify_session) {
   DCHECK(sub_status() == SubStatus::WAITING_NOTIFY_SESSION);
+  RecordGattNotifySessionResult(
+      GattNotifySessionResult::GATT_NOTIFY_SESSION_RESULT_SUCCESS);
   notify_session_ = std::move(notify_session);
   SetSubStatus(SubStatus::NOTIFY_SESSION_READY);
   SendConnectionRequest();
@@ -545,6 +552,9 @@ void BluetoothLowEnergyWeaveClientConnection::OnNotifySessionStarted(
 void BluetoothLowEnergyWeaveClientConnection::OnNotifySessionError(
     device::BluetoothRemoteGattService::GattErrorCode error) {
   DCHECK(sub_status() == SubStatus::WAITING_NOTIFY_SESSION);
+  RecordGattNotifySessionResult(
+      BluetoothRemoteDeviceGattServiceGattErrorCodeToGattNotifySessionResult(
+          error));
   PA_LOG(ERROR) << "Cannot start notification session for "
                 << GetDeviceInfoLogString() << ". Error: " << error << ".";
   DestroyConnection();
@@ -790,6 +800,91 @@ std::string BluetoothLowEnergyWeaveClientConnection::GetReasonForClose() {
       NOTREACHED();
       return "";
   }
+}
+
+void BluetoothLowEnergyWeaveClientConnection::RecordGattConnectionResult(
+    GattConnectionResult result) {
+  UMA_HISTOGRAM_ENUMERATION("ProximityAuth.BluetoothGattConnectionResult",
+                            result,
+                            GattConnectionResult::GATT_CONNECTION_RESULT_MAX);
+}
+
+BluetoothLowEnergyWeaveClientConnection::GattConnectionResult
+BluetoothLowEnergyWeaveClientConnection::
+    BluetoothDeviceConnectErrorCodeToGattConnectionResult(
+        device::BluetoothDevice::ConnectErrorCode error_code) {
+  switch (error_code) {
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_AUTH_CANCELED:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_AUTH_CANCELED;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_AUTH_FAILED:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_AUTH_FAILED;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_AUTH_REJECTED:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_AUTH_REJECTED;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_AUTH_TIMEOUT:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_AUTH_TIMEOUT;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_FAILED:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_FAILED;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_INPROGRESS:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_INPROGRESS;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_UNKNOWN:
+      return GattConnectionResult::GATT_CONNECTION_RESULT_ERROR_UNKNOWN;
+    case device::BluetoothDevice::ConnectErrorCode::ERROR_UNSUPPORTED_DEVICE:
+      return GattConnectionResult::
+          GATT_CONNECTION_RESULT_ERROR_UNSUPPORTED_DEVICE;
+    default:
+      break;
+  }
+
+  return GattConnectionResult::GATT_CONNECTION_RESULT_MAX;
+}
+
+void BluetoothLowEnergyWeaveClientConnection::RecordGattNotifySessionResult(
+    GattNotifySessionResult result) {
+  UMA_HISTOGRAM_ENUMERATION(
+      "ProximityAuth.BluetoothGattNotifySessionResult", result,
+      GattNotifySessionResult::GATT_NOTIFY_SESSION_RESULT_MAX);
+}
+
+BluetoothLowEnergyWeaveClientConnection::GattNotifySessionResult
+BluetoothLowEnergyWeaveClientConnection::
+    BluetoothRemoteDeviceGattServiceGattErrorCodeToGattNotifySessionResult(
+        device::BluetoothRemoteGattService::GattErrorCode error_code) {
+  switch (error_code) {
+    case device::BluetoothRemoteGattService::GattErrorCode::GATT_ERROR_UNKNOWN:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_UNKNOWN;
+    case device::BluetoothRemoteGattService::GattErrorCode::GATT_ERROR_FAILED:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_FAILED;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_IN_PROGRESS:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_IN_PROGRESS;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_INVALID_LENGTH:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_INVALID_LENGTH;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_NOT_PERMITTED:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_NOT_PERMITTED;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_NOT_AUTHORIZED:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_NOT_AUTHORIZED;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_NOT_PAIRED:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_NOT_PAIRED;
+    case device::BluetoothRemoteGattService::GattErrorCode::
+        GATT_ERROR_NOT_SUPPORTED:
+      return GattNotifySessionResult::
+          GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_NOT_SUPPORTED;
+    default:
+      break;
+  }
+
+  return GattNotifySessionResult::GATT_NOTIFY_SESSION_RESULT_MAX;
 }
 
 BluetoothLowEnergyWeaveClientConnection::WriteRequest::WriteRequest(

@@ -13,6 +13,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/timer/mock_timer.h"
 #include "base/timer/timer.h"
@@ -488,6 +489,8 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
     notify_session_success_callback_.Run(std::move(notify_session));
     task_runner_->RunUntilIdle();
 
+    VerifyGattNotifySessionResult(true);
+
     // Written value contains only the mock Connection Request.
     EXPECT_EQ(last_value_written_on_tx_characteristic_, kConnectionRequest);
 
@@ -566,6 +569,28 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
     task_runner_->RunUntilIdle();
   }
 
+  void VerifyGattConnectionResultSuccess() {
+    histogram_tester_.ExpectUniqueSample(
+        "ProximityAuth.BluetoothGattConnectionResult",
+        BluetoothLowEnergyWeaveClientConnection::GattConnectionResult::
+            GATT_CONNECTION_RESULT_SUCCESS,
+        1);
+  }
+
+  void VerifyGattNotifySessionResult(bool success) {
+    BluetoothLowEnergyWeaveClientConnection::GattNotifySessionResult
+        expected_result =
+            success ? BluetoothLowEnergyWeaveClientConnection::
+                          GattNotifySessionResult::
+                              GATT_NOTIFY_SESSION_RESULT_SUCCESS
+                    : BluetoothLowEnergyWeaveClientConnection::
+                          GattNotifySessionResult::
+                              GATT_NOTIFY_SESSION_RESULT_GATT_ERROR_UNKNOWN;
+
+    histogram_tester_.ExpectUniqueSample(
+        "ProximityAuth.BluetoothGattNotifySessionResult", expected_result, 1);
+  }
+
  protected:
   const RemoteDevice remote_device_;
   const device::BluetoothUUID service_uuid_;
@@ -609,6 +634,8 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
   base::Closure write_remote_characteristic_success_callback_;
   device::BluetoothRemoteGattCharacteristic::ErrorCallback
       write_remote_characteristic_error_callback_;
+
+  base::HistogramTester histogram_tester_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(
@@ -737,6 +764,8 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
 
   notify_session_error_callback_.Run(
       device::BluetoothRemoteGattService::GATT_ERROR_UNKNOWN);
+
+  VerifyGattNotifySessionResult(false);
 
   EXPECT_EQ(connection->sub_status(), SubStatus::DISCONNECTED);
   EXPECT_EQ(connection->status(), Connection::DISCONNECTED);
@@ -1135,6 +1164,8 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
   CharacteristicsFound(connection.get());
   NotifySessionStarted(connection.get());
   ConnectionResponseReceived(connection.get(), kDefaultMaxPacketSize);
+
+  VerifyGattConnectionResultSuccess();
 }
 
 TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
@@ -1173,6 +1204,8 @@ TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
   CharacteristicsFound(connection.get());
   NotifySessionStarted(connection.get());
   ConnectionResponseReceived(connection.get(), kDefaultMaxPacketSize);
+
+  VerifyGattConnectionResultSuccess();
 }
 
 TEST_F(CryptAuthBluetoothLowEnergyWeaveClientConnectionTest,
