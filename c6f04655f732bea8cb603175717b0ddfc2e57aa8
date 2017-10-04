@@ -93,6 +93,30 @@
       "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4286bf2_c15a5679",
+        "filename": "chrome/test/base/tracing.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-04T14:52:59Z",
+      "side": 1,
+      "message": "NVM. Just noted that this is a unique_ptr and * operator\u0027s behaviour is not defined when it doesn\u0027t own an object (i.e. next line is not guaranteed to fail).",
+      "parentUuid": "e9554340_a12938ba",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
