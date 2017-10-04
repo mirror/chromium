@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81ec6c50_1c8e2de2",
+        "filename": "third_party/WebKit/Source/core/css/FontFace.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-04T06:09:16Z",
+      "side": 0,
+      "message": "Since now there are only two callers of this method, and both are in SetLoadStatus, could we just remove this method and call TaskRunnerHelper inline? That would put more sense to check the execution context in SetLoadStatus(). Otherwise this method would like to take ExecutionContext as an argument to reduce vague assumptions such as ExecutionContext should be alive when this method is called.",
+      "revId": "8a06c39c4582fbfbab6966dbb1c38a9173bfb1a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
