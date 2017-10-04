@@ -14,6 +14,7 @@ import android.media.MediaCodecInfo.VideoCapabilities;
 import android.media.MediaCodecList;
 import android.media.MediaFormat;
 import android.os.Build;
+import android.media.MediaCrypto;
 
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
@@ -279,8 +280,20 @@ class MediaCodecUtil {
      * @return CodecCreationInfo object
      */
     static CodecCreationInfo createDecoder(String mime, int codecType) {
+        return createDecoder(mime,codecType,null);
+    }
+
+    /**
+     * Creates MediaCodec decoder.
+     * @param mime MIME type of the media.
+     * @param codecType Type of codec to create.
+     * @param mediaCrypto Crypto of the media.
+     * @return CodecCreationInfo object
+     */
+    static CodecCreationInfo createDecoder(String mime, int codecType, MediaCrypto mediaCrypto) {
         // Always return a valid CodecCreationInfo, its |mediaCodec| field will be null
         // if we cannot create the codec.
+
         CodecCreationInfo result = new CodecCreationInfo();
 
         assert result.mediaCodec == null;
@@ -319,6 +332,17 @@ class MediaCodecUtil {
                             codecSupportsAdaptivePlayback(insecureCodec, mime);
                     insecureCodec.release();
                 }
+
+                result.mediaCodec = MediaCodec.createByCodecName(decoderName + ".secure");
+
+                // Special check for secure audio decoder crbug.com/727918
+            } else if (mime.startsWith("audio") && mediaCrypto != null
+                    && mediaCrypto.requiresSecureDecoderComponent(mime)) {
+                String decoderName = getDefaultCodecName(mime, MediaCodecDirection.DECODER, false);
+                MediaCodec insecureCodec = MediaCodec.createByCodecName(decoderName);
+                result.supportsAdaptivePlayback =
+                        codecSupportsAdaptivePlayback(insecureCodec, mime);
+                insecureCodec.release();
                 result.mediaCodec = MediaCodec.createByCodecName(decoderName + ".secure");
             } else {
                 if (codecType == CodecType.SOFTWARE) {
