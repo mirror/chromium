@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fa9df541_b114e375",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T06:28:15Z",
+      "side": 1,
+      "message": "Sorry reverted.",
+      "parentUuid": "554ad0cf_bb2d229a",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92a4f939_7b99dfb4",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T06:03:33Z",
       "side": 1,
       "message": "Are you pretty sure that this branch should be put here?\n\nI was thinking that this branch was needed because we need to skip the sweeping phase for the TakeSnapshot case. Now that you moved TakeSnapshot below, I\u0027m not sure if you need the branch.",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b44d394_e31dc312",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T06:28:15Z",
+      "side": 1,
+      "message": "Right GCState will always be kGCRunning. Removed.",
+      "parentUuid": "92a4f939_7b99dfb4",
       "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b08d9f8_64903192",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T06:28:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce1328c0_ef6c584f",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
