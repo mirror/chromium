@@ -158,8 +158,16 @@ void ScheduledAction::Execute(LocalFrame* frame) {
   } else {
     DVLOG(1) << "ScheduledAction::execute " << this
              << ": executing from source";
+    // "The timer initialization steps used by setTimeout and setInterval would
+    // pass along the caller realm's API base URL, ..." [spec text]
+    const KURL& url = ExecutionContext::From(script_state_.Get())->Url();
+    // "... no cryptographic nonce, and "not parser-inserted"." [spec text]
+    const ParserDisposition parser_state = kNotParserInserted;
+    // https://github.com/tc39/proposal-dynamic-import/blob/master/HTML%20Integration.md
+    // TODO(kouhei): Update reference to HTML living standards once ready.
     frame->GetScriptController().ExecuteScriptAndReturnValue(
-        script_state_->GetContext(), ScriptSourceCode(code_));
+        script_state_->GetContext(),
+        ScriptSourceCode(code_, url, String() /* nonce */, parser_state));
   }
 
   // The frame might be invalid at this point because JavaScript could have
