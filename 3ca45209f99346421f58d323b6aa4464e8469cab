@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "61908bcb_4880c816",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T15:52:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c9b1fb4_95b15449",
+      "range": {
+        "startLine": 408,
+        "startChar": 1,
+        "endLine": 408,
+        "endChar": 15
+      },
+      "revId": "3ca45209f99346421f58d323b6aa4464e8469cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd73b01_81ca4618",
         "filename": "chrome/browser/ui/search/search_tab_helper.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "3ca45209f99346421f58d323b6aa4464e8469cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5cef959_95a89d6e",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T15:52:29Z",
+      "side": 1,
+      "message": "It could, but it\u0027s an overridden method from the SearchIPCRouter::Delegate interface, so that would have to become const, and IMO it\u0027s considered bad practice to make interface methods const.",
+      "parentUuid": "bbd73b01_81ca4618",
+      "range": {
+        "startLine": 414,
+        "startChar": 40,
+        "endLine": 414,
+        "endChar": 41
+      },
+      "revId": "3ca45209f99346421f58d323b6aa4464e8469cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
