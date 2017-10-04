@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0f6eb884_86837b84",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1eb022f9_f190def3",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1176af06_653a88d0",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
         "patchSetId": 2

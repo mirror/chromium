@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be60b3b2_37136c57",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "I think this can be removed.",
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16feca99_80766038",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "Can be removed.",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7450ea09_90b1bed5",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 9,
+        "startChar": 33,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919e7e14_cd091335",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "same comment as in the other test file: we can probably define this once and reuse.",
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861c7c83_dfbb7218",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "You can use browser() to get the browser object.",
+      "range": {
+        "startLine": 94,
+        "startChar": 46,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c10f202_1cd26067",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "Since this call will result in OnRebootRequired() being called immediately, which in turn may call OnInteractionDone(), the class could end up deleting itself before the constructor has finished. As discussed offline, one solution is to simply post a task to call MaybeShowRebootPrompt() on the same sequence. \n\nMaybeShowRebootPrompt() would then need to check for a browser and this class doesn\u0027t need to observe the the cleaner since it must only be called when the state is kRebootRequired.",
+      "range": {
+        "startLine": 59,
+        "startChar": 41,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7793b159_b09dc52d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "As discussed offline, probably worth adding a sequence checker and ensuring that construction happens on the UI thread.",
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "348342c5_0aa6f0e6",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "We already have a mock class for this here: https://cs.chromium.org/chromium/src/chrome/browser/ui/views/chrome_cleaner_dialog_browsertest_win.cc?rcl\u003d2898491636d1bfc1bfddee39f07c7b8a6e1c6eb8\u0026l\u003d26\n\nCould be worth breaking out and reusing it.",
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee581ac_0ed0f45b",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "You should be able to simply call browser() (inherited from InProcessBrowserTest) here to get the test\u0027s browser object. If this works, please also remove the browser_finder.h include above.",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c5cec89_0adb94c6",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "I think these four includes can be removed.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 39
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c66c22b_855f9e4c",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "I think it makes sense to put these into the resource files already now. Easy to forget later...",
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144c39c2_0456dc7f",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c650640e_a57ada9b",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-10-04T19:39:49Z",
+      "side": 1,
+      "message": "I think this comment belongs to the dialog controller class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "d7b8d29e86c54f24cd4c4d41fa21eb1624814262",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
