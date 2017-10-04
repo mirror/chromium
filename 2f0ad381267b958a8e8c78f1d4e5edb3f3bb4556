@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afb59f75_1d2b8fc3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "do you ever actually call this before DBusThreadManager is initialized? if not, please remove this check",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35744dc_06a89954",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "maybe this is what you were asking over email, but i think there\u0027s a race here. SystemClockClient makes an async request for the synchronization state when it\u0027s notified that the clock has been updated, so UpdateOffhoursMode is probably going to see a stale state instead of the current one.\n\nyou should probably instead add a SystemClockClient::Observer::NetworkSynchronizationUpdated method that\u0027s called from OnGotSystemClockLastSyncInfo.",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089233b1_46aaeece",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "is?",
+      "range": {
+        "startLine": 58,
+        "startChar": 49,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c436ff_a23dd30d",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "nit: also mention that |response| is the response to a system_clock::kSystemLastSyncInfo call",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "107a451e_fe8d465b",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "maybe just something like RequestStateUpdate?\n\nalso add a comment documenting what this does",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7290aa_8a33a1be",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "nit: GetLastSyncInfo? \"SystemClock\" seems redundant here",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 33
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34afc262_47641174",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T20:18:59Z",
+      "side": 1,
+      "message": "nit: just inline the function call on this line",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
