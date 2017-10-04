@@ -247,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "4495a3ed_ca33ec53",
+        "filename": "ash/login/ui/lock_screen_sanity_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T20:13:05Z",
+      "side": 1,
+      "message": "I like this!",
+      "parentUuid": "6dc7c2d4_16041001",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "271f1422_3947202d",
         "filename": "ash/login/ui/login_test_base.h",
         "patchSetId": 7
@@ -279,6 +297,24 @@
       "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f439ab_02492f7d",
+        "filename": "ash/login/ui/login_test_base.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T20:13:05Z",
+      "side": 1,
+      "message": "This is much better. Thanks for cleaning it up.",
+      "parentUuid": "c37edd03_0d1b42d6",
+      "revId": "5006a4832ea852685d9498f07cb8bac6e22a889e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
