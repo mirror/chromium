@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7731ac31_dce62c2a",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T09:11:15Z",
+      "side": 1,
+      "message": "This should be automatically inherited from the base class.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1ffd70_cc020d5e",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T09:11:15Z",
+      "side": 1,
+      "message": "We no longer need Cast\u003cv8::Value\u003e() here because of some improvement.",
+      "range": {
+        "startLine": 14,
+        "startChar": 34,
+        "endLine": 14,
+        "endChar": 52
+      },
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba23e7d_11667a5a",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T09:11:15Z",
+      "side": 1,
+      "message": "Better to make this VIRTUAL.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dbed2f3_161da2f8",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T09:11:15Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
