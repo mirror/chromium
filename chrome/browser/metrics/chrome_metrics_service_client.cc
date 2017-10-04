@@ -26,6 +26,7 @@
 #include "base/path_service.h"
 #include "base/rand_util.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_split.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
@@ -165,6 +166,34 @@ const uint32_t kSystemProfileMinidumpStreamType = 0x4B6B0003;
 base::LazyInstance<std::string>::Leaky g_environment_for_crash_reporter;
 #endif  // defined(OS_WIN) || defined(OS_MACOSX)
 
+metrics::FileMetricsProvider::FilterAction FilterBrowserMetricsFiles(
+    const base::FilePath& path) {
+#if defined(OS_WIN)
+  std::string pathname = path.AsUTF8Unsafe();
+  std::vector<std::string> parts = base::SplitString(
+      pathname, "-.", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  if (parts.size() != 4)
+    return metrics::FileMetricsProvider::FILTER_PROCESS_FILE;
+
+  size_t char_count = 0;
+  long lpid = std::stol(parts[2], &char_count, /*base=*/16);
+  if (char_count != parts[2].length())
+    return metrics::FileMetricsProvider::FILTER_PROCESS_FILE;
+
+  DWORD pid = static_cast<DWORD>(lpid);
+  if (pid == base::GetCurrentProcId())
+    return metrics::FileMetricsProvider::FILTER_ACTIVE_THIS_PID;
+
+  HANDLE process = OpenProcess(SYNCHRONIZE, FALSE, pid);
+  DWORD ret = WaitForSingleObject(process, 0);
+  CloseHandle(process);
+  if (ret == WAIT_TIMEOUT)
+    return metrics::FileMetricsProvider::FILTER_TRY_LATER;
+#endif
+
+  return metrics::FileMetricsProvider::FILTER_PROCESS_FILE;
+}
+
 void RegisterFileMetricsPreferences(PrefRegistrySimple* registry) {
   metrics::FileMetricsProvider::RegisterPrefs(
       registry, ChromeMetricsServiceClient::kBrowserMetricsName);
@@ -245,12 +274,14 @@ std::unique_ptr<metrics::FileMetricsProvider> CreateFileMetricsProvider(
     base::FilePath browser_metrics_upload_dir = user_data_dir.AppendASCII(
         ChromeMetricsServiceClient::kBrowserMetricsName);
     if (metrics_reporting_enabled) {
-      file_metrics_provider->RegisterSource(
-          metrics::FileMetricsProvider::Params(
-              browser_metrics_upload_dir,
-              metrics::FileMetricsProvider::SOURCE_HISTOGRAMS_ATOMIC_DIR,
-              metrics::FileMetricsProvider::ASSOCIATE_INTERNAL_PROFILE,
-              ChromeMetricsServiceClient::kBrowserMetricsName));
+      metrics::FileMetricsProvider::Params browser_metrics_params(
+          browser_metrics_upload_dir,
+          metrics::FileMetricsProvider::SOURCE_HISTOGRAMS_ATOMIC_DIR,
+          metrics::FileMetricsProvider::ASSOCIATE_INTERNAL_PROFILE,
+          ChromeMetricsServiceClient::kBrowserMetricsName);
+      browser_metrics_params.filter =
+          base::BindRepeating(&FilterBrowserMetricsFiles);
+      file_metrics_provider->RegisterSource(browser_metrics_params);
 
       base::FilePath active_path;
       base::GlobalHistogramAllocator::ConstructFilePaths(
