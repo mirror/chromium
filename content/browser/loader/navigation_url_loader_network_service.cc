@@ -107,11 +107,12 @@ const net::NetworkTrafficAnnotationTag kTrafficAnnotation =
 
 // Kept around during the lifetime of the navigation request, and is
 // responsible for dispatching a ResourceRequest to the appropriate
-// URLLoader.  In order to get the right URLLoader it builds a vector
-// of URLLoaderRequestHandler's and successively calls MaybeCreateLoader
-// on each until the request is successfully handled. The same sequence
-// may be performed multiple times when redirects happen.
-// TODO(michaeln): Expose this class and add unittests.
+// URLLoader. In order to get the right URLLoader it calls
+// NavigationURLLoaderNetworkService::CreateHandlers which returns a vector of
+// URLLoaderRequestHandler's and then it successively calls MaybeCreateLoader on
+// each until the request is successfully handled. The same sequence may be
+// performed multiple times when redirects happen.
+// TODO(michaeln): Add some more unittests.
 class NavigationURLLoaderNetworkService::URLLoaderRequestController
     : public mojom::URLLoaderClient {
  public:
@@ -139,9 +140,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       std::unique_ptr<service_manager::Connector> connector) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     web_contents_getter_ = web_contents_getter;
-    const ResourceType resource_type = request_info->is_main_frame
-                                           ? RESOURCE_TYPE_MAIN_FRAME
-                                           : RESOURCE_TYPE_SUB_FRAME;
 
     if (resource_request_->request_body) {
       GetBodyBlobDataHandles(resource_request_->request_body.get(),
@@ -162,34 +160,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     }
 
     DCHECK(handlers_.empty());
-    if (service_worker_navigation_handle_core) {
-      RequestContextFrameType frame_type =
-          request_info->is_main_frame ? REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL
-                                      : REQUEST_CONTEXT_FRAME_TYPE_NESTED;
-
-      storage::BlobStorageContext* blob_storage_context = GetBlobStorageContext(
-          GetChromeBlobStorageContextForResourceContext(resource_context_));
-      std::unique_ptr<URLLoaderRequestHandler> service_worker_handler =
-          ServiceWorkerRequestHandler::InitializeForNavigationNetworkService(
-              *resource_request_, resource_context_,
-              service_worker_navigation_handle_core, blob_storage_context,
-              request_info->begin_params.skip_service_worker, resource_type,
-              request_info->begin_params.request_context_type, frame_type,
-              request_info->are_ancestors_secure,
-              request_info->common_params.post_data, web_contents_getter);
-      if (service_worker_handler)
-        handlers_.push_back(std::move(service_worker_handler));
-    }
-
-    if (appcache_handle_core) {
-      std::unique_ptr<URLLoaderRequestHandler> appcache_handler =
-          AppCacheRequestHandler::InitializeForNavigationNetworkService(
-              *resource_request_, appcache_handle_core,
-              default_url_loader_factory_getter_.get());
-      if (appcache_handler)
-        handlers_.push_back(std::move(appcache_handler));
-    }
-
+    handlers_ = owner_->CreateHandlers(
+        request_info.get(), resource_request_.get(), resource_context_,
+        web_contents_getter, service_worker_navigation_handle_core,
+        appcache_handle_core, default_url_loader_factory_getter_.get()),
     Restart();
   }
 
@@ -279,15 +253,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
       // TODO(davidben): This logic still needs to be replicated at the
       // consumers.
-      if (resource_request_->method == "POST") {
-        // If being switched from POST, must remove Origin header.
-        // TODO(jww): This is Origin header removal is probably layering
-        // violation and should be refactored into //content.
-        // See https://crbug.com/471397.
-        // See also: https://crbug.com/760487
-        resource_request_->headers.RemoveHeader(
-            net::HttpRequestHeaders::kOrigin);
-      }
+      //
+      // The Origin header is sent on anything that is not a GET or HEAD, which
+      // suggests all redirects that change methods (since they always change to
+      // GET) should drop the Origin header.
+      // See https://fetch.spec.whatwg.org/#origin-header
+      // TODO(jww): This is Origin header removal is probably layering
+      // violation and should be refactored into //content.
+      // See https://crbug.com/471397.
+      // See also: https://crbug.com/760487
+      resource_request_->headers.RemoveHeader(net::HttpRequestHeaders::kOrigin);
+
       // The inclusion of a multipart Content-Type header can cause problems
       // with some servers:
       // http://code.google.com/p/chromium/issues/detail?id=843
@@ -696,6 +672,48 @@ bool NavigationURLLoaderNetworkService::IsDownload() const {
 
   return (!response_->head.headers ||
           response_->head.headers->response_code() / 100 == 2);
+}
+
+std::vector<std::unique_ptr<URLLoaderRequestHandler>>
+NavigationURLLoaderNetworkService::CreateHandlers(
+    const NavigationRequestInfo* request_info,
+    ResourceRequest* resource_request,
+    ResourceContext* resource_context,
+    const base::Callback<WebContents*(void)>& web_contents_getter,
+    ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core,
+    AppCacheNavigationHandleCore* appcache_handle_core,
+    URLLoaderFactoryGetter* url_loader_factory_getter) {
+  std::vector<std::unique_ptr<URLLoaderRequestHandler>> handlers;
+  if (service_worker_navigation_handle_core) {
+    ResourceType resource_type = request_info->is_main_frame
+                                     ? RESOURCE_TYPE_MAIN_FRAME
+                                     : RESOURCE_TYPE_SUB_FRAME;
+    RequestContextFrameType frame_type =
+        request_info->is_main_frame ? REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL
+                                    : REQUEST_CONTEXT_FRAME_TYPE_NESTED;
+
+    storage::BlobStorageContext* blob_storage_context = GetBlobStorageContext(
+        GetChromeBlobStorageContextForResourceContext(resource_context));
+    std::unique_ptr<URLLoaderRequestHandler> service_worker_handler =
+        ServiceWorkerRequestHandler::InitializeForNavigationNetworkService(
+            *resource_request, resource_context,
+            service_worker_navigation_handle_core, blob_storage_context,
+            request_info->begin_params.skip_service_worker, resource_type,
+            request_info->begin_params.request_context_type, frame_type,
+            request_info->are_ancestors_secure,
+            request_info->common_params.post_data, web_contents_getter);
+    if (service_worker_handler)
+      handlers.push_back(std::move(service_worker_handler));
+  }
+
+  if (appcache_handle_core) {
+    std::unique_ptr<URLLoaderRequestHandler> appcache_handler =
+        AppCacheRequestHandler::InitializeForNavigationNetworkService(
+            *resource_request, appcache_handle_core, url_loader_factory_getter);
+    if (appcache_handler)
+      handlers.push_back(std::move(appcache_handler));
+  }
+  return handlers;
 }
 
 }  // namespace content

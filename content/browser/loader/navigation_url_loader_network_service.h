@@ -17,12 +17,18 @@ struct RedirectInfo;
 
 namespace content {
 
+class AppCacheNavigationHandleCore;
 class ResourceContext;
 class NavigationPostDataHandler;
+class URLLoaderFactoryGetter;
+class URLLoaderRequestHandler;
+class ServiceWorkerNavigationHandleCore;
+class WebContents;
 
 // This is an implementation of NavigationURLLoader used when
 // --enable-network-service is used.
-class NavigationURLLoaderNetworkService : public NavigationURLLoader {
+class CONTENT_EXPORT NavigationURLLoaderNetworkService
+    : public NavigationURLLoader {
  public:
   // The caller is responsible for ensuring that |delegate| outlives the loader.
   NavigationURLLoaderNetworkService(
@@ -48,10 +54,20 @@ class NavigationURLLoaderNetworkService : public NavigationURLLoader {
   void OnStartLoadingResponseBody(mojo::ScopedDataPipeConsumerHandle body);
   void OnComplete(const ResourceRequestCompletionStatus& completion_status);
 
- private:
+ protected:
   class URLLoaderRequestController;
 
   bool IsDownload() const;
+
+  // This is virtual only for testing.
+  virtual std::vector<std::unique_ptr<URLLoaderRequestHandler>> CreateHandlers(
+      const NavigationRequestInfo* request_info,
+      ResourceRequest* resource_request,
+      ResourceContext* resource_context,
+      const base::Callback<WebContents*(void)>& web_contents_getter,
+      ServiceWorkerNavigationHandleCore* service_worker_navigation_handle_core,
+      AppCacheNavigationHandleCore* appcache_handle_core,
+      URLLoaderFactoryGetter* url_loader_factory_getter);
 
   NavigationURLLoaderDelegate* delegate_;
 
