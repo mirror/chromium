@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67ded2e1_7114c36c",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-04T11:50:22Z",
+      "side": 1,
+      "message": "Is this the same as\n[[_toolbarController view].topAnchor constraintEqualToAnchor:self.view.topAnchor constant:minY]?",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5105084b_d8169df7",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-04T11:50:22Z",
+      "side": 1,
+      "message": "Why are these \"fake\" methods?",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0b40f8_d39edfb0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-04T11:50:22Z",
+      "side": 1,
+      "message": "[view_.heightAnchor constraintEqualToConstant:[self toolbarHeight]]?",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6ed1999_f27a3b24",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-04T11:50:22Z",
+      "side": 1,
+      "message": "Can you add a comment explaining why the behavior is different in these two cases?",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f832ead_818cc31b",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-04T11:50:22Z",
+      "side": 1,
+      "message": "Please add a comment explaining why the behavior is different for the experiment.",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
