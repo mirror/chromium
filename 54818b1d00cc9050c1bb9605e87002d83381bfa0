@@ -70,6 +70,30 @@
       "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e87048bd_5d1cfe4a",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1193261
+      },
+      "writtenOn": "2017-10-04T16:38:36Z",
+      "side": 1,
+      "message": "Ah. sorry about that. I was under the impression that this was the more ordinary workflow.\n\nFwiw, it was convenient to make changes while verifying that the changes were acceptable. But I can also see it being natural to update the baseline without needing to hack your local build, so I guess either way makes sense. *shrug*",
+      "parentUuid": "3a36e40d_ef0fa9c4",
+      "range": {
+        "startLine": 3440,
+        "startChar": 50,
+        "endLine": 3440,
+        "endChar": 71
+      },
+      "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
