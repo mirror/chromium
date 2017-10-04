@@ -1755,9 +1755,6 @@
     <message name="IDS_ONC_EAP_USER_CERT" desc="ONC Property label for EAP User Certs">
       User certificate
     </message>
-    <message name="IDS_ONC_NOT_CONNECTED" desc="Settings > Internet, text in network summary when a network is not connecting or connected.">
-      Not Connected
-    </message>
     <message name="IDS_ONC_MAC_ADDRESS" desc="ONC Property label for MacAddress">
       MAC address
     </message>
