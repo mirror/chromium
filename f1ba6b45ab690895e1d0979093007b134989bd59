@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1dc687b_8a78bb8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/MediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T19:15:18Z",
+      "side": 1,
+      "message": "nit: Were you going to put isSameOrigin into OriginUtils class in this patch?",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf59b5c7_40c09970",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T19:15:18Z",
+      "side": 1,
+      "message": "nit: This can be inlined since it will only be evaluated once anyway?",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b30f2e_608bade0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T19:15:18Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like originA or originB are Nullable?",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad66e97_5825333b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T19:15:18Z",
+      "side": 1,
+      "message": "Does this need to be set up with null? If not, we can turn setUpMediaRouter into a @Before public void setUp() method, it seems.",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
