@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a5ed0c_876a764a",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2960,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-04T18:03:10Z",
+      "side": 1,
+      "message": "This is fine, but I note that most call sites check is_incognito() rather than checking |indexed_db_factory_| directly.",
+      "range": {
+        "startLine": 2960,
+        "startChar": 6,
+        "endLine": 2960,
+        "endChar": 25
+      },
+      "revId": "b2b9073a533366dad2776481dcc8eeb59b507e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
