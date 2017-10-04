@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974dae0c_feddccb0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-04T18:23:24Z",
+      "side": 1,
+      "message": "I think this patch would be simpler if there were no constructor params for this extra header, rather the fetcher just asks finch for the experiment directly.\n\nThen you don\u0027t need to teach GPB and GetOp about this thing, it is just part of the networking infrastructure.",
+      "revId": "b36e3e17bf9aed1e70ce105619d5fda3fb0eaaed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
