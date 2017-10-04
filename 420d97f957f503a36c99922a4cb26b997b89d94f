@@ -139,6 +139,24 @@
       "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eaae30f_09cd22db",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorTraceEvents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T05:13:19Z",
+      "side": 1,
+      "message": "Hum I thought at BlinkOn I learned we can use base from WebKit now... wahtever",
+      "parentUuid": "c7ee8521_93079da1",
+      "revId": "420d97f957f503a36c99922a4cb26b997b89d94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
