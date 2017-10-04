@@ -22,6 +22,30 @@
       "revId": "ec1d20c6c2c4e027ba6c76119305ab7337246344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93e2d6cb_178214f9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-10-04T10:45:28Z",
+      "side": 1,
+      "message": "Yes :-) I would actually like this kind of suggestions. Never happened.",
+      "parentUuid": "7548ae17_378e2f48",
+      "range": {
+        "startLine": 94,
+        "startChar": 40,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "ec1d20c6c2c4e027ba6c76119305ab7337246344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
