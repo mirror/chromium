@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "99fa0ec7_d35cb5d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51522c09_cdf120d8",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "320b94ee_2f65f2a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f76572_1bd77761",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaeab00a_9a1550fa",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -71,6 +119,47 @@
     },
     {
       "key": {
+        "uuid": "941f1569_4226f6f2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19702,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaeab00a_9a1550fa",
+      "range": {
+        "startLine": 19702,
+        "startChar": 56,
+        "endLine": 19702,
+        "endChar": 0
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51ea177c_d799c2f9",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "This macro is used with changed name here.",
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "327edd0f_4bf2b972",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
@@ -82,6 +171,30 @@
       "writtenOn": "2017-10-04T14:48:58Z",
       "side": 1,
       "message": "Does this macro handle the case where the input string changes? Some of them don\u0027t.",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 60
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d20783d_bc035c8b",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "It is already used in a few other places with changed name. e.g. line 154,168, etc.",
+      "parentUuid": "327edd0f_4bf2b972",
       "range": {
         "startLine": 178,
         "startChar": 4,
@@ -117,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "ccffd1f9_11dde730",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "added the metric to rappor.xml",
+      "parentUuid": "71a19cd0_38254805",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1513993_65fa2c4c",
         "filename": "ui/latency/latency_tracker.cc",
         "patchSetId": 1
@@ -128,6 +265,30 @@
       "writtenOn": "2017-10-04T14:48:58Z",
       "side": 1,
       "message": "Do we have the wheel case covered in UKM?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 26
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fc1cfb_af50f3a3",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-10-04T22:08:42Z",
+      "side": 1,
+      "message": "added the metric to ukm.xml",
+      "parentUuid": "f1513993_65fa2c4c",
       "range": {
         "startLine": 187,
         "startChar": 4,
