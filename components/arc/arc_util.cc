@@ -13,6 +13,7 @@
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "components/user_manager/user_manager.h"
+#include "google_apis/gaia/gaia_urls.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 
@@ -35,6 +36,10 @@ constexpr char kAlwaysStartWithNoPlayStore[] =
     "always-start-with-no-play-store";
 constexpr char kOnlyStartAfterLogin[] = "only-start-after-login";
 
+constexpr char kGoogleClientId[] = "77185425430.apps.googleusercontent.com";
+
+bool client_id_missmatch_reported = false;
+
 void SetArcCpuRestrictionCallback(
     login_manager::ContainerCpuRestrictionState state,
     bool success) {
@@ -50,6 +55,17 @@ void SetArcCpuRestrictionCallback(
 }  // namespace
 
 bool IsArcAvailable() {
+  const std::string& client_id =
+      GaiaUrls::GetInstance()->oauth2_chrome_client_id();
+  if (client_id != kGoogleClientId) {
+    if (!client_id_missmatch_reported) {
+      VLOG(1) << "ARC is not supported for non-google client: " << client_id
+              << ".";
+      client_id_missmatch_reported = true;
+    }
+    return false;
+  }
+
   const auto* command_line = base::CommandLine::ForCurrentProcess();
 
   if (command_line->HasSwitch(chromeos::switches::kArcAvailability)) {

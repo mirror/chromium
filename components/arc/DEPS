@@ -10,6 +10,7 @@ include_rules = [
   "+components/session_manager/core",
   "+components/signin/core/account_id",
   "+components/user_manager",
+  "+google_apis/gaia",
   "+mojo",
   "+storage/browser/fileapi",
   "+third_party/re2",
