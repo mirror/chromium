@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76be212_18c83ca4",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-04T02:10:50Z",
+      "side": 1,
+      "message": "HostContentSettingsMap::GetContentSetting(url, url) \u003d\u003d ALLOW",
+      "range": {
+        "startLine": 27,
+        "startChar": 57,
+        "endLine": 27,
+        "endChar": 78
+      },
+      "revId": "ec6ae2b3c008f0c20b9781c5526b6d586d0ccafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d2ac33c_a14ffa59",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-04T02:10:50Z",
+      "side": 1,
+      "message": "This works, but you can probably just use HostContentSettingsMap with CONTENT_SETTINGS_TYPE_COOKIES for consistency with the rest.\n\nThe CookieSettings class is useful for reading on the IO thread (since HCSM can only be read on the UI thread), but here it doesn\u0027t matter.",
+      "range": {
+        "startLine": 219,
+        "startChar": 34,
+        "endLine": 219,
+        "endChar": 48
+      },
+      "revId": "ec6ae2b3c008f0c20b9781c5526b6d586d0ccafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5034753_d7d9b47f",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-04T02:10:50Z",
+      "side": 1,
+      "message": "This section doesn\u0027t really belong to this test, as it doesn\u0027t test the behavior of JS.",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 261,
+        "endChar": 38
+      },
+      "revId": "ec6ae2b3c008f0c20b9781c5526b6d586d0ccafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12dae76f_c7e0cc0d",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-10-04T02:10:50Z",
+      "side": 1,
+      "message": "We should add an equivalent test for cookies.\n\nAlso, I think the situation for attaching data is more complicated than for storing.\n\nTo store client hints on a |url|, we have:\n\nGetContentSetting(JAVASCRIPT, url, url) \u003d\u003d ALLOW \u0026\u0026 GetContentSetting(COOKIES, url, url) \u003d\u003d ALLOW\n\nwhich is correct. However, when sending them, there are *two* URLs at play - request URL and main frame URL, which map to the primary and secondary URLs in GetContentSetting(). This is used for third-party cookie blocking. So the second condition should be replaced with\n\nGetContentSetting(COOKIES, url, main_frame_url) \u003d\u003d ALLOW",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 287,
+        "endChar": 35
+      },
+      "revId": "ec6ae2b3c008f0c20b9781c5526b6d586d0ccafb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
