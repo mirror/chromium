@@ -11,6 +11,7 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/io_buffer.h"
@@ -23,8 +24,10 @@
 #include "net/disk_cache/disk_cache_test_util.h"
 #include "net/disk_cache/memory/mem_backend_impl.h"
 #include "net/disk_cache/simple/simple_backend_impl.h"
+#include "net/disk_cache/simple/simple_file_tracker.h"
 #include "net/disk_cache/simple/simple_index.h"
 #include "net/test/gtest_util.h"
+#include "net/test/net_test_suite.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -284,8 +287,10 @@ void DiskCacheTestWithCache::TearDown() {
   if (!memory_only_ && !simple_cache_mode_ && integrity_) {
     EXPECT_TRUE(CheckCacheIntegrity(cache_path_, new_eviction_, mask_));
   }
-  base::RunLoop().RunUntilIdle();
-  disk_cache::SimpleBackendImpl::FlushWorkerPoolForTesting();
+  NetTestSuite::GetScopedTaskEnvironment()->RunUntilIdle();
+  if (simple_cache_mode_ && simple_file_tracker_)
+    EXPECT_TRUE(simple_file_tracker_->IsEmptyForTesting());
+
   DiskCacheTest::TearDown();
 }
 
@@ -316,10 +321,13 @@ void DiskCacheTestWithCache::CreateBackend(uint32_t flags) {
 
   if (simple_cache_mode_) {
     net::TestCompletionCallback cb;
-    std::unique_ptr<disk_cache::SimpleBackendImpl> simple_backend(
-        new disk_cache::SimpleBackendImpl(
-            cache_path_, /* cleanup_tracker = */ nullptr, size_, type_, runner,
-            /*net_log = */ nullptr));
+    if (!simple_file_tracker_)
+      simple_file_tracker_ = std::make_unique<disk_cache::SimpleFileTracker>();
+    std::unique_ptr<disk_cache::SimpleBackendImpl> simple_backend =
+        std::make_unique<disk_cache::SimpleBackendImpl>(
+            cache_path_, /* cleanup_tracker = */ nullptr,
+            simple_file_tracker_.get(), size_, type_, runner,
+            /*net_log = */ nullptr);
     int rv = simple_backend->Init(cb.callback());
     ASSERT_THAT(cb.GetResult(rv), IsOk());
     simple_cache_impl_ = simple_backend.get();
