@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "790f2195_10a4b330",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/events_to_stopped_extension/manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T01:25:22Z",
+      "side": 1,
+      "message": "nit: [\"tabs\"] (or below, [ \"background\" ], but we should try to be consistent)",
+      "revId": "9b8996087682e82368769fa672922e8e4bc0c7c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
