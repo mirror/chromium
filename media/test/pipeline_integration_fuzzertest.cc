@@ -193,7 +193,7 @@ class MediaSourcePipelineIntegrationFuzzerTest
 struct Environment {
   Environment() {
     // Note, use logging::LOG_VERBOSE here to assist local debugging.
-    logging::SetMinLogLevel(logging::LOG_FATAL);
+    logging::SetMinLogLevel(logging::LOG_VERBOSE - 10);
   }
 };
 
