@@ -468,8 +468,8 @@ component("skia") {
     ":skia_opts",
     "//base",
     "//base/third_party/dynamic_annotations",
-    "//build/config/freetype",
     "//third_party:jpeg",
+    "//third_party/harfbuzz-ng:font",
     "//third_party/libpng",
     "//third_party/libwebp",
   ]
