@@ -534,6 +534,10 @@
       name: "LoadingWithMojo",
     },
     {
+      name: "LocksAPI",
+      status: "experimental",
+    },
+    {
       name: "LongTaskObserver",
       status: "stable",
     },

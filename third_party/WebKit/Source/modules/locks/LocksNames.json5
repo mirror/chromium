@@ -1,0 +1,11 @@
+{
+  metadata: {
+    namespace: "Locks",
+  },
+
+  data: [
+    // https://github.com/inexorabletash/web-locks
+    "shared",
+    "exclusive",
+  ],
+}
