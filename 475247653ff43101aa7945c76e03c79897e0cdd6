@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e30ab862_89950345",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Should we (memory) cache reverse index shards?  \n\nMy instinct is no, we\u0027re not likely to re-use the data in short succession, but it\u0027s not completely clear.  What do you think Sean?",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adfa143_e6d18cae",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "If you\u0027re venturing into tuple\u003cstring, string, string\u003e, better to define a struct\nwithin the anonymous namespace that lets you name the fields.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a55842_971caa27",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "So you want to replace reverse_indexed_printers_ every time you do a fetch?  that seems not right.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1698478e_885d7522",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Since you\u0027re using this type name a few places, recommend you define a name for it with \u0027using\u0027",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb53128_015aa5cf",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Did you mean this to be a (presumably const) reference instead of a copy?",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a55fe8_fb9206c7",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Ah, debugging by (virtual) printf.  You probably meant to remove these.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf55de76_f4617b2f",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Marco?",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "decacf95_e9787c11",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Polo!",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3b5bad_dce37160",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "GetList will check-fail if entry is not a list.  You should fail gracefully if entry.is_list() is false.\n\n(The JSON Value APIs are a little weird in the way they handle \"casting\" from Values to more specific types...)",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5ff9a51_20eea78a",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Generally DCHECK\u0027ing on the contents received from an external server is a bad idea.  Badly formatted external input should be handled gracefully.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08278a8c_393cc8b5",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-04T22:58:20Z",
+      "side": 1,
+      "message": "Not sure why you\u0027re saving these at the object level.  Did you mean to check this when a reverse index is requested?\n\nAlso, probably no reason to use unique_ptr here; it\u0027s used in some of the other fields as a convenient way to determine whether or not the field has been initialized, which you don\u0027t need here.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
