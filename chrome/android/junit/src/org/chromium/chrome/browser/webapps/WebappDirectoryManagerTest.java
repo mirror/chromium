@@ -18,7 +18,9 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLooper;
 
+import org.chromium.base.ContextUtils;
 import org.chromium.base.FileUtils;
+import org.chromium.base.PathUtils;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.Feature;
@@ -57,9 +59,13 @@ public class WebappDirectoryManagerTest {
 
     @Before
     public void setUp() throws Exception {
+        mContext = RuntimeEnvironment.application;
+        ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
+
         ThreadUtils.setThreadAssertsDisabledForTesting(true);
         RecordHistogram.setDisabledForTests(true);
-        mContext = RuntimeEnvironment.application;
+        PathUtils.setPrivateDataDirectorySuffix("chrome");
+
         mWebappDirectoryManager = new TestWebappDirectoryManager();
         mWebappDirectoryManager.resetForTesting();
 
