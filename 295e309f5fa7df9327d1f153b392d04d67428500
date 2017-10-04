@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ae8f05_fc5e2a18",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-04T06:13:49Z",
+      "side": 1,
+      "message": "nit: different iframes?",
+      "range": {
+        "startLine": 9,
+        "startChar": 53,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "295e309f5fa7df9327d1f153b392d04d67428500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
