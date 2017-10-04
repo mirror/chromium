@@ -289,7 +289,10 @@ source_set("audio") {
     sources += [
       "fuchsia/audio_manager_fuchsia.cc",
       "fuchsia/audio_manager_fuchsia.h",
+      "fuchsia/audio_output_stream_fuchsia.cc",
+      "fuchsia/audio_output_stream_fuchsia.h",
     ]
+    libs += [ "media_client" ]
   }
 
   configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
@@ -405,6 +408,7 @@ source_set("unit_tests") {
 
     if (use_cras) {
       sources += [
+        "cras/audio_manager_cras_unittest.cc",
         "cras/cras_input_unittest.cc",
         "cras/cras_unified_unittest.cc",
       ]
