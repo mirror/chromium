@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4ba2f95_31679d0d",
+        "filename": "ios/web_view/internal/metrics/web_view_metrics_service_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-04T01:53:46Z",
+      "side": 1,
+      "message": "Just curious, is this necessary?",
+      "range": {
+        "startLine": 14,
+        "startChar": 52,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "3a3dd4811a9908c18c8fad917b88766fd7eb2bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
