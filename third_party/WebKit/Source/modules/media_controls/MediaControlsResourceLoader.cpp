@@ -37,6 +37,7 @@ MediaControlsResourceLoader::~MediaControlsResourceLoader(){};
 #if defined(OS_WIN)
 #pragma warning(disable : 4068)
 #else
+#pragma GCC diagnostic push
 #pragma GCC diagnostic warning "-Wunknown-pragmas"
 #endif
 String MediaControlsResourceLoader::GetMediaControlsCSS() const {
