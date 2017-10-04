@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed6e5661_3240d0ed",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-04T14:00:51Z",
+      "side": 1,
+      "message": "I don\u0027t think you need any code redundancy here.\nJust use a delegated constructor:\n\nAliveChecker::AliveChecker(\n    scoped_refptr\u003cbase::SequencedTaskRunner\u003e task_runner,\n    base::RepeatingClosure dead_callback,\n    base::TimeDelta check_interval,\n    base::TimeDelta timeout,\n    bool stop_at_first_alive_notification,\n    bool pause_check_during_suspend,\n    CreatePowerObserverHelperCallback create_power_observer_helper_callback) {...}\n\nand\n\nAliveChecker::AliveChecker(\n    scoped_refptr\u003cbase::SequencedTaskRunner\u003e task_runner,\n    base::RepeatingClosure dead_callback,\n    base::TimeDelta check_interval,\n    base::TimeDelta timeout,\n    bool stop_at_first_alive_notification,\n    bool pause_check_during_suspend) : AliveChecker(std::move(task_runner), std::move(dead_callback), check_interval, timeout, stop_at_first_alive_notification, pause_check_during_suspend, CreatePowerObserverHelperCallback()) {}",
+      "revId": "f685ac6011940ad406f3bb58017423d740d2c5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
