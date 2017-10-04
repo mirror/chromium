@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ea501547_6f0dbb71",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T09:46:37Z",
+      "side": 1,
+      "message": "Fair enough, since I can\u0027t come up with a clearly better suggestion, let\u0027s stay with the current name.\nThough logging impressions and clicks similarly for CTR just means we should use the same struct, not that it should be named \"impression\".",
+      "parentUuid": "2a7c9c62_70f257ac",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 34
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49e0d937_df58e6c1",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 3
