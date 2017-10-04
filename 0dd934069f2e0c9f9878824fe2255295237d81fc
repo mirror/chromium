@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45864237_d5c64d87",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:48:59Z",
+      "side": 1,
+      "message": "Since this CL is follow-up of replacing class\u003dapple-tab-span to\nstyle\u003dwhite-space:pre, we care only about \"white-space:pre\" case.\n\nThis CL is short term fix rather than long term fix. I think it\nis better to stop this special handling.\n\nCurrent behavior, splinting SPAN with \\t is unconditionally, is\nvery strange and Facebook has a workaround \u003d\u003d bad interoperability.",
+      "parentUuid": "79358c05_d0e9cf34",
+      "range": {
+        "startLine": 21,
+        "startChar": 12,
+        "endLine": 22,
+        "endChar": 37
+      },
+      "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a5c6385_af1de307",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5228bd_6faf144d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a5c6385_af1de307",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a4ac9d76_fb44890a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:48:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6f3df5_c701dfd6",
+      "range": {
+        "startLine": 31,
+        "startChar": 21,
+        "endLine": 31,
+        "endChar": 23
+      },
+      "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92e5845e_cdce10bc",
         "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
         "patchSetId": 4
@@ -82,6 +154,24 @@
       "writtenOn": "2017-10-03T16:48:02Z",
       "side": 1,
       "message": "The behavior still looks weird, as we don\u0027t really need to split the SPAN in this case, and it seems better if there\u0027s no splitting.\n\nCould you give a test case where the splitting is reasonable? Or can we get rid of the splitting behavior completely?",
+      "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8433812d_0e77ea49",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:48:59Z",
+      "side": 1,
+      "message": "I don\u0027t have any reasonable case to split at this time.\n\nOnce we have time to revise \"InsertText\" command behavior, we may\nget rid of this splitting.\n\nUntil then, I would like to keep as is.\n\nI added other test cases related to white-space:pre for providing\ninsight about current behavior.",
+      "parentUuid": "92e5845e_cdce10bc",
       "revId": "0dd934069f2e0c9f9878824fe2255295237d81fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
