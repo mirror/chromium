@@ -52,6 +52,24 @@
       "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31129b84_b9fb8a2e",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T10:22:01Z",
+      "side": 1,
+      "message": "I see.\n\nChanged to call DeliverErrorResponse()",
+      "parentUuid": "c819f881_c42ab4bf",
+      "revId": "3727b37e420bcb58515bb915fa8b0f2361e0c77c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

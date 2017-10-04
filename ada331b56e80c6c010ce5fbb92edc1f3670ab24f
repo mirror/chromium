@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d81fd8_d624421f",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T10:22:01Z",
+      "side": 1,
+      "message": "Humm, I think we should not commit the 500 header.\nThis is also causing LayoutTest failures.",
+      "revId": "ada331b56e80c6c010ce5fbb92edc1f3670ab24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
