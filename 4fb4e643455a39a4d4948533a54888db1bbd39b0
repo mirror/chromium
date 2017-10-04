@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6d15aeb1_47eadd78",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T23:36:33Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "1d69f108_82902d3e",
+      "range": {
+        "startLine": 824,
+        "startChar": 6,
+        "endLine": 825,
+        "endChar": 74
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42ac3919_01bb69f5",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
