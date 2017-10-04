@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83b0c7b_b41bd1ab",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T21:37:11Z",
+      "side": 1,
+      "message": "This is hard to read and kind of wrong when size\u003d\u003d0 (undefined behavior) and size\u003d\u003d1 ([0] checked twice). More elegant to just write two loops:\n\nfor (size_t i \u003d old_index; i \u003c paint_chunks_info_.size(); i++) {\n  if (paint_chunks_info_[i].Matches(new_chunk))\n    return i;\n}\nfor (size_t i \u003d 0; i \u003c old_index; i++) {\n  if (paint_chunks_info_[i].Matches(new_chunk))\n    return i;\n}\nreturn kNotFound;",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128104b3_d89762d5",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T21:37:11Z",
+      "side": 1,
+      "message": "Can we DCHECK(!old_chunks_matched[matched]) here?",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c649df_a4f45dc3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T21:37:11Z",
+      "side": 1,
+      "message": "I think the reordering handling is incorrect. Issue filed: crbug.com/771770",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf5cae2_d1eea228",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T21:37:11Z",
+      "side": 1,
+      "message": "Who calls this?",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
