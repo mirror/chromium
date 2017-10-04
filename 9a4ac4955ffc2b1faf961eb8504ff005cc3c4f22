@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25b7c345_63dcd193",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 702,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T20:24:23Z",
+      "side": 1,
+      "message": "Perhaps, we can just have \"formSubmissionGet\" and \"formSubmissionPost\" reasons? WDYT?\n\nAt least, we can use that trick in implementation instead of an extra field/param/getter.",
+      "revId": "9a4ac4955ffc2b1faf961eb8504ff005cc3c4f22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
