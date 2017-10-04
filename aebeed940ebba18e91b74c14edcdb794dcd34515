@@ -16,6 +16,24 @@
       "revId": "aebeed940ebba18e91b74c14edcdb794dcd34515",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1c64b3_02aaace9",
+        "filename": "content/browser/loader/resource_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T14:49:10Z",
+      "side": 1,
+      "message": "request_ is always valid.  It may be at different points of its life cycle, which will mean different things are valid or not valid.  This call will never crash, but it may return garbage if the request never got a response (cancelled early, no network, that sort of thing) so I\u0027d be inclined to only access this value if you\u0027re sure the request has gotten a response.\n\nAnd you\u0027re completely right about the AssertURLRequestPresent.  The crash I was chasing was infrequent enough that I can\u0027t be sure it\u0027s gone until the fix for the bug you mention makes it to dev, so I\u0027m leaving the code for the moment.",
+      "parentUuid": "8ba97bf1_df9f65a9",
+      "revId": "aebeed940ebba18e91b74c14edcdb794dcd34515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
