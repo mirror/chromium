@@ -164,7 +164,7 @@ void HttpCache::Writers::SetNetworkReadOnly(bool keep_entry) {
 
 void HttpCache::Writers::RemoveTransaction(Transaction* transaction,
                                            bool success) {
-  EraseTransaction(transaction);
+  EraseTransaction(transaction, OK);
 
   bool in_idle_state = next_state_ == State::NONE;
 
@@ -183,7 +183,8 @@ void HttpCache::Writers::RemoveTransaction(Transaction* transaction,
     cache_->CurrentWritersDoneWritingToEntry(entry_, success, TransactionSet());
 }
 
-void HttpCache::Writers::EraseTransaction(Transaction* transaction) {
+void HttpCache::Writers::EraseTransaction(Transaction* transaction,
+                                          int result) {
   // The transaction should be part of all_writers.
   auto it = all_writers_.find(transaction);
   DCHECK(it != all_writers_.end());
@@ -191,7 +192,19 @@ void HttpCache::Writers::EraseTransaction(Transaction* transaction) {
   transaction->WriterAboutToBeRemovedFromEntry(OK);
 
   all_writers_.erase(it);
+  ErasedTransaction(transaction);
+}
 
+HttpCache::Writers::TransactionMap::iterator
+HttpCache::Writers::EraseTransaction(TransactionMap::iterator it, int result) {
+  Transaction* transaction = it->first;
+  transaction->WriterAboutToBeRemovedFromEntry(OK);
+  TransactionMap::iterator return_it = all_writers_.erase(it);
+  ErasedTransaction(transaction);
+  return return_it;
+}
+
+void HttpCache::Writers::ErasedTransaction(Transaction* transaction) {
   if (all_writers_.empty() && next_state_ == State::NONE)
     ResetStateForEmptyWriters();
   else
@@ -204,6 +217,7 @@ void HttpCache::Writers::EraseTransaction(Transaction* transaction) {
 
   // If waiting for read, remove it from the map.
   waiting_for_read_.erase(transaction);
+  return;
 }
 
 void HttpCache::Writers::UpdatePriority() {
@@ -401,7 +415,7 @@ void HttpCache::Writers::OnNetworkReadFailure(int result) {
   ProcessFailure(result);
 
   if (active_transaction_)
-    EraseTransaction(active_transaction_);
+    EraseTransaction(active_transaction_, result);
 
   bool truncate_initiated = InitiateTruncateEntry();
 
@@ -536,7 +550,7 @@ void HttpCache::Writers::OnDataReceived(int result) {
     }
 
     if (active_transaction_)
-      EraseTransaction(active_transaction_);
+      EraseTransaction(active_transaction_, result);
     active_transaction_ = nullptr;
     ProcessWaitingForReadTransactions(write_len_);
 
@@ -595,9 +609,9 @@ void HttpCache::Writers::ProcessWaitingForReadTransactions(int result) {
     it = waiting_for_read_.erase(it);
 
     // If its response completion or failure, this transaction needs to be
-    // removed.
+    // removed from writers.
     if (result <= 0)
-      EraseTransaction(transaction);
+      EraseTransaction(transaction, result);
   }
 }
 
@@ -606,11 +620,12 @@ void HttpCache::Writers::SetIdleWritersFailState(int result) {
   // should be empty.
   DCHECK(waiting_for_read_.empty());
   for (auto it = all_writers_.begin(); it != all_writers_.end();) {
-    if (it->first == active_transaction_) {
+    Transaction* transaction = it->first;
+    if (transaction == active_transaction_) {
       it++;
       continue;
     }
-    EraseTransaction(it->first);
+    it = EraseTransaction(it, result);
   }
 }
 

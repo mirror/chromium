@@ -231,7 +231,10 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   bool InitiateTruncateEntry();
 
   // Remove the transaction.
-  void EraseTransaction(Transaction* transaction);
+  void EraseTransaction(Transaction* transaction, int result);
+  TransactionMap::iterator EraseTransaction(TransactionMap::iterator it,
+                                            int result);
+  void ErasedTransaction(Transaction* transaction);
 
   TransactionSet RemoveTransactionsFromAllWriters();
 
