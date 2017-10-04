@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e866104_11be4790",
+        "filename": "ash/arc/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:57:35Z",
+      "side": 1,
+      "message": "why is the folder and source set named \"arc\"? exo/wayland is not specific to arc.. would \"wayland\" be a better name? match the name of the command line flag",
+      "range": {
+        "startLine": 7,
+        "startChar": 12,
+        "endLine": 7,
+        "endChar": 15
+      },
+      "revId": "bababec2b098bbed39e4911c563c1a9a065d1f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdb2fd21_a3235ac0",
+        "filename": "ash/arc/exo_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:57:35Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bababec2b098bbed39e4911c563c1a9a065d1f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e88ca4e_5fb6a516",
+        "filename": "ash/arc/exo_parts.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:57:35Z",
+      "side": 1,
+      "message": "is glib support needed in this case?",
+      "revId": "bababec2b098bbed39e4911c563c1a9a065d1f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24de17e9_c5626bff",
+        "filename": "ash/arc/exo_parts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:57:35Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bababec2b098bbed39e4911c563c1a9a065d1f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6eb8acf_1352b0f1",
+        "filename": "ash/arc/exo_parts.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T16:57:35Z",
+      "side": 1,
+      "message": "\"Parts\" is a very browsery name. Fine with me but maybe we should use a different more descriptive name here? WaylandServerController?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "bababec2b098bbed39e4911c563c1a9a065d1f2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
