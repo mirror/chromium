@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "17011002_edebad20",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "IsStreamingFinished() is just checking state_, so this looks redundant with line 412.",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516cf0e6_7750d9eb",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 4
@@ -72,6 +89,132 @@
     },
     {
       "key": {
+        "uuid": "05524fd8_3eeaf764",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "+1 that seems simpler probably",
+      "parentUuid": "516cf0e6_7750d9eb",
+      "range": {
+        "startLine": 469,
+        "startChar": 49,
+        "endLine": 469,
+        "endChar": 66
+      },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ffd11e5_a8f9d832",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "it\u0027s a bit surprising that Waiting is the state we reach after Finish.",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9426dbb_e1b156a6",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "Is the renderer allowed to request a script that\u0027s not installed? If it can\u0027t we should BadMessage it instead of DCHECK",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434d95fd_2aab7031",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "It looks like IsStreamingFinished() is only used in tests except for the callsite which might be redundant. Could we remove it or make it clear it\u0027s only used for tests? i.e., have the unittest check state_ directly?",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9989d2f_28afbacf",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "The kWaiting name doesn\u0027t seem to fit well with the other naming in the class like FinishedReason, Finish(). It\u0027s also unclear what is being waited for.\n\nI kind of think kFinished is still better than kWaiting.",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2778d0_cb022063",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "this function might be better named Abort() given the comment.",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7018379d_fd2f61c6",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "it\u0027d be nicer to make the verb tenses consistent if possible\n\nkReceived, kTaken, kFailed, kPending maybe?",
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1c5789f7_27a33165",
         "filename": "content/renderer/service_worker/thread_safe_script_container.h",
         "patchSetId": 4
@@ -89,6 +232,23 @@
         "endLine": 47,
         "endChar": 60
       },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78db7a0b_ace5a9ef",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T08:14:22Z",
+      "side": 1,
+      "message": "This documentation seems better on the enum ScriptStatus",
       "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
