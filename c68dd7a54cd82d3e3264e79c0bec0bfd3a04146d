@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c0127f2_77103eaa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/IntegrationTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:15:25Z",
+      "side": 1,
+      "message": "I\u0027d merge this into TestRunner.js.",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16e5392f_234fba7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/PageMockTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:15:25Z",
+      "side": 1,
+      "message": "And move this to a separate sdk_test_runner module.",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951426f_dcf59127",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/SyntaxHighlightTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:15:25Z",
+      "side": 1,
+      "message": "Merge this one into TestRunner as well.",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cae421_ef981880",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:15:25Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this.",
+      "range": {
+        "startLine": 4,
+        "startChar": 5,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
