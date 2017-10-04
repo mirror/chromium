@@ -52,6 +52,24 @@
       "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101a787c_a6e2b73a",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-04T20:43:58Z",
+      "side": 1,
+      "message": "Hi Mike, I\u0027ve just tried but\n\nShelfItemDelegateChanged does not contain old delegate, which is important for this case. Of cause I can extend by adding old_delegate for example. However at the moment of calling old_delegate is destroyed because of replacing unique_ptr. Alternatively I can add OnDiscardedFromModel to delegate.",
+      "parentUuid": "f60fc6d3_961d93e4",
+      "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
