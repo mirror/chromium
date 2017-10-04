@@ -2462,7 +2462,6 @@ void Document::UpdateStyleAndLayoutIgnorePendingStylesheets(
 
   if (run_post_layout_tasks == kRunPostLayoutTasksSynchronously && View())
     View()->FlushAnyPendingPostLayoutTasks();
-  ++force_layout_count_;
 }
 
 RefPtr<ComputedStyle> Document::StyleForElementIgnoringPendingStylesheets(
