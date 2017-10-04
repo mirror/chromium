@@ -112,7 +112,7 @@ WATERFALL = {
     'Win7 Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -124,7 +124,7 @@ WATERFALL = {
     'Win7 Debug (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -228,7 +228,7 @@ FYI_WATERFALL = {
     'Win7 Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -240,7 +240,7 @@ FYI_WATERFALL = {
     'Win7 Debug (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -252,7 +252,7 @@ FYI_WATERFALL = {
     'Win7 dEQP Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -265,7 +265,7 @@ FYI_WATERFALL = {
     'Win10 Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-10',
           'pool': 'Chrome-GPU',
         },
@@ -277,7 +277,7 @@ FYI_WATERFALL = {
     'Win10 Debug (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-10',
           'pool': 'Chrome-GPU',
         },
@@ -365,7 +365,7 @@ FYI_WATERFALL = {
     'Win7 x64 Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -377,7 +377,7 @@ FYI_WATERFALL = {
     'Win7 x64 Debug (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -389,7 +389,7 @@ FYI_WATERFALL = {
     'Win7 x64 dEQP Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -795,7 +795,7 @@ FYI_WATERFALL = {
     'Optional Win7 Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -949,7 +949,7 @@ V8_FYI_WATERFALL = {
     'Win Release (NVIDIA)': {
       'swarming_dimensions': [
         {
-          'gpu': '10de:104a',
+          'gpu': '10de:104a-21.21.13.7254',
           'os': 'Windows-2008ServerR2-SP1',
           'pool': 'Chrome-GPU',
         },
@@ -1020,7 +1020,7 @@ COMMON_GTESTS = {
         'build_configs': ['Release', 'Release_x64'],
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           }
         ],
@@ -1048,7 +1048,7 @@ COMMON_GTESTS = {
         'swarming_dimension_sets': [
           # NVIDIA Win 7
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
           # AMD Win 7
@@ -1205,7 +1205,7 @@ COMMON_GTESTS = {
         'swarming_dimension_sets': [
           # NVIDIA Win 7
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
           # AMD Win 7
@@ -1281,7 +1281,7 @@ COMMON_GTESTS = {
         'predicate': Predicates.DEQP,
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           }
         ],
@@ -1310,7 +1310,7 @@ COMMON_GTESTS = {
         'predicate': Predicates.DEQP,
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
           {
@@ -2147,7 +2147,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Only run on the NVIDIA Release Windows bots.
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
         ],
@@ -2176,7 +2176,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         # Only run on the NVIDIA Release Windows bots.
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
         ],
@@ -2217,7 +2217,7 @@ NON_TELEMETRY_ISOLATED_SCRIPT_TESTS = {
         'build_configs': ['Release'],
         'swarming_dimension_sets': [
           {
-            'gpu': '10de:104a',
+            'gpu': '10de:104a-21.21.13.7254',
             'os': 'Windows-2008ServerR2-SP1'
           },
           {
