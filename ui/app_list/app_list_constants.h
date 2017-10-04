@@ -104,7 +104,7 @@ APP_LIST_EXPORT extern const size_t kExpandArrowTopPadding;
 APP_LIST_EXPORT extern const int kReorderDroppingCircleRadius;
 
 APP_LIST_EXPORT extern const int kAppsGridPadding;
-APP_LIST_EXPORT extern const int kAppsGridLeftRightPaddingFullscreen;
+APP_LIST_EXPORT extern const int kAppsGridLeftRightPadding;
 APP_LIST_EXPORT extern const int kBottomSeparatorLeftRightPaddingFullScreen;
 APP_LIST_EXPORT extern const int kBottomSeparatorBottomPaddingFullScreen;
 APP_LIST_EXPORT extern const int kSearchBoxPadding;

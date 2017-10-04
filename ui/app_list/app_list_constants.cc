@@ -142,10 +142,10 @@ const int kReorderDroppingCircleRadius = 35;
 // The padding around the outside of the apps grid (sides).
 const int kAppsGridPadding = 24;
 
-// The left and right side padding of the apps grid in fullscreen mode. The
+// The left and right side padding of the apps grid. The
 // space is used for page switcher on the right side. Left side should have the
 // same space to keep the apps grid horizontally centered.
-const int kAppsGridLeftRightPaddingFullscreen = 28;
+const int kAppsGridLeftRightPadding = 28;
 
 // The left and right padding from the folder name bottom separator to the edge
 // of the left or right edge of the left most and right most app item.
@@ -177,9 +177,7 @@ const int kPeekingAppListHeight = 320;
 const int kShelfSize = 48;
 
 // Max items allowed in a folder.
-const size_t kMaxFolderItems = 16;
-// Max items allowed in a folder for fullscreen app list folder v1.
-const size_t kMaxFolderItemsFullscreen = 20;
+const size_t kMaxFolderItems = 20;
 
 // Number of the top items in a folder, which are shown inside the folder icon
 // and animated when opening and closing a folder.
