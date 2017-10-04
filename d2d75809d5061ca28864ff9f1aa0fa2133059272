@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1a167973_a5318ff8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-04T22:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04bb02bd_47ef2b37",
+      "range": {
+        "startLine": 367,
+        "startChar": 4,
+        "endLine": 367,
+        "endChar": 63
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "424de12f_767a482f",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
         "patchSetId": 8
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "7e200e06_685ad2ee",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-04T22:16:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "424de12f_767a482f",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51b91795_6176b103",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
         "patchSetId": 8
@@ -82,6 +130,30 @@
       "writtenOn": "2017-10-04T09:41:50Z",
       "side": 1,
       "message": "Shall we add a test for this? :)",
+      "range": {
+        "startLine": 93,
+        "startChar": 37,
+        "endLine": 93,
+        "endChar": 61
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280416ac_2dd1cf3a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-04T22:16:54Z",
+      "side": 1,
+      "message": "Yes! I\u0027ve added tests to ThrottlingObserver test case, which covers CalculateThrottling and UpdateThrottlingState.",
+      "parentUuid": "51b91795_6176b103",
       "range": {
         "startLine": 93,
         "startChar": 37,
