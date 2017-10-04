@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9133bfd1_d88b3f1f",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-04T07:09:48Z",
+      "side": 1,
+      "message": "the type used within files-safe-media is not identical to the mime type; it is set in ui/file_manager/file_manager/foreground/elements/files_quick_view.html within the files-safe-media element as attribute type. I chose the type \u0027html\u0027 because it makes handling easier rather than introducing a subtype by using the mime type - if you prefer to update the \u0027html\u0027 string in ui/file_manager/file_manager/foreground/elements/files_quick_view.html to \u0027document/html\u0027, that shouldn\u0027t be an issue, I guess, but IMHO it would not be the same granularity as used within ui/file_manager/file_manager/foreground/elements/files_quick_view.js and ui/file_manager/file_manager/foreground/elements/files_safe_media.js, as these have 4 types of \"special\" cases they handle (all audio files, all image files, all video files, and all html files).\n\nSo, summary: I would be open to update the string itself to \u0027document/html\u0027, but I am against introducing a separate subtype attribute, and I am against omitting \u0027html\u0027 and only using \u0027document\u0027 as type as that would be misleading.",
+      "parentUuid": "330e3609_205d148a",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be274d18_f0cddcaf",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T06:41:55Z",
       "side": 1,
       "message": "As the body has 8px margin by default, the body\u0027s height is now ({100% of viewport\u0027s height} + 8px * 2).\nIt will result in that the bottom of the content will be clipped from the viewport?",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51ec60d_84a15b51",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-04T07:09:48Z",
+      "side": 1,
+      "message": "Thanks for bringing that to my attention, I never completely scrolled down my test html file!\nI\u0027ve made a few tests (specifying margin or border instead of padding, and moving it to pre instead), but neither seemed to solve the issue of the lost pixels at the bottom.\n\nThe problem when not somehow limiting the max height is that pre will be several thousand pixels high, so the browser won\u0027t display the scroll bars. Always displaying the scroll bars will include files that don\u0027t need them. Do you have any idea on how to solve that issue that doesn\u0027t use absolute pixel values (which will cause problems when resizing the window)?",
+      "parentUuid": "be274d18_f0cddcaf",
       "range": {
         "startLine": 22,
         "startChar": 10,
@@ -68,6 +116,30 @@
       "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f886219d_a1fcbd78",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-04T07:09:48Z",
+      "side": 1,
+      "message": "My bad. Thanks!",
+      "parentUuid": "b608ee43_3b9af0da",
+      "range": {
+        "startLine": 12,
+        "startChar": 31,
+        "endLine": 12,
+        "endChar": 34
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
