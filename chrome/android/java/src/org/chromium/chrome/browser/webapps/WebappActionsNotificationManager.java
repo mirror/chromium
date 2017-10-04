@@ -76,7 +76,7 @@ class WebappActionsNotificationManager {
 
         return NotificationBuilderFactory
                 .createChromeNotificationBuilder(
-                        true /* prefer compat */, ChannelDefinitions.CHANNEL_ID_BROWSER)
+                        true /* prefer compat */, ChannelDefinitions.CHANNEL_ID_WEBAPP_ACTIONS)
                 .setSmallIcon(R.drawable.ic_chrome)
                 .setContentTitle(
                         mWebappActivity.getString(R.string.webapp_runs_in_chrome_disclosure,
