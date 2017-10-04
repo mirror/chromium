@@ -46,6 +46,30 @@
       "revId": "6b660f15fc74cf9335a661e9c4f134ae7c6f4cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312fca2d_0cce9da8",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:26:12Z",
+      "side": 1,
+      "message": "ah, let\u0027s do this then:\n\nstd::unique_ptr\u003cBuffer\u003e buffer;\n#if defined(USE_GBM)\nif (device_)\n  buffer \u003d CreateDrmBuffer(size, drm_format, bo_usage);\n#endif\n\nif (!buffer) { ...",
+      "parentUuid": "4c2b780d_baeb75e1",
+      "range": {
+        "startLine": 432,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 3
+      },
+      "revId": "6b660f15fc74cf9335a661e9c4f134ae7c6f4cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
