@@ -73,6 +73,7 @@ test("device_unittests") {
     "test/run_all_unittests.cc",
     "u2f/u2f_apdu_unittest.cc",
     "u2f/u2f_ble_frames_unittest.cc",
+    "u2f/u2f_discovery_unittest.cc",
     "u2f/u2f_message_unittest.cc",
   ]
 
@@ -120,6 +121,7 @@ test("device_unittests") {
       "hid/test_report_descriptors.h",
       "serial/serial_io_handler_posix_unittest.cc",
       "u2f/u2f_hid_device_unittest.cc",
+      "u2f/u2f_hid_discovery_unittest.cc",
       "u2f/u2f_register_unittest.cc",
       "u2f/u2f_request_unittest.cc",
       "u2f/u2f_sign_unittest.cc",
