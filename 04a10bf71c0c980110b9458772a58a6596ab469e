@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "def9d7d4_bc2eb3c3",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T21:09:42Z",
+      "side": 1,
+      "message": "Based on this I have a proposal...\n\n1) RTI tracks if software was ever asked for, flips bit to say no gpu compositing\n2) when software is asked for, it loses the shared context so that clients recheck\n3) RTI has a IsGpuCompositingDisabled() so clients can see *after* asking for a context (after to avoid race), and in that case don\u0027t use the context and never ask again.\n\nwdyt, or is there something better?",
+      "parentUuid": "fc5b8358_d0980947",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
