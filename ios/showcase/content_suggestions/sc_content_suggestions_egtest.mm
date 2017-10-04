@@ -42,7 +42,7 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       selectElementWithMatcher:grey_allOf(matcher, grey_sufficientlyVisible(),
                                           nil)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionDown, 150)
-      onElementWithMatcher:chrome_test_util::ContentSuggestionCollectionView()];
+      onElementWithMatcher:chrome_test_util::CotentSuggestionView()];
 }
 
 // Select the cell with the |ID| by scrolling the collection.
