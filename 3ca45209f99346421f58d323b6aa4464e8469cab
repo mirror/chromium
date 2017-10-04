@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c9b1fb4_95b15449",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-04T15:45:23Z",
+      "side": 1,
+      "message": "nit: or just\n  return manager \u0026\u0026 gaia::AreEmailsSame( ... );",
+      "range": {
+        "startLine": 408,
+        "startChar": 1,
+        "endLine": 408,
+        "endChar": 15
+      },
+      "revId": "3ca45209f99346421f58d323b6aa4464e8469cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd73b01_81ca4618",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-04T15:45:23Z",
+      "side": 1,
+      "message": "nit: wonder if this can be a const method?",
+      "range": {
+        "startLine": 414,
+        "startChar": 40,
+        "endLine": 414,
+        "endChar": 41
+      },
+      "revId": "3ca45209f99346421f58d323b6aa4464e8469cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
