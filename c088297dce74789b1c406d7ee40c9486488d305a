@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a32183b7_267610cc",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-04T21:12:22Z",
+      "side": 1,
+      "message": "Can we do a\n\nEXPECT_FALSE(wc-\u003eIsJavaScriptDialogShowing())?\n\nWith no dialog manager, since we\u0027ve attached a PageHandler, we should be allowed to get a dialog open, but detaching it should ensure that the dialog is gone.\n\n(We can totally use IsJavaScriptDialogShowing() in the above test too.)",
+      "range": {
+        "startLine": 1357,
+        "startChar": 0,
+        "endLine": 1357,
+        "endChar": 1
+      },
+      "revId": "c088297dce74789b1c406d7ee40c9486488d305a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30975ee4_b4040e2e",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-04T21:12:22Z",
+      "side": 1,
+      "message": "whoo for paranoia!",
+      "range": {
+        "startLine": 607,
+        "startChar": 6,
+        "endLine": 607,
+        "endChar": 33
+      },
+      "revId": "c088297dce74789b1c406d7ee40c9486488d305a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
