@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d58a598_052712d7",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-04T01:20:27Z",
+      "side": 1,
+      "message": "Thoughts on the names of either the var or the values? \n\nI purposefully do not want this to be a bool, because most things that start as bools don\u0027t stay that way. I would be fine with adding a separate \"is_small_checkout\" flag or something.",
+      "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
