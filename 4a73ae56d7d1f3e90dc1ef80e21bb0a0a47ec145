@@ -16,6 +16,24 @@
       "revId": "4a73ae56d7d1f3e90dc1ef80e21bb0a0a47ec145",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1017983f_602bd0b1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T22:17:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd84933d_e33f1bca",
+      "revId": "4a73ae56d7d1f3e90dc1ef80e21bb0a0a47ec145",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
