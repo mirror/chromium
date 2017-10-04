@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7360848_7c387fd3",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 3546,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-04T17:11:17Z",
+      "side": 1,
+      "message": "A question for bokan@: is the LayoutPoint-to-FloatPoint conversion okay here?  I think LayoutPoint was introduced to avoid float\u0027s loss of precision at a high page offset (e.g. infinite scroll).  May be we don\u0027t care about fractions here?\n\nThis general applies to all/most other FloatPoint() uses below.",
+      "revId": "57f6ab5ba435db474d9f0fae1e7433e605aabab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
