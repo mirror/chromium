@@ -13,7 +13,8 @@ namespace resource_coordinator {
 PageCoordinationUnitImpl::PageCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitBase(id, std::move(service_ref)) {}
+    : CoordinationUnitBase(id, std::move(service_ref)),
+      clock_(&default_tick_clock_) {}
 
 PageCoordinationUnitImpl::~PageCoordinationUnitImpl() = default;
 
@@ -72,7 +73,21 @@ bool PageCoordinationUnitImpl::IsVisible() const {
   return is_visible;
 }
 
+base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastNavigation() const {
+  if (navigation_finished_time.is_null())
+    return base::TimeDelta();
+  return clock_->NowTicks() - navigation_finished_time;
+}
+
+base::TimeDelta PageCoordinationUnitImpl::TimeSinceLastVisibilityChange()
+    const {
+  return clock_->NowTicks() - visibility_change_time;
+}
+
 void PageCoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
+  if (event == mojom::Event::kNavigationCommitted) {
+    navigation_finished_time = clock_->NowTicks();
+  }
   for (auto& observer : observers())
     observer.OnPageEventReceived(this, event);
 }
@@ -80,6 +95,9 @@ void PageCoordinationUnitImpl::OnEventReceived(const mojom::Event event) {
 void PageCoordinationUnitImpl::OnPropertyChanged(
     const mojom::PropertyType property_type,
     int64_t value) {
+  if (property_type == mojom::PropertyType::kVisible) {
+    visibility_change_time = clock_->NowTicks();
+  }
   for (auto& observer : observers()) {
     observer.OnPagePropertyChanged(this, property_type, value);
   }

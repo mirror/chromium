@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 #include "base/run_loop.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 #include "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h"
@@ -101,6 +103,55 @@ TEST_F(PageCoordinationUnitImplTest,
   ASSERT_TRUE(cu_graph.other_page->GetProperty(
       mojom::PropertyType::kExpectedTaskQueueingDuration, &eqt));
   EXPECT_EQ(1, eqt);
+}
+
+TEST_F(PageCoordinationUnitImplTest, TimeSinceLastVisibilityChange) {
+  MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
+  base::SimpleTestTickClock clock;
+  // Sets a valid starting time.
+  clock.SetNowTicks(base::TimeTicks::Now());
+  SetPageCoordinationUnitClock(cu_graph.page.get(), &clock);
+  cu_graph.page->SetProperty(mojom::PropertyType::kVisible, true);
+  EXPECT_TRUE(CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                  ->IsVisible());
+  clock.Advance(base::TimeDelta::FromSeconds(42));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(42),
+            CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                ->TimeSinceLastVisibilityChange());
+
+  cu_graph.page->SetProperty(mojom::PropertyType::kVisible, false);
+  clock.Advance(base::TimeDelta::FromSeconds(23));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(23),
+            CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                ->TimeSinceLastVisibilityChange());
+  EXPECT_FALSE(CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                   ->IsVisible());
+}
+
+TEST_F(PageCoordinationUnitImplTest, TimeSinceLastNavigation) {
+  MockSinglePageInSingleProcessCoordinationUnitGraph cu_graph;
+  base::SimpleTestTickClock clock;
+  // Sets a valid starting time.
+  clock.SetNowTicks(base::TimeTicks::Now());
+  SetPageCoordinationUnitClock(cu_graph.page.get(), &clock);
+  // Before any commit events, timedelta should be 0.
+  EXPECT_TRUE(CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                  ->TimeSinceLastNavigation()
+                  .is_zero());
+
+  // 1st navigation.
+  cu_graph.page->SendEvent(mojom::Event::kNavigationCommitted);
+  clock.Advance(base::TimeDelta::FromSeconds(11));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(11),
+            CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                ->TimeSinceLastNavigation());
+
+  // 2nd navigation.
+  cu_graph.page->SendEvent(mojom::Event::kNavigationCommitted);
+  clock.Advance(base::TimeDelta::FromSeconds(17));
+  EXPECT_EQ(base::TimeDelta::FromSeconds(17),
+            CoordinationUnitBase::ToPageCoordinationUnit(cu_graph.page.get())
+                ->TimeSinceLastNavigation());
 }
 
 }  // namespace resource_coordinator

@@ -21,6 +21,8 @@ class MetricsCollectorTest : public CoordinationUnitTestHarness {
   MetricsCollectorTest() : CoordinationUnitTestHarness() {}
 
   void SetUp() override {
+    // Sets a valid starting time.
+    clock_.SetNowTicks(base::TimeTicks::Now());
     MetricsCollector* metrics_collector = new MetricsCollector();
     const_cast<base::TickClock*&>(metrics_collector->clock_) = &clock_;
     coordination_unit_manager().RegisterObserver(
@@ -29,6 +31,12 @@ class MetricsCollectorTest : public CoordinationUnitTestHarness {
 
  protected:
   void AdvanceClock(base::TimeDelta delta) { clock_.Advance(delta); }
+
+  TestCoordinationUnitWrapper CreatePageCoordinationUnitWithClock() {
+    auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+    SetPageCoordinationUnitClock(page_cu.get(), &clock_);
+    return page_cu;
+  }
 
   base::HistogramTester histogram_tester_;
   base::SimpleTestTickClock clock_;
@@ -46,11 +54,10 @@ class MetricsCollectorTest : public CoordinationUnitTestHarness {
   FromBackgroundedToFirstAudioStartsUMA
 #endif
 TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstAudioStartsUMA) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
-
   page_cu->AddChild(frame_cu->id());
 
   page_cu->SendEvent(mojom::Event::kNavigationCommitted);
@@ -107,7 +114,7 @@ TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstAudioStartsUMA) {
 #endif
 TEST_F(MetricsCollectorTest,
        MAYBE_FromBackgroundedToFirstAudioStartsUMA5MinutesTimeout) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
@@ -137,7 +144,7 @@ TEST_F(MetricsCollectorTest,
   FromBackgroundedToFirstTitleUpdatedUMA
 #endif
 TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstTitleUpdatedUMA) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
 
   page_cu->SendEvent(mojom::Event::kNavigationCommitted);
@@ -178,7 +185,7 @@ TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstTitleUpdatedUMA) {
 #endif
 TEST_F(MetricsCollectorTest,
        MAYBE_FromBackgroundedToFirstTitleUpdatedUMA5MinutesTimeout) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
 
   page_cu->SendEvent(mojom::Event::kNavigationCommitted);
@@ -203,7 +210,7 @@ TEST_F(MetricsCollectorTest,
   FromBackgroundedToFirstAlertFiredUMA
 #endif
 TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstAlertFiredUMA) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
@@ -247,7 +254,7 @@ TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstAlertFiredUMA) {
 #endif
 TEST_F(MetricsCollectorTest,
        MAYBE_FromBackgroundedToFirstAlertFiredUMA5MinutesTimeout) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
@@ -276,7 +283,7 @@ TEST_F(MetricsCollectorTest,
 #endif
 TEST_F(MetricsCollectorTest,
        MAYBE_FromBackgroundedToFirstNonPersistentNotificationCreatedUMA) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
@@ -321,7 +328,7 @@ TEST_F(MetricsCollectorTest,
 TEST_F(
     MetricsCollectorTest,
     MAYBE_FromBackgroundedToFirstNonPersistentNotificationCreatedUMA5MinutesTimeout) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   auto frame_cu = CreateCoordinationUnit(CoordinationUnitType::kFrame);
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
   coordination_unit_manager().OnCoordinationUnitCreated(frame_cu.get());
@@ -349,7 +356,7 @@ TEST_F(
   FromBackgroundedToFirstFaviconUpdatedUMA
 #endif
 TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstFaviconUpdatedUMA) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
 
   page_cu->SendEvent(mojom::Event::kNavigationCommitted);
@@ -390,7 +397,7 @@ TEST_F(MetricsCollectorTest, MAYBE_FromBackgroundedToFirstFaviconUpdatedUMA) {
 #endif
 TEST_F(MetricsCollectorTest,
        MAYBE_FromBackgroundedToFirstFaviconUpdatedUMA5MinutesTimeout) {
-  auto page_cu = CreateCoordinationUnit(CoordinationUnitType::kPage);
+  auto page_cu = CreatePageCoordinationUnitWithClock();
   coordination_unit_manager().OnCoordinationUnitCreated(page_cu.get());
 
   page_cu->SendEvent(mojom::Event::kNavigationCommitted);
