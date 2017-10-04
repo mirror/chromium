@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ee3ec3f_a97bb53d",
+        "filename": "components/signin/ios/browser/profile_oauth2_token_service_ios_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-04T08:40:01Z",
+      "side": 1,
+      "message": "The provider is an object that we should not expose. I think the fact that we already expose the TokenService delegate from the TokenService is bad, we should not add one extra thing to this.",
+      "range": {
+        "startLine": 71,
+        "startChar": 40,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "5ec89d87b100e258836bbaf877f00064d18ed33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99f62402_8926fc7f",
         "filename": "ios/web_view/internal/web_view_browser_state.mm",
         "patchSetId": 13
