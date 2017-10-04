@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cbb87e58_96201052",
+        "filename": "components/arc/common/ime.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-04T15:51:29Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 2
+      },
+      "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be358dbe_4e0dc730",
         "filename": "components/arc/common/voice_interaction_arc_home.mojom",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-10-04T10:48:45Z",
       "side": 1,
       "message": "muyuanli@, should we migrate this into Range, too?",
+      "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3395a0bb_fdafb209",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-10-04T15:51:29Z",
+      "side": 1,
+      "message": "We should.",
+      "parentUuid": "be358dbe_4e0dc730",
       "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
