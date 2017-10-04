@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73615385_9f866865",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T20:14:12Z",
+      "side": 1,
+      "message": "nit: move Observer interface default impl up to be consistent with their order in the header file.",
+      "revId": "91a1b5a559d0e127cc671c79788e13bda9e71dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "782a6311_ddcca9e4",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T20:14:12Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "91a1b5a559d0e127cc671c79788e13bda9e71dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee38f05_80dbf722",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T20:14:12Z",
+      "side": 1,
+      "message": "nit: no \"const\" when returning non-const",
+      "range": {
+        "startLine": 139,
+        "startChar": 66,
+        "endLine": 139,
+        "endChar": 71
+      },
+      "revId": "91a1b5a559d0e127cc671c79788e13bda9e71dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d18b4f_658cd24e",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T20:14:12Z",
+      "side": 1,
+      "message": "nit: const bool",
+      "range": {
+        "startLine": 605,
+        "startChar": 2,
+        "endLine": 605,
+        "endChar": 6
+      },
+      "revId": "91a1b5a559d0e127cc671c79788e13bda9e71dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3538290_a7c3fd77",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T20:14:12Z",
+      "side": 1,
+      "message": "nit: add a \"return\" after L620 and get rid of \"else\".\n\ni.e. prefer this pattern:\n  if (condition) {\n    ...\n    return;\n  }\n  ... do something else.",
+      "range": {
+        "startLine": 621,
+        "startChar": 4,
+        "endLine": 621,
+        "endChar": 8
+      },
+      "revId": "91a1b5a559d0e127cc671c79788e13bda9e71dde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
