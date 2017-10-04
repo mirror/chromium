@@ -85,6 +85,13 @@ policy.Page.prototype.initialize = function() {
     }
   };
 
+  $('delete-session-button').onclick = () => {
+    var sessionName = $('session-list').value;
+    if (sessionName) {
+      chrome.send('deleteSession', [sessionName]);
+    }
+  };
+
   // Notify the browser that the page has loaded, causing it to send the
   // list of all known policies and the values from the default session.
   chrome.send('initialized');
