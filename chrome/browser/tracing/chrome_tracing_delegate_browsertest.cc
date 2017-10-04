@@ -294,6 +294,8 @@ IN_PROC_BROWSER_TEST_F(ChromeTracingDelegateBrowserTestOnStartup,
   DCHECK(local_state);
   local_state->SetInt64(prefs::kBackgroundTracingLastUpload,
                         base::Time::Now().ToInternalValue());
+  // Wait until trace upload is completed.
+  base::RunLoop().RunUntilIdle();
 }
 
 IN_PROC_BROWSER_TEST_F(ChromeTracingDelegateBrowserTestOnStartup,
