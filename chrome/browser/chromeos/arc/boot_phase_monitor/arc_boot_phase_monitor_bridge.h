@@ -78,6 +78,10 @@ class ArcBootPhaseMonitorBridge
   // SessionRestoreObserver
   void OnSessionRestoreFinishedLoadingTabs() override;
 
+  // Called when ExtensionsServices finishes loading all extensions for the
+  // profile.
+  void OnExtensionsReady();
+
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
   void RecordFirstAppLaunchDelayUMAForTesting() {
     RecordFirstAppLaunchDelayUMAInternal();

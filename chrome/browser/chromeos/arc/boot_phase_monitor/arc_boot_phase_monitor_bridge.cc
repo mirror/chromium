@@ -20,6 +20,10 @@
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_util.h"
+#include "extensions/browser/extension_system.h"
+#include "extensions/browser/extension_system_provider.h"
+#include "extensions/browser/extensions_browser_client.h"
+#include "extensions/common/one_shot_event.h"
 
 namespace arc {
 namespace {
@@ -65,7 +69,12 @@ class ArcBootPhaseMonitorBridgeFactory
 
  private:
   friend base::DefaultSingletonTraits<ArcBootPhaseMonitorBridgeFactory>;
-  ArcBootPhaseMonitorBridgeFactory() = default;
+
+  ArcBootPhaseMonitorBridgeFactory() {
+    DependsOn(extensions::ExtensionsBrowserClient::Get()
+                  ->GetExtensionSystemFactory());
+  }
+
   ~ArcBootPhaseMonitorBridgeFactory() override = default;
 };
 
@@ -99,6 +108,15 @@ ArcBootPhaseMonitorBridge::ArcBootPhaseMonitorBridge(
   DCHECK(arc_session_manager);
   arc_session_manager->AddObserver(this);
   SessionRestore::AddObserver(this);
+
+  auto* extension_system =
+      extensions::ExtensionSystem::Get(Profile::FromBrowserContext(context));
+  // Using base::Unretained is safe here because of the dependency added in the
+  // factory. The same is true for DCHECK().
+  DCHECK(extension_system);
+  extension_system->ready().Post(
+      FROM_HERE, base::Bind(&ArcBootPhaseMonitorBridge::OnExtensionsReady,
+                            base::Unretained(this)));
 }
 
 ArcBootPhaseMonitorBridge::~ArcBootPhaseMonitorBridge() {
@@ -198,6 +216,16 @@ void ArcBootPhaseMonitorBridge::OnSessionRestoreFinishedLoadingTabs() {
   // 2) This is not an opt-in boot, and OnBootCompleted() hasn't been called.
   // In both cases, relax the restriction to let the instance fully start.
   VLOG(2) << "Allowing the instance to use more CPU resources";
+  if (delegate_)
+    delegate_->DisableCpuRestriction();
+}
+
+void ArcBootPhaseMonitorBridge::OnExtensionsReady() {
+  VLOG(2) << "All extensions are loaded";
+  if (!ShouldArcAlwaysStart())
+    return;
+  VLOG(1) << "ARC is enabled by admin. "
+          << "Allowing the instance to use more CPU resources";
   if (delegate_)
     delegate_->DisableCpuRestriction();
 }
