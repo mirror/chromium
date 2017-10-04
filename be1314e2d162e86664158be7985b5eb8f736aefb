@@ -22,6 +22,30 @@
       "revId": "be1314e2d162e86664158be7985b5eb8f736aefb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fc3931_80f27971",
+        "filename": "content/test/gpu/generate_buildbot_json.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-04T20:15:06Z",
+      "side": 1,
+      "message": "Note: when generating the actual JSON file it would put the bots\u0027 actual swarming dimensions in, not the wildcard version.\n\nThis would allow experimental bots with different driver versions to be deployed trivially, without modifying the tests\u0027 descriptions.",
+      "parentUuid": "016ed436_0dcd0521",
+      "range": {
+        "startLine": 115,
+        "startChar": 7,
+        "endLine": 115,
+        "endChar": 8
+      },
+      "revId": "be1314e2d162e86664158be7985b5eb8f736aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
