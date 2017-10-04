@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2773bcb6_52b02f9f",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_sample_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-10-04T00:57:08Z",
+      "side": 1,
+      "message": "This is a strange variable name. it is actually a list of lists. And each of the lists inside is passed as a \"get_parameters\" in the constructor of WebVrSamplePage. I have two suggestions:\n\n1. Drive-by: how about \"url_parameters\" as the argument name in the constructor of WebVrSamplePage and VrSamplePage? I like this better because we know what the parameters will be used for. I could imagine \"get_parameters\" in a constructor of a Page to mean any number of crazy things, but url_parameters explains that they will be where the browser navigates.\n\n2. For this variable, how about \"test_cases\" instead of \"get_parameters\". Then the for loop below will explain that each test case is simply a list of url_parameters.\n\n\"for url_parameters in test_cases:\"\n\nOr something like that. just please don\u0027t do\n\n\"for url_parameter in url_parameters:\"\n\nbecause that makes it seem like url_parameter is a single parameter when the truth is that it is a list.",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "d1198d6cb17265a92a4601842467bfc968232c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
