@@ -81,6 +81,7 @@ public class DownloadForegroundServiceManager {
 
         // When nothing has been initialized, just bind the service.
         if (!mIsServiceBound) {
+            Log.e("joy", "nothing has been initialized, bind the service");
             // If the download update is not active at the onset, don't even start the service!
             if (!isActive(downloadUpdate.mDownloadStatus)) {
                 cleanDownloadUpdateQueue();
@@ -95,6 +96,7 @@ public class DownloadForegroundServiceManager {
 
         // In the pending case, start foreground with specific notificationId and notification.
         if (isProcessingPending) {
+            Log.e("joy", "start foreground in pending");
             startOrUpdateForegroundService(
                     downloadUpdate.mNotificationId, downloadUpdate.mNotification);
         }
@@ -103,6 +105,7 @@ public class DownloadForegroundServiceManager {
         // Stop the foreground service.
         // In the pending case, this will stop the foreground immediately after it was started.
         if (!isActive(downloadUpdate.mDownloadStatus)) {
+            Log.e("joy", "no active downloads left");
             stopAndUnbindService(downloadUpdate.mDownloadStatus == DownloadStatus.CANCEL);
             cleanDownloadUpdateQueue();
             return;
@@ -111,6 +114,7 @@ public class DownloadForegroundServiceManager {
         // Make sure the pinned notification is still active, if not, update.
         if (mDownloadUpdateQueue.get(mPinnedNotificationId) == null
                 || !isActive(mDownloadUpdateQueue.get(mPinnedNotificationId).mDownloadStatus)) {
+            Log.e("joy", "update inactive pinned");
             startOrUpdateForegroundService(
                     downloadUpdate.mNotificationId, downloadUpdate.mNotification);
         }
@@ -168,6 +172,7 @@ public class DownloadForegroundServiceManager {
     private final ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
+            Log.e("joy", "onServiceConnected");
             if (!(service instanceof DownloadForegroundService.LocalBinder)) {
                 Log.w(TAG,
                         "Not from DownloadNotificationService, do not connect."
@@ -190,6 +195,7 @@ public class DownloadForegroundServiceManager {
 
     @VisibleForTesting
     void startOrUpdateForegroundService(int notificationId, Notification notification) {
+        Log.e("joy", "startOrUpdateForegroundService: " + notificationId);
         if (mBoundService != null && notificationId != INVALID_NOTIFICATION_ID
                 && notification != null) {
             mBoundService.startOrUpdateForegroundService(notificationId, notification);
@@ -197,8 +203,7 @@ public class DownloadForegroundServiceManager {
             // In the case that there was another notification pinned to the foreground, re-launch
             // that notification because it gets cancelled in the switching process.
             // This does not happen for API >= 24.
-            if (mPinnedNotificationId != INVALID_NOTIFICATION_ID
-                    && mPinnedNotificationId != notificationId && Build.VERSION.SDK_INT < 24) {
+            if (mPinnedNotificationId != notificationId && Build.VERSION.SDK_INT < 24) {
                 relaunchPinnedNotification();
             }
 
@@ -207,17 +212,24 @@ public class DownloadForegroundServiceManager {
     }
 
     private void relaunchPinnedNotification() {
-        NotificationManager notificationManager =
-                (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
-                        Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(mPinnedNotificationId,
-                mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
+        Log.e("joy", "relaunchPinnedNotification: " + mPinnedNotificationId);
+        if (mPinnedNotificationId != INVALID_NOTIFICATION_ID
+                && mDownloadUpdateQueue.containsKey(mPinnedNotificationId)
+                && mDownloadUpdateQueue.get(mPinnedNotificationId).mDownloadStatus
+                    != DownloadStatus.CANCEL) {
+            NotificationManager notificationManager =
+                    (NotificationManager) ContextUtils.getApplicationContext().getSystemService(
+                            Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(mPinnedNotificationId,
+                    mDownloadUpdateQueue.get(mPinnedNotificationId).mNotification);
+        }
     }
 
     /** Helper code to stop and unbind service. */
 
     @VisibleForTesting
     void stopAndUnbindService(boolean isCancelled) {
+        Log.e("joy", "stopAndUnbindService: " + isCancelled);
         mIsServiceBound = false;
 
         if (mBoundService != null) {

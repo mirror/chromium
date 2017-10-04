@@ -197,9 +197,11 @@ public class DownloadManagerService
             if (!BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                             .isStartupSuccessfullyCompleted()
                     || !ChromeFeatureList.isEnabled(ChromeFeatureList.DOWNLOADS_FOREGROUND)) {
+                Log.e("joy", "sdn");
                 sDownloadManagerService = new DownloadManagerService(appContext,
                         new SystemDownloadNotifier(appContext), new Handler(), UPDATE_DELAY_MILLIS);
             } else {
+                Log.e("joy", "sdn2");
                 sDownloadManagerService = new DownloadManagerService(appContext,
                         new SystemDownloadNotifier2(appContext), new Handler(),
                         UPDATE_DELAY_MILLIS);
@@ -1389,11 +1391,13 @@ public class DownloadManagerService
         if (!BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                         .isStartupSuccessfullyCompleted()
                 || !ChromeFeatureList.isEnabled(ChromeFeatureList.DOWNLOADS_FOREGROUND)) {
+            Log.e("joy", "dns");
             Intent intent = DownloadNotificationService.buildActionIntent(mContext, action,
                     LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
                     downloadItem.getDownloadInfo().isOffTheRecord());
             mContext.sendBroadcast(intent);
         } else {
+            Log.e("joy", "dnf");
             Intent intent = DownloadNotificationFactory.buildActionIntent(mContext, action,
                     LegacyHelpers.buildLegacyContentId(false, downloadItem.getId()),
                     downloadItem.getDownloadInfo().isOffTheRecord());
