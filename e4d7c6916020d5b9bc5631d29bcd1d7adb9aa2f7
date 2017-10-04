@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf10b68_b8e5edbb",
+        "filename": "extensions/common/manifest_handlers/csp_info.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-04T09:13:34Z",
+      "side": 0,
+      "message": "Do you have any data on the impact to extension developers? AFAIR, we added these because lots and lots of extensions relied on it, and broke when we changed `\u0027self\u0027` to not match them.",
+      "revId": "e4d7c6916020d5b9bc5631d29bcd1d7adb9aa2f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

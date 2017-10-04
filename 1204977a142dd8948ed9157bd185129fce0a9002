@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c914b298_2da1053c",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1768,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-04T09:13:34Z",
+      "side": 1,
+      "message": "Doesn\u0027t `ShouldUseInnerURL` imply `url.ProtocolIs(\"blob\") || url.ProtocolIs(\"filesystem\")`?",
+      "revId": "1204977a142dd8948ed9157bd185129fce0a9002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
