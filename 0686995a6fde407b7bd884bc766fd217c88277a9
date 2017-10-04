@@ -34,6 +34,24 @@
       "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60fc6d3_961d93e4",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:27:29Z",
+      "side": 1,
+      "message": "Hmm, could the controllers instead observe ShelfItemDelegateChanged?\nReally, I think long term the extra controller tracking should go away.",
+      "parentUuid": "98e68042_50248905",
+      "revId": "0686995a6fde407b7bd884bc766fd217c88277a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
