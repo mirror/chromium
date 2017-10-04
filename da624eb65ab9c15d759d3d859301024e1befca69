@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c898e7b_2c928854",
+        "filename": "base/win/win_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T21:57:21Z",
+      "side": 1,
+      "message": "WDYT of moving these functions to ui/base/win? That way these functions can directly access the hidden window and don\u0027t need to take an HWND.",
+      "range": {
+        "startLine": 145,
+        "startChar": 17,
+        "endLine": 150,
+        "endChar": 41
+      },
+      "revId": "da624eb65ab9c15d759d3d859301024e1befca69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
