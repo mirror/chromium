@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93000127_d0efb0c0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintControllerPaintTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-04T00:57:57Z",
+      "side": 1,
+      "message": "Can you delete this line?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 48
+      },
+      "revId": "a2c4e62e192eb738d2c360dbe98aca359f7949c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2b9eed_125382cb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintControllerPaintTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-04T00:57:57Z",
+      "side": 1,
+      "message": "Should this be PaintControllerPaintTest ?",
+      "range": {
+        "startLine": 104,
+        "startChar": 7,
+        "endLine": 104,
+        "endChar": 49
+      },
+      "revId": "a2c4e62e192eb738d2c360dbe98aca359f7949c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
