@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "151b59f7_748dd55f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-04T17:24:10Z",
+      "side": 1,
+      "message": "Per a discussion with android.support.annotation.Nullable vs javax.annotation.Nullable, we want to use android.support.annotation.Nullable from now on.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "79a42acff8529dcc7d14e83709f604b791256d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
