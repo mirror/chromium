@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e6de668f_9859417d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-04T19:35:49Z",
+      "side": 1,
+      "message": "I\u0027m confused...why are we probing manually here instead of calling VirtualAllocEx with NULL for lpAddress?  Also, why are we making the browser do this? It feels sorta odd to have the browser allocate address space in the child process?",
+      "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd7180c_2ead3fcd",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 10
@@ -31,6 +48,29 @@
       "side": 1,
       "message": "This is only called on Windows:\n\nhttps://cs.chromium.org/chromium/src/content/common/sandbox_win.cc?rcl\u003d7eabc099a4dcbf647d1bffcf009df0fff6b5b33a\u0026l\u003d887\n\nIf you search PostSpawnTarget, you\u0027ll see the existing example of this technique in NaClBrowserHost.",
       "parentUuid": "8dd7180c_2ead3fcd",
+      "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2502bcc4_4bd67e76",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-10-04T19:35:49Z",
+      "side": 1,
+      "message": "I\u0027m assuming we\u0027re effectively doing this reserve twice because we are trying to move the reserve earlier in the child process lifespan? \n\nIf so...it feels like the better solution is to add a hook in the child process init code that lets you do this reserve earlier?\n\nThe probing is fairly expensive in and of itself since each VirtualQuery() call is a syscall transition. Walking a large fragmented address space can actually be noticeable to a human even on a toy program. And then the magic of trying to find a region of the same request size seems flaky...",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 70
+      },
       "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
