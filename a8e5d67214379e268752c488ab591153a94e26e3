@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fad1c88a_f4f0e3f6",
+        "filename": "device/hid/hid_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-04T00:12:54Z",
+      "side": 1,
+      "message": "The HidManagerImpl won\u0027t be created twice, so the g_hid_service should be safe. see https://cs.chromium.org/chromium/src/services/device/device_service.cc?rcl\u003da3cac15f5f6abbe7217bd264c4635c6b92a93aa6\u0026l\u003d144\n\nSorry I misunderstood your comments before. Now if the g_hid_service is safe, should I still need to change it to base::LazyInstance\u003cstd::unique_ptr\u003cHidService\u003e\u003e?\n\nThanks very much.",
+      "parentUuid": "8571a686_ef552bf7",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd8af64_9a3b2fbe",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 13
