@@ -42,6 +42,9 @@ IntegrationTestRunner._setupTestHelpers = function(target) {
   TestRunner.mainTarget = target;
 };
 
+/** @type {number} */
+TestRunner._evaluateInPageCounter = 0;
+
 /**
  * @param {string|!Function} code
  * @param {!Function} callback
@@ -56,10 +59,11 @@ TestRunner.evaluateInPage = async function(code, callback) {
   var components = functionLine.trim().split('/');
   var source = components[components.length - 1].slice(0, -1).split(':');
   var fileName = source[0];
+  var sourceURL = `test://evaluations/${fileName}@evaluation` + TestRunner._evaluateInPageCounter++;
   var lineOffset = parseInt(source[1], 10);
   code = '\n'.repeat(lineOffset - 1) + code;
   if (code.indexOf('sourceURL=') === -1)
-    code += `//# sourceURL=${fileName}`;
+    code += `//# sourceURL=${sourceURL}`;
   var response = await TestRunner.RuntimeAgent.invoke_evaluate({expression: code, objectGroup: 'console'});
   if (!response[Protocol.Error]) {
     TestRunner.safeWrap(callback)(

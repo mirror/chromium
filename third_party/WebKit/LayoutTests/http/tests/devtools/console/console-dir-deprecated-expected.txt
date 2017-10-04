@@ -1,5 +1,5 @@
 Tests that console does not log deprecated warning messages while dir-dumping objects.
 
-console-dir-deprecated.js:17 Window
-console-dir-deprecated.js:18 #document-fragment
+console-dir-deprecated.js@evaluation1:17 Window
+console-dir-deprecated.js@evaluation1:18 #document-fragment
 

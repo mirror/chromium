@@ -1,46 +1,46 @@
 Tests that console logging dumps proper messages.
 
-console-dir-es6.js:20 Object
+console-dir-es6.js@evaluation0:20 Object
     a: 1
     Symbol(): 2
     Symbol(Symbol.iterator): Symbol(foo)
     Symbol(a): 3
     Symbol(a): Symbol(Symbol.iterator)
     __proto__: Object
-console-dir-es6.js:23 Symbol()
-console-dir-es6.js:27 Map(1)
+console-dir-es6.js@evaluation0:23 Symbol()
+console-dir-es6.js@evaluation0:27 Map(1)
     size: (...)
     __proto__: Map
     [[Entries]]: Array(1)
         0: {Object => Object}
         length: 1
-console-dir-es6.js:27 WeakMap
+console-dir-es6.js@evaluation0:27 WeakMap
     __proto__: WeakMap
     [[Entries]]: Array(1)
         0: {Object => Object}
         length: 1
-console-dir-es6.js:31 Set(1)
+console-dir-es6.js@evaluation0:31 Set(1)
     size: (...)
     __proto__: Set
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:31 WeakSet
+console-dir-es6.js@evaluation0:31 WeakSet
     __proto__: WeakSet
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:39 Set(1)
+console-dir-es6.js@evaluation0:39 Set(1)
     size: (...)
     __proto__: Set
     [[Entries]]: Array(1)
         0: Set(1)
         length: 1
-console-dir-es6.js:42 WeakMap
+console-dir-es6.js@evaluation0:42 WeakMap
     __proto__: WeakMap
     [[Entries]]: Array(0)
         length: 0
-console-dir-es6.js:50 MapIterator
+console-dir-es6.js@evaluation0:50 MapIterator
     __proto__: Map Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -48,7 +48,7 @@ console-dir-es6.js:50 MapIterator
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:51 MapIterator
+console-dir-es6.js@evaluation0:51 MapIterator
     __proto__: Map Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -56,7 +56,7 @@ console-dir-es6.js:51 MapIterator
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:52 MapIterator
+console-dir-es6.js@evaluation0:52 MapIterator
     __proto__: Map Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -64,7 +64,7 @@ console-dir-es6.js:52 MapIterator
     [[Entries]]: Array(1)
         0: {Object => Object}
         length: 1
-console-dir-es6.js:50 SetIterator
+console-dir-es6.js@evaluation0:50 SetIterator
     __proto__: Set Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -72,7 +72,7 @@ console-dir-es6.js:50 SetIterator
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:51 SetIterator
+console-dir-es6.js@evaluation0:51 SetIterator
     __proto__: Set Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -80,7 +80,7 @@ console-dir-es6.js:51 SetIterator
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:52 SetIterator
+console-dir-es6.js@evaluation0:52 SetIterator
     __proto__: Set Iterator
     [[IteratorHasMore]]: true
     [[IteratorIndex]]: 0
@@ -88,7 +88,7 @@ console-dir-es6.js:52 SetIterator
     [[Entries]]: Array(1)
         0: Object
         length: 1
-console-dir-es6.js:90 Array(27)
+console-dir-es6.js@evaluation0:90 Array(27)
     0: class 
     1: class classWithWhitespace
     2: class FooClass
@@ -118,7 +118,7 @@ console-dir-es6.js:90 Array(27)
     26: ƒ (c = ")", {a: b})
     length: 27
     __proto__: Array(0)
-console-dir-es6.js:98 Array(4)
+console-dir-es6.js@evaluation0:98 Array(4)
     0: badArrow(x = a => {…}
     1: ƒ (a = ")
     2: ƒ (a = function()
