@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a45abde_3d017e8b",
+        "filename": "ios/web/navigation/legacy_navigation_manager_impl.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-04T23:16:57Z",
+      "side": 1,
+      "message": "If we\u0027re exposing SetPreviousItemIndex() in NavigationManagerImpl\u0027s interface, I think we might as well also expose |-setPreviousItemIndex:| in CRWSessionController\u0027s interface.  Exposing via a property like this seems unnecessarily convoluted.",
+      "revId": "f5002ed75f7aef511a7abf6e18661a81fe8ef43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
