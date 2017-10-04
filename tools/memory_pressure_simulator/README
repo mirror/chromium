@@ -1,0 +1,10 @@
+The memory_pressure_similator application is a small application to put the
+system in a state of memory pressure and high CPU usage, it has the following
+requirements:
+- Continuously touch most of the available memory: e.g. allocate X arrays of
+  1MB, where X = ([Amount of memory in MB] - 1000) and continuously read and
+  write some data to/from them. This will leave only 1 GB of memory available
+  for the other applications (Chrome)
+- Use most of the available cores: During a thrashing state we expect the
+  compression process to interfere with the performance of Chrome, in order to
+  simulate this we should make sure that the test application actively use N-1 cores (with N being the total number of cores).
