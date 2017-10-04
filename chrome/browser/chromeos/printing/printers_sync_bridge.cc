@@ -136,6 +136,9 @@ class PrintersSyncBridge::StoreProxy {
       return;
     }
 
+    if (!owner_->ready_callback_.is_null()) {
+      std::move(owner_->ready_callback_).Run();
+    }
     owner_->change_processor()->ModelReadyToSync(std::move(metadata_batch));
   }
 
@@ -402,6 +405,10 @@ bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
   }
 
   return false;
+}
+
+void PrintersSyncBridge::SetOnReadyCallback(base::OnceClosure callback) {
+  ready_callback_ = std::move(callback);
 }
 
 }  // namespace chromeos
