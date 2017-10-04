@@ -186,6 +186,30 @@
     },
     {
       "key": {
+        "uuid": "20b6e681_9d06db6b",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T19:31:16Z",
+      "side": 1,
+      "message": "There is a vscode extension called \"Rewrap\" that reflows comments to 80 char lines. It works well.",
+      "parentUuid": "0634932e_43b50681",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91a49528_292f8a93",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
         "patchSetId": 18
@@ -456,6 +480,23 @@
         "endLine": 78,
         "endChar": 11
       },
+      "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dac04f2_f8a98582",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T19:31:16Z",
+      "side": 1,
+      "message": "This should be private (or protected but only in test fixtures) as per style guide.",
       "revId": "7fba487aa9e1f8b983e5f1aa8190c4519de1d8d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
