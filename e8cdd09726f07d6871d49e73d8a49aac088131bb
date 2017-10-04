@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2202f94_6dc232a0",
+        "filename": "third_party/WebKit/Source/core/workers/AbstractWorker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T05:25:08Z",
+      "side": 1,
+      "message": "Looks neat. Done.",
+      "parentUuid": "3da4c12d_863986bc",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "749c6771_f476fc6f",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T05:08:56Z",
       "side": 1,
       "message": "DCHECK(IsMainThread()) also?",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7812900a_e872f1ac",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T05:25:08Z",
+      "side": 1,
+      "message": "Added the checks here and elsewhere in this class.",
+      "parentUuid": "749c6771_f476fc6f",
       "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b195fde6_38a4f84d",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T05:25:08Z",
+      "side": 1,
+      "message": "Yes. Added the comment here.",
+      "parentUuid": "111eab85_eb69edee",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fe1dba3_24d864dd",
         "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca85683_b958d84b",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T05:25:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe1dba3_24d864dd",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
