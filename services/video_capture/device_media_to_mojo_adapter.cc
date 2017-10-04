@@ -109,10 +109,7 @@ void DeviceMediaToMojoAdapter::GetPhotoState(GetPhotoStateCallback callback) {
 void DeviceMediaToMojoAdapter::SetPhotoOptions(
     media::mojom::PhotoSettingsPtr settings,
     SetPhotoOptionsCallback callback) {
-  media::mojom::ImageCapture::SetOptionsCallback scoped_callback =
-      media::ScopedCallbackRunner(media::BindToCurrentLoop(std::move(callback)),
-                                  false);
-  device_->SetPhotoOptions(std::move(settings), std::move(scoped_callback));
+  device_->SetPhotoOptions(std::move(settings), std::move(callback));
 }
 
 void DeviceMediaToMojoAdapter::TakePhoto(TakePhotoCallback callback) {

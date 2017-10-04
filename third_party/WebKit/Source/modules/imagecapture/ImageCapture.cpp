@@ -247,12 +247,6 @@ ScriptPromise ImageCapture::setOptions(ScriptState* script_state,
   auto resolver_cb =
       WTF::Bind(&ImageCapture::ResolveWithNothing, WrapPersistent(this));
 
-  service_->SetOptions(
-      stream_track_->Component()->Source()->Id(), std::move(settings),
-      ConvertToBaseCallback(
-          WTF::Bind(&ImageCapture::OnMojoSetOptions, WrapPersistent(this),
-                    WrapPersistent(resolver),
-                    WTF::Passed(std::move(resolver_cb)), trigger_take_photo)));
   return promise;
 }
 
@@ -543,13 +537,6 @@ void ImageCapture::SetMediaTrackConstraints(
   resolver_constraints.setAdvanced(constraints_vector);
   auto resolver_cb = WTF::Bind(&ImageCapture::ResolveWithMediaTrackConstraints,
                                WrapPersistent(this), resolver_constraints);
-
-  service_->SetOptions(
-      stream_track_->Component()->Source()->Id(), std::move(settings),
-      ConvertToBaseCallback(WTF::Bind(
-          &ImageCapture::OnMojoSetOptions, WrapPersistent(this),
-          WrapPersistent(resolver), WTF::Passed(std::move(resolver_cb)),
-          false /* trigger_take_photo */)));
 }
 
 const MediaTrackConstraintSet& ImageCapture::GetMediaTrackConstraints() const {

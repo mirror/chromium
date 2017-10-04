@@ -19,10 +19,6 @@ class ImageCaptureImpl : public media::mojom::ImageCapture {
   void GetPhotoState(const std::string& source_id,
                      GetPhotoStateCallback callback) override;
 
-  void SetOptions(const std::string& source_id,
-                  media::mojom::PhotoSettingsPtr settings,
-                  SetOptionsCallback callback) override;
-
   void TakePhoto(const std::string& source_id,
                  TakePhotoCallback callback) override;
 

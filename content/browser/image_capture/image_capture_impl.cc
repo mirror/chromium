@@ -57,21 +57,6 @@ void GetPhotoStateOnIOThread(const std::string& source_id,
 #endif
 }
 
-void SetOptionsOnIOThread(const std::string& source_id,
-                          MediaStreamManager* media_stream_manager,
-                          media::mojom::PhotoSettingsPtr settings,
-                          ImageCaptureImpl::SetOptionsCallback callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  const int session_id =
-      media_stream_manager->VideoDeviceIdToSessionId(source_id);
-
-  if (session_id == MediaStreamDevice::kNoId)
-    return;
-  media_stream_manager->video_capture_manager()->SetPhotoOptions(
-      session_id, std::move(settings), std::move(callback));
-}
-
 void TakePhotoOnIOThread(const std::string& source_id,
                          MediaStreamManager* media_stream_manager,
                          ImageCaptureImpl::TakePhotoCallback callback) {
@@ -113,20 +98,6 @@ void ImageCaptureImpl::GetPhotoState(const std::string& source_id,
       base::BindOnce(&GetPhotoStateOnIOThread, source_id,
                      BrowserMainLoop::GetInstance()->media_stream_manager(),
                      std::move(scoped_callback)));
-}
-
-void ImageCaptureImpl::SetOptions(const std::string& source_id,
-                                  media::mojom::PhotoSettingsPtr settings,
-                                  SetOptionsCallback callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  SetOptionsCallback scoped_callback = media::ScopedCallbackRunner(
-      media::BindToCurrentLoop(std::move(callback)), false);
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&SetOptionsOnIOThread, source_id,
-                     BrowserMainLoop::GetInstance()->media_stream_manager(),
-                     std::move(settings), std::move(scoped_callback)));
 }
 
 void ImageCaptureImpl::TakePhoto(const std::string& source_id,
