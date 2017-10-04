@@ -10,6 +10,7 @@ blink_core_sources("offscreencanvas") {
     "OffscreenCanvas.h",
   ]
   deps = [
+    "//gpu/ipc/common:interfaces",
     "//mojo/public/cpp/bindings:bindings",
   ]
 }
