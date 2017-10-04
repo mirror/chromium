@@ -16,6 +16,27 @@
 #include "third_party/cros_system_api/dbus/service_constants.h"
 
 namespace chromeos {
+namespace {
+
+// Return true if device time is synchronized with network time.
+bool GetNetworkSynchronizedResponse(dbus::Response* response) {
+  if (!response) {
+    LOG(ERROR) << system_clock::kSystemClockInterface << "."
+               << system_clock::kSystemLastSyncInfo << " request failed.";
+    return false;
+  }
+  dbus::MessageReader reader(response);
+  bool network_synchronized = false;
+  if (!reader.PopBool(&network_synchronized)) {
+    LOG(ERROR) << system_clock::kSystemClockInterface << "."
+               << system_clock::kSystemLastSyncInfo
+               << " response lacks network-synchronized argument";
+    return false;
+  }
+  return network_synchronized;
+}
+
+}  // namespace
 
 // The SystemClockClient implementation used in production.
 class SystemClockClientImpl : public SystemClockClient {
@@ -53,6 +74,8 @@ class SystemClockClientImpl : public SystemClockClient {
 
   bool CanSetTime() override { return can_set_time_; }
 
+  bool IsNetworkSynchronized() { return network_synchronized_; }
+
  protected:
   void Init(dbus::Bus* bus) override {
     system_clock_proxy_ = bus->GetObjectProxy(
@@ -71,13 +94,22 @@ class SystemClockClientImpl : public SystemClockClient {
   }
 
  private:
+  void GetCanSetAndLastSyncInfo() {
+    // Check if the system clock can be changed now.
+    GetCanSet();
+    // Check if the system time is synchronized with network time because
+    // it happens when TimeUpdated signal is received.
+    GetSystemClockLastSyncInfo();
+  }
+
   // Called once when the service initially becomes available (or immediately if
   // it's already available).
   void ServiceInitiallyAvailable(bool service_is_available) {
-    if (service_is_available)
-      GetCanSet();
-    else
+    if (service_is_available) {
+      GetCanSetAndLastSyncInfo();
+    } else {
       LOG(ERROR) << "Failed to wait for D-Bus service availability";
+    }
   }
 
   // Called when a TimeUpdated signal is received.
@@ -86,9 +118,7 @@ class SystemClockClientImpl : public SystemClockClient {
     dbus::MessageReader reader(signal);
     for (auto& observer : observers_)
       observer.SystemClockUpdated();
-
-    // Check if the system clock can be changed now.
-    GetCanSet();
+    GetCanSetAndLastSyncInfo();
   }
 
   // Called when the TimeUpdated signal is initially connected.
@@ -135,10 +165,29 @@ class SystemClockClientImpl : public SystemClockClient {
                        weak_ptr_factory_.GetWeakPtr()));
   }
 
+  void GetSystemClockLastSyncInfo() {
+    dbus::MethodCall method_call(system_clock::kSystemClockInterface,
+                                 system_clock::kSystemLastSyncInfo);
+    system_clock_proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
+        base::BindOnce(&SystemClockClientImpl::OnGotSystemClockLastSyncInfo,
+                       weak_ptr_factory_.GetWeakPtr()));
+  }
+
+  void OnGotSystemClockLastSyncInfo(dbus::Response* response) {
+    bool network_synchronized = GetNetworkSynchronizedResponse(response);
+    if (network_synchronized)
+      network_synchronized_ = true;
+  }
+
   // Whether the time can be set. Value is false until the first
   // CanSetTime response is received.
   bool can_set_time_;
   bool can_set_time_initialized_;
+
+  // Value is false until the system time is synchronized with network time.
+  bool network_synchronized_ = false;
+
   dbus::ObjectProxy* system_clock_proxy_;
   base::ObserverList<Observer> observers_;
 
