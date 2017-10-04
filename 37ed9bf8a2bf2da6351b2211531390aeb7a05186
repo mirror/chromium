@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51329074_17980ebf",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:44:16Z",
+      "side": 1,
+      "message": "nit: s/this-\u003e//",
+      "revId": "37ed9bf8a2bf2da6351b2211531390aeb7a05186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2a194b_5887857f",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:44:16Z",
+      "side": 1,
+      "message": "Could you use early-return style to reduce indentation?\n\nif (Selection().IsHandleVisible())\n  return true;\n\nconst bool did_select \u003d ...\n...\nreturn true;",
+      "revId": "37ed9bf8a2bf2da6351b2211531390aeb7a05186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba1dc306_3be2d330",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:44:16Z",
+      "side": 1,
+      "message": "Please use SelectionInFlatTree instead of VSInFlatTree. VisibleSelection and\nVisiblePosition are not suitable for parameter and return value.",
+      "revId": "37ed9bf8a2bf2da6351b2211531390aeb7a05186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "110f5a34_981b6a3a",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionOptions.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T04:44:16Z",
+      "side": 1,
+      "message": "Could you move SetSelectionOptions to another patch with test case?\nOnce upon a time, I saw the patch for builder pattern, failed to\nset/get value.",
+      "revId": "37ed9bf8a2bf2da6351b2211531390aeb7a05186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
