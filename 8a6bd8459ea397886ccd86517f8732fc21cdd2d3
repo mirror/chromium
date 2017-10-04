@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "6abd0c61_e3baa82e",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-04T18:09:08Z",
+      "side": 1,
+      "message": "chrome/browser/sync/test/integration/single_client_bookmarks_sync_test.cc would be the place. Those are sync specific browser tests that talk to a fake server that allows inspecting data. And yes, they\u0027re based on sync_test.h.",
+      "parentUuid": "fe23096c_9704834b",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15
