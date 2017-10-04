@@ -31,21 +31,6 @@
 #include "base/file_descriptor_posix.h"
 #endif
 
-namespace {
-
-bool WriteAssetToBuffer(const SkStreamAsset* asset,
-                        void* buffer,
-                        size_t size) {
-  // Calling duplicate() keeps original asset state unchanged.
-  std::unique_ptr<SkStreamAsset> assetCopy(asset->duplicate());
-  size_t length = assetCopy->getLength();
-  if (length > size)
-    return false;
-  return (length == assetCopy->read(buffer, length));
-}
-
-}  // namespace
-
 namespace printing {
 
 struct Page {
@@ -66,7 +51,7 @@ struct PdfMetafileSkiaData {
   cc::PaintRecorder recorder_;  // Current recording
 
   std::vector<Page> pages_;
-  std::unique_ptr<SkStreamAsset> pdf_data_;
+  std::unique_ptr<std::vector<char>> pdf_data_;
 
   // The scale factor is used because Blink occasionally calls
   // PaintCanvas::getTotalMatrix() even though the total matrix is not as
@@ -91,8 +76,9 @@ bool PdfMetafileSkia::Init() {
 // PdfMetafileSkia does.
 bool PdfMetafileSkia::InitFromData(const void* src_buffer,
                                    size_t src_buffer_size) {
-  data_->pdf_data_ = base::MakeUnique<SkMemoryStream>(
-      src_buffer, src_buffer_size, true /* copy_data? */);
+  const char* start = static_cast<const char*>(src_buffer);
+  data_->pdf_data_ =
+      std::make_unique<std::vector<char>>(start, start + src_buffer_size);
   return true;
 }
 
@@ -177,22 +163,22 @@ bool PdfMetafileSkia::FinishDocument() {
   }
   doc->close();
 
-  data_->pdf_data_ = stream.detachAsStream();
+  data_->pdf_data_ = std::make_unique<std::vector<char>>(stream.bytesWritten());
+  stream.copyToAndReset(data_->pdf_data_->data());
   return true;
 }
 
 uint32_t PdfMetafileSkia::GetDataSize() const {
   if (!data_->pdf_data_)
     return 0;
-  return base::checked_cast<uint32_t>(data_->pdf_data_->getLength());
+  return base::checked_cast<uint32_t>(data_->pdf_data_->size());
 }
 
 bool PdfMetafileSkia::GetData(void* dst_buffer,
                               uint32_t dst_buffer_size) const {
-  if (!data_->pdf_data_)
+  if (!data_->pdf_data_ || dst_buffer_size != data_->pdf_data_->size())
     return false;
-  return WriteAssetToBuffer(data_->pdf_data_.get(), dst_buffer,
-                            base::checked_cast<size_t>(dst_buffer_size));
+  return memcpy(dst_buffer, data_->pdf_data_->data(), dst_buffer_size);
 }
 
 gfx::Rect PdfMetafileSkia::GetPageBounds(unsigned int page_number) const {
@@ -242,10 +228,7 @@ bool PdfMetafileSkia::RenderPage(unsigned int page_number,
   if (data_->pdf_cg_.GetDataSize() == 0) {
     if (GetDataSize() == 0)
       return false;
-    size_t length = data_->pdf_data_->getLength();
-    std::vector<uint8_t> buffer(length);
-    (void)WriteAssetToBuffer(data_->pdf_data_.get(), &buffer[0], length);
-    data_->pdf_cg_.InitFromData(&buffer[0], length);
+    data_->pdf_cg_.InitFromData(data_->pdf_data_->data(), GetDataSize());
   }
   return data_->pdf_cg_.RenderPage(page_number, context, rect, params);
 }
@@ -255,21 +238,11 @@ bool PdfMetafileSkia::SaveTo(base::File* file) const {
   if (GetDataSize() == 0U)
     return false;
 
-  // Calling duplicate() keeps original asset state unchanged.
-  std::unique_ptr<SkStreamAsset> asset(data_->pdf_data_->duplicate());
-
-  const size_t kMaximumBufferSize = 1024 * 1024;
-  std::vector<char> buffer(std::min(kMaximumBufferSize, asset->getLength()));
-  do {
-    size_t read_size = asset->read(&buffer[0], buffer.size());
-    if (read_size == 0)
-      break;
-    DCHECK_GE(buffer.size(), read_size);
-    if (!file->WriteAtCurrentPos(&buffer[0],
-                                 base::checked_cast<int>(read_size))) {
-      return false;
-    }
-  } while (!asset->isAtEnd());
+  if (!file->WriteAtCurrentPos(
+          static_cast<const char*>(data_->pdf_data_->data()),
+          base::checked_cast<int>(GetDataSize()))) {
+    return false;
+  }
 
   return true;
 }
