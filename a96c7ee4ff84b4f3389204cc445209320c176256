@@ -16,6 +16,24 @@
       "revId": "a96c7ee4ff84b4f3389204cc445209320c176256",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091aa90f_750f44d5",
+        "filename": "mojo/public/tools/bindings/generators/js_templates/validation_macros.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-10-04T23:15:20Z",
+      "side": 1,
+      "message": "Tried and I couldn\u0027t get it to work.  I don\u0027t think the space generated from this macro can be consumed by the other template.  Also, the other one fairly frequently has -%} if that changes anything.\n\nIf you have anything else you think that will work I can try it.",
+      "parentUuid": "2b10f6bf_ef14a40a",
+      "revId": "a96c7ee4ff84b4f3389204cc445209320c176256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
