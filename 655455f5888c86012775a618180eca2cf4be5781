@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898dfa5f_cb53f6e7",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T18:37:36Z",
+      "side": 1,
+      "message": "Can you use base::make_optional here?",
+      "revId": "655455f5888c86012775a618180eca2cf4be5781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
