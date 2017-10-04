@@ -83,6 +83,12 @@ const char kTopChromeMD[] = "top-chrome-md";
 // Material design mode for the |kTopChromeMD| switch.
 const char kTopChromeMDMaterial[] = "material";
 
+#if defined(OS_WIN)
+// Auto-switching mode |kTopChromeMD| switch. This mode toggles between
+// material and material-hybrid depending on device.
+const char kTopChromeMDMaterialAuto[] = "material-auto";
+#endif
+
 // Material design hybrid mode for the |kTopChromeMD| switch. Targeted for
 // mouse/touch hybrid devices.
 const char kTopChromeMDMaterialHybrid[] = "material-hybrid";
