@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aad39aca_5d8a28f3",
+        "filename": "chrome/renderer/searchbox/searchbox.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T10:11:40Z",
+      "side": 0,
+      "message": "Unrelated cleanup: This was unused.",
+      "range": {
+        "startLine": 418,
+        "startChar": 25,
+        "endLine": 418,
+        "endChar": 0
+      },
+      "revId": "5e2972e4ba9a79520fa7d75e491b7fdfb1009393",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
