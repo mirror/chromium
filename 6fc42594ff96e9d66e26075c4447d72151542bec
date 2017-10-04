@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a34c0cbf_298d96e6",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:24:27Z",
+      "side": 1,
+      "message": "It looks like DeliverErrorResponse() is only used for \"start errors\" and we\u0027ll never have sent the headers yet. So we could simplify code by not doing this if, and having more strict DCHECK on status_.",
+      "revId": "6fc42594ff96e9d66e26075c4447d72151542bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

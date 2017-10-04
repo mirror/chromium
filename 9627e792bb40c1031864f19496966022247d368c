@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e01e40a_21dee936",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:24:27Z",
+      "side": 1,
+      "message": "It might be worth factoring out lines 308-310 (repeated above) into a function with a good name similar to FallbackToNetwork() except saying we\u0027re returning network error... but I can\u0027t think of a very good name. Something like ReturnNetworkError()..?",
+      "revId": "9627e792bb40c1031864f19496966022247d368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a122dd8c_91eed98a",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:24:27Z",
+      "side": 1,
+      "message": "This is now only used for start errors, which is why we\u0027re passing request/client to it. I think the comment can be something like:\n\n// The StartLoaderCallback passed to |loader_callback_| on error. Returns a network error to |client|.",
+      "revId": "9627e792bb40c1031864f19496966022247d368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

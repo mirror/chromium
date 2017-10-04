@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db39e97f_e602e8bc",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:24:27Z",
+      "side": 1,
+      "message": "slightly prefer moving these status_ checks up to the top of the function",
+      "revId": "2ba4e386c643e9243a5d5ea0a3fdfb1f2792e71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280363ab_4a17fd42",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-features\u003dNetworkService",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T14:24:27Z",
+      "side": 1,
+      "message": "we could also just skip this test see lines 101-102 below",
+      "revId": "2ba4e386c643e9243a5d5ea0a3fdfb1f2792e71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
