@@ -11,6 +11,7 @@
 
 #include "base/containers/circular_deque.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/download/internal/config.h"
 #include "components/download/internal/service_config_impl.h"
 #include "components/download/public/download_service.h"
@@ -46,6 +47,7 @@ class DownloadServiceImpl : public DownloadService {
   Logger* GetLogger() override;
 
  private:
+  void Initialize();
   void OnControllerInitialized();
 
   // config_ needs to be destructed after controller_ and service_config_ which
@@ -59,6 +61,8 @@ class DownloadServiceImpl : public DownloadService {
   base::circular_deque<base::Closure> pending_actions_;
   std::map<DownloadTaskType, base::Closure> pending_tasks_;
   bool startup_completed_;
+
+  base::WeakPtrFactory<DownloadServiceImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadServiceImpl);
 };
