@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67d53c6e_2df0880f",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T20:11:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a6d0e4ec_c662691b",
+      "range": {
+        "startLine": 50,
+        "startChar": 64,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e8c547_47cd4385",
         "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "f84ee618_dc8c2f45",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06e8c547_47cd4385",
+      "range": {
+        "startLine": 26,
+        "startChar": 52,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e1663d3d_66d8b5e5",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c9e1dfc_ea26ad7c",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b451af92_b714f995",
         "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "711164e182a3129f6510d466ecf895774f107f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad782d37_a4f62a9e",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b451af92_b714f995",
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "711164e182a3129f6510d466ecf895774f107f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8f4bcc4_1b78fa40",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T20:11:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0fe599_2c226f61",
+      "range": {
+        "startLine": 51,
+        "startChar": 52,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
