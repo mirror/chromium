@@ -1161,6 +1161,31 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
 }
 #endif
 
+TEST_F(ScrollbarsTest, LargeBodyShouldNotHaveScrollbars) {
+  DCHECK(RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 199px;"
+      "  width: 799px;"
+      "}");
+
+  Compositor().BeginFrame();
+  ScrollableArea* layout_viewport =
+      GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
 }  // namespace
 
 }  // namespace blink
