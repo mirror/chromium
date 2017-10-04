@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3dc7231e_9837a27f",
+        "filename": "chrome/browser/ui/views/ime_driver/remote_text_input_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-04T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ff8f612_ea2ae51b",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "34fea2022701b7c4aac619321907ed76e1026e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e386535_c006e79c",
         "filename": "ui/aura/mus/input_method_mus.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "34fea2022701b7c4aac619321907ed76e1026e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b14c0d_bc504b04",
+        "filename": "ui/aura/mus/input_method_mus.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-04T18:09:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e386535_c006e79c",
+      "range": {
+        "startLine": 117,
+        "startChar": 21,
+        "endLine": 117,
+        "endChar": 41
+      },
+      "revId": "34fea2022701b7c4aac619321907ed76e1026e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2a1485f2_75c96405",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-04T18:09:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b32d8f48_751ca5bc",
+      "range": {
+        "startLine": 45,
+        "startChar": 27,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "34fea2022701b7c4aac619321907ed76e1026e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37216c1d_d52f3da5",
         "filename": "ui/base/ime/chromeos/ime_candidate_window_handler_interface.h",
         "patchSetId": 13
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-29T15:36:35Z",
       "side": 1,
       "message": "How about OnCandidateWindowVisibilityChanged? We generally use \u0027On\u0027 in function names to indicate the function is called as a result of something.",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 46
+      },
+      "revId": "34fea2022701b7c4aac619321907ed76e1026e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721aad24_830f9580",
+        "filename": "ui/base/ime/chromeos/ime_candidate_window_handler_interface.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-04T18:09:48Z",
+      "side": 1,
+      "message": "I see, thanks for the naming explanation.",
+      "parentUuid": "37216c1d_d52f3da5",
       "range": {
         "startLine": 47,
         "startChar": 15,
