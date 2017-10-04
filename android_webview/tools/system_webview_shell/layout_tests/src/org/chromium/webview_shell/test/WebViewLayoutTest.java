@@ -21,9 +21,10 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.Log;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.DisableIf;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.UrlUtils;
+import org.chromium.content.common.ContentSwitches;
 import org.chromium.webview_shell.WebViewLayoutTestActivity;
 
 import java.io.BufferedReader;
@@ -268,17 +269,17 @@ public class WebViewLayoutTest {
                 "blink-apis/geolocation/geolocation-permission-callbacks-expected.txt");
     }
 
-    @DisabledTest(message = "crbug.com/690536")
     @Test
     @MediumTest
+    @CommandLineFlags.Add(ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM)
     public void testMediaStreamApiDenyPermission() throws Exception {
         runWebViewLayoutTest("blink-apis/webrtc/mediastream-permission-denied-callbacks.html",
                 "blink-apis/webrtc/mediastream-permission-denied-callbacks-expected.txt");
     }
 
-    @DisabledTest(message = "crbug.com/690536")
     @Test
     @MediumTest
+    @CommandLineFlags.Add(ContentSwitches.USE_FAKE_DEVICE_FOR_MEDIA_STREAM)
     public void testMediaStreamApi() throws Exception {
         mTestActivity.setGrantPermission(true);
         runWebViewLayoutTest("blink-apis/webrtc/mediastream-callbacks.html",
