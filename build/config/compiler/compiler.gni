@@ -68,6 +68,13 @@ declare_args() {
 
   # Whether or not we should use position independent code.
   use_pic = true
+
+  # If true, optimize for size. Does not affect windows builds. Linux & Mac
+  # favor speed over size. Chromecast builds set this argument true for embedded
+  # Linux and Android platforms, and false for Cast on desktop Linux.
+  # TODO(brettw) it's weird that Mac and desktop Linux are different. We should
+  # explore favoring size over speed in this case as well.
+  optimize_for_size = is_android || is_ios
 }
 
 assert(!is_cfi || use_thin_lto, "CFI requires ThinLTO")
@@ -79,12 +86,6 @@ assert(!is_cfi || use_thin_lto, "CFI requires ThinLTO")
 # to unwind at runtime.
 exclude_unwind_tables = (is_chrome_branded && is_official_build) ||
                         (is_chromecast && !is_cast_desktop_build && !is_debug)
-
-# If true, optimize for size. Does not affect windows builds.
-# Linux & Mac favor speed over size.
-# TODO(brettw) it's weird that Mac and desktop Linux are different. We should
-# explore favoring size over speed in this case as well.
-optimize_for_size = is_android || is_ios
 
 # Determine whether to enable or disable frame pointers, based on the platform
 # and build arguments.
