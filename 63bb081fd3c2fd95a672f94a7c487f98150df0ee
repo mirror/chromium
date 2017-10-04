@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae7c017_52191ebc",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T19:05:00Z",
+      "side": 1,
+      "message": "add comment for why these are necessary",
+      "revId": "63bb081fd3c2fd95a672f94a7c487f98150df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527adf94_986e6131",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T19:05:00Z",
+      "side": 1,
+      "message": "How about:\nThe threshold can also be set to a high value to disable the offline message on slow configurations like MSAN, where it otherwise triggers on every run.",
+      "revId": "63bb081fd3c2fd95a672f94a7c487f98150df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
