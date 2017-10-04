@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ced92dd7_ce4e583f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-04T19:37:19Z",
+      "side": 1,
+      "message": "I had tried that for a while, but it never felt right -- perhaps just because of the naming. It would need to return a bool that says whether it\u0027s framed or not, and also have the side effect of kicking off the promise test (maybe).",
+      "parentUuid": "30576126_fa335640",
+      "revId": "620ac6b0437565b7f837563c80c1d111464d8507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5c2091f_0ae06a02",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "620ac6b0437565b7f837563c80c1d111464d8507",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516c6925_ce24c615",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-10-04T19:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5c2091f_0ae06a02",
+      "revId": "620ac6b0437565b7f837563c80c1d111464d8507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
