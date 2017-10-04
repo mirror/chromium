@@ -340,6 +340,18 @@ class TestImporterTest(LoggingTestCase):
                 ]
             ])
 
+    def test_only_wpt_manifest_changed(self):
+        host = MockHost()
+        git = MockGit(filesystem=host.filesystem, executive=host.executive, platform=host.platform)
+        git.changed_files = lambda: ['third_party/WebKit/LayoutTests/external/WPT_BASE_MANIFEST.json',
+                                     'third_party/WebKit/LayoutTests/external/wpt/foo/x.html']
+        host.git = lambda: git
+        importer = TestImporter(host)
+        self.assertFalse(importer._only_wpt_manifest_changed())
+
+        git.changed_files = lambda: ['third_party/WebKit/LayoutTests/external/WPT_BASE_MANIFEST.json']
+        self.assertTrue(importer._only_wpt_manifest_changed())
+
     def test_delete_orphaned_baselines_basic(self):
         host = MockHost()
         importer = TestImporter(host)
