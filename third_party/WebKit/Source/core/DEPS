@@ -6,6 +6,7 @@ include_rules = [
     "+core",
     "-inspector/v8",
     "+inspector/v8/public",
+    "+gpu/config/gpu_feature_info.h",
     "-modules",
     "+mojo/public/cpp/bindings",
     "+platform",
