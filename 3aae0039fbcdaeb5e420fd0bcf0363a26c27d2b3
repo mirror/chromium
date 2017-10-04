@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd5a59a3_23e19ee7",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-04T19:27:18Z",
+      "side": 1,
+      "message": "The CL started out as a \"get rid of the default match\" effort, and the default match points to \u0027matches_.begin()\u0027. If somehow this relands, I\u0027ll fix this.",
+      "parentUuid": "2fc03a51_6ccd44a5",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62070ff3_0a059bbc",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T18:32:17Z",
       "side": 1,
       "message": "This function is confusing.  I think it might be wrong.  Shouldn\u0027t we set the new value for default_match to point to point to end only if *other_was_end*?  I.e., is test backwards?\n\n(and ditto below)",
+      "range": {
+        "startLine": 286,
+        "startChar": 34,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4f399a_9c7bb491",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-10-04T19:27:18Z",
+      "side": 1,
+      "message": "I can\u0027t disagree with the confusing part, but the explicit version was worse and was rejected.\n\nFocusing on the swap below should help it make sense. That is, \u0027default match\u0027 is going to get \u0027other default match\u0027 regardless; so what would you want \u0027other default match\u0027 to contain before the swap?",
+      "parentUuid": "62070ff3_0a059bbc",
       "range": {
         "startLine": 286,
         "startChar": 34,
