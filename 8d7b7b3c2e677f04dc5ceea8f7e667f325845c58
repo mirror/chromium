@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f580e6f5_3fbb173e",
+        "filename": "components/viz/service/display/display_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T15:18:48Z",
+      "side": 1,
+      "message": "What makes this fail if you remove those changes? Time didn\u0027t advance, and we didn\u0027t check that time stays the same, did we?",
+      "revId": "8d7b7b3c2e677f04dc5ceea8f7e667f325845c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
