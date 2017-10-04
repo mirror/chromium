@@ -482,6 +482,9 @@ class PDFiumEngine : public PDFEngine,
   void KillTouchTimer(int timer_id);
   void HandleLongPress(const pp::TouchInputEvent& event);
 
+  pp::VarDictionary TraverseBookmarks(FPDF_BOOKMARK bookmark,
+                                      unsigned int depth);
+
   // FPDF_FORMFILLINFO callbacks.
   static void Form_Invalidate(FPDF_FORMFILLINFO* param,
                               FPDF_PAGE page,

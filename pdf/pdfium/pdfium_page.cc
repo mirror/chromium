@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -354,6 +355,8 @@ PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
     return DOCLINK_AREA;
 
   target->page = FPDFDest_GetPageIndex(engine_->doc(), destination);
+  std::cerr << "PDFiumPage::GetDestinationTarget page" << target->page
+            << std::endl;
 
   FPDF_BOOL has_x_coord;
   FPDF_BOOL has_y_coord;
@@ -366,8 +369,14 @@ PDFiumPage::Area PDFiumPage::GetDestinationTarget(FPDF_DEST destination,
 
   if (success && has_x_coord && has_y_coord) {
     pp::FloatRect page_rect(x, y, 0, 0);
+    std::cerr << "PDFiumPage::GetDestinationTarget x " << x << " y " << y
+              << std::endl;
+    std::cerr << "PDFiumPage::GetDestinationTarget page_ " << (void*)page_
+              << std::endl;
     pp::FloatRect pixel_rect(FloatPageRectToPixelRect(page_, page_rect));
     target->y_in_pixels = pixel_rect.y();
+    std::cerr << "PDFiumPage::GetDestinationTarget y_in_pixels "
+              << target->y_in_pixels << std::endl;
   }
 
   return DOCLINK_AREA;
