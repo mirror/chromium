@@ -1403,9 +1403,7 @@ public class LocationBarLayout extends FrameLayout
 
     @Override
     public boolean shouldEmphasizeHttpsScheme() {
-        if (!ColorUtils.isUsingDefaultToolbarColor(
-                    getResources(), mToolbarDataProvider.getPrimaryColor())
-                || mToolbarDataProvider.isIncognito()) {
+        if (mToolbarDataProvider.isUsingBrandColor() || mToolbarDataProvider.isIncognito()) {
             return false;
         }
         return true;
