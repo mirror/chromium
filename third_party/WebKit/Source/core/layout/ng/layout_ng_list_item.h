@@ -23,6 +23,8 @@ class CORE_EXPORT LayoutNGListItem final : public LayoutNGBlockFlow {
 
   void OrdinalValueChanged();
 
+  static bool IsListMarker(LayoutObject*);
+
   const char* GetName() const override { return "LayoutNGListItem"; }
 
  private:
@@ -33,13 +35,16 @@ class CORE_EXPORT LayoutNGListItem final : public LayoutNGBlockFlow {
   void WillBeRemovedFromTree() override;
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
 
+  bool IsInside() const;
+
   enum MarkerTextFormat { kWithSuffix, kWithoutSuffix };
   void MarkerText(StringBuilder*, MarkerTextFormat) const;
   void UpdateMarkerText(LayoutText*);
   void UpdateMarker();
+  void DestroyMarker();
 
   ListItemOrdinal ordinal_;
-  LayoutBlockFlow* marker_ = nullptr;
+  LayoutObject* marker_ = nullptr;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutNGListItem, IsLayoutNGListItem());
