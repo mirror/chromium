@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a423a13e_b2b129db",
+        "filename": "ui/views/controls/progress_bar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "nit: \u0027no else after return\u0027 - https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#code-formatting\n\ni.e.\n\n  if (foreground_color_)\n    return foreground_color_.value();\n\n  return GetNativeTheme()-\u003eGetSystemColor(\n      ui::NativeTheme::kColorId_ProminentButtonColor);",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f548930_74943096",
+        "filename": "ui/views/controls/progress_bar.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "ditto -\n\n  if (background_color_)\n    return background_color_.value();\n\n  return color_utils::BlendTowardOppositeLuma(GetForegroundColor(), 0xCC);",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd88fc7f_782f8733",
+        "filename": "ui/views/controls/progress_bar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "Even though it\u0027s base::Optional, I think this still counts as a \"simple setter\", so we prefer an inline,\n\n void set_foreground_color(SkColor color) { foreground_color_ \u003d color; }",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a55e09bc_1f1ffdfd",
+        "filename": "ui/views/controls/progress_bar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f020c102_7092a241",
+        "filename": "ui/views/controls/progress_bar_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "the arguments to all the EXPECT_EQ should be swapped - i.e order is always EXPECT(expected, actual)  (the log output on failure is clearer this way).",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe76afc_9f0f277d",
+        "filename": "ui/views/controls/progress_bar_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-04T00:57:41Z",
+      "side": 1,
+      "message": "this is a bit too much like a change detector test.. ( go/tott-350 )\n\nto avoid that, and just test behaviour, I suppose something like\n\n\n\n// Test that default colors can be overridden. Used by Chromecast.\nTEST(ProgressBarTest, OverrideDefaultColors) {\n  ProgressBar bar;\n  EXPECT_NE(SK_ColorRED, bar.GetForegroundColor());\n  EXPECT_NE(SK_ColorGREEN, bar.GetBackgroundColor());\n  EXPECT_NE(bar.GetForeground(), bar.GetBackgroundColor());\n  \n  bar.set_foreground_color(SK_ColorRED);\n  bar.set_background_color(SK_ColorGREEN);\n  EXPECT_EQ(SK_ColorRED, bar.GetForegroundColor());\n  EXPECT_EQ(SK_ColorGREEN, bar.GetBackgroundColor());\n}\n\n\n(having that note about chromecast should help with ensuring someone thinking to delete the methods will think twice too)\n\n(the other tests can be dropped)",
+      "revId": "0eaaa86b829f73aa1eb9ac2c9191eb3332aba4d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
