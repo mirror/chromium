@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1876e4d6_1672d399",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-04T21:43:42Z",
+      "side": 1,
+      "message": "What about having welcome bubble manage the prefs and here we just call WelcomeBubble::ShowIfNeeded()? Then we can also eliminate \"OnShownPaletteWelcomeBubblePrefChanged\" and all of the welcome bubble state is localized to the welcome bubble class.",
+      "revId": "3cd7c5cd17e5d38451dec86181cc296f312e58c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
