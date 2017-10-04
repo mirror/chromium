@@ -41,8 +41,8 @@ GeneratePageBundleRequest::GeneratePageBundleRequest(
   request.SerializeToString(&upload_data);
 
   fetcher_ = PrefetchRequestFetcher::CreateForPost(
-      GeneratePageBundleRequestURL(channel), upload_data,
-      request_context_getter,
+      GeneratePageBundleRequestURL(channel), PrefetchExperimentHeader(),
+      upload_data, request_context_getter,
       base::Bind(&GeneratePageBundleRequest::OnCompleted,
                  // Fetcher is owned by this instance.
                  base::Unretained(this)));

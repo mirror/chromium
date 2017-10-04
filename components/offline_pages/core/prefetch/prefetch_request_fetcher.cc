@@ -31,24 +31,27 @@ const char kRequestContentType[] = "application/x-protobuf";
 // static
 std::unique_ptr<PrefetchRequestFetcher> PrefetchRequestFetcher::CreateForGet(
     const GURL& url,
+    const std::string& extra_header,
     net::URLRequestContextGetter* request_context_getter,
     const FinishedCallback& callback) {
   return base::WrapUnique(new PrefetchRequestFetcher(
-      url, std::string(), request_context_getter, callback));
+      url, extra_header, std::string(), request_context_getter, callback));
 }
 
 // static
 std::unique_ptr<PrefetchRequestFetcher> PrefetchRequestFetcher::CreateForPost(
     const GURL& url,
+    const std::string& extra_header,
     const std::string& message,
     net::URLRequestContextGetter* request_context_getter,
     const FinishedCallback& callback) {
   return base::WrapUnique(new PrefetchRequestFetcher(
-      url, message, request_context_getter, callback));
+      url, extra_header, message, request_context_getter, callback));
 }
 
 PrefetchRequestFetcher::PrefetchRequestFetcher(
     const GURL& url,
+    const std::string& extra_header,
     const std::string& message,
     net::URLRequestContextGetter* request_context_getter,
     const FinishedCallback& callback)
@@ -80,11 +83,13 @@ PrefetchRequestFetcher::PrefetchRequestFetcher(
   url_fetcher_->SetRequestContext(request_context_getter_.get());
   url_fetcher_->SetAutomaticallyRetryOn5xx(false);
   url_fetcher_->SetAutomaticallyRetryOnNetworkChanges(0);
-  if (message.empty()) {
-    std::string extra_header(net::HttpRequestHeaders::kContentType);
-    extra_header += ": ";
-    extra_header += kRequestContentType;
+  if (!extra_header.empty())
     url_fetcher_->AddExtraRequestHeader(extra_header);
+  if (message.empty()) {
+    std::string content_type_header(net::HttpRequestHeaders::kContentType);
+    content_type_header += ": ";
+    content_type_header += kRequestContentType;
+    url_fetcher_->AddExtraRequestHeader(content_type_header);
   } else {
     url_fetcher_->SetUploadData(kRequestContentType, message);
   }
