@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd28030d_dce0bca3",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-04T17:29:09Z",
+      "side": 1,
+      "message": "Ack. It reduces the amount of memory we use on the stack.",
+      "parentUuid": "9f9abeaa_7c64bde8",
+      "revId": "a6b9b5c592487ebea7081600d70f1988b34d172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b7a30c_5d5868ca",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a6b9b5c592487ebea7081600d70f1988b34d172f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5162e481_d97daa7c",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-04T17:29:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b7a30c_5d5868ca",
+      "revId": "a6b9b5c592487ebea7081600d70f1988b34d172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
