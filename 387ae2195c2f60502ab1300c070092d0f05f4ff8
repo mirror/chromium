@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e33b885_9a5b39be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-04T08:13:17Z",
+      "side": 1,
+      "message": "can you please reference a tracking bug here",
+      "revId": "387ae2195c2f60502ab1300c070092d0f05f4ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
