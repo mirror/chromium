@@ -182,7 +182,9 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
   ServiceWorkerVersion* active_worker =
       delegate_->GetServiceWorkerVersion(&result);
   if (!active_worker) {
-    DeliverErrorResponse();
+    std::move(loader_callback_)
+        .Run(base::BindOnce(&ServiceWorkerURLLoaderJob::DeliverErrorResponse,
+                            weak_factory_.GetWeakPtr()));
     return;
   }
 
@@ -235,6 +237,7 @@ ServiceWorkerURLLoaderJob::CreateRequestBodyBlob() {
 
 void ServiceWorkerURLLoaderJob::CommitResponseHeaders() {
   DCHECK_EQ(Status::kStarted, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info_,
                                         nullptr /* downloaded_file */);
@@ -242,6 +245,7 @@ void ServiceWorkerURLLoaderJob::CommitResponseHeaders() {
 
 void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
   DCHECK_LT(status_, Status::kCompleted);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
 
   // |stream_waiter_| calls this when done.
@@ -250,7 +254,11 @@ void ServiceWorkerURLLoaderJob::CommitCompleted(int error_code) {
   url_loader_client_->OnComplete(ResourceRequestCompletionStatus(error_code));
 }
 
-void ServiceWorkerURLLoaderJob::DeliverErrorResponse() {
+void ServiceWorkerURLLoaderJob::DeliverErrorResponse(
+    mojom::URLLoaderRequest request,
+    mojom::URLLoaderClientPtr client) {
+  DCHECK(!url_loader_client_.is_bound());
+  url_loader_client_ = std::move(client);
   DCHECK_GT(status_, Status::kNotStarted);
   DCHECK_LT(status_, Status::kCompleted);
   if (status_ < Status::kSentHeader) {
@@ -277,7 +285,6 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
   ServiceWorkerMetrics::URLRequestJobResult result =
       ServiceWorkerMetrics::REQUEST_JOB_ERROR_BAD_DELEGATE;
   if (!delegate_->RequestStillValid(&result)) {
-    DeliverErrorResponse();
     return;
   }
 
@@ -298,7 +305,9 @@ void ServiceWorkerURLLoaderJob::DidDispatchFetchEvent(
   // A response with status code 0 is Blink telling us to respond with
   // network error.
   if (response.status_code == 0) {
-    DeliverErrorResponse();
+    std::move(loader_callback_)
+        .Run(base::BindOnce(&ServiceWorkerURLLoaderJob::DeliverErrorResponse,
+                            weak_factory_.GetWeakPtr()));
     return;
   }
 
@@ -327,6 +336,7 @@ void ServiceWorkerURLLoaderJob::StartResponse(
     mojom::URLLoaderRequest request,
     mojom::URLLoaderClientPtr client) {
   DCHECK(!binding_.is_bound());
+  DCHECK(!url_loader_client_.is_bound());
   binding_.Bind(std::move(request));
   binding_.set_connection_error_handler(base::BindOnce(
       &ServiceWorkerURLLoaderJob::Cancel, base::Unretained(this)));
@@ -408,6 +418,7 @@ void ServiceWorkerURLLoaderJob::OnReceiveResponse(
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   DCHECK_EQ(Status::kStarted, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   if (response_head.headers->response_code() >= 400) {
     DVLOG(1) << "Blob::OnReceiveResponse got error: "
@@ -448,12 +459,14 @@ void ServiceWorkerURLLoaderJob::OnTransferSizeUpdated(
 
 void ServiceWorkerURLLoaderJob::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
+  DCHECK(url_loader_client_.is_bound());
   url_loader_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
 void ServiceWorkerURLLoaderJob::OnComplete(
     const ResourceRequestCompletionStatus& status) {
   DCHECK_EQ(Status::kSentHeader, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
   url_loader_client_->OnComplete(status);
 }
