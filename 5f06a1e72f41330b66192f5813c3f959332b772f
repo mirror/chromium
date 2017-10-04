@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b177c199_b94181fa",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-04T12:18:59Z",
+      "side": 1,
+      "message": "Done.\n\nReplaced with the shiny new Reset() function. Thanks!",
+      "parentUuid": "099022fa_38cb0db7",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35222eb9_94780d36",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 6
@@ -63,6 +87,24 @@
       "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de0b5c_caf627b1",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-04T12:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35222eb9_94780d36",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "a52422f2_27fdf712",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-04T12:18:59Z",
+      "side": 1,
+      "message": "Done.\n\n(Also changed the order a bit. Clang-format now indents it a little nicer, IMHO.)",
+      "parentUuid": "c822a9ef_1b0ed7e5",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a658deb6_49bdde1f",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
         "patchSetId": 6
@@ -97,6 +157,24 @@
       "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c9dfa2_48e98154",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-04T12:18:59Z",
+      "side": 1,
+      "message": "Done.\n\nNot concerned about overhead. But if I was, I think final would make testing difficult... \n\n( https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/ScriptRunnerTest.cpp?q\u003dIsCurrentlyStreaming\u0026sq\u003dpackage:chromium\u0026l\u003d106\u0026dr\u003dC )",
+      "parentUuid": "a658deb6_49bdde1f",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +198,30 @@
       "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c7fb9c_39b1ea9c",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-10-04T12:18:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4e25c4_b351ddc2",
+      "range": {
+        "startLine": 105,
+        "startChar": 31,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
