@@ -487,6 +487,7 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
   SendClassification();
   SendRankerDebugData();
   SendLastRemoteSuggestionsBackgroundFetchTime();
+  SendWhetherSuggestionPushingPossible();
 
   if (remote_suggestions_provider_) {
     const ntp_snippets::RemoteSuggestionsFetcher* fetcher =
@@ -553,6 +554,19 @@ void SnippetsInternalsMessageHandler::
       "chrome.SnippetsInternals."
       "receiveLastRemoteSuggestionsBackgroundFetchTime",
       base::Value(base::TimeFormatShortDateAndTime(time)));
+}
+
+void SnippetsInternalsMessageHandler::SendWhetherSuggestionPushingPossible() {
+  RemoteSuggestionsProvider* provider =
+      content_suggestions_service_->remote_suggestions_provider_for_debugging();
+  DCHECK(provider);
+  ntp_snippets::BreakingNewsListener* listener =
+      static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(provider)
+          ->breaking_news_listener_for_debugging();
+  CallJavascriptFunction(
+      "chrome.SnippetsInternals."
+      "receiveWhetherSuggestionPushingPossible",
+      base::Value(listener != nullptr && listener->IsListening()));
 }
 
 void SnippetsInternalsMessageHandler::SendContentSuggestions() {
