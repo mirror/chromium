@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92162086_da86c0f2",
+        "filename": "ash/login/lock_screen_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T15:49:51Z",
+      "side": 1,
+      "message": "Can we move this block into AuthenticateUser and bail earlier? In addition to this protection, should we disable UI after user submits password?",
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c599d8f0_4a081be1",
+        "filename": "ash/login/lock_screen_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T15:49:51Z",
+      "side": 1,
+      "message": "Why do we need a RepeatingCallback?",
+      "range": {
+        "startLine": 77,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43176e36_4e2f9c69",
+        "filename": "ash/login/lock_screen_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T15:49:51Z",
+      "side": 1,
+      "message": "How about using pending_user_auth_.is_null() as the concurrent auth flag?",
+      "revId": "83967c14210364a6d659c375b8a0b7925f8da6a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
