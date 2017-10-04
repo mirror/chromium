@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89494263_2c210b79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-10-04T09:31:37Z",
+      "side": 1,
+      "message": "Nit: could you elaborate the description, please?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 37
+      },
+      "revId": "b3cde948d10b5fe0d422f3b75bca081614a86de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
