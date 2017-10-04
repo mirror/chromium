@@ -150,6 +150,7 @@
 #include "platform/graphics/CompositorMutableProperties.h"
 #include "platform/graphics/CompositorMutation.h"
 #include "platform/runtime_enabled_features.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/BitVector.h"
@@ -174,6 +175,30 @@ ScrollCustomizationCallbacks& GetScrollCustomizationCallbacks() {
                       scroll_customization_callbacks,
                       (new ScrollCustomizationCallbacks));
   return scroll_customization_callbacks;
+}
+
+// Returns true if the |scroll-customization| property for |element| covers the
+// gesture direction corresponding to |scroll_state|.
+bool IsScrollCustomized(const Element& element,
+                        const ScrollState& scroll_state) {
+  ScrollCustomizationEnabledDirection scroll_customization =
+      element.GetLayoutBox()->Style()->ScrollCustomization();
+  if (scroll_customization == ScrollCustomizationEnabledDirection::kAuto)
+    return true;
+
+  if (scroll_customization == ScrollCustomizationEnabledDirection::kNone)
+    return false;
+
+  ScrollCustomizationEnabledDirection direction =
+      GetScrollCustomizationForDirection(scroll_state.effectiveDeltaX(),
+                                         scroll_state.effectiveDeltaY());
+
+  if (direction == ScrollCustomizationEnabledDirection::kNone) {
+    // During begin and end the effective deltas might be zero.
+    return scroll_state.isBeginning() || scroll_state.isEnding();
+  }
+
+  return scroll_customization & direction;
 }
 
 }  // namespace
@@ -622,7 +647,16 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  bool has_scroll_customization_for_gesture =
+      !RuntimeEnabledFeatures::ScrollCustomizationEnabled() ||
+      GetDocument()
+              .GetPage()
+              ->GlobalRootScrollerController()
+              .GlobalRootScroller() == this ||
+      IsScrollCustomized(*this, scroll_state);
+
+  if (!callback || disable_custom_callbacks ||
+      !has_scroll_customization_for_gesture) {
     NativeDistributeScroll(scroll_state);
     return;
   }
@@ -635,7 +669,7 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
   if (callback->NativeScrollBehavior() ==
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
-};
+}
 
 void Element::NativeApplyScroll(ScrollState& scroll_state) {
   // All elements in the scroll chain should be boxes.
@@ -707,7 +741,16 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  bool has_scroll_customization_for_gesture =
+      !RuntimeEnabledFeatures::ScrollCustomizationEnabled() ||
+      GetDocument()
+              .GetPage()
+              ->GlobalRootScrollerController()
+              .GlobalRootScroller() == this ||
+      IsScrollCustomized(*this, scroll_state);
+
+  if (!callback || disable_custom_callbacks ||
+      !has_scroll_customization_for_gesture) {
     NativeApplyScroll(scroll_state);
     return;
   }
