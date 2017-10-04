@@ -16,6 +16,24 @@
       "revId": "a723d037b07f9f38508083a99527120a8a9c0c50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facde6a9_9549a584",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1001296
+      },
+      "writtenOn": "2017-10-04T19:47:15Z",
+      "side": 1,
+      "message": "Done -- Not needed anymore. I had forgotten to refresh PersonalDataManager after a pref change.",
+      "parentUuid": "5c2e03d7_f8084f2f",
+      "revId": "a723d037b07f9f38508083a99527120a8a9c0c50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
