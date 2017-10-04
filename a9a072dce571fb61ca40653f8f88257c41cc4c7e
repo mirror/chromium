@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48266e4a_55fc62b8",
+        "filename": "third_party/WebKit/Source/platform/fonts/WebFontDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-10-04T19:43:53Z",
+      "side": 1,
+      "message": "nit: make_unique?",
+      "range": {
+        "startLine": 221,
+        "startChar": 40,
+        "endLine": 221,
+        "endChar": 67
+      },
+      "revId": "a9a072dce571fb61ca40653f8f88257c41cc4c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
