@@ -88,6 +88,23 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "149508df_5d49b115",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-04T18:22:02Z",
+      "side": 1,
+      "message": "I am not a fan of having two versions of these functions. Can we have just one?",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
