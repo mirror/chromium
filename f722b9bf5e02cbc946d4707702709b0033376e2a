@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd210bcd_a115414d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-04T15:50:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd4e1ae0_293e4f76",
+      "range": {
+        "startLine": 583,
+        "startChar": 20,
+        "endLine": 585,
+        "endChar": 43
+      },
+      "revId": "f722b9bf5e02cbc946d4707702709b0033376e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48913592_b342a779",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 18
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-03T21:58:44Z",
       "side": 1,
       "message": "Just as an FYI, there\u0027s going to be a merge conflict with this patch I just sent to the CQ: https://chromium-review.googlesource.com/c/chromium/src/+/698890\n\nThe conflict should be easy to resolve.",
+      "range": {
+        "startLine": 270,
+        "startChar": 6,
+        "endLine": 270,
+        "endChar": 34
+      },
+      "revId": "f722b9bf5e02cbc946d4707702709b0033376e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c04ee676_2a879880",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-04T15:50:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "48913592_b342a779",
       "range": {
         "startLine": 270,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3716bffa_89a51376",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-04T15:50:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ef03cc5_f22f50ab",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 7
+      },
+      "revId": "f722b9bf5e02cbc946d4707702709b0033376e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "555aa4b2_5ffde2e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
         "patchSetId": 18
@@ -91,6 +163,30 @@
       "revId": "f722b9bf5e02cbc946d4707702709b0033376e2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5a0e5a_6bb7c99a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-04T15:50:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "555aa4b2_5ffde2e6",
+      "range": {
+        "startLine": 25,
+        "startChar": 75,
+        "endLine": 25,
+        "endChar": 77
+      },
+      "revId": "f722b9bf5e02cbc946d4707702709b0033376e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
