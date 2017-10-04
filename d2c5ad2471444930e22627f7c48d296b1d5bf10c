@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60f84d0_1e04d984",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-04T15:11:42Z",
+      "side": 1,
+      "message": "I can\u0027t seem to see where this is being logged? Was a file omitted from the CL?",
+      "range": {
+        "startLine": 719,
+        "startChar": 62,
+        "endLine": 719,
+        "endChar": 0
+      },
+      "revId": "d2c5ad2471444930e22627f7c48d296b1d5bf10c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
