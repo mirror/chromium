@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c530294_7ea6101a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "I think you can get rid of mIsBridged and just rely on instanceof checks for your asserts.\n\nassert !(mOptionalSelectionClient instanceof SelectionClientBridge) : \"\";",
+      "range": {
+        "startLine": 70,
+        "startChar": 16,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b862dde8_2a81c9b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "I\u0027d be more tempted to have a variable for the smartselectclient in this class and just reset to it then pulling it out of the bridge.",
+      "range": {
+        "startLine": 91,
+        "startChar": 39,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c94a07_d9117791",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "how much worse does this code look if we didn\u0027t have the bridge but just did two null checks in each of these?\n\nif (mSmartSelectionClient !\u003d null) {\n    mSmartSelectionClient.onSelectionChanged(selection);\n}\nif (mContextualSearchSelectionClient !\u003d null) {\n    mContextualSearchSelectionClient.onSelectionChanged(selection);\n}\n\nI wonder if the class indirection buys us much in this case.",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6a91232_1c2c0630",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "nit, looks like you have one too many spaces before each line of this block.",
+      "range": {
+        "startLine": 382,
+        "startChar": 7,
+        "endLine": 382,
+        "endChar": 8
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7784853_a058f7e6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "remove this?  we now have a class that implements it below.",
+      "range": {
+        "startLine": 1215,
+        "startChar": 0,
+        "endLine": 1217,
+        "endChar": 99
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce00f1c1_80a94e8d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:58:54Z",
+      "side": 1,
+      "message": "javadoc?  should this be called when webcontents changed?  should we just pass in the selectionclientmanager in the constructor?\n\nLooks like this is tied to the lifetime of the CVC.  Instead of tab calling into this, I wonder if we could instead listen for changes and have this class create the selection manager.\n\nTabObserver#onContentChanged (which this class already is a TabObserver) is something you could listen to and look for when Tab#getCVC returns a different value and update it then.  Then tab is more unaware of this logic, which is good.  You\u0027d have to keep a CVC reference and do equality checks as onContentChanged is called more often, but that could be a good option to investigate.\n\nThat being said, then this class is in charge of smart select, which is a bit weird, but I think that \"might\" be ok for now.",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
