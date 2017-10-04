@@ -1,0 +1,339 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e93937_0c62ce76",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This should belong to the Next() method, and this seems redundant - you can remove this line.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289e44aa_6da99085",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Please make owner_map passed by reference, not by pointer.\n\nThey are almost same, but here passed by reference means that we can avoid\nnullptr is being passed to this.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f64ccd_e754537d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Please make owner_map passed by reference, not by pointer.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bca57ce_3f50b3fd",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Please order functions, followed by data members.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418c1588_bbed9f87",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "s/owner_map/owner_map_/.\n\nCan you make this HeapHashMap\u003cMember\u003cContainerNode\u003e, Member\u003cElement\u003e\u003e\u0026 ?\nAlso, \"using OwnerMap \u003d HeapHashMap\u003c...\u003e;\" would improve readability.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fdd17b_0e632697",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Can you make this ContainerNode* ?",
+      "range": {
+        "startLine": 137,
+        "startChar": 21,
+        "endLine": 137,
+        "endChar": 25
+      },
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cf7991_09634026",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Can you make this ContainerNode* ?",
+      "range": {
+        "startLine": 152,
+        "startChar": 21,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b498e5dd_d81c3318",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "All these factory methods also should take HeapHashMap\u003c..\u003e\u0026 as an argument.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f099da00_28e1245e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This should be reference as well.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a46d1_ce9709ba",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be HeapHashMap\u003c..\u003e\u0026.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85a20daa_f38162b7",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be passed by reference.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6aa0c05_05d699ec",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be passed by reference.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dff5105_0abfa996",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be passed by reference.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "354cf0de_9b0ee2fe",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be passed by reference.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab258dc_570dc065",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 772,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This can be passed by reference.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d122a48e_4ed61cb2",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "As this is a local variable, you don\u0027t need trailing underscore.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001d4a3d_d6acfb5c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "This function should get owner_map_ passed from the callers.\n(You need to modify the prototype in .h file, and here).\n\nThis function is currently only called from NextFocusableElementInForm() below,\nand this is repeatedly called from the same loop in the function, so sharing the\nsame cache should be beneficial for performance.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8c1262_f2be1085",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1145,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "Please remove this line, and use passed owner_map.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4963fa2a_38389ccf",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:17:40Z",
+      "side": 1,
+      "message": "As this function is public, defining this local variable here makes sense.\nPlease remove the trailing underscore.",
+      "revId": "22fe899047c2d1899f078a30aeb0d021c3991640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
