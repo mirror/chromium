@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e04aa1d0_7de014e2",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea501547_6f0dbb71",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 34
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49e0d937_df58e6c1",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e52f91_1cb055a7",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Done, indeed!",
+      "parentUuid": "49e0d937_df58e6c1",
+      "range": {
+        "startLine": 260,
+        "startChar": 5,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "89bef901_b3699928",
+        "filename": "components/ntp_tiles/metrics.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c857a3e8_d6564cc0",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 15
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c26e8b_2465e14c",
         "filename": "components/ntp_tiles/metrics_unittest.cc",
         "patchSetId": 3
@@ -139,6 +211,30 @@
       "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c81e75_7633caf6",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c26e8b_2465e14c",
+      "range": {
+        "startLine": 34,
+        "startChar": 15,
+        "endLine": 34,
+        "endChar": 24
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "4e3f2f25_7f7fd130",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Done, split artifact.",
+      "parentUuid": "6482abcb_9acaddc5",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb45d907_f91ed4a1",
         "filename": "components/ntp_tiles/metrics_unittest.cc",
         "patchSetId": 3
@@ -176,6 +296,30 @@
       "writtenOn": "2017-10-02T15:38:14Z",
       "side": 1,
       "message": "You removed TITLE_TAG here - on purpose?",
+      "range": {
+        "startLine": 204,
+        "startChar": 36,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cb3c88_2f668886",
+        "filename": "components/ntp_tiles/metrics_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Yes, I think this was introduced accidentally, presumably a leftover in review iterations: titles are not covered in this test and hence it makes no sense to initialize them (obvious from the fact that tests pass).",
+      "parentUuid": "eb45d907_f91ed4a1",
       "range": {
         "startLine": 204,
         "startChar": 36,
@@ -208,6 +352,30 @@
       "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8770b5fd_b57c4ed8",
+        "filename": "components/ntp_tiles/tile_impression.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T12:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ddf5997_2cf5887d",
+      "range": {
+        "startLine": 15,
+        "startChar": 7,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
