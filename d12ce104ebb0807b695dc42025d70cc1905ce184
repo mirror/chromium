@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd647b21_3831d066",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-04T18:18:57Z",
+      "side": 1,
+      "message": "Is Chinese the *only* special case? What guarantees that?\n\nWhat if translation support is added for some language variant like es-ES in the future?",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
