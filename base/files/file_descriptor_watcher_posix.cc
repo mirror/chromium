@@ -95,7 +95,11 @@ FileDescriptorWatcher::Controller::Watcher::Watcher(
     : file_descriptor_watcher_(FROM_HERE),
       controller_(controller),
       mode_(mode),
-      fd_(fd) {
+      // Watcher uses a duplicate of |fd| instead of |fd| itself to prevent
+      // operations on a closed file descriptor (when Controller is deleted, the
+      // caller is allowed to close |fd| even if ~Watcher hasn't run on the
+      // MessageLoopForIO thread yet).
+      fd_(dup(fd)) {
   DCHECK(callback_task_runner_);
   thread_checker_.DetachFromThread();
 }
