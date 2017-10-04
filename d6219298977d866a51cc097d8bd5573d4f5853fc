@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "81b36c68_445039d3",
+        "filename": "content/network/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T20:14:22Z",
+      "side": 1,
+      "message": "If we do that, we should also get rid of DevToolsNetworkConditions usage in network_handler.cc on the network-service codepath, so that later we can just remove the old path and not depend on content/network/throttling at all.",
+      "parentUuid": "06c8a722_5f56625d",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ec69df_b87fc21d",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 1
