@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f861e05_32dd2bee",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T00:18:16Z",
+      "side": 1,
+      "message": "Move to header as it already references std::unique_ptr.",
+      "range": {
+        "startLine": 7,
+        "startChar": 9,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "49b6313afde7157a57b116b5957e5efc3df2022a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19adbc8_2b59e4b7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T00:18:16Z",
+      "side": 1,
+      "message": ":P\n\nAdd similar TODO to FreshnessPeriodForState.",
+      "revId": "49b6313afde7157a57b116b5957e5efc3df2022a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b625a88_86227ad8",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-04T00:18:16Z",
+      "side": 1,
+      "message": "nit: using a specific constant value instead of Now() would make errors easier to debug.",
+      "range": {
+        "startLine": 95,
+        "startChar": 13,
+        "endLine": 95,
+        "endChar": 16
+      },
+      "revId": "49b6313afde7157a57b116b5957e5efc3df2022a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
