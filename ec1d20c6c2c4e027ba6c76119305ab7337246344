@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7548ae17_378e2f48",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NtpUiCaptureTestData.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T10:42:35Z",
+      "side": 1,
+      "message": "I see you are from Local Area too!",
+      "range": {
+        "startLine": 94,
+        "startChar": 40,
+        "endLine": 94,
+        "endChar": 52
+      },
+      "revId": "ec1d20c6c2c4e027ba6c76119305ab7337246344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
