@@ -29,11 +29,13 @@
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_fetcher_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_navigation_util_win.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_runner_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/settings_resetter_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_client_info_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/installer/util/scoped_token_privilege.h"
 #include "components/chrome_cleaner/public/constants/constants.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
@@ -177,6 +179,15 @@ void ChromeCleanerControllerDelegate::ResetTaggedProfiles(
         std::move(profiles), std::move(continuation),
         base::MakeUnique<PostCleanupSettingsResetter::Delegate>());
   }
+}
+
+void ChromeCleanerControllerDelegate::StartRebootPromptFlow(
+    ChromeCleanerController* controller) {
+  // The controller object decides if and when a prompt should be shown.
+  // It manages its own lifecycle and will auto-delete once it decides that no
+  // prompt should be shown or once the user interacts with the prompt, in
+  // case a dialog is shown.
+  new ChromeCleanerRebootDialogControllerImpl(controller);
 }
 
 // static
@@ -558,11 +569,8 @@ void ChromeCleanerControllerImpl::OnCleanerProcessDone(
       RecordCleanupResultHistogram(CLEANUP_RESULT_REBOOT_REQUIRED);
       SetStateAndNotifyObservers(State::kRebootRequired);
 
-      Browser* browser = chrome_cleaner_util::FindBrowser();
-      if (browser)
-        chrome_cleaner_util::OpenSettingsPage(
-            browser, WindowOpenDisposition::NEW_BACKGROUND_TAB,
-            /*skip_if_current_tab=*/true);
+      // Start the reboot prompt flow.
+      delegate_->StartRebootPromptFlow(this);
       return;
     }
 
