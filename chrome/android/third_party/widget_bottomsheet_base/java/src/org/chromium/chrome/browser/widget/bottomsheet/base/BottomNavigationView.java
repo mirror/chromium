@@ -140,10 +140,6 @@ public class BottomNavigationView extends FrameLayout {
             mMenuView.setItemTextColor(
                     createDefaultColorStateList(android.R.attr.textColorSecondary));
         }
-        if (a.hasValue(R.styleable.BottomNavigationView_elevation)) {
-            ViewCompat.setElevation(
-                    this, a.getDimensionPixelSize(R.styleable.BottomNavigationView_elevation, 0));
-        }
 
         int itemBackground = a.getResourceId(R.styleable.BottomNavigationView_itemBackground, 0);
         mMenuView.setItemBackgroundRes(itemBackground);
