@@ -70,6 +70,30 @@
       "revId": "277f00a3e96b15d22d175de24228c9495d660b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddbe679_e4ef1c00",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-04T18:40:11Z",
+      "side": 1,
+      "message": "Good point re: code searches, added all values back.",
+      "parentUuid": "84c1f0ff_1bd65214",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "277f00a3e96b15d22d175de24228c9495d660b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
