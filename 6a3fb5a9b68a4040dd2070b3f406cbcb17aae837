@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dab3cd63_a3c2cfbf",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-04T13:52:11Z",
+      "side": 1,
+      "message": "I\u0027d add sequence checks.  They\u0027re cheap and easy, and debugging a corrupt vector could be awful. NetworkChangeNotifier has been plagued by use on multiple threads; I don\u0027t want this API suffering any of that.",
+      "parentUuid": "1ec5c63e_01f71cf9",
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1733149e_17d9406a",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 12
