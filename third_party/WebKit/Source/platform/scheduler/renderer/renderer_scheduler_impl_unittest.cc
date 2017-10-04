@@ -3850,6 +3850,8 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(scheduler_->VirtualTimeControlTaskQueue()->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
+  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
+            scheduler_->GetVirtualTimeDomain());
 
   // The main control task queue remains in the real time domain.
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
@@ -3903,6 +3905,8 @@ TEST_F(RendererSchedulerImplTest, DisableVirtualTimeForTesting) {
   EXPECT_EQ(scheduler_->TimerTaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_EQ(scheduler_->ControlTaskQueue()->GetTimeDomain(),
+            scheduler_->real_time_domain());
+  EXPECT_EQ(scheduler_->V8TaskQueue()->GetTimeDomain(),
             scheduler_->real_time_domain());
   EXPECT_FALSE(scheduler_->VirtualTimeControlTaskQueue());
 }

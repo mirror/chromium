@@ -121,6 +121,11 @@ RendererSchedulerImpl::RendererSchedulerImpl(
       NewLoadingTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_LOADING);
   default_timer_task_queue_ =
       NewTimerTaskQueue(MainThreadTaskQueue::QueueType::DEFAULT_TIMER);
+  v8_task_queue_ = NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
+                                    MainThreadTaskQueue::QueueType::V8)
+                                    .SetCanBePaused(true)
+                                    .SetCanBeStopped(true)
+                                    .SetCanBeDeferred(true));
 
   TRACE_EVENT_OBJECT_CREATED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"), "RendererScheduler",
@@ -295,6 +300,11 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::LoadingTaskQueue() {
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::TimerTaskQueue() {
   helper_.CheckOnValidThread();
   return default_timer_task_queue_;
+}
+
+scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::V8TaskQueue() {
+  helper_.CheckOnValidThread();
+  return v8_task_queue_;
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::ControlTaskQueue() {
@@ -1799,6 +1809,7 @@ void RendererSchedulerImpl::SetTopLevelBlameContext(
   default_timer_task_queue_->SetBlameContext(blame_context);
   compositor_task_queue_->SetBlameContext(blame_context);
   idle_helper_.IdleTaskRunner()->SetBlameContext(blame_context);
+  v8_task_queue_->SetBlameContext(blame_context);
 }
 
 void RendererSchedulerImpl::SetRAILModeObserver(RAILModeObserver* observer) {
