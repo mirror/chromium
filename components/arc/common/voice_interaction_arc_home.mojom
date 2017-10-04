@@ -6,8 +6,8 @@
 
 module arc.mojom;
 
+import "gfx.mojom";
 import "mojo/common/string16.mojom";
-import "screen_rect.mojom";
 
 // Represents the start and end unicode char indices of the selected
 // portion of the text [start, end).
@@ -24,7 +24,7 @@ struct TextSelection {
 // AccessibilitySnapshotNode.java used in Android Chromium.
 struct VoiceInteractionStructure {
   // Geometry of the view in pixels
-  ScreenRect rect;
+  Rect rect;
 
   // Text of the view.
   mojo.common.mojom.String16 text;
