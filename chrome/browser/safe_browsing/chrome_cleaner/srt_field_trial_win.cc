@@ -45,6 +45,9 @@ const char kSRTPromptTrial[] = "SRTPromptFieldTrial";
 const base::Feature kInBrowserCleanerUIFeature{
     "InBrowserCleanerUI", base::FEATURE_DISABLED_BY_DEFAULT};
 
+extern const base::Feature kRebootPromptDialogFeature{
+    "RebootPromptDialog", base::FEATURE_DISABLED_BY_DEFAULT};
+
 const base::Feature kCleanerDownloadFeature{"DownloadCleanupToolByBitness",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
