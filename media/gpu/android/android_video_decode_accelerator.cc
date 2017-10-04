@@ -1616,7 +1616,7 @@ AndroidVideoDecodeAccelerator::GetPromotionHintCB() {
 }
 
 void AndroidVideoDecodeAccelerator::NotifyPromotionHint(
-    const PromotionHintAggregator::Hint& hint) {
+    PromotionHintAggregator::Hint hint) {
   bool update_state = false;
 
   promotion_hint_aggregator_->NotifyPromotionHint(hint);
@@ -1631,8 +1631,7 @@ void AndroidVideoDecodeAccelerator::NotifyPromotionHint(
     }
   }
 
-  surface_chooser_state_.initial_position =
-      gfx::Rect(hint.x, hint.y, hint.width, hint.height);
+  surface_chooser_state_.initial_position = hint.screen_rect;
   bool promotable = promotion_hint_aggregator_->IsSafeToPromote();
   if (promotable != surface_chooser_state_.is_compositor_promotable) {
     surface_chooser_state_.is_compositor_promotable = promotable;
