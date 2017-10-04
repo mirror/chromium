@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f11a973_64992bde",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetUploadDataStream.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-04T22:14:15Z",
+      "side": 1,
+      "message": "This one should not be needed anymore.",
+      "range": {
+        "startLine": 339,
+        "startChar": 31,
+        "endLine": 339,
+        "endChar": 64
+      },
+      "revId": "c474055e1a2d13578d0132adb1b5ca3642b4f28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
