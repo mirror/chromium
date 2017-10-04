@@ -114,6 +114,29 @@
       "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633fe7c4_f2a2a159",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2168,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:19:10Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure this will break brotli in Chrome.",
+      "range": {
+        "startLine": 2168,
+        "startChar": 31,
+        "endLine": 2168,
+        "endChar": 60
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
