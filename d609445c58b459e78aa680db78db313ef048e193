@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc73fbae_ebbd41f6",
+        "filename": "components/cronet/url_request_context_config.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "The changes in this file (names and logic) need updating now that it isn\u0027t depending on the async resolver.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12cecac8_189fe42d",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027re using this one.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427a8d78_bcf2dc23",
+        "filename": "net/dns/host_resolver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "This part of the comment is out of date now.",
+      "range": {
+        "startLine": 186,
+        "startChar": 41,
+        "endLine": 186,
+        "endChar": 63
+      },
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f2e05b9_4d83aea2",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "This should also set is_speculative, so it isn\u0027t counted in the main histograms.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea738a23_4b765cef",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2241,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "Instead of making the class refcounted, you can use base::Owned here. It\u0027ll have the same lifetime as it does here but it\u0027s more clear about what\u0027s going on.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b80a94f6_94b4da05",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2249,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this info needs to be saved. It could be copied and modified in Refresh() instead of the constructor.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4aa1fba_6af0f85a",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2252,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "This class needs a DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15537d96_7a21221c",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "What\u0027s this change for? It\u0027s going to conflict with your negative caching CL.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b32108b_df01d49a",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "kCacheEntryTTLSeconds is the constant that sets this.",
+      "range": {
+        "startLine": 2281,
+        "startChar": 30,
+        "endLine": 2281,
+        "endChar": 61
+      },
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705b9b5e_773850af",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "I\u0027d rather have this logic hidden behind a HostCache::SetRefreshing(key) or something. That way you\u0027d avoid using the Set() API when you\u0027re really just fiddling with internal state, and also avoid needing a new public constructor.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6146fb19_06789084",
+        "filename": "net/dns/host_resolver_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-10-04T16:11:33Z",
+      "side": 1,
+      "message": "nit: I\u0027d drop the \"async_\" here, even though it\u0027s accurate. In context it\u0027s confusing since it\u0027s not related to the async resolver.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
