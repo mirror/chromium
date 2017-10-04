@@ -16,6 +16,24 @@
       "revId": "1773c87a20a5a8d3e9f2bc64667fdb7164cc9da8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84231e9_aa846723",
+        "filename": "third_party/WebKit/Source/core/scheduler/FrameThrottlingTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1372,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-04T23:46:32Z",
+      "side": 1,
+      "message": "Done. I find it a bit weird to check for NeedsRepaint because technically none of the drawing changed. I checked lifecycle state instead.",
+      "parentUuid": "59956389_ec947d63",
+      "revId": "1773c87a20a5a8d3e9f2bc64667fdb7164cc9da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
