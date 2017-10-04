@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c7fc08b_be6cea67",
+        "filename": "components/cdm/browser/media_drm_storage_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "Consider just returning the RenderFrameHost pointer directly.\n\n(Google style is input parameters before output parameters as well)",
+      "revId": "041049dbe82c3ee6ec44f6168085423517d9b897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0e5139_046dfad4",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "Nit: just use WebContentsObserver(web_contents) in the initializer list?",
+      "revId": "041049dbe82c3ee6ec44f6168085423517d9b897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f51e594_da971e1a",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "Nit: safety",
+      "range": {
+        "startLine": 54,
+        "startChar": 45,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "041049dbe82c3ee6ec44f6168085423517d9b897",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

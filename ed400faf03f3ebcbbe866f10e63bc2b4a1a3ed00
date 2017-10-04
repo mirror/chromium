@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ef515e26_3dc9e84f",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 3955,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "That would be my personal vote.",
+      "parentUuid": "26143a88_444e6c69",
+      "range": {
+        "startLine": 3955,
+        "startChar": 6,
+        "endLine": 3955,
+        "endChar": 25
+      },
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3858263_fdaf154f",
         "filename": "chrome/browser/chromeos/attestation/platform_verification_impl.cc",
         "patchSetId": 6
@@ -189,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "2db27a8b_8bb1352f",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "Ah right, this isn\u0027t in Chrome, sorry!",
+      "parentUuid": "7c2adcd9_98bac995",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516dc941_42b34083",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 6
@@ -218,6 +260,24 @@
       "side": 1,
       "message": "|origin_string_| is used in 6 places in the file, so I feel it\u0027s probably worth it to have a dedicated class member for it. I could add a GetOrigin() helper function to do this lazily, but I don\u0027t feel it\u0027s necessary given the Serialize() operation isn\u0027t expensive, and after the construction of this class, the chance that we\u0027ll need the origin string is very large.",
       "parentUuid": "516dc941_42b34083",
+      "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23e289b_728984de",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T05:46:53Z",
+      "side": 1,
+      "message": "The usages are mostly for debugging logging. DCHECK(origin_string_.empty()) is also an indirect way of saying DCHECK(!GetOrigin().unique());\n\n(Basically, I\u0027d prefer to avoid storing origin in two forms, and just use url::Origin as the canonical representation)",
+      "parentUuid": "dc7e8935_cfe72fdd",
       "revId": "ed400faf03f3ebcbbe866f10e63bc2b4a1a3ed00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
