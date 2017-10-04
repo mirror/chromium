@@ -176,6 +176,8 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       HandleOpenTag(item, item_result);
       state = LineBreakState::kNotBreakable;
+    } else if (item.Type() == NGInlineItem::kListMarker) {
+      state = HandleListMarker(item, item_result, *line_info);
     } else if (item.Type() == NGInlineItem::kFloating) {
       state = HandleFloat(item, item_result);
     } else if (item.Length()) {
@@ -470,6 +472,45 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   DCHECK_EQ(item.Type(), NGInlineItem::kAtomicInline);
   line_.should_create_line_box = true;
 
+  item_result->layout_result = LayoutAtomicInline(item, item_result, line_info);
+  DCHECK(item_result->layout_result->PhysicalFragment());
+
+  item_result->inline_size =
+      NGFragment(constraint_space_.WritingMode(),
+                 *item_result->layout_result->PhysicalFragment())
+          .InlineSize();
+
+  DCHECK(item.Style());
+  const ComputedStyle& style = *item.Style();
+  item_result->margins =
+      ComputeMarginsForVisualContainer(constraint_space_, style);
+  item_result->inline_size += item_result->margins.InlineSum();
+
+  line_.position += item_result->inline_size;
+  MoveToNextOf(item);
+  return ComputeIsBreakableAfter(item_result);
+}
+
+NGLineBreaker::LineBreakState NGLineBreaker::HandleListMarker(
+    const NGInlineItem& item,
+    NGInlineItemResult* item_result,
+    const NGLineInfo& line_info) {
+  DCHECK_EQ(item.Type(), NGInlineItem::kListMarker);
+  line_.should_create_line_box = true;
+
+  item_result->layout_result = LayoutAtomicInline(item, item_result, line_info);
+  DCHECK(item_result->layout_result->PhysicalFragment());
+
+  item_result->prohibit_break_after = true;
+  MoveToNextOf(item);
+  return LineBreakState::kNotBreakable;
+}
+
+// Layout an inline block and return NGLayoutResult.
+RefPtr<NGLayoutResult> NGLineBreaker::LayoutAtomicInline(
+    const NGInlineItem& item,
+    NGInlineItemResult* item_result,
+    const NGLineInfo& line_info) {
   // TODO(kojii): For inline-blocks, the block layout algorithm needs to use
   // :first-line style. We could pass UseFirstLineStyle() or style through
   // constraint space, though it doesn't solve nested case. Revisit after
@@ -497,21 +538,7 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
               constraint_space_.PercentageResolutionSize())
           .SetTextDirection(style.Direction())
           .ToConstraintSpace(FromPlatformWritingMode(style.GetWritingMode()));
-  item_result->layout_result = node.Layout(*constraint_space);
-
-  DCHECK(item_result->layout_result->PhysicalFragment());
-  item_result->inline_size =
-      NGFragment(constraint_space_.WritingMode(),
-                 *item_result->layout_result->PhysicalFragment())
-          .InlineSize();
-
-  item_result->margins =
-      ComputeMarginsForVisualContainer(constraint_space_, style);
-  item_result->inline_size += item_result->margins.InlineSum();
-
-  line_.position += item_result->inline_size;
-  MoveToNextOf(item);
-  return ComputeIsBreakableAfter(item_result);
+  return node.Layout(*constraint_space);
 }
 
 // Performs layout and positions a float.
