@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "540aec1c_fb76e7b2",
+        "filename": "sandbox/win/src/acl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-04T21:25:36Z",
+      "side": 1,
+      "message": "I definitely wanted the lowercase... \n\nbut also I thought the point here is to put windows.h at the top of includes for consistency, in a block on its own (so presubmit stuff doesn\u0027t move it).\n\nI don\u0027t feel strongly about this, so do as you will.  Clearly the include order doesn\u0027t break compilation here with windows.h included later.  Depends on your goal for this CL - no worries either way.\n\nSame comment for restricted_token_utils.h.",
+      "parentUuid": "ec702091_6f94c4c1",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "5b3acac7e000c03784d7836cf34784df080f39cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "818550e6_ef42ba6c",
         "filename": "sandbox/win/src/broker_services.cc",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I\u0027m not sure what the issue is here. This is in alphabetical order?",
       "parentUuid": "41db25c7_4af9bbdf",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "5b3acac7e000c03784d7836cf34784df080f39cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2067e5_bb8d5822",
+        "filename": "sandbox/win/src/file_policy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-04T21:25:36Z",
+      "side": 1,
+      "message": "I suppose I thought we\u0027re putting windows.h at the top of all includes - except a matching header file include at the very top.  Also in a block on its own.  For consistency.\n\nAgain, depends on consistency goals, or if we only do this for files where windows.h include order will explicitly break.\n\nDo as you will, I\u0027m happy either way.  I dislike the fact that this dancing around for windows.h is even required, just to get around a presubmit check that auto-reorders includes.  I don\u0027t know if our goal is to always do this or not.  \u003cshoulder shrug\u003e",
+      "parentUuid": "901666c1_e20b9510",
       "range": {
         "startLine": 8,
         "startChar": 10,
