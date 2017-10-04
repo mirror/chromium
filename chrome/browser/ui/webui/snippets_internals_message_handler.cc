@@ -172,6 +172,13 @@ std::string TimeToJSONTimeString(const base::Time time) {
       exploded.millisecond);
 }
 
+ntp_snippets::BreakingNewsListener* GetBreakingNewsListener(
+    RemoteSuggestionsProvider* provider) {
+  DCHECK(provider);
+  return static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(provider)
+      ->breaking_news_listener_for_debugging();
+}
+
 }  // namespace
 
 SnippetsInternalsMessageHandler::SnippetsInternalsMessageHandler(
@@ -487,6 +494,7 @@ void SnippetsInternalsMessageHandler::SendAllContent() {
   SendClassification();
   SendRankerDebugData();
   SendLastRemoteSuggestionsBackgroundFetchTime();
+  SendWhetherSuggestionPushingPossible();
 
   if (remote_suggestions_provider_) {
     const ntp_snippets::RemoteSuggestionsFetcher* fetcher =
@@ -553,6 +561,16 @@ void SnippetsInternalsMessageHandler::
       "chrome.SnippetsInternals."
       "receiveLastRemoteSuggestionsBackgroundFetchTime",
       base::Value(base::TimeFormatShortDateAndTime(time)));
+}
+
+void SnippetsInternalsMessageHandler::SendWhetherSuggestionPushingPossible() {
+  ntp_snippets::BreakingNewsListener* listener = GetBreakingNewsListener(
+      content_suggestions_service_
+          ->remote_suggestions_provider_for_debugging());
+  CallJavascriptFunction(
+      "chrome.SnippetsInternals."
+      "receiveWhetherSuggestionPushingPossible",
+      base::Value(listener != nullptr && listener->IsListening()));
 }
 
 void SnippetsInternalsMessageHandler::SendContentSuggestions() {
@@ -657,13 +675,11 @@ void SnippetsInternalsMessageHandler::PushDummySuggestion() {
   gcm::IncomingMessage message;
   message.data["payload"] = json;
 
-  RemoteSuggestionsProvider* provider =
-      content_suggestions_service_->remote_suggestions_provider_for_debugging();
-  DCHECK(provider);
-  ntp_snippets::BreakingNewsListener* listener =
-      static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(provider)
-          ->breaking_news_listener_for_debugging();
+  ntp_snippets::BreakingNewsListener* listener = GetBreakingNewsListener(
+      content_suggestions_service_
+          ->remote_suggestions_provider_for_debugging());
   DCHECK(listener);
+  DCHECK(listener->IsListening());
   static_cast<ntp_snippets::BreakingNewsGCMAppHandler*>(listener)->OnMessage(
       "com.google.breakingnews.gcm", message);
 }
