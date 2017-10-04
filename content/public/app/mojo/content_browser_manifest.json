@@ -86,6 +86,7 @@
           "device:vibration",
           "device:wake_lock"
         ],
+        "embedded_ui": [ "browser" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
         "network": [
