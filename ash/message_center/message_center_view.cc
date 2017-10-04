@@ -192,7 +192,6 @@ void MessageCenterView::ClearAllClosableNotifications() {
 }
 
 void MessageCenterView::OnAllNotificationsCleared() {
-  is_clearing_all_notifications_ = false;
   SetViewHierarchyEnabled(scroller_, true);
   button_bar_->SetCloseAllButtonEnabled(false);
 
@@ -202,6 +201,7 @@ void MessageCenterView::OnAllNotificationsCleared() {
   message_center_->RemoveAllNotifications(
       true /* by_user */,
       message_center::MessageCenter::RemoveType::NON_PINNED);
+  is_clearing_all_notifications_ = false;
 }
 
 size_t MessageCenterView::NumMessageViewsForTest() const {
@@ -368,7 +368,7 @@ void MessageCenterView::OnNotificationRemoved(const std::string& id,
     return;
   size_t index = view_pair.first;
 
-  if (by_user) {
+  if (by_user && !is_clearing_all_notifications_) {
     message_list_view_->SetRepositionTarget(view->bounds());
     // Moves the keyboard focus to the next notification if the removed
     // notification is focused so that the user can dismiss notifications
