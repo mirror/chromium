@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be434937_1e72a338",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d24e8b4_8be6d02e",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "921b42b4_552899f0",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b948d385_34c2706a",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "921b42b4_552899f0",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f24ce1ab_5fee0dac",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e635757_f856013a",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a24de48_7ba42416",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c40766a_bfcf45e0",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "I ended up removing a lot of stuff from here that was actually unnecessary. Sorry about that, should have done it before the review. Turns out I don\u0027t need a shadow looper at all since flags.setColor sets the color I need for the background. Because it\u0027s so much different than the new tab before, I will hold off on refactoring the draw looper method as only the new tab button is using it.",
+      "parentUuid": "5a24de48_7ba42416",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a8c18a07_600a8d7a",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "I dug up this Cl where this magic number first was used and is only used in the new tab button:\nhttps://codereview.chromium.org/1785613004/",
+      "parentUuid": "3887f0db_990307cd",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a90b3a30_2c4bd5a8",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81141f70_2132beea",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "part of the gnarly paste :) switched to saturated_cast seems it seems that it\u0027s analogous to static_cast but instead of overflowing will saturate based on documentation",
+      "parentUuid": "a90b3a30_2c4bd5a8",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ecbe7584_f452b84c",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7d1120f_f326e3f9",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c02496_ea693564",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "08a1c110_bd27a57b",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c02496_ea693564",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90d58877_fbcee9a9",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9695f061_f372155d",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-04T22:57:28Z",
+      "side": 1,
+      "message": "I changed the name to background_color as it seems to be more descriptive of what it actually is",
+      "parentUuid": "90d58877_fbcee9a9",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
