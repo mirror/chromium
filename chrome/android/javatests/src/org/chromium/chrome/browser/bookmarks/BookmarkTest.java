@@ -24,7 +24,6 @@ import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.ActivityUtils;
-import org.chromium.chrome.test.util.BookmarkTestUtil;
 import org.chromium.chrome.test.util.ChromeTabUtils;
 import org.chromium.chrome.test.util.MenuUtils;
 import org.chromium.components.bookmarks.BookmarkId;
@@ -82,7 +81,6 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
                 mBookmarkModel = new BookmarkModel(getActivity().getActivityTab().getProfile());
             }
         });
-        BookmarkTestUtil.waitForBookmarkModelLoaded();
     }
 
     private void openBookmarkManager() throws InterruptedException {
@@ -120,7 +118,7 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     @SmallTest
     public void testAddBookmark() throws InterruptedException {
         loadUrl(mTestPage);
-        // Click star button to bookmark the curent tab.
+        // Click star button to bookmark the current tab.
         MenuUtils.invokeCustomMenuActionSync(getInstrumentation(), getActivity(),
                 R.id.bookmark_this_page_id);
         // All actions with BookmarkModel needs to run on UI thread.

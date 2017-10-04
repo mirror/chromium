@@ -103,6 +103,7 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.omaha.UpdateMenuItemHelper;
 import org.chromium.chrome.browser.page_info.PageInfoPopup;
+import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.partnercustomizations.PartnerBrowserCustomizations;
 import org.chromium.chrome.browser.physicalweb.PhysicalWebShareActivity;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
@@ -1444,6 +1445,7 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             return;
         }
 
+
         // Note the use of getUserBookmarkId() over getBookmarkId() here: Managed bookmarks can't be
         // edited. If the current URL is only bookmarked by managed bookmarks, this will return
         // INVALID_BOOKMARK_ID, so the code below will fall back on adding a new bookmark instead.
@@ -1451,6 +1453,10 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         final long bookmarkId = tabToBookmark.getUserBookmarkId();
 
         final BookmarkModel bookmarkModel = new BookmarkModel();
+
+        // Partner bookmarks need to be loaded explicitly so that BookmarkModel can be loaded.
+        PartnerBookmarksShim.kickOffReading(this);
+
         bookmarkModel.runAfterBookmarkModelLoaded(() -> {
             // Gives up the bookmarking if the tab is being destroyed.
             if (!tabToBookmark.isClosing() && tabToBookmark.isInitialized()) {
