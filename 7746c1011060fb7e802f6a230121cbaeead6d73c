@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf57f501_d2db178e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-04T17:46:25Z",
+      "side": 1,
+      "message": "That change does not affect any shared file, so it cannot really be included in this CL.",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "7746c1011060fb7e802f6a230121cbaeead6d73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
