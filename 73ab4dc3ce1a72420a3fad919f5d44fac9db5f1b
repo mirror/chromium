@@ -16,6 +16,208 @@
       "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7cee7c_3bc56fe4",
+        "filename": "ash/display/display_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3031,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bd2e280d_2e409eaa",
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df46e962_34b53124",
+        "filename": "chrome/browser/chromeos/display/display_configuration_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Why this is added here rather than in the constructor?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 65
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9acde96b_a619ad9b",
+        "filename": "chrome/browser/chromeos/display/display_configuration_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Nit: braces.",
+      "range": {
+        "startLine": 32,
+        "startChar": 22,
+        "endLine": 32,
+        "endChar": 23
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551ae87a_1a72acc4",
+        "filename": "chrome/browser/chromeos/display/display_configuration_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Nit: can you please document this?",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba15613_22db77e4",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "I would just make OnDisplaysInitialized() and OnDisplayConfigurationChanged() public rather than protected in DisplayConfigurationObserver. There\u0027s no point in making them protected since they are public in the parent class, and it\u0027s always possible to go around this using this cast.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb41fba2_6ec436c4",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "This is not needed since Get() returns a bool that you can check.",
+      "range": {
+        "startLine": 142,
+        "startChar": 8,
+        "endLine": 142,
+        "endChar": 31
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc84b0d_1e0f655a",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Get() seems to be deprecated now. You might want to consider using Value::FindKey().",
+      "range": {
+        "startLine": 144,
+        "startChar": 17,
+        "endLine": 144,
+        "endChar": 20
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5168dd_c015927d",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1187,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "You might want to add a test to check if we are already in mirror mode before we enter tablet mode, when we exit tablet mode, we stay in mirror mode.",
+      "range": {
+        "startLine": 1187,
+        "startChar": 0,
+        "endLine": 1187,
+        "endChar": 1
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24bb04d0_ea42770f",
+        "filename": "ui/display/manager/display_layout_store.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-04T21:33:38Z",
+      "side": 1,
+      "message": "Nit: This sounds incomplete. Returns mirror mode state? status?",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
