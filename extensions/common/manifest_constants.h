@@ -17,6 +17,7 @@ extern const char kAllFrames[];
 extern const char kAltKey[];
 extern const char kApp[];
 extern const char kAppIconColor[];
+extern const char kAppThemeColor[];
 extern const char kAutomation[];
 extern const char kBackgroundAllowJsAccess[];
 extern const char kBackgroundPage[];

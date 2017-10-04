@@ -27,6 +27,7 @@
 #include "base/values.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
+#include "chrome/common/extensions/manifest_handlers/app_theme_color_info.h"
 #include "chrome/common/web_application_info.h"
 #include "crypto/sha2.h"
 #include "extensions/common/constants.h"
@@ -167,6 +168,9 @@ scoped_refptr<Extension> ConvertWebAppToExtension(
     root->SetString(keys::kAppIconColor, image_util::GenerateHexColorString(
                                              web_app.generated_icon_color));
   }
+
+  if (web_app.theme_color != AppThemeColorInfo::kInvalidAppThemeColorValue)
+    root->SetInteger(keys::kAppThemeColor, web_app.theme_color);
 
   if (!web_app.scope.is_empty()) {
     root->SetDictionary(keys::kUrlHandlers, CreateURLHandlersForBookmarkApp(

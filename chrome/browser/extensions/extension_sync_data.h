@@ -122,6 +122,7 @@ class ExtensionSyncData {
   const std::string& bookmark_app_icon_color() const {
     return bookmark_app_icon_color_;
   }
+  int bookmark_app_theme_color() const { return bookmark_app_theme_color_; }
   const std::vector<LinkedAppIconInfo>& linked_icons() const {
     return linked_icons_;
   }
@@ -171,6 +172,7 @@ class ExtensionSyncData {
   std::string bookmark_app_description_;
   std::string bookmark_app_scope_;
   std::string bookmark_app_icon_color_;
+  int bookmark_app_theme_color_;
   std::vector<LinkedAppIconInfo> linked_icons_;
 };
 
