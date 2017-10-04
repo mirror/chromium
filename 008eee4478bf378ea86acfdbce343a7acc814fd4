@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cd872c0d_52ab4ad9",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-04T14:51:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b0f0412d_c005f1d3",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb17c03e_df5dbc3e",
         "filename": "cc/input/scroll_customization.h",
         "patchSetId": 18
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "If you make the bitwise operations constexpr, can you include them in the case statement? (I\u0027m not sure)",
       "parentUuid": "8af20b09_598d94ff",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 10
+      },
+      "revId": "008eee4478bf378ea86acfdbce343a7acc814fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09764d16_df63c658",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-04T14:51:28Z",
+      "side": 1,
+      "message": "It works! Thanks.",
+      "parentUuid": "02ace892_b7da79fc",
       "range": {
         "startLine": 55,
         "startChar": 9,
