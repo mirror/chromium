@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55c12bd_b6861eb0",
+        "filename": "ui/aura/mus/text_input_client_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T22:22:35Z",
+      "side": 1,
+      "message": "newline bewtween 25 and 26.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "74fcf8c82da9a3276d243fd09b95b5818ddcc375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
