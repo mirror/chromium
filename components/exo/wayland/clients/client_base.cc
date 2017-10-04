@@ -423,8 +423,13 @@ std::unique_ptr<ClientBase::Buffer> ClientBase::CreateBuffer(
     const gfx::Size& size,
     int32_t drm_format,
     int32_t bo_usage) {
+  bool create_drm_buffer = false;
+#if defined(USE_GBM)
+  create_drm_buffer = !!device_;
+#endif
+
   std::unique_ptr<Buffer> buffer;
-  if (device_) {
+  if (create_drm_buffer) {
     buffer = CreateDrmBuffer(size, drm_format, bo_usage);
     CHECK(buffer) << "Can't create drm buffer";
   } else {
