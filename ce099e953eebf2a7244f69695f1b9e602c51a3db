@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8684419_da4e6ab8",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-04T15:33:42Z",
+      "side": 0,
+      "message": "can this be replaced with [self validateField:field]; ?",
+      "range": {
+        "startLine": 380,
+        "startChar": 0,
+        "endLine": 384,
+        "endChar": 51
+      },
+      "revId": "ce099e953eebf2a7244f69695f1b9e602c51a3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b12fed1_69de9a30",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-04T15:33:42Z",
+      "side": 0,
+      "message": "access item from field.item instead. Also this line should preferably move to where item is first used.",
+      "range": {
+        "startLine": 416,
+        "startChar": 0,
+        "endLine": 417,
+        "endChar": 41
+      },
+      "revId": "ce099e953eebf2a7244f69695f1b9e602c51a3db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

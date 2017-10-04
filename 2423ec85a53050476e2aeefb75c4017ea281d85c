@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "add3d5dd_8037fa6d",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-04T15:33:42Z",
+      "side": 1,
+      "message": "q: why is this block necessary? in https://chromium-review.googlesource.com/c/chromium/src/+/698356 (that recently landed) we validate the form when in edit mode. When in create mode, there shouldn\u0027t be any dirty fields.",
+      "range": {
+        "startLine": 332,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 3
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf62134_a25c99e4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-04T15:33:42Z",
+      "side": 1,
+      "message": "Why can\u0027t you set field.pristine \u003d NO; at the end of this method and have a pristine check around [self validateField:field];?\nThat way the first time around the field doesn\u0027t get validated but the following times it will.",
+      "range": {
+        "startLine": 574,
+        "startChar": 2,
+        "endLine": 575,
+        "endChar": 27
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ff8b68_97336190",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_edit_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-10-04T15:33:42Z",
+      "side": 1,
+      "message": "q: why is this necessary here? I think you should only set field.pristine \u003d NO; for a selector field here at most for consistency with the other fields.\n\nThe selector fields don\u0027t really need validation as we only allow selection of valid values.",
+      "range": {
+        "startLine": 676,
+        "startChar": 0,
+        "endLine": 679,
+        "endChar": 72
+      },
+      "revId": "2423ec85a53050476e2aeefb75c4017ea281d85c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
