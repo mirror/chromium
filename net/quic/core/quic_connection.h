@@ -44,6 +44,7 @@
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_socket_address.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -351,6 +352,7 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // received for all the packets written in this call.
   // The |listener| is not owned by the QuicConnection and must outlive it.
   virtual QuicConsumedData SendStreamData(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicStreamId id,
       QuicIOVector iov,
       QuicStreamOffset offset,

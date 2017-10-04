@@ -16,6 +16,7 @@
 #include "net/base/rand_callback.h"
 #include "net/log/net_log_source.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -176,10 +177,12 @@ void TCPSocket::RecvFrom(int count,
                0);
 }
 
-void TCPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-                       int byte_count,
-                       const net::IPEndPoint& address,
-                       const CompletionCallback& callback) {
+void TCPSocket::SendTo(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const net::IPEndPoint& address,
+    const CompletionCallback& callback) {
   callback.Run(net::ERR_FAILED);
 }
 
@@ -266,15 +269,18 @@ bool TCPSocket::GetLocalAddress(net::IPEndPoint* address) {
 
 Socket::SocketType TCPSocket::GetSocketType() const { return Socket::TYPE_TCP; }
 
-int TCPSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int TCPSocket::WriteImpl(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback) {
   if (socket_mode_ != CLIENT)
     return net::ERR_FAILED;
   else if (!socket_.get() || !IsConnected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_->Write(io_buffer, io_buffer_size, callback);
+    return socket_->Write(traffic_annotation, io_buffer, io_buffer_size,
+                          callback);
 }
 
 void TCPSocket::RefreshConnectionStatus() {

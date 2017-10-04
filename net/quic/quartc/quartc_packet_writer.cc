@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "net/quic/quartc/quartc_packet_writer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -16,9 +17,11 @@ WriteResult QuartcPacketWriter::WritePacket(
     size_t buf_len,
     const QuicIpAddress& self_address,
     const QuicSocketAddress& peer_address,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     PerPacketOptions* options) {
   DCHECK(packet_transport_);
-  int bytes_written = packet_transport_->Write(buffer, buf_len);
+  int bytes_written =
+      packet_transport_->Write(traffic_annotation, buffer, buf_len);
   if (bytes_written <= 0) {
     return WriteResult(WRITE_STATUS_BLOCKED, EWOULDBLOCK);
   }

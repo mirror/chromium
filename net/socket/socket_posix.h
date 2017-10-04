@@ -15,6 +15,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/socket/socket_descriptor.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -75,13 +76,18 @@ class NET_EXPORT_PRIVATE SocketPosix : public base::MessageLoopForIO::Watcher {
   int ReadIfReady(IOBuffer* buf,
                   int buf_len,
                   const CompletionCallback& callback);
-  int Write(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
+  int Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
+            int buf_len,
+            const CompletionCallback& callback);
 
   // Waits for next write event. This is called by TCPSocketPosix for TCP
   // fastopen after sending first data. Returns ERR_IO_PENDING if it starts
   // waiting for write event successfully. Otherwise, returns a net error code.
   // It must not be called after Write() because Write() calls it internally.
-  int WaitForWrite(IOBuffer* buf, int buf_len,
+  int WaitForWrite(const NetworkTrafficAnnotationTag& traffic_annotation,
+                   IOBuffer* buf,
+                   int buf_len,
                    const CompletionCallback& callback);
 
   int GetLocalAddress(SockaddrStorage* address) const;
@@ -114,7 +120,9 @@ class NET_EXPORT_PRIVATE SocketPosix : public base::MessageLoopForIO::Watcher {
   void RetryRead(int rv);
   void ReadCompleted();
 
-  int DoWrite(IOBuffer* buf, int buf_len);
+  int DoWrite(const NetworkTrafficAnnotationTag& traffic_annotation,
+              IOBuffer* buf,
+              int buf_len);
   void WriteCompleted();
 
   void StopWatchingAndCleanUp();
@@ -148,6 +156,8 @@ class NET_EXPORT_PRIVATE SocketPosix : public base::MessageLoopForIO::Watcher {
   std::unique_ptr<SockaddrStorage> peer_address_;
 
   base::ThreadChecker thread_checker_;
+
+  MutableNetworkTrafficAnnotationTag traffic_annotation_;
 
   DISALLOW_COPY_AND_ASSIGN(SocketPosix);
 };

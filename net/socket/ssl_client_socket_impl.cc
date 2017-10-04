@@ -48,6 +48,7 @@
 #include "net/ssl/ssl_info.h"
 #include "net/ssl/ssl_private_key.h"
 #include "net/ssl/token_binding.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/boringssl/src/include/openssl/bio.h"
 #include "third_party/boringssl/src/include/openssl/bytestring.h"
 #include "third_party/boringssl/src/include/openssl/err.h"
@@ -794,11 +795,14 @@ int SSLClientSocketImpl::ReadIfReady(IOBuffer* buf,
   return rv;
 }
 
-int SSLClientSocketImpl::Write(IOBuffer* buf,
-                               int buf_len,
-                               const CompletionCallback& callback) {
+int SSLClientSocketImpl::Write(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   user_write_buf_ = buf;
   user_write_buf_len_ = buf_len;
+  transport_adapter_->SetTrafficAnnotation(traffic_annotation);
 
   int rv = DoPayloadWrite();
 
@@ -809,6 +813,7 @@ int SSLClientSocketImpl::Write(IOBuffer* buf,
       was_ever_used_ = true;
     user_write_buf_ = NULL;
     user_write_buf_len_ = 0;
+    transport_adapter_->ClearTrafficAnnotation();
   }
 
   return rv;
@@ -996,12 +1001,15 @@ void SSLClientSocketImpl::DoReadCallback(int rv) {
 }
 
 void SSLClientSocketImpl::DoWriteCallback(int rv) {
+  CHECK(transport_adapter_->HasTrafficAnnotation());
   // Since Run may result in Write being called, clear |user_write_callback_|
   // up front.
   if (rv > 0)
     was_ever_used_ = true;
   user_write_buf_ = NULL;
   user_write_buf_len_ = 0;
+  transport_adapter_->ClearTrafficAnnotation();
+
   base::ResetAndReturn(&user_write_callback_).Run(rv);
 }
 

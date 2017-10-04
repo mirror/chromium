@@ -6,6 +6,7 @@
 
 #include "net/base/net_errors.h"
 #include "net/base/rand_callback.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -49,11 +50,13 @@ int UDPServerSocket::RecvFrom(IOBuffer* buf,
   return socket_.RecvFrom(buf, buf_len, address, callback);
 }
 
-int UDPServerSocket::SendTo(IOBuffer* buf,
-                            int buf_len,
-                            const IPEndPoint& address,
-                            const CompletionCallback& callback) {
-  return socket_.SendTo(buf, buf_len, address, callback);
+int UDPServerSocket::SendTo(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint& address,
+    const CompletionCallback& callback) {
+  return socket_.SendTo(traffic_annotation, buf, buf_len, address, callback);
 }
 
 int UDPServerSocket::SetReceiveBufferSize(int32_t size) {

@@ -33,6 +33,7 @@
 #include "net/http/http_util.h"
 #include "net/log/net_log.h"
 #include "net/log/net_log_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 #if defined(OS_CHROMEOS)
@@ -213,7 +214,8 @@ void DialServiceImpl::DialSocket::SendOneRequest(
 
   is_writing_ = true;
   int result =
-      socket_->SendTo(send_buffer.get(), send_buffer->size(), send_address,
+      socket_->SendTo(NO_TRAFFIC_ANNOTATION_YET, send_buffer.get(),
+                      send_buffer->size(), send_address,
                       base::Bind(&DialServiceImpl::DialSocket::OnSocketWrite,
                                  base::Unretained(this), send_buffer->size()));
   bool result_ok = CheckResult("SendTo", result);

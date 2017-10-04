@@ -28,6 +28,7 @@
 #include "net/spdy/core/spdy_header_block.h"
 #include "net/spdy/core/spdy_protocol.h"
 #include "net/spdy/platform/api/spdy_string.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -215,9 +216,11 @@ bool SpdyHttpStream::GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
   return stream_->GetLoadTimingInfo(load_timing_info);
 }
 
-int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
-                                HttpResponseInfo* response,
-                                const CompletionCallback& callback) {
+int SpdyHttpStream::SendRequest(
+    const HttpRequestHeaders& request_headers,
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    HttpResponseInfo* response,
+    const CompletionCallback& callback) {
   if (stream_closed_) {
     return closed_stream_status_;
   }
@@ -282,7 +285,7 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
       base::Bind(&SpdyHeaderBlockNetLogCallback, &headers));
   DispatchRequestHeadersCallback(headers);
   result = stream_->SendRequestHeaders(
-      std::move(headers),
+      traffic_annotation, std::move(headers),
       HasUploadData() ? MORE_DATA_TO_SEND : NO_MORE_DATA_TO_SEND);
 
   if (result == ERR_IO_PENDING) {
@@ -480,7 +483,9 @@ void SpdyHttpStream::OnRequestBodyReadCompleted(int status) {
   } else {
     CHECK_GT(request_body_buf_size_, 0);
   }
-  stream_->SendData(request_body_buf_.get(),
+  // TODO(rhalavati): Can this be an internal annotaiton, or tunneled from
+  // somewhere else?
+  stream_->SendData(NO_TRAFFIC_ANNOTATION_YET, request_body_buf_.get(),
                     request_body_buf_size_,
                     eof ? NO_MORE_DATA_TO_SEND : MORE_DATA_TO_SEND);
 }

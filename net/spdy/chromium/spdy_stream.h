@@ -28,6 +28,7 @@
 #include "net/spdy/core/spdy_protocol.h"
 #include "net/spdy/platform/api/spdy_string.h"
 #include "net/ssl/ssl_client_cert_type.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -313,15 +314,20 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // MORE_DATA_TO_SEND for bidirectional streams; for request/response streams,
   // it must be MORE_DATA_TO_SEND if the request has data to upload, or
   // NO_MORE_DATA_TO_SEND if not.
-  int SendRequestHeaders(SpdyHeaderBlock request_headers,
-                         SpdySendStatus send_status);
+  int SendRequestHeaders(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      SpdyHeaderBlock request_headers,
+      SpdySendStatus send_status);
 
   // Sends a DATA frame. The delegate will be notified via
   // OnDataSent() when the send is complete. |send_status| must be
   // MORE_DATA_TO_SEND for bidirectional streams; for request/response
   // streams, it must be MORE_DATA_TO_SEND if there is more data to
   // upload, or NO_MORE_DATA_TO_SEND if not.
-  void SendData(IOBuffer* data, int length, SpdySendStatus send_status);
+  void SendData(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                IOBuffer* data,
+                int length,
+                SpdySendStatus send_status);
 
   // Fills SSL info in |ssl_info| and returns true when SSL is in use.
   bool GetSSLInfo(SSLInfo* ssl_info) const;
@@ -481,6 +487,7 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // after the data is fully written.
   scoped_refptr<DrainableIOBuffer> pending_send_data_;
   SpdySendStatus pending_send_status_;
+  MutableNetworkTrafficAnnotationTag pending_traffic_annotation_;
 
   // Data waiting to be received, and the close state of the remote endpoint
   // after the data is fully read. Specifically, data received before the

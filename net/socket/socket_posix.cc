@@ -20,6 +20,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/sockaddr_storage.h"
 #include "net/base/trace_constants.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 #if defined(OS_FUCHSIA)
 #include <fcntl.h>
@@ -360,7 +361,8 @@ int SocketPosix::ReadIfReady(IOBuffer* buf,
   return ERR_IO_PENDING;
 }
 
-int SocketPosix::Write(IOBuffer* buf,
+int SocketPosix::Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+                       IOBuffer* buf,
                        int buf_len,
                        const CompletionCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -371,15 +373,17 @@ int SocketPosix::Write(IOBuffer* buf,
   DCHECK(!callback.is_null());
   DCHECK_LT(0, buf_len);
 
-  int rv = DoWrite(buf, buf_len);
+  int rv = DoWrite(traffic_annotation, buf, buf_len);
   if (rv == ERR_IO_PENDING)
-    rv = WaitForWrite(buf, buf_len, callback);
+    rv = WaitForWrite(traffic_annotation, buf, buf_len, callback);
   return rv;
 }
 
-int SocketPosix::WaitForWrite(IOBuffer* buf,
-                              int buf_len,
-                              const CompletionCallback& callback) {
+int SocketPosix::WaitForWrite(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_NE(kInvalidSocket, socket_fd_);
   DCHECK(write_callback_.is_null());
@@ -396,6 +400,7 @@ int SocketPosix::WaitForWrite(IOBuffer* buf,
 
   write_buf_ = buf;
   write_buf_len_ = buf_len;
+  traffic_annotation_ = MutableNetworkTrafficAnnotationTag(traffic_annotation);
   write_callback_ = callback;
   return ERR_IO_PENDING;
 }
@@ -577,7 +582,9 @@ void SocketPosix::ReadCompleted() {
   base::ResetAndReturn(&read_if_ready_callback_).Run(OK);
 }
 
-int SocketPosix::DoWrite(IOBuffer* buf, int buf_len) {
+int SocketPosix::DoWrite(const NetworkTrafficAnnotationTag& traffic_annotation,
+                         IOBuffer* buf,
+                         int buf_len) {
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   // Disable SIGPIPE for this write. Although Chromium globally disables
   // SIGPIPE, the net stack may be used in other consumers which do not do
@@ -591,7 +598,8 @@ int SocketPosix::DoWrite(IOBuffer* buf, int buf_len) {
 }
 
 void SocketPosix::WriteCompleted() {
-  int rv = DoWrite(write_buf_.get(), write_buf_len_);
+  int rv = DoWrite(NetworkTrafficAnnotationTag(traffic_annotation_),
+                   write_buf_.get(), write_buf_len_);
   if (rv == ERR_IO_PENDING)
     return;
 

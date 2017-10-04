@@ -369,9 +369,11 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
   // Pushes the given producer into the write queue for
   // |stream|. |stream| is guaranteed to be activated before the
   // producer is used to produce its frame.
-  void EnqueueStreamWrite(const base::WeakPtr<SpdyStream>& stream,
-                          SpdyFrameType frame_type,
-                          std::unique_ptr<SpdyBufferProducer> producer);
+  void EnqueueStreamWrite(
+      const base::WeakPtr<SpdyStream>& stream,
+      SpdyFrameType frame_type,
+      std::unique_ptr<SpdyBufferProducer> producer,
+      const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Creates and returns a HEADERS frame for |stream_id|.
   std::unique_ptr<SpdySerializedFrame> CreateHeaders(
@@ -771,16 +773,19 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
 
   // Pushes the given frame with the given priority into the write
   // queue for the session.
-  void EnqueueSessionWrite(RequestPriority priority,
-                           SpdyFrameType frame_type,
-                           std::unique_ptr<SpdySerializedFrame> frame);
+  void EnqueueSessionWrite(
+      RequestPriority priority,
+      SpdyFrameType frame_type,
+      std::unique_ptr<SpdySerializedFrame> frame,
+      const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Puts |producer| associated with |stream| onto the write queue
   // with the given priority.
   void EnqueueWrite(RequestPriority priority,
                     SpdyFrameType frame_type,
                     std::unique_ptr<SpdyBufferProducer> producer,
-                    const base::WeakPtr<SpdyStream>& stream);
+                    const base::WeakPtr<SpdyStream>& stream,
+                    const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Inserts a newly-created stream into |created_streams_|.
   void InsertCreatedStream(std::unique_ptr<SpdyStream> stream);

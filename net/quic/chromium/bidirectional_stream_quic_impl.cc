@@ -17,6 +17,7 @@
 #include "net/socket/next_proto.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
 #include "net/spdy/core/spdy_header_block.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "quic_http_stream.h"
 
 namespace net {
@@ -158,6 +159,7 @@ int BidirectionalStreamQuicImpl::ReadData(IOBuffer* buffer, int buffer_len) {
 }
 
 void BidirectionalStreamQuicImpl::SendvData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool end_stream) {
@@ -186,7 +188,7 @@ void BidirectionalStreamQuicImpl::SendvData(
   }
 
   int rv = stream_->WritevStreamData(
-      buffers, lengths, end_stream,
+      traffic_annotation, buffers, lengths, end_stream,
       base::Bind(&BidirectionalStreamQuicImpl::OnSendDataComplete,
                  weak_factory_.GetWeakPtr()));
 

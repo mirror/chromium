@@ -13,6 +13,7 @@
 #include "extensions/browser/api/socket/socket_api.h"
 #include "extensions/browser/api/socket/tcp_socket.h"
 #include "net/ssl/ssl_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 class Socket;
@@ -107,7 +108,8 @@ class TLSSocket : public ResumableTCPSocket {
       const SecureCallback& callback);
 
  private:
-  int WriteImpl(net::IOBuffer* io_buffer,
+  int WriteImpl(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                net::IOBuffer* io_buffer,
                 int io_buffer_size,
                 const net::CompletionCallback& callback) override;
 
