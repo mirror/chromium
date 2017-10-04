@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "fc5b8358_d0980947",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T20:07:21Z",
+      "side": 1,
+      "message": "Looking at this some more, it\u0027s more surprising, but actually simpler that I thought. Let me write it all out.\n\n- RenderThreadImpl will retry the connection to make GpuChannel indefinitely.\n- If the connect fails and is null, for any reason, it passes null back to the RenderWidgetCompositor.\n- If RenderWidgetCompositor gets a null, then it will ask for a software frame sink.\n- If the compositor fails to bind the context on the compositor thread for any reason, it reports back to RenderWidgetCompositor, and will from then on ask for a software frame sink.\n\nSo basically *any* problem establishing a context will bail forever AFAICT. I figured we\u0027d retry in some cases.",
+      "parentUuid": "29555d62_9f4f3bba",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
