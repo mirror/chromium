@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f3056cd1_90316998",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-04T16:58:50Z",
+      "side": 1,
+      "message": "I see what you mean. Yeah, when using from content, we would need to create this conditionally, unless the right cmd-flag is used. I will add that param to the ctor in that CL.",
+      "parentUuid": "24f5f0e3_1722932e",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3285938d_e73f8d77",
         "filename": "services/ui/gpu/gpu_main.cc",
         "patchSetId": 7
