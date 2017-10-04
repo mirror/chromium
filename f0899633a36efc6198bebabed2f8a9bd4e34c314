@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "35081f3e_1c07296b",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T15:18:46Z",
+      "side": 1,
+      "message": "This isn\u0027t straightforward to me, but I\u0027m not so familiar with Renderer code. Your renaming seems helpful, though, thanks.",
+      "parentUuid": "5db7dc84_a78b5e54",
+      "revId": "f0899633a36efc6198bebabed2f8a9bd4e34c314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd8b19d4_28a5f6a6",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 1
