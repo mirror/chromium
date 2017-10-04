@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894d0ec9_a7bc8cc1",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T06:36:42Z",
+      "side": 1,
+      "message": "Bind inside Bind inside Bind is too complicated.\nCould you make this a bit simpler (e.g. by directly calling DBusStringCallback in the lambda, or by having a new function in the unnamed namespace)",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac58e878_50c79cc5",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T06:36:42Z",
+      "side": 1,
+      "message": "\u003d false;\nPlease don\u0027t leave a variable uninitialized.",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933673e8_04fd950c",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T06:36:42Z",
+      "side": 1,
+      "message": "It\u0027s difficult to understand what std::get\u003c0\u003e(result.value()) returns.\nHow about making this a struct?",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
