@@ -32,8 +32,6 @@ void MockGetPreviewsEnabledCallback(
   passedInParams = std::move(params);
 }
 
-}  // namespace
-
 class InterventionsInternalsPageHandlerTest : public testing::Test {
  public:
   InterventionsInternalsPageHandlerTest()
@@ -144,3 +142,5 @@ TEST_F(InterventionsInternalsPageHandlerTest, OfflinePreviewsEnabled) {
   EXPECT_EQ(kOfflineDesciption, offline_previews->second->description);
   EXPECT_TRUE(offline_previews->second->enabled);
 }
+
+}  // namespace

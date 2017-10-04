@@ -6,6 +6,7 @@
 
 #include <unordered_map>
 
+#include "base/strings/stringprintf.h"
 #include "components/previews/core/previews_experiments.h"
 
 namespace {
@@ -27,6 +28,28 @@ InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     : binding_(this, std::move(request)) {}
 
 InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
+
+void InterventionsInternalsPageHandler::SetClientPage(
+    mojom::InterventionsInternalsPagePtr page) {
+  page_ = std::move(page);
+}
+
+void InterventionsInternalsPageHandler::OnNewMessageLogAdded(
+    previews::PreviewsLogger::MessageLog message) {
+  mojom::MessageLogPtr mojo_message_ptr(mojom::MessageLog::New());
+
+  mojo_message_ptr->type = message.event_type;
+  mojo_message_ptr->description = message.event_description;
+  mojo_message_ptr->url = message.url.spec();
+
+  base::Time::Exploded exploded;
+  message.time.LocalExplode(&exploded);
+  mojo_message_ptr->time = base::StringPrintf(
+      "%d/%d/%d - %d:%d:%d", exploded.month, exploded.day_of_month,
+      exploded.year, exploded.hour, exploded.minute, exploded.second);
+
+  page_->LogNewMessage(std::move(mojo_message_ptr));
+}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {

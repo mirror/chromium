@@ -9,6 +9,7 @@
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_controller.h"
+#include "components/previews/core/previews_log.h"
 
 // The WebUI for chrome://interventions-internals.
 class InterventionsInternalsUI
@@ -23,6 +24,10 @@ class InterventionsInternalsUI
       mojom::InterventionsInternalsPageHandlerRequest request) override;
 
   std::unique_ptr<InterventionsInternalsPageHandler> page_handler_;
+
+  // PreviewsLogger from previews_ui_service used for posting new log message to
+  // chrome://interventions-internals.
+  previews::PreviewsLogger* logger_;
 
   DISALLOW_COPY_AND_ASSIGN(InterventionsInternalsUI);
 };
