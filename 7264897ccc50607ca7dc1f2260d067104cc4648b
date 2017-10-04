@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88cd1af2_aa516646",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T23:01:01Z",
+      "side": 1,
+      "message": "This sounded a bit confusing to me.  This class seems to be destroyed when any navigation happens, but RenderFrameHost might still be the same after a navigation (e.g., same-origin navigation).  So does this really mean \"tied to document lifetime\"?",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe24af0_5c040d34",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T23:01:01Z",
+      "side": 1,
+      "message": "nit: RenderFrame",
+      "range": {
+        "startLine": 24,
+        "startChar": 71,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfef456_b479bae9",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T23:01:01Z",
+      "side": 1,
+      "message": "I probably missed this discussion elsewhere, but what is the race you\u0027re concerned with here?",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f273c465_34d6f6c8",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T23:01:01Z",
+      "side": 1,
+      "message": "DidFinishNavigation also fires for fragment navigations, pushState, and other things which keep the old document.  Is this going to do what you want here?",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82430315_0fe2bfb6",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T23:01:01Z",
+      "side": 1,
+      "message": "Would it be better to move the function implementations in this header into frame_service_base.cc?",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
