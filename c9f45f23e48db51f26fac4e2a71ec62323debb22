@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a148b401_5e0f7d3a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-04T23:11:54Z",
+      "side": 1,
+      "message": "TabManager.Background.ActiveOrClosed seems like a better name, in case you decide to record other metrics at this point.",
+      "range": {
+        "startLine": 1346,
+        "startChar": 13,
+        "endLine": 1346,
+        "endChar": 55
+      },
+      "revId": "c9f45f23e48db51f26fac4e2a71ec62323debb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
