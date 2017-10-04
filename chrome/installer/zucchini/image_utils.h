@@ -8,6 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <limits>
+
 #include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "chrome/installer/zucchini/buffer_view.h"
@@ -18,6 +20,7 @@ namespace zucchini {
 // offset_t is used to describe an offset in an image.
 // Files bigger than 4GB are not supported.
 using offset_t = uint32_t;
+using key_t = uint32_t;
 // Divide by 2 since label marking uses the most significant bit.
 constexpr offset_t kOffsetBound = static_cast<offset_t>(-1) / 2;
 constexpr offset_t kInvalidOffset = static_cast<offset_t>(-1);
@@ -65,6 +68,15 @@ struct Reference {
 
 inline bool operator==(const Reference& a, const Reference& b) {
   return a.location == b.location && a.target == b.target;
+}
+
+struct IndirectReference {
+  offset_t location;
+  key_t target_key;
+};
+
+inline bool operator==(const IndirectReference& a, const IndirectReference& b) {
+  return a.location == b.location && a.target_key == b.target_key;
 }
 
 // Interface for extracting References through member function GetNext().
@@ -134,6 +146,8 @@ struct EquivalenceCandidate {
   Equivalence eq;
   double similarity;
 };
+
+constexpr double kMismatchFatal = -std::numeric_limits<double>::infinity();
 
 // Enumerations for supported executables.
 enum ExecutableType : uint32_t {
