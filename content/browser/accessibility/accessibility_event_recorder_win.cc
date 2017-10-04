@@ -109,6 +109,8 @@ class AccessibilityEventRecorderWin : public AccessibilityEventRecorder {
 
   HWINEVENTHOOK win_event_hook_handle_;
   static AccessibilityEventRecorderWin* instance_;
+
+  // This magic is required for ax_dump_events tool to work.
   base::win::ScopedCOMInitializer com_initializer;
 };
 
