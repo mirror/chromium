@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0212f793_7c04dd49",
+        "filename": "DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1179484
+      },
+      "writtenOn": "2017-10-04T08:15:30Z",
+      "side": 1,
+      "message": "Just so you know, switching repositories back and forth like this is not nice (especially 1 month later). There are at least 3 projects that utilize this DEPS file and require manual intervention every time this changes.",
+      "range": {
+        "startLine": 377,
+        "startChar": 106,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "7a4242ea93a0791204ab98f7fa8a14fa3799f8b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
