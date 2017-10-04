@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b211ff8f_bce19136",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T11:13:47Z",
+      "side": 1,
+      "message": "Shall we use \"const char* const\" here and below?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "15e0690fec6ca04e58ad8c04b5f130d01666d86d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
