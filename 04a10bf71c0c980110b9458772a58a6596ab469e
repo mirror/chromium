@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "29555d62_9f4f3bba",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T18:04:41Z",
+      "side": 1,
+      "message": "OK Let me try that.",
+      "parentUuid": "82d95531_c731db78",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
@@ -137,6 +155,24 @@
       "side": 1,
       "message": "Fair enough. I got it wrong, the fallback is if we got a ContextProvider, but it failed to create the command buffer context (BindToCurrentThread failed). It could be because the channel is dead, but it could also be because of some other things (e.g. failure to create a context on the service side).\n\nI don\u0027t have a good theory of why one would succeed and the other one wouldn\u0027t (maybe lack of resources?), but at the same time I don\u0027t think we have strong guarantees. Those would be edge cases. We may have those wrong in other places. I wonder if there is a way to measure that.",
       "parentUuid": "32119bad_5bf311fd",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57fc70c9_04811d27",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T18:04:41Z",
+      "side": 1,
+      "message": "Oh, you\u0027re worried that BindToCurrentThread could fail, but the GpuChannel is non-null? In that case the compositor would just keep trying over and over again too, I think. So everything would still agree if they went by GpuChannel being present or not.",
+      "parentUuid": "c3799364_301842bf",
       "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
