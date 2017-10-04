@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ea805353_4ad448e2",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-04T23:44:50Z",
+      "side": 1,
+      "message": "Ah, my previous comment was messed up by copy paste error. Correcting...\n\nThis file IS being type-checked already (see [1] and [2]) so better types would give us better type coverage.",
+      "parentUuid": "b69c516a_acf0f69f",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49cac16_653b1498",
         "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
         "patchSetId": 10
