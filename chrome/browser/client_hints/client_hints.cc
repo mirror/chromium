@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/client_hints/client_hints.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/content_settings/core/common/content_settings_utils.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/origin_util.h"
@@ -18,6 +19,16 @@
 #include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
 #include "third_party/WebKit/public/platform/WebClientHintsType.h"
 #include "url/gurl.h"
+
+namespace {
+
+bool IsJavaScriptAllowed(Profile* profile, const GURL& url) {
+  return HostContentSettingsMapFactory::GetForProfile(profile)
+             ->GetContentSetting(url, url, CONTENT_SETTINGS_TYPE_JAVASCRIPT,
+                                 std::string()) == CONTENT_SETTING_ALLOW;
+}
+
+}  // namespace
 
 namespace client_hints {
 
@@ -34,6 +45,12 @@ GetAdditionalNavigationRequestClientHintsHeaders(
   Profile* profile = Profile::FromBrowserContext(context);
   if (!profile)
     return nullptr;
+
+  // Check if |url| is allowed to run JavaScript. If not, client hints are not
+  // attached to the requests that initiate on the browser side.
+  if (!IsJavaScriptAllowed(profile, url)) {
+    return nullptr;
+  }
 
   ContentSettingsForOneType client_hints_host_settings;
   HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
