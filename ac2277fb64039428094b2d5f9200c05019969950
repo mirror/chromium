@@ -70,6 +70,30 @@
       "revId": "ac2277fb64039428094b2d5f9200c05019969950",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43701389_12a3d305",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-10-04T07:23:30Z",
+      "side": 1,
+      "message": "Done: added simple assertions at Enable/DisableVirtualTime, which I am not sure is enough though.",
+      "parentUuid": "9fce7d90_76c48481",
+      "range": {
+        "startLine": 124,
+        "startChar": 2,
+        "endLine": 124,
+        "endChar": 16
+      },
+      "revId": "ac2277fb64039428094b2d5f9200c05019969950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
