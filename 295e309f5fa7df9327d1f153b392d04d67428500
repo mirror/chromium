@@ -22,6 +22,30 @@
       "revId": "295e309f5fa7df9327d1f153b392d04d67428500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c97ad27_a5c875c4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-10-04T18:55:58Z",
+      "side": 1,
+      "message": "Done (interesting that you can publish comments on the commit message now, cool)",
+      "parentUuid": "38ae8f05_fc5e2a18",
+      "range": {
+        "startLine": 9,
+        "startChar": 53,
+        "endLine": 9,
+        "endChar": 62
+      },
+      "revId": "295e309f5fa7df9327d1f153b392d04d67428500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
