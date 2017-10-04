@@ -110,9 +110,6 @@ class AppListViewTest : public views::ViewsTestBase {
     AppListView::InitParams params;
     params.parent = parent;
     view_->Initialize(params);
-    // Initialize around a point that ensures the window is wholly shown.
-    const gfx::Size size = view_->bounds().size();
-    view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   }
 
   void TearDown() override {
@@ -867,8 +864,6 @@ TEST_F(AppListViewFullscreenTest, MultiplePagesAlwaysReinitializeOnFirstPage) {
   params.parent = GetContext();
   params.initial_apps_page = 1;
   view_->Initialize(params);
-  const gfx::Size size = view_->bounds().size();
-  view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   Show();
 
   ASSERT_EQ(0, view_->GetAppsPaginationModel()->selected_page());
@@ -1392,8 +1387,6 @@ TEST_F(AppListViewTest, MultiplePagesReinitializeOnInputPage) {
   params.parent = GetContext();
   params.initial_apps_page = 1;
   view_->Initialize(params);
-  const gfx::Size size = view_->bounds().size();
-  view_->MaybeSetAnchorPoint(gfx::Point(size.width() / 2, size.height() / 2));
   Show();
 
   ASSERT_EQ(1, view_->GetAppsPaginationModel()->selected_page());

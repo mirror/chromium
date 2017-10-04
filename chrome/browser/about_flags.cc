@@ -1563,12 +1563,6 @@ const FeatureEntry kFeatureEntries[] = {
             chromeos::switches::kDisableOfficeEditingComponentApp),
     },
     {
-        "enable-fullscreen-app-list",
-        flag_descriptions::kEnableFullscreenAppListName,
-        flag_descriptions::kEnableFullscreenAppListDescription, kOsCrOS,
-        FEATURE_VALUE_TYPE(app_list::features::kEnableFullscreenAppList),
-    },
-    {
         "enable-background-blur", flag_descriptions::kEnableBackgroundBlurName,
         flag_descriptions::kEnableBackgroundBlurDescription, kOsCrOS,
         FEATURE_VALUE_TYPE(app_list::features::kEnableBackgroundBlur),
