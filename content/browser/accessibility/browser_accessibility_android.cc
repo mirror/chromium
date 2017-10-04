@@ -1247,7 +1247,7 @@ void BrowserAccessibilityAndroid::GetGranularityBoundaries(
     int offset) {
   switch (granularity) {
     case ANDROID_ACCESSIBILITY_NODE_INFO_MOVEMENT_GRANULARITY_LINE:
-      GetLineBoundaries(starts, ends, offset);
+      GetLineBoundaries(starts, ends, offset, -1);
       break;
     case ANDROID_ACCESSIBILITY_NODE_INFO_MOVEMENT_GRANULARITY_WORD:
       GetWordBoundaries(starts, ends, offset);
@@ -1260,7 +1260,8 @@ void BrowserAccessibilityAndroid::GetGranularityBoundaries(
 void BrowserAccessibilityAndroid::GetLineBoundaries(
     std::vector<int32_t>* line_starts,
     std::vector<int32_t>* line_ends,
-    int offset) {
+    int offset,
+    int index_adjustment_counter) {
   // If this node has no children, treat it as all one line.
   if (GetText().size() > 0 && !InternalChildCount()) {
     line_starts->push_back(offset);
@@ -1278,6 +1279,12 @@ void BrowserAccessibilityAndroid::GetLineBoundaries(
       // TODO(dmazzoni): replace this with a proper API to determine
       // if two inline text boxes are on the same line. http://crbug.com/421771
       int y = child->GetPageBoundsRect().y();
+      // This corrects the indexes in case WebView joins words with space
+      // separator. Eg. <div>Cat</div><div>Ate</div><div>Bug</div> is converted
+      // to "Cat Ate Bug" and we need to adjust the traverse event's "from" and
+      // "to" indices to account for the extra spaces.
+      if (index_adjustment_counter > 0)
+        offset = offset + (index_adjustment_counter - 1);
       if (i == 0) {
         line_starts->push_back(offset);
       } else if (y != last_y) {
@@ -1295,7 +1302,9 @@ void BrowserAccessibilityAndroid::GetLineBoundaries(
   for (uint32_t i = 0; i < InternalChildCount(); i++) {
     BrowserAccessibilityAndroid* child =
         static_cast<BrowserAccessibilityAndroid*>(InternalGetChild(i));
-    child->GetLineBoundaries(line_starts, line_ends, offset);
+    index_adjustment_counter++;
+    child->GetLineBoundaries(line_starts, line_ends, offset,
+                             index_adjustment_counter);
     offset += child->GetText().size();
   }
 }

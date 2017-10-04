@@ -134,7 +134,8 @@ class CONTENT_EXPORT BrowserAccessibilityAndroid : public BrowserAccessibility {
   // (as returned by GetText()), adding |offset| to each one.
   void GetLineBoundaries(std::vector<int32_t>* line_starts,
                          std::vector<int32_t>* line_ends,
-                         int offset);
+                         int offset,
+                         int index_adjustment_counter);
 
   // Append word start and end indices for the text of this node
   // (as returned by GetText()) to |word_starts| and |word_ends|,
