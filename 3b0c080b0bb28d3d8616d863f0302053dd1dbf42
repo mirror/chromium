@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfc73bad_3b193f50",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T20:58:49Z",
+      "side": 1,
+      "message": "No period. The end comment should match the namespace vertatim.",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b6e0094_98fdcfd7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T20:58:49Z",
+      "side": 1,
+      "message": "There\u0027s no need for the semi-colon, which confuses clang-format and makes it forget the space in front. Ditto on line 31.",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd2cd8c_6cf40aeb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T20:58:49Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e440a6_553fbed2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T20:58:49Z",
+      "side": 1,
+      "message": "My local Linux build says:\n\nthird_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp:59:24: warning: pragma diagnostic pop could not pop, no matching push [-Wunknown-pragmas]\n#pragma GCC diagnostic pop\n                       ^\n\nIs that expected?",
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
