@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92e01b45_c73ea189",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "Do you know happen to know what these are? If so, can you document?",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce77bd4b_06ea23f6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "If line 145 calls FindPathOfType(), then either this should make sure |val| is a dictionary, or it should do nothing, and just let FindPathOfType() fail when |val| is not a dictionary.",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5f42782_279a6753",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "empty()",
+      "range": {
+        "startLine": 156,
+        "startChar": 47,
+        "endLine": 156,
+        "endChar": 58
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de0dec0_b5e595f2",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "GetList().empty()",
+      "range": {
+        "startLine": 157,
+        "startChar": 50,
+        "endLine": 157,
+        "endChar": 64
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d050b_511f75e9",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "Need to make sure |caps| is a dictionary.",
+      "range": {
+        "startLine": 236,
+        "startChar": 23,
+        "endLine": 236,
+        "endChar": 40
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b3f2b2_90ff2226",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "May be more readable to add: const auto\u0026 path \u003d it.first, and use |path| here and below.",
+      "range": {
+        "startLine": 238,
+        "startChar": 30,
+        "endLine": 238,
+        "endChar": 38
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f312ea6_e6309e53",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "Maybe use early return here to avoid \"Tour de France\" coding. e.g.\n\nif (!list) {\n  out_caps-\u003eSetPath({it.first}, it.second.Clone());\n  continue;\n}\n\n// More work to handle list type below here.",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a7948a_ffbbfb06",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "Can FindPathOfType() return nullptr here and below?",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dae664_f20fb281",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "What\u0027s the difference between |index| and |i|?",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff84d68_2188342b",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T02:01:22Z",
+      "side": 1,
+      "message": "Can you take a (maybe const) ref to the list so you don\u0027t have to keep calling expected_vendor_caps-\u003eGetList() inside the for loop?",
+      "range": {
+        "startLine": 175,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
