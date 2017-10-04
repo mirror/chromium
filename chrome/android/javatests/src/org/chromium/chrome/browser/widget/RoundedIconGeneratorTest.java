@@ -7,12 +7,10 @@ package org.chromium.chrome.browser.widget;
 import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.chromium.base.CommandLine;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.test.ChromeBrowserTestRule;
@@ -27,11 +25,6 @@ public class RoundedIconGeneratorTest {
 
     private String getIconTextForUrl(String url, boolean includePrivateRegistries) {
         return RoundedIconGenerator.getIconTextForUrl(url, includePrivateRegistries);
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        CommandLine.init(null);
     }
 
     /**
