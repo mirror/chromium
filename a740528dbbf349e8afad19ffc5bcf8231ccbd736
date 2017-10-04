@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e5eee22_2face9b9",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T16:54:52Z",
+      "side": 1,
+      "message": "this is another example of a NotificationHandler which doesn\u0027t really do anything except forward to a different object based on the notification\u0027s ID. The type (FILE_SYSTEM_PROVIDER) is pretty much irrelevant here, UMA aside. This is a whole lot of boiler plate to add to many files, so I would like to reconsider the decision to create a generic ID-to-delegate type and NotificationHandler object.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "a740528dbbf349e8afad19ffc5bcf8231ccbd736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
