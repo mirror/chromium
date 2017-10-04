@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "21e93a3c_f3bd3d0a",
+        "filename": "chrome/browser/apps/platform_app_url_redirector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-04T22:55:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ab021ab_470d2106",
+      "revId": "e7f5c56d72ad1e9a6ef7cb97dfd3dcdd61e8ce84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ef6748_7ecba7bc",
         "filename": "chrome/browser/apps/platform_app_url_redirector.h",
         "patchSetId": 8
