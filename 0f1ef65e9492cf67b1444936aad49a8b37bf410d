@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f60444c6_0e96680d",
+        "filename": "third_party/WebKit/Source/build/scripts/make_names.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T04:54:55Z",
+      "side": 1,
+      "message": "just to confirm: we will use .cc even for CamelCase file names, right?",
+      "revId": "0f1ef65e9492cf67b1444936aad49a8b37bf410d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
