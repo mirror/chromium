@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cf0f627_039f2f99",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T09:47:05Z",
+      "side": 1,
+      "message": "I know it\u0027s not your fault, but I\u0027m still having trouble parsing this code. How about this:\n\nfor supported_on in policy[\u0027supported_on\u0027]:\n  if not self._IsVersionSupported(supported_on):\n    continue\n  if \u0027*\u0027 in self.platforms:\n    return True\n  if any(platform in self.platforms for platform in supported_on[\u0027platforms\u0027])\n    return True\nreturn False",
+      "range": {
+        "startLine": 77,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 16
+      },
+      "revId": "60bb9a4b5758652ef5dd61b56775afc857ca82da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df953c4a_99754627",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T09:47:05Z",
+      "side": 1,
+      "message": "I think this should be \u0027product\u0027.",
+      "range": {
+        "startLine": 101,
+        "startChar": 5,
+        "endLine": 101,
+        "endChar": 13
+      },
+      "revId": "60bb9a4b5758652ef5dd61b56775afc857ca82da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

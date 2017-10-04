@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e2fbe0d1_5d694068",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T09:47:05Z",
+      "side": 1,
+      "message": "Thanks, that makes sense.",
+      "parentUuid": "cf051747_8a362e36",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 49
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be500cb5_cea44377",
         "filename": "components/policy/tools/template_writers/writers/template_writer.py",
         "patchSetId": 6
@@ -116,6 +140,30 @@
       "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e45474d2_fd8b09e3",
+        "filename": "components/policy/tools/template_writers/writers/template_writer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T09:47:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94175852_3897b7fb",
+      "range": {
+        "startLine": 144,
+        "startChar": 1,
+        "endLine": 146,
+        "endChar": 0
+      },
+      "revId": "579ab8d391c5597e78eea60de1dc17c1a8580805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
