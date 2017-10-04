@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "056b9003_ea88bb09",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3014,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "290b3155_d30501f2",
+      "range": {
+        "startLine": 3014,
+        "startChar": 1,
+        "endLine": 3014,
+        "endChar": 2
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85e3690e_1452a5ce",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdae49db_bd17a2c7",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85e3690e_1452a5ce",
+      "range": {
+        "startLine": 3018,
+        "startChar": 1,
+        "endLine": 3018,
+        "endChar": 2
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,54 @@
     },
     {
       "key": {
+        "uuid": "ffab9380_d914130a",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc50089b_407649fe",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15438392_62c17666",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0d4aa966_e454d84f",
+      "range": {
+        "startLine": 23,
+        "startChar": 29,
+        "endLine": 23,
+        "endChar": 44
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0c7a702_ad79a949",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
         "patchSetId": 8
@@ -118,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "c920ae62_f38954d6",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0c7a702_ad79a949",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa3d1c28_504033fd",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
         "patchSetId": 8
@@ -129,6 +249,30 @@
       "writtenOn": "2017-09-11T18:47:22Z",
       "side": 1,
       "message": "Do we have any tests that destroy and re-create a factory?  I\u0027m not seeing any.  I don\u0027t want to land anything in this space without them, as I don\u0027t feel that we can be sure this CL works without them.  Coincidentally, I\u0027m adding some in my CL (And hopefully they\u0027ll still work with this one, without any changes).\n\nAlso, will this shut down the utility process?  I\u0027m assuming it will?",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b27ee1_fd5cb770",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we have such tests, especially given that this class is a singleton.\nIf you have tests written for this, do you want me to wait for your CL to land?\n\nThe utility process is going away when all the interface ptrs to this service have been released.",
+      "parentUuid": "aa3d1c28_504033fd",
       "range": {
         "startLine": 99,
         "startChar": 28,
@@ -164,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "fa9cf3a2_ab821fea",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "This was moved to its own service as discussed, services/proxy_resolver.",
+      "parentUuid": "1906f78b_f2ab8fb7",
+      "range": {
+        "startLine": 15,
+        "startChar": 35,
+        "endLine": 15,
+        "endChar": 41
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6882124d_de6c9a87",
         "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
         "patchSetId": 8
@@ -187,6 +355,30 @@
     },
     {
       "key": {
+        "uuid": "3f51a0ea_72ffb79f",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "By having it in the services/proxy_resolver, I think it\u0027s now clearer that it is the interface implementation. (like is done for all other services)",
+      "parentUuid": "6882124d_de6c9a87",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43823620_9f8d839c",
         "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
         "patchSetId": 8
@@ -198,6 +390,30 @@
       "writtenOn": "2017-09-11T18:47:22Z",
       "side": 1,
       "message": "What is a ServiceContextRef?  It doesn\u0027t look to be documented.",
+      "range": {
+        "startLine": 23,
+        "startChar": 39,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5954d31a_51cb7fca",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "I think it\u0027s now more explicit that it\u0027s under service manager.",
+      "parentUuid": "43823620_9f8d839c",
       "range": {
         "startLine": 23,
         "startChar": 39,
@@ -244,6 +460,30 @@
       "writtenOn": "2017-09-11T18:47:22Z",
       "side": 1,
       "message": "Again, can we document all these?  We have something like two dozen classes named Proxy[Resolver|Factory|Service|Client|Request]*, and they\u0027re very hard to keep straight.",
+      "range": {
+        "startLine": 17,
+        "startChar": 40,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e10bcee_69ed8ef8",
+        "filename": "net/proxy/mojo_proxy_resolver_factory_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Hopefully it should be more obvious now that it\u0027s in services/proxy_resolver.",
+      "parentUuid": "f1d6a9f4_be0224b9",
       "range": {
         "startLine": 17,
         "startChar": 40,

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e27133db_6e5729bb",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3017,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d043d81_d65446a2",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "002a3b6c_6ca25cba",
         "filename": "chrome/utility/network/OWNERS",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-20T22:39:26Z",
       "side": 1,
       "message": "Maybe ask mmenke for advice on who else to add to OWNERS here. Otherwise this directory falls back to chrome/OWNERS.",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47818ff_354bc9c3",
+        "filename": "chrome/utility/network/OWNERS",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "The service moved to services/proxy_resolver. The OWNERS file there forward to net/OWNERS as requested by mmenke.",
+      "parentUuid": "002a3b6c_6ca25cba",
       "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f5a7671f_d3ecf522",
+        "filename": "chrome/utility/network/mojo_proxy_resolver_factory_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done (in ProxyResolverImpl as well).",
+      "parentUuid": "71ad7a2f_2c1f9f53",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f98bc964_0142fe2b",
         "filename": "chrome/utility/network/mojo_proxy_resolver_factory_service.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-20T22:39:26Z",
       "side": 1,
       "message": "std::make_unique",
+      "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a9ba38_ab1f4223",
+        "filename": "chrome/utility/network/mojo_proxy_resolver_factory_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-04T00:59:27Z",
+      "side": 1,
+      "message": "Done (above as well).",
+      "parentUuid": "f98bc964_0142fe2b",
       "revId": "fb6d3fc38d4a27e8707e334c89bf4d3badee9ef3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
