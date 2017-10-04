@@ -177,7 +177,7 @@ void TrayBubbleView::RerouteEventHandler::OnKeyEvent(ui::KeyEvent* event) {
   // Always consumes key event not to pass it to other widgets. Calling
   // StopPropagation here to make this consistent with
   // MenuController::OnWillDispatchKeyEvent.
-  event->StopPropagation();
+  event->SetHandled();
 
   // To provide consistent behavior with a menu, process accelerator as a menu
   // is open if the event is not handled by the widget.
