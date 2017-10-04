@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e97296b0_2eb3e121",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-04T13:53:13Z",
+      "side": 1,
+      "message": "Can you link to a bug, that would in turn link to the crash dashboard?",
+      "revId": "aa28b80d137ae3f167373688ac637a7a50788c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e518ef6_904045b6",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-04T13:53:13Z",
+      "side": 1,
+      "message": "nit: auto?\nSince you have make_unique on the other side, no need to be redundant redundant.",
+      "range": {
+        "startLine": 327,
+        "startChar": 7,
+        "endLine": 327,
+        "endChar": 17
+      },
+      "revId": "aa28b80d137ae3f167373688ac637a7a50788c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7356188e_85323ebe",
+        "filename": "chrome/browser/predictors/resource_prefetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-10-04T13:53:13Z",
+      "side": 1,
+      "message": "nit: auto as well?",
+      "range": {
+        "startLine": 236,
+        "startChar": 4,
+        "endLine": 236,
+        "endChar": 17
+      },
+      "revId": "aa28b80d137ae3f167373688ac637a7a50788c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
