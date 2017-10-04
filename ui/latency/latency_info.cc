@@ -177,7 +177,7 @@ void LatencyInfo::CopyLatencyFrom(const LatencyInfo& other,
   expected_queueing_time_on_dispatch_ =
       other.expected_queueing_time_on_dispatch_;
 
-  trace_id_ = other.trace_id();
+  //  trace_id_ = other.trace_id();
   coalesced_ = other.coalesced();
   // TODO(tdresser): Ideally we'd copy |began_| here as well, but |began_| isn't
   // very intuitive, and we can actually begin multiple times across copied
@@ -199,7 +199,7 @@ void LatencyInfo::AddNewLatencyFrom(const LatencyInfo& other) {
   expected_queueing_time_on_dispatch_ =
       other.expected_queueing_time_on_dispatch_;
 
-  trace_id_ = other.trace_id();
+  //  trace_id_ = other.trace_id();
   coalesced_ = other.coalesced();
   // TODO(tdresser): Ideally we'd copy |began_| here as well, but |began_| isn't
   // very intuitive, and we can actually begin multiple times across copied
