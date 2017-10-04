@@ -46,6 +46,30 @@
       "revId": "019ea546582786a97476007914405558beccb6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a93d283a_a4d77efd",
+        "filename": "chrome/browser/feature_engagement/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T14:47:32Z",
+      "side": 1,
+      "message": "The reason chrome/browser/DEPS has a -chrome/browser/ui/views is twofold. We do not want circular dependencies between browser code and the actual ui code, and the code in chrome/browser should talk to UI code using platform independent interfaces (as I discuss above). That you had to update DEPS here isn\u0027t the right solution.\n\nYou have two options:\n. Introduce platform independent interfaces that views implements.\n. Move all this code into c/b/ui/views/feature_engagement (this only works if you have no other dependencies on the code in this directory from non-ui code).",
+      "parentUuid": "542091bb_5341daa9",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 43
+      },
+      "revId": "019ea546582786a97476007914405558beccb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
