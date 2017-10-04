@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70fd7364_99059e55",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-04T20:14:28Z",
+      "side": 1,
+      "message": "I realize this is too naive. If |sIsDisabled| we shouldn\u0027t re-install it. Right now, we\u0027d up installing it every time we create an activity (which should be rare for ChromeTabbedActivity but can happen esp. with multi-window). Additionally, it\u0027s not true for ChromeLauncherActivity.",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7eb723_8f028d3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-04T20:14:28Z",
+      "side": 1,
+      "message": "ugh, but this still may end up getting installed twice. Let\u0027s just put it in ChromeTabbedActivity and call it a day.",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f584eb1a_e4625861",
+        "filename": "chrome/browser/android/crash/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-10-04T20:14:28Z",
+      "side": 1,
+      "message": "Ran isn\u0027t a committer so can\u0027t be in OWNERS",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
