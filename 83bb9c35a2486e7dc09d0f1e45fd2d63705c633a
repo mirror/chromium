@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad8ea747_7adeecfc",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T21:49:59Z",
+      "side": 1,
+      "message": "nit: I find views::Button more readable in the code and it\u0027s not very long.",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2ca0a8_0aa38138",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T21:49:59Z",
+      "side": 1,
+      "message": "At least some of these constants seem like they can/should be shared within the message_center UI? I see at least BackgroundColor is shared with NotifierSettingsView.",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad15be1_3aeef933",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T21:49:59Z",
+      "side": 1,
+      "message": "Can we generalize this and share it with NotifierSettingsView, e.g. message_center::GetFontListForSize(kTextFontSize)? (or message_center::kTextFontSize if it is or will be shared).",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1af0a9_4386e169",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T21:49:59Z",
+      "side": 1,
+      "message": "Don\u0027t use both \u0027using\u0027 and views:: specifier (I prefier the explicit specifier).",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a8087e_9f1e0161",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T21:49:59Z",
+      "side": 1,
+      "message": "What does \"This\" refer to? It\u0027s not immediately clear what the comment is intended to clarify, I would just remove it. (I\u0027ll concede that ToggleImageButton::SetToggledImage is not well documented, but ImageSkia is just a wrapper and is usually copied).",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
