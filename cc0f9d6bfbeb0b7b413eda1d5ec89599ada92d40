@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f88c29f9_77fb864e",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-04T18:57:12Z",
+      "side": 1,
+      "message": "The profiler is only supported on desktop platforms currently. We would probably add something equivalent to Android early initialization if and when we support that platform.",
+      "parentUuid": "07636bc9_0a338a82",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3df1f87d_a3818837",
         "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T17:40:19Z",
       "side": 1,
       "message": "Style guide says static function locals should only be PODs (unless this can be a constexpr).",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ef0f9c_d4d71732",
+        "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-04T18:57:12Z",
+      "side": 1,
+      "message": "Side note: please retain the destruction of the StackSamplingProfiler object when addressing this change, to preserve existing behavior.",
+      "parentUuid": "3df1f87d_a3818837",
       "range": {
         "startLine": 55,
         "startChar": 2,
