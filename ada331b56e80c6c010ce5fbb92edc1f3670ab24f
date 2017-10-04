@@ -34,6 +34,24 @@
       "revId": "ada331b56e80c6c010ce5fbb92edc1f3670ab24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77803584_601a5550",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T11:10:45Z",
+      "side": 1,
+      "message": "Ah, that is because ServiceWorkerURLRequestJob::DidDispatchFetchEvent() doesn\u0027t call\nDeliverErrorResponse() when (response.status_code \u003d\u003d 0).\nI should remove CommitResponseHeaders in https://chromium-review.googlesource.com/c/chromium/src/+/696502.\n\nI uploaded PS 8 which doesn\u0027t call CommitResponseHeaders() in DeliverErrorResponse().\nThis change made fetch-response-taint.https.html and redirected-response.https.html pass.\n\nBut fetch-event-redirect.https.html somethimes crashes. But it looks like a bug of ServiceWorkerScriptURLLoaderFactory.\n\n[111619:111641:1004/193959.026224:203910525993:FATAL:service_worker_script_cache_map.cc(36)] Check failed: kInvalidServiceWorkerResourceId \u003d\u003d LookupResourceId(url) (-1 vs. 58)\n#0 0x000003050307 base::debug::StackTrace::StackTrace()\n#1 0x00000306c8e1 logging::LogMessage::~LogMessage()\n#2 0x000002d6bdd7 content::ServiceWorkerScriptCacheMap::NotifyStartedCaching()\n#3 0x000002d6d26d content::ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader()\n#4 0x000002d6f963 _ZN4base10MakeUniqueIN7content28ServiceWorkerScriptURLLoaderEJRiS3_RjRKNS1_15ResourceRequestEN4mojo12InterfacePtrINS1_5mojom15URLLoaderClientEEEPNS1_20ServiceWorkerVersionER13scoped_refptrINS1_22URLLoaderFactoryGetterEERKN3net34MutableNetworkTrafficAnnotationTagEEEEDTclsr3stdE11make_uniqueIT_Espclsr3stdE7forwardIT0_Efp_EEEDpOSO_\n#5 0x000002d6f551 content::ServiceWorkerScriptURLLoaderFactory::CreateLoaderAndStart()\n#6 0x0000018129e2 content::mojom::URLLoaderFactoryStubDispatch::Accept()\n#7 0x00000322e50f mojo::InterfaceEndpointClient::HandleValidatedMessage()\n#8 0x000003230856 mojo::FilterChain::Accept()\n#9 0x00000322f8bc mojo::InterfaceEndpointClient::HandleIncomingMessage()\n#10 0x000003256551 IPC::(anonymous namespace)::ChannelAssociatedGroupController::Accept()\n#11 0x000003230856 mojo::FilterChain::Accept()\n#12 0x00000322d461 mojo::Connector::ReadSingleMessage()\n#13 0x00000322de82 mojo::Connector::ReadAllAvailableMessages()\n#14 0x00000322dcfc mojo::Connector::OnHandleReadyInternal()\n#15 0x0000029494d0 net::(anonymous namespace)::CallInt64ToInt()\n#16 0x000003248782 mojo::SimpleWatcher::OnHandleReady()\n#17 0x000003248c4a _ZN4base8internal7InvokerINS0_9BindStateIMN4mojo13SimpleWatcherEFvijRKNS3_18HandleSignalsStateEEJNS_7WeakPtrIS4_EEijS5_EEEFvvEE7RunImplIRKS9_RKNSt3__15tupleIJSB_ijS5_EEEJLm0ELm1ELm2ELm3EEEEvOT_OT0_NSI_16integer_sequenceImJXspT1_EEEE\n#18 0x000003051447 base::debug::TaskAnnotator::RunTask()\n#19 0x000003074bd0 base::internal::IncomingTaskQueue::RunTask()\n#20 0x000003072997 base::MessageLoop::RunTask()\n#21 0x000003072fda base::MessageLoop::DoWork()\n#22 0x000003076899 base::MessagePumpLibevent::Run()\n#23 0x00000307243a base::MessageLoop::Run()\n#24 0x0000030970f6 base::RunLoop::Run()\n#25 0x0000030c66dc base::Thread::Run()\n#26 0x0000029a49d6 content::BrowserThreadImpl::IOThreadRun()\n#27 0x0000029a4bd1 content::BrowserThreadImpl::Run()\n#28 0x0000030c6c82 base::Thread::ThreadMain()\n#29 0x0000030bf6fc base::(anonymous namespace)::ThreadFunc()\n#30 0x7f77d8d7d184 start_thread\n#31 0x7f77d448affd clone",
+      "parentUuid": "9671b03a_d77cc554",
+      "revId": "ada331b56e80c6c010ce5fbb92edc1f3670ab24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
