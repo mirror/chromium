@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "138a8808_2b8cdff0",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 6
+      },
+      "lineNbr": 2703,
+      "author": {
+        "id": 1129576
+      },
+      "writtenOn": "2017-10-04T13:04:34Z",
+      "side": 1,
+      "message": "More specifically, this is because of the conflicting NeedsRebaseLine; could you make the comment more clear, e.g., \n\n\u003e Temporarily disabled due to conflicting NeedsRebaseLine below\n\nI don\u0027t think you need to list the bug number again since you can already see that from the NeedsRebaseLine entry.",
+      "revId": "2eb51c0057d2f20e23295ed7886ed5b0cd51e7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
