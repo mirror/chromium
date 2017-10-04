@@ -669,7 +669,7 @@ void SystemTray::OnMouseExitedView() {
 }
 
 base::string16 SystemTray::GetAccessibleNameForBubble() {
-  return GetAccessibleNameForTray();
+  return full_system_tray_menu_ ? GetAccessibleNameForTray() : base::string16();
 }
 
 bool SystemTray::ShouldEnableExtraKeyboardAccessibility() {

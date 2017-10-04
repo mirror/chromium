@@ -152,8 +152,11 @@ void Slider::SetValueInternal(float value, SliderChangeReason reason) {
   } else {
     SchedulePaint();
   }
-  if (accessibility_events_enabled_ && GetWidget())
+  if (accessibility_events_enabled_ && GetWidget()) {
     NotifyAccessibilityEvent(ui::AX_EVENT_VALUE_CHANGED, true);
+    // Set the Chromevox focus to the slider.
+    NotifyAccessibilityEvent(ui::AX_EVENT_SELECTION, true);
+  }
 }
 
 void Slider::PrepareForMove(const int new_x) {
