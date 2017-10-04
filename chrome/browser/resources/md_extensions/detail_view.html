@@ -66,6 +66,15 @@
         @apply(--cr-title-text);
       }
 
+      .action-button {
+        --paper-button-ink-color: var(--google-blue-500);
+        color: var(--google-blue-500);
+        font-size: 15px;
+        font-weight: 500;
+        margin: 0;
+        width: 78px;
+      }
+
       .control-line {
         align-items: center;
         display: flex;
@@ -91,6 +100,11 @@
         border-top: none;
       }
 
+      .section.continuation.warning {
+        padding-left: 21px;
+        padding-right: 8px;
+      }
+
       .section:first-child {
         border: none;
       }
@@ -114,6 +128,33 @@
         width: auto;  /* override the default button size of 24x24 */
       }
 
+      .warning-content {
+        color: var(--paper-red-700);
+        display: flex;
+        justify-content: left;
+      }
+
+      .warning-content span {
+        max-width: 484px;
+      }
+
+      .warning-content.warning-with-button {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .warning-icon {
+        --iron-icon-fill-color: var(--paper-red-700);
+        --iron-icon-width: 19px;
+        margin-right: 17px;
+      }
+
+      .warning-with-button div:first-child {
+        display: flex;
+      }
+
       ul {
         -webkit-padding-start: 20px;
         margin: 0;
@@ -123,35 +164,91 @@
         width: 100%;
       }
     </style>
-    <div id="container">
-      <div id="main">
-        <div id="top-bar">
-          <button id="close-button" is="paper-icon-button-light"
-              class="icon-arrow-back no-overlap"
-              on-tap="onCloseButtonTap_"></button>
-          <img alt="" id="icon" src="[[data.iconUrl]]">
-          <span id="name">[[data.name]]</span>
+    <div id="main">
+      <div id="top-bar">
+        <button id="close-button" is="paper-icon-button-light"
+            class="icon-arrow-back no-overlap"
+            on-tap="onCloseButtonTap_"></button>
+        <img alt="" id="icon" src="[[data.iconUrl]]">
+        <span id="name">[[data.name]]</span>
+      </div>
+      <div class="section continuation" id="enable-section">
+        <div class="control-line">
+          <span>[[computeEnabledText_(data.*)]]</span>
+          <div class="layout horizontal">
+            <cr-tooltip-icon hidden$="[[!data.controlledInfo]]"
+                tooltip-text="[[data.controlledInfo.text]]"
+                icon-class="[[getIndicatorIcon_(data.controlledInfo.type)]]"
+                icon-aria-label="[[data.controlledInfo.type]]">
+            </cr-tooltip-icon>
+            <cr-toggle id="enable-toggle"
+                checked="[[isEnabled_(data.state)]]"
+                on-change="onEnableChange_"
+                disabled="[[!isEnableToggleEnabled_(data.*)]]">
+            </cr-toggle>
+          </div>
         </div>
-        <div class="section continuation" id="enable-section">
-          <div class="control-line">
-            <span>[[computeEnabledText_(data.*)]]</span>
-            <div class="layout horizontal">
-              <cr-tooltip-icon hidden$="[[!data.controlledInfo]]"
-                  tooltip-text="[[data.controlledInfo.text]]"
-                  icon-class="[[getIndicatorIcon_(data.controlledInfo.type)]]"
-                  icon-aria-label="[[data.controlledInfo.type]]">
-              </cr-tooltip-icon>
-              <cr-toggle id="enable-toggle"
-                  checked="[[isEnabled_(data.state)]]"
-                  on-change="onEnableChange_"
-                  disabled="[[!isEnableToggleEnabled_(data.*)]]">
-              </cr-toggle>
+      </div>
+      <div id="warnings" hidden$="[[!hasWarnings_(data.*)]]">
+        <div class="section continuation warning" id="suspicious-warning"
+            hidden$="[[!data.disableReasons.suspiciousInstall]]">
+          <div class="warning-content">
+            <iron-icon class="warning-icon" icon="cr:warning"></iron-icon>
+            <span>
+              $i18n{itemSuspiciousInstall}
+            </span>
+          </div>
+        </div>
+        <div class="section continuation warning" id="corrupted-warning"
+            hidden$="[[!data.disableReasons.corruptInstall]]">
+          <div class="warning-content warning-with-button">
+            <div>
+              <iron-icon class="warning-icon" icon="cr:warning"></iron-icon>
+              <span>$i18n{itemCorruptInstall}</span>
+            </div>
+            <div>
+              <paper-button id="repair-button" class="action-button"
+                  on-tap="onRepairTap_">
+                $i18n{itemRepair}
+              </paper-button>
             </div>
           </div>
         </div>
-        <div class="section continuation block">
-          <div class="section-title">$i18n{itemDescriptionLabel}</div>
-          <div class="section-content">[[data.description]]</div>
+        <div class="section continuation warning" id="blacklisted-warning"
+            hidden$="[[!data.blacklistText]]">
+          <div class="warning-content">
+             <iron-icon class="warning-icon" icon="cr:warning"></iron-icon>
+             <span>
+               [[data.blacklistText]]
+             </span>
+          </div>
+        </div>
+      </div>
+      <div class="section continuation block">
+        <div class="section-title">$i18n{itemDescriptionLabel}</div>
+        <div class="section-content">[[data.description]]</div>
+      </div>
+      <div class="section block">
+        <div class="section-title">$i18n{itemVersion}</div>
+        <div class="section-content">[[data.version]]</div>
+      </div>
+      <div class="section block" id="id-section" hidden$="[[!inDevMode]]">
+        <div class="section-title">$i18n{itemIdHeading}</div>
+        <div class="section-content">[[data.id]]</div>
+      </div>
+      <div class="section" id="inspectable-views" hidden$="[[!inDevMode]]">
+        <div class="section-title">$i18n{itemInspectViews}</div>
+        <div class="section-content">
+          <ul id="inspect-views">
+            <template is="dom-repeat" items="[[data.views]]">
+              <li>
+                <a is="action-link" class="inspectable-view"
+                    on-tap="onInspectTap_">
+                  [[computeInspectLabel_(item)]]
+                </a>
+              </li>
+            </template>
+          </ul>
         </div>
         <div class="section block">
           <div class="section-title">$i18n{itemVersion}</div>
