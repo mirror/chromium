@@ -303,6 +303,11 @@ class PushMessagingBrowserTest : public InProcessBrowserTest {
     EXPECT_EQ(expected_score, service->GetScore(url));
   }
 
+  static void ExpectTagEquals(const Notification& notification,
+                              const std::string& tag) {
+    EXPECT_FALSE(std::string::npos == notification.id().find(tag));
+  }
+
  protected:
   virtual std::string GetTestURL() { return "/push_messaging/test.html"; }
 
@@ -1352,7 +1357,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
   ASSERT_TRUE(RunScript("resultQueue.pop()", &script_result, web_contents));
   EXPECT_EQ("shownotification", script_result);
   EXPECT_EQ(1u, GetNotificationCount());
-  EXPECT_EQ("push_test_tag", GetDisplayedNotifications()[0].tag());
+  ExpectTagEquals(GetDisplayedNotifications()[0], "push_test_tag");
   RemoveAllNotifications();
 
   // If the Service Worker push event handler does not show a notification, we
@@ -1377,7 +1382,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
     std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_EQ(kPushMessagingForcedNotificationTag, notifications[0].tag());
+    ExpectTagEquals(notifications[0], kPushMessagingForcedNotificationTag);
     EXPECT_TRUE(notifications[0].silent());
   }
 
@@ -1392,7 +1397,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
     std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_NE(kPushMessagingForcedNotificationTag, notifications[0].tag());
+    ExpectTagEquals(notifications[0], kPushMessagingForcedNotificationTag);
   }
 }
 
@@ -1454,7 +1459,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
     std::vector<Notification> notifications = GetDisplayedNotifications();
     ASSERT_EQ(notifications.size(), 1u);
 
-    EXPECT_EQ(kPushMessagingForcedNotificationTag, notifications[0].tag());
+    ExpectTagEquals(notifications[0], kPushMessagingForcedNotificationTag);
     EXPECT_TRUE(notifications[0].silent());
   }
 
@@ -1558,7 +1563,7 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,
 
   EXPECT_TRUE(IsRegisteredKeepAliveEqualTo(false));
   ASSERT_EQ(1u, GetNotificationCount());
-  EXPECT_EQ("push_test_tag", GetDisplayedNotifications()[0].tag());
+  ExpectTagEquals(GetDisplayedNotifications()[0], "push_test_tag");
 
   // Verify that the renderer process hasn't crashed.
   ASSERT_TRUE(RunScript("permissionState()", &script_result));

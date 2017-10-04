@@ -42,9 +42,6 @@ class Notification : public message_center::Notification {
   ~Notification() override;
   Notification& operator=(const Notification& notification);
 
-  // A unique identifier used to update (replace) or remove a notification.
-  const std::string& tag() const { return tag_; }
-
  private:
   // The user-supplied tag for the notification.
   std::string tag_;

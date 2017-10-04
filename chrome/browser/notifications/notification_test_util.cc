@@ -63,13 +63,11 @@ void StubNotificationUIManager::Add(const Notification& notification,
 bool StubNotificationUIManager::Update(const Notification& notification,
                                        Profile* profile) {
   const ProfileID profile_id = NotificationUIManager::GetProfileID(profile);
-  if (notification.tag().empty())
-    return false;
 
   auto iter = notifications_.begin();
   for (; iter != notifications_.end(); ++iter) {
     const Notification& old_notification = iter->first;
-    if (old_notification.tag() == notification.tag() &&
+    if (old_notification.id() == notification.id() &&
         old_notification.origin_url() == notification.origin_url() &&
         iter->second == profile_id) {
       notifications_.erase(iter);

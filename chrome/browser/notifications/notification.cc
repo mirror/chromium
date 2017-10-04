@@ -30,16 +30,15 @@ Notification::Notification(
 
 Notification::Notification(const std::string& id,
                            const Notification& notification)
-    : message_center::Notification(id, notification),
-      tag_(notification.tag()) {}
+    : message_center::Notification(id, notification), tag_(notification.tag_) {}
 
 Notification::Notification(const Notification& notification)
-    : message_center::Notification(notification), tag_(notification.tag()) {}
+    : message_center::Notification(notification), tag_(notification.tag_) {}
 
 Notification::~Notification() {}
 
 Notification& Notification::operator=(const Notification& notification) {
   message_center::Notification::operator=(notification);
-  tag_ = notification.tag();
+  tag_ = notification.tag_;
   return *this;
 }
