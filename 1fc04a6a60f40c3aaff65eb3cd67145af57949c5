@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b4b0f2d_1831cad0",
+        "filename": "services/network/public/interfaces/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T18:43:47Z",
+      "side": 1,
+      "message": "Do we need to wrap this in an is_ios block? I feel like this should be implicit (i.e. we just don\u0027t generate the Blink variant on iOS)",
+      "revId": "1fc04a6a60f40c3aaff65eb3cd67145af57949c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efcf0a3_158514eb",
+        "filename": "third_party/WebKit/Source/core/loader/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T18:43:47Z",
+      "side": 1,
+      "message": "TBH, I\u0027m not sure it\u0027s necessary to include this comment: this seems like the thing that will only get stale.",
+      "revId": "1fc04a6a60f40c3aaff65eb3cd67145af57949c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
