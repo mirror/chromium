@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7818be81_e9288567",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-04T15:05:44Z",
+      "side": 1,
+      "message": "Turns out I can\u0027t do this because |owner_| is a WeakPtr set on the UI thread but this is the IO thread, it can lead to peculiar DCHECKs.",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 22
+      },
+      "revId": "b8695c702429112417f2ef4f6fe6ac7971afe6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
