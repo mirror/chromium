@@ -266,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "d6c5e2b4_b7b5a81a",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-04T15:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af09c3f_8b53d3e6",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e902c40c_0c09d9f3",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 3
@@ -316,6 +334,24 @@
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e800892e_c7a8f3cc",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-04T15:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c9544fc_0c1bcc04",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
