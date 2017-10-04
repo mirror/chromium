@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaeb7b87_90fb5651",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-04T21:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41ca3917_bbc99646",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13cf1a1e_5fb81c9e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fee72e1e_d5b797bc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-04T21:16:55Z",
+      "side": 1,
+      "message": "The reason I added it here was that under certain conditions, the UI might not be shown even after this method is called (line 477). Therefore I wanted to be sure it\u0027ll only notify the event when the UI is displayed.",
+      "parentUuid": "13cf1a1e_5fb81c9e",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0ee4829_81617f81",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b425ae4_ce0db6bb",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5354,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-04T21:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0ee4829_81617f81",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "52075505_371f4709",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5639,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-04T21:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a38d38_0e391daf",
+      "range": {
+        "startLine": 5639,
+        "startChar": 20,
+        "endLine": 5639,
+        "endChar": 28
+      },
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb660cd1_26e1f5dc",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 1
@@ -90,6 +168,24 @@
       "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d895b7_1694b900",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5818,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-04T21:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb660cd1_26e1f5dc",
+      "revId": "4d94e9222e80417e7c3a2b13086698d30a14745f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
