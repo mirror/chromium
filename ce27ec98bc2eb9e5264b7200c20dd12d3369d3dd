@@ -22,6 +22,30 @@
       "revId": "ce27ec98bc2eb9e5264b7200c20dd12d3369d3dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c1cd2b_c6fdfa61",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T11:36:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d94fe6_009c83b1",
+      "range": {
+        "startLine": 777,
+        "startChar": 20,
+        "endLine": 777,
+        "endChar": 0
+      },
+      "revId": "ce27ec98bc2eb9e5264b7200c20dd12d3369d3dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

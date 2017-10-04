@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "a8f81040_cdb14f95",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T11:36:41Z",
+      "side": 1,
+      "message": "Still investigating. Ran 50 times, got 10% flaky. Maybe the code is running before the transition even starts?",
+      "parentUuid": "40e0d03c_7ae14740",
+      "range": {
+        "startLine": 786,
+        "startChar": 54,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9992a774_2e02460e",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 2
