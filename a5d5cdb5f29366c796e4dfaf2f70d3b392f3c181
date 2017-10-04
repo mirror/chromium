@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c0c89bc_89e2b7bc",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "I don\u0027t see people prefixing template types with T in Chrome.\nWhat\u0027s your source for doing this?\n\ntreib@, WDYT?",
+      "range": {
+        "startLine": 21,
+        "startChar": 19,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea19abe_bb61bff6",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "const base::TimeDelta\u0026",
+      "range": {
+        "startLine": 24,
+        "startChar": 48,
+        "endLine": 24,
+        "endChar": 64
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ba559d_b013b1dc",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "\u003e\u003d max_capacity_\n\nI don\u0027t understand why +1.",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 39
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884ce124_93263a9d",
+        "filename": "components/ntp_snippets/contextual/cached_timestamped_map.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "Sorry for suggesting you to use std::pair, but now I feel like a private struct would be clearer.",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0025483_41dc7034",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "/*from_cache\u003d*/true",
+      "range": {
+        "startLine": 56,
+        "startChar": 34,
+        "endLine": 56,
+        "endChar": 53
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fcf2885_7baacdaf",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "/*from_cache\u003d*/false",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bdad23_08820553",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "-\u003e (optional behaves like a pointer and you can use arrow operator to call methods).",
+      "range": {
+        "startLine": 93,
+        "startChar": 43,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b41ab2_3817c8f4",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "I feel like having a function which may call the callback asynchronously or synchronously depending on some internal state is inconvenient for the callers, but I am not sure. I will have to redirect this to treib@.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 40
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b984a2_08a2791d",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "persistEnt",
+      "range": {
+        "startLine": 75,
+        "startChar": 9,
+        "endLine": 75,
+        "endChar": 19
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e806d6_6d6bd121",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "why not doing this in this CL? \n\nIsn\u0027t it just SizeIs(1)?",
+      "range": {
+        "startLine": 267,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 16
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa74cb2_e58b540a",
+        "filename": "components/ntp_snippets/contextual/contextual_content_suggestions_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-04T10:14:00Z",
+      "side": 1,
+      "message": "This should not be a test for service, but for the cache map.",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 23
+      },
+      "revId": "a5d5cdb5f29366c796e4dfaf2f70d3b392f3c181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
