@@ -52,6 +52,24 @@
       "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e33c738_af4eec54",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T06:50:40Z",
+      "side": 1,
+      "message": "Hmm, I have a concern about whether ui::kXxxKey is really okay or not.  Even though it\u0027s hard to make this an enum class, should we introduce another name scope?  e.g. another namespace or namespace-like class.  I\u0027m fine with ui::foo::kXxxKey or ui::Foo::kXxxKey, but we may not want to have them at ui top-level.\n\nAlso you can make this a kind of an enum class in terms of scope:\n  // TODO(someone): Make the following enum a real enum class.\n  struct ModifierKey {\n    enum {\n      kSearchKey \u003d 0\n    };\n  };\nThen, the client code needs to say \"ui::ModifierKey::kSearchKey\".  Given that this is Chrome OS specific and placed in ui/chromeos/, ui::chromeos::ModifierKey::kSearchKey would be better.",
+      "parentUuid": "1c175f30_b5dcbf31",
+      "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
