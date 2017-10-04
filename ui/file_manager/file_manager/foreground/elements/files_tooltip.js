@@ -210,6 +210,11 @@ var FilesTooltip = Polymer({
    * @private
    */
   onFocus_: function(target, event) {
+    if (target.classList.contains('using-mouse'))
+      // ButtonMenu closed by a mouse click on a menu button or a menu item.
+      // Do not show tooltip because the focus is not moved by user operation.
+      // See cr.ui.MenuButton.
+      return;
     this.initShowingTooltip_(target);
   },
 
