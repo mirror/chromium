@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1667315c_82a04a34",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T14:50:57Z",
+      "side": 1,
+      "message": "Taking a step back: Is it possible and would it make sense to (1) have client A create and embed a new Window in client B for the new WindowTreeClient (then pass that to client B for bounds setting or whatever), or (2) have client B pass a Window it creates as a response to client A\u0027s request (when it needs to embed the new WindowTreeClient)? You\u0027re more familiar with the Browser/Renderer use case and workflow, but I wanted to check that we hadn\u0027t missed alternate ideas.",
+      "revId": "142d7494ccc37d126fa33b83c6e324a82d07d4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70334911_33e1381b",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2131,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T14:50:57Z",
+      "side": 1,
+      "message": "nit: point out exactly what\u0027s wrong here? (client2 never actually made the window with id 121)",
+      "revId": "142d7494ccc37d126fa33b83c6e324a82d07d4b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
