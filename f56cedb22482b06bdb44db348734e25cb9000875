@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771488ca_2a16e961",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T19:16:44Z",
+      "side": 1,
+      "message": "BTW, do RPM distros prefer bzipped man pages?",
+      "revId": "f56cedb22482b06bdb44db348734e25cb9000875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
