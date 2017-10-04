@@ -113,6 +113,8 @@ std::string CompletionTypeToHistogramSuffix(CompletionType type) {
       return "Unknown";
     case CompletionType::CANCEL:
       return "Cancel";
+    case CompletionType::OUT_OF_RETRIES:
+      return "OutOfRetries";
     case CompletionType::COUNT:
       NOTREACHED();
   }
