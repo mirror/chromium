@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b6875321_c2378d7d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:24:43Z",
+      "side": 1,
+      "message": "Do you have concrete test cases for these \"some circumstances\"?",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4640f315_13f591be",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
         "patchSetId": 9
@@ -37,6 +54,41 @@
     },
     {
       "key": {
+        "uuid": "9ccf557c_b60d4984",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:24:43Z",
+      "side": 1,
+      "message": "Updating DecodedSize() by deltas looks prone to error (e.g. https://crbug.com/570043).\n\n(Anyway, DecodedSize() is implemented in the current way just because it is used for MemoryCache size management (we need to update MemoryCache\u0027s current size when DecodedSize() is changed), which is now has much lower impact. So probably it\u0027s clearer to decouple decoded size from MemoryCache and make DecodedSize() virtual as suggested, and potentially even simplify it to bool HasDecodedData(). But this might require modest work and I expect this shouldn\u0027t block this CL)",
+      "parentUuid": "13afa358_8a2f86f0",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8c933f_3a60eb19",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:24:43Z",
+      "side": 1,
+      "message": "This is signaling: something can be wrong, i.e. calling SheetText() in a wrong timing can cause wrong CSS content -- if it is called from CSSPreloadScanner it\u0027s fine to have partial CSS text, but if not CSSPreloadScanner? -- probably since before this CL?",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a9e1d29_590c7e56",
         "filename": "third_party/WebKit/Source/core/loader/resource/TextResource.h",
         "patchSetId": 9
@@ -48,6 +100,23 @@
       "writtenOn": "2017-09-28T21:59:35Z",
       "side": 1,
       "message": "DecodedTextMaybeIncomplete? MaybeIncompleteDecodedText?",
+      "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524a126a_8aa53ccb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:24:43Z",
+      "side": 1,
+      "message": "We might set IntegrityMetadata unnecessarily here (because |resource| might be unmatched below)?",
       "revId": "29696709fb18d5918fb751d4df883490bc6c021a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
