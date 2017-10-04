@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dff66945_10413600",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T14:08:40Z",
+      "side": 1,
+      "message": "It is because FetchRespondWithObserver::OnResponseRejected() calls RespondToFetchEvent with a WebServiceWorkerResponse which status is 0, and ServiceWorkerSubresourceLoader::OnResponse() will be called.",
+      "parentUuid": "94ffee11_9c0abdf7",
+      "revId": "e6a5f4ea77978713a5f6b14cfe9c23328ef20c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3776965_4ead238b",
         "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e6a5f4ea77978713a5f6b14cfe9c23328ef20c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8030e8a_007461a3",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-04T14:08:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3776965_4ead238b",
+      "revId": "e6a5f4ea77978713a5f6b14cfe9c23328ef20c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
