@@ -22,6 +22,30 @@
       "revId": "6b660f15fc74cf9335a661e9c4f134ae7c6f4cfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2b780d_baeb75e1",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-10-04T20:45:20Z",
+      "side": 1,
+      "message": "I\u0027d have to duplicate wl_buffer_add_listener() inside the if then?",
+      "parentUuid": "8527415b_ecadb476",
+      "range": {
+        "startLine": 432,
+        "startChar": 2,
+        "endLine": 435,
+        "endChar": 3
+      },
+      "revId": "6b660f15fc74cf9335a661e9c4f134ae7c6f4cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
