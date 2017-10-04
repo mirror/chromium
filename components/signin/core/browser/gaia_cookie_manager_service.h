@@ -280,6 +280,10 @@ class GaiaCookieManagerService : public KeyedService,
   // Virtual for testing purpose.
   virtual void StartFetchingLogOut();
 
+  // Called when SigninClient::PreGaiaLogout() is done. See
+  // StartFetchingLogOut().
+  void PreGaiaLogoutDone();
+
   // Start the next request, if needed.
   void HandleNextRequest();
 
