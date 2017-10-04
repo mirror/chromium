@@ -541,8 +541,9 @@ void ImageCapture::SetMediaTrackConstraints(
 
   MediaTrackConstraints resolver_constraints;
   resolver_constraints.setAdvanced(constraints_vector);
-  auto resolver_cb = WTF::Bind(&ImageCapture::ResolveWithMediaTrackConstraints,
-                               WrapPersistent(this), resolver_constraints);
+  auto resolver_cb = WTF::Bind(
+      &ImageCapture::ResolveWithMediaTrackConstraints, WrapPersistent(this),
+      WrapPersistent(MakeHeapWrapper(resolver_constraints)));
 
   service_->SetOptions(
       stream_track_->Component()->Source()->Id(), std::move(settings),
@@ -832,10 +833,10 @@ void ImageCapture::ResolveWithPhotoCapabilities(
 }
 
 void ImageCapture::ResolveWithMediaTrackConstraints(
-    MediaTrackConstraints constraints,
+    HeapWrapper<MediaTrackConstraints>* constraints,
     ScriptPromiseResolver* resolver) {
   DCHECK(resolver);
-  resolver->Resolve(constraints);
+  resolver->Resolve(constraints->value());
 }
 
 DEFINE_TRACE(ImageCapture) {

@@ -18,6 +18,7 @@
 #include "modules/mediastream/MediaTrackSettings.h"
 #include "platform/AsyncMethodRunner.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
+#include "platform/heap/HeapWrapper.h"
 
 namespace blink {
 
@@ -97,7 +98,7 @@ class MODULES_EXPORT ImageCapture final
   void ResolveWithNothing(ScriptPromiseResolver*);
   void ResolveWithPhotoSettings(ScriptPromiseResolver*);
   void ResolveWithPhotoCapabilities(ScriptPromiseResolver*);
-  void ResolveWithMediaTrackConstraints(MediaTrackConstraints,
+  void ResolveWithMediaTrackConstraints(HeapWrapper<MediaTrackConstraints>*,
                                         ScriptPromiseResolver*);
 
   Member<MediaStreamTrack> stream_track_;
