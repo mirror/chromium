@@ -43,3 +43,49 @@ group("metrics_metadata") {
     ":rappor_xml",
   ]
 }
+
+# This group defines the isolate files needed to run metrics_python_tests.py on
+# on bots. This also tells the build system when the tests should be re-run -
+# when one of the dependent files changes.
+group("metrics_python_tests") {
+  data = [
+    # The run_isolated_script_test.py script and its dependencies.
+    "//testing/scripts/run_isolated_script_test.py",
+    "//testing/scripts/common.py",
+    "//testing/xvfb.py",
+    "//testing/test_env.py",
+    "//third_party/typ/",
+
+    # The metrics_python_tests.py runner and its dependencies.
+    "//tools/metrics/metrics_python_tests.py",
+
+    "//tools/metrics/actions/action_utils.py",
+    "//tools/metrics/actions/extract_actions.py",
+    "//tools/metrics/actions/extract_actions_test.py",
+    "//tools/metrics/actions/pretty_print.py",
+    "//tools/metrics/actions/print_style.py",
+
+    "//tools/metrics/common/diff_util.py",
+    "//tools/metrics/common/models.py",
+    "//tools/metrics/common/path_util.py",
+    "//tools/metrics/common/presubmit_util.py",
+    "//tools/metrics/common/pretty_print_xml.py",
+
+    "//tools/metrics/histograms/extract_histograms.py",
+    "//tools/metrics/histograms/generate_expired_histograms_array.py",
+    "//tools/metrics/histograms/generate_expired_histograms_array_unittest.py",
+    "//tools/metrics/histograms/merge_xml.py",
+
+    "//tools/metrics/ukm/pretty_print_test.py",
+    "//tools/variations/fieldtrial_to_struct_unittest.py",
+    "//tools/variations/fieldtrial_to_struct.py",
+    "//tools/variations/fieldtrial_util_unittest.py",
+    "//tools/variations/fieldtrial_util.py",
+    "//tools/variations/unittest_data/expected_output.cc",
+    "//tools/variations/unittest_data/expected_output.h",
+    "//tools/variations/unittest_data/test_config.json",
+
+    "//components/variations/service/generate_ui_string_overrider.py",
+    "//components/variations/service/generate_ui_string_overrider_unittest.py",
+  ]
+}
