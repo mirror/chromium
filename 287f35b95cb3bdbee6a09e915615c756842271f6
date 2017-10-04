@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "eaba3ee5_0ed7be89",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T20:36:38Z",
+      "side": 1,
+      "message": "So there are two concerns:\n\n1)  Do we kill the process when we shouldn\u0027t (i.e., we have PRoxyResolvers, but call this method anyways).  I think with the service API, we\u0027ll keep the service alive in that case, anyways, though there\u0027s still a problem with creating multiple services instead of just reusing the old one, if we incorrectly destroy the ResolverFactory.  No idea if the new factory would be in the same process or not.\n\n2)  We keep this process alive when we should not.  We use a PAC for a while, then stop using one for a while (Maybe because the network changed).  Do we correctly shut down the service in this case?\n\nBoth cases depend on the timer / proxy count logic, and have no tests, which seems pretty concerning.  I had some tests which worked with the old code, but I suspect they don\u0027t work with the new code (They relied on making secret ProxyResolver connections to the factory, untracked by this class, and watching when they were closed.  But I think the service would now keep those connections alive).\n\nAll code should be tested, so I\u0027d really like some integration tests for this (I\u0027m concerned about unit tests not giving sufficient coverage, particularly when the network stack finally goes out of process).",
+      "parentUuid": "11b27ee1_fd5cb770",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1906f78b_f2ab8fb7",
         "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
         "patchSetId": 8
