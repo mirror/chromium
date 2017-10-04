@@ -46,6 +46,30 @@
       "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a36e40d_ef0fa9c4",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-04T16:32:46Z",
+      "side": 1,
+      "message": "I think the more common flow would\u0027ve been:\n\n1) Land TestExpectations change (adding NeedsManualRebaseline)\n2) Land CL that changes the behavior\n3) Land new baselines (removing NeedsManualRebaseline)\n\nReverting et.c will still be equally painful of course (and the sum of CLs the same.) But \"whatever\" I guess, I just reacted to something looking out of the ordinary... so, carry on.",
+      "parentUuid": "6b1db7b6_c6952c48",
+      "range": {
+        "startLine": 3440,
+        "startChar": 50,
+        "endLine": 3440,
+        "endChar": 71
+      },
+      "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
