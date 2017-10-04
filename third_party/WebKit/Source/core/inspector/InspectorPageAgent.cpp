@@ -122,6 +122,24 @@ String ScheduledNavigationReasonToProtocol(ScheduledNavigation::Reason reason) {
   return ReasonEnum::Reload;
 }
 
+Maybe<String> ScheduledNavigationFormSubmissionMethodToProtocol(
+    const Optional<ScheduledNavigation::FormSubmissionMethod>&
+        form_submission_method) {
+  using FormSubmissionMethodEnum = protocol::Page::
+      FrameScheduledNavigationNotification::FormSubmissionMethodEnum;
+  if (!form_submission_method)
+    return Maybe<String>();
+  switch (*form_submission_method) {
+    case ScheduledNavigation::FormSubmissionMethod::kGet:
+      return Maybe<String>(FormSubmissionMethodEnum::GET);
+    case ScheduledNavigation::FormSubmissionMethod::kPost:
+      return Maybe<String>(FormSubmissionMethodEnum::POST);
+    default:
+      NOTREACHED();
+  }
+  return Maybe<String>();
+}
+
 Resource* CachedResource(LocalFrame* frame,
                          const KURL& url,
                          InspectorResourceContentLoader* loader) {
@@ -773,7 +791,9 @@ void InspectorPageAgent::FrameScheduledNavigation(
   GetFrontend()->frameScheduledNavigation(
       FrameId(frame), scheduled_navigation->Delay(),
       ScheduledNavigationReasonToProtocol(scheduled_navigation->GetReason()),
-      scheduled_navigation->Url().GetString());
+      scheduled_navigation->Url().GetString(),
+      ScheduledNavigationFormSubmissionMethodToProtocol(
+          scheduled_navigation->GetFormSubmissionMethod()));
 }
 
 void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {
