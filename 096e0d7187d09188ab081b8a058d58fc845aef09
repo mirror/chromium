@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ce2b36d_1c946ab2",
+        "filename": "sandbox/mac/seatbelt_extension.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-04T20:36:59Z",
+      "side": 1,
+      "message": "Add a comment above this, too:\n\n\"Requires (allow file-read* (extension \"com.apple.app-sandbox.read\"))\".",
+      "revId": "096e0d7187d09188ab081b8a058d58fc845aef09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
