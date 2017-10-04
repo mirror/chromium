@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcd2f6a1_1c58986b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T20:17:17Z",
+      "side": 1,
+      "message": "Just to re-iterate, it would be very nice to change this on the fly and use it for every captureScreenshot to ensure all work is done. Any hope?",
+      "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
