@@ -10,7 +10,7 @@ FakePaintImageGenerator::FakePaintImageGenerator(
     const SkImageInfo& info,
     std::vector<FrameMetadata> frames)
     : PaintImageGenerator(info, std::move(frames)),
-      image_backing_memory_(info.getSafeSize(info.minRowBytes()), 0),
+      image_backing_memory_(info.computeByteSize(info.minRowBytes()), 0),
       image_pixmap_(info, image_backing_memory_.data(), info.minRowBytes()) {}
 
 FakePaintImageGenerator::~FakePaintImageGenerator() = default;
