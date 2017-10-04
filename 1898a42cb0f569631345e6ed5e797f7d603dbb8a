@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1e21053_4a56079f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T16:18:32Z",
+      "side": 1,
+      "message": "I think the appropriate test here is whether next_state_ was NONE on entry to the function.  If it was, we need to kick the DoLoop; if it wasn\u0027t, there\u0027s an active state machine driver (probably an IO Callback) which will do it for us.",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 17
+      },
+      "revId": "1898a42cb0f569631345e6ed5e797f7d603dbb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0a702d_7852a75e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T16:18:32Z",
+      "side": 1,
+      "message": "Again, if we\u0027re in the state machine, I think this is appropriately left to a future state transition, and if we\u0027re not, we should call directly.  I.e. that the test is whether or not we were in state NONE at the beginning of this if statement.",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 44
+      },
+      "revId": "1898a42cb0f569631345e6ed5e797f7d603dbb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8aa606_8fe0137b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T16:18:32Z",
+      "side": 1,
+      "message": "What circumstances can this happen in other than NONE?  My goal in suggesting the extra state was to completely avoid situations in which we\u0027re unilaterally shoving the state diagram around when it\u0027s in the middle of doing something, so my preference would be to have a DCHECK here that enforces that next_state_ (on entry) was either CACHE_WRITE_DATA_COMPLETE or NONE.\n\nETA: This is a general concern with this PS.  It\u0027s got a lot of places where states are being tested, where I think of the point of the state machine as the difference between states is handled purely in the switch statement of the DoLoop().  I\u0027ve made specific comments at each point as to how it might be alternatively handled, but in general, I\u0027d like to see if we can get rid of almost all of these (the one exception being DATA_COMPLETE -\u003e DATA_COMPLETE_PRE_TRUNCATE).  We should probably talk this through F2F.",
+      "revId": "1898a42cb0f569631345e6ed5e797f7d603dbb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d919a52_be9c7390",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T16:18:32Z",
+      "side": 1,
+      "message": "If TruncateEntry() set a state of CACHE_WRITE_DATA_COMPLETE_PRE_TRUNCATE, I think this can also be delegated to the later state transition (specifically TRUNCATED_RESPONSE_COMPLETE).  \n\nMore generally, it looks to me like a) whenever TruncateEntry is called we want this to be the cache_callback_, and b) the only place where TruncateEntry() is called when it isn\u0027t guaranteed that there will be DoLoop() processing in the future is RemoveTransaction().  Would it be reasonable to a) Set this callback unilaterally in TruncateEntry() if it isn\u0027t setting the state (any state setting in TruncateEntry() will lead to this callback being set later in the state diagram), and b) in RemoveTransaction(), call CurrentWritersDoneWritingToEntry(..,true,...) if TruncateEntry() is not called and next_state_ \u003d\u003d NONE?",
+      "range": {
+        "startLine": 496,
+        "startChar": 30,
+        "endLine": 496,
+        "endChar": 60
+      },
+      "revId": "1898a42cb0f569631345e6ed5e797f7d603dbb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a5626a_5a9bfea1",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 50
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-04T16:18:32Z",
+      "side": 1,
+      "message": "nit, suggestion: In this kind of loop where each element in turn has something happen to it and then is erased, my preferred idea is a while(container.is_non_empty()) that takes the element off the front.  If there\u0027s an easy way to pop it (*), great, otherwise just operate on it and call erase then go back to the top and see if there\u0027s anything left.\n\n(*) I.e. I\u0027m too lazy to look at the type of container waiting_for_read_ is and see what interfaces it supports.",
+      "range": {
+        "startLine": 587,
+        "startChar": 9,
+        "endLine": 587,
+        "endChar": 26
+      },
+      "revId": "1898a42cb0f569631345e6ed5e797f7d603dbb8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
