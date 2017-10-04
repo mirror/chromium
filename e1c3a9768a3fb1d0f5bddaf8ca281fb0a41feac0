@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37ead870_a51cf5d0",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T04:34:32Z",
+      "side": 1,
+      "message": "I think we should not assume that the button of the tooltip is cr.ui.MenuButton.\nCan we detect it by files-tooltip itself?",
+      "range": {
+        "startLine": 216,
+        "startChar": 13,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "e1c3a9768a3fb1d0f5bddaf8ca281fb0a41feac0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
