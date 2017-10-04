@@ -1616,7 +1616,7 @@ AndroidVideoDecodeAccelerator::GetPromotionHintCB() {
 }
 
 void AndroidVideoDecodeAccelerator::NotifyPromotionHint(
-    const PromotionHintAggregator::Hint& hint) {
+    PromotionHintAggregator::Hint hint) {
   bool update_state = false;
 
   promotion_hint_aggregator_->NotifyPromotionHint(hint);
