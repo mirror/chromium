@@ -46,6 +46,53 @@
       "revId": "e973bae4b27c3784e873694d7123c6d113721923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2627c7b_d28db720",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T03:20:46Z",
+      "side": 1,
+      "message": "What I mean is that we\u0027re only counting the number that are stale or orphaned. That excludes those which are for installed WebAPKs which haven\u0027t had an update successfully complete yet in the last day. I\u0027m more interested in the peak number of these files that are left around, so that means just recording the size of the |children| array. Since this method is called on web app startup (thanks for pointing that out), I\u0027m happy with this metric being recorded here as just the total number of update files.\n\nWDYT?",
+      "parentUuid": "59dc1175_4ede4667",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58afe83_627f494e",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T03:20:46Z",
+      "side": 1,
+      "message": "Is it impossible to test the histogram now that it\u0027s a JUnit test? It would be very good if we could explicitly test the histogram by putting some update files in the directory and verifying that the right number is recorded.",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
