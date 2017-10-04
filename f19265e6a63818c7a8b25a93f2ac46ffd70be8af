@@ -82,6 +82,24 @@
     },
     {
       "key": {
+        "uuid": "a397a4e8_166965cf",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-04T20:35:46Z",
+      "side": 1,
+      "message": "I feel it is more clear that the pointing_device_id_ and keyboard_device_id_ are only updated in  OnGetInputDevicesList(). So here it doesn\u0027t use and update the pointing_device_id_.\n\nAnother scenario is, the HidDetectionScreen is showed first and hidden later, then the WizardController wants to check if it is ready to be showed again. I think it is better to go through the latest returned devices list than use the pointing_device_id_ which was updated earlier.",
+      "parentUuid": "af686843_f7ecb0bb",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b290e075_e4a9db3a",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
