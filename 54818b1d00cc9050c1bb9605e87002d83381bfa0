@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b5709fa_197e461c",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 7
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-04T14:03:34Z",
+      "side": 1,
+      "message": "Why all the NeedsManualRebaseline? It looks like this CL is actually the new baselines? (Then you don\u0027t need to add all the NeedsManualRebaseline - just to remove them again, because otherwise these tests would be essentially disabled...)",
+      "range": {
+        "startLine": 3440,
+        "startChar": 50,
+        "endLine": 3440,
+        "endChar": 71
+      },
+      "revId": "54818b1d00cc9050c1bb9605e87002d83381bfa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
