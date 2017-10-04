@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "40e0d03c_7ae14740",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T09:38:12Z",
+      "side": 1,
+      "message": "Huh, that\u0027s weird - any ideas what caused that flake? Either the transition is already done, or it\u0027s not and we\u0027ll get the transitionend event, I don\u0027t see what we\u0027re missing...",
+      "parentUuid": "edfb6589_6e59742d",
+      "range": {
+        "startLine": 786,
+        "startChar": 54,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9992a774_2e02460e",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 2
