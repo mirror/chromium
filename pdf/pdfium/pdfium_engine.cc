@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <iostream>
 #include <memory>
 #include <set>
 
@@ -539,67 +540,6 @@ bool FindMultipleClickBoundary(bool is_double_click, base::char16 cur) {
     return true;
 
   return false;
-}
-
-// Returns a VarDictionary (representing a bookmark), which in turn contains
-// child VarDictionaries (representing the child bookmarks).
-// If nullptr is passed in as the bookmark then we traverse from the "root".
-// Note that the "root" bookmark contains no useful information.
-pp::VarDictionary TraverseBookmarks(FPDF_DOCUMENT doc,
-                                    FPDF_BOOKMARK bookmark,
-                                    unsigned int depth) {
-  pp::VarDictionary dict;
-  base::string16 title;
-  unsigned long buffer_size = FPDFBookmark_GetTitle(bookmark, nullptr, 0);
-  if (buffer_size > 0) {
-    PDFiumAPIStringBufferSizeInBytesAdapter<base::string16> api_string_adapter(
-        &title, buffer_size, true);
-    api_string_adapter.Close(FPDFBookmark_GetTitle(
-        bookmark, api_string_adapter.GetData(), buffer_size));
-  }
-  dict.Set(pp::Var("title"), pp::Var(base::UTF16ToUTF8(title)));
-
-  FPDF_DEST dest = FPDFBookmark_GetDest(doc, bookmark);
-  // Some bookmarks don't have a page to select.
-  if (dest) {
-    int page_index = FPDFDest_GetPageIndex(doc, dest);
-    dict.Set(pp::Var("page"), pp::Var(page_index));
-  } else {
-    // Extract URI for bookmarks linking to an external page.
-    FPDF_ACTION action = FPDFBookmark_GetAction(bookmark);
-    buffer_size = FPDFAction_GetURIPath(doc, action, nullptr, 0);
-    if (buffer_size > 0) {
-      std::string uri;
-      PDFiumAPIStringBufferAdapter<std::string> api_string_adapter(
-          &uri, buffer_size, true);
-      api_string_adapter.Close(FPDFAction_GetURIPath(
-          doc, action, api_string_adapter.GetData(), buffer_size));
-      dict.Set(pp::Var("uri"), pp::Var(uri));
-    }
-  }
-
-  pp::VarArray children;
-
-  // Don't trust PDFium to handle circular bookmarks.
-  const unsigned int kMaxDepth = 128;
-  if (depth < kMaxDepth) {
-    int child_index = 0;
-    std::set<FPDF_BOOKMARK> seen_bookmarks;
-    for (FPDF_BOOKMARK child_bookmark =
-             FPDFBookmark_GetFirstChild(doc, bookmark);
-         child_bookmark;
-         child_bookmark = FPDFBookmark_GetNextSibling(doc, child_bookmark)) {
-      if (base::ContainsKey(seen_bookmarks, child_bookmark))
-        break;
-
-      seen_bookmarks.insert(child_bookmark);
-      children.Set(child_index,
-                   TraverseBookmarks(doc, child_bookmark, depth + 1));
-      child_index++;
-    }
-  }
-  dict.Set(pp::Var("children"), children);
-  return dict;
 }
 
 std::string GetDocumentMetadata(FPDF_DOCUMENT doc, const std::string& key) {
@@ -1843,6 +1783,8 @@ bool PDFiumEngine::OnLeftMouseDown(const pp::MouseInputEvent& event) {
   pp::Point point = event.GetPosition();
   PDFiumPage::Area area =
       GetCharIndex(point, &page_index, &char_index, &form_type, &target);
+  std::cerr << "PDFiumEngine::OnLeftMouseDown page_index " << page_index
+            << std::endl;
   DCHECK_GE(form_type, FPDF_FORMFIELD_UNKNOWN);
   mouse_down_state_.Set(area, target);
 
@@ -2644,9 +2586,74 @@ int PDFiumEngine::GetNumberOfPages() {
 }
 
 pp::VarArray PDFiumEngine::GetBookmarks() {
-  pp::VarDictionary dict = TraverseBookmarks(doc_, nullptr, 0);
+  pp::VarDictionary dict = TraverseBookmarks(nullptr, 0);
   // The root bookmark contains no useful information.
   return pp::VarArray(dict.Get(pp::Var("children")));
+}
+
+// Returns a VarDictionary (representing a bookmark), which in turn contains
+// child VarDictionaries (representing the child bookmarks).
+// If nullptr is passed in as the bookmark then we traverse from the "root".
+// Note that the "root" bookmark contains no useful information.
+pp::VarDictionary PDFiumEngine::TraverseBookmarks(FPDF_BOOKMARK bookmark,
+                                                  unsigned int depth) {
+  pp::VarDictionary dict;
+  base::string16 title;
+  unsigned long buffer_size = FPDFBookmark_GetTitle(bookmark, nullptr, 0);
+  if (buffer_size > 0) {
+    PDFiumAPIStringBufferSizeInBytesAdapter<base::string16> api_string_adapter(
+        &title, buffer_size, true);
+    api_string_adapter.Close(FPDFBookmark_GetTitle(
+        bookmark, api_string_adapter.GetData(), buffer_size));
+  }
+  dict.Set(pp::Var("title"), pp::Var(base::UTF16ToUTF8(title)));
+
+  FPDF_DEST dest = FPDFBookmark_GetDest(doc_, bookmark);
+  // Some bookmarks don't have a page to select.
+  if (dest) {
+    int page_index = FPDFDest_GetPageIndex(doc_, dest);
+    dict.Set(pp::Var("page"), pp::Var(page_index));
+    PDFiumPage::LinkTarget target;
+    target.y_in_pixels = 0;
+    pages_[page_index]->GetPage();
+    pages_[page_index]->GetDestinationTarget(dest, &target);
+    if (target.y_in_pixels != 0)
+      dict.Set(pp::Var("y"), pp::Var(target.y_in_pixels));
+  } else {
+    // Extract URI for bookmarks linking to an external page.
+    FPDF_ACTION action = FPDFBookmark_GetAction(bookmark);
+    buffer_size = FPDFAction_GetURIPath(doc_, action, nullptr, 0);
+    if (buffer_size > 0) {
+      std::string uri;
+      PDFiumAPIStringBufferAdapter<std::string> api_string_adapter(
+          &uri, buffer_size, true);
+      api_string_adapter.Close(FPDFAction_GetURIPath(
+          doc_, action, api_string_adapter.GetData(), buffer_size));
+      dict.Set(pp::Var("uri"), pp::Var(uri));
+    }
+  }
+
+  pp::VarArray children;
+
+  // Don't trust PDFium to handle circular bookmarks.
+  const unsigned int kMaxDepth = 128;
+  if (depth < kMaxDepth) {
+    int child_index = 0;
+    std::set<FPDF_BOOKMARK> seen_bookmarks;
+    for (FPDF_BOOKMARK child_bookmark =
+             FPDFBookmark_GetFirstChild(doc_, bookmark);
+         child_bookmark;
+         child_bookmark = FPDFBookmark_GetNextSibling(doc_, child_bookmark)) {
+      if (base::ContainsKey(seen_bookmarks, child_bookmark))
+        break;
+
+      seen_bookmarks.insert(child_bookmark);
+      children.Set(child_index, TraverseBookmarks(child_bookmark, depth + 1));
+      child_index++;
+    }
+  }
+  dict.Set(pp::Var("children"), children);
+  return dict;
 }
 
 int PDFiumEngine::GetNamedDestinationPage(const std::string& destination) {
@@ -3117,6 +3124,7 @@ bool PDFiumEngine::IsPageVisible(int index) const {
 }
 
 void PDFiumEngine::ScrollToPage(int page) {
+  std::cerr << "PDFiumEngine::ScrollToPage page " << page << std::endl;
   if (!PageIndexInBounds(page))
     return;
 
