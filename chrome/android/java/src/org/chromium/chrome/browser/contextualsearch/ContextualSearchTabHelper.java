@@ -9,6 +9,7 @@ import android.view.ContextMenu;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.SelectionClientManager;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.locale.LocaleManager;
@@ -42,6 +43,8 @@ public class ContextualSearchTabHelper
      */
     private GestureStateListener mGestureStateListener;
 
+    private SelectionClientManager mSelectionClientManager;
+
     private long mNativeHelper;
 
     private final Tab mTab;
@@ -50,8 +53,8 @@ public class ContextualSearchTabHelper
      * Creates a contextual search tab helper for the given tab.
      * @param tab The tab whose contextual search actions will be handled by this helper.
      */
-    public static void createForTab(Tab tab) {
-        new ContextualSearchTabHelper(tab);
+    public static ContextualSearchTabHelper createForTab(Tab tab) {
+        return new ContextualSearchTabHelper(tab);
     }
 
     private ContextualSearchTabHelper(Tab tab) {
@@ -60,6 +63,14 @@ public class ContextualSearchTabHelper
         // Connect to a network, unless under test.
         if (NetworkChangeNotifier.isInitialized()) {
             NetworkChangeNotifier.addConnectionTypeObserver(this);
+        }
+    }
+
+    public void setSelectionClientManager(SelectionClientManager selectionClientManager) {
+        mSelectionClientManager = selectionClientManager;
+        ContextualSearchManager manager = getContextualSearchManager();
+        if (manager != null) {
+            manager.suppressContextualSearchForSmartSelection(selectionClientManager.isEnabled());
         }
     }
 
@@ -195,7 +206,8 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener == null && manager != null) {
             mGestureStateListener = manager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            cvc.setSelectionClient(mSelectionClientManager.setContextualSearchSelectionClient(
+                    manager.getContextualSearchSelectionClient()));
         }
     }
 
@@ -209,7 +221,8 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.setSelectionClient(
+                    mSelectionClientManager.setContextualSearchSelectionClient(null));
         }
     }
 

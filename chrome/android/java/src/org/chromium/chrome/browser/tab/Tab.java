@@ -47,6 +47,7 @@ import org.chromium.chrome.browser.FrozenNativePage;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.IntentHandler.TabOpenType;
 import org.chromium.chrome.browser.NativePage;
+import org.chromium.chrome.browser.SelectionClientManager;
 import org.chromium.chrome.browser.SwipeRefreshHandler;
 import org.chromium.chrome.browser.TabState;
 import org.chromium.chrome.browser.TabState.WebContentsState;
@@ -465,6 +466,8 @@ public class Tab
 
     private BrowserControlsVisibilityDelegate mBrowserControlsVisibilityDelegate;
 
+    private final ContextualSearchTabHelper mContextualSearchTabHelper;
+
     /**
      * Creates an instance of a {@link Tab}.
      *
@@ -526,7 +529,7 @@ public class Tab
             CipherFactory.getInstance().triggerKeyGeneration();
         }
 
-        ContextualSearchTabHelper.createForTab(this);
+        mContextualSearchTabHelper = ContextualSearchTabHelper.createForTab(this);
         MediaSessionTabHelper.createForTab(this);
 
         if (creationState != null) {
@@ -1649,6 +1652,11 @@ public class Tab
         ChromeActionModeCallback actionModeCallback = new ChromeActionModeCallback(
                 mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
         cvc.setActionModeCallback(actionModeCallback);
+        SelectionClientManager selectionClientManager =
+                new SelectionClientManager(cvc, getWindowAndroid(), webContents);
+        mContextualSearchTabHelper.setSelectionClientManager(selectionClientManager);
+        cvc.setSelectionClient(selectionClientManager);
+
         return cvc;
     }
 
