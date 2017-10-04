@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2dc1502c_0c9993ce",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-04T17:04:39Z",
+      "side": 1,
+      "message": "Some of these (e.g. HistogramOpenStatus) might not strictly be necessary, due to argument-dependent lookup -- however, I\u0027ve got no objection to including them anyway; explicitness is good.",
+      "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27dca9aa_6ef5c6d9",
         "filename": "content/browser/indexed_db/indexed_db_reporting.h",
         "patchSetId": 2
@@ -31,6 +48,23 @@
       "side": 1,
       "message": "As discussed in chat, this would be a change for later, as this is a purely-move-only cl (no code change).",
       "parentUuid": "27dca9aa_6ef5c6d9",
+      "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34433c44_89d692c6",
+        "filename": "content/browser/indexed_db/indexed_db_reporting.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-04T17:04:39Z",
+      "side": 1,
+      "message": "These macro names are a little generic, so there\u0027s some risk of collision now that they\u0027re in a header file, but that can be dealt with if/when it happens.",
       "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
