@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd4293e2_58b36023",
+        "filename": "chrome/browser/ui/blocked_content/popup_opener_tab_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-04T17:47:13Z",
+      "side": 0,
+      "message": "Can be removed",
+      "revId": "344f3cdc9c447ceb62f1d3e46669869cb7deffe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7614dc_bd66f795",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-04T17:47:13Z",
+      "side": 0,
+      "message": "Can be private now.",
+      "range": {
+        "startLine": 57,
+        "startChar": 14,
+        "endLine": 57,
+        "endChar": 40
+      },
+      "revId": "344f3cdc9c447ceb62f1d3e46669869cb7deffe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
