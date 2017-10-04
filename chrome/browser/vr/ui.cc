@@ -28,7 +28,10 @@ Ui::Ui(UiBrowserInterface* browser,
                                                model_.get(),
                                                ui_initial_state)),
       input_manager_(base::MakeUnique<vr::UiInputManager>(scene_.get())),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  model_->started_for_autopresentation =
+      ui_initial_state.web_vr_autopresentation_expected;
+}
 
 Ui::~Ui() = default;
 
@@ -109,7 +112,8 @@ void Ui::OnGlInitialized(unsigned int content_texture_id,
 }
 
 void Ui::OnAppButtonClicked() {
-  scene_manager_->OnAppButtonClicked();
+  OnWebVrTimeoutPending();
+  //scene_manager_->OnAppButtonClicked();
 }
 
 void Ui::OnAppButtonGesturePerformed(UiInterface::Direction direction) {
@@ -124,8 +128,13 @@ void Ui::OnWebVrFrameAvailable() {
   scene_manager_->OnWebVrFrameAvailable();
 }
 
+void Ui::OnWebVrTimeoutPending() {
+  model_->web_vr_timeout_state = kWebVrTimeoutPending;
+}
+
 void Ui::OnWebVrTimedOut() {
-  scene_manager_->OnWebVrTimedOut();
+  model_->web_vr_timeout_state = kWebVrTimedOut;
+//  scene_manager_->OnWebVrTimedOut();
 }
 
 }  // namespace vr

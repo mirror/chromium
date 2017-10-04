@@ -63,9 +63,9 @@ void InsecureContentPermanentTexture::Draw(SkCanvas* sk_canvas,
       IsRTL() ? 4 * kBorderFactor * size_.height() + text_size.width()
               : size_.height() * kBorderFactor,
       size_.height() * (1.0 - kIconSizeFactor) / 2.0);
-  DrawVectorIcon(canvas, vector_icons::kInfoOutlineIcon,
-                 size_.height() * kIconSizeFactor, icon_location,
-                 color_scheme().permanent_warning_foreground);
+  VectorIcon::DrawVectorIcon(canvas, vector_icons::kInfoOutlineIcon,
+                             size_.height() * kIconSizeFactor, icon_location,
+                             color_scheme().permanent_warning_foreground);
 
   canvas->Save();
   canvas->Translate(gfx::Vector2d(

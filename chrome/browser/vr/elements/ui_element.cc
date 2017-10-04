@@ -61,15 +61,26 @@ void UiElement::Render(UiElementRenderer* renderer,
 
 void UiElement::Initialize() {}
 
-void UiElement::OnHoverEnter(const gfx::PointF& position) {}
+void UiElement::OnHoverEnter(const gfx::PointF& position) {
+  hovered_ = true;
+}
 
-void UiElement::OnHoverLeave() {}
+void UiElement::OnHoverLeave() {
+  hovered_ = false;
+}
 
 void UiElement::OnMove(const gfx::PointF& position) {}
 
-void UiElement::OnButtonDown(const gfx::PointF& position) {}
+void UiElement::OnButtonDown(const gfx::PointF& position) {
+  pressed_ = true;
+}
 
-void UiElement::OnButtonUp(const gfx::PointF& position) {}
+void UiElement::OnButtonUp(const gfx::PointF& position) {
+  pressed_ = false;
+  //if (click_handler_) {
+    click_handler_.Run();
+ // }
+}
 
 void UiElement::OnFlingStart(std::unique_ptr<blink::WebGestureEvent> gesture,
                              const gfx::PointF& position) {}
@@ -185,8 +196,43 @@ float UiElement::computed_opacity() const {
 }
 
 bool UiElement::HitTest(const gfx::PointF& point) const {
-  return point.x() >= 0.0f && point.x() <= 1.0f && point.y() >= 0.0f &&
-         point.y() <= 1.0f;
+  if (point.x() < 0.0f || point.x() > 1.0f || point.y() < 0.0f ||
+         point.y() > 1.0f) {
+    return false;
+  }
+  if (corner_radius_ <= 0.0f) {
+    return false;
+  }
+  gfx::PointF scaled = point;
+  scaled.Scale(size_.width(), size_.height());
+  float corner_radius_squared = corner_radius_ * corner_radius_;
+
+  if (scaled.x() < corner_radius_ && scaled.y() < corner_radius_) {
+    if ((scaled - gfx::PointF(corner_radius_, corner_radius_)).LengthSquared() >
+        corner_radius_squared) {
+      return false;
+    }
+  } else if (scaled.x() < corner_radius_ &&
+             scaled.y() > size_.height() - corner_radius_) {
+    if ((scaled - gfx::PointF(corner_radius_, size_.height() - corner_radius_))
+            .LengthSquared() > corner_radius_squared) {
+      return false;
+    }
+  } else if (scaled.x() > size_.width() - corner_radius_ &&
+             scaled.y() < corner_radius_) {
+    if ((scaled - gfx::PointF(size_.width() - corner_radius_, corner_radius_))
+            .LengthSquared() > corner_radius_squared) {
+      return false;
+    }
+  } else if (scaled.x() < size_.width() - corner_radius_ &&
+             scaled.y() > size_.height() - corner_radius_) {
+    if ((scaled - gfx::PointF(size_.width() - corner_radius_,
+                              size_.height() - corner_radius_))
+            .LengthSquared() > corner_radius_squared) {
+      return false;
+    }
+  }
+  return true;
 }
 
 void UiElement::SetMode(ColorScheme::Mode mode) {
@@ -277,10 +323,10 @@ bool UiElement::GetRayDistance(const gfx::Point3F& ray_origin,
                              distance);
 }
 
-void UiElement::NotifyClientFloatAnimated(float opacity,
+void UiElement::NotifyClientFloatAnimated(float value,
                                           int target_property_id,
                                           cc::Animation* animation) {
-  opacity_ = base::ClampToRange(opacity, 0.0f, 1.0f);
+  opacity_ = base::ClampToRange(value, 0.0f, 1.0f);
 }
 
 void UiElement::NotifyClientTransformOperationsAnimated(

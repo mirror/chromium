@@ -9,6 +9,7 @@
 #include <string>
 #include <vector>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "cc/animation/animation_target.h"
 #include "cc/animation/transform_operations.h"
@@ -231,15 +232,15 @@ class UiElement : public cc::AnimationTarget {
       const gfx::Point3F& world_point) const;
 
   // cc::AnimationTarget
-  void NotifyClientFloatAnimated(float opacity,
-                                 int transform_property_id,
+  void NotifyClientFloatAnimated(float value,
+                                 int target_property_id,
                                  cc::Animation* animation) override;
   void NotifyClientTransformOperationsAnimated(
       const cc::TransformOperations& operations,
-      int transform_property_id,
+      int target_property_id,
       cc::Animation* animation) override;
   void NotifyClientSizeAnimated(const gfx::SizeF& size,
-                                int transform_property_id,
+                                int target_property_id,
                                 cc::Animation* animation) override;
 
   void SetTransitionedProperties(const std::set<TargetProperty>& properties);
@@ -283,6 +284,13 @@ class UiElement : public cc::AnimationTarget {
 
   void set_update_phase(UpdatePhase phase) { phase_ = phase; }
 
+  bool hovered() const { return hovered_; }
+  bool pressed() const { return pressed_; }
+
+  void set_click_handler(base::Callback<void()> callback) {
+    click_handler_ = callback;
+  }
+
  protected:
   virtual void OnSetMode();
   virtual void OnUpdatedWorldSpaceTransform();
@@ -320,6 +328,12 @@ class UiElement : public cc::AnimationTarget {
   // The corner radius of the object. Analogous to the CSS property,
   // border-radius. This is in meters (same units as |size|).
   float corner_radius_ = 0.0f;
+
+  // This is true if the reticle is hovering the element.
+  bool hovered_ = false;
+
+  // This is true if the reticle is hovering the element.
+  bool pressed_ = false;
 
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity_ = 1.0f;
@@ -366,6 +380,8 @@ class UiElement : public cc::AnimationTarget {
   std::vector<std::unique_ptr<BindingBase>> bindings_;
 
   UpdatePhase phase_ = kClean;
+
+  base::Callback<void()> click_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(UiElement);
 };

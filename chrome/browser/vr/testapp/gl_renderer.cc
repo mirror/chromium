@@ -5,10 +5,12 @@
 #include "chrome/browser/vr/testapp/gl_renderer.h"
 
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "chrome/browser/vr/testapp/vr_test_context.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_surface.h"
+#include "ui/gl/gl_surface_format.h"
 #include "ui/gl/init/gl_factory.h"
 
 namespace vr {
@@ -48,9 +50,10 @@ void GlRenderer::RenderFrame() {
 }
 
 void GlRenderer::PostRenderFrameTask(gfx::SwapResult result) {
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE,
-      base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()));
+      base::Bind(&GlRenderer::RenderFrame, weak_ptr_factory_.GetWeakPtr()),
+      base::TimeDelta::FromSecondsD(1.0 / 60.0));
 }
 
 }  // namespace vr
