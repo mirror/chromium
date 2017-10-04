@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "34936ec4_e99db883",
+        "filename": "sandbox/win/src/acl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-04T22:58:35Z",
+      "side": 1,
+      "message": "presubmit won\u0027t move common blocks if they are in alphabetical order, and in this case windows.h is fine being below accctrl.h - so leaving it in a common block seems fine to me.",
+      "parentUuid": "540aec1c_fb76e7b2",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 17
+      },
+      "revId": "5b3acac7e000c03784d7836cf34784df080f39cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "818550e6_ef42ba6c",
         "filename": "sandbox/win/src/broker_services.cc",
         "patchSetId": 3
@@ -188,6 +212,30 @@
       "revId": "5b3acac7e000c03784d7836cf34784df080f39cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745d7cf4_8b6eb37e",
+        "filename": "sandbox/win/src/file_policy_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-04T22:58:35Z",
+      "side": 1,
+      "message": "there\u0027s times when windows.h has to be before other includes, so that\u0027s when we put it in its own block to avoid presubmit from re-ordering it. but in the cases where it\u0027s happy living with other windows includes in any order, or the order works, then I think having them in a block on its own is fine.\n\nI don\u0027t think there is a rule of \u0027always put windows.h on its own\u0027 it\u0027s more \u0027put windows.h before other headers that break if it\u0027s not before them, and avoid presubmit from reodering it\u0027.",
+      "parentUuid": "4c2067e5_bb8d5822",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "5b3acac7e000c03784d7836cf34784df080f39cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
