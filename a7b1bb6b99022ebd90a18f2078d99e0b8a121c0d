@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8739b571_b819cf5d",
+        "filename": "third_party/WebKit/public/web/WebLocalFrame.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T09:35:29Z",
+      "side": 1,
+      "message": "Nit: no _ (and please don\u0027t add bool default arguments; please add an enum and use that instead, since it makes it obvious what the parameter means at the callsites)",
+      "range": {
+        "startLine": 84,
+        "startChar": 34,
+        "endLine": 84,
+        "endChar": 35
+      },
+      "revId": "a7b1bb6b99022ebd90a18f2078d99e0b8a121c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
