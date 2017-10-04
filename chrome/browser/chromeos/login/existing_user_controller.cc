@@ -1022,8 +1022,12 @@ void ExistingUserController::OnPolicyFetchResult(
     PolicyFetchResult result,
     std::unique_ptr<enterprise_management::CloudPolicySettings>
         policy_payload) {
-  apu::EcryptfsMigrationAction action =
-      apu::EcryptfsMigrationAction::kDisallowMigration;
+  const bool active_directory_user =
+      user_context.GetUserType() ==
+      user_manager::UserType::USER_TYPE_ACTIVE_DIRECTORY;
+  const apu::EcryptfsMigrationAction unset_policy_action =
+      apu::GetDefaultEcryptfsMigrationAction(active_directory_user);
+  apu::EcryptfsMigrationAction action = unset_policy_action;
   if (result == PolicyFetchResult::NO_POLICY) {
     // There was no policy, the user is unmanaged. They get to choose themselves
     // if they'd like to migrate.
@@ -1035,16 +1039,15 @@ void ExistingUserController::OnPolicyFetchResult(
     if (!DecodeMigrationActionFromPolicy(policy_payload.get(), &action)) {
       // User policy was present, but the EcryptfsMigrationStrategy policy value
       // was not there. Stay on the safe side and don't start migration.
-      action = apu::EcryptfsMigrationAction::kDisallowMigration;
+      action = unset_policy_action;
     }
   } else {
-    // We don't know if the user has policy or not. Stay on the safe side and
-    // don't start migration.
+    // We don't know if the user has policy or not.
     VLOG(1) << "Policy pre-fetch: User policy could not be fetched. Result: "
             << static_cast<int>(result);
-    action = apu::EcryptfsMigrationAction::kDisallowMigration;
   }
-  VLOG(1) << "Migration action: " << static_cast<int>(action);
+  VLOG(1) << "Migration action (user_type=" << user_context.GetUserType()
+          << ": " << static_cast<int>(action);
 
   switch (action) {
     case apu::EcryptfsMigrationAction::kDisallowMigration:

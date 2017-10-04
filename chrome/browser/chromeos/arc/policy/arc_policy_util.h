@@ -8,6 +8,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include "components/user_manager/user_type.h"
+
 class Profile;
 
 namespace arc {
@@ -41,6 +43,13 @@ bool IsAccountManaged(Profile* profile);
 
 // Returns true if ARC is disabled by --enterprise-diable-arc flag.
 bool IsArcDisabledForEnterprise();
+
+// Returns the default ecryptfs migration action for unset policy.
+// |active_directory_user| specifies if the user authenticates with active
+// directory. We have a separate default for active directory users, as these
+// are assumed to be enterprise users.
+EcryptfsMigrationAction GetDefaultEcryptfsMigrationAction(
+    bool active_directory_user);
 
 }  // namespace policy_util
 }  // namespace arc

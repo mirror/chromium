@@ -117,8 +117,25 @@ bool IsReportingFirstTimeForProfile(const Profile* profile) {
 }
 
 bool IsArcMigrationAllowedInternal(const Profile* profile) {
-  int migration_strategy =
-      profile->GetPrefs()->GetInteger(prefs::kEcryptfsMigrationStrategy);
+  // Always allow migration for unmanaged users.
+  // We're checking if kArcEnabled is managed to find out if the profile is
+  // managed. This is equivalent, because kArcEnabled is marked
+  // 'default_for_enterprise_users': False in policy_templates.json).
+  // TODO(pmarko): crbug.com/771666: Figure out a nicer way to do this on a
+  // const Profile*.
+  if (!profile || !profile->GetPrefs()->IsManagedPreference(prefs::kArcEnabled))
+    return true;
+
+  int migration_strategy;
+  if (!profile->GetPrefs()->IsManagedPreference(
+          prefs::kEcryptfsMigrationStrategy)) {
+    migration_strategy =
+        static_cast<int>(arc::policy_util::GetDefaultEcryptfsMigrationAction(
+            IsActiveDirectoryUserForProfile(profile)));
+  } else {
+    migration_strategy =
+        profile->GetPrefs()->GetInteger(prefs::kEcryptfsMigrationStrategy);
+  }
   // |kAskForEcryptfsArcUsers| value is received only if the device is in EDU
   // and admin left the migration policy unset. Note that when enabling ARC on
   // the admin console, it is mandatory for the administrator to also choose a
@@ -224,11 +241,6 @@ bool IsArcAllowedForProfile(const Profile* profile) {
 }
 
 bool IsArcMigrationAllowedByPolicyForProfile(const Profile* profile) {
-  if (!profile || !profile->GetPrefs()->IsManagedPreference(
-                      prefs::kEcryptfsMigrationStrategy)) {
-    return true;
-  }
-
   // Use the profile path as unique identifier for profile.
   const base::FilePath path = profile->GetPath();
   auto iter = g_is_arc_migration_allowed.Get().find(path);
