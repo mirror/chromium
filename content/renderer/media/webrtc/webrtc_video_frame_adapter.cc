@@ -29,6 +29,12 @@ class I420Adapter : public webrtc::I420BufferInterface {
     return frame_->visible_data(media::VideoFrame::kVPlane);
   }
 
+  const uint8_t* DataA() const override {
+    if (media::PIXEL_FORMAT_YV12A == frame_->format())
+      return frame_->visible_data(media::VideoFrame::kAPlane);
+    return nullptr;
+  }
+
   int StrideY() const override {
     return frame_->stride(media::VideoFrame::kYPlane);
   }
@@ -41,6 +47,12 @@ class I420Adapter : public webrtc::I420BufferInterface {
     return frame_->stride(media::VideoFrame::kVPlane);
   }
 
+  int StrideA() const override {
+    if (media::PIXEL_FORMAT_YV12A == frame_->format())
+      return frame_->stride(media::VideoFrame::kAPlane);
+    return 0;
+  }
+
   scoped_refptr<media::VideoFrame> frame_;
 };
 
@@ -51,7 +63,8 @@ void IsValidFrame(const scoped_refptr<media::VideoFrame>& frame) {
       frame->format(), frame->storage_type(), frame->coded_size(),
       frame->visible_rect(), frame->natural_size()));
   DCHECK(media::PIXEL_FORMAT_I420 == frame->format() ||
-         media::PIXEL_FORMAT_YV12 == frame->format());
+         media::PIXEL_FORMAT_YV12 == frame->format() ||
+         media::PIXEL_FORMAT_YV12A == frame->format());
   CHECK(reinterpret_cast<void*>(frame->data(media::VideoFrame::kYPlane)));
   CHECK(reinterpret_cast<void*>(frame->data(media::VideoFrame::kUPlane)));
   CHECK(reinterpret_cast<void*>(frame->data(media::VideoFrame::kVPlane)));

@@ -250,10 +250,10 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
         }
       } else {
         DCHECK_GE(frame_resources_.size(), 3u);
-        DCHECK(frame_resources_.size() <= 3 ||
-               ya_tex_size == media::VideoFrame::PlaneSize(
-                                  frame_->format(), media::VideoFrame::kAPlane,
-                                  coded_size));
+        // DCHECK(frame_resources_.size() <= 3 ||
+        //        ya_tex_size == media::VideoFrame::PlaneSize(
+        //                           frame_->format(),
+        //                           media::VideoFrame::kAPlane, coded_size));
       }
 
       // Compute the UV sub-sampling factor based on the ratio between
