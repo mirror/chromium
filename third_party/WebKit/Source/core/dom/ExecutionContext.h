@@ -68,6 +68,15 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   WTF_MAKE_NONCOPYABLE(ExecutionContext);
 
  public:
+  typedef int IsGarbageCollectedMixinMarker;
+  HeapObjectHeader* GetHeapObjectHeader() const override {
+    NOTREACHED();
+    return nullptr;
+  }
+  void AdjustAndMark(Visitor*) const override {
+    NOTREACHED();
+  }
+
   DECLARE_VIRTUAL_TRACE();
 
   static ExecutionContext* From(const ScriptState*);
