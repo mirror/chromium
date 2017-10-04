@@ -269,6 +269,7 @@ public final class CronetUploadDataStream extends UploadDataSink {
      * Posts task to application Executor.
      */
     void postTaskToExecutor(Runnable task) {
+        assert mRequest != null : "can only be called after initializeWithRequest()";
         try {
             mExecutor.execute(task);
         } catch (Throwable e) {
