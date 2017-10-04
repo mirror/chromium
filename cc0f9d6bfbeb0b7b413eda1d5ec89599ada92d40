@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07636bc9_0a338a82",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:40:19Z",
+      "side": 1,
+      "message": "On a quick looks it seems like chrome_main is not compiled on android, where as chrome_browser_main is. I assume you want the profiler on android, so could you verify this file is compiled on android?",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 37
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df1f87d_a3818837",
+        "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T17:40:19Z",
+      "side": 1,
+      "message": "Style guide says static function locals should only be PODs (unless this can be a constexpr).",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
