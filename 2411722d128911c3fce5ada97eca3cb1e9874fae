@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30be07f1_cc0a8179",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-04T22:47:44Z",
+      "side": 1,
+      "message": "Add a comment that layer animation is needed for animation.",
+      "revId": "2411722d128911c3fce5ada97eca3cb1e9874fae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
