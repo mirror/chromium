@@ -91,9 +91,8 @@ public class NewTabPageLoadTest {
         }
 
         @Override
-        public void recordTileImpression(
-                int index, int type, int nameSource, int source, String url) {
-            assertNotEquals(TileVisualType.NONE, type);
+        public void recordTileImpression(Tile tile) {
+            assertNotEquals(TileVisualType.NONE, tile.getType());
         }
     }
 
