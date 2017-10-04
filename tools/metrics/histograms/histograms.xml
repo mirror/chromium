@@ -57286,6 +57286,47 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Permissions.Battery.GeolocationAccepted" units="BatteryDecile">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Battery percentage when a geolocation permission prompt was accepted for
+    Android. The histogram value is floor(battery/10).
+  </summary>
+</histogram>
+
+<histogram name="Permissions.Battery.GeolocationDenied" units="BatteryDecile">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Battery percentage when a geolocation permission prompt was accepted for
+    Android. The histogram value is floor(battery/10).
+  </summary>
+</histogram>
+
+<histogram name="Permissions.Battery.GeolocationDismissed"
+    units="BatteryDecile">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Battery percentage when a geolocation permission prompt was accepted for
+    Android. The histogram value is floor(battery/10).
+  </summary>
+</histogram>
+
+<histogram name="Permissions.Battery.LSDAccepted" units="BatteryDecile">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Battery percentage when a geolocation permission prompt was accepted for
+    Android. The histogram value is floor(battery/10).
+  </summary>
+</histogram>
+
+<histogram name="Permissions.Battery.LSDDenied" units="BatteryDecile">
+  <owner>timloh@chromium.org</owner>
+  <summary>
+    Battery percentage when a geolocation permission prompt was accepted for
+    Android. The histogram value is floor(battery/10).
+  </summary>
+</histogram>
+
 <histogram name="Permissions.Engagement.Accepted" units="%">
   <owner>dominickn@chromium.org</owner>
   <owner>kcarattini@chromium.org</owner>
