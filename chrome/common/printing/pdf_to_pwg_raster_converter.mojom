@@ -21,7 +21,7 @@ struct PDFRenderSettings {
 
   gfx.mojom.Rect area;
   gfx.mojom.Point offsets;
-  int32 dpi;
+  gfx.mojom.Size dpi;
   bool autorotate;
   Mode mode;
 };

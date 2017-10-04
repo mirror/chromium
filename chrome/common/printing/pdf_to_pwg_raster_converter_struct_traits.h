@@ -79,7 +79,7 @@ class StructTraits<printing::mojom::PDFRenderSettingsDataView,
   static gfx::Point offsets(const printing::PdfRenderSettings& settings) {
     return settings.offsets;
   }
-  static int32_t dpi(const printing::PdfRenderSettings& settings) {
+  static gfx::Size dpi(const printing::PdfRenderSettings& settings) {
     return settings.dpi;
   }
   static bool autorotate(const printing::PdfRenderSettings& settings) {

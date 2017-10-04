@@ -278,9 +278,10 @@ void PrintJob::StartPdfToEmfConversion(
   DCHECK(!pdf_conversion_state_);
   pdf_conversion_state_ =
       base::MakeUnique<PdfConversionState>(page_size, content_area);
-  const int kPrinterDpi = settings().dpi();
   PdfRenderSettings settings(
-      content_area, gfx::Point(0, 0), kPrinterDpi, /*autorotate=*/true,
+      content_area, gfx::Point(0, 0),
+      gfx::Size(settings().dpi_horizontal(), settings().dpi_vertical()),
+      /*autorotate=*/true,
       print_text_with_gdi ? PdfRenderSettings::Mode::GDI_TEXT
                           : PdfRenderSettings::Mode::NORMAL);
   pdf_conversion_state_->Start(
@@ -324,11 +325,11 @@ void PrintJob::StartPdfToTextConversion(
   DCHECK(!pdf_conversion_state_);
   pdf_conversion_state_ =
       base::MakeUnique<PdfConversionState>(gfx::Size(), gfx::Rect());
-  const int kPrinterDpi = settings().dpi();
   gfx::Rect page_area = gfx::Rect(0, 0, page_size.width(), page_size.height());
-  PdfRenderSettings settings(page_area, gfx::Point(0, 0), kPrinterDpi,
-                             /*autorotate=*/true,
-                             PdfRenderSettings::Mode::TEXTONLY);
+  PdfRenderSettings settings(
+      page_area, gfx::Point(0, 0),
+      gfx::Size(settings().dpi_horizontal(), settings().dpi_vertical()),
+      /*autorotate=*/true, PdfRenderSettings::Mode::TEXTONLY);
   pdf_conversion_state_->Start(
       bytes, settings, base::Bind(&PrintJob::OnPdfConversionStarted, this));
 }
@@ -341,9 +342,10 @@ void PrintJob::StartPdfToPostScriptConversion(
   DCHECK(!pdf_conversion_state_);
   pdf_conversion_state_ = base::MakeUnique<PdfConversionState>(
       gfx::Size(), gfx::Rect());
-  const int kPrinterDpi = settings().dpi();
   PdfRenderSettings settings(
-      content_area, physical_offsets, kPrinterDpi, /*autorotate=*/true,
+      content_area, physical_offsets,
+      gfx::Size(settings().dpi_horizontal(), settings().dpi_vertical()),
+      /*autorotate=*/true,
       ps_level2 ? PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2
                 : PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3);
   pdf_conversion_state_->Start(
