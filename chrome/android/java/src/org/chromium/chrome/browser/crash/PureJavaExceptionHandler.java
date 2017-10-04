@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.crash;
 
+import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.MainDex;
 
 /**
@@ -38,7 +39,8 @@ public class PureJavaExceptionHandler implements Thread.UncaughtExceptionHandler
                 new PureJavaExceptionHandler(Thread.getDefaultUncaughtExceptionHandler()));
     }
 
-    public static void uninstallHandler() {
+    @CalledByNative
+    private static void uninstallHandler() {
         // The current handler can be in the middle of an exception handler chain. We do not know
         // about handlers before it. If resetting the uncaught exception handler to mParent, we lost
         // all the handlers before mParent. In order to disable this handler, globally setting a

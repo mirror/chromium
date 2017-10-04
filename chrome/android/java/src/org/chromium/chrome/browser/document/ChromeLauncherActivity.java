@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.chrome.browser.LaunchIntentDispatcher;
+import org.chromium.chrome.browser.crash.PureJavaExceptionHandler;
 
 /**
  * Dispatches incoming intents to the appropriate activity based on the current configuration and
@@ -24,6 +25,7 @@ public class ChromeLauncherActivity extends Activity {
         TraceEvent.begin("ChromeLauncherActivity.onCreate");
         try {
             super.onCreate(savedInstanceState);
+            PureJavaExceptionHandler.installHandler();
 
             @LaunchIntentDispatcher.Action
             int dispatchAction = LaunchIntentDispatcher.dispatch(this, getIntent());
