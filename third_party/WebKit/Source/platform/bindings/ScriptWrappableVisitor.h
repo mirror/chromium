@@ -18,7 +18,10 @@ namespace blink {
 class HeapObjectHeader;
 class ScriptWrappable;
 class ScriptWrappableVisitor;
+template <typename T>
+class Supplement;
 class TraceWrapperBase;
+class TraceWrapperBaseForSupplement;
 template <typename T>
 class TraceWrapperV8Reference;
 
@@ -189,7 +192,6 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
     MarkAndTraceWrappers(traceable);
   }
 
-  virtual void DispatchTraceWrappers(const TraceWrapperBase*) const;
   template <typename V8Type>
   void TraceWrappers(const TraceWrapperV8Reference<V8Type>& v8reference) const {
     TraceWrappers(v8reference.template Cast<v8::Value>());
@@ -200,16 +202,26 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
   // Mark wrappers in all worlds for the given ScriptWrappable as alive in V8.
   virtual void MarkWrappersInAllWorlds(const ScriptWrappable*) const;
 
+  virtual void DispatchTraceWrappers(const TraceWrapperBase*) const;
+  template <typename T>
+  void DispatchTraceWrappers(const Supplement<T>* traceable) const {
+    const TraceWrapperBaseForSupplement* base = traceable;
+    DispatchTraceWrappersForSupplement(base);
+  }
+  // Catch all handlers needed because of mixins except for Supplement<T>.
+  void DispatchTraceWrappers(const void*) const { NOTREACHED(); }
+
   void MarkWrappersInAllWorlds(const TraceWrapperBase*) const {
     // TraceWrapperBase cannot point to V8 and thus doesn't need to
     // mark wrappers.
   }
-
-  // Catch all handlers needed because of mixins.
-  void DispatchTraceWrappers(const void*) const { CHECK(false); }
-
-  // Catch all handlers needed because of mixins.
-  void MarkWrappersInAllWorlds(const void*) const { CHECK(false); }
+  template <typename T>
+  void MarkWrappersInAllWorlds(const Supplement<T>*) const {
+    // Supplement<T> which is not ScriptWrappable cannot point to V8 and thus
+    // doesn't need to mark wrappers.
+  }
+  // Catch all handlers needed because of mixins except for Supplement<T>.
+  void MarkWrappersInAllWorlds(const void*) const { NOTREACHED(); }
 
   // v8::EmbedderHeapTracer interface.
 
@@ -270,6 +282,12 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
     }
 #endif
   }
+
+  // Supplement-specific implementation of DispatchTraceWrappers.  The suffix of
+  // "ForSupplement" is necessary not to make this member function a candidate
+  // of overload resolutions.
+  void DispatchTraceWrappersForSupplement(
+      const TraceWrapperBaseForSupplement*) const;
 
   // Schedule an idle task to perform a lazy (incremental) clean up of
   // wrappers.
