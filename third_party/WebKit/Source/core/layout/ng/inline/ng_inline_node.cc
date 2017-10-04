@@ -24,6 +24,7 @@
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/inline/ng_text_fragment.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
+#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/ng/legacy_layout_tree_walking.h"
 #include "core/layout/ng/ng_box_fragment.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
@@ -282,6 +283,8 @@ template <typename OffsetMappingBuilder>
 LayoutBox* CollectInlinesInternal(
     LayoutNGBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
+  if (block->IsLayoutNGListItem())
+    ToLayoutNGListItem(block)->UpdateMarkerTextIfNeeded();
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
   LayoutBox* next_box = nullptr;
