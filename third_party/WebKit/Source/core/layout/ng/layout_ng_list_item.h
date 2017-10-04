@@ -22,6 +22,7 @@ class CORE_EXPORT LayoutNGListItem final : public LayoutNGBlockFlow {
   String MarkerTextWithoutSuffix() const;
 
   void OrdinalValueChanged();
+  void UpdateMarkerTextIfNeeded();
 
   const char* GetName() const override { return "LayoutNGListItem"; }
 
@@ -40,6 +41,8 @@ class CORE_EXPORT LayoutNGListItem final : public LayoutNGBlockFlow {
 
   ListItemOrdinal ordinal_;
   LayoutBlockFlow* marker_ = nullptr;
+
+  unsigned is_marker_text_updated_ : 1;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutNGListItem, IsLayoutNGListItem());

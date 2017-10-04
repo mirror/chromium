@@ -10,7 +10,7 @@
 namespace blink {
 
 LayoutNGListItem::LayoutNGListItem(Element* element)
-    : LayoutNGBlockFlow(element) {
+    : LayoutNGBlockFlow(element), is_marker_text_updated_(false) {
   SetInline(false);
 }
 
@@ -47,6 +47,12 @@ void LayoutNGListItem::StyleDidChange(StyleDifference diff,
 }
 
 void LayoutNGListItem::OrdinalValueChanged() {
+  is_marker_text_updated_ = false;
+}
+
+void LayoutNGListItem::UpdateMarkerTextIfNeeded() {
+  if (is_marker_text_updated_)
+    return;
   if (marker_)
     UpdateMarkerText(ToLayoutText(marker_->FirstChild()));
 }
@@ -56,6 +62,7 @@ void LayoutNGListItem::UpdateMarkerText(LayoutText* text) {
   StringBuilder marker_text_builder;
   MarkerText(&marker_text_builder, kWithSuffix);
   text->SetText(marker_text_builder.ToString().ReleaseImpl());
+  is_marker_text_updated_ = true;
 }
 
 void LayoutNGListItem::UpdateMarker() {
