@@ -86,7 +86,6 @@ void TraySessionLengthLimit::Update() {
   // Don't show notification or tray item until the user is logged in.
   if (!Shell::Get()->session_controller()->IsActiveUserSessionStarted())
     return;
-
   UpdateState();
   UpdateNotification();
   UpdateTrayBubbleView();
