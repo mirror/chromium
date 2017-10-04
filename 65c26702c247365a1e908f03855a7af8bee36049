@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d971d8b1_5f8935f7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-04T23:11:15Z",
+      "side": 1,
+      "message": "nit: This CL description is out-of-date with respect to the final CL that was landed; please try to keep the two in-sync in future - thanks!",
+      "revId": "65c26702c247365a1e908f03855a7af8bee36049",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
