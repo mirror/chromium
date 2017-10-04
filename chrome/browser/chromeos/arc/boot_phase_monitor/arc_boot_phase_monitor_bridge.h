@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -78,6 +79,10 @@ class ArcBootPhaseMonitorBridge
   // SessionRestoreObserver
   void OnSessionRestoreFinishedLoadingTabs() override;
 
+  // Called when ExtensionsServices finishes loading all extensions for the
+  // profile.
+  void OnExtensionsReady();
+
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
   void RecordFirstAppLaunchDelayUMAForTesting() {
     RecordFirstAppLaunchDelayUMAInternal();
@@ -102,6 +107,9 @@ class ArcBootPhaseMonitorBridge
   base::TimeTicks app_launch_time_;
   bool first_app_launch_delay_recorded_ = false;
   bool boot_completed_ = false;
+
+  // This has to be the last member variable in the class.
+  base::WeakPtrFactory<ArcBootPhaseMonitorBridge> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcBootPhaseMonitorBridge);
 };
