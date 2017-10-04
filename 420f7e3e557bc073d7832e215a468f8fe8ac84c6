@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2ab1cede_15f02100",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T22:29:41Z",
+      "side": 1,
+      "message": "optional nit: reorder immediately after RequestLockScreen() (kinda similar?)",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b1d213_ac4e8675",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T22:29:41Z",
+      "side": 1,
+      "message": "nit: sessiono",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbe84528_dd2e0cf8",
         "filename": "ash/session/session_controller.h",
         "patchSetId": 1
