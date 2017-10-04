@@ -222,13 +222,14 @@ TEST_F(ArcBootPhaseMonitorBridgeTest, TestRecordUMA_AppLaunchesAfterBoot) {
   EXPECT_EQ(1U, record_uma_counter());
 }
 
+// Tests that CPU restriction is disabled when tab restoration is done.
 TEST_F(ArcBootPhaseMonitorBridgeTest, TestOnSessionRestoreFinishedLoadingTabs) {
-  // Check that CPU restriction is disabled when tab restoration is done.
   EXPECT_EQ(0U, disable_cpu_restriction_counter());
   boot_phase_monitor_bridge()->OnSessionRestoreFinishedLoadingTabs();
   EXPECT_EQ(1U, disable_cpu_restriction_counter());
 }
 
+// Tests that nothing happens if tab restoration is done after ARC boot.
 TEST_F(ArcBootPhaseMonitorBridgeTest,
        TestOnSessionRestoreFinishedLoadingTabs_BootFirst) {
   // Tell |arc_session_manager_| that this is not opt-in boot.
@@ -240,6 +241,18 @@ TEST_F(ArcBootPhaseMonitorBridgeTest,
   EXPECT_EQ(0U, disable_cpu_restriction_counter());
   boot_phase_monitor_bridge()->OnSessionRestoreFinishedLoadingTabs();
   EXPECT_EQ(0U, disable_cpu_restriction_counter());
+}
+
+// Tests that OnExtensionsReady() does nothing by default.
+TEST_F(ArcBootPhaseMonitorBridgeTest, TestOnExtensionsReady) {
+  boot_phase_monitor_bridge()->OnExtensionsReady();
+  EXPECT_EQ(0U, disable_cpu_restriction_counter());
+}
+
+// Tests that OnExtensionsReady() relaxes the CPU restriction when ARC is
+// enabled by policy.
+TEST_F(ArcBootPhaseMonitorBridgeTest, TestOnExtensionsReady_PolicyEnabled) {
+  // wip
 }
 
 }  // namespace

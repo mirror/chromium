@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -15,6 +16,7 @@
 #include "components/arc/common/boot_phase_monitor.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
@@ -78,6 +80,10 @@ class ArcBootPhaseMonitorBridge
   // SessionRestoreObserver
   void OnSessionRestoreFinishedLoadingTabs() override;
 
+  // Called when ExtensionsServices finishes loading all extensions for the
+  // profile.
+  void OnExtensionsReady();
+
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
   void RecordFirstAppLaunchDelayUMAForTesting() {
     RecordFirstAppLaunchDelayUMAInternal();
@@ -88,6 +94,8 @@ class ArcBootPhaseMonitorBridge
  private:
   void RecordFirstAppLaunchDelayUMAInternal();
   void Reset();
+  void OnPreferenceChanged();
+  void MaybeThrottleInstance();
 
   THREAD_CHECKER(thread_checker_);
 
@@ -95,6 +103,10 @@ class ArcBootPhaseMonitorBridge
   const AccountId account_id_;
   mojo::Binding<mojom::BootPhaseMonitorHost> binding_;
   std::unique_ptr<Delegate> delegate_;
+  content::BrowserContext* const context_;
+  PrefChangeRegistrar pref_change_registrar_;
+
+  bool extensions_ready_ = false;
 
   // The following variables must be reset every time when the instance stops or
   // restarts.
@@ -102,6 +114,10 @@ class ArcBootPhaseMonitorBridge
   base::TimeTicks app_launch_time_;
   bool first_app_launch_delay_recorded_ = false;
   bool boot_completed_ = false;
+  bool enabled_by_policy_;
+
+  // This has to be the last member variable in the class.
+  base::WeakPtrFactory<ArcBootPhaseMonitorBridge> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcBootPhaseMonitorBridge);
 };
