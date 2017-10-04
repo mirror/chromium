@@ -7,6 +7,10 @@ package org.chromium.chrome.browser.media.router;
 /**
  * An interface components providing media sinks and routes need to implement to hooks up into
  * {@link ChromeMediaRouter}.
+ *
+ * Note: Empty-string origins passed through this interface should be considered
+ * "unique origins" from url::Origin for the purposes of comparison, and compared
+ * using OriginUtil#isSameOrigin.
  */
 public interface MediaRouteProvider {
     /**
