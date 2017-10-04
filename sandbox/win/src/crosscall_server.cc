@@ -10,7 +10,9 @@
 #include <string>
 #include <vector>
 
+#include "base/atomicops.h"
 #include "base/logging.h"
+#include "build/build_config.h"
 #include "sandbox/win/src/crosscall_client.h"
 #include "sandbox/win/src/crosscall_params.h"
 
@@ -155,7 +157,7 @@ CrossCallParamsEx* CrossCallParamsEx::CreateFromBuffer(void* buffer_base,
     // Avoid compiler optimizations across this point. Any value stored in
     // memory should be stored for real, and values previously read from memory
     // should be actually read.
-    _ReadWriteBarrier();
+    base::subtle::MemoryBarrier();
 
     min_declared_size = sizeof(CrossCallParams) +
                         ((param_count + 1) * sizeof(ParamInfo));
@@ -240,6 +242,8 @@ bool CrossCallParamsEx::GetParameterVoidPtr(uint32_t index, void** param) {
   return true;
 }
 
+// This code assumes that WCHAR is UTF16 which is only valid on Windows.
+#if defined(WCHAR_T_IS_UTF16)
 // Covers the common case of reading a string. Note that the string is not
 // scanned for invalid characters.
 bool CrossCallParamsEx::GetParameterStr(uint32_t index,
@@ -263,6 +267,13 @@ bool CrossCallParamsEx::GetParameterStr(uint32_t index,
   string->append(reinterpret_cast<wchar_t*>(start), size/(sizeof(wchar_t)));
   return true;
 }
+#else
+// Not implemented on this platform.
+bool CrossCallParamsEx::GetParameterStr(uint32_t index,
+                                        base::string16* string) {
+  return false;
+}
+#endif
 
 bool CrossCallParamsEx::GetParameterPtr(uint32_t index,
                                         uint32_t expected_size,
