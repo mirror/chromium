@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "127ea471_690a2c0e",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:36:13Z",
+      "side": 1,
+      "message": "This line will test that we did not handle dialog on Page.disable:\nEXPECT_TRUE(wc-\u003eIsJavaScriptDialogShowing());",
+      "revId": "790a985e2cc02e2f030d7a2731fcefbc09ee0088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b79aabe7_ca7e041b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4653,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:36:13Z",
+      "side": 1,
+      "message": "This can never happen!",
+      "revId": "790a985e2cc02e2f030d7a2731fcefbc09ee0088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
