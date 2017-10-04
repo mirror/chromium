@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fda246c9_ca0315c9",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T17:52:22Z",
+      "side": 1,
+      "message": "Will OffsetFromOrigin ever be non-0?",
+      "range": {
+        "startLine": 442,
+        "startChar": 10,
+        "endLine": 442,
+        "endChar": 34
+      },
+      "revId": "632842bae48b25663ed4ba3b9e959f46b89611ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b01b8964_b4b63bec",
         "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
         "patchSetId": 1
@@ -13,6 +36,52 @@
       "writtenOn": "2017-10-04T16:58:32Z",
       "side": 1,
       "message": "I don\u0027t know enough about this system to know if these space conversions are correct.  Is there somebody else who knows this better who can review it?\n\nAlternatively, can you add more tests? Such as ones that include a page scale factor and edge case differentiation between an error on one pixel and a successful one on the pixel next to it? I\u0027m not quite sure what the correct view rect is for this test either.\n\nIt seems like maybe a test that using the default start_x/start_y from SmoothScrollBy and having that succeed would be good as well?\n\nSorry for all the questions.  I just don\u0027t know this code enough to review this well.",
+      "revId": "632842bae48b25663ed4ba3b9e959f46b89611ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "596c1f6e_f3c8baf7",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T17:52:22Z",
+      "side": 1,
+      "message": "I suspect this is wrong  (I guess it would depend on the arguments are passed in) in the other methods but we don\u0027t ever notice because we never drag/tap when zoomed in from tests. My expectation would be that coordinates passed into gpuBenchmarking are in the \"visual viewport\" space so there\u0027s no need to apply the scaling factor here. i.e. Tap(centerX, centerY) should always tap in the middle of the viewport, regardless of whether we\u0027ve zoomed.\n\nI removed this for pinch-zoom methods in https://chromium-review.googlesource.com/c/chromium/src/+/668376 but it\u0027s just waiting for a Catapult roll to land it, I missed it for these methods. I think you can just do a similar change to what I did there.",
+      "range": {
+        "startLine": 443,
+        "startChar": 31,
+        "endLine": 443,
+        "endChar": 48
+      },
+      "revId": "632842bae48b25663ed4ba3b9e959f46b89611ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5acb207a_ee3bbd95",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/synthetic-events/gpu-benchmarking-validity.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T17:52:22Z",
+      "side": 1,
+      "message": "I would add a test case with a large page scale factor to make sure it doesn\u0027t blow up when zoomed. This was exactly what happened in the pinch-zoom telemetry tests...",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 6
+      },
       "revId": "632842bae48b25663ed4ba3b9e959f46b89611ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
