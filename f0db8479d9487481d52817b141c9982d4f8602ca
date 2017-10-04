@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5aacb56_9039613c",
+        "filename": "ash/ime/test_ime_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T14:23:01Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "f0db8479d9487481d52817b141c9982d4f8602ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3408bc_a621c28b",
+        "filename": "ash/ime/test_ime_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T14:23:01Z",
+      "side": 1,
+      "message": "nit: You probably need ASH_EXPORT here for the component build\n\nAlso, ash:: not needed, here or below (even in comments)",
+      "revId": "f0db8479d9487481d52817b141c9982d4f8602ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c1cecc_f15597af",
+        "filename": "ash/ime/test_ime_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-04T14:23:01Z",
+      "side": 1,
+      "message": "nit: implementation of virtual function goes in .cc file, even if empty",
+      "revId": "f0db8479d9487481d52817b141c9982d4f8602ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
