@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/extensions/extension_name.h"
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
@@ -21,6 +22,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
+#include "extensions/common/constants.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
@@ -66,7 +68,8 @@ class PermissionsBubbleDialogDelegateView
  public:
   PermissionsBubbleDialogDelegateView(
       PermissionPromptImpl* owner,
-      const std::vector<PermissionRequest*>& requests);
+      const std::vector<PermissionRequest*>& requests,
+      content::WebContents* web_contents);
   ~PermissionsBubbleDialogDelegateView() override;
 
   void CloseBubble();
@@ -94,12 +97,21 @@ class PermissionsBubbleDialogDelegateView
   base::string16 display_origin_;
   views::Checkbox* persist_checkbox_;
 
+  // If |url| is an extension URL, returns the name of the associated extension,
+  // with whitespace collapsed. Otherwise, returns the URL formatted for
+  // display. |web_contents| is used to get at the extension registry.
+  static base::string16 GetDisplayOrigin(const GURL& url,
+                                         content::WebContents* web_contents);
+  // Returns |url| formatted for display.
+  static base::string16 FormatOriginUrl(const GURL& url);
+
   DISALLOW_COPY_AND_ASSIGN(PermissionsBubbleDialogDelegateView);
 };
 
 PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
     PermissionPromptImpl* owner,
-    const std::vector<PermissionRequest*>& requests)
+    const std::vector<PermissionRequest*>& requests,
+    content::WebContents* web_contents)
     : owner_(owner), persist_checkbox_(nullptr) {
   DCHECK(!requests.empty());
 
@@ -119,9 +131,7 @@ PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
       views::BoxLayout::kVertical, gfx::Insets(),
       provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL)));
 
-  display_origin_ = url_formatter::FormatUrlForSecurityDisplay(
-      requests[0]->GetOrigin(),
-      url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
+  display_origin_ = GetDisplayOrigin(requests[0]->GetOrigin(), web_contents);
 
   bool show_persistence_toggle = true;
   for (size_t index = 0; index < requests.size(); index++) {
@@ -251,11 +261,38 @@ void PermissionsBubbleDialogDelegateView::UpdateAnchor() {
     SetAnchorRect(GetPermissionAnchorRect(owner_->browser()));
 }
 
+// static
+base::string16 PermissionsBubbleDialogDelegateView::GetDisplayOrigin(
+    const GURL& url,
+    content::WebContents* web_contents) {
+  // On ChromeOS, this function can be called using web_contents from
+  // SimpleWebViewDialog::GetWebContents() which always returns null.
+  // TODO(crbug.com/680329) Remove the null check and make
+  // SimpleWebViewDialog::GetWebContents return the proper web contents instead.
+  if (!web_contents || !url.SchemeIs(extensions::kExtensionScheme)) {
+    // Web URLs (and extension URLs in the case described above) should be
+    // displayed as the origin in the URL.
+    return FormatOriginUrl(url);
+  }
+  return extensions::GetExtensionName(url, web_contents);
+}
+
+base::string16 PermissionsBubbleDialogDelegateView::FormatOriginUrl(
+    const GURL& url) {
+  return url_formatter::FormatUrlForSecurityDisplay(
+      url, url_formatter::SchemeDisplay::OMIT_CRYPTOGRAPHIC);
+}
+
 //////////////////////////////////////////////////////////////////////////////
 // PermissionPromptImpl
 
-PermissionPromptImpl::PermissionPromptImpl(Browser* browser, Delegate* delegate)
-    : browser_(browser), delegate_(delegate), bubble_delegate_(nullptr) {
+PermissionPromptImpl::PermissionPromptImpl(Browser* browser,
+                                           Delegate* delegate,
+                                           content::WebContents* web_contents)
+    : browser_(browser),
+      delegate_(delegate),
+      bubble_delegate_(nullptr),
+      web_contents_(web_contents) {
   Show();
 }
 
@@ -311,8 +348,8 @@ void PermissionPromptImpl::Show() {
   DCHECK(browser_);
   DCHECK(browser_->window());
 
-  bubble_delegate_ =
-      new PermissionsBubbleDialogDelegateView(this, delegate_->Requests());
+  bubble_delegate_ = new PermissionsBubbleDialogDelegateView(
+      this, delegate_->Requests(), web_contents_);
 
   // Set |parent_window| because some valid anchors can become hidden.
   bubble_delegate_->set_parent_window(

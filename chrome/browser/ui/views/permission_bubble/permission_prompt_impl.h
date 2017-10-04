@@ -13,7 +13,9 @@ class PermissionsBubbleDialogDelegateView;
 
 class PermissionPromptImpl : public PermissionPrompt {
  public:
-  PermissionPromptImpl(Browser* browser, Delegate* delegate);
+  PermissionPromptImpl(Browser* browser,
+                       Delegate* delegate,
+                       content::WebContents* web_contents);
   ~PermissionPromptImpl() override;
 
   // PermissionPrompt:
@@ -34,6 +36,7 @@ class PermissionPromptImpl : public PermissionPrompt {
   Browser* browser_;
   Delegate* delegate_;
   PermissionsBubbleDialogDelegateView* bubble_delegate_;
+  content::WebContents* web_contents_;
 
   DISALLOW_COPY_AND_ASSIGN(PermissionPromptImpl);
 };

@@ -37,7 +37,8 @@ std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
     Delegate* delegate) {
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   if (UseViewsBubbles()) {
-    auto prompt = base::MakeUnique<PermissionPromptImpl>(browser, delegate);
+    auto prompt =
+        base::MakeUnique<PermissionPromptImpl>(browser, delegate, web_contents);
     // Note the PermissionPromptImpl constructor always shows the bubble, which
     // is necessary to call TrackBubbleState().
     // Also note it's important to use BrowserWindow::GetNativeWindow() and not
