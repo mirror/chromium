@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75bfc787_e9a43966",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T08:24:17Z",
+      "side": 1,
+      "message": "Please add argument name which suggests expected roles for each.\n\nIn the WebKit\u0027s era, \"Omit argument name if it\u0027s obvious from its type\" was the rule,\nbut Google\u0027s style require having variable name - Blink is in the middle of migrating the\nstyles.  Even with WebKit\u0027s rule, clarifying the role of the first \"ContainerNode\" and\nthe second \"Element\" is necessary.",
+      "revId": "b5284a20b3eaeeee01da15955e5fdf884e76ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123583c4_4c69c1c7",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T08:24:17Z",
+      "side": 1,
+      "message": "Please avoid using too generic argument name, be more specific about the role\nof the argument.  In this case, \u0027scoping_root_node\u0027?",
+      "revId": "b5284a20b3eaeeee01da15955e5fdf884e76ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044cbe2c_bd2a86e1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T08:24:17Z",
+      "side": 1,
+      "message": "You don\u0027t need this check.\n\nIn debug builds, ToHTMLSlotElement() implicitly does DCHECK(IsHTMLSlotElement).",
+      "revId": "b5284a20b3eaeeee01da15955e5fdf884e76ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21885e36_739371af",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T08:24:17Z",
+      "side": 1,
+      "message": "Does this fail to compile, if you change \"Node\" to \"ContainerNode\"?\n\nWe should be careful not to accept too broad objects.",
+      "revId": "b5284a20b3eaeeee01da15955e5fdf884e76ed4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
