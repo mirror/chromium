@@ -100,7 +100,7 @@ template("libgtkui") {
              # GTK pulls pangoft2, which requires HarfBuzz symbols. Since we
              # link our own HarfBuzz, avoid mixing symbols from system HarfBuzz
              # and own ones, hence the dependency to harfbuzz-ng here.
-             "//third_party/harfbuzz-ng",
+             "//third_party/harfbuzz-ng:font",
              "//ui/aura",
              "//ui/base",
              "//ui/base/ime",
