@@ -296,8 +296,10 @@ void ChunkDemuxerStream::Read(const ReadCB& read_cb) {
 
   read_cb_ = BindToCurrentLoop(read_cb);
 
+  LOG(ERROR) << __func__ << "MDW read called on CDS, type=" << type_;
+
   if (!is_enabled_) {
-    DVLOG(1) << "Read from disabled stream, returning EOS";
+    LOG(ERROR) << "Read from disabled stream, returning EOS";
     base::ResetAndReturn(&read_cb_).Run(kOk,
                                         StreamParserBuffer::CreateEOSBuffer());
     return;
@@ -405,7 +407,7 @@ void ChunkDemuxerStream::CompletePendingReadIfPossible_Locked() {
       switch (SBSTREAM_OP(GetNextBuffer(&buffer))) {
         case SourceBufferStreamStatus::kSuccess:
           status = DemuxerStream::kOk;
-          DVLOG(2) << __func__ << ": returning kOk, type " << type_ << ", dts "
+          LOG(ERROR) << __func__ << ": returning kOk, type " << type_ << ", dts "
                    << buffer->GetDecodeTimestamp().InSecondsF() << ", pts "
                    << buffer->timestamp().InSecondsF() << ", dur "
                    << buffer->duration().InSecondsF() << ", key "
@@ -414,18 +416,18 @@ void ChunkDemuxerStream::CompletePendingReadIfPossible_Locked() {
         case SourceBufferStreamStatus::kNeedBuffer:
           // Return early without calling |read_cb_| since we don't have
           // any data to return yet.
-          DVLOG(2) << __func__ << ": returning kNeedBuffer, type " << type_;
+          LOG(ERROR) << __func__ << ": returning kNeedBuffer, type " << type_;
           return;
         case SourceBufferStreamStatus::kEndOfStream:
           status = DemuxerStream::kOk;
           buffer = StreamParserBuffer::CreateEOSBuffer();
-          DVLOG(2) << __func__ << ": returning kOk with EOS buffer, type "
+          LOG(ERROR) << __func__ << ": returning kOk with EOS buffer, type "
                    << type_;
           break;
         case SourceBufferStreamStatus::kConfigChange:
           status = kConfigChanged;
           buffer = NULL;
-          DVLOG(2) << __func__ << ": returning kConfigChange, type " << type_;
+          LOG(ERROR) << __func__ << ": returning kConfigChange, type " << type_;
           break;
       }
       break;
@@ -435,12 +437,12 @@ void ChunkDemuxerStream::CompletePendingReadIfPossible_Locked() {
       // because they are associated with the seek.
       status = DemuxerStream::kAborted;
       buffer = NULL;
-      DVLOG(2) << __func__ << ": returning kAborted, type " << type_;
+      LOG(ERROR) << __func__ << ": returning kAborted, type " << type_;
       break;
     case SHUTDOWN:
       status = DemuxerStream::kOk;
       buffer = StreamParserBuffer::CreateEOSBuffer();
-      DVLOG(2) << __func__ << ": returning kOk with EOS buffer, type " << type_;
+      LOG(ERROR) << __func__ << ": SHUTTING DOWN returning kOk with EOS buffer, type " << type_;
       break;
   }
 
@@ -469,7 +471,7 @@ ChunkDemuxer::ChunkDemuxer(
       buffering_by_pts_(base::FeatureList::IsEnabled(kMseBufferByPts)) {
   DCHECK(!open_cb_.is_null());
   DCHECK(!encrypted_media_init_data_cb_.is_null());
-  MEDIA_LOG(INFO, media_log_)
+  MEDIA_LOG(ERROR, media_log_)
       << GetDisplayName()
       << (buffering_by_pts_ ? ": buffering by PTS" : ": buffering by DTS");
 }
