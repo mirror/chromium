@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73afa236_b3653c88",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8797,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T13:02:24Z",
+      "side": 1,
+      "message": "I think this includes manual user installation (e.g. with OPTIONAL). It\u0027s important to note this since it gives admins peace of mind that the app will no longer be available.",
+      "parentUuid": "4eb7e417_c9fe7490",
+      "range": {
+        "startLine": 8797,
+        "startChar": 441,
+        "endLine": 8797,
+        "endChar": 464
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b8b4a92_db060100",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T12:43:23Z",
       "side": 1,
       "message": "nit: Just checking: These are really key-value pairs and not another json schema defined in the manifest?",
+      "range": {
+        "startLine": 8817,
+        "startChar": 80,
+        "endLine": 8817,
+        "endChar": 102
+      },
+      "revId": "ba704104fca77f045cfdb8472d65ef5eeac656c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a08d555_3b5af70c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 8817,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-04T13:02:24Z",
+      "side": 1,
+      "message": "Afaik they\u0027re all kv pairs, but a value could be a JSON blob :D",
+      "parentUuid": "9b8b4a92_db060100",
       "range": {
         "startLine": 8817,
         "startChar": 80,
