@@ -17,6 +17,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/windows_version.h"
+#include "media/gpu/media_foundation_video_encode_accelerator_win.h"
 #include "remoting/host/win/evaluate_d3d.h"
 #endif
 
@@ -113,6 +114,11 @@ std::string GetHostAttributes() {
     if (version >= base::win::VERSION_WIN10) {
       result.push_back("Win10+");
     }
+  }
+
+  if (media::MediaFoundationVideoEncodeAccelerator
+      ::PreSandboxInitialization()) {
+    result.push_back("HWEncoder");
   }
 #endif
 
