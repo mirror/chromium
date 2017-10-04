@@ -229,7 +229,7 @@ size_t BaseArena::ObjectPayloadSizeForTesting() {
 }
 
 void BaseArena::PrepareForSweep() {
-  DCHECK(GetThreadState()->IsInGC());
+  // DCHECK(GetThreadState()->IsInGC());
   DCHECK(!first_unswept_page_);
 
   // Move all pages to a list of unswept pages.

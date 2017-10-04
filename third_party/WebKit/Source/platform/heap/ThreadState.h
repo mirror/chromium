@@ -269,7 +269,12 @@ class PLATFORM_EXPORT ThreadState {
   //   running.
   void MakeConsistentForGC();
   void PreGC();
-  void PostGC(BlinkGC::GCType);
+  void MarkPhasePrologue(BlinkGC::StackState,
+                         BlinkGC::GCType,
+                         BlinkGC::GCReason);
+  void MarkPhaseVisitRoots();
+  bool MarkPhaseAdvanceMarking(double deadline_seconds);
+  void MarkPhaseEpilogue();
   void CompleteSweep();
   void PreSweep(BlinkGC::GCType);
   void PostSweep();
@@ -746,6 +751,16 @@ class PLATFORM_EXPORT ThreadState {
   size_t reported_memory_to_v8_;
 
   int gc_age_ = 0;
+
+  struct GCData {
+    BlinkGC::StackState stack_state;
+    BlinkGC::GCType gc_type;
+    BlinkGC::GCReason reason;
+    double marking_time_in_milliseconds;
+    size_t marked_object_size;
+    std::unique_ptr<Visitor> visitor;
+  };
+  GCData current_gc_data_;
 };
 
 template <>
