@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "48908336_57b05b9d",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T09:21:31Z",
+      "side": 1,
+      "message": "You can remove this macro.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7731ac31_dce62c2a",
         "filename": "third_party/WebKit/Source/bindings/templates/callback_function.cpp.tmpl",
         "patchSetId": 7
@@ -13,6 +30,57 @@
       "writtenOn": "2017-10-04T09:11:15Z",
       "side": 1,
       "message": "This should be automatically inherited from the base class.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa736b8_5e1d1453",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T09:21:31Z",
+      "side": 1,
+      "message": "Move this included file in CALLBACK_FUNCTION_H_INCLUDES in third_party/WebKit/Source/bindings/scripts/v8_callback_function.py",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620ab3d8_d2c2fffb",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_function.h.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T09:21:31Z",
+      "side": 1,
+      "message": "you can remove this macro.",
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6100941_30af179b",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T09:21:31Z",
+      "side": 1,
+      "message": "Put a copyright description.",
       "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +104,23 @@
         "endLine": 14,
         "endChar": 52
       },
+      "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5832609c_66678d82",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-04T09:21:31Z",
+      "side": 1,
+      "message": "Put a copyright description",
       "revId": "1abcd6fcc8ac55a2457ce8085718fcf1f52e1613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
