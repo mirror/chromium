@@ -116,6 +116,24 @@
       "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "356e264f_369f4a8c",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-04T10:15:40Z",
+      "side": 1,
+      "message": "With suffixing, you see the two variants of IsDomainJoined together with the same filter on the uma dashboards -- you can just select both to view the two variants. As you have it here, I think you\u0027d have IsDomainJoined ordinarily showing you the total population. You\u0027d have to filter on NetGetJoinInformationAddress to see the two types. I\u0027m not sure that you could see the two together easily. I suggest you chat with a metrics person about how you want to view the data so they can help you make the right choice. Ultimately, we\u0027ll have all the data either way, it just may be more difficult to extract the information you want from the data depending on how it\u0027s reported.",
+      "parentUuid": "3c142f9a_fb33b429",
+      "revId": "568c1e09e8e456bfcd7797dae362398e189b16d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
