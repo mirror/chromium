@@ -85,6 +85,24 @@
       "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a2478f_02107449",
+        "filename": "net/base/data_url.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-10-04T13:56:10Z",
+      "side": 1,
+      "message": "Sure. But those restrictions live outside of //net :-)\n\n//net is the basis for a library that has a bunch of consumers that aren\u0027t browsers. So the criteria I\u0027d look at is whether it makes sense for this method to be a part of //net. I believe it does since it gives a near zero-overhead method to avoid an unnecessary parsing run and a string copy when a consumer has an unparsed string that they believe is a data URL. This shortcut exists because of how DataURL is implemented, not because of anything specific to Android WebView.",
+      "parentUuid": "2d1f4ca3_98222f76",
+      "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
