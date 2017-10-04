@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b18b2164_57eb3060",
+        "filename": "net/nqe/throughput_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-04T20:13:00Z",
+      "side": 1,
+      "message": "Would it if requests_[\u0026request] \u003d tick_clock_-\u003eNowTicks(); is called here?",
+      "parentUuid": "f735a741_7232d240",
+      "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc3e40cc_45c2b8f7",
         "filename": "net/nqe/throughput_analyzer.h",
         "patchSetId": 4
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I am not sure.",
       "parentUuid": "fc3e40cc_45c2b8f7",
+      "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d8ef3a5_c593de4c",
+        "filename": "net/nqe/throughput_analyzer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-04T20:13:00Z",
+      "side": 1,
+      "message": "I think the style guide recommends dep injecction instead of adding a ForTesting method, so the implementation is cleaner. Your call.",
+      "parentUuid": "a5c3e8a7_ddc33084",
       "revId": "d4193ee5fc84a4d4597e79e205c6f84badcf1805",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
