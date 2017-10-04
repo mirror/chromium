@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "ce77c155_4e75bce0",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-04T01:17:34Z",
+      "side": 1,
+      "message": "Done. I changed them to use LayoutPoint.",
+      "parentUuid": "7a5fd162_e60a9419",
+      "range": {
+        "startLine": 246,
+        "startChar": 10,
+        "endLine": 246,
+        "endChar": 20
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6eb3be1_49f6efd3",
         "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
         "patchSetId": 3
@@ -128,6 +152,30 @@
       "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73da6f2b_e5b11d28",
+        "filename": "third_party/WebKit/Source/core/input/EventHandler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-04T01:17:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6eb3be1_49f6efd3",
+      "range": {
+        "startLine": 261,
+        "startChar": 19,
+        "endLine": 261,
+        "endChar": 34
+      },
+      "revId": "edbfa7c197ec5d5371eb8b342bf4115beada72ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
