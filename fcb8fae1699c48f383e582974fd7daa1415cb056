@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b8d0f091_c92ac73f",
+        "filename": "third_party/WebKit/LayoutTests/virtual/scroll_customization/fast/scroll-behavior/scroll-customization-property.html",
+        "patchSetId": 19
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:54:10Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t really say what I meant...\n\nI think this is redundant - let\u0027s just say \"returns a Promise\".",
+      "parentUuid": "0fa95e78_15886f51",
+      "range": {
+        "startLine": 148,
+        "startChar": 47,
+        "endLine": 148,
+        "endChar": 55
+      },
+      "revId": "fcb8fae1699c48f383e582974fd7daa1415cb056",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5f53c37_91f0a667",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserTest.cpp",
         "patchSetId": 19
