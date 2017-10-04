@@ -27,6 +27,7 @@ var elements = [];
 for (var i = 0; i < elementCount; ++i) {
   var element = document.createElement("div");
   element.creationOrder = i;
+  element.style.scrollCustomization = 'auto';
   element.setDistributeScroll(distributeScroll.bind(element), "disable-native-scroll");
   elements.push(element);
 }
