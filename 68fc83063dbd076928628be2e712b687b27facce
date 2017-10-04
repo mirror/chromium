@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905fa4af_9de1d68a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-04T02:28:23Z",
+      "side": 1,
+      "message": "Could you also add http://crbug.com/731540 ?",
+      "revId": "68fc83063dbd076928628be2e712b687b27facce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
