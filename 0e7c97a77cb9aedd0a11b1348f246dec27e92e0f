@@ -383,6 +383,24 @@
     },
     {
       "key": {
+        "uuid": "327b4610_65adbeb6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T23:38:28Z",
+      "side": 1,
+      "message": "no, see line 180, which will increment |i| but not |index|.",
+      "parentUuid": "6987a511_ec152dae",
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bff84d68_2188342b",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 10
@@ -442,6 +460,30 @@
       "side": 1,
       "message": "vendor_capability_out-\u003eGetList() should receive the same treatment.",
       "parentUuid": "31fc9fa8_1fce6202",
+      "range": {
+        "startLine": 175,
+        "startChar": 25,
+        "endLine": 175,
+        "endChar": 56
+      },
+      "revId": "0e7c97a77cb9aedd0a11b1348f246dec27e92e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34218519_89f436e8",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201cd34a_0121c010",
       "range": {
         "startLine": 175,
         "startChar": 25,

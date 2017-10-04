@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d91447f9_e9d78435",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b067ea14_85e34f9a",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0292f06f_1ae1d76f",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2d7af00d_eb121723",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T23:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0292f06f_1ae1d76f",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22bd86eb_52f63629",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-04T22:32:54Z",
       "side": 1,
       "message": "Do you need to check the FindPathOfType() return value here, and really, everywhere? Unless there is some guarantee that it won\u0027t return a nullptr. But then again, this is a function to sanitize CDDs, so I\u0027m extremely paranoid here.",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e706d3_dc5fa5e3",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T23:38:28Z",
+      "side": 1,
+      "message": "The guarantee is that this has already been checked in lines 255-256 and any list elements that do not meet the requirements have already been removed. See VendorCapabilityInvalid function.",
+      "parentUuid": "22bd86eb_52f63629",
       "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
