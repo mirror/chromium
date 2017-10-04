@@ -45,6 +45,54 @@
       "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9554340_a12938ba",
+        "filename": "chrome/test/base/tracing.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-04T14:40:39Z",
+      "side": 1,
+      "message": "Done. But, out of curiosity, do we need to DCHECK when we are dereferencing \"chunk\" in the next line which will fail anyways if it\u0027s nullptr?",
+      "parentUuid": "858798e5_e6e1902c",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 44
+      },
+      "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a20ad7_aef48b7c",
+        "filename": "chrome/test/base/tracing.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-04T14:40:39Z",
+      "side": 1,
+      "message": "Yes. This is taken care of by the tracing coordinator now.",
+      "parentUuid": "e18bcc8e_cac149b0",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "c6f04655f732bea8cb603175717b0ddfc2e57aa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
