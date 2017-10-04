@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a11d83ff_b8b0a2b2",
+        "filename": "base/files/file_descriptor_watcher_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-04T00:39:54Z",
+      "side": 1,
+      "message": "If the caller tears down their Controller while we\u0027re processing StartWatching(), and then close()s the FD, then (potentially) the moment we release the cancellation-flag lock, the FD can become invalid, such that the sequence tear-down of the Watcher will attempt to cancel a watch on a closed (and potentially even re-used) FD.\n\nSo I don\u0027t think this implementation addresses the failure case you\u0027ll see if you apply https://chromium-review.googlesource.com/c/chromium/src/+/575108\n\nThe only way to make this class work correctly with its current API would be for tear-down of Controllers to be synchronous (i.e. wait for the background thread to complete stopping watching), which seems unfortunate.\n\nThe alternative (alas, with an API change) would be to actually pass the FD off to the FileDescriptorWatcher to close, rather than closing it on the calling Sequence.",
+      "revId": "8796a714d2b15e422e4d43209e0b02999176f4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da7b396d_121a7f8c",
         "filename": "base/files/file_descriptor_watcher_posix_unittest.cc",
         "patchSetId": 3
