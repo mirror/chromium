@@ -23,5 +23,19 @@ bool IsArcDisabledForEnterprise() {
       chromeos::switches::kEnterpriseDisableArc);
 }
 
+EcryptfsMigrationAction GetDefaultEcryptfsMigrationAction(
+    bool managed_user,
+    bool active_directory_user) {
+  if (managed_user) {
+    // Active directory users are assumed to be enterprise users, so mimic the
+    // server-side default logic for enterprise users, letting them choose if
+    // they want to migrate by default.
+    return active_directory_user ? EcryptfsMigrationAction::kAskUser
+                                 : EcryptfsMigrationAction::kDisallowMigration;
+  } else {
+    return EcryptfsMigrationAction::kAskUser;
+  }
+}  // namespace policy_util
+
 }  // namespace policy_util
 }  // namespace arc
