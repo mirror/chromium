@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a63b772_9eff00d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/MediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-04T21:07:07Z",
+      "side": 1,
+      "message": "This comment is from an earlier iteration, fixed.",
+      "parentUuid": "c1dc687b_8a78bb8e",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf59b5c7_40c09970",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce46e4a9_358435c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-04T21:07:07Z",
+      "side": 1,
+      "message": "This saves code size (variable reference is shorter than call site).",
+      "parentUuid": "bf59b5c7_40c09970",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8fdfba68_47af09d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-04T21:07:07Z",
+      "side": 1,
+      "message": "The lack of @Nullable annotation doesn\u0027t imply they are always non-null.  I think they won\u0027t be null because of how this code happens to be called today, but there\u0027s no guarantee.",
+      "parentUuid": "19b30f2e_608bade0",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad66e97_5825333b",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProviderTest.java",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749687ac_2727d58d",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/media/router/cast/CastMediaRouteProviderTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-04T21:07:07Z",
+      "side": 1,
+      "message": "Yes, this test case is evaluating behavior when the ChromeMediaRouter instance is null.",
+      "parentUuid": "fad66e97_5825333b",
+      "revId": "f1ba6b45ab690895e1d0979093007b134989bd59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
