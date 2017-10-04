@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "495b1a07_97fb2e59",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T21:55:43Z",
+      "side": 1,
+      "message": "Your suggestion is much better. Done.\n\nsize\u003d\u003d0 should not happen because we always have at least one chunk in a layer.",
+      "parentUuid": "c83b0c7b_b41bd1ab",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "128104b3_d89762d5",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e97005_ec262537",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T21:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "128104b3_d89762d5",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e2ec14ac_c63e369e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T21:55:43Z",
+      "side": 1,
+      "message": "Thanks for catching this. I will also check if PaintController::GenerateRasterInvalidations() has similar issue.",
+      "parentUuid": "60c649df_a4f45dc3",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bf5cae2_d1eea228",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.h",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T21:37:11Z",
       "side": 1,
       "message": "Who calls this?",
+      "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae248e6_f8556c84",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T21:55:43Z",
+      "side": 1,
+      "message": "This is called from\n  PaintArtifactCompositor::ClientForPaintChunk() -\u003e\n  ContentLayerClientImpl::Matches()",
+      "parentUuid": "8bf5cae2_d1eea228",
       "revId": "9795ab202ac0e69f52f2f12d8e5ec9d03d336831",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
