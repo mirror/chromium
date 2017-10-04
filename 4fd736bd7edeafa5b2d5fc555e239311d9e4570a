@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7e03b75_06ac900e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df659d39_569c9445",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 18
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f95bf1c_e968d914",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-03T00:41:55Z",
       "side": 1,
       "message": "This is inconsistent with the comments about the class: \"Implementations manage their own lifetimes and delete themselves once they decide that no dialog should be shown\". From this it looks like the class should only be instantiated when it is already known that the dialog will be shown.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb022f9_f190def3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "This class is expected to be instantiated only if reboot is required, so we don\u0027t want to instantiate an object that will never be used.\n\nHowever, the dialog may not be shown even if reboot is required (e.g. the Settings page is the current active tab). Please check class comments at chrome_cleaner_reboot_dialog_win.h. Explicitly added a note there saying that implementations can decide to not show the dialog even if reboot is required.",
+      "parentUuid": "0f95bf1c_e968d914",
       "range": {
         "startLine": 47,
         "startChar": 2,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "479aae7b_1d8bba81",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1176af06_653a88d0",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aa8d4c4_48e79096",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "96d96a33_7660609b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Good catch!",
+      "parentUuid": "9aa8d4c4_48e79096",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edea6eac_8a8f7edf",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0af98d1_1a9a5c4e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edea6eac_8a8f7edf",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "2433e9c0_0e20b776",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc2387f_ee6a9229",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e31257c_440a5708",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
         "patchSetId": 2
@@ -142,6 +274,24 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f8628e_c08eeec4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "From the comment in chrome_cleaner_reboot_dialog_controller_win.h, this class is only supposed to be instantiated if reboot is required, since we don\u0027t want to create an object that may never be needed.",
+      "parentUuid": "9e31257c_440a5708",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +315,30 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102842a6_f69f84c0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "361e3f58_83f3de6e",
+      "range": {
+        "startLine": 42,
+        "startChar": 7,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +388,54 @@
     },
     {
       "key": {
+        "uuid": "1284ea21_00a4cdc6",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053df03e_ceeb0178",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 79
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e985684e_946e7069",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbdec965_7a0d6c84",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57300463_8ecda890",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
         "patchSetId": 2
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "556911d7_2c9de567",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57300463_8ecda890",
+      "range": {
+        "startLine": 15,
+        "startChar": 59,
+        "endLine": 15,
+        "endChar": 64
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4f0250_3d032ad1",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
         "patchSetId": 2
@@ -251,6 +497,24 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068d025b_bffd60ef",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4f0250_3d032ad1",
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -277,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "4fb789f4_4cce1311",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df64cfd_597e2c3e",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee5a087_4d029cb2",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
         "patchSetId": 2
@@ -297,6 +585,30 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b51d118_34773950",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ee5a087_4d029cb2",
+      "range": {
+        "startLine": 9,
+        "startChar": 17,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -323,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "665034b5_3294af38",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Excellent idea!",
+      "parentUuid": "e1f19b86_845c98f3",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1989e9dc_849546ca",
         "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
         "patchSetId": 2
@@ -343,6 +679,30 @@
       "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31407ba_0c640097",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-04T15:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1989e9dc_849546ca",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "4fd736bd7edeafa5b2d5fc555e239311d9e4570a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
