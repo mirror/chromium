@@ -29,7 +29,7 @@
 #if defined(OS_CHROMEOS)
 #include "ash/system/system_notifier.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #endif
 
 class MessageCenterSettingsControllerBaseTest : public testing::Test {

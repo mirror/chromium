@@ -14,7 +14,6 @@
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
 #include "chrome/browser/chromeos/customization/customization_document.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_service_test_base.h"
 #include "chrome/browser/prefs/pref_service_syncable_util.h"
@@ -37,6 +36,7 @@
 #include "components/sync/model/sync_change_processor.h"
 #include "components/sync/model/sync_error_factory_mock.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/test/test_utils.h"
 

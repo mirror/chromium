@@ -4,7 +4,6 @@
 
 #include "ash/test/ash_test_base.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/signin/account_tracker_service_factory.h"
 #include "chrome/browser/signin/fake_signin_manager_builder.h"
@@ -13,6 +12,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/signin/core/browser/account_tracker_service.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #include "components/user_manager/user.h"
 
 namespace ash {

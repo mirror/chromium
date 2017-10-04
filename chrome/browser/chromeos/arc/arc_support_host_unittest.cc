@@ -6,8 +6,8 @@
 
 #include "chrome/browser/chromeos/arc/extensions/fake_arc_support.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/test/base/testing_profile.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"

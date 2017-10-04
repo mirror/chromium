@@ -37,9 +37,9 @@
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/customization/customization_document.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chromeos/system/fake_statistics_provider.h"
 #include "chromeos/system/statistics_provider.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #endif
 
 using ::testing::NotNull;

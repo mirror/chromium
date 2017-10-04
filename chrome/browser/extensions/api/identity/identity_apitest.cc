@@ -18,9 +18,9 @@
 #include "components/prefs/pref_service.h"
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/login/users/mock_user_manager.h"
-#include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/settings/stub_install_attributes.h"
+#include "components/user_manager/scoped_user_manager_enabler.h"
 #include "extensions/common/extension_builder.h"
 #endif
 #include "chrome/browser/extensions/api/identity/identity_api.h"

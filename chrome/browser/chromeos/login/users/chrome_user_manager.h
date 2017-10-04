@@ -12,7 +12,13 @@
 #include "chrome/browser/chromeos/login/users/user_manager_interface.h"
 #include "components/user_manager/user_manager_base.h"
 
+namespace user_manager {
+class ScopedUserManagerEnabler;
+}
+
 namespace chromeos {
+
+using ScopedUserManagerEnabler = user_manager::ScopedUserManagerEnabler;
 
 // Chrome specific interface of the UserManager.
 class ChromeUserManager : public user_manager::UserManagerBase,
