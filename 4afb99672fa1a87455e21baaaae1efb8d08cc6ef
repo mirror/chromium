@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9eeea3ef_a0e93a88",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T22:48:36Z",
+      "side": 1,
+      "message": "It can be used once per child process. It binds a ChildHistogram interface that requires no further initialization. Barring introducing constructor arguments to mojo, this is simplest way to get creation-as-initialization. Daniel\u0027s upstream comments said that from a security perspective, this is the endorsed way.",
+      "parentUuid": "49a3726b_30283a5f",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7094441_76b3951f",
         "filename": "content/child/child_histogram_impl.cc",
         "patchSetId": 19
@@ -145,6 +169,24 @@
       "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1ea462_d1cf2162",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-10-04T22:48:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e44990c5_0eb57aef",
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
