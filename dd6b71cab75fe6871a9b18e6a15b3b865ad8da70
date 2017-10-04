@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93b57408_dbfd5253",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-04T14:04:05Z",
+      "side": 1,
+      "message": "can be only written to on the main thread but can read from any thread.",
+      "range": {
+        "startLine": 261,
+        "startChar": 17,
+        "endLine": 261,
+        "endChar": 19
+      },
+      "revId": "dd6b71cab75fe6871a9b18e6a15b3b865ad8da70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76344cc4_66574d02",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-04T14:04:05Z",
+      "side": 1,
+      "message": "|impl_| or when accessing",
+      "range": {
+        "startLine": 262,
+        "startChar": 58,
+        "endLine": 262,
+        "endChar": 59
+      },
+      "revId": "dd6b71cab75fe6871a9b18e6a15b3b865ad8da70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfa8506_cf0a5601",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-04T14:04:05Z",
+      "side": 1,
+      "message": "uber nit:  erase would be O(1) if queue was an iterator instead. (This shouldn\u0027t matter in practice).",
+      "range": {
+        "startLine": 76,
+        "startChar": 29,
+        "endLine": 76,
+        "endChar": 34
+      },
+      "revId": "dd6b71cab75fe6871a9b18e6a15b3b865ad8da70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad100a81_6d5dba18",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/scheduler_helper_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-04T14:04:05Z",
+      "side": 1,
+      "message": "Can we avoid having to call UnregisterTaskQueue?  It pretty easy to forget that, as this test illustrates.",
+      "range": {
+        "startLine": 218,
+        "startChar": 14,
+        "endLine": 218,
+        "endChar": 33
+      },
+      "revId": "dd6b71cab75fe6871a9b18e6a15b3b865ad8da70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
