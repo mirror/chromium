@@ -155,7 +155,7 @@ scoped_refptr<cc::PictureLayer> ContentLayerClientImpl::UpdateCcPictureLayer(
                        DisplayItemList::kSkipNonDrawings |
                            DisplayItemList::kShownOnlyDisplayItemTypes));
     json->SetString("propertyTreeState",
-                    chunk->properties.layer_state.ToTreeString());
+                    chunk->properties.property_tree_state.ToTreeString());
     paint_chunk_debug_data_->PushObject(std::move(json));
   }
 #endif

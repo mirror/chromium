@@ -243,7 +243,7 @@ void LayoutBoxModelObject::StyleWillChange(StyleDifference diff,
        Style()->IsStackingContext() != new_style.IsStackingContext()) &&
       // ObjectPaintInvalidator requires this.
       IsRooted()) {
-    if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled()) {
       ObjectPaintInvalidator(*this).SlowSetPaintingLayerNeedsRepaint();
     } else {
       // The following disablers are valid because we need to invalidate based

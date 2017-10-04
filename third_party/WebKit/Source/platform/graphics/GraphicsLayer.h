@@ -41,6 +41,7 @@
 #include "platform/graphics/GraphicsLayerDebugInfo.h"
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/graphics/PaintInvalidationReason.h"
+#include "platform/graphics/compositing/CompositedLayerRasterInvalidator.h"
 #include "platform/graphics/paint/DisplayItemClient.h"
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/heap/Handle.h"
@@ -340,6 +341,8 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
 
   sk_sp<PaintRecord> CaptureRecord();
 
+  void SetNeedsDisplayInRectInternal(const IntRect&);
+
   GraphicsLayerClient* client_;
 
   // Offset from the owning layoutObject
@@ -407,8 +410,14 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   IntRect previous_interest_rect_;
 
   struct LayerState {
+    LayerState(PropertyTreeState&& state,
+               const IntPoint& offset,
+               CompositedLayerRasterInvalidator::RasterInvalidationFunction f)
+        : state(std::move(state)), offset(offset), raster_invalidator(f) {}
+
     PropertyTreeState state;
     IntPoint offset;
+    CompositedLayerRasterInvalidator raster_invalidator;
   };
   std::unique_ptr<LayerState> layer_state_;
 };
