@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac2f7473_3bac3de3",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T21:02:11Z",
+      "side": 1,
+      "message": "My plan is to add the implementation after adding the client to android.  If I send events without the client set up android crashes, but if I add the client to android without adding the server here, android freezes.  So my plan is:\n\n1: Add server here without sending events\n2: Add client to android\n3: Send events through server",
+      "parentUuid": "4cad71c8_19262729",
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4362a11b_7b192c2c",
         "filename": "components/exo/pointer_gesture_pinch_delegate.h",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29996eb7_ac89ce95",
+        "filename": "components/exo/pointer_gesture_pinch_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T21:02:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4362a11b_7b192c2c",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "a3d18cb2_b98ccf7c",
+        "filename": "components/exo/pointer_gesture_pinch_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T21:02:11Z",
+      "side": 1,
+      "message": "From what I can tell, we have separate delegates for separate wayland interfaces, and each gesture in the wl_pointer_gestures protocol has its own interface.\n\nPerhaps I should define my own protocol that only covers pinch gestures, since we handle swipe gestures using the wl_pointer?",
+      "parentUuid": "5ce73bc8_35a8d971",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8291066_ee9c15a6",
         "filename": "third_party/wayland-protocols/unstable/pointer-gestures/pointer-gestures-unstable-v1.xml",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f65fc70_b6d47ef1",
+        "filename": "third_party/wayland-protocols/unstable/pointer-gestures/pointer-gestures-unstable-v1.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T21:02:11Z",
+      "side": 1,
+      "message": "I shouldn\u0027t have included this here- the same file is already in this upstream version.",
+      "parentUuid": "f8291066_ee9c15a6",
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
