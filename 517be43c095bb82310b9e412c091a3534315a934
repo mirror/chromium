@@ -22,6 +22,30 @@
       "revId": "517be43c095bb82310b9e412c091a3534315a934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bb7422_ef5e8c19",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-04T18:43:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb6ee1a2_6a7ed72a",
+      "range": {
+        "startLine": 77,
+        "startChar": 30,
+        "endLine": 77,
+        "endChar": 31
+      },
+      "revId": "517be43c095bb82310b9e412c091a3534315a934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
