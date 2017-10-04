@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f9abeaa_7c64bde8",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-04T17:21:22Z",
+      "side": 1,
+      "message": "This is a good change but I am not sure it solves the out of memory issue.",
+      "revId": "a6b9b5c592487ebea7081600d70f1988b34d172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b7a30c_5d5868ca",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-04T17:21:22Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be required since the request if complete.",
+      "revId": "a6b9b5c592487ebea7081600d70f1988b34d172f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
