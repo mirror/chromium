@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "841e3855_fae8b0a7",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T00:03:02Z",
+      "side": 1,
+      "message": "You only want to use input params sample rate if it input params isvalid.",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834e4463_8f7e3c35",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T00:03:02Z",
+      "side": 1,
+      "message": "Could just store this as base::TimeDelta?",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8e9531_87244844",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T00:03:02Z",
+      "side": 1,
+      "message": "Query Now() just once at the beginning of the function for these cases where only nanoseconds will pass. Hence the scoping I used in my recommendation. Calling Now can be expensive. You should only need to call Now twice, here at the beginning and when scheduling the next task.",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "443a5fb0_be7b26b5",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T00:03:02Z",
+      "side": 1,
+      "message": "Don\u0027t you need to reset start time here? Otherwise your scheduled callback is drifting behind.",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03756200_2752bdaf",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T00:03:02Z",
+      "side": 1,
+      "message": "Why + 1000? Just to avoid being \u003c min_delay? Seems silly to have a min_delay API if you always need to add some padding too it. Do you know if min_delay is an absolute or if it\u0027s just an estimate of when one may expect to miss the deadline? If it\u0027s not an absolute this seems unnecessary given at most a couple nano seconds will elapse between here and write().",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
