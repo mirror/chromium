@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "663c19d2_bd45b5d2",
+        "filename": "chrome/browser/ui/views/find_bar_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-04T18:32:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee347ee3_66974f48",
+      "range": {
+        "startLine": 347,
+        "startChar": 14,
+        "endLine": 347,
+        "endChar": 24
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ae1f4f_185d2831",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "530bdbf5_09c7beeb",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-04T18:32:29Z",
+      "side": 1,
+      "message": "browser_view_ is a views::ClientView, not a BrowserView. browser_view_ is poorly named.",
+      "parentUuid": "b1ae1f4f_185d2831",
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea0599dc_51be6a76",
         "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2017-10-03T21:40:37Z",
       "side": 1,
       "message": "I really dislike that this is lining up the find bar with the omnibox \"on accident.\" If we make the find bar a proper bubble like Evan suggested, I assume we get the proper alignment for free. Can we do that instead?",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6924bff6_1b684ee9",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-04T18:32:29Z",
+      "side": 1,
+      "message": "Is there a metric that describes the widget drop-shadow width? I\u0027m pretty sure that\u0027s why there is the need for this.",
+      "parentUuid": "ea0599dc_51be6a76",
       "range": {
         "startLine": 244,
         "startChar": 6,
@@ -232,6 +298,30 @@
     },
     {
       "key": {
+        "uuid": "ec20b1be_5bcf6228",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-04T18:32:29Z",
+      "side": 1,
+      "message": "The find bar is much more persistent than most other views. No amount of clicking or focus changes will dismiss it. Only clicking the close(x) or hitting escape (and only if it\u0027s focused) will close it. I think the UX folks are looking to preserve that behavior.\n\nMany (most? all?) of the bubble will be dismissed if they lose focus or, as I mentioned, when the icon is clicked again. Where does the bubble go when the OmniBox is hidden by policy or other? I\u0027m concerned that we\u0027ll be fighting the inherent behavior of the bubbles.\n\nOn principal, I\u0027m not disagreeing here. I\u0027m only bringing up the potential pitfalls by going to a bubble and what I think is the viewpoint of the UX team.",
+      "parentUuid": "3adb4034_8c3c8701",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c09f7a4_519d6f16",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 8
@@ -347,6 +437,30 @@
       "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd31030e_54c81dd1",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-04T18:32:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1fc5ba_39e42582",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
