@@ -9,9 +9,13 @@
 
 #include "base/containers/span.h"
 #include "third_party/WebKit/common/common_export.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 
 namespace blink {
+namespace mojom {
+class SerializedBlob;
+}
 
 // This struct represents messages as they are posted over a message port. This
 // type can be serialized as a blink::mojom::MessagePortMessage struct.
@@ -31,6 +35,9 @@ struct BLINK_COMMON_EXPORT MessagePortMessage {
 
   // Any ports being transfered as part of this message.
   std::vector<MessagePortChannel> ports;
+
+  // Blob handles for any blobs being send in this message.
+  std::vector<mojo::StructPtr<mojom::SerializedBlob>> blobs;
 };
 
 }  // namespace blink

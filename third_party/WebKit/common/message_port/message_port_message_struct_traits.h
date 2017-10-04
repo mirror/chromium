@@ -24,6 +24,11 @@ struct BLINK_COMMON_EXPORT
     return blink::MessagePortChannel::ReleaseHandles(input.ports);
   }
 
+  static std::vector<blink::mojom::SerializedBlobPtr>& blobs(
+      blink::MessagePortMessage& input) {
+    return input.blobs;
+  }
+
   static bool Read(blink::mojom::MessagePortMessage::DataView data,
                    blink::MessagePortMessage* out);
 };

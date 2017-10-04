@@ -4,14 +4,34 @@
 
 #include "core/dom/BlinkMessagePortMessageStructTraits.h"
 
+#include "platform/blob/BlobData.h"
+#include "platform/runtime_enabled_features.h"
+
 namespace mojo {
+
+Vector<blink::mojom::blink::SerializedBlobPtr> StructTraits<
+    blink::mojom::blink::MessagePortMessage::DataView,
+    blink::BlinkMessagePortMessage>::blobs(blink::BlinkMessagePortMessage&
+                                               input) {
+  Vector<blink::mojom::blink::SerializedBlobPtr> result;
+  if (blink::RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    result.ReserveInitialCapacity(input.message->BlobDataHandles().size());
+    for (const auto& blob : input.message->BlobDataHandles()) {
+      result.push_back(blink::mojom::blink::SerializedBlob::New(
+          blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
+          blob.value->CloneBlobPtr()));
+    }
+  }
+  return result;
+}
 
 bool StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
                   blink::BlinkMessagePortMessage>::
     Read(blink::mojom::blink::MessagePortMessage::DataView data,
          blink::BlinkMessagePortMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
-  if (!data.ReadPorts(&ports))
+  Vector<blink::mojom::blink::SerializedBlobPtr> blobs;
+  if (!data.ReadPorts(&ports) || !data.ReadBlobs(&blobs))
     return false;
   auto channels =
       blink::MessagePortChannel::CreateFromHandles(std::move(ports));
@@ -23,6 +43,12 @@ bool StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
   data.GetEncodedMessageDataView(&message_data);
   out->message = blink::SerializedScriptValue::Create(
       reinterpret_cast<const char*>(message_data.data()), message_data.size());
+  for (auto& blob : blobs) {
+    out->message->BlobDataHandles().Set(
+        blob->uuid,
+        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
+                                      blob->size, blob->blob.PassInterface()));
+  }
   return true;
 }
 
