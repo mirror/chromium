@@ -113,8 +113,10 @@ class MockAutofillClient : public TestAutofillClient {
 class TestPaymentsClient : public payments::PaymentsClient {
  public:
   TestPaymentsClient(net::URLRequestContextGetter* context_getter,
+                     PrefService* pref_service,
                      payments::PaymentsClientDelegate* delegate)
-      : PaymentsClient(context_getter, delegate), delegate_(delegate) {}
+      : PaymentsClient(context_getter, pref_service, delegate),
+        delegate_(delegate) {}
 
   ~TestPaymentsClient() override {}
 
@@ -568,9 +570,11 @@ class TestAutofillManager : public AutofillManager {
                       AutofillClient* client,
                       TestPersonalDataManager* personal_data)
       : AutofillManager(driver, client, personal_data),
+        client_(client),
         personal_data_(personal_data),
         context_getter_(driver->GetURLRequestContext()),
-        test_payments_client_(new TestPaymentsClient(context_getter_, this)),
+        test_payments_client_(
+            new TestPaymentsClient(context_getter_, client->GetPrefs(), this)),
         autofill_enabled_(true),
         credit_card_upload_enabled_(false),
         credit_card_was_uploaded_(false),
@@ -707,7 +711,7 @@ class TestAutofillManager : public AutofillManager {
 
   void ResetPaymentsClientForCardUpload(const char* server_id) {
     TestPaymentsClient* payments_client =
-        new TestPaymentsClient(context_getter_, this);
+        new TestPaymentsClient(context_getter_, client_->GetPrefs(), this);
     payments_client->server_id_ = server_id;
     set_payments_client(payments_client);
   }
@@ -719,6 +723,7 @@ class TestAutofillManager : public AutofillManager {
     AutofillManager::OnDidUploadCard(result, server_id);
   };
 
+  AutofillClient* client_;                        // Weak reference.
   TestPersonalDataManager* personal_data_;        // Weak reference.
   net::URLRequestContextGetter* context_getter_;  // Weak reference.
   TestPaymentsClient* test_payments_client_;      // Weak reference.

@@ -36,6 +36,7 @@ extern const base::Feature kAutofillDeleteDisusedAddresses;
 extern const base::Feature kAutofillDeleteDisusedCreditCards;
 extern const base::Feature kAutofillOfferLocalSaveIfServerCardManuallyEntered;
 extern const base::Feature kAutofillRationalizeFieldTypePredictions;
+extern const base::Feature kAutofillSendBillingCustomerNumber;
 extern const base::Feature kAutofillSuppressDisusedAddresses;
 extern const base::Feature kAutofillSuppressDisusedCreditCards;
 extern const base::Feature kAutofillUpstreamAllowAllEmailDomains;
@@ -139,6 +140,11 @@ bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled();
 // Returns whether the experiment is enabled where Chrome Upstream displays a
 // new save card bubble/infobar design.
 bool IsAutofillUpstreamShowNewUiExperimentEnabled();
+
+// Returns whether the experiment is enabled where Chrome reads billing customer
+// number from priority preference and send along with UploadCardRequest and
+// FullCardRequest.
+bool IsAutofillSendBillingCustomerNumberExperimentEnabled();
 
 #if defined(OS_MACOSX)
 // Returns whether the Credit Card Autofill Touch Bar experiment is enabled.
