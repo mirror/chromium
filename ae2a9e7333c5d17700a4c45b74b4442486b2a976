@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c5aaac96_50a94085",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-04T14:43:06Z",
+      "side": 1,
+      "message": "Please could you also add the \u0027Implement inline replies\u0027 bug number here (https://bugs.chromium.org/p/chromium/issues/detail?id\u003d599859)",
+      "revId": "ae2a9e7333c5d17700a4c45b74b4442486b2a976",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56fa8675_67541abd",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 2
