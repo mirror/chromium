@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0727f1b_467a267c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "We probably should add asserts that getSize on the original spec isn\u0027t 0 (in the case where it was UNSPECIFIED)",
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dee1deb_caa72c22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "any reason we have a variable if it\u0027s always true?",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 739,
+        "endChar": 31
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a00f60f1_27df7322",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "is this called at most once for each set of views?  If yes, then ignore the rest of this.\n\nif not, we should likely cache the lists inside of the other classes.  also the foreach iteration of a list requires an Iterator allocation, which we do not use in Chrome where we know the list have constant time lookup (i.e. arraylist)",
+      "range": {
+        "startLine": 68,
+        "startChar": 24,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d87552e_0edd051d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "is this the top and bottom visible element for the first and last element in the list (not necessarily what is visible)?",
+      "range": {
+        "startLine": 79,
+        "startChar": 36,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50177b7c_e51a2533",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "what happens if this is called multiple times for the same recyclerview?  Is that the case where you need to ensure the ordering of the call to prevent infinite padding?\n\nSomething you could look at if that becomes an issue is View#setTag\n(https://developer.android.com/reference/android/view/View.html#setTag(int, java.lang.Object))\n\nThen you could set the item decoration instance on your recycler view and call remove on it if one already exists (or potentially not add it).",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 48
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27799156_ad348e01",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "Is there a case where we apply padding to views unnecessarily where the recycler view would not previously had needed to scroll?  I.e. if you have views that exactly fill up the viewport and didn\u0027t need any additional scroll, would we be adding bottom padding and thus given some amount of vertical scroll?\n\nI don\u0027t know if there is any way to only add this if the recycler view needs to scroll, but that might be slightly more correct, but also not worth fighting too much.",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349da6b6_125522e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T16:39:46Z",
+      "side": 1,
+      "message": "For this case, are we actually preventing the content from showing behind the transparent toolbar?\n\nLong, long term, I wonder if we should be building a custom ScrollView class that determines the vertical scroll range based on this so the content can indeed hide behind the toolbar and force bottom content to either pass in this custom class or RecyclerViews.",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 111,
+        "endChar": 43
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
