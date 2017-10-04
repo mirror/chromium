@@ -46,6 +46,30 @@
       "revId": "277f00a3e96b15d22d175de24228c9495d660b7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84c1f0ff_1bd65214",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T04:44:39Z",
+      "side": 1,
+      "message": "I think it\u0027s ok either way.  Findbugs might complain if you include the others, but I\u0027d likely be tempted to for no good reason other than it makes it easier for code searches to stumble upon this if they change one.  But yeah, up to you.",
+      "parentUuid": "74d92fcb_a142167f",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "277f00a3e96b15d22d175de24228c9495d660b7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
