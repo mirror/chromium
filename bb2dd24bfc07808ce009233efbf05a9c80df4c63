@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf25be24_55c60574",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-04T15:23:44Z",
+      "side": 1,
+      "message": "\"This constructor is defined as deleted if std::is_copy_constructible_v\u003cT\u003e is false\" as well fwiw.",
+      "revId": "bb2dd24bfc07808ce009233efbf05a9c80df4c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
