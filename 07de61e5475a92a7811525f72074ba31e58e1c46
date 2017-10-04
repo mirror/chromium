@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "80c651a8_44b2eb76",
+        "filename": "chrome/browser/resources/policy_tool.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-04T00:15:18Z",
+      "side": 1,
+      "message": "size\u003d\"4\"",
+      "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abbca6a_1e86860c",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-04T00:15:18Z",
+      "side": 1,
+      "message": "Maybe {!Array\u003cstring\u003e} since it looks like a null |sessions| would be bad.",
+      "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b087460_f92ea8cd",
         "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
         "patchSetId": 4
@@ -61,6 +95,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "31588073_e2e8d9d3",
+      "range": {
+        "startLine": 348,
+        "startChar": 21,
+        "endLine": 348,
+        "endChar": 22
+      },
+      "revId": "07de61e5475a92a7811525f72074ba31e58e1c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4aa5d10f_1f4ee178",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-04T00:15:18Z",
+      "side": 1,
+      "message": "Optional: the i-- (third part of for-loop) is executed as an independent statement, so --i will have the same result. Unless ya prefer to have the compiler change this to a --i for you on each compile, it\u0027s just as well to say --i from the get go (which I also find more readable).\n\nTrivia: Braces are optional (either way is correct in the style guide last I looked). (My preference is to use braces in c/c++/js).",
+      "parentUuid": "3993c235_20bd9673",
       "range": {
         "startLine": 348,
         "startChar": 21,
