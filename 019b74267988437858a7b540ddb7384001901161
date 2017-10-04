@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8359fd6_52e460bc",
+        "filename": "net/ssl/ssl_client_session_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Now that you\u0027re not setting anything, probably can just write:\n\n  cache_.Put(cache_key, Entry());",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "718e93d2_d4cc6458",
+        "filename": "net/ssl/ssl_client_session_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "cache_.Put returns an iterator, so may as well save the extra lookup with:\n\n  iter \u003d cache_.Put(cache_key, Entry());",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baaaae5f_1ff035a0",
+        "filename": "net/ssl/ssl_client_session_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Optional: these three lines can just be:\n\nfor (const CRYPTO_BUFFER* cert : session-\u003ecerts) {\n\n(Hrm, we should see about adding an accessor for this...)",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c16619e7_17c7c6ab",
+        "filename": "net/ssl/ssl_client_session_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "If sessions[1] is hanging around since it\u0027s really old, we probably should release that too.",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efd8b7e_eb69ee9d",
+        "filename": "net/ssl/ssl_client_session_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Unused.",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aceadf9_e18254de",
+        "filename": "net/ssl/ssl_client_session_cache.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Hrm. I think base.h is still sufficient?",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "610d71e4_f53b7f65",
+        "filename": "net/ssl/ssl_client_session_cache_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "(New API should avoid this and the TLS1_3_DRAFT_VERSION thing.)",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4564dd83_4a6dcf27",
+        "filename": "net/ssl/ssl_client_session_cache_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "(For later, but these refcount checks really ought to go when we make this opaque. ASan should be sufficient here.)",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "34e86ae3_aaceadc1",
+        "filename": "net/ssl/ssl_client_session_cache_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Could you add some tests also for when you\u0027re inserting single-use sessions into a cache which already has multi-use sessions and vice versa?",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c51827c_45a91940",
+        "filename": "net/ssl/ssl_client_session_cache_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the cache have zero size now?",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d810f1d_adee9afd",
+        "filename": "net/ssl/ssl_client_session_cache_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-04T05:35:39Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like this is testing what happens when you insert three sessions at key1, with the first one falling off.",
+      "revId": "019b74267988437858a7b540ddb7384001901161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
