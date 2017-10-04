@@ -8,12 +8,12 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 
-namespace v8 {
-class Extension;
-}
-
 namespace blink {
 class WebLocalFrame;
+}
+
+namespace content {
+class RenderFrame;
 }
 
 namespace extensions_v8 {
@@ -22,9 +22,7 @@ namespace extensions_v8 {
 // http://dev.chromium.org/searchbox
 class SearchBoxExtension {
  public:
-  // Returns the v8::Extension object handling searchbox bindings. Returns null
-  // if match-preview is not enabled. Caller takes ownership of returned object.
-  static v8::Extension* Get();
+  static void Install(content::RenderFrame* render_frame);
 
   // Helpers to dispatch Javascript events.
   static void DispatchChromeIdentityCheckResult(blink::WebLocalFrame* frame,

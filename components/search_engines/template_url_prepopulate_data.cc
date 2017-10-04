@@ -555,7 +555,7 @@ const PrepopulatedEngine* const engines_UA[] = {
 
 // United States
 const PrepopulatedEngine* const engines_US[] = {
-    &google, &bing, &yahoo, &aol, &ask,
+    &google, &bing, &yahoo, &aol, &ask, &yandex_ru,
 };
 
 // Uruguay
