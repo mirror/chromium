@@ -125,7 +125,7 @@ void TcpCubicSenderBase::OnCongestionEvent(
        it != lost_packets.end(); ++it) {
     OnPacketLost(it->first, it->second, prior_in_flight);
   }
-  for (const SendAlgorithmInterface::AckedPacket acked_packet : acked_packets) {
+  for (const AckedPacket acked_packet : acked_packets) {
     OnPacketAcked(acked_packet.packet_number, acked_packet.bytes_acked,
                   prior_in_flight, event_time);
   }

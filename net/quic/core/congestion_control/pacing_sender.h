@@ -47,7 +47,7 @@ class QUIC_EXPORT_PRIVATE PacingSender {
       bool rtt_updated,
       QuicByteCount bytes_in_flight,
       QuicTime event_time,
-      const SendAlgorithmInterface::AckedPacketVector& acked_packets,
+      const AckedPacketVector& acked_packets,
       const SendAlgorithmInterface::CongestionVector& lost_packets);
 
   void OnPacketSent(QuicTime sent_time,

@@ -16,6 +16,7 @@
 #include "net/quic/core/quic_connection_stats.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_time.h"
+#include "net/quic/core/quic_types.h"
 #include "net/quic/core/quic_unacked_packet_map.h"
 #include "net/quic/platform/api/quic_clock.h"
 #include "net/quic/platform/api/quic_export.h"
@@ -29,26 +30,6 @@ const QuicPacketCount kDefaultMaxCongestionWindowPackets = 2000;
 
 class QUIC_EXPORT_PRIVATE SendAlgorithmInterface {
  public:
-  struct AckedPacket {
-    AckedPacket(QuicPacketNumber packet_number,
-                QuicPacketLength bytes_acked,
-                QuicTime receive_timestamp)
-        : packet_number(packet_number),
-          bytes_acked(bytes_acked),
-          receive_timestamp(receive_timestamp) {}
-
-    QuicPacketNumber packet_number;
-    // Number of bytes sent in the packet that was acknowledged.
-    QuicPacketLength bytes_acked;
-    // The time |packet_number| was received by the peer, according to the
-    // optional timestamp the peer included in the ACK frame which acknowledged
-    // |packet_number|. Zero if no timestamp was available for this packet.
-    QuicTime receive_timestamp;
-  };
-
-  // A vector of acked packets.
-  typedef std::vector<AckedPacket> AckedPacketVector;
-
   // A sorted vector of packets.
   typedef std::vector<std::pair<QuicPacketNumber, QuicPacketLength>>
       CongestionVector;

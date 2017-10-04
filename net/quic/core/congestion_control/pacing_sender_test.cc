@@ -48,7 +48,7 @@ class PacingSenderTest : public QuicTest {
       EXPECT_CALL(*mock_sender_, OnCongestionEvent(_, _, _, _, _));
       SendAlgorithmInterface::CongestionVector lost_packets;
       lost_packets.push_back(std::make_pair(1, kMaxPacketSize));
-      SendAlgorithmInterface::AckedPacketVector empty;
+      AckedPacketVector empty;
       pacing_sender_->OnCongestionEvent(true, 1234, clock_.Now(), empty,
                                         lost_packets);
     } else if (burst_size != kInitialBurstPackets) {
@@ -104,7 +104,7 @@ class PacingSenderTest : public QuicTest {
   void UpdateRtt() {
     EXPECT_CALL(*mock_sender_,
                 OnCongestionEvent(true, kBytesInFlight, _, _, _));
-    SendAlgorithmInterface::AckedPacketVector empty_acked;
+    AckedPacketVector empty_acked;
     SendAlgorithmInterface::CongestionVector empty_lost;
     pacing_sender_->OnCongestionEvent(true, kBytesInFlight, clock_.Now(),
                                       empty_acked, empty_lost);
@@ -320,7 +320,7 @@ TEST_F(PacingSenderTest, NoBurstEnteringRecovery) {
   // Losing a packet will set clear burst tokens.
   SendAlgorithmInterface::CongestionVector lost_packets;
   lost_packets.push_back(std::make_pair(1, kMaxPacketSize));
-  SendAlgorithmInterface::AckedPacketVector empty_acked;
+  AckedPacketVector empty_acked;
   EXPECT_CALL(*mock_sender_, OnCongestionEvent(true, kMaxPacketSize, _,
                                                IsEmpty(), lost_packets));
   pacing_sender_->OnCongestionEvent(true, kMaxPacketSize, clock_.Now(),
