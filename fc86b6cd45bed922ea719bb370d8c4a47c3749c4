@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "28972f0d_28d5a6ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df277044_78db6c5d",
+      "range": {
+        "startLine": 518,
+        "startChar": 12,
+        "endLine": 518,
+        "endChar": 38
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca5c9113_1c1f6451",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 27
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6cffa2c_c18fc523",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca5c9113_1c1f6451",
+      "range": {
+        "startLine": 69,
+        "startChar": 59,
+        "endLine": 69,
+        "endChar": 75
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45920949_592db4ea",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 27
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-04T19:08:23Z",
       "side": 1,
       "message": "should we rate limit the number of times we ask whether a survey is available?  Should we do it at most once a day?  I can imagine on low end phones we could ask this a lot.  Or is it cached on the device and therefore cheap to call frequently?",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc88a32_bdb59549",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "The internal logic throttles it by checking the cached response code.",
+      "parentUuid": "45920949_592db4ea",
       "range": {
         "startLine": 75,
         "startChar": 20,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f419905b_ded18410",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "529ad2ba_8004440d",
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "905015f2_d0d61e44",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 27
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "6c67487b_06e68f6a",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 27
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905015f2_d0d61e44",
+      "range": {
+        "startLine": 2672,
+        "startChar": 39,
+        "endLine": 2672,
+        "endChar": 50
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82ec5dd0_0c25baee",
         "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
         "patchSetId": 27
@@ -131,6 +245,30 @@
       "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dcc984_aa6fffe6",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-04T22:14:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82ec5dd0_0c25baee",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
