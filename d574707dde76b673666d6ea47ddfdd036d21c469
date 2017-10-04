@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc252c18_e38160c5",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-04T19:01:40Z",
+      "side": 1,
+      "message": "sgtm",
+      "parentUuid": "2dc1502c_0c9993ce",
+      "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27dca9aa_6ef5c6d9",
         "filename": "content/browser/indexed_db/indexed_db_reporting.h",
         "patchSetId": 2
@@ -65,6 +83,24 @@
       "writtenOn": "2017-10-04T17:04:39Z",
       "side": 1,
       "message": "These macro names are a little generic, so there\u0027s some risk of collision now that they\u0027re in a header file, but that can be dealt with if/when it happens.",
+      "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f9df57_ecc4fd6b",
+        "filename": "content/browser/indexed_db/indexed_db_reporting.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-04T19:01:40Z",
+      "side": 1,
+      "message": "Yeah - at the very least I\u0027d like to change that in another CL to keep this as pure of a move as possible. I think I prefer dealing with this if/when it happens.",
+      "parentUuid": "34433c44_89d692c6",
       "revId": "d574707dde76b673666d6ea47ddfdd036d21c469",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
