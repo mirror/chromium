@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "a724a489_12c573b3",
+        "filename": "base/i18n/bidi_line_iterator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T15:06:52Z",
+      "side": 1,
+      "message": "Oh wow, that is very cool, thanks for the insight!",
+      "parentUuid": "7dd07a32_5da1f25f",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6be4755_b53273c7",
         "filename": "base/i18n/bidi_line_iterator.h",
         "patchSetId": 22
@@ -282,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "adc13789_2e894d68",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3764,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T15:06:52Z",
+      "side": 1,
+      "message": "Oh hmm, I\u0027m not familiar with that distinction...",
+      "parentUuid": "6b7b57c0_a16e9a51",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace37ca0_6ff0a84b",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 22
@@ -311,6 +347,24 @@
       "side": 1,
       "message": "I don\u0027t know what your client is showing you, but there is no whitespace in that string.\n\n(This weird display issue is kind of why I usually avoid putting Unicode characters in code, but you requested this previously.)",
       "parentUuid": "ace37ca0_6ff0a84b",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f6e637_bc3d6122",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T15:06:52Z",
+      "side": 1,
+      "message": "Okay, something approximate here is better than nothing.",
+      "parentUuid": "10e4c0ee_27c67445",
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
