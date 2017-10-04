@@ -16,6 +16,24 @@
       "revId": "86664628d375d5e4cf3250f633672c46add20194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410e3d20_149d00ed",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-04T17:15:23Z",
+      "side": 1,
+      "message": "Nope, it should be in the same ballpark as |avatar|.",
+      "parentUuid": "efd123fb_9afdbf24",
+      "revId": "86664628d375d5e4cf3250f633672c46add20194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
