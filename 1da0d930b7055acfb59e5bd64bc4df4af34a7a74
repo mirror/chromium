@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28563acd_b31cc8af",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T14:25:36Z",
+      "side": 1,
+      "message": "Might as well take the ContentSuggestionsService* here, since both call sites are passing content_suggestions_service_-\u003eremote_suggestions_provider_for_debugging().",
+      "range": {
+        "startLine": 176,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 29
+      },
+      "revId": "1da0d930b7055acfb59e5bd64bc4df4af34a7a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
