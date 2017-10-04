@@ -355,6 +355,7 @@ bool CanShowSuggestion(const PasswordFormFillData& fill_data,
 // |field_value_and_properties_map|.
 // Flags in |added_flags| are added with bitwise OR operation.
 // If |value| is null, the value is neither updated nor added.
+// If |value| is empty, USER_TYPED and AUTOFILLED should be cleared.
 void UpdateFieldValueAndPropertiesMaskMap(
     const blink::WebFormControlElement& element,
     const base::string16* value,
@@ -365,12 +366,23 @@ void UpdateFieldValueAndPropertiesMaskMap(
   if (it != field_value_and_properties_map->end()) {
     if (value)
       it->second.first.reset(new base::string16(*value));
-    it->second.second |= added_flags;
+    // Reset USER_TYPED and AUTOFILLED flags if the value is empty.
+    if (value && value->empty()) {
+      it->second.second &= ~(FieldPropertiesFlags::USER_TYPED |
+                             FieldPropertiesFlags::AUTOFILLED);
+    } else {
+      it->second.second |= added_flags;
+    }
   } else {
     (*field_value_and_properties_map)[element] = std::make_pair(
         value ? base::MakeUnique<base::string16>(*value) : nullptr,
         added_flags);
   }
+  // Check USER_TYPED and AUTOFILLED should be cleared, if |value| is empty.
+  DCHECK(!value || !value->empty() ||
+         ((*field_value_and_properties_map)[element].second &
+          (FieldPropertiesFlags::USER_TYPED |
+           FieldPropertiesFlags::AUTOFILLED)) == 0);
 }
 
 // This function attempts to find the matching credentials for the
