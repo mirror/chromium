@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4ab65e7_202f29d0",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/page_range.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T19:29:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c0fd1be3_e503fa83",
+      "revId": "09abb46f5fb300c857186aeb7087fc68185b9b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf8856b_5ddfbd57",
         "filename": "chrome/browser/resources/print_preview/settings/settings_section_select.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T17:49:45Z",
       "side": 1,
       "message": "Interesting. The compiler started catching the missing |capability| getter only after the change to ES6?",
+      "revId": "09abb46f5fb300c857186aeb7087fc68185b9b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d22e0f4a_ef93880f",
+        "filename": "chrome/browser/resources/print_preview/settings/settings_section_select.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T19:29:06Z",
+      "side": 1,
+      "message": "Yes. Not sure why it did not catch it before.",
+      "parentUuid": "fcf8856b_5ddfbd57",
       "revId": "09abb46f5fb300c857186aeb7087fc68185b9b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
