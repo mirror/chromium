@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "534dab87_efae5289",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1212,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-10-04T08:15:42Z",
+      "side": 1,
+      "message": "Can you add some comments saying that this creates a reference cycle intentionally to keep the loaders alive?",
+      "revId": "b459adacadf2777cdb2b56259620b31077e423ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
