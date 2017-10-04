@@ -113,6 +113,8 @@ class ManagePasswordsBubbleView : public LocationBarBubbleDelegateView,
 
   // The timeout in seconds for the auto sign-in toast.
   static int auto_signin_toast_timeout_;
+  // The timeout in seconds for the eye icon in pending view.
+  static int password_view_button_timeout_;
 
   ManagePasswordsBubbleModel model_;
 
