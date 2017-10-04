@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35212235_1175c4e9",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd60f473_2015fcb4",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca03d4f7_d1eb2cb8",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -70,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "8b46f0d1_04b2bed9",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca03d4f7_d1eb2cb8",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3125a701_131e90bf",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "b35f7f38_35a7fa84",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3125a701_131e90bf",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bda8a8b0_8e54cecb",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -98,6 +152,24 @@
       "writtenOn": "2017-10-03T18:49:25Z",
       "side": 1,
       "message": "Can we just apply a max-width to .warning-content instead, and remove the suspicious-warn-text span? Or maybe use display:flex to achieve the same desired layout so you won\u0027t need a hard-coded width at all.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8dcd3f_c794d1a0",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "This has been removed. However, max-width (or width) cannot be applied to .warning-content because .warning-content can contain both text and a button. Meaning that, if .warning-content was clipped to max-width: 484px, then the button would be squeezed to the next line.\n\nThe max-width should really apply to the text.",
+      "parentUuid": "bda8a8b0_8e54cecb",
       "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "7ee0ffa2_2b04ba03",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39cddde9_f589f2d2",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ae8114_b9dcfb0b",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -135,6 +225,24 @@
       "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac59971_8c7139d1",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5ae8114_b9dcfb0b",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "1121903f_eb20ea56",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "683e5346_495a60c4",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4557e18f_c7d6db8a",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -166,6 +292,24 @@
       "writtenOn": "2017-10-03T18:49:25Z",
       "side": 1,
       "message": "I think here and the following two blocks, the same visual results can be achieved with simplified mark-up, along with shuffling some css rules, like so:\n\n\u003cdiv class\u003d\"control-line warning-content\"\u003e\n  \u003ciron-icon ...\u003e\n  \u003cspan\u003etext...\u003c/span\u003e\n  \u003cpaper-button ...\u003e\n\u003c/div\u003e\n\nWith this, you might need to use display:flex to achieve the desired layout, but it\u0027ll help make the mark-up a lot cleaner.",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82b6942_58649677",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "I did simplify the mark-up to match the above except for the case when there is an icon, text, and button.\n\nIn that case, I had to leave a \u003cdiv\u003e wrapper around the icon and text and leave another \u003cdiv\u003e wrapper around the button. This is because the justify-content attribute of display:flex does not allow for custom layout -- e.g. the icon and text should be left aligned and the button should be right aligned.\n\nThe two \u003cdiv\u003e\u0027s can be flexed with justify-content:space-between. In the second div\u003e, the button can then be float:right.\n\nDo you see a way to drop the two \u003cdiv\u003e wrappers in this case?",
+      "parentUuid": "4557e18f_c7d6db8a",
       "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "5a3f86c7_2018efde",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "The reliance on :empty{ ... } has been removed. I didn\u0027t put the attribute hidden\u003d\"[[!text]]\" on the \u003cspan\u003e tag since its parent div already does the check.",
+      "parentUuid": "c6858ee2_7ee80426",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "460ea5c7_b2b7db3a",
         "filename": "chrome/browser/resources/md_extensions/detail_view.js",
         "patchSetId": 2
@@ -206,6 +368,24 @@
     },
     {
       "key": {
+        "uuid": "cd2feb54_34ecbc12",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "460ea5c7_b2b7db3a",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9223dc2_7323e693",
         "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
         "patchSetId": 2
@@ -220,6 +400,24 @@
       "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c3d394_5922907c",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-10-04T18:32:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9223dc2_7323e693",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
