@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7a316b5e_9977c214",
+        "filename": "gpu/command_buffer/client/gpu_control.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a34cf10_ba53f4a6",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66067400_ac274400",
         "filename": "gpu/command_buffer/tests/gl_manager.cc",
         "patchSetId": 7
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "03150697_b2ac05a7",
+        "filename": "gpu/command_buffer/tests/gl_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66067400_ac274400",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "204df0aa_21db2846",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 7
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-29T01:40:15Z",
       "side": 1,
       "message": "I don\u0027t understand the addition of the test of GPU_FEATURE_TYPE_GPU_COMPOSITING for WebGL and WebGL2; could you please explain that?",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfeac02e_a4cef6ee",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "This is a logic currently handled on the browser side in GpuDataManagerImplPrivate.\n\nI added it here, but will address the browser side code when I work on moving GPU_COMPOSITING to gpu side.",
+      "parentUuid": "204df0aa_21db2846",
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "2fb42d66_96429003",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Same answer.",
+      "parentUuid": "1ba0d4ad_8504ad18",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8fcc522_3412ddd5",
         "filename": "gpu/gles2_conform_support/egl/context.cc",
         "patchSetId": 7
@@ -102,6 +174,24 @@
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d5560dd_97c7dd2a",
+        "filename": "gpu/gles2_conform_support/egl/context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8fcc522_3412ddd5",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "050a6bb1_4dfbd3cd",
+        "filename": "gpu/ipc/gl_in_process_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784e38d2_8e900437",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eacbd2bc_bd869c62",
         "filename": "gpu/ipc/gl_in_process_context.h",
         "patchSetId": 7
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "0ca124fd_ec994c3f",
+        "filename": "gpu/ipc/gl_in_process_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eacbd2bc_bd869c62",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "854672c2_0ae1b426",
         "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
         "patchSetId": 7
@@ -153,6 +279,24 @@
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f382e9b5_2cbf88a3",
+        "filename": "services/ui/public/cpp/gpu/context_provider_command_buffer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854672c2_0ae1b426",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +329,24 @@
       "side": 1,
       "message": "This check belongs in ShouldAccelerate()",
       "parentUuid": "4d2079bd_aaa7f2a1",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4aac85f_640a8fab",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "kbr: It\u0027s hard because sometimes we check Enabled, sometimes we check Enabled or EnabledSoftware. It varies from case to case, that\u0027s why I didn\u0027t add a helper. Right now it\u0027s a long statement but still easy to read.\n\njunov: per our offline discussion, move the entire ContextProvider code block into ShouldAccelerate().",
+      "parentUuid": "ba58e51f_27518a8c",
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "aa76bf71_01200007",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/AcceleratedImageBufferSurface.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "kbr: Looking at OffscreenCanvas::GetOrCreateImageBuffer(), we did check RuntimeEnabledFeatures::Accelerated2dCanvasEnabled() before creating a AcceleratedImageBufferSurface.\n\njunov: per our offline discussion, moving this check to OffscreenCanvas::GetOrCreateImageBuffer().",
+      "parentUuid": "cc8b4fca_7aa7fb3f",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1db9c70d_9d35504b",
         "filename": "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h",
         "patchSetId": 7
@@ -240,6 +420,24 @@
       "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c5bbd8a_a964ceec",
+        "filename": "third_party/WebKit/public/platform/WebGraphicsContext3DProvider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-04T21:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1db9c70d_9d35504b",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
