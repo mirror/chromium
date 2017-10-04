@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a86ff2e6_ad3db1a6",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-04T14:19:24Z",
+      "side": 1,
+      "message": "nit: I think this is not needed anymore.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "2e8393eb9e60f7d5560b79fe299da9cae671714b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
