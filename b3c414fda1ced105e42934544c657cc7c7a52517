@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34d86152_ae862732",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T23:42:28Z",
+      "side": 1,
+      "message": "since these are in the parent class, I think you can omit the class name here and elsewhere.",
+      "range": {
+        "startLine": 146,
+        "startChar": 38,
+        "endLine": 146,
+        "endChar": 58
+      },
+      "revId": "b3c414fda1ced105e42934544c657cc7c7a52517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
