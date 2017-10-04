@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "fe23096c_9704834b",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Agreed with the goal. Qq: what would be the best place to add integration tests for this particular requirement? Are there browser tests for sync? If not browser tests, would it be based on chrome/browser/sync/test/integration/sync_test.h?",
+      "parentUuid": "c42b59e8_f7090200",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15

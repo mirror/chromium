@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93e1fda8_738c38a4",
+        "filename": "chrome/test/data/favicon/page_removing_favicon_via_js.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94dc51d4_dd4cd641",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92f45150_8911be0b",
         "filename": "chrome/test/data/favicon/page_removing_touch_icon_via_js.html",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f640e741_f82d237a",
+        "filename": "chrome/test/data/favicon/page_removing_touch_icon_via_js.html",
+        "patchSetId": 16
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f45150_8911be0b",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "956241bd_1fb219f2",
+        "filename": "components/favicon/content/content_favicon_driver.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd0fa2a5_8ffeb511",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbde0f9f_79e0c6da",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3a1771_f387b941",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cbde0f9f_79e0c6da",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "36f08cbc_5754d967",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "931e5f5c_c46bc50b",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f00f94c_ec7ba63e",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 16
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c11b2b11_f973d605",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f00f94c_ec7ba63e",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d24fd34_4ca50e39",
         "filename": "components/favicon/core/favicon_handler_unittest.cc",
         "patchSetId": 16
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-02T22:51:57Z",
       "side": 1,
       "message": "Is it possible for ContentFaviconDriver::DidUpdateFaviconURL() to be called with zero candidates? My understanding is that it is impossible due to the early return in RenderFrameImpl::SendUpdateFaviconURL()",
+      "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92852593_49f04304",
+        "filename": "components/favicon/core/favicon_handler_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T17:41:03Z",
+      "side": 1,
+      "message": "Correct, it never happens, even for iOS. However, FaviconHandler\u0027s API doesn\u0027t require (as per documentation) that candidates are non-empty, and in fact handles that case well. So I see no reason why the implementation would take that for granted, or why tests can\u0027t use such a setup (manifest-related ones already do).\n\nFor this particular test, the alternative would be to feed in candidates that filtered out by type. I think that\u0027d be distracting.",
+      "parentUuid": "9d24fd34_4ca50e39",
       "revId": "886e0fed9f076b5e22053f7d2eba6b45680f9f7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
