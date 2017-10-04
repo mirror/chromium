@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2baf45bc_a97825a1",
+        "filename": "content/browser/android/webview_navigation_throttle.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-04T13:41:40Z",
+      "side": 1,
+      "message": "You are right. There is no need to DEFER the navigation. It was \"safer\" only in my mind, the NavigationHandleImpl already know how to handle its own deletion in CheckWillStartRequest/CheckWillRedirectRequest.",
+      "parentUuid": "a476d7e5_1170f9fe",
+      "revId": "530c82461526f31663aa95ba804c8736600864ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01bbbac1_44f6be48",
         "filename": "content/browser/frame_host/navigation_handle_impl.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T18:18:42Z",
       "side": 1,
       "message": "Since this is a WebView specific code, let\u0027s not register it for all Android navigations, especially if we must keep the behavior of \"defer, PostTask, check, cancel | resume\". This will add an extra delay in navigations in Chrome on Android, which is undersirable, as it doesn\u0027t support this WebView API.\n\nChatting with boliu@, it should be possible to put this registration in chrome/android_webview/ and use a content/public API through ContentBrowserClient to let the WebView code register it itself.",
+      "revId": "530c82461526f31663aa95ba804c8736600864ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fbde17_b69b4c78",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-10-04T13:41:40Z",
+      "side": 1,
+      "message": "Yes we can. I can use AwContentBrowserClient::CreateThrottleForNavigation().\nThe issue is that the WebViewNavigationThrottle depends on NavigationHandleImpl/FrameTreeNode. I can probably add more getters in NavigationHandle. I don\u0027t know if it is okay to expose frame_tree_node_id out of content/.\n\nI will look at this after making sure everything works as intended. Bots ares reds now.",
+      "parentUuid": "01bbbac1_44f6be48",
       "revId": "530c82461526f31663aa95ba804c8736600864ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
