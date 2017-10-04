@@ -11,8 +11,10 @@
 #include "chrome/browser/vr/ui_renderer.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
+#include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkImageEncoder.h"
 #include "third_party/skia/include/core/SkStream.h"
+#include "third_party/skia/include/core/SkSurface.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/test/gl_image_test_template.h"
@@ -35,9 +37,21 @@ void UiPixelTest::SetUp() {
       base::MakeUnique<GlTestEnvironment>(frame_buffer_size_);
 
   // Make content texture.
+  sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(645, 430);
+  SkCanvas* canvas = surface->getCanvas();
+  canvas->clear(0xFF5E4A3F);
+
+  SkPixmap pixmap;
+  ASSERT_TRUE(surface->peekPixels(&pixmap));
+
+  SkColorType type = pixmap.colorType();
+  ASSERT_TRUE(type == kRGBA_8888_SkColorType || type == kBGRA_8888_SkColorType);
+  GLint format = (type == kRGBA_8888_SkColorType ? GL_RGBA : GL_BGRA);
+
   content_texture_ = gl::GLTestHelper::CreateTexture(GL_TEXTURE_2D);
-  // TODO(tiborg): Make GL_TEXTURE_EXTERNAL_OES texture for content and fill it
-  // with fake content.
+  glTexImage2D(GL_TEXTURE_2D, 0, format, pixmap.width(), pixmap.height(), 0,
+               format, GL_UNSIGNED_BYTE, pixmap.addr());
+
   ASSERT_EQ(glGetError(), (GLenum)GL_NO_ERROR);
 
   browser_ = base::MakeUnique<MockBrowserInterface>();
