@@ -286,6 +286,8 @@ class ProcessMemoryMetricsEmitterTest : public ExtensionBrowserTest {
 #endif
     CheckMemoryMetricWithName(source_id, UkmEntry::kPrivateMemoryFootprintName,
                               false, metric_count);
+    CheckMemoryMetricWithName(source_id, UkmEntry::kUptimeName, true,
+                              metric_count);
   }
 
   bool ProcessHasTypeForSource(ukm::SourceId source_id,
