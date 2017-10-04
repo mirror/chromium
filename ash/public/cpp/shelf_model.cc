@@ -223,6 +223,8 @@ void ShelfModel::SetShelfItemDelegate(
     item_delegate->set_shelf_id(safe_shelf_id);
   // This assignment replaces any ShelfItemDelegate already registered for
   // |shelf_id|.
+  if (id_to_item_delegate_map_[safe_shelf_id])
+    id_to_item_delegate_map_[safe_shelf_id]->OnBeforeReplacingInModel();
   id_to_item_delegate_map_[safe_shelf_id] = std::move(item_delegate);
   for (auto& observer : observers_) {
     observer.ShelfItemDelegateChanged(

@@ -54,6 +54,9 @@ class ASH_PUBLIC_EXPORT ShelfItemDelegate : public mojom::ShelfItemDelegate {
   // Returns nullptr if class is not AppWindowLauncherItemController.
   virtual AppWindowLauncherItemController* AsAppWindowLauncherItemController();
 
+  // Called before replacing this item in the shelf model.
+  virtual void OnBeforeReplacingInModel() {}
+
   // Attempts to execute a context menu command; returns true if it was run.
   bool ExecuteContextMenuCommand(int64_t command_id, int32_t event_flags);
 

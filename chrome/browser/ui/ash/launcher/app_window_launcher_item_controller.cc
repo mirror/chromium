@@ -116,12 +116,23 @@ void AppWindowLauncherItemController::Close() {
     window->Close();
 }
 
+void AppWindowLauncherItemController::OnBeforeReplacingInModel() {
+  if (discarded_callback_)
+    std::move(discarded_callback_).Run();
+}
+
 void AppWindowLauncherItemController::ActivateIndexedApp(size_t index) {
   if (index >= windows_.size())
     return;
   auto it = windows_.begin();
   std::advance(it, index);
   ShowAndActivateOrMinimize(*it);
+}
+
+void AppWindowLauncherItemController::SetDiscardedCallback(
+    DiscardedCallback discarded_callback) {
+  DCHECK(!discarded_callback_);
+  discarded_callback_ = std::move(discarded_callback);
 }
 
 ui::BaseWindow* AppWindowLauncherItemController::GetLastActiveWindow() {
