@@ -76,7 +76,6 @@ class CC_ANIMATION_EXPORT AnimationHost : public MutatorHost,
 
   void SetNeedsCommit();
   void SetNeedsPushProperties();
-  bool needs_push_properties() const { return needs_push_properties_; }
 
   bool SupportsScrollAnimations() const;
 

@@ -26,18 +26,13 @@ class AnimationPlayerTest : public AnimationTimelinesTest {
 // See element_animations_unittest.cc for active/pending observers tests.
 
 TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
   host_->AddAnimationTimeline(timeline_);
-  EXPECT_TRUE(timeline_->needs_push_properties());
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
-
   timeline_->AttachPlayer(player_);
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
 
-  EXPECT_TRUE(timeline_->needs_push_properties());
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
-
+  // The first push should create an impl player, but it will not have an
+  // element_id_ since the main-thread player does not have an element.
   host_->PushPropertiesTo(host_impl_);
 
   EXPECT_FALSE(GetImplTickerForLayerId(element_id_));
@@ -46,45 +41,44 @@ TEST_F(AnimationPlayerTest, AttachDetachLayerIfTimelineAttached) {
 
   EXPECT_FALSE(player_impl_->element_animations());
   EXPECT_FALSE(player_impl_->element_id());
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
-  EXPECT_FALSE(timeline_->needs_push_properties());
 
   player_->AttachElement(element_id_);
   EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(element_id_));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
+  // In this push the element id, element animations, etc should be hooked up
+  // since the main-thread player had an element attached.
   host_->PushPropertiesTo(host_impl_);
 
   EXPECT_EQ(player_impl_->animation_ticker(),
             GetImplTickerForLayerId(element_id_));
   EXPECT_TRUE(player_impl_->element_animations());
   EXPECT_EQ(player_impl_->element_id(), element_id_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   player_->DetachElement();
   EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
+  // The main-thread player has had its element detached, so after this push the
+  // impl side should reflect that.
   host_->PushPropertiesTo(host_impl_);
 
   EXPECT_FALSE(GetImplTickerForLayerId(element_id_));
   EXPECT_FALSE(player_impl_->element_animations());
   EXPECT_FALSE(player_impl_->element_id());
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   timeline_->DetachPlayer(player_);
   EXPECT_FALSE(player_->animation_timeline());
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
-  EXPECT_TRUE(timeline_->needs_push_properties());
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
 
+  // Finally, pushing properties again should detach the impl player from the
+  // impl timeline.
+  EXPECT_TRUE(timeline_impl_->GetPlayerById(player_impl_->id()));
   host_->PushPropertiesTo(host_impl_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
+  EXPECT_FALSE(timeline_impl_->GetPlayerById(player_impl_->id()));
 }
 
 TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
@@ -92,21 +86,18 @@ TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
 
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
 
   player_->AttachElement(element_id_);
   EXPECT_FALSE(player_->animation_timeline());
   EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
 
   timeline_->AttachPlayer(player_);
   EXPECT_EQ(timeline_, player_->animation_timeline());
   EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(element_id_));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), element_id_);
-  EXPECT_TRUE(player_->animation_ticker()->needs_push_properties());
 
   // Removing player from timeline detaches layer.
   timeline_->DetachPlayer(player_);
@@ -114,7 +105,6 @@ TEST_F(AnimationPlayerTest, AttachDetachTimelineIfLayerAttached) {
   EXPECT_FALSE(GetTickerForElementId(element_id_));
   EXPECT_FALSE(player_->element_animations());
   EXPECT_FALSE(player_->element_id());
-  EXPECT_TRUE(player_->animation_ticker()->needs_push_properties());
 }
 
 TEST_F(AnimationPlayerTest, PropertiesMutate) {
@@ -125,10 +115,8 @@ TEST_F(AnimationPlayerTest, PropertiesMutate) {
   host_->AddAnimationTimeline(timeline_);
   timeline_->AttachPlayer(player_);
   player_->AttachElement(element_id_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   const float start_opacity = .7f;
   const float end_opacity = .3f;
@@ -147,10 +135,8 @@ TEST_F(AnimationPlayerTest, PropertiesMutate) {
                                transform_y);
   AddAnimatedFilterToPlayer(player_.get(), duration, start_brightness,
                             end_brightness);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   EXPECT_FALSE(client_.IsPropertyMutated(element_id_, ElementListType::ACTIVE,
                                          TargetProperty::OPACITY));
@@ -171,11 +157,9 @@ TEST_F(AnimationPlayerTest, PropertiesMutate) {
   base::TimeTicks time;
   time += base::TimeDelta::FromSecondsD(0.1);
   TickAnimationsTransferEvents(time, 3u);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   time += base::TimeDelta::FromSecondsD(duration);
   TickAnimationsTransferEvents(time, 3u);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
   client_.ExpectOpacityPropertyMutated(element_id_, ElementListType::ACTIVE,
                                        end_opacity);
@@ -215,10 +199,7 @@ TEST_F(AnimationPlayerTest, AttachTwoPlayersToOneLayer) {
   host_->AddAnimationTimeline(timeline_);
 
   timeline_->AttachPlayer(player1);
-  EXPECT_TRUE(timeline_->needs_push_properties());
-
   timeline_->AttachPlayer(player2);
-  EXPECT_TRUE(timeline_->needs_push_properties());
 
   player1->set_animation_delegate(&delegate1);
   player2->set_animation_delegate(&delegate2);
@@ -259,17 +240,11 @@ TEST_F(AnimationPlayerTest, AttachTwoPlayersToOneLayer) {
   EXPECT_TRUE(delegate2.started());
   EXPECT_FALSE(delegate2.finished());
 
-  EXPECT_FALSE(player1->animation_ticker()->needs_push_properties());
-  EXPECT_FALSE(player2->animation_ticker()->needs_push_properties());
-
   time += base::TimeDelta::FromSecondsD(duration);
   TickAnimationsTransferEvents(time, 2u);
 
   EXPECT_TRUE(delegate1.finished());
   EXPECT_TRUE(delegate2.finished());
-
-  EXPECT_TRUE(player1->animation_ticker()->needs_push_properties());
-  EXPECT_TRUE(player2->animation_ticker()->needs_push_properties());
 
   client_.ExpectOpacityPropertyMutated(element_id_, ElementListType::ACTIVE,
                                        end_opacity);
@@ -301,15 +276,11 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
   AddOpacityTransitionToPlayer(player_.get(), duration, start_opacity,
                                end_opacity, false);
 
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
-
   host_->AddAnimationTimeline(timeline_);
   timeline_->AttachPlayer(player_);
 
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
   EXPECT_FALSE(player_->element_animations());
   player_->RemoveAnimation(filter_id);
-  EXPECT_FALSE(player_->animation_ticker()->needs_push_properties());
 
   player_->AttachElement(element_id_);
 
@@ -318,7 +289,6 @@ TEST_F(AnimationPlayerTest, AddRemoveAnimationToNonAttachedPlayer) {
       TargetProperty::FILTER));
   EXPECT_TRUE(player_->element_animations()->HasAnyAnimationTargetingProperty(
       TargetProperty::OPACITY));
-  EXPECT_TRUE(player_->animation_ticker()->needs_push_properties());
 
   host_->PushPropertiesTo(host_impl_);
 
@@ -396,7 +366,6 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
             GetImplTickerForLayerId(element_id_));
   EXPECT_TRUE(player_impl_->element_animations());
   EXPECT_EQ(player_impl_->element_id(), element_id_);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(false));
 
   const ElementId new_element_id(NextTestLayerId());
   player_->DetachElement();
@@ -405,7 +374,6 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
   EXPECT_EQ(player_->animation_ticker(), GetTickerForElementId(new_element_id));
   EXPECT_TRUE(player_->element_animations());
   EXPECT_EQ(player_->element_id(), new_element_id);
-  EXPECT_TRUE(CheckTickerTimelineNeedsPushProperties(true));
 
   host_->PushPropertiesTo(host_impl_);
 

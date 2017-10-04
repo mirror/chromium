@@ -462,28 +462,6 @@ int AnimationTimelinesTest::NextTestLayerId() {
   return next_test_layer_id_;
 }
 
-bool AnimationTimelinesTest::CheckTickerTimelineNeedsPushProperties(
-    bool needs_push_properties) const {
-  DCHECK(player_);
-  DCHECK(timeline_);
-
-  bool result = true;
-
-  AnimationTicker* ticker = player_->animation_ticker();
-  if (ticker->needs_push_properties() != needs_push_properties) {
-    ADD_FAILURE() << "ticker->needs_push_properties() expected to be "
-                  << needs_push_properties;
-    result = false;
-  }
-  if (timeline_->needs_push_properties() != needs_push_properties) {
-    ADD_FAILURE() << "timeline_->needs_push_properties() expected to be "
-                  << needs_push_properties;
-    result = false;
-  }
-
-  return result;
-}
-
 void AnimationTimelinesTest::PushProperties() {
   host_->PushPropertiesTo(host_impl_);
 }

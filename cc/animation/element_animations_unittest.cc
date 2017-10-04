@@ -634,13 +634,8 @@ TEST_F(ElementAnimationsTest, AnimationsAreDeleted) {
   AddOpacityTransitionToPlayer(player_.get(), 1.0, 0.0f, 1.0f, false);
   player_->Tick(kInitialTickTime);
   player_->UpdateState(true, nullptr);
-  EXPECT_TRUE(ticker_->needs_push_properties());
 
   PushProperties();
-  EXPECT_FALSE(ticker_->needs_push_properties());
-
-  EXPECT_FALSE(host_->needs_push_properties());
-  EXPECT_FALSE(host_impl_->needs_push_properties());
 
   player_impl_->ActivateAnimations();
 
@@ -655,14 +650,9 @@ TEST_F(ElementAnimationsTest, AnimationsAreDeleted) {
   player_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(1000));
   player_->UpdateState(true, nullptr);
 
-  EXPECT_FALSE(host_->needs_push_properties());
-  EXPECT_FALSE(host_impl_->needs_push_properties());
-
   events = CreateEventsForTesting();
   player_impl_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(2000));
   player_impl_->UpdateState(true, events.get());
-
-  EXPECT_TRUE(host_impl_->needs_push_properties());
 
   // There should be a FINISHED event for the animation.
   EXPECT_EQ(1u, events->events_.size());
@@ -676,7 +666,6 @@ TEST_F(ElementAnimationsTest, AnimationsAreDeleted) {
 
   player_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(3000));
   player_->UpdateState(true, nullptr);
-  EXPECT_TRUE(host_->needs_push_properties());
 
   PushProperties();
 
@@ -1578,7 +1567,6 @@ TEST_F(ElementAnimationsTest, PushUpdatesWhenSynchronizedStartTimeNeeded) {
   EXPECT_TRUE(active_animation);
   EXPECT_TRUE(active_animation->needs_synchronized_start_time());
 
-  EXPECT_TRUE(ticker_->needs_push_properties());
   PushProperties();
   player_impl_->ActivateAnimations();
 
@@ -1753,31 +1741,25 @@ TEST_F(ElementAnimationsTest, MainThreadAbortedAnimationGetsDeleted) {
 
   int animation_id =
       AddOpacityTransitionToPlayer(player_.get(), 1.0, 0.f, 1.f, false);
-  EXPECT_TRUE(host_->needs_push_properties());
 
   PushProperties();
 
   player_impl_->ActivateAnimations();
 
   EXPECT_TRUE(ticker_impl_->GetAnimationById(animation_id));
-  EXPECT_FALSE(host_->needs_push_properties());
 
   player_->AbortAnimations(TargetProperty::OPACITY, false);
   EXPECT_EQ(Animation::ABORTED,
             player_->GetAnimation(TargetProperty::OPACITY)->run_state());
-  EXPECT_TRUE(host_->needs_push_properties());
 
   player_->Tick(kInitialTickTime);
   player_->UpdateState(true, nullptr);
   EXPECT_EQ(Animation::ABORTED,
             player_->GetAnimation(TargetProperty::OPACITY)->run_state());
 
-  EXPECT_TRUE(ticker_->needs_push_properties());
-  EXPECT_TRUE(host_->needs_push_properties());
-
+  // The animation is now aborted on the main thread, so pushing properties
+  // should delete it on both.
   PushProperties();
-  EXPECT_FALSE(ticker_->needs_push_properties());
-  EXPECT_FALSE(host_->needs_push_properties());
 
   EXPECT_FALSE(ticker_->GetAnimationById(animation_id));
   EXPECT_FALSE(ticker_impl_->GetAnimationById(animation_id));
@@ -1796,7 +1778,6 @@ TEST_F(ElementAnimationsTest, ImplThreadAbortedAnimationGetsDeleted) {
       AddOpacityTransitionToPlayer(player_.get(), 1.0, 0.f, 1.f, false);
 
   PushProperties();
-  EXPECT_FALSE(host_->needs_push_properties());
 
   player_impl_->ActivateAnimations();
   EXPECT_TRUE(ticker_impl_->GetAnimationById(animation_id));
@@ -1804,13 +1785,10 @@ TEST_F(ElementAnimationsTest, ImplThreadAbortedAnimationGetsDeleted) {
   player_impl_->AbortAnimations(TargetProperty::OPACITY, false);
   EXPECT_EQ(Animation::ABORTED,
             player_impl_->GetAnimation(TargetProperty::OPACITY)->run_state());
-  EXPECT_TRUE(host_impl_->needs_push_properties());
-  EXPECT_TRUE(ticker_impl_->needs_push_properties());
 
   auto events = CreateEventsForTesting();
   player_impl_->Tick(kInitialTickTime);
   player_impl_->UpdateState(true, events.get());
-  EXPECT_TRUE(host_impl_->needs_push_properties());
   EXPECT_EQ(1u, events->events_.size());
   EXPECT_EQ(AnimationEvent::ABORTED, events->events_[0].type);
   EXPECT_EQ(Animation::WAITING_FOR_DELETION,
@@ -1823,10 +1801,11 @@ TEST_F(ElementAnimationsTest, ImplThreadAbortedAnimationGetsDeleted) {
 
   player_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(500));
   player_->UpdateState(true, nullptr);
-  EXPECT_TRUE(host_->needs_push_properties());
   EXPECT_EQ(Animation::WAITING_FOR_DELETION,
             player_->GetAnimation(TargetProperty::OPACITY)->run_state());
 
+  // The animation has now been aborted on the impl thread, so should be deleted
+  // when we push properties.
   PushProperties();
 
   player_impl_->ActivateAnimations();
@@ -1862,13 +1841,11 @@ TEST_F(ElementAnimationsTest, ImplThreadTakeoverAnimationGetsDeleted) {
   player_impl_->AddAnimation(std::move(animation));
 
   PushProperties();
-  EXPECT_FALSE(host_->needs_push_properties());
 
   player_impl_->ActivateAnimations();
   EXPECT_TRUE(ticker_impl_->GetAnimationById(animation_id));
 
   player_impl_->AbortAnimations(TargetProperty::SCROLL_OFFSET, true);
-  EXPECT_TRUE(host_impl_->needs_push_properties());
   EXPECT_EQ(
       Animation::ABORTED_BUT_NEEDS_COMPLETION,
       player_impl_->GetAnimation(TargetProperty::SCROLL_OFFSET)->run_state());
@@ -1877,7 +1854,6 @@ TEST_F(ElementAnimationsTest, ImplThreadTakeoverAnimationGetsDeleted) {
   player_impl_->Tick(kInitialTickTime);
   player_impl_->UpdateState(true, events.get());
   EXPECT_TRUE(delegate_impl.finished());
-  EXPECT_TRUE(host_impl_->needs_push_properties());
   EXPECT_EQ(1u, events->events_.size());
   EXPECT_EQ(AnimationEvent::TAKEOVER, events->events_[0].type);
   EXPECT_EQ(TicksFromSecondsF(123), events->events_[0].animation_start_time);
@@ -1889,10 +1865,6 @@ TEST_F(ElementAnimationsTest, ImplThreadTakeoverAnimationGetsDeleted) {
   // MT receives the event to take over.
   ticker_->NotifyAnimationTakeover(events->events_[0]);
   EXPECT_TRUE(delegate.takeover());
-
-  // AnimationPlayer::NotifyAnimationTakeover requests SetNeedsPushProperties
-  // to purge CT animations marked for deletion.
-  EXPECT_TRUE(ticker_->needs_push_properties());
 
   // ElementAnimations::PurgeAnimationsMarkedForDeletion call happens only in
   // ElementAnimations::PushPropertiesTo.
