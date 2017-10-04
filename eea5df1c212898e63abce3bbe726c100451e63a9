@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d87de4a_6edb5114",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 24
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T00:11:01Z",
+      "side": 1,
+      "message": "My comment was actually around not exposing ChromeHomeSurveyController references at all externally (add a private empty constructor as well)\n\nYou\u0027d just have one static initialize(Context, TabModelSelector) method as the only public method on this class.  There is no need for anyone to hold onto a ChromeHomeSurveyController reference.  All the consumers do is call the one method and forget about it.",
+      "range": {
+        "startLine": 36,
+        "startChar": 18,
+        "endLine": 36,
+        "endChar": 44
+      },
+      "revId": "eea5df1c212898e63abce3bbe726c100451e63a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
