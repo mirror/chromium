@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219d4cbf_669fbe9e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "nit:  blank line after start of the anonymous namespace, to match the one before it\u0027s closed.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c007118b_3dc039d5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "The more common styles are:\n\nfalse /* report_raw_headers */ and /*report_raw_headers\u003d*/ false.  The former is more common, and already used in content/browser/loader, so stick with that one here?",
+      "range": {
+        "startLine": 57,
+        "startChar": 47,
+        "endLine": 57,
+        "endChar": 52
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9428b231_1daef96e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "What does this do?",
+      "range": {
+        "startLine": 92,
+        "startChar": 27,
+        "endLine": 92,
+        "endChar": 49
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "963ad38d_59656290",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "Should have comments with their argument names for these two \"falses\" too.",
+      "range": {
+        "startLine": 110,
+        "startChar": 35,
+        "endLine": 110,
+        "endChar": 40
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9775b0d5_31f25551",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "false /* is_form_submission */",
+      "range": {
+        "startLine": 112,
+        "startChar": 19,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c9c140_9919031d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "Again, these bools should all be labelled (And the -1).",
+      "range": {
+        "startLine": 121,
+        "startChar": 58,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52ea1d9_b224b62a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "And these nullptrs.",
+      "range": {
+        "startLine": 132,
+        "startChar": 42,
+        "endLine": 132,
+        "endChar": 49
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e14f37b_4acd9135",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "Mention that it uses |redirect_url|\u0027s origin as the initial origin?",
+      "range": {
+        "startLine": 136,
+        "startChar": 29,
+        "endLine": 136,
+        "endChar": 30
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a16415_f704f7d9",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-04T19:01:11Z",
+      "side": 1,
+      "message": "origin_value -\u003e expected_origin_value?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 68
+      },
+      "revId": "6459d220afae579c6888227092fb92291d611bbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
