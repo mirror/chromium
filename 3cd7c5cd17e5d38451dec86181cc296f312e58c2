@@ -34,6 +34,24 @@
       "revId": "3cd7c5cd17e5d38451dec86181cc296f312e58c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209f7746_2b4c0749",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-10-04T22:46:30Z",
+      "side": 1,
+      "message": "Yea, I think it will be better to have the state localized to the welcome bubble. It will be much easier to understand the flow of the code and the initialization paths despite the additional boilerplate.",
+      "parentUuid": "d5a3cd34_94b98723",
+      "revId": "3cd7c5cd17e5d38451dec86181cc296f312e58c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
