@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/files/scoped_file.h"
 #include "base/memory/shared_memory.h"
 #include "base/process/launch.h"
@@ -72,10 +73,12 @@ CONTENT_EXPORT bool InitializeSandbox(service_manager::SandboxType sandbox_type,
 // Initialize a seccomp-bpf sandbox. |policy| may not be NULL.
 // If an existing layer of sandboxing is present that would prevent access to
 // /proc, |proc_fd| must be a valid file descriptor to /proc/.
+// |post_warmup_hook| is executed before engaging the sandbox.
 // Returns true if the sandbox has been properly engaged.
 CONTENT_EXPORT bool InitializeSandbox(
     std::unique_ptr<sandbox::bpf_dsl::Policy> policy,
-    base::ScopedFD proc_fd);
+    base::ScopedFD proc_fd,
+    base::OnceClosure post_warmup_hook);
 
 // Return a "baseline" policy. This is used by other modules to implement a
 // policy that is derived from the baseline.
