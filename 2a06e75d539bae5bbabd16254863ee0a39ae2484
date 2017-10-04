@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56145417_bfac52de",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14698,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-04T22:31:09Z",
+      "side": 1,
+      "message": "Oh, also, I cleaned this up along the way - most bots, including \"Site Isolation Linux\", use this for browser_tests, presumably to parallelize it more, so I think we might as well use it here to also speed the Win bot up.  I can also spin this off into a separate CL.",
+      "range": {
+        "startLine": 14698,
+        "startChar": 0,
+        "endLine": 14698,
+        "endChar": 21
+      },
+      "revId": "2a06e75d539bae5bbabd16254863ee0a39ae2484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
