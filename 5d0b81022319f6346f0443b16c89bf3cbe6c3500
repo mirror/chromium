@@ -120,6 +120,81 @@
     },
     {
       "key": {
+        "uuid": "334948fe_84a23f8b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T02:05:02Z",
+      "side": 1,
+      "message": "I believe what I told you was that we get queries for Facebook comment fields (representing upwards of 30% of our query traffic). These generally are not autofillable, though we do get a lot of votes because sometimes user\u0027s do put recognizable data in these fields.\n\nWe want to password forms here because the form metrics can be triggered from any field, and you don\u0027t want to count them in the bins we\u0027re actually interested in by mistake.",
+      "parentUuid": "d794ff0b_ebee9fa9",
+      "range": {
+        "startLine": 726,
+        "startChar": 3,
+        "endLine": 726,
+        "endChar": 4
+      },
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "96f4eeb2_22c5d663",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T02:05:02Z",
+      "side": 1,
+      "message": "USERNAME fields are part of password forms.",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29be42fd_c24bfdbb",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T02:05:02Z",
+      "side": 1,
+      "message": "add TRANSACTION alongside NO_GROUP when mapping to UNKNOWN",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eceb4aee_2acbf125",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T02:05:02Z",
+      "side": 1,
+      "message": "Plz add the other types here.",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a78fa3c_363db6bf",
         "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
         "patchSetId": 8
@@ -421,6 +496,24 @@
       "side": 1,
       "message": "This cl doesn\u0027t have the possibility to generate the Password and Unknown metrics.",
       "parentUuid": "ee4e1c0b_aa72e9a6",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77f37005_af275bbc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T02:05:02Z",
+      "side": 1,
+      "message": "Oh,then let\u0027s fix that. I thought you had already added that.\n\nAdd the password and other logging lines to the log function and a simple test that just validates that calling the log function with the PASSWORD field type group generates the right metric. Similarly for OTHER (i.e., you can test both logging functions with a call to the one that maps FieldTypeGroup to FormType.)",
+      "parentUuid": "097f369e_1d5f7679",
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
