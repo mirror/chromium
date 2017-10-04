@@ -22,6 +22,30 @@
       "revId": "30e8d2d2ecbf0e7923876d68eab63f858d133945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae17f2f_813c935d",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-10-04T22:07:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1a7622f_d40c010a",
+      "range": {
+        "startLine": 356,
+        "startChar": 25,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "30e8d2d2ecbf0e7923876d68eab63f858d133945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
