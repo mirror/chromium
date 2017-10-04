@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35222eb9_94780d36",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:31:26Z",
+      "side": 1,
+      "message": "Could you add a comment like:\n// |is_currently_streaming_| is cleared after done() in order to avoid starting streaming\n// again inside done() via StartStreamingIfPossible(). https://crbug.com/754360",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c822a9ef_1b0ed7e5",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-10-04T00:31:26Z",
+      "side": 1,
+      "message": "Could you add ()s, i.e.\n\nready_state_ \u003d\u003d kReadyStreaming ||\n  ((ready_state_ \u003d\u003d kWaitingForResource ||\n  ready_state_ \u003d\u003d kWaitingForStreaming) \u0026\u0026\n     streamer_)\n\nfor clarity?\n\nhttps://softwareengineering.stackexchange.com/questions/201175/should-i-use-parentheses-in-logical-statements-even-where-not-necessary",
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
