@@ -43,8 +43,6 @@
     testObject: async_test('Misspellings should be reported in static text when design mode is on.'),
     action: () => {
       document.designMode = 'on';
-      // Trigger spell checking on originally static text.
-      window.getSelection().collapse(document.getElementById('paragraph'), 0);
     },
     verification: () => {
       var axParagraph = accessibilityController.accessibleElementById('paragraph');
