@@ -640,6 +640,30 @@
       "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cec59319_5bfbc573",
+        "filename": "components/signin/core/browser/android/javatests/src/org/chromium/components/signin/test/util/FakeAccountManagerDelegate.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T10:45:45Z",
+      "side": 1,
+      "message": "You\u0027re one of today\u0027s lucky ten thousand! (https://xkcd.com/1053/)",
+      "parentUuid": "ae4b01fd_4b00deff",
+      "range": {
+        "startLine": 218,
+        "startChar": 16,
+        "endLine": 218,
+        "endChar": 93
+      },
+      "revId": "431f968093cd8558bb2129c6eea0e0e9e0fed797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
