@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e5d9db8c_fd077c16",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T01:31:18Z",
+      "side": 1,
+      "message": "Yeah but you\u0027re just converting to us everywhere, so why not do it once? Up to you.",
+      "parentUuid": "7b509b90_d4e0ffcf",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d8e9531_87244844",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 9

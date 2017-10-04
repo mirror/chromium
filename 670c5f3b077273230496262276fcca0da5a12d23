@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7b4952f_5ab2c79f",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T01:31:18Z",
+      "side": 1,
+      "message": "You can just check input_params.IsValid() unless you really don\u0027t support rates outside of this.",
+      "revId": "670c5f3b077273230496262276fcca0da5a12d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f865508_430bfe59",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T01:31:18Z",
+      "side": 1,
+      "message": "I still think it\u0027d be clearer to roll this into started_time_ than adding it in every cycle, but up to you.",
+      "revId": "670c5f3b077273230496262276fcca0da5a12d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc6f9e0_57b7b720",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-04T01:31:18Z",
+      "side": 1,
+      "message": "Call zx_time_get only instead of Now() and it, then use base::TimeTicks::FromZxTime()? Make sure you include the 1ms with start_time_.",
+      "revId": "670c5f3b077273230496262276fcca0da5a12d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
