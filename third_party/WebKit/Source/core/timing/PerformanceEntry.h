@@ -89,7 +89,10 @@ class CORE_EXPORT PerformanceEntry
 
   static bool StartTimeCompareLessThan(PerformanceEntry* a,
                                        PerformanceEntry* b) {
-    return a->startTime() < b->startTime();
+    return a->startTime() < b->startTime()
+               ? true
+               : (a->startTime() == b->startTime() ? a->index_ < b->index_
+                                                   : false);
   }
 
   static PerformanceEntry::EntryType ToEntryTypeEnum(const String& entry_type);
@@ -109,6 +112,8 @@ class CORE_EXPORT PerformanceEntry
   const double start_time_;
   const double duration_;
   const PerformanceEntryType entry_type_enum_;
+  uint32_t index_;
+  static uint32_t instance_count_;
 };
 
 }  // namespace blink
