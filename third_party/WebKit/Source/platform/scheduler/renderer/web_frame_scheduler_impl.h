@@ -46,6 +46,8 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void SetFrameVisible(bool frame_visible) override;
   void SetPageVisible(bool page_visible) override;
   void SetPaused(bool frame_paused) override;
+  void SetStoppedInBackground(bool) override;
+
   void SetCrossOrigin(bool cross_origin) override;
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
   RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
@@ -88,6 +90,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   void ApplyPolicyToThrottleableQueue();
   bool ShouldThrottleTimers() const;
   void UpdateThrottling(bool was_throttled);
+  WebFrameScheduler::ThrottlingState CalculateThrottlingState() const;
 
   void DidOpenActiveConnection();
   void DidCloseActiveConnection();
@@ -119,6 +122,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   std::set<Observer*> loader_observers_;             // NOT OWNED
   bool frame_visible_;
   bool page_visible_;
+  bool page_stopped_;
   bool frame_paused_;
   bool cross_origin_;
   int active_connection_count_;

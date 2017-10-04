@@ -42,6 +42,7 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       blame_context_(blame_context),
       frame_visible_(true),
       page_visible_(true),
+      page_stopped_(false),
       frame_paused_(false),
       cross_origin_(false),
       active_connection_count_(0),
@@ -107,9 +108,7 @@ void WebFrameSchedulerImpl::AddThrottlingObserver(ObserverType type,
                                                   Observer* observer) {
   DCHECK_EQ(ObserverType::kLoader, type);
   DCHECK(observer);
-  observer->OnThrottlingStateChanged(page_visible_
-                                         ? ThrottlingState::kNotThrottled
-                                         : ThrottlingState::kThrottled);
+  observer->OnThrottlingStateChanged(CalculateThrottlingState());
   loader_observers_.insert(observer);
 }
 
@@ -365,9 +364,7 @@ void WebFrameSchedulerImpl::SetPageVisible(bool page_visible) {
   UpdateThrottling(was_throttled);
 
   for (auto observer : loader_observers_) {
-    observer->OnThrottlingStateChanged(page_visible_
-                                           ? ThrottlingState::kNotThrottled
-                                           : ThrottlingState::kThrottled);
+    observer->OnThrottlingStateChanged(CalculateThrottlingState());
   }
 }
 
@@ -387,6 +384,23 @@ void WebFrameSchedulerImpl::SetPaused(bool frame_paused) {
     deferrable_queue_enabled_voter_->SetQueueEnabled(!frame_paused);
   if (pausable_queue_enabled_voter_)
     pausable_queue_enabled_voter_->SetQueueEnabled(!frame_paused);
+}
+
+void WebFrameSchedulerImpl::SetStoppedInBackground(bool stopped) {
+  if (stopped == page_stopped_)
+    return;
+  page_stopped_ = stopped;
+  for (auto observer : loader_observers_)
+    observer->OnThrottlingStateChanged(CalculateThrottlingState());
+}
+
+WebFrameScheduler::ThrottlingState
+WebFrameSchedulerImpl::CalculateThrottlingState() const {
+  if (page_stopped_)
+    return WebFrameScheduler::ThrottlingState::kStopped;
+  if (!page_visible_)
+    return WebFrameScheduler::ThrottlingState::kThrottled;
+  return WebFrameScheduler::ThrottlingState::kNotThrottled;
 }
 
 void WebFrameSchedulerImpl::OnFirstMeaningfulPaint() {
