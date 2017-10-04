@@ -48,6 +48,71 @@
     },
     {
       "key": {
+        "uuid": "c2b80791_378ffb7f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T18:30:21Z",
+      "side": 1,
+      "message": "While I prefer address and credit card first, the code will be simpler to maintain in the current ordering, as the prefix already exists without the address/creditcard split.\n\n:(\n\nThat said... \n**If** you want to swap the order, you need to maintain the existing names for a while (since people are actively using them) while at least a release cycle\u0027s worth of data is gathered under the new names.",
+      "parentUuid": "e8433998_afadcee2",
+      "range": {
+        "startLine": 747,
+        "startChar": 45,
+        "endLine": 747,
+        "endChar": 60
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b76ca4d_46defd49",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T18:30:21Z",
+      "side": 1,
+      "message": "I confirm. it\u0027s \"From\" (as in to/from)",
+      "parentUuid": "37edf0df_3ecd62fa",
+      "range": {
+        "startLine": 747,
+        "startChar": 29,
+        "endLine": 747,
+        "endChar": 33
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "722b5e6d_60cf37f4",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-04T18:30:21Z",
+      "side": 1,
+      "message": "We need to also log the parent node as well as the leaf.\n\nUMA_HISTOGRAM_CUSTOM_TIMES(\n    used_autofill ? \"...WithAutofill\" : \"...WithoutAutofill\".\n    duration, ...)\n\nYou could alternatively add two more entries to the kMetricNames table and then tweak the two index calculations as\n\n  parent_index \u003d kMetricNames[static_cast\u003cint\u003e(used_autofill)]\n  child_index \u003d  /* current index calculation */ + 2;",
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33a6eecc_0fe3ea75",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 5
