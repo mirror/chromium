@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed59e10_c88bface",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-04T16:19:53Z",
+      "side": 1,
+      "message": "please add a comment explaining this scenario, why we chose to fall-back to RefetchInTheBackground(), why we do it in here (and consequently, what assumption about the state we can make for case we stay in the method).",
+      "range": {
+        "startLine": 462,
+        "startChar": 4,
+        "endLine": 462,
+        "endChar": 17
+      },
+      "revId": "639e8b52bd8aaa0e47faceba46b432ffdb351ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779ce891_bca20d8f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-04T16:19:53Z",
+      "side": 1,
+      "message": "nit: Drop the \"ToDisplay\" prefix. The logic is independent of that aspect and just checks if the status is available.",
+      "range": {
+        "startLine": 621,
+        "startChar": 36,
+        "endLine": 621,
+        "endChar": 65
+      },
+      "revId": "639e8b52bd8aaa0e47faceba46b432ffdb351ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

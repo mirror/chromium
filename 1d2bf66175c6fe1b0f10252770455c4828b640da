@@ -415,6 +415,24 @@
     },
     {
       "key": {
+        "uuid": "71dca024_d529cbe6",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-04T16:19:53Z",
+      "side": 1,
+      "message": "ok for a separate CL but please add a fat TODO() explaining this.",
+      "parentUuid": "d26e8acc_5e7e3389",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
