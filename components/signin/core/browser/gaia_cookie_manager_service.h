@@ -280,6 +280,8 @@ class GaiaCookieManagerService : public KeyedService,
   // Virtual for testing purpose.
   virtual void StartFetchingLogOut();
 
+  void PreGaiaLogoutDone();
+
   // Start the next request, if needed.
   void HandleNextRequest();
 
