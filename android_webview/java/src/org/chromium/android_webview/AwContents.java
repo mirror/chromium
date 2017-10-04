@@ -66,6 +66,7 @@ import org.chromium.content.browser.AppWebMessagePort;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewStatics;
 import org.chromium.content.browser.SmartClipProvider;
+import org.chromium.content.browser.SmartSelectionClient;
 import org.chromium.content_public.browser.ChildProcessImportance;
 import org.chromium.content_public.browser.GestureStateListener;
 import org.chromium.content_public.browser.JavaScriptCallback;
@@ -833,6 +834,8 @@ public class AwContents implements SmartClipProvider {
             contentViewCore.setNonSelectionActionModeCallback(
                     new AutofillActionModeCallback(context, mAutofillProvider));
         }
+        contentViewCore.setSelectionClient(SmartSelectionClient.create(
+                contentViewCore.getPopupControllerResultCallback(), windowAndroid, webContents));
         contentViewCore.addGestureStateListener(gestureStateListener);
     }
 
