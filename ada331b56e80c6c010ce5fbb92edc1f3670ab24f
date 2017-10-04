@@ -16,6 +16,24 @@
       "revId": "ada331b56e80c6c010ce5fbb92edc1f3670ab24f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9671b03a_d77cc554",
+        "filename": "content/child/service_worker/service_worker_subresource_loader.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T10:31:54Z",
+      "side": 1,
+      "message": "I think this was from ServiceWorkerURLRequestJob. Not sure why this is okay in the original code path? I agree that we should just finish with net error.",
+      "parentUuid": "49d81fd8_d624421f",
+      "revId": "ada331b56e80c6c010ce5fbb92edc1f3670ab24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
