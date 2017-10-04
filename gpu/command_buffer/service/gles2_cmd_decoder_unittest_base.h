@@ -913,6 +913,12 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
                               GLenum textarget,
                               GLuint texture_client_id,
                               GLint level);
+  void DoFramebufferRenderbuffer(GLenum target,
+                                 GLenum attachment,
+                                 GLenum renderbuffertarget,
+                                 GLuint renderbuffer);
+
+  void DoBindRenderbuffer(GLenum target, GLuint client_id);
 
   static const size_t kSharedBufferSize = 2048;
   static const uint32_t kSharedMemoryOffset = 132;
@@ -924,6 +930,7 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
   static const GLuint kClientBufferId = 100;
   static const GLuint kClientTextureId = 101;
   static const GLuint kClientFramebufferId = 102;
+  static const GLuint kClientRenderbufferId = 103;
 
   int32_t shared_memory_id_;
   uint32_t shared_memory_offset_;
