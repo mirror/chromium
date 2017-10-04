@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "187570bb_b2edcb3d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T18:15:44Z",
+      "side": 1,
+      "message": "Do you mean \"collapsed_border_values_valid_ \u003d\u003d false\" and we invalidate rows in UpdateCollapsedBorderValues()? Yes, that would cause over-invalidation. For now we invalidate collapsed borders of all cells aggressively, even only one cell changed collapsed borders, and per-cell invalidation has not been fully implemented yet, so change detection is needed to prevent over-invalidations.",
+      "parentUuid": "42cfb21f_02817b85",
+      "revId": "8e903035e09abc344404ae592da836acea12dbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "688bca54_31065993",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 3
