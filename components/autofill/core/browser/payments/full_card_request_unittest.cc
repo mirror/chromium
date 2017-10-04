@@ -64,7 +64,9 @@ class FullCardRequestTest : public testing::Test,
   FullCardRequestTest()
       : request_context_(new net::TestURLRequestContextGetter(
             base::ThreadTaskRunnerHandle::Get())),
-        payments_client_(request_context_.get(), this),
+        payments_client_(request_context_.get(),
+                         autofill_client_.GetPrefs(),
+                         this),
         request_(&autofill_client_, &payments_client_, &personal_data_) {
     // Silence the warning from PaymentsClient about matching sync and Payments
     // server types.

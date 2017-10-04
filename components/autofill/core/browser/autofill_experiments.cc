@@ -63,6 +63,8 @@ const base::Feature kAutofillUpstreamShowNewUi{
 const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
     "AutofillUpstreamUseAutofillProfileComparator",
     base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillSendBillingCustomerNumber{
+    "AutofillSendBillingCustomerNumber", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kCreditCardSigninPromoImpressionLimitParamKey[] = "impression_limit";
 const char kAutofillCreditCardPopupBackgroundColorKey[] = "background_color";
 const char kAutofillCreditCardPopupDividerColorKey[] = "dropdown_divider_color";
@@ -294,6 +296,10 @@ bool IsAutofillUpstreamShowNewUiExperimentEnabled() {
 #else
   return base::FeatureList::IsEnabled(kAutofillUpstreamShowNewUi);
 #endif
+}
+
+bool IsAutofillSendBillingCustomerNumberExperimentEnabled() {
+  return base::FeatureList::IsEnabled(kAutofillSendBillingCustomerNumber);
 }
 
 #if defined(OS_MACOSX)
