@@ -16,6 +16,24 @@
       "revId": "998c852321b071f3989bf9782dcc482ed0dc25a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df899075_efe42ba3",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-10-04T15:58:57Z",
+      "side": 1,
+      "message": "That\u0027s probably my fault; I renamed \u0027clang_tot_msan_release_bot\u0027 to \u0027clang_tot_msan_release\u0027 yesterday. It\u0027s weird that this one got past the bots and not your patch though.\n\nI\u0027m fixing here: https://chromium-review.googlesource.com/#/c/chromium/src/+/699642",
+      "parentUuid": "38e4d71d_5319876f",
+      "revId": "998c852321b071f3989bf9782dcc482ed0dc25a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
