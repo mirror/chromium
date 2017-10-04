@@ -2,6 +2,115 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6d0e4ec_c662691b",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T18:00:14Z",
+      "side": 1,
+      "message": "not necessary for this cl, but it might be a good idea to rename this property to something more generic (given it\u0027s not used only for list items anymore) - e.g. replace it with \u0027allow-not-connected\u0027, or \u0027connected-only\u0027.",
+      "range": {
+        "startLine": 50,
+        "startChar": 64,
+        "endLine": 50,
+        "endChar": 76
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e8c547_47cd4385",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T18:00:14Z",
+      "side": 1,
+      "message": "maybe:\nthe dialog is shown to configure a new network,",
+      "range": {
+        "startLine": 26,
+        "startChar": 52,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9e1dfc_ea26ad7c",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T18:00:14Z",
+      "side": 1,
+      "message": "I\u0027d drop \u0027for\u0027",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b451af92_b714f995",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T18:00:14Z",
+      "side": 1,
+      "message": "nit: which is",
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0fe599_2c226f61",
+        "filename": "chrome/browser/resources/chromeos/internet_config_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-04T18:00:14Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 51,
+        "startChar": 52,
+        "endLine": 51,
+        "endChar": 53
+      },
+      "revId": "711164e182a3129f6510d466ecf895774f107f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba4c1c33_104fdff0",
         "filename": "chrome/browser/ui/ash/system_tray_client.cc",
         "patchSetId": 2
