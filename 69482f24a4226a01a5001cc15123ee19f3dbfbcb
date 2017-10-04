@@ -99,6 +99,24 @@
       "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91ae5bb_f2614fd7",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-04T00:22:55Z",
+      "side": 1,
+      "message": "Changed these to use the old strings, as JS changes required were minimal.",
+      "parentUuid": "a3523916_928dcdbc",
+      "revId": "69482f24a4226a01a5001cc15123ee19f3dbfbcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
