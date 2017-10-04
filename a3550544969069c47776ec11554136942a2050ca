@@ -395,6 +395,24 @@
     },
     {
       "key": {
+        "uuid": "73ae0a25_dc01c08f",
+        "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000329
+      },
+      "writtenOn": "2017-10-04T20:18:21Z",
+      "side": 1,
+      "message": "I didn\u0027t know about SCOPED_TRACE, and I do like it now that I read about it.\n\nBut your suggestion is not trivial to do here, because the LogSourceAccessManager would need to be passed into that function and then called with those args. I think it\u0027s cleaner (even if more verbose) to keep it the way it is.",
+      "parentUuid": "595c2b30_d0a27233",
+      "revId": "a3550544969069c47776ec11554136942a2050ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f56dfce2_ef7ecdbd",
         "filename": "extensions/browser/api/feedback_private/log_source_access_manager_chromeos_unittest.cc",
         "patchSetId": 3
