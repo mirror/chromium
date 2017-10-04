@@ -105,6 +105,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908675e1_0622e9c0",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-04T22:06:05Z",
+      "side": 1,
+      "message": "same as oshima@\u0027s comment in ash/display/screen_position_controller.h. There are some usage of the int version of this function. Can we keep both for now and remove the int version when code that use int version are changed to use float version.",
+      "parentUuid": "149508df_5d49b115",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
