@@ -1255,6 +1255,7 @@ target("jumbo_" + core_link_small_target_type, "core_generated") {
     "//gin",
     "//skia",
     "//third_party/WebKit/Source/bindings/core/v8:bindings_core_v8_generated",
+    "//third_party/WebKit/Source/platform",
     "//third_party/iccjpeg",
     "//third_party/libpng",
     "//third_party/libwebp",

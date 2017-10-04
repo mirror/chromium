@@ -31,13 +31,10 @@ V8VoidCallbackFunctionDictionaryArg* V8VoidCallbackFunctionDictionaryArg::Create
 }
 
 V8VoidCallbackFunctionDictionaryArg::V8VoidCallbackFunctionDictionaryArg(ScriptState* scriptState, v8::Local<v8::Function> callback)
-    : script_state_(scriptState),
-    callback_(scriptState->GetIsolate(), this, callback) {
-  DCHECK(!callback_.IsEmpty());
-}
+    : CallbackFunctionBase(scriptState, callback) {}
 
 DEFINE_TRACE_WRAPPERS(V8VoidCallbackFunctionDictionaryArg) {
-  visitor->TraceWrappers(callback_.Cast<v8::Value>());
+  CallbackFunctionBase::TraceWrappers(visitor);
 }
 
 bool V8VoidCallbackFunctionDictionaryArg::call(ScriptWrappable* scriptWrappable, const TestDictionary& arg) {
