@@ -62,6 +62,7 @@ void FrameNavigationEntry::UpdateEntry(
     const std::string& method,
     int64_t post_id) {
   frame_unique_name_ = frame_unique_name;
+  SetPageState(page_state);
   item_sequence_number_ = item_sequence_number;
   document_sequence_number_ = document_sequence_number;
   site_instance_ = site_instance;
@@ -69,7 +70,6 @@ void FrameNavigationEntry::UpdateEntry(
   redirect_chain_ = redirect_chain;
   url_ = url;
   referrer_ = referrer;
-  page_state_ = page_state;
   method_ = method;
   post_id_ = post_id;
 }
@@ -88,14 +88,21 @@ void FrameNavigationEntry::set_document_sequence_number(
 }
 
 void FrameNavigationEntry::SetPageState(const PageState& page_state) {
-  page_state_ = page_state;
-
   ExplodedPageState exploded_state;
-  if (!DecodePageState(page_state_.ToEncodedData(), &exploded_state))
+  if (!DecodePageState(page_state.ToEncodedData(), &exploded_state))
     return;
 
   item_sequence_number_ = exploded_state.top.item_sequence_number;
   document_sequence_number_ = exploded_state.top.document_sequence_number;
+  if (frame_unique_name_.empty()) {
+    page_state_ = page_state;
+  } else {
+    exploded_state.top.target =
+        base::NullableString16(base::UTF8ToUTF16(frame_unique_name_), false);
+    std::string encoded_with_target;
+    EncodePageState(exploded_state, &encoded_with_target);
+    page_state_ = PageState::CreateFromEncodedData(encoded_with_target);
+  }
 }
 
 scoped_refptr<ResourceRequestBody> FrameNavigationEntry::GetPostData(
