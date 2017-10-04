@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a695d7_707efedf",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-04T20:20:00Z",
+      "side": 1,
+      "message": "You need to move this out of DCHECK otherwise it gets compiled out in a non-DCHECK build.\n\nCan you add test coverage for it?",
+      "range": {
+        "startLine": 154,
+        "startChar": 67,
+        "endLine": 154,
+        "endChar": 0
+      },
+      "revId": "ee74fa8d0355f92c83b4b6a6b8368d3350defe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc88304_59c5aaa4",
+        "filename": "components/metrics/net/net_metrics_log_uploader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-04T20:20:00Z",
+      "side": 1,
+      "message": "This doesn\u0027t make sense. Headers are plain text - but proto SerializeToString() is actually just generating binary data (just uses string as a buffer). You want to do something like base64 encoding here.",
+      "range": {
+        "startLine": 156,
+        "startChar": 40,
+        "endLine": 156,
+        "endChar": 61
+      },
+      "revId": "ee74fa8d0355f92c83b4b6a6b8368d3350defe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
