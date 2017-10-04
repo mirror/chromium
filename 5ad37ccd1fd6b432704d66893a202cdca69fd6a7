@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "554ad0cf_bb2d229a",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapPage.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 1,
+      "message": "What\u0027s this?",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a4f939_7b99dfb4",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 1,
+      "message": "Are you pretty sure that this branch should be put here?\n\nI was thinking that this branch was needed because we need to skip the sweeping phase for the TakeSnapshot case. Now that you moved TakeSnapshot below, I\u0027m not sure if you need the branch.",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1328c0_ef6c584f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1482,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 1,
+      "message": "You should reset current_gc_data_.marking_time_in_milliseconds to 0.",
+      "revId": "5ad37ccd1fd6b432704d66893a202cdca69fd6a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

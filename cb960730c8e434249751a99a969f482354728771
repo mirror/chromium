@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff441861_9fc8e13c",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 0,
+      "message": "Can we remove this function?",
+      "revId": "cb960730c8e434249751a99a969f482354728771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e9dbc7_909fb87b",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 0,
+      "message": "Can we keep these DCHECKs?",
+      "revId": "cb960730c8e434249751a99a969f482354728771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3770dd2_6c634e1e",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-04T06:03:33Z",
+      "side": 0,
+      "message": "Keep this comment.",
+      "revId": "cb960730c8e434249751a99a969f482354728771",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
