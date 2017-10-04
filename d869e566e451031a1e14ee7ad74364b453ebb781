@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb1a5943_a8e9ddfb",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-04T04:22:35Z",
+      "side": 1,
+      "message": "Other places use \u0027let\u0027 while \u0027const\u0027 is used here.  Please try to be consistent.\n(as this is in web-platform-tests, there is no strong style enforcement, though)",
+      "revId": "d869e566e451031a1e14ee7ad74364b453ebb781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
