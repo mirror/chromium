@@ -51,7 +51,7 @@ class LoginBubbleTest : public LoginTestBase {
 
     container_->AddChildView(bubble_opener_);
     container_->AddChildView(other_view_);
-    ShowWidgetWithContent(container_);
+    SetWidget(CreateWidgetWithContent(container_));
 
     bubble_ = base::MakeUnique<LoginBubble>();
   }
