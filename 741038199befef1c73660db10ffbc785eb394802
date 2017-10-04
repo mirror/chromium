@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35a0433b_08f63e41",
+        "filename": "media/audio/fuchsia/audio_manager_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-04T01:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "841e3855_fae8b0a7",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "834e4463_8f7e3c35",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T00:03:02Z",
       "side": 1,
       "message": "Could just store this as base::TimeDelta?",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b509b90_d4e0ffcf",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-04T01:14:12Z",
+      "side": 1,
+      "message": "base::TimeDelta is in microseconds, but PTS is expected in nanoseconds.",
+      "parentUuid": "834e4463_8f7e3c35",
       "revId": "741038199befef1c73660db10ffbc785eb394802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a573603f_1e95e942",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-04T01:14:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d8e9531_87244844",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "443a5fb0_be7b26b5",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7f600b8d_db7debdf",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-04T01:14:12Z",
+      "side": 1,
+      "message": "Done. Also removed reset_pts flag.",
+      "parentUuid": "443a5fb0_be7b26b5",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03756200_2752bdaf",
         "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-04T00:03:02Z",
       "side": 1,
       "message": "Why + 1000? Just to avoid being \u003c min_delay? Seems silly to have a min_delay API if you always need to add some padding too it. Do you know if min_delay is an absolute or if it\u0027s just an estimate of when one may expect to miss the deadline? If it\u0027s not an absolute this seems unnecessary given at most a couple nano seconds will elapse between here and write().",
+      "revId": "741038199befef1c73660db10ffbc785eb394802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535e7b06_fdcd87d5",
+        "filename": "media/audio/fuchsia/audio_output_stream_fuchsia.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-04T01:14:12Z",
+      "side": 1,
+      "message": "The current implementation of the API has strict check for PTS, so this call will always fail if we don\u0027t add anything to min_value here.\n\n  zx_time_t deadline \u003d stream-\u003edelay_nsec + zx_time_get(ZX_CLOCK_MONOTONIC);\n  if (pres_time \u003c deadline) {\n    return ZX_ERR_IO_MISSED_DEADLINE;\n  }\n\nThis check seems to be reasonable. If it fails that the API can\u0027t guarantee that the data will be played. So we need some padding on either side of the API, but it seems better to put it in the application layer. Note that we won\u0027t be using the same API long-term, so it\u0027s not worth nit-picking on the API right now.",
+      "parentUuid": "03756200_2752bdaf",
       "revId": "741038199befef1c73660db10ffbc785eb394802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
