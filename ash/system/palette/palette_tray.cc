@@ -16,6 +16,7 @@
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/palette/palette_tool_manager.h"
 #include "ash/system/palette/palette_utils.h"
+#include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/tray/system_menu_button.h"
 #include "ash/system/tray/system_tray_controller.h"
 #include "ash/system/tray/tray_bubble_wrapper.h"
@@ -142,7 +143,7 @@ class TitleView : public views::View, public views::ButtonListener {
 // StylusWatcher is used to monitor for stylus events, since we only want to
 // make the palette tray visible for devices without internal styluses once they
 // start using the stylus.
-class PaletteTray::StylusWatcher : views::PointerWatcher {
+class PaletteTray::StylusWatcher : public views::PointerWatcher {
  public:
   explicit StylusWatcher(PrefService* pref_service)
       : local_state_pref_service_(pref_service) {
@@ -199,6 +200,7 @@ PaletteTray::~PaletteTray() {
 // static
 void PaletteTray::RegisterLocalStatePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kHasSeenStylus, false);
+  registry->RegisterBooleanPref(prefs::kShownPaletteWelcomeBubble, false);
 }
 
 bool PaletteTray::ContainsPointInScreen(const gfx::Point& point) {
@@ -206,6 +208,14 @@ bool PaletteTray::ContainsPointInScreen(const gfx::Point& point) {
     return true;
 
   return bubble_ && bubble_->bubble_view()->GetBoundsInScreen().Contains(point);
+}
+
+void PaletteTray::OnWelcomeBubbleWidgetClosedDestroyed() {
+  DCHECK(welcome_bubble_);
+  if (local_state_pref_service_) {
+    local_state_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
+                                          true);
+  }
 }
 
 void PaletteTray::OnSessionStateChanged(session_manager::SessionState state) {
@@ -235,14 +245,21 @@ void PaletteTray::OnLocalStatePrefServiceInitialized(
     local_state_pref_service_->SetBoolean(prefs::kHasSeenStylus, true);
   }
 
+  local_state_pref_service_->SetBoolean(prefs::kShownPaletteWelcomeBubble,
+                                        false);
   pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(local_state_pref_service_);
   pref_change_registrar_->Add(
       prefs::kHasSeenStylus,
       base::Bind(&PaletteTray::OnHasSeenStylusPrefChanged,
                  base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kShownPaletteWelcomeBubble,
+      base::Bind(&PaletteTray::OnShownPaletteWelcomeBubblePrefChanged,
+                 base::Unretained(this)));
 
   OnHasSeenStylusPrefChanged();
+  OnShownPaletteWelcomeBubblePrefChanged();
 }
 
 void PaletteTray::ClickedOutsideBubble() {
@@ -288,6 +305,9 @@ void PaletteTray::OnStylusStateChanged(ui::StylusState stylus_state) {
     } else if (stylus_state == ui::StylusState::INSERTED && bubble_) {
       HidePalette();
     }
+  } else if (stylus_state == ui::StylusState::REMOVED) {
+    if (welcome_bubble_ && !welcome_bubble_->BubbleShown())
+      welcome_bubble_->Show();
   }
 
   // Disable any active modes if the stylus has been inserted.
@@ -521,6 +541,17 @@ void PaletteTray::OnHasSeenStylusPrefChanged() {
   UpdateIconVisibility();
 }
 
+void PaletteTray::OnShownPaletteWelcomeBubblePrefChanged() {
+  DCHECK(local_state_pref_service_);
+
+  if (!local_state_pref_service_->GetBoolean(
+          prefs::kShownPaletteWelcomeBubble)) {
+    welcome_bubble_ = std::make_unique<PaletteWelcomeBubble>(this);
+  } else {
+    welcome_bubble_.reset();
+  }
+}
+
 bool PaletteTray::DeactivateActiveTool() {
   PaletteToolId active_tool_id =
       palette_tool_manager_->GetActiveTool(PaletteGroup::MODE);
@@ -549,5 +580,9 @@ PaletteTray::TestApi::TestApi(PaletteTray* palette_tray)
 }
 
 PaletteTray::TestApi::~TestApi() {}
+
+void PaletteTray::TestApi::OnStylusStateChanged(ui::StylusState stylus_state) {
+  palette_tray_->OnStylusStateChanged(stylus_state);
+}
 
 }  // namespace ash

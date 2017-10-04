@@ -32,6 +32,7 @@ class ImageView;
 namespace ash {
 
 class PaletteToolManager;
+class PaletteWelcomeBubble;
 class TrayBubbleWrapper;
 
 // The PaletteTray shows the palette in the bottom area of the screen. This
@@ -54,11 +55,17 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
       return palette_tray_->palette_tool_manager_.get();
     }
 
+    PaletteWelcomeBubble* GetWelcomeBubble() {
+      return palette_tray_->welcome_bubble_.get();
+    }
+
     TrayBubbleWrapper* GetTrayBubbleWrapper() {
       return palette_tray_->bubble_.get();
     }
 
     bool IsStylusWatcherActive() { return !!palette_tray_->watcher_; }
+
+    void OnStylusStateChanged(ui::StylusState stylus_state);
 
    private:
     PaletteTray* palette_tray_ = nullptr;  // not owned
@@ -100,6 +107,9 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   // for determining if an event should be propagated through to the palette.
   bool ContainsPointInScreen(const gfx::Point& point);
 
+  // Called when the welcome bubble is closed or destroyed.
+  void OnWelcomeBubbleWidgetClosedDestroyed();
+
  private:
   class StylusWatcher;
 
@@ -131,10 +141,14 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   // Called when the has seen stylus pref has changed.
   void OnHasSeenStylusPrefChanged();
 
+  // Called when the shown palette welcome bubble pref has changed.
+  void OnShownPaletteWelcomeBubblePrefChanged();
+
   // Deactivates the active tool. Returns false if there was no active tool.
   bool DeactivateActiveTool();
 
   std::unique_ptr<PaletteToolManager> palette_tool_manager_;
+  std::unique_ptr<PaletteWelcomeBubble> welcome_bubble_;
   std::unique_ptr<TrayBubbleWrapper> bubble_;
   std::unique_ptr<StylusWatcher> watcher_;
 
