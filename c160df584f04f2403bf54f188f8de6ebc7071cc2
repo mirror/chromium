@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cad71c8_19262729",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T02:00:42Z",
+      "side": 1,
+      "message": "please provide an implementation of at least some of this. it doesn\u0027t make sense to land code that is not used.",
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4362a11b_7b192c2c",
+        "filename": "components/exo/pointer_gesture_pinch_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T02:00:42Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce73bc8_35a8d971",
+        "filename": "components/exo/pointer_gesture_pinch_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T02:00:42Z",
+      "side": 1,
+      "message": "Why not PointerGestureDelegate to match the wayland protocol? All gesture handling should be forwarded to this delegate afaict.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8291066_ee9c15a6",
+        "filename": "third_party/wayland-protocols/unstable/pointer-gestures/pointer-gestures-unstable-v1.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T02:00:42Z",
+      "side": 1,
+      "message": "if this exists upstream, can we instead uprev wayland-protocols and use the upstream version instead of including a copy manually?\n\nSeparate CL for that is preferred.",
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
