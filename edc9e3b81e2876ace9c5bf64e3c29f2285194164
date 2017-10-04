@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be358dbe_4e0dc730",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T10:48:45Z",
+      "side": 1,
+      "message": "muyuanli@, should we migrate this into Range, too?",
+      "revId": "edc9e3b81e2876ace9c5bf64e3c29f2285194164",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
