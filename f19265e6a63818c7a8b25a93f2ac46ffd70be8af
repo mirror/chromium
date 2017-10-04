@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9fd19331_edd5b59e",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "efc0c60b_cbb87725",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
@@ -48,6 +65,40 @@
     },
     {
       "key": {
+        "uuid": "af686843_f7ecb0bb",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "Why not use pointing_device_id_ and keyboard_device_id_?",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b290e075_e4a9db3a",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "590b3622_3402739f",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
@@ -65,6 +116,98 @@
         "endLine": 501,
         "endChar": 39
       },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbee076c_2a3865ab",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "nit: drop {}",
+      "parentUuid": "590b3622_3402739f",
+      "range": {
+        "startLine": 501,
+        "startChar": 38,
+        "endLine": 501,
+        "endChar": 39
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2805758c_bd9bfe45",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cba1a76_a067ac73",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "Let\u0027s note here that we don\u0027t save the device list",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3beadf8_7c59d6bc",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this comment?\n\nMaybe this:\nThe devices list will be kept updated by OnInputDeviceAdded() and OnInputDeviceRemoved().",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714a08b5_996853a6",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-10-04T18:49:45Z",
+      "side": 1,
+      "message": "devices_enumerated_?",
       "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
