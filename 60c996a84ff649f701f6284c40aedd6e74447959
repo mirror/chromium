@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "722f1e0a_8c1d0004",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "nit: base::Optional\u003c\u003e has an operator bool, so just\nif (web_app.theme_color)\nworks.  If you think that the has_value() adds something, though, we can leave it.",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634c4edf_c29b7308",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "Maybe:\nconst BrowserList\u0026 browser_list \u003d BrowserList::GetInstance();\nauto iter \u003d std::find_if(\n    browser_list.begin(), browser_list.end(),\n    auto[extension](Browser* b) {\n      return web_app::GetExtensionIdFromApplicationName(b-\u003eapp_name()) \u003d\u003d\n          extension-\u003eid();\n    });\nEXPECT_FALSE(iter \u003d\u003d browser_list.end());\nreturn iter \u003d\u003d browser_list.end() ? nullptr : *iter;",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653a3b8c_6fa835da",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "Is this line strictly necessary?  The main browser shouldn\u0027t have the app name matching.",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ecbb36_5abb8878",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "Function comments",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47b35f3_827e2ba7",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "function comments",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d375e3_5f61b7c1",
+        "filename": "chrome/browser/extensions/extension_sync_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "same comment on operator bool",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93382a5_660ec203",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "What about invalid inputs?",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7304fc_0f534784",
+        "filename": "extensions/common/manifest_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T13:26:24Z",
+      "side": 1,
+      "message": "Do we need to add a new manifest feature for this?\n\n(Sorry, I could have sworn I mentioned this earlier, but it looks like not :/)",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
