@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285498e1_787f8ed4",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-10-04T10:28:59Z",
+      "side": 1,
+      "message": "Some of the code seems equal in the clang/non-clang case. Could you pull it out of the condition so that only the differences are added in the if (clang) ... else ... part?",
+      "range": {
+        "startLine": 754,
+        "startChar": 12,
+        "endLine": 755,
+        "endChar": 28
+      },
+      "revId": "33855fcc47bb833bb8fa4d558a751e788ece1a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc83c78_b9ccacbf",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-10-04T10:28:59Z",
+      "side": 1,
+      "message": "You seem to pass certain things like this independent of the mips version. Maybe pull this out of the if (mips_arch_variant \u003d\u003d \"r6\") checks and have one condition \"if (!is_clang)\" outside, e.g. below.",
+      "range": {
+        "startLine": 896,
+        "startChar": 12,
+        "endLine": 897,
+        "endChar": 23
+      },
+      "revId": "33855fcc47bb833bb8fa4d558a751e788ece1a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
