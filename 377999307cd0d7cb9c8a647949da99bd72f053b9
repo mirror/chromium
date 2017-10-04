@@ -67,6 +67,24 @@
       "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1f4ca3_98222f76",
+        "filename": "net/base/data_url.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T09:39:03Z",
+      "side": 1,
+      "message": "I was explicitly trying to limit this hack to Android only: the current code to build a data URL and then extract the data from it later before passing it into Blink feels silly, so I wanted to get rid of it later. Limiting the scope of the hack will hopefully make that easier (or at least contain the mess to one platform).",
+      "parentUuid": "9e19ebe3_d8e5f582",
+      "revId": "377999307cd0d7cb9c8a647949da99bd72f053b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
