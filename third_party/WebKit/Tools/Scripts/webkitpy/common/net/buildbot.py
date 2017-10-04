@@ -97,16 +97,17 @@ class BuildBot(object):
         return self.builder_results_url_base(builder_name) + '/results/layout-test-results'
 
     @memoized
-    def fetch_results(self, build):
-        return self.fetch_layout_test_results(self.results_url(build.builder_name, build.build_number))
+    def fetch_results(self, build, results_type):
+        return self.fetch_layout_test_results(
+            self.results_url(build.builder_name, build.build_number), results_type)
 
     @memoized
-    def fetch_layout_test_results(self, results_url):
+    def fetch_layout_test_results(self, results_url, results_type='failing_results'):
         """Returns a LayoutTestResults object for results fetched from a given URL."""
         results_file = NetworkTransaction(return_none_on_404=True).run(
-            lambda: self.fetch_file(results_url, 'failing_results.json'))
+            lambda: self.fetch_file(results_url, '%s.json' % results_type))
         if results_file is None:
-            _log.debug('Got 404 response from:\n%s/failing_results.json', results_url)
+            _log.debug('Got 404 response from:\n%s/%s.json', results_url, results_type)
             return None
         revision = NetworkTransaction(return_none_on_404=True).run(
             lambda: self.fetch_file(results_url, 'LAST_CHANGE'))

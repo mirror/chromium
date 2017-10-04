@@ -161,6 +161,8 @@ class GitCL(object):
         for result in raw_results:
             if builder_names and result['builder_name'] not in builder_names:
                 continue
+            if result['url'] and '/task/' in result['url']:
+                continue
             build_to_status[self._build(result)] = self._try_job_status(result)
         return build_to_status
 
