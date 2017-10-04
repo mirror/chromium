@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f01090f_223529e6",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-04T08:18:16Z",
+      "side": 1,
+      "message": "why the cpu restriction?",
+      "revId": "234549d7facd3a965d128bcaa8441790c62cc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
