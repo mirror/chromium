@@ -96,6 +96,7 @@ class CC_ANIMATION_EXPORT AnimationTicker {
   bool NotifyAnimationAborted(const AnimationEvent& event);
 
   bool HasTickingAnimation() const;
+  size_t TickingAnimationsCount() const;
   bool HasNonDeletedAnimation() const;
 
   bool HasOnlyTranslationTransforms(ElementListType list_type) const;

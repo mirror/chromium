@@ -5,6 +5,7 @@
 #include "cc/scheduler/compositor_timing_history.h"
 
 #include "base/macros.h"
+#include "base/test/histogram_tester.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -17,8 +18,11 @@ class TestCompositorTimingHistory : public CompositorTimingHistory {
  public:
   TestCompositorTimingHistory(CompositorTimingHistoryTest* test,
                               RenderingStatsInstrumentation* rendering_stats)
-      : CompositorTimingHistory(false, NULL_UMA, rendering_stats),
+      : CompositorTimingHistory(false, RENDERER_UMA, rendering_stats),
         test_(test) {}
+  // To avoid hitting the DCHECK in CompositorTimingHistory::DidDraw().
+  void SetDrawTestTime() { draw_start_time_ = Now(); }
+  void SetActiveTreeMainFrameTime() { active_tree_main_frame_time_ = Now(); }
 
  protected:
   base::TimeTicks Now() const override;
@@ -88,7 +92,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(true, true, Now());
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
 
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -138,7 +142,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(false, false, Now());
+  timing_history_.DidDraw(false, false, Now(), 0, 0, 0);
 
   EXPECT_EQ(base::TimeDelta(),
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -261,6 +265,328 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
 
   EXPECT_EQ(begin_main_frame_start_to_commit_duration,
             timing_history_.BeginMainFrameStartToCommitDurationEstimate());
+}
+
+void TestAnimationUMA(
+    const base::HistogramTester& histogram_tester,
+    base::HistogramBase::Count composited_animation_frames,
+    base::HistogramBase::Count main_thread_animation_frames,
+    base::HistogramBase::Count main_thread_compositable_animation_frames) {
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2",
+      composited_animation_frames);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2",
+      main_thread_animation_frames);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations2",
+      main_thread_compositable_animation_frames);
+}
+
+TEST_F(CompositorTimingHistoryTest, AnimationNotReported) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 0);
+  // Previous frame had no animation, so won't report anything in this frame.
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, ReportCompositedAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest, ReportMainThreadAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 1, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2", 456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest, ReportMainThreadCompositableAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 1);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations2",
+      456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       MainThreadNotReportedAfterMainThreadCompositable) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       MainThreadCompositableNotReportedAfterMainThread) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, InterFrameCompositedAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(789));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, InterFrameMainThreadAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(789));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, InterFrameMainThreadCompositableAnimation) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(789));
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, CompositedAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest, MainThreadAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       MainThreadCompositableAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       CompositedWithMainThreadAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 1, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 1, 1, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       CompositedWithMainThreadCompositableAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 1);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest,
+       MainThreadAndCompositableAnimationNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+  timing_history_.WillBeginMainFrame(true, Now());
+  timing_history_.DidCommit();
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(123));
+  timing_history_.DidDraw(false, true, Now(), 0, 1, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  timing_history_.SetDrawTestTime();
+  timing_history_.SetActiveTreeMainFrameTime();
+  AdvanceNowBy(base::TimeDelta::FromMicroseconds(456));
+  timing_history_.DidDraw(false, true, Now(), 0, 1, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
 }
 
 }  // namespace
