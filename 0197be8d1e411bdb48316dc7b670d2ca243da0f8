@@ -69,6 +69,24 @@
       "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5adc07_11794bc3",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-10-04T00:18:55Z",
+      "side": 1,
+      "message": "\u003e Flipping a flag should at least create compiler errors and not a more subtle failure.\n\nYou could imagine it changing such that the default depends on the device or some other factor but the enable flag remains in place.\n\n\u003e \n\u003e If there\u0027s no other obvious place to own a helper method, there is precident for a function in switches .cc files, e.g. ash::ConstrainPointerToRoot() (chromeos_switches.cc has more examples than ash_switches.cc).\n\nAhmed, would you be ok with moving the NightLightController::IsFeatureEnabled function to ash/public/cpp/ash_switches.cc? (that file doesn\u0027t actually exist yet but it will soon)",
+      "parentUuid": "e64c4897_8892496d",
+      "revId": "0197be8d1e411bdb48316dc7b670d2ca243da0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
