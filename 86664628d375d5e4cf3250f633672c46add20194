@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd123fb_9afdbf24",
+        "filename": "ash/public/interfaces/user_info.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-04T09:32:55Z",
+      "side": 1,
+      "message": "Do you expect this to show up in perf tests?",
+      "revId": "86664628d375d5e4cf3250f633672c46add20194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
