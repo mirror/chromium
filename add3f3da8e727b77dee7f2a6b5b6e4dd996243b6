@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7164826a_ac4c66e4",
+        "filename": "third_party/wayland-protocols/include/protocol/pointer-gestures-unstable-v1-client-protocol.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T22:38:35Z",
+      "side": 1,
+      "message": "please use wayland-scanner 1.13.0 to generate these files if that\u0027s not already the case. the version in chromium/src/third_party/wayland/src",
+      "revId": "add3f3da8e727b77dee7f2a6b5b6e4dd996243b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
