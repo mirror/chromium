@@ -10,8 +10,11 @@ top
       sources/resources
         sourcemap-script.js
         sourcemap-typescript.ts
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+  evaluation
+    0
+      js-sourcemaps-toggle-enabled.js
+    1
+      js-sourcemaps-toggle-enabled.js
 
 Running: disableJSSourceMaps
 top
@@ -21,8 +24,11 @@ top
         inspected-page.html
       sources/resources
         sourcemap-script.js
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+  evaluation
+    0
+      js-sourcemaps-toggle-enabled.js
+    1
+      js-sourcemaps-toggle-enabled.js
 
 Running: enableJSSourceMaps
 top
@@ -33,6 +39,9 @@ top
       sources/resources
         sourcemap-script.js
         sourcemap-typescript.ts
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+  evaluation
+    0
+      js-sourcemaps-toggle-enabled.js
+    1
+      js-sourcemaps-toggle-enabled.js
 
