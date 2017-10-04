@@ -637,6 +637,7 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScale.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollBehavior.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollBoundaryBehavior.h",
+    "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollCustomization.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollSnapAlign.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollSnapMargin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIScrollSnapStop.h",
