@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be7b611e_8e4a2c6e",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-04T20:02:21Z",
+      "side": 1,
+      "message": "I added two ifdefs to handle Android and ChromeOS, which both require setting up a NCNFactory.\n\nIt\u0027s unclear how we can support ChromeOS in Network Service, so I added an NOTIMPLEMENTED() per offline discussion with Matt.",
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

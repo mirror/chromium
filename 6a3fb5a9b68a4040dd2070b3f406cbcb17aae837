@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "0d80becb_555087ca",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-04T20:02:21Z",
+      "side": 1,
+      "message": "Ack. Thanks for the info!",
+      "parentUuid": "a158d135_ae429dd9",
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1733149e_17d9406a",
         "filename": "content/network/network_change_manager_impl.h",
         "patchSetId": 12
@@ -394,6 +412,30 @@
       "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bb5ccd_4deab9c8",
+        "filename": "content/public/common/network_connection_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-04T20:02:21Z",
+      "side": 1,
+      "message": "Done. Thanks. TIL atomic32 and volatile.",
+      "parentUuid": "d5a33a7b_37be5d55",
+      "range": {
+        "startLine": 67,
+        "startChar": 41,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "6a3fb5a9b68a4040dd2070b3f406cbcb17aae837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
