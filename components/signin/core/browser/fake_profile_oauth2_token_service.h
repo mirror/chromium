@@ -13,6 +13,8 @@
 #include "base/memory/weak_ptr.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 
+class AccountTrackerService;
+
 // Helper class to simplify writing unittests that depend on an instance of
 // ProfileOAuth2TokenService.
 //
@@ -49,7 +51,8 @@ class FakeProfileOAuth2TokenService : public ProfileOAuth2TokenService {
 
   FakeProfileOAuth2TokenService();
   explicit FakeProfileOAuth2TokenService(
-      std::unique_ptr<OAuth2TokenServiceDelegate> delegate);
+      std::unique_ptr<OAuth2TokenServiceDelegate> delegate,
+      AccountTrackerService* account_tracker);
   ~FakeProfileOAuth2TokenService() override;
 
   // Gets a list of active requests (can be used by tests to validate that the

@@ -65,7 +65,8 @@ KeyedService* ProfileOAuth2TokenServiceFactory::BuildServiceInstanceFor(
       SigninErrorControllerFactory::GetInstance()->GetForProfile(profile),
       AccountTrackerServiceFactory::GetInstance()->GetForProfile(profile));
 #endif
-  ProfileOAuth2TokenService* service =
-      new ProfileOAuth2TokenService(std::move(delegate));
+  ProfileOAuth2TokenService* service = new ProfileOAuth2TokenService(
+      std::move(delegate),
+      AccountTrackerServiceFactory::GetInstance()->GetForProfile(profile));
   return service;
 }
