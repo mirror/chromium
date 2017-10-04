@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fa96f3ea_041eeb92",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-04T07:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3424bb5f_5dbe82cf",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df1dc139_1fd4b759",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-26T03:18:58Z",
       "side": 1,
       "message": "The primary purpose of these tests in this file is for testing\n|target| property of Event after dispatch, or do you want to test\nother properties as well?\n\nEither is fine, but please clarify (e.g. via comments or test title)\nwhat this test is actually testing.",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed921a8e_3f3d6892",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-04T07:52:07Z",
+      "side": 1,
+      "message": "I think the test name doesn\u0027t mention \"target\", so testing not only target behavior but other properties as well seems to be natural.\nDo I need to change the test name?",
+      "parentUuid": "df1dc139_1fd4b759",
       "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "e2f3fe8a_c7118e56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-04T07:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72625f45_3b9b5bbd",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "252748fb_2d3d00e5",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
         "patchSetId": 1
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "cc0b13ae_060744fe",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-04T07:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "252748fb_2d3d00e5",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f25705_9f340733",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
         "patchSetId": 1
@@ -101,6 +173,24 @@
       "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ebcd6e4_80835a26",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-10-04T07:52:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f25705_9f340733",
+      "revId": "0b4cf28b143850df4d0298f5585eb05fe5afbee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
