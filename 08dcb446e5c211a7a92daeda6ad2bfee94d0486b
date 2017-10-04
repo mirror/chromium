@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16eda6b6_f88b56d5",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClientFactory.java",
+        "patchSetId": 23
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T23:43:05Z",
+      "side": 1,
+      "message": "Bo, like this?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 81
+      },
+      "revId": "08dcb446e5c211a7a92daeda6ad2bfee94d0486b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

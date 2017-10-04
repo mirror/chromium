@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1efb1c71_09619fc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b14cf9d_8361cd00",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8de2a075_ab215628",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3fba1e12_814021bd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8de2a075_ab215628",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f004f67_e4dd8477",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
         "patchSetId": 20
@@ -50,6 +86,24 @@
       "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee1cf4cd_4c673412",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T23:43:05Z",
+      "side": 1,
+      "message": "Done -- I think.",
+      "parentUuid": "6f004f67_e4dd8477",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
