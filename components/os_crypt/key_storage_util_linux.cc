@@ -50,8 +50,8 @@ SelectedLinuxBackend SelectBackend(const std::string& type,
 
   // Detect the store to use automatically.
   const char* name = base::nix::GetDesktopEnvironmentName(desktop_env);
-  VLOG(1) << "Password storage detected desktop environment: "
-          << (name ? name : "(unknown)");
+  LOG(ERROR) << "Password storage detected desktop environment: "
+             << (name ? name : "(unknown)");
   switch (desktop_env) {
     case base::nix::DESKTOP_ENVIRONMENT_KDE4:
       return SelectedLinuxBackend::KWALLET;

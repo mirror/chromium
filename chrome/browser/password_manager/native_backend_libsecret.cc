@@ -419,6 +419,7 @@ bool NativeBackendLibsecret::GetLoginsList(
     const PasswordStore::FormDigest* lookup_form,
     GetLoginsListOptions options,
     std::vector<std::unique_ptr<PasswordForm>>* forms) {
+  LOG(ERROR) << "**** GetLoginsList";
   if (!ensured_keyring_unlocked_) {
     LibsecretLoader::EnsureKeyringUnlocked();
     ensured_keyring_unlocked_ = true;
@@ -536,7 +537,7 @@ NativeBackendLibsecret::ConvertFormList(
     std::unique_ptr<PasswordForm> form(FormOutOfAttributes(attrs));
     g_hash_table_unref(attrs);
     if (!form) {
-      VLOG(1) << "Could not initialize PasswordForm from attributes!";
+      LOG(ERROR) << "Could not initialize PasswordForm from attributes!";
       continue;
     }
 

@@ -191,14 +191,14 @@ PasswordStoreFactory::BuildServiceInstanceFor(
   std::unique_ptr<PasswordStoreX::NativeBackend> backend;
   if (selected_backend == os_crypt::SelectedLinuxBackend::KWALLET ||
       selected_backend == os_crypt::SelectedLinuxBackend::KWALLET5) {
-    VLOG(1) << "Trying KWallet for password storage.";
+    LOG(ERROR) << "Trying KWallet for password storage.";
     base::nix::DesktopEnvironment used_desktop_env =
         selected_backend == os_crypt::SelectedLinuxBackend::KWALLET
             ? base::nix::DESKTOP_ENVIRONMENT_KDE4
             : base::nix::DESKTOP_ENVIRONMENT_KDE5;
     backend.reset(new NativeBackendKWallet(id, used_desktop_env));
     if (backend->Init()) {
-      VLOG(1) << "Using KWallet for password storage.";
+      LOG(ERROR) << "Using KWallet for password storage.";
       used_backend = KWALLET;
     } else {
       backend.reset();
@@ -211,10 +211,10 @@ PasswordStoreFactory::BuildServiceInstanceFor(
 #if defined(USE_LIBSECRET)
     if (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
         selected_backend == os_crypt::SelectedLinuxBackend::GNOME_LIBSECRET) {
-      VLOG(1) << "Trying libsecret for password storage.";
+      LOG(ERROR) << "Trying libsecret for password storage.";
       backend.reset(new NativeBackendLibsecret(id));
       if (backend->Init()) {
-        VLOG(1) << "Using libsecret keyring for password storage.";
+        LOG(ERROR) << "Using libsecret keyring for password storage.";
         used_backend = LIBSECRET;
       } else {
         backend.reset();
@@ -225,10 +225,10 @@ PasswordStoreFactory::BuildServiceInstanceFor(
     if (!backend.get() &&
         (selected_backend == os_crypt::SelectedLinuxBackend::GNOME_ANY ||
          selected_backend == os_crypt::SelectedLinuxBackend::GNOME_KEYRING)) {
-      VLOG(1) << "Trying GNOME keyring for password storage.";
+      LOG(ERROR) << "Trying GNOME keyring for password storage.";
       backend.reset(new NativeBackendGnome(id));
       if (backend->Init()) {
-        VLOG(1) << "Using GNOME keyring for password storage.";
+        LOG(ERROR) << "Using GNOME keyring for password storage.";
         used_backend = GNOME_KEYRING;
       } else {
         backend.reset();
