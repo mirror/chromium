@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b685b110_4b73c1c0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-04T14:16:09Z",
+      "side": 1,
+      "message": "We\u0027d like to avoid hard-coded paths when possible. I suggest using the following code instead (inspired by _generate_manifest):\n\n        manifest_base_path \u003d self.fs.relpath(\n            self.fs.join(self.dest_path, \u0027..\u0027, \u0027WPT_BASE_MANIFEST.json\u0027),\n            self.finder.chromium_base()\n        )\n\nP.S. Don\u0027t follow the other bad example that uses self.finder.path_from_layout_tests, since self.dest_path is not necessarily LT/external/wpt. (We need to clean up all these manifest paths in the code some day.)",
+      "revId": "2857aef29f2a34c1ad580ffe70aa4f5a560ac242",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
