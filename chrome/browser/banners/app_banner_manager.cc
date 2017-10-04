@@ -74,7 +74,6 @@ std::string GetStatusParam(InstallableStatusCode code) {
 class ConsoleStatusReporter : public banners::AppBannerManager::StatusReporter {
  public:
   bool Waiting() const override { return false; }
-
   // Logs an error message corresponding to |code| to the devtools console
   // attached to |web_contents|.
   void ReportStatus(content::WebContents* web_contents,
@@ -93,9 +92,9 @@ class TrackingStatusReporter
   // Records code via a UMA histogram.
   void ReportStatus(content::WebContents* web_contents,
                     InstallableStatusCode code) override {
-    // Ensure that we haven't yet logged a status code for this page.
-    DCHECK(!done_);
-    banners::TrackInstallableStatusCode(code);
+    // We only log the first status code for the page.
+    if (!done_)
+      banners::TrackInstallableStatusCode(code);
     done_ = true;
   }
 
