@@ -1735,6 +1735,8 @@ crbug.com/751952 virtual/mojo-loading/http/tests/devtools/console/console-uncaug
 crbug.com/751952 virtual/mojo-loading/http/tests/inspector-unit/datagrid-editable-longtext.js [ Pass Failure ]
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 
+crbug.com/771729 [ Win Debug ] external/wpt/html/semantics/scripting-1/the-script-element/execution-timing/039.html [ Pass Failure ]
+
 # ====== New tests from wpt-importer added here ======
 crbug.com/626703 external/wpt/requestidlecallback/basic.html [ Timeout ]
 crbug.com/626703 external/wpt/payment-request/PaymentRequestUpdateEvent/updateWith-call-immediate-manual.https.html [ Skip ]
