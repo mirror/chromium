@@ -16,6 +16,24 @@
       "revId": "bb2dd24bfc07808ce009233efbf05a9c80df4c63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41c08b7a_7e64925d",
+        "filename": "base/optional.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T15:28:04Z",
+      "side": 1,
+      "message": "Yeah--I think this already fails to compile, but deleting it makes the error nicer.",
+      "parentUuid": "bf25be24_55c60574",
+      "revId": "bb2dd24bfc07808ce009233efbf05a9c80df4c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
