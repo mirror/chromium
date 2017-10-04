@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "1559037c_56ecab87",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-04T18:48:36Z",
+      "side": 1,
+      "message": "I see. It does seem hard to understand in its current state though.\ncollapsed_border_values_valid_ is defined in the .h file as\n\"set when collapsed_border_values_ needs recalculation\", which is\ntrue but doesn\u0027t handle the subtlety of when invalidation happens.\nWould it be clearer to introduce a collapsed_border_values_needs_invalidation_?\nThis would be similar to repaint-after-layout, which sometimes inherits\nforced invalidations, and sometimes tries to compute invalidations based\non a geometry algorithm.",
+      "parentUuid": "187570bb_b2edcb3d",
+      "revId": "8e903035e09abc344404ae592da836acea12dbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "688bca54_31065993",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 3
