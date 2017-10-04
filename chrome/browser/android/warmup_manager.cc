@@ -20,7 +20,15 @@ static void PreconnectUrlAndSubresources(JNIEnv* env,
   if (url_str) {
     GURL url = GURL(base::android::ConvertJavaStringToUTF8(env, url_str));
     Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
-    if (profile) {
+    if (!profile)
+      return;
+
+    auto* loading_predictor =
+        predictors::LoadingPredictorFactory::GetForProfile(profile);
+    if (loading_predictor) {
+      loading_predictor->PrepareForPageLoad(url,
+                                            predictors::HintOrigin::EXTERNAL)
+    } else if (profile->GetNetworkPredictor()) {
       profile->GetNetworkPredictor()->PreconnectUrlAndSubresources(url, GURL());
     }
   }
