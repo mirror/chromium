@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0030490f_8e41618d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4155,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "I\u0027ve removed the comment.",
+      "parentUuid": "80db3b31_45f9c41e",
+      "range": {
+        "startLine": 4155,
+        "startChar": 34,
+        "endLine": 4155,
+        "endChar": 48
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44894441_e4492ef5",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a80605_4528ae12",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4177,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44894441_e4492ef5",
+      "range": {
+        "startLine": 4177,
+        "startChar": 39,
+        "endLine": 4177,
+        "endChar": 44
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a521b387_1db7cc49",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4197,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e9ffb1_429a8141",
+      "range": {
+        "startLine": 4197,
+        "startChar": 33,
+        "endLine": 4197,
+        "endChar": 48
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5093be04_4e447443",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 11
@@ -91,6 +163,30 @@
       "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b59dc4_2f251b6c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4296,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5093be04_4e447443",
+      "range": {
+        "startLine": 4296,
+        "startChar": 7,
+        "endLine": 4296,
+        "endChar": 25
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "36aec9b9_acf3e3f5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 4297,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "After the offline discussion, I found out that _not_used is far from a common pattern. I chose to ignore the callbacks and add comments instead.",
+      "parentUuid": "d01b2b9c_3b31dfc8",
+      "range": {
+        "startLine": 4297,
+        "startChar": 6,
+        "endLine": 4297,
+        "endChar": 7
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99d71362_bd0e6939",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 11
@@ -137,6 +257,30 @@
       "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f7e877_1308952a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99d71362_bd0e6939",
+      "range": {
+        "startLine": 68,
+        "startChar": 32,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e45f17fc_3e19ac28",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Sorry, I\u0027ve missed that :|\n\nDone.",
+      "parentUuid": "d349f432_bfdfb15f",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 46
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d70d81f2_afe6078c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 11
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "bf96cbb7_afe2548f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d70d81f2_afe6078c",
+      "range": {
+        "startLine": 1117,
+        "startChar": 40,
+        "endLine": 1117,
+        "endChar": 49
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be572ba2_477e3e51",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
         "patchSetId": 11
@@ -206,6 +398,30 @@
       "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b52d6df_e9297249",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1213,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "be572ba2_477e3e51",
+      "range": {
+        "startLine": 1213,
+        "startChar": 57,
+        "endLine": 1213,
+        "endChar": 59
+      },
+      "revId": "505f7f7094c66df06b1af27ff6cc8b32e7be484e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

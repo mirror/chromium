@@ -397,6 +397,24 @@
     },
     {
       "key": {
+        "uuid": "d26e8acc_5e7e3389",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "Now I see. Done. With a slight variation, doing the fallback internally. The reason is at the end of this comment.\n\nRelated to your side note, this change breaks the situation if we trigger the fetch when the provider is still in state NOT_INITED (and the article category thus has status INITIALIZING): \n - In this situation we now return false and fallback to RefetchInTheBackground which postpones the refetch task until the provider becomes READY. \n - This postponed task then does not flip the category status and thus we see no placeholder.\n\nI want to fix it in a separate CL, this one grows quite big. I plan to specify the fetch_when_ready_ task by a Closure and not by explicitly storing all its parameters. This way, I can easily postpone RefetchWhileDisplaying if not yet ready(). At the moment when postponing the task, it feels too strong to assume that the category will be AVAILABLE when the task will be run. For that reason I want to do the fallback internally if the status is not AVAILABLE when running the task.",
+      "parentUuid": "2d2f1b0f_90ce7e6f",
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f045b0e6_177f1264",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 8
@@ -706,6 +724,30 @@
       "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e730041e_ffea6efb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-04T15:52:42Z",
+      "side": 1,
+      "message": "After an offline discussion, I\u0027ve removed the PERSISTENT_SCHEDULER_WAKE_UP trigger for this treatment. I\u0027ve added a TODO to document a possible change to SURFACE_OPENED in the future.",
+      "parentUuid": "a0a56638_1f1bda83",
+      "range": {
+        "startLine": 772,
+        "startChar": 2,
+        "endLine": 777,
+        "endChar": 3
+      },
+      "revId": "1d2bf66175c6fe1b0f10252770455c4828b640da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
