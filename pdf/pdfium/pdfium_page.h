@@ -68,6 +68,9 @@ class PDFiumPage {
     int y_in_pixels;  // Valid for DOCLINK_AREA only. From the top of the page.
   };
 
+  // Returns target associated with a destination.
+  Area GetDestinationTarget(FPDF_DEST destination, LinkTarget* target) const;
+
   // Given a point in the document that's in this page, returns its character
   // index if it's near a character, and also the type of text.
   // Target is optional. It will be filled in for WEBLINK_AREA or
@@ -118,8 +121,6 @@ class PDFiumPage {
   // Returns link type and target associated with a link. Returns
   // NONSELECTABLE_AREA if link detection failed.
   Area GetLinkTarget(FPDF_LINK link, LinkTarget* target) const;
-  // Returns target associated with a destination.
-  Area GetDestinationTarget(FPDF_DEST destination, LinkTarget* target) const;
   // Returns target associated with a URI action.
   Area GetURITarget(FPDF_ACTION uri_action, LinkTarget* target) const;
 

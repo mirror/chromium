@@ -14,6 +14,7 @@ Polymer({
      * A bookmark object, each containing a:
      * - title
      * - page (optional)
+     * - y (optional, requires page)
      * - children (an array of bookmarks)
      */
     bookmark: {type: Object, observer: 'bookmarkChanged_'},
@@ -37,6 +38,7 @@ Polymer({
   keyBindings: {'enter': 'onEnter_', 'space': 'onSpace_'},
 
   bookmarkChanged_: function() {
+    // console.log('bookmarkChanged_');
     this.$.expand.style.visibility =
         this.bookmark.children.length > 0 ? 'visible' : 'hidden';
   },
@@ -48,10 +50,26 @@ Polymer({
   },
 
   onClick: function() {
-    if (this.bookmark.hasOwnProperty('page'))
-      this.fire('change-page', {page: this.bookmark.page});
-    else if (this.bookmark.hasOwnProperty('uri'))
+    console.log('onClick');
+    if (this.bookmark.hasOwnProperty('page')) {
+      console.log('onClick page = ' + this.bookmark.page);
+      if (this.bookmark.hasOwnProperty('y'))
+        console.log('onClick y = ' + this.bookmark.y);
+    } else if (this.bookmark.hasOwnProperty('uri')) {
+      console.log('onClick uri = ' + this.bookmark.uri);
+    }
+
+    if (this.bookmark.hasOwnProperty('page')) {
+      if (this.bookmark.hasOwnProperty('y')) {
+        this.fire(
+            'change-page-and-y',
+            {page: this.bookmark.page, y: this.bookmark.y});
+      } else {
+        this.fire('change-page', {page: this.bookmark.page});
+      }
+    } else if (this.bookmark.hasOwnProperty('uri')) {
       this.fire('navigate', {uri: this.bookmark.uri, newtab: true});
+    }
   },
 
   onEnter_: function(e) {

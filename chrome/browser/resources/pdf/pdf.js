@@ -222,6 +222,11 @@ function PDFViewer(browserApi) {
     this.viewport_.goToPage(e.detail.page);
   });
 
+  document.body.addEventListener('change-page-and-y', e => {
+    this.viewport_.goToPage(e.detail.page);
+    // Do more
+  });
+
   document.body.addEventListener('navigate', e => {
     var disposition = e.detail.newtab ?
         Navigator.WindowOpenDisposition.NEW_BACKGROUND_TAB :
