@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e9389941_c20078df",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-04T20:48:26Z",
+      "side": 1,
+      "message": "Ooops, changes in this function are unintended, reverting.",
+      "parentUuid": "15662f19_31ffa07e",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "117fc200_e64f66b1",
         "filename": "ui/display/util/edid_parser.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T20:02:41Z",
       "side": 1,
       "message": "nit: Maybe extract a small function that computes the value.\nAlso, it might be slightly more explicit that you\u0027re merging bits with a | instead of a +.",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6843c2c5_897593eb",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-04T20:48:26Z",
+      "side": 1,
+      "message": "\u003e nit: Maybe extract a small function that computes the value.\n\nYeah I thought about it but it\u0027d need a lot of parameters and\nit would end up being as ugly as the current scaffolding.\n\n\u003e Also, it might be slightly more explicit that you\u0027re merging bits with a | instead of a +.\nI could do it but in my mind we\u0027re adding numbers as opposed\nto logically adding them :-)",
+      "parentUuid": "117fc200_e64f66b1",
       "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d7521e9_2d4cba57",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-04T20:48:26Z",
+      "side": 1,
+      "message": "We\u0027ll probably have to sanitize them in a higher level, yes.\n\nCan imagine e.g. making sure that the values are such that x + y \u003c\u003d 1\n(since they are limited by the x+y\u003d1 line), and that the\ngreen has a higher y component that the others, etc.",
+      "parentUuid": "a42fe786_0a794b4a",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d80e7f0_28763cad",
         "filename": "ui/display/util/edid_parser.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2539f5c5_3ab42d04",
+        "filename": "ui/display/util/edid_parser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-04T20:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d80e7f0_28763cad",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
