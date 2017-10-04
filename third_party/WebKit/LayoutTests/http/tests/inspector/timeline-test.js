@@ -43,6 +43,7 @@ InspectorTest.timelinePropertyFormatters = {
     timedOut: "formatAsTypeName",
     networkTime: "formatAsTypeName",
     timing: "formatAsTypeName",
+    streamed: "skip",
 };
 
 InspectorTest.InvalidationFormatters = {
