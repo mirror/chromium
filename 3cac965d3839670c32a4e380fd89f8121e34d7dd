@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75f69636_3cfcbab8",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T06:04:14Z",
+      "side": 1,
+      "message": "For readability, these state checks should be conducted in the order of the state transition, that is, kMain-\u003ekImported-\u003ekWaiting-\u003ekRequested. For example...\n\nif (state_ \u003d\u003d kSendingMainScript)\n  UpdateState(State::kSendingImportedScript);\n\nif (state_ \u003d\u003d kSendingImportedScript) {\n  if (!imported_script_iter_)\n    imported_script_iter_ \u003d imported_scripts_.begin();\n  if (imported_script_iter_ !\u003d imported_scripts_.end()) {\n    StartSendingScript(imported_script_iter_-\u003efirst);\n    imported_script_iter_++;\n    return;\n  }\n  Finish(FinishedReason::kSuccess);\n  UpdateState(kWaiting);\n}\n\nif (state_ \u003d\u003d kWaiting) {\n  if (!requested_scripts_empty()) {\n    StartSendingScript(requested_scripts_.front().first);\n    requested_scripts_.pop();\n    // I wonder if we could remove the kSendingRequestedScript state.\n    // OnFinishSendingScript() will be called with the kWaiting state.\n  }\n  return;\n}",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 47
+      },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516cf0e6_7750d9eb",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T06:04:14Z",
+      "side": 1,
+      "message": "How about having \"GURL current_sending_url_\" as a member field set in StartSendingScript() and reset in OnFinishSendingScript()/OnAbortSendingScript()?",
+      "range": {
+        "startLine": 469,
+        "startChar": 49,
+        "endLine": 469,
+        "endChar": 66
+      },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c5789f7_27a33165",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-04T06:04:14Z",
+      "side": 1,
+      "message": "\"it has\"",
+      "range": {
+        "startLine": 47,
+        "startChar": 56,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "3cac965d3839670c32a4e380fd89f8121e34d7dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
