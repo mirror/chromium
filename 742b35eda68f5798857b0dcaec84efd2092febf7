@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fb6255c_4a4bc1fc",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-04T07:59:43Z",
+      "side": 1,
+      "message": "I\u0027m curious about this. SPARSE_SLOWLY still seems like the wrong thing to me here since we\u0027re logging values in an enum. mpearson: If this is correct (and not just \"it\u0027ll work\"), would you please update the guidance in https://chromium.googlesource.com/chromium/src/+/de5e4bf1c32c92265c69735a240d46ee198e3a72/tools/metrics/histograms/README.md#Enum-Histograms and https://chromium.googlesource.com/chromium/src/+/de5e4bf1c32c92265c69735a240d46ee198e3a72/tools/metrics/histograms/README.md#When-To-Use-Sparse-Histograms to make it more clear when to use one over the other? For example, maybe sparse is better when only a single value will be logged for the lifetime of the process. Thanks.",
+      "revId": "742b35eda68f5798857b0dcaec84efd2092febf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
