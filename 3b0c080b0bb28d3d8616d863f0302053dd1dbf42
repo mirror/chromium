@@ -85,6 +85,24 @@
       "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09548db0_1f04200b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-04T21:24:52Z",
+      "side": 1,
+      "message": "This is a warning which for some reason we do not treat as an error, but I think it definitely needs to be fixed.\n\nThe issue is that there ought to be a corresponding push above the previous diagnostic pragma. i.e.:\n\n#pragma GCC diagnostic push\n#pragma GCC diagnostic warning \"-Wunknown-pragmas\"\n\n\notherwise popping here makes no sense.",
+      "parentUuid": "b5e440a6_553fbed2",
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
