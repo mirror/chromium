@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f98a754_1716d3e1",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-04T09:32:46Z",
+      "side": 1,
+      "message": "I think the const can stay?",
+      "range": {
+        "startLine": 62,
+        "startChar": 73,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "a3893730cf12d7b203bff38669c1d73cb454a437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
