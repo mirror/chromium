@@ -436,131 +436,85 @@ static SelectionMarkingRange MarkStartAndEndInOneNode(
           std::move(invalidation_set)};
 }
 
+struct LayoutObjectAndOffset {
+  STACK_ALLOCATED();
+  LayoutObject* layout_object;
+  int offset;
+
+  LayoutObjectAndOffset(LayoutObject* layout_object_, int offset_)
+      : layout_object(layout_object_), offset(offset_) {
+    DCHECK(layout_object_);
+    DCHECK_GE(offset_, 0);
+  }
+};
+
+LayoutObjectAndOffset MarkStart(PaintInvalidationSet* invalidation_set,
+                                LayoutObject* start_layout_object,
+                                int start_offset) {
+  if (!start_layout_object->IsText()) {
+    MarkSelected(invalidation_set, start_layout_object, SelectionState::kStart);
+    return {start_layout_object, 0};
+  }
+
+  DCHECK_GE(start_offset, 0);
+  LayoutTextFragment* const first_letter_part =
+      FirstLetterPartFor(start_layout_object);
+  if (!first_letter_part) {
+    MarkSelected(invalidation_set, start_layout_object, SelectionState::kStart);
+    return {start_layout_object, start_offset};
+  }
+  LayoutTextFragment* const remaining_part =
+      ToLayoutTextFragment(start_layout_object);
+  const unsigned unsigned_offset = static_cast<unsigned>(start_offset);
+  if (unsigned_offset < remaining_part->Start()) {
+    MarkSelected(invalidation_set, first_letter_part, SelectionState::kStart);
+    MarkSelected(invalidation_set, remaining_part, SelectionState::kInside);
+    return {first_letter_part, start_offset};
+  }
+  MarkSelected(invalidation_set, remaining_part, SelectionState::kStart);
+  return {remaining_part,
+          static_cast<int>(unsigned_offset - remaining_part->Start())};
+}
+
+LayoutObjectAndOffset MarkEnd(PaintInvalidationSet* invalidation_set,
+                              LayoutObject* end_layout_object,
+                              int end_offset) {
+  if (!end_layout_object->IsText()) {
+    MarkSelected(invalidation_set, end_layout_object, SelectionState::kEnd);
+    return {end_layout_object, 0};
+  }
+
+  DCHECK_GE(end_offset, 0);
+  LayoutTextFragment* const first_letter_part =
+      FirstLetterPartFor(end_layout_object);
+  if (!first_letter_part) {
+    MarkSelected(invalidation_set, end_layout_object, SelectionState::kEnd);
+    return {end_layout_object, end_offset};
+  }
+  LayoutTextFragment* const remaining_part =
+      ToLayoutTextFragment(end_layout_object);
+  const unsigned unsigned_offset = static_cast<unsigned>(end_offset);
+  if (unsigned_offset < remaining_part->Start()) {
+    MarkSelected(invalidation_set, first_letter_part, SelectionState::kEnd);
+    return {first_letter_part, end_offset};
+  }
+  MarkSelected(invalidation_set, first_letter_part, SelectionState::kInside);
+  MarkSelected(invalidation_set, remaining_part, SelectionState::kEnd);
+  return {remaining_part,
+          static_cast<int>(unsigned_offset - remaining_part->Start())};
+}
+
 static SelectionMarkingRange MarkStartAndEndInTwoNodes(
     PaintInvalidationSet invalidation_set,
     LayoutObject* start_layout_object,
     int start_offset,
     LayoutObject* end_layout_object,
     int end_offset) {
-  DCHECK_NE(start_layout_object, end_layout_object);
-  DCHECK_GE(start_offset, 0);
-  DCHECK_GE(end_offset, 0);
-  LayoutTextFragment* const start_first_letter_part =
-      FirstLetterPartFor(start_layout_object);
-  LayoutTextFragment* const end_first_letter_part =
-      FirstLetterPartFor(end_layout_object);
-  if (!start_first_letter_part && !end_first_letter_part) {
-    // Case 0: Both start and end don't relate to first-letter.
-    MarkSelected(&invalidation_set, start_layout_object,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, end_layout_object, SelectionState::kEnd);
-    return {{start_layout_object, start_offset, end_layout_object, end_offset},
-            std::move(invalidation_set)};
-  }
-  if (!start_first_letter_part) {
-    LayoutTextFragment* const end_remaining_part =
-        ToLayoutTextFragment(end_layout_object);
-    if (static_cast<unsigned>(end_offset) <= end_remaining_part->Start()) {
-      // Case 1: The selection ends in first-letter part
-      MarkSelected(&invalidation_set, start_layout_object,
-                   SelectionState::kStart);
-      MarkSelected(&invalidation_set, end_first_letter_part,
-                   SelectionState::kEnd);
-      return {{start_layout_object, start_offset, end_first_letter_part,
-               end_offset},
-              std::move(invalidation_set)};
-    }
-    // Case 2: The selection ends in remaining part
-    DCHECK_GT(static_cast<unsigned>(end_offset), end_remaining_part->Start());
-    MarkSelected(&invalidation_set, start_layout_object,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, end_first_letter_part,
-                 SelectionState::kInside);
-    MarkSelected(&invalidation_set, end_remaining_part, SelectionState::kEnd);
-    return {{start_layout_object, start_offset, end_remaining_part,
-             static_cast<int>(end_offset - end_remaining_part->Start())},
-            std::move(invalidation_set)};
-  }
-  if (!end_first_letter_part) {
-    LayoutTextFragment* const start_remaining_part =
-        ToLayoutTextFragment(start_layout_object);
-    if (static_cast<unsigned>(start_offset) < start_remaining_part->Start()) {
-      // Case 3: The selection starts in first-letter part.
-      MarkSelected(&invalidation_set, start_first_letter_part,
-                   SelectionState::kStart);
-      MarkSelected(&invalidation_set, start_remaining_part,
-                   SelectionState::kInside);
-      MarkSelected(&invalidation_set, end_layout_object, SelectionState::kEnd);
-      return {{start_first_letter_part, start_offset, end_layout_object,
-               end_offset},
-              std::move(invalidation_set)};
-    }
-    // Case 4: The selection starts in remaining part.
-    MarkSelected(&invalidation_set, start_remaining_part,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, end_layout_object, SelectionState::kEnd);
-    return {{start_remaining_part,
-             static_cast<int>(start_offset - start_remaining_part->Start()),
-             end_layout_object, end_offset},
-            std::move(invalidation_set)};
-  }
-  LayoutTextFragment* const start_remaining_part =
-      ToLayoutTextFragment(start_layout_object);
-  LayoutTextFragment* const end_remaining_part =
-      ToLayoutTextFragment(end_layout_object);
-  if (static_cast<unsigned>(start_offset) < start_remaining_part->Start() &&
-      static_cast<unsigned>(end_offset) <= end_remaining_part->Start()) {
-    // Case 5: The selection starts and end in first-letter part.
-    MarkSelected(&invalidation_set, start_first_letter_part,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, start_remaining_part,
-                 SelectionState::kInside);
-    MarkSelected(&invalidation_set, end_first_letter_part,
-                 SelectionState::kEnd);
-    return {{start_first_letter_part, start_offset, end_first_letter_part,
-             end_offset},
-            std::move(invalidation_set)};
-  }
-  if (static_cast<unsigned>(start_offset) < start_remaining_part->Start()) {
-    // Case 6: The selection starts in first-letter part and ends in remaining
-    // part.
-    DCHECK_GT(static_cast<unsigned>(end_offset), end_remaining_part->Start());
-    MarkSelected(&invalidation_set, start_first_letter_part,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, start_remaining_part,
-                 SelectionState::kInside);
-    MarkSelected(&invalidation_set, end_first_letter_part,
-                 SelectionState::kInside);
-    MarkSelected(&invalidation_set, end_remaining_part, SelectionState::kEnd);
-    return {{start_first_letter_part, start_offset, end_remaining_part,
-             static_cast<int>(end_offset - end_remaining_part->Start())},
-            std::move(invalidation_set)};
-  }
-  if (static_cast<unsigned>(end_offset) <= end_remaining_part->Start()) {
-    // Case 7: The selection starts in remaining part and ends in first letter
-    // part.
-    DCHECK_GE(static_cast<unsigned>(start_offset),
-              start_remaining_part->Start());
-    MarkSelected(&invalidation_set, start_remaining_part,
-                 SelectionState::kStart);
-    MarkSelected(&invalidation_set, end_first_letter_part,
-                 SelectionState::kEnd);
-    return {{start_remaining_part,
-             static_cast<int>(start_offset - start_remaining_part->Start()),
-             end_first_letter_part, end_offset},
-            std::move(invalidation_set)};
-  }
-  // Case 8: The selection starts in remaining part and ends in remaining part.
-  DCHECK_GE(static_cast<unsigned>(start_offset), start_remaining_part->Start());
-  DCHECK_GT(static_cast<unsigned>(end_offset), end_remaining_part->Start());
-  MarkSelected(&invalidation_set, start_remaining_part, SelectionState::kStart);
-  MarkSelected(&invalidation_set, end_first_letter_part,
-               SelectionState::kInside);
-  MarkSelected(&invalidation_set, end_remaining_part, SelectionState::kEnd);
-  return {{start_remaining_part,
-           static_cast<int>(start_offset - start_remaining_part->Start()),
-           end_remaining_part,
-           static_cast<int>(end_offset - end_remaining_part->Start())},
+  const LayoutObjectAndOffset& start =
+      MarkStart(&invalidation_set, start_layout_object, start_offset);
+  const LayoutObjectAndOffset& end =
+      MarkEnd(&invalidation_set, end_layout_object, end_offset);
+  return {{start.layout_object, start.offset, end.layout_object, end.offset},
           std::move(invalidation_set)};
 }
 
@@ -578,6 +532,8 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
 
   // Find first/last visible LayoutObject while
   // marking SelectionState and collecting invalidation candidate LayoutObjects.
+  // TODO(editing-dev) To adopt Layout NG, |LayoutObject| will not be place for
+  // storing |SelectionState|.
   LayoutObject* start_layout_object = nullptr;
   LayoutObject* end_layout_object = nullptr;
   PaintInvalidationSet invalidation_set;
