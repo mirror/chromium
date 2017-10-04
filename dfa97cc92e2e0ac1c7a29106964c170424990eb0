@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37417835_dc5f47a4",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-04T23:42:42Z",
+      "side": 1,
+      "message": "I adapted this from the NaCl code, which looked for the largest chunk of free address space. However, I think I am confused, not you - we can simply attempt to reserve the memory with VirtualAllocEx as you suggest.",
+      "parentUuid": "e6de668f_9859417d",
+      "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dd7180c_2ead3fcd",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 10
@@ -89,6 +107,30 @@
       "side": 1,
       "message": "I agree with ajwong.",
       "parentUuid": "2502bcc4_4bd67e76",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 70
+      },
+      "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ae665a_7e2ccd58",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-04T23:42:42Z",
+      "side": 1,
+      "message": "This approach was used by NaCl, but there we knew NaCl was the only thing in the child process. That\u0027s not true for renderers, so this magic scan is a little shaky. I could avoid this by sending a message from browser to renderer with the address and reservation size.\n\nIt would be great to avoid this - how can we make the reservation earlier in the process lifetime?",
+      "parentUuid": "2b53bd91_7a98cea7",
       "range": {
         "startLine": 117,
         "startChar": 0,
