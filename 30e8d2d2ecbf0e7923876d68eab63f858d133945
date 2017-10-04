@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1a7622f_d40c010a",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-10-04T21:56:44Z",
+      "side": 1,
+      "message": "Please wrap with `{ }`",
+      "range": {
+        "startLine": 356,
+        "startChar": 25,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "30e8d2d2ecbf0e7923876d68eab63f858d133945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
