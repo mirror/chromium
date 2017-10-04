@@ -60,6 +60,9 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
       service_manager::Connector* connector,
       service_manager::ServiceContextRefFactory* context_ref_factory);
 
+  // Called by the MediaService after the CDM is preloaded.
+  virtual void OnPreSandboxStartupFinished();
+
   virtual std::unique_ptr<AudioDecoder> CreateAudioDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 

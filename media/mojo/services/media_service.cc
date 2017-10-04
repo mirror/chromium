@@ -68,6 +68,9 @@ void MediaService::LoadCdm(const base::FilePath& cdm_path) {
   CdmModule::GetInstance()->Initialize(cdm_path);
   is_cdm_loaded_ = true;
 #endif
+
+  // This may trigger the sandbox to be sealed.
+  mojo_media_client_->OnPreSandboxStartupFinished();
 }
 
 void MediaService::CreateInterfaceFactory(
