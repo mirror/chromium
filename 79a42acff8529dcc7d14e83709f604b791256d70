@@ -22,6 +22,30 @@
       "revId": "79a42acff8529dcc7d14e83709f604b791256d70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea673ee_d290870f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-04T22:45:54Z",
+      "side": 1,
+      "message": "Done here and in every other file touched by this CL that needed it.\n\nThanks!",
+      "parentUuid": "151b59f7_748dd55f",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "79a42acff8529dcc7d14e83709f604b791256d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
