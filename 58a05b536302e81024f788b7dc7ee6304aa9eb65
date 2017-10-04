@@ -16,6 +16,24 @@
       "revId": "58a05b536302e81024f788b7dc7ee6304aa9eb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac0fb93_93efd860",
+        "filename": "chrome/common/web_application_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-04T09:06:37Z",
+      "side": 1,
+      "message": "Changed to an Optional.",
+      "parentUuid": "e172984c_3f26f879",
+      "revId": "58a05b536302e81024f788b7dc7ee6304aa9eb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
