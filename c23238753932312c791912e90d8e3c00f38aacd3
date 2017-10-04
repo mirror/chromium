@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc46dde_30c3f39b",
+        "filename": "third_party/errorprone/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-04T19:41:17Z",
+      "side": 0,
+      "message": "Given this todo, is the bootclasspath still necessary?",
+      "revId": "c23238753932312c791912e90d8e3c00f38aacd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
