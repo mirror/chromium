@@ -48,6 +48,7 @@
 #include "extensions/browser/test_extension_registry_observer.h"
 #include "extensions/common/api/runtime.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/switches.h"
 #include "extensions/common/value_builder.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
@@ -125,20 +126,28 @@ class MessageSender : public content::NotificationObserver {
   content::NotificationRegistrar registrar_;
 };
 
-class MessagingApiTest : public ExtensionApiTest {
+enum BindingsType { NATIVE_BINDINGS, JAVASCRIPT_BINDINGS };
+
+class MessagingApiTest : public ExtensionApiTest,
+                         public testing::WithParamInterface<BindingsType> {
  public:
   void SetUpOnMainThread() override {
     ExtensionApiTest::SetUpOnMainThread();
     host_resolver()->AddRule("*", "127.0.0.1");
     ASSERT_TRUE(StartEmbeddedTestServer());
   }
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    ExtensionApiTest::SetUpCommandLine(command_line);
+    command_line->AppendSwitchASCII(switches::kNativeCrxBindings,
+                                    GetParam() == NATIVE_BINDINGS ? "1" : "0");
+  }
 };
 
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, Messaging) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, Messaging) {
   ASSERT_TRUE(RunExtensionTest("messaging/connect")) << message_;
 }
 
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingCrash) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingCrash) {
   ExtensionTestMessageListener ready_to_crash("ready_to_crash", false);
   ASSERT_TRUE(LoadExtension(
           test_data_dir_.AppendASCII("messaging/connect_crash")));
@@ -154,7 +163,7 @@ IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingCrash) {
 }
 
 // Tests that message passing from one extension to another works.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingExternal) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingExternal) {
   ASSERT_TRUE(LoadExtension(
       shared_test_data_dir().AppendASCII("messaging").AppendASCII("receiver")));
 
@@ -165,26 +174,26 @@ IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingExternal) {
 
 // Tests that a content script can exchange messages with a tab even if there is
 // no background page.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingNoBackground) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingNoBackground) {
   ASSERT_TRUE(RunExtensionSubtest("messaging/connect_nobackground",
                                   "page_in_main_frame.html")) << message_;
 }
 
 // Tests that messages with event_urls are only passed to extensions with
 // appropriate permissions.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingEventURL) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingEventURL) {
   MessageSender sender;
   ASSERT_TRUE(RunExtensionTest("messaging/event_url")) << message_;
 }
 
 // Tests that messages cannot be received from the same frame.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingBackgroundOnly) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingBackgroundOnly) {
   ASSERT_TRUE(RunExtensionTest("messaging/background_only")) << message_;
 }
 
 // Tests whether an extension in an interstitial page can send messages to the
 // background page.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingInterstitial) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingInterstitial) {
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
@@ -1013,7 +1022,7 @@ IN_PROC_BROWSER_TEST_F(ExternallyConnectableMessagingTest,
 
 IN_PROC_BROWSER_TEST_F(ExternallyConnectableMessagingTest, FromPopup) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      switches::kDisablePopupBlocking);
+      ::switches::kDisablePopupBlocking);
 
   scoped_refptr<const Extension> extension = LoadChromiumConnectableExtension();
 
@@ -1282,7 +1291,7 @@ IN_PROC_BROWSER_TEST_F(ExternallyConnectableMessagingTest,
 #endif  // !defined(OS_WIN) - http://crbug.com/350517.
 
 // Tests that messages sent in the unload handler of a window arrive.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingOnUnload) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, MessagingOnUnload) {
   const Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("messaging/on_unload"));
   ExtensionTestMessageListener listener("listening", false);
@@ -1319,9 +1328,16 @@ IN_PROC_BROWSER_TEST_F(MessagingApiTest, MessagingOnUnload) {
 
 // Tests that messages over a certain size are not sent.
 // https://crbug.com/766713.
-IN_PROC_BROWSER_TEST_F(MessagingApiTest, LargeMessages) {
+IN_PROC_BROWSER_TEST_P(MessagingApiTest, LargeMessages) {
   ASSERT_TRUE(RunExtensionTest("messaging/large_messages"));
 }
+
+INSTANTIATE_TEST_CASE_P(NativeBindings,
+                        MessagingApiTest,
+                        ::testing::Values(NATIVE_BINDINGS));
+INSTANTIATE_TEST_CASE_P(JavaScriptBindings,
+                        MessagingApiTest,
+                        ::testing::Values(JAVASCRIPT_BINDINGS));
 
 }  // namespace
 
