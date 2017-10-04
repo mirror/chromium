@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b98e982a_d33c4efd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/main_thread_task_queue.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T07:48:10Z",
+      "side": 1,
+      "message": "ultra-nit: v8_tq for consistency.",
+      "range": {
+        "startLine": 46,
+        "startChar": 14,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "fe19fab4c7259c5090873d14a94f86c2873434da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba88930_cba55930",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T07:48:10Z",
+      "side": 1,
+      "message": "I think that at this point we don\u0027t want to pause/stop/defer tasks coming from v8 (if v8 decides to schedule a memory-critical garbage collection we don\u0027t have a knowledge of this and we don\u0027t want to get in the way). Let\u0027s do not use any Set* here and apply smarter scheduling when we have proper v8/scheduler integration.\n\nI also suggest that we add some test coverage for this: see renderer_scheduler_impl_unittest, in particular PostTestTasks function and tests like TestRendererBackgroundedTimerSuspension.",
+      "range": {
+        "startLine": 126,
+        "startChar": 37,
+        "endLine": 126,
+        "endChar": 51
+      },
+      "revId": "fe19fab4c7259c5090873d14a94f86c2873434da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62a98ef_413a36a2",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1806,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T07:48:10Z",
+      "side": 1,
+      "message": "nit: please add \"TODO(altimin): automatically enter top-level for all task queues associated with renderer scheduler which do not have a corresponding frame\".",
+      "range": {
+        "startLine": 1806,
+        "startChar": 23,
+        "endLine": 1806,
+        "endChar": 38
+      },
+      "revId": "fe19fab4c7259c5090873d14a94f86c2873434da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
