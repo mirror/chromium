@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad8630ea_775b4f1c",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1174,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-04T01:01:38Z",
+      "side": 1,
+      "message": "thanks. turns out i need to update these too...",
+      "revId": "761b97e91a537e2c874bbccaba81b96b40cd8073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
