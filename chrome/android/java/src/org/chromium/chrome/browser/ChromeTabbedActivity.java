@@ -61,6 +61,7 @@ import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChromeTablet;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.phone.StackLayout;
 import org.chromium.chrome.browser.cookies.CookiesFetcher;
+import org.chromium.chrome.browser.crash.PureJavaExceptionHandler;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.document.DocumentUtils;
 import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
@@ -513,6 +514,9 @@ public class ChromeTabbedActivity
             } else {
                 preferenceManager.setPromosSkippedOnFirstStart(true);
             }
+
+            // By this time JavaExceptionReporter should be set up.
+            PureJavaExceptionHandler.uninstallHandler();
 
             super.finishNativeInitialization();
         } finally {
@@ -1373,6 +1377,9 @@ public class ChromeTabbedActivity
     @Override
     public void preInflationStartup() {
         super.preInflationStartup();
+
+        // This should happen first in order to capture crashes that happen later.
+        PureJavaExceptionHandler.installHandler();
 
         // Decide whether to record startup UMA histograms. This is done  early in the main
         // Activity.onCreate() to avoid recording navigation delays when they require user input to
