@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/usb/usb_chooser_controller.h"
+#include "chrome/browser/usb/usb_util.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "content/public/test/web_contents_tester.h"
 #include "device/base/mock_device_client.h"
@@ -154,4 +155,14 @@ TEST_F(UsbChooserControllerTest, AddAndRemoveDeviceWithSameName) {
   device_client_.usb_service()->RemoveDevice(device_a_1);
   EXPECT_EQ(base::ASCIIToUTF16("b"), usb_chooser_controller_->GetOption(0));
   EXPECT_EQ(base::ASCIIToUTF16("a"), usb_chooser_controller_->GetOption(1));
+}
+
+TEST_F(UsbChooserControllerTest, UnknownDeviceName) {
+  uint16_t vendor_id = 123;
+  uint16_t product_id = 456;
+  scoped_refptr<device::MockUsbDevice> device =
+      new device::MockUsbDevice(vendor_id, product_id);
+  device_client_.usb_service()->AddDevice(device);
+  base::string16 device_name = FormatUsbDeviceName(device);
+  EXPECT_EQ(device_name, usb_chooser_controller_->GetOption(0));
 }
