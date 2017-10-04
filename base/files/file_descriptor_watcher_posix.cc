@@ -5,6 +5,7 @@
 #include "base/files/file_descriptor_watcher_posix.h"
 
 #include "base/bind.h"
+#include "base/files/scoped_file.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -59,6 +60,9 @@ class FileDescriptorWatcher::Controller::Watcher
   // MessageLoop::DestructionObserver:
   void WillDestroyCurrentMessageLoop() override;
 
+  // The watched file descriptor.
+  const ScopedFD fd_;
+
   // Used to instruct the MessageLoopForIO to stop watching the file descriptor.
   MessageLoopForIO::FileDescriptorWatcher file_descriptor_watcher_;
 
@@ -73,9 +77,6 @@ class FileDescriptorWatcher::Controller::Watcher
   // Whether this Watcher is notified when |fd_| becomes readable or writable
   // without blocking.
   const MessageLoopForIO::Mode mode_;
-
-  // The watched file descriptor.
-  const int fd_;
 
   // Except for the constructor, every method of this class must run on the same
   // MessageLoopForIO thread.
@@ -92,10 +93,14 @@ FileDescriptorWatcher::Controller::Watcher::Watcher(
     WeakPtr<Controller> controller,
     MessageLoopForIO::Mode mode,
     int fd)
-    : file_descriptor_watcher_(FROM_HERE),
+    :  // Watcher uses a duplicate of |fd| instead of |fd| itself to prevent
+       // operations on a closed file descriptor (when Controller is deleted,
+       // the caller is allowed to close |fd| even if ~Watcher hasn't run on the
+       // MessageLoopForIO thread yet).
+      fd_(dup(fd)),
+      file_descriptor_watcher_(FROM_HERE),
       controller_(controller),
-      mode_(mode),
-      fd_(fd) {
+      mode_(mode) {
   DCHECK(callback_task_runner_);
   thread_checker_.DetachFromThread();
 }
@@ -108,13 +113,9 @@ FileDescriptorWatcher::Controller::Watcher::~Watcher() {
 void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!MessageLoopForIO::current()->WatchFileDescriptor(
-          fd_, false, mode_, &file_descriptor_watcher_, this)) {
-    // TODO(wez): Ideally we would [D]CHECK here, or propagate the failure back
-    // to the caller, but there is no guarantee that they haven't already
-    // closed |fd_| on another thread, so the best we can do is Debug-log.
-    DLOG(ERROR) << "Failed to watch fd=" << fd_;
-  }
+  const bool success = MessageLoopForIO::current()->WatchFileDescriptor(
+      fd_.get(), false, mode_, &file_descriptor_watcher_, this);
+  DCHECK(success) << "Failed to watch fd=" << fd_.get();
 
   if (!registered_as_destruction_observer_) {
     MessageLoopForIO::current()->AddDestructionObserver(this);
@@ -124,7 +125,7 @@ void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
 
 void FileDescriptorWatcher::Controller::Watcher::OnFileCanReadWithoutBlocking(
     int fd) {
-  DCHECK_EQ(fd_, fd);
+  DCHECK_EQ(fd_.get(), fd);
   DCHECK_EQ(MessageLoopForIO::WATCH_READ, mode_);
   DCHECK(thread_checker_.CalledOnValidThread());
 
@@ -135,7 +136,7 @@ void FileDescriptorWatcher::Controller::Watcher::OnFileCanReadWithoutBlocking(
 
 void FileDescriptorWatcher::Controller::Watcher::OnFileCanWriteWithoutBlocking(
     int fd) {
-  DCHECK_EQ(fd_, fd);
+  DCHECK_EQ(fd_.get(), fd);
   DCHECK_EQ(MessageLoopForIO::WATCH_WRITE, mode_);
   DCHECK(thread_checker_.CalledOnValidThread());
 
