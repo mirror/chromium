@@ -60,6 +60,9 @@
 #include "ui/events/base_event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/keyboard/keyboard_test_util.h"
+#include "ui/keyboard/keyboard_ui.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/window_util.h"
@@ -1667,6 +1670,55 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest, IgnoreKeyboardBoundsChange) {
   EXPECT_EQ(keyboard_bounds(), window->bounds());
   ShowKeyboard();
   EXPECT_EQ(keyboard_bounds(), window->bounds());
+}
+
+// When kAshUseNewVKWindowBehavior flag enabled, do not change accessibility
+// keyboard work area in non-sticky mode.
+TEST_F(WorkspaceLayoutManagerKeyboardTest,
+       IgnoreWorkAreaChangeinNonStickyMode) {
+  keyboard::SetAccessibilityKeyboardEnabled(true);
+  InitKeyboardBounds();
+  Shell::Get()->CreateKeyboard();
+  keyboard::KeyboardController* kb_controller =
+      keyboard::KeyboardController::GetInstance();
+
+  gfx::Rect work_area(
+      display::Screen::GetScreen()->GetPrimaryDisplay().work_area());
+
+  gfx::Rect orig_window_bounds(0, 100, work_area.width(),
+                               work_area.height() - 100);
+  std::unique_ptr<aura::Window> window(
+      CreateToplevelTestWindow(orig_window_bounds));
+
+  wm::ActivateWindow(window.get());
+  EXPECT_EQ(orig_window_bounds, window->bounds());
+
+  // Open keyboard in non-sticky mode.
+  kb_controller->ShowKeyboard(false);
+  kb_controller->ui()->GetContentsWindow()->SetBounds(
+      keyboard::KeyboardBoundsFromRootBounds(
+          Shell::GetPrimaryRootWindow()->bounds(), 100));
+
+  // Window should not be shifted up.
+  EXPECT_EQ(orig_window_bounds, window->bounds());
+
+  kb_controller->HideKeyboard(
+      keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
+  EXPECT_EQ(orig_window_bounds, window->bounds());
+
+  // Open keyboard in sticky mode.
+  kb_controller->ShowKeyboard(true);
+
+  int shift =
+      work_area.height() - kb_controller->GetContainerWindow()->bounds().y();
+  gfx::Rect changed_window_bounds(orig_window_bounds);
+  changed_window_bounds.Offset(0, -shift);
+  // Window should be shifted up.
+  EXPECT_EQ(changed_window_bounds, window->bounds());
+
+  kb_controller->HideKeyboard(
+      keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
+  EXPECT_EQ(orig_window_bounds, window->bounds());
 }
 
 // Test that backdrop works in split view mode.
