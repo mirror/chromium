@@ -183,7 +183,8 @@ public final class CronetUrlRequest extends UrlRequestBase {
         if (mInitialMethod == null) {
             mInitialMethod = "POST";
         }
-        mUploadDataStream = new CronetUploadDataStream(uploadDataProvider, executor);
+        mUploadDataStream =
+                new CronetUploadDataStream(uploadDataProvider, executor, CronetUrlRequest.this);
     }
 
     @Override
