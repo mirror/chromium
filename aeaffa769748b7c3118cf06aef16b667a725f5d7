@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00a77516_d9ba0efe",
+        "filename": "mojo/public/tools/bindings/mojom.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-04T16:37:49Z",
+      "side": 1,
+      "message": "(No need to block landing this patch.)\nA naive question: why the following doesn\u0027t work?\ntarget_os \u003d\u003d \"win\" || target_os \u003d\u003d \"linux\" || target_os \u003d\u003d \"mac\"",
+      "revId": "aeaffa769748b7c3118cf06aef16b667a725f5d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
