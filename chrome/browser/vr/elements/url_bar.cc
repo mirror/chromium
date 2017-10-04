@@ -38,20 +38,22 @@ void UrlBar::OnMove(const gfx::PointF& position) {
 }
 
 void UrlBar::OnButtonDown(const gfx::PointF& position) {
-  if (texture_->HitsBackButton(position))
+  if (texture_->HitsBackButton(position)) {
     down_ = true;
-  else if (texture_->HitsSecurityRegion(position))
+  } else if (texture_->HitsSecurityRegion(position)) {
     security_region_down_ = true;
+  }
   OnStateUpdated(position);
 }
 
 void UrlBar::OnButtonUp(const gfx::PointF& position) {
   down_ = false;
   OnStateUpdated(position);
-  if (can_go_back_ && texture_->HitsBackButton(position))
+  if (can_go_back_ && texture_->HitsBackButton(position)) {
     back_button_callback_.Run();
-  else if (security_region_down_ && texture_->HitsSecurityRegion(position))
+  } else if (security_region_down_ && texture_->HitsSecurityRegion(position)) {
     security_icon_callback_.Run();
+  }
   security_region_down_ = false;
 }
 

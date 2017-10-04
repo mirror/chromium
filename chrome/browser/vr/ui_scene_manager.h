@@ -59,9 +59,11 @@ struct UiInitialState;
 //       kExclusiveScreenToastTransientParent
 //         kExclusiveScreenToast
 //       kCloseButton
+//       kVoiceSearchButton
 //       kUrlBar
 //         kLoadingIndicator
 //         kExitButton
+//         kUnderDevelopmentNotice
 //     kFullscreenToast
 //     kScreenDimmer
 //     k2dBrowsingViewportAwareRoot
@@ -146,6 +148,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateVoiceSearchButton();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -158,6 +161,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
+  void OnVoiceSearchButtonClicked();
   ColorScheme::Mode mode() const;
 
   TransientElement* AddTransientParent(UiElementName name,
@@ -188,6 +192,7 @@ class UiSceneManager : public UiInterface, public BrowserUiInterface {
   Rect* ceiling_ = nullptr;
   Grid* floor_ = nullptr;
   UiElement* close_button_ = nullptr;
+  UiElement* voice_search_button_ = nullptr;
   UrlBar* url_bar_ = nullptr;
   TransientElement* webvr_url_toast_transient_parent_ = nullptr;
   WebVrUrlToast* webvr_url_toast_ = nullptr;

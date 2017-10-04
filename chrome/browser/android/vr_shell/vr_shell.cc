@@ -67,6 +67,16 @@
 #include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
 
+#include "chrome/browser/browser_process.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/browser/profiles/profile_manager.h"
+#include "components/prefs/pref_service.h"
+#include "content/public/browser/speech_recognition_session_preamble.h"
+
+#include "components/search_engines/template_url_service.h"
+#include "components/search_engines/util.h"
+#include "chrome/browser/search_engines/template_url_service_factory.h"
+
 using base::android::JavaParamRef;
 
 namespace vr_shell {
@@ -711,6 +721,36 @@ void VrShell::OnContentScreenBoundsChanged(const gfx::SizeF& bounds) {
   Java_VrShellImpl_setContentCssSize(env, j_vr_shell_, window_size.width(),
                                      window_size.height(), dpr);
 }
+
+void VrShell::OnVoiceSearchStart() {
+  Profile* profile = ProfileManager::GetActiveUserProfile();
+  std::string profile_locale;
+//  profile_locale = profile->GetPrefs()->GetString(
+//      prefs::kApplicationLocale);
+//  if (profile_locale.empty())
+    profile_locale = g_browser_process->GetApplicationLocale();
+  speech_recognizer_.reset(new vr::SpeechRecognizer(
+      weak_ptr_factory_.GetWeakPtr(),
+      profile->GetRequestContext(),
+      profile_locale));
+  voice_input_started_ = !voice_input_started_;
+  if (voice_input_started_) {
+    LOG(ERROR) << "===start voice search===";
+    speech_recognizer_->Start(nullptr);
+  } else {
+    LOG(ERROR) << "===stop voice search===";
+    speech_recognizer_->Stop();
+  }
+}
+
+void VrShell::OnSpeechResult(const base::string16& query, bool is_final) {
+  TemplateURLService* template_url_service =
+      TemplateURLServiceFactory::GetForProfile(ProfileManager::GetActiveUserProfile());
+  GURL url(GetDefaultSearchURLForSearchTerms(template_url_service, query));
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_loadUrl(env, j_vr_shell_,
+      base::android::ConvertUTF8ToJavaString(env, url.spec()));
+};
 
 void VrShell::PollMediaAccessFlag() {
   poll_capturing_media_task_.Cancel();

@@ -101,6 +101,8 @@ static_library("vr_common") {
     "gltf_parser.cc",
     "gltf_parser.h",
     "model/model.h",
+    "speech_recognizer.h",
+    "speech_recognizer.cc",
     "target_property.h",
     "toolbar_helper.cc",
     "toolbar_helper.h",

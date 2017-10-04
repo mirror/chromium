@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
 #include "chrome/browser/vr/exit_vr_prompt_choice.h"
+#include "chrome/browser/vr/speech_recognizer.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "device/geolocation/public/interfaces/geolocation_config.mojom.h"
@@ -65,6 +66,7 @@ class VrMetricsHelper;
 // must only be used on the UI thread.
 class VrShell : device::GvrGamepadDataProvider,
                 device::CardboardGamepadDataProvider,
+                public vr::SpeechRecognizerDelegate,
                 public ChromeToolbarModelDelegate {
  public:
   VrShell(JNIEnv* env,
@@ -181,6 +183,7 @@ class VrShell : device::GvrGamepadDataProvider,
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice);
   void OnContentScreenBoundsChanged(const gfx::SizeF& bounds);
+  void OnVoiceSearchStart();
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
@@ -202,6 +205,12 @@ class VrShell : device::GvrGamepadDataProvider,
   content::WebContents* GetActiveWebContents() const override;
   bool ShouldDisplayURL() const override;
 
+  // Overridden from vr::SpeechRecognizerDelegate:
+  void OnSpeechResult(const base::string16& query, bool is_final) override;
+  void OnSpeechSoundLevelChanged(int16_t level) override {};
+  void OnSpeechRecognitionStateChanged(int new_state) override {};
+  void GetSpeechAuthParameters(std::string* auth_scope,
+                               std::string* auth_token) override {};
  private:
   ~VrShell() override;
   void PostToGlThread(const base::Location& from_here,
@@ -236,6 +245,7 @@ class VrShell : device::GvrGamepadDataProvider,
   std::unique_ptr<vr::WebContentsEventForwarder> web_contents_event_forwarder_;
   std::unique_ptr<AndroidUiGestureTarget> android_ui_gesture_target_;
   std::unique_ptr<VrMetricsHelper> metrics_helper_;
+  std::unique_ptr<vr::SpeechRecognizer> speech_recognizer_;
 
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner_;
   std::unique_ptr<VrGLThread> gl_thread_;
@@ -259,6 +269,7 @@ class VrShell : device::GvrGamepadDataProvider,
   bool gvr_gamepad_source_active_ = false;
   bool cardboard_gamepad_source_active_ = false;
   bool pending_cardboard_trigger_ = false;
+  bool voice_input_started_ = false;
 
   // Registered fetchers, must remain alive for UpdateGamepadData calls.
   // That's ok since the fetcher is only destroyed from VrShell's destructor.
