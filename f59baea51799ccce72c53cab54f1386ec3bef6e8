@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d5154ce9_f19d535a",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T04:33:29Z",
+      "side": 1,
+      "message": "Huh... I thought we made most of the time stuff constexpr. Oh well.",
+      "parentUuid": "e4de71ea_4a916731",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7994dbc1_adefd211",
         "filename": "chrome/renderer/chrome_content_renderer_client.cc",
         "patchSetId": 3
@@ -224,6 +242,24 @@
       "side": 1,
       "message": "Yeah, what Kinuko said.",
       "parentUuid": "793ee771_bb1f1a74",
+      "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af09c3f_8b53d3e6",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-04T04:33:29Z",
+      "side": 1,
+      "message": "We can still remove the null check I think.",
+      "parentUuid": "204c6dc7_33a6ac11",
       "revId": "f59baea51799ccce72c53cab54f1386ec3bef6e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
