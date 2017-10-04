@@ -631,13 +631,11 @@ TEST_F(CookieManagerImplTest, DeleteByExcludingDomains) {
 
   filter.excluding_domains = std::vector<std::string>();
   filter.excluding_domains->push_back("foo_host2");
-  EXPECT_EQ(1u, service_wrapper()->DeleteCookies(filter));
+  EXPECT_EQ(2u, service_wrapper()->DeleteCookies(filter));
   std::vector<net::CanonicalCookie> cookies =
       service_wrapper()->GetAllCookies();
-  ASSERT_EQ(2u, cookies.size());
-  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
-  EXPECT_EQ("A1", cookies[0].Name());
-  EXPECT_EQ("A3", cookies[1].Name());
+  ASSERT_EQ(1u, cookies.size());
+  EXPECT_EQ("A2", cookies[0].Name());
 }
 
 TEST_F(CookieManagerImplTest, DeleteByIncludingDomains) {
@@ -669,13 +667,11 @@ TEST_F(CookieManagerImplTest, DeleteByIncludingDomains) {
   filter.including_domains = std::vector<std::string>();
   filter.including_domains->push_back("foo_host1");
   filter.including_domains->push_back("foo_host3");
-  EXPECT_EQ(1u, service_wrapper()->DeleteCookies(filter));
+  EXPECT_EQ(2u, service_wrapper()->DeleteCookies(filter));
   std::vector<net::CanonicalCookie> cookies =
       service_wrapper()->GetAllCookies();
-  ASSERT_EQ(2u, cookies.size());
-  std::sort(cookies.begin(), cookies.end(), &CompareCanonicalCookies);
-  EXPECT_EQ("A1", cookies[0].Name());
-  EXPECT_EQ("A3", cookies[1].Name());
+  ASSERT_EQ(1u, cookies.size());
+  EXPECT_EQ("A2", cookies[0].Name());
 }
 
 TEST_F(CookieManagerImplTest, DeleteBySessionStatus) {
