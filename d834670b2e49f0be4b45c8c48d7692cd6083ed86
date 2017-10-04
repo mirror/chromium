@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e0251c3_edd96f4f",
+        "filename": "extensions/renderer/bindings/api_request_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T01:14:38Z",
+      "side": 1,
+      "message": "Updated the comment.  How expensive are handle/context scopes?",
+      "parentUuid": "8d49dba8_b2399d3e",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72c2e230_0114fda8",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "407bc2bd_6902cc51",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T01:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72c2e230_0114fda8",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377418b2_846d731b",
         "filename": "extensions/renderer/one_time_message_handler_unittest.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1971adcb_786574fd",
+        "filename": "extensions/renderer/one_time_message_handler_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-04T01:14:38Z",
+      "side": 1,
+      "message": "Whoops!  Done.",
+      "parentUuid": "377418b2_846d731b",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
