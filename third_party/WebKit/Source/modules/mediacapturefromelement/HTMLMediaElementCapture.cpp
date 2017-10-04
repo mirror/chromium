@@ -71,6 +71,10 @@ void MediaElementEventListener::handleEvent(ExecutionContext* context,
   if (event->type() != EventTypeNames::loadedmetadata)
     return;
 
+  // If |media_element_| is a MediaStream, we have already cloned it.
+  if (media_element_->GetLoadType() == WebMediaPlayer::kLoadTypeMediaStream)
+    return;
+
   WebMediaStream web_stream;
   web_stream.Initialize(WebVector<WebMediaStreamTrack>(),
                         WebVector<WebMediaStreamTrack>());
