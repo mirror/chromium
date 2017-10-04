@@ -128,6 +128,27 @@ void SimpleFileTracker::Close(const SimpleSynchronousEntry* owner,
   // close --- the FD is still alive for it.
 }
 
+void SimpleFileTracker::Doom(const SimpleSynchronousEntry* owner,
+                             EntryFileKey* key) {
+  // ### TODO: deal with wrap around.
+  base::AutoLock hold_lock(lock_);
+  uint32_t max_doom_gen = 0;
+  auto iter = tracked_files_.find(key->entry_hash);
+  DCHECK(iter != tracked_files_.end());
+  for (const TrackedFiles& cand : iter->second)
+    max_doom_gen = std::max(max_doom_gen, cand.key.doom_generation);
+  // if (max_doom_gen == std::limits<uint32_t>::max ....
+
+  // Update external key.
+  key->doom_generation = max_doom_gen + 1;
+
+  // Update our own.
+  for (TrackedFiles& cand : iter->second) {
+    if (cand.owner == owner)
+      cand.key.doom_generation = max_doom_gen + 1;
+  }
+}
+
 bool SimpleFileTracker::IsEmptyForTesting() {
   base::AutoLock hold_lock(lock_);
   return tracked_files_.empty();

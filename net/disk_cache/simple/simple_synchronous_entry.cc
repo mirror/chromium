@@ -293,10 +293,52 @@ void SimpleSynchronousEntry::CreateEntry(
 }
 
 // static
-int SimpleSynchronousEntry::DoomEntry(const FilePath& path,
-                                      uint64_t entry_hash) {
+int SimpleSynchronousEntry::DeleteEntryFiles(const FilePath& path,
+                                             uint64_t entry_hash) {
   const bool deleted_well = DeleteFilesForEntryHash(path, entry_hash);
   return deleted_well ? net::OK : net::ERR_FAILED;
+}
+
+int SimpleSynchronousEntry::Doom() {
+  if (doomed_) {
+    // Already doomed.
+    DCHECK_NE(0u, entry_file_key_.doom_generation);
+    return true;
+  }
+  DCHECK_EQ(0u, entry_file_key_.doom_generation);
+
+  if (have_open_files_) {
+    bool ok = true;
+    SimpleFileTracker::EntryFileKey orig_key = entry_file_key_;
+    file_tracker_->Doom(this, &entry_file_key_);
+
+    for (int i = 0; i < kSimpleEntryNormalFileCount; ++i) {
+      if (!empty_file_omitted_[i]) {
+        File::Error out_error;
+        ok = base::ReplaceFile(
+                 path_.AppendASCII(
+                     GetFilenameFromEntryFileKeyAndFileIndex(orig_key, i)),
+                 path_.AppendASCII(GetFilenameFromEntryFileKeyAndFileIndex(
+                     entry_file_key_, i)),
+                 &out_error) &&
+             ok;
+      }
+    }
+
+    if (sparse_file_open()) {
+      File::Error out_error;
+      ok = base::ReplaceFile(
+               path_.AppendASCII(GetSparseFilenameFromEntryFileKey(orig_key)),
+               path_.AppendASCII(
+                   GetSparseFilenameFromEntryFileKey(entry_file_key_)),
+               &out_error) &&
+           ok;
+    }
+
+    return ok ? net::OK : net::ERR_FAILED;
+  } else {
+    return DeleteEntryFiles(path_, entry_file_key_.entry_hash);
+  }
 }
 
 // static
@@ -891,6 +933,7 @@ SimpleSynchronousEntry::SimpleSynchronousEntry(net::CacheType cache_type,
       key_(key),
       have_open_files_(false),
       initialized_(false),
+      doomed_(false),
       file_tracker_(file_tracker),
       sparse_file_open_(false) {
   for (int i = 0; i < kSimpleEntryNormalFileCount; ++i)
@@ -1471,18 +1514,14 @@ int SimpleSynchronousEntry::GetEOFRecordData(base::File* file,
   return net::OK;
 }
 
-void SimpleSynchronousEntry::Doom() const {
-  DCHECK_EQ(0u, entry_file_key_.doom_generation);
-  DeleteFilesForEntryHash(path_, entry_file_key_.entry_hash);
-}
-
 // static
 bool SimpleSynchronousEntry::DeleteFileForEntryHash(const FilePath& path,
                                                     const uint64_t entry_hash,
                                                     const int file_index) {
   FilePath to_delete = path.AppendASCII(GetFilenameFromEntryFileKeyAndFileIndex(
       SimpleFileTracker::EntryFileKey(entry_hash), file_index));
-  return simple_util::SimpleCacheDeleteFile(to_delete);
+  return base::DeleteFile(to_delete, false);
+  // return simple_util::SimpleCacheDeleteFile(to_delete);
 }
 
 // static

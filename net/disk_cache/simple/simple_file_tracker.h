@@ -112,6 +112,13 @@ class NET_EXPORT_PRIVATE SimpleFileTracker {
   // a new backing file can be established by calling Register() again.
   void Close(const SimpleSynchronousEntry* owner, SubFile file);
 
+  // Updates key->doom_generation to one not in use for the hash; it's the
+  // caller's responsibility to update file names accordingly. The assumption is
+  // also that the external mechanism (active_entries + entries_pending_doom_)
+  // protects this from racing, in that the caller should rename the files
+  // before relinquishing being the active owner of the key.
+  void Doom(const SimpleSynchronousEntry* owner, EntryFileKey* key);
+
   // Returns true if there is no in-memory state around, e.g. everything got
   // cleaned up. This is a test-only method since this object is expected to be
   // shared between multiple threads, in which case its return value may be
