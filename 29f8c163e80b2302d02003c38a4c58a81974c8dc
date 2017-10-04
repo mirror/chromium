@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0575c581_ab9b43a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T20:24:12Z",
+      "side": 1,
+      "message": "Agreed, added check.",
+      "parentUuid": "70fd7364_99059e55",
+      "range": {
+        "startLine": 38,
+        "startChar": 15,
+        "endLine": 38,
+        "endChar": 49
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d7eb723_8f028d3c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "73d46b1d_67031b03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d7eb723_8f028d3c",
+      "range": {
+        "startLine": 28,
+        "startChar": 12,
+        "endLine": 28,
+        "endChar": 36
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f584eb1a_e4625861",
         "filename": "chrome/browser/android/crash/OWNERS",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5b0bac1_543fa513",
+        "filename": "chrome/browser/android/crash/OWNERS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T20:24:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f584eb1a_e4625861",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 4
+      },
+      "revId": "29f8c163e80b2302d02003c38a4c58a81974c8dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
