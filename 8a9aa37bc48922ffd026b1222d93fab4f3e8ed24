@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "24f5f0e3_1722932e",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T14:35:41Z",
+      "side": 1,
+      "message": "I thought we were always going to use GpuMain in content? The compositor runs in the browser process, unless --enable-viz is passed in, so the GPU compositor thread is going to be idle. I might just not understand the exact plan though.",
+      "parentUuid": "c311fe09_13a38654",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3285938d_e73f8d77",
         "filename": "services/ui/gpu/gpu_main.cc",
         "patchSetId": 7
