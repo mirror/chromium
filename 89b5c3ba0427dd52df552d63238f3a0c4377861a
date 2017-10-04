@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe6158e_8c0ac797",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-04T15:06:34Z",
+      "side": 0,
+      "message": "You went too far in this CL: mojom\u0027s setOptions() is still used to\nsend the PhotoSettings that the user passes on takePhoto() [1], so\nthis call and the one in l.546 should stay (and also, why would you\nkeep filling |settings| in this method if it\u0027s not going to be sent??).\n\nWhat we need is simply removing the .idl method (and for that you \nneed to send the Intent to Remove to the blink-dev like guidou@ \nsays) and adjust the LayoutTests. \n\n\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp?q\u003dimagecapture.cpp\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d288",
+      "range": {
+        "startLine": 250,
+        "startChar": 12,
+        "endLine": 250,
+        "endChar": 22
+      },
+      "revId": "89b5c3ba0427dd52df552d63238f3a0c4377861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
