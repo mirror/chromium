@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df277044_78db6c5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "let\u0027s do this in initDeferredStartupForActivity where we add another task.  This could result in spinning up another process to do the downloading, so deferred startup is after the first page has loaded and will ensure we don\u0027t slow down the first page interaction.",
+      "range": {
+        "startLine": 518,
+        "startChar": 12,
+        "endLine": 518,
+        "endChar": 38
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca5c9113_1c1f6451",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "Actually, let\u0027s just inline these in showSurveyInfoBar.  No need to pass these through the next function.",
+      "range": {
+        "startLine": 69,
+        "startChar": 59,
+        "endLine": 69,
+        "endChar": 75
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45920949_592db4ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "should we rate limit the number of times we ask whether a survey is available?  Should we do it at most once a day?  I can imagine on low end phones we could ask this a lot.  Or is it cached on the device and therefore cheap to call frequently?",
+      "range": {
+        "startLine": 75,
+        "startChar": 20,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529ad2ba_8004440d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 27
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "in this case, should we register a tab model observer and wait for another tab to be loaded?  If we don\u0027t do this, then we wouldn\u0027t show the infobar until the next cold start?",
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905015f2_d0d61e44",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 27
+      },
+      "lineNbr": 2672,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "I would call this just LINK.  LINK1 implies multiple to me :-)",
+      "range": {
+        "startLine": 2672,
+        "startChar": 39,
+        "endLine": 2672,
+        "endChar": 50
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ec5dd0_0c25baee",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-04T19:08:23Z",
+      "side": 1,
+      "message": "at this point, I don\u0027t think you can guarantee the delegate is the right type.  I think you want do to:\n\nif (delegate-\u003eGetIdentifier() !\u003d GetIdentifier())\n  return false;\nSurveyInfoBarDelegate* survey_delegate \u003d\n    static_cast\u003cSurveyInfoBarDelegate*\u003e(delegate);\nreturn site_id_ \u003d\u003d survey_delegate-\u003eGetSiteId();",
+      "range": {
+        "startLine": 39,
+        "startChar": 20,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "fc86b6cd45bed922ea719bb370d8c4a47c3749c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
