@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20c424e2_4f0be17f",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e18b337e_d4f899da",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f74d30cc_26645b31",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T15:17:41Z",
       "side": 1,
       "message": "Interface does not mention a possibility of having a null callback.\nOverload the constructor instead (with/without callback)? Update documentation, explain what is created by default?",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e14bb2_5880067b",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Yeah, I missed to document this. I updated the documentation in the header.\n\nThe interface sure is better with overloaded ctor, but creates redundant code. Anyway, prioritising the interface and changed it. An option, as a middle path, could of course be to have a default value for that parameter.",
+      "parentUuid": "f74d30cc_26645b31",
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "371def5d_a5b9f742",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bb911b_d3a8d715",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcb3f6e2_d432852a",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -67,6 +121,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b92bd87_5c0c14ca",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcb3f6e2_d432852a",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "128e960c_056a387b",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Rephrased this paragraph.",
+      "parentUuid": "2d527506_03aedabc",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee1e6cfd_e6247ed4",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -101,6 +191,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c25752_7a93ed31",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "ee1e6cfd_e6247ed4",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "36197d05_0639fbf3",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cb57dd1_56eff827",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95393266_9e656892",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-02T15:17:41Z",
       "side": 1,
       "message": "Parameters require comments: |dead_callback| is unclear, as well as |check_interval| vs timeout.\nOn which thread |dead_callback| and |create_power_observer_callback| are called?",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f5102f_d0d754a4",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "They are be explained in the class comment above. Although not mentioned by explicit name, I think the mapping should be clear. It will be quite a bit of repetition to describe here as well, but I can do that if you think it makes it clearer.\n\nI added reference to the class comment and added description of |create_power_observer_callback| here though; since it\u0027s not part of the class\u0027 core operation.",
+      "parentUuid": "95393266_9e656892",
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5cd17764_cbdcfa74",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Added comment above that checking can be restarted after detection. Should be clear enough?",
+      "parentUuid": "caa1803b_7f7c4143",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b7e2bdf_5eb68c33",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "fa98fa61_9c3748c7",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Added DCHECKs for this (and comment). They should be larger than 0 and timeout should be larger than the interval.",
+      "parentUuid": "1b7e2bdf_5eb68c33",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "238649af_fae7e8f3",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -183,6 +363,24 @@
       "writtenOn": "2017-10-02T15:17:41Z",
       "side": 1,
       "message": "These two could be bit fields of \"options\" integer.",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1270ab_0edce8c3",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "I don\u0027t see the benefit, it will be less readable.",
+      "parentUuid": "238649af_fae7e8f3",
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "f4ef943b_662f2323",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "783abd40_1538978f",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dbf9a33_73f83da3",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -220,6 +436,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667b225c_558cc43b",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Oh, this is obsolete actually. No implementation for it even. Removed. (SetLastAliveNotificationTimeToNowOnTaskRunner replaced it.)",
+      "parentUuid": "8dbf9a33_73f83da3",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "7fb897ba_d76ff98b",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Yes, updated comment.",
+      "parentUuid": "3820ec1f_12ae9e43",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c03797_0957cc30",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 11
@@ -254,6 +506,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9adfedb4_70ce5857",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14c03797_0957cc30",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "5e0c9a92_ac51f914",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Updated comment.",
+      "parentUuid": "6ebbb1fa_97bd8987",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96461d55_5bbf3fbb",
         "filename": "media/audio/alive_checker_unittest.cc",
         "patchSetId": 11
@@ -288,6 +576,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee14972_5789d7e7",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Changed to OnDetectedDead, and added testing AliveChecker::DetectedDead(). Thanks for catching that!",
+      "parentUuid": "96461d55_5bbf3fbb",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "c5703a52_89b4fe07",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "109c0a9d_3ffc85f4",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34028d82_b697a7a5",
         "filename": "media/audio/alive_checker_unittest.cc",
         "patchSetId": 11
@@ -322,6 +646,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "123cf678_bbc3b56e",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34028d82_b697a7a5",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "1171d872_35649d5d",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be. Fixed all binds.",
+      "parentUuid": "7edffe07_8953e90e",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9183163a_f8b8950b",
         "filename": "media/audio/audio_input_device.cc",
         "patchSetId": 11
@@ -356,6 +716,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772790b0_a5d89163",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Yes, that sounds good, fixed.",
+      "parentUuid": "9183163a_f8b8950b",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "1b5eb063_c91b82a4",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2386cc57_5f26a9df",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3269604a_7785314e",
         "filename": "media/audio/audio_input_device.cc",
         "patchSetId": 11
@@ -390,6 +786,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63debf0_4f5910aa",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3269604a_7785314e",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "76540432_3d0d331e",
+        "filename": "media/audio/audio_input_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done. The reason, as far as this class is concerned, being that they\u0027re created on that thread. Further internal reason for the AliveChecker belongs to that class\u0027 description.",
+      "parentUuid": "de4c928d_902732e9",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b7388a4_b33203e7",
         "filename": "media/audio/power_observer_helper.cc",
         "patchSetId": 11
@@ -424,6 +856,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e349b0a4_c7743ec9",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b7388a4_b33203e7",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -444,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "3bbe16db_920b197a",
+        "filename": "media/audio/power_observer_helper.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "It\u0027s only for a test mock. Done.",
+      "parentUuid": "ec9b8c7a_a961554a",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6eea76b_97971b12",
         "filename": "media/audio/power_observer_helper_unittest.cc",
         "patchSetId": 11
@@ -461,6 +929,24 @@
     },
     {
       "key": {
+        "uuid": "12ab1952_3fe3e63a",
+        "filename": "media/audio/power_observer_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "In a parallel universe... jokes aside, no, fixed.",
+      "parentUuid": "e6eea76b_97971b12",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "651981b9_408f4713",
         "filename": "media/audio/power_observer_helper_unittest.cc",
         "patchSetId": 11
@@ -475,6 +961,24 @@
       "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ebed4e_d17dee95",
+        "filename": "media/audio/power_observer_helper_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-04T13:05:36Z",
+      "side": 1,
+      "message": "Added these test cases.",
+      "parentUuid": "651981b9_408f4713",
+      "revId": "fbd4e49827239276c13abe08848cc5abd2010685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
