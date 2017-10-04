@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69584d50_272a0d28",
+        "filename": "chrome/browser/android/metrics/launch_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-04T05:42:24Z",
+      "side": 1,
+      "message": "FYI renamed from standalone to isShortcut to minimize confusion from \"standalone\" being one of the display modes. Shortcut in this context is as far as I can tell less overloaded.",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
