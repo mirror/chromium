@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15662f19_31ffa07e",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-04T20:02:41Z",
+      "side": 1,
+      "message": "Not sure this is necessary.",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "117fc200_e64f66b1",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-04T20:02:41Z",
+      "side": 1,
+      "message": "nit: Maybe extract a small function that computes the value.\nAlso, it might be slightly more explicit that you\u0027re merging bits with a | instead of a +.",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a42fe786_0a794b4a",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-04T20:02:41Z",
+      "side": 1,
+      "message": "Do we have any way of validating that the primaries we found make any sense?",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d80e7f0_28763cad",
+        "filename": "ui/display/util/edid_parser.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-10-04T20:02:41Z",
+      "side": 1,
+      "message": "nit: SkColorSpace could be forward decl.",
+      "revId": "e1ed8b8bacc6f52fd1def2c5bc5ee8b011328c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
