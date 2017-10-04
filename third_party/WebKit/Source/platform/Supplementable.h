@@ -26,6 +26,7 @@
 #ifndef Supplementable_h
 #define Supplementable_h
 
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashMap.h"
@@ -87,16 +88,54 @@ namespace blink {
 // the method could easily cause racy condition.
 //
 // Note that reattachThread() does nothing if assertion is not enabled.
-//
 
 template <typename T>
 class Supplementable;
 
 template <typename T>
+class Supplement;
+
+// Utilities to support both cases that typename T inherits from
+// TraceWrapperBase and T does not.
+template <typename T,
+          // Intentionally using std::is_convertible instead of std::is_base_of
+          // because the latter requires complete types as arguments.  However,
+          // T is now being defined as
+          //   class T : public Supplementable<T> { ... };
+          // so T is yet an incomplete type.
+          // std::is_convertible<Derived*, Base*> works even when Derived is an
+          // incomplete type.
+          bool is_trace_wrappable_base =
+              std::is_convertible<T*, TraceWrapperBase*>::value>
+struct SupplementTrait;
+
+template <typename T>
+struct SupplementTrait<T, false> {
+  using MapMemberType = Member<Supplement<T>>;
+  using MapType = HeapHashMap<const char*, MapMemberType, PtrHash<const char>>;
+  static void TraceWrappers(const ScriptWrappableVisitor* visitor,
+                            const MapType& map) {
+    NOTREACHED();
+  }
+};
+
+template <typename T>
+struct SupplementTrait<T, true> {
+  using MapMemberType = TraceWrapperMember<Supplement<T>>;
+  using MapType = HeapHashMap<const char*, MapMemberType, PtrHash<const char>>;
+  static void TraceWrappers(const ScriptWrappableVisitor* visitor,
+                            const MapType& map) {
+    NOTREACHED();
+    for (const auto& supplement : map.Values())
+      visitor->TraceWrappers(supplement);
+  }
+};
+
+template <typename T>
 class Supplement : public GarbageCollectedMixin {
  public:
   // TODO(haraken): Remove the default constructor.
-  // All Supplement objects should be instantiated with m_host.
+  // All Supplement objects should be instantiated with supplementable_.
   Supplement() {}
 
   explicit Supplement(T& supplementable) : supplementable_(&supplementable) {}
@@ -166,7 +205,7 @@ class Supplementable : public virtual GarbageCollectedMixin {
 
  protected:
   using SupplementMap =
-      HeapHashMap<const char*, Member<Supplement<T>>, PtrHash<const char>>;
+      HeapHashMap<const char*, TraceWrapperMember<Supplement<T>>, PtrHash<const char>>;
   SupplementMap supplements_;
 
   Supplementable()
