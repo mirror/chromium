@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/files/scoped_file.h"
 #include "base/memory/shared_memory.h"
 #include "base/process/launch.h"
@@ -18,7 +19,6 @@
 
 namespace base {
 class CommandLine;
-class FilePath;
 }
 
 namespace sandbox {
@@ -57,15 +57,16 @@ CONTENT_EXPORT sandbox::ResultCode StartSandboxedProcess(
 
 #elif defined(OS_MACOSX)
 
-// Initialize the sandbox of the given |sandbox_type|, optionally specifying a
+// Initialize the sandbox of the given |sandbox_type|, computing a
 // directory to allow access to. Note specifying a directory needs to be
 // supported by the sandbox profile associated with the given |sandbox_type|.
+// |post_warmup_hook| is executed before engaging the sandbox.
 //
 // Returns true if the sandbox was initialized succesfully, false if an error
 // occurred.  If process_type isn't one that needs sandboxing, no action is
 // taken and true is always returned.
 CONTENT_EXPORT bool InitializeSandbox(service_manager::SandboxType sandbox_type,
-                                      const base::FilePath& allowed_path);
+                                      base::OnceClosure post_warmup_hook);
 
 #elif defined(OS_LINUX) || defined(OS_NACL_NONSFI)
 
