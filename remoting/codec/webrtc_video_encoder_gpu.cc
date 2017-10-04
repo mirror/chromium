@@ -127,7 +127,8 @@ void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
     auto shm = base::MakeUnique<base::SharedMemory>();
     // TODO(gusss): Do we need to handle mapping failure more gracefully?
     // LOG_ASSERT will simply cause a crash.
-    LOG_ASSERT(shm->CreateAndMapAnonymous(output_buffer_size_));
+    CHECK(shm->CreateAndMapAnonymous(output_buffer_size_));
+    DCHECK(shm->memory());
     output_buffers_.push_back(std::move(shm));
   }
 
@@ -155,6 +156,7 @@ void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
       base::MakeUnique<EncodedFrame>();
   base::SharedMemory* output_buffer =
       output_buffers_[bitstream_buffer_id].get();
+  DCHECK(output_buffer->memory());
   encoded_frame->data.assign(reinterpret_cast<char*>(output_buffer->memory()),
                              payload_size);
   encoded_frame->key_frame = key_frame;
@@ -202,7 +204,8 @@ void WebrtcVideoEncoderGpu::UseOutputBitstreamBufferId(
     int32_t bitstream_buffer_id) {
   DVLOG(3) << __func__ << " id=" << bitstream_buffer_id;
   video_encode_accelerator_->UseOutputBitstreamBuffer(media::BitstreamBuffer(
-      bitstream_buffer_id, output_buffers_[bitstream_buffer_id]->handle(),
+      bitstream_buffer_id,
+      output_buffers_[bitstream_buffer_id]->handle().Duplicate(),
       output_buffer_size_));
 }
 
