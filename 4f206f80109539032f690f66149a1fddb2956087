@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d75173e_1b2b4c6a",
+        "filename": "chromecast/browser/cast_content_browser_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-10-04T19:56:28Z",
+      "side": 1,
+      "message": "nit: GetDeviceCert",
+      "range": {
+        "startLine": 117,
+        "startChar": 46,
+        "endLine": 117,
+        "endChar": 56
+      },
+      "revId": "4f206f80109539032f690f66149a1fddb2956087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648aedc1_1c21c91b",
+        "filename": "chromecast/browser/cast_content_browser_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-10-04T19:56:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 118,
+        "startChar": 44,
+        "endLine": 118,
+        "endChar": 53
+      },
+      "revId": "4f206f80109539032f690f66149a1fddb2956087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
