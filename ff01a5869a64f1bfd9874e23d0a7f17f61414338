@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a76d559d_c7355976",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-10-04T19:30:16Z",
+      "side": 1,
+      "message": "btw, you don\u0027t actually need the PostTask here. MessageAvailable (and thus DispatchMessages) will be called anyway as long as messages remain in the port.",
+      "revId": "ff01a5869a64f1bfd9874e23d0a7f17f61414338",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
