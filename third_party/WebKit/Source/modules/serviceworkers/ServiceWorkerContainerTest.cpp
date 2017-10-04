@@ -379,5 +379,9 @@ TEST_F(ServiceWorkerContainerTest,
   }
 }
 
+TEST(HogeTest, HogeTest2) {
+  EXPECT_TRUE(IsGarbageCollectedMixin<ServiceWorkerContainerClient>::value);
+}
+
 }  // namespace
 }  // namespace blink

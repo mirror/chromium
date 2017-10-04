@@ -54,6 +54,8 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+#include "core/css/FontFaceSetDocument.h" 
+
 namespace blink {
 
 class DocumentTest : public ::testing::Test {
@@ -935,6 +937,15 @@ TEST_F(DocumentTest, ViewportPropagationNoRecalc) {
   int new_element_count = GetDocument().GetStyleEngine().StyleForElementCount();
 
   EXPECT_EQ(1, new_element_count - old_element_count);
+}
+
+TEST(HogeTest, HogeTest) {
+  EXPECT_TRUE(IsGarbageCollectedMixin<SecurityContext>::value);
+  EXPECT_TRUE(IsGarbageCollectedMixin<ExecutionContext>::value);
+  EXPECT_TRUE(IsGarbageCollectedMixin<Supplement<Document>>::value);
+  EXPECT_TRUE(IsGarbageCollectedMixin<Supplementable<Document>>::value);
+  EXPECT_TRUE(IsGarbageCollectedMixin<FontFaceSetDocument>::value);
+  EXPECT_TRUE(IsGarbageCollectedMixin<Document>::value);
 }
 
 }  // namespace blink
