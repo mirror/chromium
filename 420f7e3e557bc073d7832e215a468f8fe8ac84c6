@@ -150,6 +150,24 @@
       "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ddc044a_1149eb6a",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T22:38:00Z",
+      "side": 1,
+      "message": "I guess it is arguable of whether to add it here. For a), we can move the boolean flag into SessionController to provide similar test support. For b), I understand it makes sense to put this side-by-side with RequestShutdown but OTOH, sign-out is a user session concept. \n\nI am slightly inclined to put it in SessionController but don\u0027t feel strong enough to block the CL.",
+      "parentUuid": "51372162_d3cc3f7c",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
