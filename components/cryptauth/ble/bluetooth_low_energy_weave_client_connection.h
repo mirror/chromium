@@ -79,6 +79,7 @@ class BluetoothLowEnergyWeaveClientConnection
     DISCONNECTED,
     WAITING_CONNECTION_LATENCY,
     WAITING_GATT_CONNECTION,
+    WAITING_GATT_SERVICE_DISCOVERY,
     WAITING_CHARACTERISTICS,
     CHARACTERISTICS_FOUND,
     WAITING_NOTIFY_SESSION,
@@ -132,6 +133,8 @@ class BluetoothLowEnergyWeaveClientConnection
                      device::BluetoothDevice* device) override;
   void DeviceRemoved(device::BluetoothAdapter* adapter,
                      device::BluetoothDevice* device) override;
+  void GattServicesDiscovered(device::BluetoothAdapter* adapter,
+                              device::BluetoothDevice* device) override;
   void GattCharacteristicValueChanged(
       device::BluetoothAdapter* adapter,
       device::BluetoothRemoteGattCharacteristic* characteristic,
@@ -183,6 +186,7 @@ class BluetoothLowEnergyWeaveClientConnection
   void CreateGattConnection();
   void OnGattConnectionCreated(
       std::unique_ptr<device::BluetoothGattConnection> gatt_connection);
+  void FindGattCharacteristics();
   void OnSetConnectionLatencyError();
   void OnCreateGattConnectionError(
       device::BluetoothDevice::ConnectErrorCode error_code);
