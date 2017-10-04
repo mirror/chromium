@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7067ff38_5fd7c228",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-04T19:41:47Z",
+      "side": 1,
+      "message": "We don\u0027t have a way to  record this information right now.",
+      "parentUuid": "6eecbc20_6d855009",
+      "revId": "ecb5b37efc1fc353fa805b206bcc304c0b9539f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b4eedc_a2ff3914",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "ecb5b37efc1fc353fa805b206bcc304c0b9539f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c50eb21_42cc20c9",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-04T19:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19b4eedc_a2ff3914",
+      "revId": "ecb5b37efc1fc353fa805b206bcc304c0b9539f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
