@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b10f6bf_ef14a40a",
+        "filename": "mojo/public/tools/bindings/generators/js_templates/validation_macros.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-04T22:41:17Z",
+      "side": 1,
+      "message": "Sorry I may be totally wrong about spaces.\nIt seems to me that it could probably be fixed by changing {% to {%- around here:\nhttps://cs.chromium.org/chromium/src/mojo/public/tools/bindings/generators/js_templates/struct_definition.tmpl?rcl\u003df18dc4824eee4d272ea02011652d4c887f468300\u0026l\u003d61\n(There are multiple \"{%\" there that should be changed.)\n\nCould you please give it a try?\n\nI prefer it that way because we use \"{%- ... %}\" (i.e., minus at the beginning but not the end) fairly consistent in this code.",
+      "revId": "a96c7ee4ff84b4f3389204cc445209320c176256",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
