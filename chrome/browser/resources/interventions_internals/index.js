@@ -10,6 +10,10 @@ cr.define('interventions_internals', () => {
     getPreviewsEnabled();
   }
 
+  /**
+   * Retrieves the statuses of previews (i.e. Offline, LoFi, AMP Redirection),
+   * and posts them on chrome://intervention-internals.
+   */
   function getPreviewsEnabled() {
     pageHandler.getPreviewsEnabled()
         .then((response) => {
@@ -43,6 +47,7 @@ window.setupFn = window.setupFn || function() {
 
 document.addEventListener('DOMContentLoaded', () => {
   let pageHandler = null;
+  let pageImpl = null;
 
   window.setupFn().then(() => {
     if (window.testPageHandler) {
@@ -53,6 +58,35 @@ document.addEventListener('DOMContentLoaded', () => {
           mojom.InterventionsInternalsPageHandler.name,
           mojo.makeRequest(pageHandler).handle);
     }
+
+    /** @constructor */
+    let InterventionsInternalPageImpl = function(request) {
+      this.binding_ =
+          new mojo.Binding(mojom.InterventionsInternalsPage, this, request);
+    };
+
+    InterventionsInternalPageImpl.prototype = {
+      /**
+       * Post a new log message to the web page.
+       * @override
+       * @param {!MessageLog} log The new log message recorded by
+       * PreviewsLogger.
+       */
+      logNewMessage: function(log) {
+        let logsComponent = $('messageLogs');
+        let node = document.createElement('div');
+
+        node.setAttribute('class', 'log-message');
+        node.textContent = log.time + ': [' + log.type + '] ' +
+            log.description + ' [' + log.url + ']';
+        logsComponent.appendChild(node);
+      },
+    };
+
+    let client = new mojom.InterventionsInternalsPagePtr;
+    pageImpl = new InterventionsInternalPageImpl(mojo.makeRequest(client));
+    pageHandler.setClientPage(client);
+
     interventions_internals.init(pageHandler);
   });
 });
