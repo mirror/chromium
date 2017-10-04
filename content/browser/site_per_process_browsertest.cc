@@ -50,7 +50,6 @@
 #include "content/browser/renderer_host/input/synthetic_tap_gesture.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
-#include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/browser/renderer_host/render_widget_host_view_child_frame.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/browser/url_loader_factory_getter.h"
@@ -108,6 +107,7 @@
 
 #if defined(USE_AURA)
 #include "content/browser/renderer_host/overscroll_controller.h"
+#include "content/browser/renderer_host/render_widget_host_view_aura.h"
 #include "content/public/browser/overscroll_configuration.h"
 #include "content/test/mock_overscroll_controller_delegate_aura.h"
 #endif
