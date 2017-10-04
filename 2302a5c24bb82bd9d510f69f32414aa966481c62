@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9b0d1e58_d7c2a6ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-04T21:41:32Z",
+      "side": 1,
+      "message": "I think this is the part I don\u0027t fully get -- sorry if I\u0027m missing something obvious. Instead of doing this complicated change in ownership, why don\u0027t we implement just this queue draining behavior? For instance we could have an DrainAndUnregister() call which makes TQM retain a an extra reference to the task queue while it\u0027s non-empty and unregister it once everything is drained. There might still be outside references keeping the task queue alive after this point but that\u0027s fine; the unregistration has already happened.",
+      "parentUuid": "e8fe9630_a64db410",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ec370f_0b609647",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
