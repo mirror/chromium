@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 
 #include <unordered_map>
+#include <vector>
 
 #include "components/previews/core/previews_experiments.h"
 
@@ -27,6 +28,22 @@ InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
     : binding_(this, std::move(request)) {}
 
 InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
+
+void InterventionsInternalsPageHandler::SetClientPage(
+    mojom::InterventionsInternalsPagePtr page) {
+  page_ = std::move(page);
+}
+
+void InterventionsInternalsPageHandler::OnNewMessageLogAdded(
+    previews::PreviewsLogger::MessageLog message) {
+  mojom::MessageLogPtr mojo_message_ptr(mojom::MessageLog::New());
+
+  mojo_message_ptr->type = message.event_type;
+  mojo_message_ptr->description = message.event_description;
+  mojo_message_ptr->url = message.url.spec();
+
+  page_->LogNewMessage(std::move(mojo_message_ptr));
+}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {

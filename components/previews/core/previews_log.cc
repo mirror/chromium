@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#include "components/previews/core/previews_log_observer.h"
 
 namespace previews {
 
@@ -42,6 +43,15 @@ PreviewsLogger::PreviewsLogger() {}
 
 PreviewsLogger::~PreviewsLogger() {}
 
+void PreviewsLogger::AddObserver(MessageLogObserver* observer_ptr) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  observer_ptrs.push_back(observer_ptr);
+}
+
+const std::vector<MessageLogObserver*>& PreviewsLogger::observers() const {
+  return observer_ptrs;
+}
+
 std::vector<PreviewsLogger::MessageLog> PreviewsLogger::log_messages() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   return std::vector<MessageLog>(log_messages_.begin(), log_messages_.end());
@@ -53,10 +63,17 @@ void PreviewsLogger::LogMessage(const std::string& event_type,
                                 base::Time time) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK_GE(kMaximumMessageLogs, log_messages_.size());
+  MessageLog message(event_type, event_description, url, time);
+
+  // Notifying observers about the new LogMessage.
+  for (auto* obs_ptr : observer_ptrs) {
+    obs_ptr->OnNewMessageLogAdded(message);
+  }
+
   if (log_messages_.size() >= kMaximumMessageLogs) {
     log_messages_.pop_front();
   }
-  log_messages_.emplace_back(event_type, event_description, url, time);
+  log_messages_.push_back(message);
 }
 
 void PreviewsLogger::LogPreviewNavigation(const PreviewNavigation& navigation) {

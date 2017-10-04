@@ -16,6 +16,8 @@
 
 namespace previews {
 
+class MessageLogObserver;
+
 // Records information about previews and interventions events. The class only
 // keeps the recent event logs.
 class PreviewsLogger {
@@ -67,6 +69,13 @@ class PreviewsLogger {
   PreviewsLogger();
   virtual ~PreviewsLogger();
 
+  // Add a observer to the list. These observer will be notify when new a log
+  // message is added to the logger.
+  void AddObserver(MessageLogObserver* observer_ptr);
+
+  // Expose the observers for testing.
+  const std::vector<MessageLogObserver*>& observers() const;
+
   std::vector<MessageLog> log_messages() const;
 
   // Add MessageLog using the given information. Pop out the oldest log if the
@@ -84,6 +93,10 @@ class PreviewsLogger {
   // Collection of recorded log messages.
   std::list<MessageLog> log_messages_;
 
+  // The collection of observers listening to the logger. These observers are
+  // removed by InterventionsInternalsPageHandler.
+  std::vector<MessageLogObserver*> observer_ptrs;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(PreviewsLogger);
@@ -91,4 +104,4 @@ class PreviewsLogger {
 
 }  // namespace previews
 
-#endif  // COMPONENTS_PREVIEWS_CORE_PREVIEWS_LOG_H
+#endif  // COMPONENTS_PREVIEWS_CORE_PREVIEWS_LOG_H_
