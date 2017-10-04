@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f437b5f6_bb02798d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 1,
+      "message": "of",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 31
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b7c08e5_15a2b11a",
         "filename": "components/download/content/internal/download_driver_impl.cc",
         "patchSetId": 1
@@ -18,6 +41,29 @@
         "startChar": 32,
         "endLine": 99,
         "endChar": 35
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a496d42_301ed1f9",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 1,
+      "message": "Should we have entry-\u003escheduling_params.priority \u003c\u003d SchedulingParams::Priority::NORMAL?\nThe same condition should be updated in ShouldBlockDownloadOnNavigation() too.",
+      "range": {
+        "startLine": 824,
+        "startChar": 6,
+        "endLine": 825,
+        "endChar": 74
       },
       "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -42,6 +88,70 @@
         "endLine": 840,
         "endChar": 62
       },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d164e0a8_40461e68",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 1,
+      "message": "Also what happens if the driver entry is already IN_PROGRESS?\nWill it try to do driver_-\u003eResume() again?\nMay be we should add \"else if(!active)\" in line 840?",
+      "parentUuid": "42ac3919_01bb69f5",
+      "range": {
+        "startLine": 840,
+        "startChar": 52,
+        "endLine": 840,
+        "endChar": 62
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12504d8c_874fa75c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 1,
+      "message": "It seems like we are incrementing attempt_count every time we resume for a download those that have can_resume\u003dfalse.\n\nWe can get paused due to any number of reasons and very frequently too (due to navigations, external downloads etc). Technically we didn\u0027t fail. Should we do something else for those downloads?\n\nMay be have this on OnDownloadFailed() instead?\n\nFor the case where can_resume\u003dtrue, do we ever call driver_-\u003eStart() after a failure? Or maybe driver_-\u003eResume() will take care of it? But in that case we never increment attempt_count?",
+      "range": {
+        "startLine": 841,
+        "startChar": 6,
+        "endLine": 841,
+        "endChar": 11
+      },
+      "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df06503_3fa1e891",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 1,
+      "message": "Should we have if (driver_entry.has_value() \u0026\u0026 driver_entry-\u003ecan_resume) ?\nNot sure though.",
       "revId": "4fb4e643455a39a4d4948533a54888db1bbd39b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68c7df2_aa7c5bbc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-10-04T18:51:15Z",
+      "side": 0,
+      "message": "So was this wrong? When in INTERRUPTED state we are incrementing the attempt_count but issuing a driver_-\u003eResume() call.",
+      "range": {
+        "startLine": 835,
+        "startChar": 51,
+        "endLine": 835,
+        "endChar": 62
+      },
+      "revId": "9d1be13377da9b1939f296324d23bfbf4d8357e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
