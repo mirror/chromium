@@ -542,7 +542,7 @@ void ChromeScreenshotGrabber::OnReadScreenshotFileForPreviewCompleted(
 
   std::unique_ptr<Notification> notification(
       CreateNotification(result, screenshot_path, image));
-  g_browser_process->notification_ui_manager()->Add(*notification,
+  g_browser_process->notification_ui_manager()->Add(*notification,nullptr,
                                                     GetProfile());
 }
 

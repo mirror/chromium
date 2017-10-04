@@ -96,7 +96,7 @@ void MessageCenterDisplayService::Display(
   handler->OnShow(profile_, notification_id);
 
   if (notification.delegate()) {
-    ui_manager->Add(notification, profile_);
+    ui_manager->Add(notification, std::move(metadata), profile_);
     return;
   }
 
@@ -106,10 +106,10 @@ void MessageCenterDisplayService::Display(
       notification.type(), notification.id(), notification.title(),
       notification.message(), notification.icon(), notification.notifier_id(),
       notification.display_source(), notification.origin_url(),
-      notification.tag(), notification.rich_notification_data(),
+      /*notification.tag()*/ "", notification.rich_notification_data(),
       base::WrapRefCounted(
           new PassThroughDelegate(profile_, notification, notification_type)));
-  ui_manager->Add(notification_with_delegate, profile_);
+  ui_manager->Add(notification_with_delegate, std::move(metadata), profile_);
 }
 
 void MessageCenterDisplayService::Close(

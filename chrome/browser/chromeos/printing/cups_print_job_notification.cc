@@ -158,10 +158,10 @@ void CupsPrintJobNotification::UpdateNotification() {
       // If the notification was closed during the printing, prevent showing the
       // following printing progress.
       g_browser_process->notification_ui_manager()->Update(*notification_,
-                                                           profile_);
+                                                           profile_, nullptr);
     } else {
       // If it was not closed, update the notification message directly.
-      g_browser_process->notification_ui_manager()->Add(*notification_,
+      g_browser_process->notification_ui_manager()->Add(*notification_, nullptr,
                                                         profile_);
     }
   } else {
@@ -170,7 +170,7 @@ void CupsPrintJobNotification::UpdateNotification() {
     const ProfileID profile_id = NotificationUIManager::GetProfileID(profile_);
     g_browser_process->notification_ui_manager()->CancelById(notification_id_,
                                                              profile_id);
-    g_browser_process->notification_ui_manager()->Add(*notification_, profile_);
+    g_browser_process->notification_ui_manager()->Add(*notification_, nullptr, profile_);
   }
 
   // |print_job_| will be deleted by CupsPrintJobManager if the job is finished

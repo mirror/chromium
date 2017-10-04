@@ -154,11 +154,7 @@ void SigninErrorNotifier::OnErrorChanged() {
   notification.SetSystemPriority();
 
   // Update or add the notification.
-  if (notification_ui_manager->FindById(
-          notification_id_, NotificationUIManager::GetProfileID(profile_)))
-    notification_ui_manager->Update(notification, profile_);
-  else
-    notification_ui_manager->Add(notification, profile_);
+  notification_ui_manager->Add(notification, nullptr, profile_);
 }
 
 base::string16 SigninErrorNotifier::GetMessageBody() const {

@@ -268,11 +268,12 @@ void PrivetNotificationService::PrivetNotify(int devices_active,
       rich_notification_data, CreateNotificationDelegate(profile));
 
   auto* notification_ui_manager = g_browser_process->notification_ui_manager();
-  bool updated = notification_ui_manager->Update(notification, profile);
+  bool updated =
+      notification_ui_manager->Update(notification, profile, nullptr);
   if (!updated && added &&
       !local_discovery::LocalDiscoveryUIHandler::GetHasVisible()) {
     ReportPrivetUmaEvent(PRIVET_NOTIFICATION_SHOWN);
-    notification_ui_manager->Add(notification, profile);
+    notification_ui_manager->Add(notification, nullptr, profile);
   }
 }
 

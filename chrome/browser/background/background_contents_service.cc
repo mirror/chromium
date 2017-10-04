@@ -183,7 +183,8 @@ void NotificationImageReady(const std::string extension_name,
       base::string16(), GURL("chrome://extension-crash"), id,
       message_center::RichNotificationData(), delegate.get());
 
-  g_browser_process->notification_ui_manager()->Add(notification, profile);
+  g_browser_process->notification_ui_manager()->Add(notification, nullptr,
+                                                    profile);
 }
 
 // Show a popup notification balloon with a crash message for a given app/

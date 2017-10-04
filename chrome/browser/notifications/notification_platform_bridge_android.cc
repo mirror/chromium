@@ -250,8 +250,9 @@ void NotificationPlatformBridgeAndroid::Display(
   // persistent once/if non persistent notifications are ever implemented on
   // Android.
   DCHECK_EQ(notification_type, NotificationCommon::PERSISTENT);
-  GURL scope_url(PersistentNotificationMetadata::From(metadata.get())
-                     ->service_worker_scope);
+  const auto* persistent_data =
+      PersistentNotificationMetadata::From(metadata.get());
+  GURL scope_url(persistent_data->service_worker_scope);
   if (!scope_url.is_valid())
     scope_url = origin_url;
 
@@ -263,7 +264,7 @@ void NotificationPlatformBridgeAndroid::Display(
   ScopedJavaLocalRef<jstring> j_origin =
       ConvertUTF8ToJavaString(env, origin_url.spec());
   ScopedJavaLocalRef<jstring> tag =
-      ConvertUTF8ToJavaString(env, notification.tag());
+      ConvertUTF8ToJavaString(env, persistent_data->tag);
   ScopedJavaLocalRef<jstring> title =
       ConvertUTF16ToJavaString(env, notification.title());
   ScopedJavaLocalRef<jstring> body =

@@ -10,7 +10,6 @@
 #include "chrome/browser/download/download_commands.h"
 #include "chrome/browser/image_decoder.h"
 #include "chrome/browser/notifications/notification.h"
-#include "chrome/browser/notifications/notification_test_util.h"
 #include "content/public/browser/download_item.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/message_center/notification_delegate.h"

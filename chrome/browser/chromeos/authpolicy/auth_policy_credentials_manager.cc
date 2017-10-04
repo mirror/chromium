@@ -339,7 +339,7 @@ void AuthPolicyCredentialsManager::ShowNotification(int message_id) {
   NotificationUIManager* notification_ui_manager =
       g_browser_process->notification_ui_manager();
   // Add the notification.
-  notification_ui_manager->Add(notification, profile_);
+  notification_ui_manager->Add(notification, nullptr, profile_);
   shown_notifications_.insert(message_id);
 }
 

@@ -71,6 +71,7 @@ struct PersistentNotificationMetadata : public NotificationCommon::Metadata {
 
   static const PersistentNotificationMetadata* From(const Metadata* metadata);
 
+  std::string tag;  // Matches content::PlatformNotification::tag
   GURL service_worker_scope;
 };
 

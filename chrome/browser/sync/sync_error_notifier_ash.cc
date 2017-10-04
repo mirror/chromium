@@ -163,6 +163,6 @@ void SyncErrorNotifier::OnErrorChanged() {
       GURL(notification_id_), notification_id_, data,
       new SyncNotificationDelegate(profile_));
 
-  notification_ui_manager->Add(notification, profile_);
+  notification_ui_manager->Add(notification, nullptr, profile_);
   notification_displayed_ = true;
 }

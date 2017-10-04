@@ -369,6 +369,7 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
       new WebNotificationDelegate(NotificationCommon::PERSISTENT, profile,
                                   notification_id, origin));
   auto metadata = std::make_unique<PersistentNotificationMetadata>();
+  metadata->tag = notification_data.tag;
   metadata->service_worker_scope = service_worker_scope;
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(

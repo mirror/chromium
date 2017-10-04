@@ -287,7 +287,10 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   const Notification& default_notification = notifications[0];
   EXPECT_EQ("Some title", base::UTF16ToUTF8(default_notification.title()));
   EXPECT_EQ("", base::UTF16ToUTF8(default_notification.message()));
-  EXPECT_EQ("", default_notification.tag());
+  EXPECT_EQ("", PersistentNotificationMetadata::From(
+                    display_service_tester_->GetMetadataForNotification(
+                        default_notification))
+                    ->tag);
   EXPECT_TRUE(default_notification.image().IsEmpty());
   EXPECT_TRUE(default_notification.icon().IsEmpty());
   EXPECT_TRUE(default_notification.small_image().IsEmpty());
@@ -315,7 +318,11 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   const Notification& all_options_notification = notifications[1];
   EXPECT_EQ("Title", base::UTF16ToUTF8(all_options_notification.title()));
   EXPECT_EQ("Contents", base::UTF16ToUTF8(all_options_notification.message()));
-  EXPECT_EQ("replace-id", all_options_notification.tag());
+  EXPECT_EQ("replace-id",
+            PersistentNotificationMetadata::From(
+                display_service_tester_->GetMetadataForNotification(
+                    all_options_notification))
+                ->tag);
 #if !defined(OS_MACOSX)
   EXPECT_FALSE(all_options_notification.image().IsEmpty());
   EXPECT_EQ(kIconWidth, all_options_notification.image().Width());
@@ -370,8 +377,11 @@ IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,
   // No engagement should be granted for clicking on the settings link.
   EXPECT_DOUBLE_EQ(5.5, GetEngagementScore(origin));
 
+  // Chrome OS shows the notification settings inline.
+#if !defined(OS_CHROMEOS)
   std::string url = web_contents->GetLastCommittedURL().spec();
   ASSERT_EQ("chrome://settings/content/notifications", url);
+#endif
 }
 
 IN_PROC_BROWSER_TEST_F(PlatformNotificationServiceBrowserTest,

@@ -44,6 +44,8 @@ bool StubNotificationUIManager::SilentDismissById(
 }
 
 void StubNotificationUIManager::Add(const Notification& notification,
+std::unique_ptr<NotificationCommon::Metadata> metadata,
+
                                     Profile* profile) {
   if (is_shutdown_started_)
     return;
@@ -60,16 +62,16 @@ void StubNotificationUIManager::Add(const Notification& notification,
   notification.delegate()->Display();
 }
 
-bool StubNotificationUIManager::Update(const Notification& notification,
-                                       Profile* profile) {
+bool StubNotificationUIManager::Update(
+    const Notification& notification,
+    Profile* profile,
+    std::unique_ptr<NotificationCommon::Metadata>* metadata) {
   const ProfileID profile_id = NotificationUIManager::GetProfileID(profile);
-  if (notification.tag().empty())
-    return false;
 
   auto iter = notifications_.begin();
   for (; iter != notifications_.end(); ++iter) {
     const Notification& old_notification = iter->first;
-    if (old_notification.tag() == notification.tag() &&
+    if (old_notification.id() == notification.id() &&
         old_notification.origin_url() == notification.origin_url() &&
         iter->second == profile_id) {
       notifications_.erase(iter);
@@ -108,18 +110,6 @@ bool StubNotificationUIManager::CancelById(const std::string& delegate_id,
   }
 
   return false;
-}
-
-std::set<std::string>
-StubNotificationUIManager::GetAllIdsByProfileAndSourceOrigin(
-    ProfileID profile_id,
-    const GURL& source) {
-  std::set<std::string> delegate_ids;
-  for (const auto& pair : notifications_) {
-    if (pair.second == profile_id && pair.first.origin_url() == source)
-      delegate_ids.insert(pair.first.id());
-  }
-  return delegate_ids;
 }
 
 std::set<std::string> StubNotificationUIManager::GetAllIdsByProfile(

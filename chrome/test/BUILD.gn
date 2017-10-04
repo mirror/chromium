@@ -464,6 +464,7 @@ if (!is_android) {
       "../browser/ui/blocked_content/popup_tracker_browsertest.cc",
       "../browser/ui/blocked_content/tab_under_blocker_browsertest.cc",
       "../browser/ui/browser_command_controller_interactive_browsertest.cc",
+        "../browser/notifications/platform_notification_service_interactive_uitest.cc",
       "../browser/ui/browser_focus_uitest.cc",
       "../browser/ui/cocoa/apps/app_shim_menu_controller_mac_interactive_uitest.mm",
       "../browser/ui/cocoa/apps/quit_with_apps_controller_mac_interactive_uitest.mm",
@@ -757,7 +758,6 @@ if (!is_android) {
         "../browser/notifications/notification_interactive_uitest_mac.mm",
         "../browser/notifications/notification_interactive_uitest_support.cc",
         "../browser/notifications/notification_interactive_uitest_support.h",
-        "../browser/notifications/platform_notification_service_interactive_uitest.cc",
       ]
     }
 

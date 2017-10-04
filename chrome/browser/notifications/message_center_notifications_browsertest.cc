@@ -152,7 +152,7 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, BasicAddCancel) {
   // TODO(mukai): move this to SetUpOnMainThread() after fixing the side-effect
   // of canceling animation which prevents some Displayed() event.
   manager()->CancelAll();
-  manager()->Add(CreateTestNotification("hey"), profile());
+  manager()->Add(CreateTestNotification("hey"), nullptr, profile());
   EXPECT_EQ(1u, message_center()->NotificationCount());
   manager()->CancelById("hey", NotificationUIManager::GetProfileID(profile()));
   EXPECT_EQ(0u, message_center()->NotificationCount());
@@ -160,7 +160,7 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, BasicAddCancel) {
 
 IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, BasicDelegate) {
   TestDelegate* delegate;
-  manager()->Add(CreateTestNotification("hey", &delegate), profile());
+  manager()->Add(CreateTestNotification("hey", &delegate), nullptr, profile());
   // Verify that delegate accumulated correct log of events.
   EXPECT_EQ("Display_", delegate->log());
   manager()->CancelById("hey", NotificationUIManager::GetProfileID(profile()));
@@ -171,7 +171,7 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, BasicDelegate) {
 
 IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, ButtonClickedDelegate) {
   TestDelegate* delegate;
-  manager()->Add(CreateTestNotification("n", &delegate), profile());
+  manager()->Add(CreateTestNotification("n", &delegate), nullptr, profile());
   const std::string notification_id =
       manager()->GetMessageCenterNotificationIdForTest("n", profile());
   message_center()->ClickOnNotificationButton(notification_id, 1);
@@ -183,9 +183,9 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, ButtonClickedDelegate) {
 IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest,
                        UpdateExistingNotification) {
   TestDelegate* delegate;
-  manager()->Add(CreateTestNotification("n", &delegate), profile());
+  manager()->Add(CreateTestNotification("n", &delegate), nullptr, profile());
   TestDelegate* delegate2;
-  manager()->Add(CreateRichTestNotification("n", &delegate2), profile());
+  manager()->Add(CreateRichTestNotification("n", &delegate2), nullptr, profile());
 
   manager()->CancelById("n", NotificationUIManager::GetProfileID(profile()));
   EXPECT_EQ("Display_", delegate->log());
@@ -200,13 +200,13 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, VerifyKeepAlives) {
       KeepAliveOrigin::NOTIFICATION));
 
   TestDelegate* delegate;
-  manager()->Add(CreateTestNotification("a", &delegate), profile());
+  manager()->Add(CreateTestNotification("a", &delegate), nullptr, profile());
   RunLoopUntilIdle();
   EXPECT_TRUE(KeepAliveRegistry::GetInstance()->IsOriginRegistered(
       KeepAliveOrigin::NOTIFICATION));
 
   TestDelegate* delegate2;
-  manager()->Add(CreateRichTestNotification("b", &delegate2), profile());
+  manager()->Add(CreateRichTestNotification("b", &delegate2), nullptr, profile());
   RunLoopUntilIdle();
   EXPECT_TRUE(KeepAliveRegistry::GetInstance()->IsOriginRegistered(
       KeepAliveOrigin::NOTIFICATION));
@@ -234,11 +234,11 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest, QueueWhenCenterVisible) {
   TestDelegate* delegate;
   TestDelegate* delegate2;
 
-  manager()->Add(CreateTestNotification("n", &delegate), profile());
+  manager()->Add(CreateTestNotification("n", &delegate), nullptr, profile());
   const std::string id_n =
       manager()->GetMessageCenterNotificationIdForTest("n", profile());
   message_center()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
-  manager()->Add(CreateTestNotification("n2", &delegate2), profile());
+  manager()->Add(CreateTestNotification("n2", &delegate2), nullptr, profile());
   const std::string id_n2 =
       manager()->GetMessageCenterNotificationIdForTest("n2", profile());
 
@@ -268,14 +268,14 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest,
   // is visible.
   Notification notification = CreateTestNotification("n", &delegate);
   notification.set_type(message_center::NOTIFICATION_TYPE_PROGRESS);
-  manager()->Add(notification, profile());
+  manager()->Add(notification, nullptr, profile());
   const std::string notification_id =
       manager()->GetMessageCenterNotificationIdForTest("n", profile());
   message_center()->ClickOnNotification(notification_id);
   message_center()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
   observer.reset_logs();
   notification.set_progress(50);
-  manager()->Update(notification, profile());
+  manager()->Update(notification, profile(), nullptr);
 
   // Expect that the progress notification update is performed.
   EXPECT_EQ(base::StringPrintf("update-%s", notification_id.c_str()),
@@ -293,14 +293,14 @@ IN_PROC_BROWSER_TEST_F(MessageCenterNotificationsTest,
   // Add a non-progress notification and update it while the message center
   // is visible.
   Notification notification = CreateTestNotification("n", &delegate);
-  manager()->Add(notification, profile());
+  manager()->Add(notification, nullptr, profile());
   const std::string notification_id =
       manager()->GetMessageCenterNotificationIdForTest("n", profile());
   message_center()->ClickOnNotification(notification_id);
   message_center()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
   observer.reset_logs();
   notification.set_title(base::ASCIIToUTF16("title2"));
-  manager()->Update(notification, profile());
+  manager()->Update(notification, profile(), nullptr);
 
   // Expect that the notification update is done.
   EXPECT_NE("", observer.log(notification_id));
@@ -322,14 +322,14 @@ IN_PROC_BROWSER_TEST_F(
   // Add a non-progress notification and change the type to progress while the
   // message center is visible.
   Notification notification = CreateTestNotification("n", &delegate);
-  manager()->Add(notification, profile());
+  manager()->Add(notification, nullptr, profile());
   const std::string notification_id =
       manager()->GetMessageCenterNotificationIdForTest("n", profile());
   message_center()->ClickOnNotification(notification_id);
   message_center()->SetVisibility(message_center::VISIBILITY_MESSAGE_CENTER);
   observer.reset_logs();
   notification.set_type(message_center::NOTIFICATION_TYPE_PROGRESS);
-  manager()->Update(notification, profile());
+  manager()->Update(notification, profile(), nullptr);
 
   // Expect that the notification update is done.
   EXPECT_NE("", observer.log(notification_id));

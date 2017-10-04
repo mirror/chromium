@@ -94,7 +94,8 @@ void DesktopNotificationBalloon::DisplayBalloon(
       std::string(), message_center::RichNotificationData(),
       new DummyNotificationDelegate(notification_id, profile_));
 
-  g_browser_process->notification_ui_manager()->Add(notification, profile);
+  g_browser_process->notification_ui_manager()->Add(notification, nullptr,
+                                                    profile);
 
   notification_id_ = notification.id();
   profile_ = profile;

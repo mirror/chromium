@@ -197,7 +197,8 @@ void HatsNotificationController::OnPortalDetectionCompleted(
 
   // Create and display the notification for the user.
   std::unique_ptr<Notification> notification(CreateNotification());
-  g_browser_process->notification_ui_manager()->Add(*notification, profile_);
+  g_browser_process->notification_ui_manager()->Add(*notification, nullptr,
+                                                    profile_);
 }
 
 Notification* HatsNotificationController::CreateNotification() {

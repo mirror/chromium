@@ -32,6 +32,35 @@
 
 using message_center::NotifierId;
 
+namespace {
+
+bool NotificationsMatchForUpdate(const Notification& existing_notification,
+                                 const Notification& new_notification,
+                                 const std::string& profile_notification_id,
+                                 NotificationCommon::Metadata* metadata) {
+  // NB: This only works because |metadata| is only currently set for persistent
+  // notifications. When more notifications start setting metadata, we'll need
+  // to know the NotificationCommon::Type of the notifications.
+  if (metadata && existing_notification.metadata()) {
+    std::string new_tag = NotificationCommon::PersistentNotificationMetadata::From(
+                   metadata)
+                   ->tag;
+    // The old notification will be updated if the profile matches,
+    // the tag matches,
+    return !new_tag.empty() &&
+           NotificationCommon::PersistentNotificationMetadata::From(
+               existing_notification.metadata())
+                   ->tag == new_tag &&
+           existing_notification->origin_url() ==
+               new_notification.origin_url() &&
+           existing_notification->profile_id() == profile_notification_id;
+  }
+
+  return existing_notification->notification().id() == profile_notification_id;
+}
+
+}  // namespace
+
 MessageCenterNotificationManager::MessageCenterNotificationManager(
     message_center::MessageCenter* message_center,
     std::unique_ptr<message_center::NotifierSettingsProvider> settings_provider)
@@ -67,17 +96,19 @@ MessageCenterNotificationManager::~MessageCenterNotificationManager() {
 ////////////////////////////////////////////////////////////////////////////////
 // NotificationUIManager
 
-void MessageCenterNotificationManager::Add(const Notification& notification,
-                                           Profile* profile) {
+void MessageCenterNotificationManager::Add(
+    const Notification& notification,
+    std::unique_ptr<NotificationCommon::Metadata> metadata,
+    Profile* profile) {
   // We won't have time to process and act on this notification.
   if (is_shutdown_started_)
     return;
 
-  if (Update(notification, profile))
+  if (Update(notification, profile, &metadata))
     return;
 
-  std::unique_ptr<ProfileNotification> profile_notification_ptr =
-      std::make_unique<ProfileNotification>(profile, notification);
+  auto profile_notification_ptr = std::make_unique<ProfileNotification>(
+      profile, notification, std::move(metadata));
   ProfileNotification* profile_notification = profile_notification_ptr.get();
 
   // WARNING: You MUST use AddProfileNotification or update the message center
@@ -91,67 +122,68 @@ void MessageCenterNotificationManager::Add(const Notification& notification,
           profile_notification->notification()));
 }
 
-bool MessageCenterNotificationManager::Update(const Notification& notification,
-                                              Profile* profile) {
-  const std::string& tag = notification.tag();
-  if (tag.empty())
-    return false;
+bool MessageCenterNotificationManager::Update(
+    const Notification& notification,
+    Profile* profile,
+    std::unique_ptr<NotificationCommon::Metadata>* metadata) {
+  const std::string& profile_notification_id =
+      ProfileNotification::GetProfileNotificationId(
+          notification.id(), NotificationUIManager::GetProfileID(profile));
 
-  const GURL origin_url = notification.origin_url();
-  DCHECK(origin_url.is_valid());
-
-  // Since tag is provided by arbitrary JS, we need to use origin_url
-  // (which is an app url in case of app/extension) to scope the tags
-  // in the given profile.
   for (auto iter = profile_notifications_.begin();
        iter != profile_notifications_.end(); ++iter) {
     ProfileNotification* old_notification = (*iter).second.get();
-    if (old_notification->notification().tag() == tag &&
-        old_notification->notification().origin_url() == origin_url &&
-        old_notification->profile_id() ==
-            NotificationUIManager::GetProfileID(profile)) {
-      // Changing the type from non-progress to progress does not count towards
-      // the immediate update allowed in the message center.
-      std::string old_id = old_notification->notification().id();
 
-      // Add/remove notification in the local list but just update the same
-      // one in MessageCenter.
-      std::unique_ptr<ProfileNotification> new_notification =
-          std::make_unique<ProfileNotification>(profile, notification);
-      const Notification& notification = new_notification->notification();
-      // Delete the old one after the new one is created to ensure we don't run
-      // out of KeepAlives.
-      profile_notifications_.erase(old_id);
-      profile_notifications_[notification.id()] = std::move(new_notification);
+    if (!NotificationsMatchForUpdate(old_notification->notification(), notification, profile_notification_id))
+  continue;
 
-      // TODO(liyanhou): Add routing updated notifications to alternative
-      // providers.
+    // The ID should uniquely identify the notification, but as a sanity check
+    // make sure we got the right origin URL and profile.
+    // FIXME: the id also has an identifier for the renderer which isn't
+    // relevant to this check
+    DCHECK_EQ(old_notification->notification().origin_url(),
+              notification.origin_url());
+    DCHECK_EQ(old_notification->profile_id(),
+              NotificationUIManager::GetProfileID(profile));
 
-      // Non-persistent Web Notifications rely on receiving the Display() event
-      // to inform the developer, even when replacing a previous notification.
-      if (notification.notifier_id().type == NotifierId::WEB_PAGE)
-        notification.delegate()->Display();
+    // Changing the type from non-progress to progress does not count towards
+    // the immediate update allowed in the message center.
+    std::string old_id = old_notification->notification().id();
 
-      // WARNING: You MUST use AddProfileNotification or update the message
-      // center via the notification within a ProfileNotification object or the
-      // profile ID will not be correctly set for ChromeOS.
-      message_center_->UpdateNotification(
-          old_id, std::make_unique<message_center::Notification>(notification));
+    // Add/remove notification in the local list but just update the same
+    // one in MessageCenter.
+    auto new_notification = std::make_unique<ProfileNotification>(
+        profile, notification, std::move(*metadata));
+    const Notification& notification = new_notification->notification();
+    // Delete the old one after the new one is created to ensure we don't run
+    // out of KeepAlives.
+    profile_notifications_.erase(old_id);
+    profile_notifications_[notification.id()] = std::move(new_notification);
 
-      return true;
-    }
+    // TODO(liyanhou): Add routing updated notifications to alternative
+    // providers.
+
+    // Non-persistent Web Notifications rely on receiving the Display() event
+    // to inform the developer, even when replacing a previous notification.
+    if (notification.notifier_id().type == NotifierId::WEB_PAGE)
+      notification.delegate()->Display();
+
+    // WARNING: You MUST use AddProfileNotification or update the message
+    // center via the notification within a ProfileNotification object or the
+    // profile ID will not be correctly set for ChromeOS.
+    message_center_->UpdateNotification(
+        old_id, std::make_unique<message_center::Notification>(notification));
+    return true;
   }
+
   return false;
 }
 
 const Notification* MessageCenterNotificationManager::FindById(
-    const std::string& delegate_id,
+    const std::string& id,
     ProfileID profile_id) const {
-  // The profile pointer can be weak, the instance may have been destroyed, so
-  // no profile method should be called inside this function.
-
   std::string profile_notification_id =
-      ProfileNotification::GetProfileNotificationId(delegate_id, profile_id);
+      ProfileNotification::GetProfileNotificationId(id, profile_id);
   auto iter = profile_notifications_.find(profile_notification_id);
   if (iter == profile_notifications_.end())
     return nullptr;
@@ -159,13 +191,10 @@ const Notification* MessageCenterNotificationManager::FindById(
 }
 
 bool MessageCenterNotificationManager::CancelById(
-    const std::string& delegate_id,
+    const std::string& id,
     ProfileID profile_id) {
-  // The profile pointer can be weak, the instance may have been destroyed, so
-  // no profile method should be called inside this function.
-
   std::string profile_notification_id =
-      ProfileNotification::GetProfileNotificationId(delegate_id, profile_id);
+      ProfileNotification::GetProfileNotificationId(id, profile_id);
   // See if this ID hasn't been shown yet.
   // If it has been shown, remove it.
   auto iter = profile_notifications_.find(profile_notification_id);
@@ -178,31 +207,15 @@ bool MessageCenterNotificationManager::CancelById(
   return true;
 }
 
-std::set<std::string>
-MessageCenterNotificationManager::GetAllIdsByProfileAndSourceOrigin(
-    ProfileID profile_id,
-    const GURL& source) {
-  std::set<std::string> delegate_ids;
-  for (const auto& pair : profile_notifications_) {
-    const Notification& notification = pair.second->notification();
-    if (pair.second->profile_id() == profile_id &&
-        notification.origin_url() == source) {
-      delegate_ids.insert(notification.id());
-    }
-  }
-
-  return delegate_ids;
-}
-
 std::set<std::string> MessageCenterNotificationManager::GetAllIdsByProfile(
     ProfileID profile_id) {
-  std::set<std::string> delegate_ids;
+  std::set<std::string> ids;
   for (const auto& pair : profile_notifications_) {
     if (pair.second->profile_id() == profile_id)
-      delegate_ids.insert(pair.second->notification().id());
+      ids.insert(pair.second->notification().id());
   }
 
-  return delegate_ids;
+  return ids;
 }
 
 bool MessageCenterNotificationManager::CancelAllBySourceOrigin(
@@ -267,9 +280,9 @@ void MessageCenterNotificationManager::SetMessageCenterTrayDelegateForTest(
 
 std::string
 MessageCenterNotificationManager::GetMessageCenterNotificationIdForTest(
-    const std::string& delegate_id,
+    const std::string& id,
     Profile* profile) {
-  return ProfileNotification::GetProfileNotificationId(delegate_id,
+  return ProfileNotification::GetProfileNotificationId(id,
                                                        GetProfileID(profile));
 }
 

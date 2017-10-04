@@ -40,15 +40,16 @@ class StubNotificationUIManager : public NotificationUIManager {
   bool SilentDismissById(const std::string& delegate_id, ProfileID profile_id);
 
   // NotificationUIManager implementation.
-  void Add(const Notification& notification, Profile* profile) override;
-  bool Update(const Notification& notification, Profile* profile) override;
+  void Add(const Notification& notification,
+           std::unique_ptr<NotificationCommon::Metadata> metadata,
+           Profile* profile) override;
+  bool Update(const Notification& notification,
+              Profile* profile,
+              std::unique_ptr<NotificationCommon::Metadata>* metadata) override;
   const Notification* FindById(const std::string& delegate_id,
                                ProfileID profile_id) const override;
   bool CancelById(const std::string& delegate_id,
                   ProfileID profile_id) override;
-  std::set<std::string> GetAllIdsByProfileAndSourceOrigin(
-      ProfileID profile_id,
-      const GURL& source) override;
   std::set<std::string> GetAllIdsByProfile(ProfileID profile_id) override;
   bool CancelAllBySourceOrigin(const GURL& source_origin) override;
   bool CancelAllByProfile(ProfileID profile_id) override;

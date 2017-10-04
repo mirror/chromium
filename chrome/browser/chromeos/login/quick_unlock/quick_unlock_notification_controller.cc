@@ -170,7 +170,8 @@ void QuickUnlockNotificationController::Observe(
   }
 
   std::unique_ptr<Notification> notification = CreateNotification();
-  g_browser_process->notification_ui_manager()->Add(*notification, profile_);
+  g_browser_process->notification_ui_manager()->Add(*notification, nullptr,
+                                                    profile_);
 }
 
 // message_center::NotificationDelegate override:

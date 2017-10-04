@@ -66,7 +66,8 @@ ExtensionInstalledNotification::ExtensionInstalledNotification(
                               message_center::kSystemNotificationColorNormal)));
     notification->set_vector_small_image(kNotificationInstalledIcon);
   }
-  g_browser_process->notification_ui_manager()->Add(*notification, profile_);
+  g_browser_process->notification_ui_manager()->Add(*notification, nullptr,
+                                                    profile_);
 }
 
 ExtensionInstalledNotification::~ExtensionInstalledNotification() {}

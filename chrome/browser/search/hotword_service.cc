@@ -442,7 +442,8 @@ void HotwordService::ShowHotwordNotification() {
       base::string16(), GURL(), std::string(), data,
       new HotwordNotificationDelegate(profile_));
 
-  g_browser_process->notification_ui_manager()->Add(notification, profile_);
+  g_browser_process->notification_ui_manager()->Add(notification, nullptr,
+                                                    profile_);
   profile_->GetPrefs()->SetBoolean(
       prefs::kHotwordAlwaysOnNotificationSeen, true);
 }
