@@ -22,6 +22,30 @@
       "revId": "b6ccbd512b65f9ea7c635c118159ddd87e99dedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25eb2974_9172805e",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-10-04T00:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e7f2e12_a5028216",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 7
+      },
+      "revId": "b6ccbd512b65f9ea7c635c118159ddd87e99dedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
