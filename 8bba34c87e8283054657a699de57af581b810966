@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dad5ac05_18a4cd4c",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T08:49:59Z",
+      "side": 1,
+      "message": "Hmm, unnested one level. As two nested-level Bind() in Bind() was in the existing code, and cleaning up is out of scope.",
+      "parentUuid": "894d0ec9_a7bc8cc1",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac58e878_50c79cc5",
         "filename": "chromeos/attestation/attestation_flow.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9e536395_8691a70d",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T08:49:59Z",
+      "side": 1,
+      "message": "Ack.",
+      "parentUuid": "ac58e878_50c79cc5",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "933673e8_04fd950c",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-04T06:36:42Z",
       "side": 1,
       "message": "It\u0027s difficult to understand what std::get\u003c0\u003e(result.value()) returns.\nHow about making this a struct?",
+      "revId": "8bba34c87e8283054657a699de57af581b810966",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ce9c15_6eee5b63",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-04T08:49:59Z",
+      "side": 1,
+      "message": "Done. Named \"Data\" after \"Data\"MethodCallback. Any better suggestion is welcome.",
+      "parentUuid": "933673e8_04fd950c",
       "revId": "8bba34c87e8283054657a699de57af581b810966",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
