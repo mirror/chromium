@@ -343,6 +343,9 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
     auto* child_object = child_fragment->GetLayoutObject();
     DCHECK(child_fragment->IsPlaced());
 
+    if (!child_fragment->IsBox())
+      continue;
+
     // At the moment "anonymous" fragments for inline layout will have the same
     // layout object as ourselves, we need to copy its floats across.
     if (child_object == box_) {
@@ -360,6 +363,7 @@ void NGBlockNode::PlaceChildrenInLayoutBox(
       }
       continue;
     }
+
     const auto& box_fragment = *ToNGPhysicalBoxFragment(child_fragment.get());
     if (IsFirstFragment(constraint_space, box_fragment))
       CopyChildFragmentPosition(box_fragment, offset_from_start);

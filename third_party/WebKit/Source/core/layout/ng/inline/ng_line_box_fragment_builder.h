@@ -15,7 +15,6 @@ namespace blink {
 
 class NGInlineNode;
 class NGPhysicalFragment;
-class NGPhysicalLineBoxFragment;
 
 class CORE_EXPORT NGLineBoxFragmentBuilder final
     : public NGBaseFragmentBuilder {
@@ -24,9 +23,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
  public:
   NGLineBoxFragmentBuilder(NGInlineNode,
                            RefPtr<const ComputedStyle>,
-                           NGWritingMode);
-
-  NGLineBoxFragmentBuilder& SetInlineSize(LayoutUnit);
+                           NGWritingMode,
+                           TextDirection);
 
   NGLineBoxFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                                      const NGLogicalOffset&);
@@ -46,20 +44,19 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   void SetMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
 
+  NGLogicalSize Size() const override {
+    return NGLogicalSize{inline_size_, Metrics().LineHeight()};
+  }
+
   // Set the break token for the fragment to build.
   // A finished break token will be attached if not set.
   void SetBreakToken(RefPtr<NGInlineBreakToken>);
 
   // Creates the fragment. Can only be called once.
-  RefPtr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
+  RefPtr<NGLayoutResult> ToLineBoxFragment();
 
  private:
   NGInlineNode node_;
-
-  LayoutUnit inline_size_;
-
-  Vector<RefPtr<NGPhysicalFragment>> children_;
-  Vector<NGLogicalOffset> offsets_;
 
   NGLineHeightMetrics metrics_;
 

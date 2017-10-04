@@ -4,6 +4,7 @@
 
 #include "core/layout/ng/inline/ng_inline_node.h"
 
+#include <iostream>
 #include "core/layout/BidiRun.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
@@ -110,6 +111,10 @@ void CreateBidiRuns(BidiRunList<BidiRun>* bidi_runs,
 
       NGFragment fragment(constraint_space.WritingMode(), physical_fragment);
       NGLogicalOffset child_offset = fragment.Offset() + parent_offset;
+
+      if (physical_fragment.GetLayoutObject()->IsFloating())
+        continue;
+
       if (physical_fragment.Children().size()) {
         CreateBidiRuns(bidi_runs, physical_fragment.Children(),
                        constraint_space, child_offset, items, text_offsets,
@@ -368,6 +373,12 @@ NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
     block->ResetNGInlineNodeData();
 }
 
+bool NGInlineNode::IsEmptyInline() {
+  InvalidatePrepareLayout();
+  PrepareLayout();
+  return Data().is_empty_inline_;
+}
+
 const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
   const NGInlineNodeData& data = Data();
   if (!is_first_line || !data.first_line_items_)
@@ -551,11 +562,11 @@ RefPtr<NGLayoutResult> NGInlineNode::Layout(
                                     ToNGInlineBreakToken(break_token));
   RefPtr<NGLayoutResult> result = algorithm.Layout();
 
-  if (result->Status() == NGLayoutResult::kSuccess &&
+  /*if (result->Status() == NGLayoutResult::kSuccess &&
       result->UnpositionedFloats().IsEmpty() &&
       !RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled()) {
     CopyFragmentDataToLayoutBox(constraint_space, result.get());
-  }
+  }*/
 
   return result;
 }
@@ -576,10 +587,13 @@ static LayoutUnit ComputeContentSize(NGInlineNode node,
   NGFragmentBuilder container_builder(node, &node.Style(), space->WritingMode(),
                                       TextDirection::kLtr);
   container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
+  NGLayoutOpportunity opportunity(
+      NGBfcOffset{LayoutUnit(), LayoutUnit()},
+      NGLogicalSize{available_inline_size, NGSizeIndefinite});
 
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
   NGLineBreaker line_breaker(node, *space, &container_builder,
-                             &unpositioned_floats);
+                             &unpositioned_floats, opportunity);
 
   NGLineInfo line_info;
   NGExclusionSpace empty_exclusion_space;
@@ -631,7 +645,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
-    NGLayoutResult* layout_result) {
+    const NGLayoutResult& layout_result) {
   LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
@@ -652,7 +666,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   BidiRunList<BidiRun> bidi_runs;
   LineInfo line_info;
   NGPhysicalBoxFragment* box_fragment =
-      ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().get());
+      ToNGPhysicalBoxFragment(layout_result.PhysicalFragment().get());
+
   for (const auto& container_child : box_fragment->Children()) {
     // Skip any float children we might have, these are handled by the wrapping
     // parent NGBlockNode.
@@ -667,6 +682,7 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
     CreateBidiRuns(&bidi_runs, physical_line_box.Children(), constraint_space,
                    line_box.Offset(), items, text_offsets,
                    &positions_for_bidi_runs, &positions);
+
     // TODO(kojii): When a line contains a list marker but nothing else, there
     // are fragments but there is no BidiRun. How to handle this is TBD.
     if (!bidi_runs.FirstRun())

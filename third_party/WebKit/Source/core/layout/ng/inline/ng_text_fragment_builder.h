@@ -27,6 +27,8 @@ class CORE_EXPORT NGTextFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGTextFragmentBuilder& SetSize(const NGLogicalSize&);
 
+  NGLogicalSize Size() const override { return size_; }
+
   NGTextFragmentBuilder& SetShapeResult(RefPtr<const ShapeResult>);
 
   // The amount of expansion for justification.
