@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af34ed0d_229c8d5b",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 732,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T22:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a241ff3b_615adcc3",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bb4671_5a1e355b",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4f57f1c0_d0e1f135",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T22:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87bb4671_5a1e355b",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "570fc543_d12881c4",
         "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b24bf7f_51f2bc64",
+        "filename": "components/autofill/core/browser/autofill_metrics_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1424,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T22:21:47Z",
+      "side": 1,
+      "message": "This is because we set the address field as Unknown_type. Fixed now.",
+      "parentUuid": "570fc543_d12881c4",
+      "revId": "7d2d27c866e03067b1f50cfe8d4d735d6cdcbbad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
