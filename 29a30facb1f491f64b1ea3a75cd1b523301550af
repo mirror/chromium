@@ -16,6 +16,24 @@
       "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873c6c9d_4357c5f1",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-04T20:20:52Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s where I\u0027d like this functionality to end up eventually, as mentioned at the very end of the patch description :) it\u0027s blocked on a few compositor changes, which I\u0027ll look into next.",
+      "parentUuid": "fcd2f6a1_1c58986b",
+      "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
