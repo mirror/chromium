@@ -1615,7 +1615,8 @@ GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   // We'll only modify YouTube Flash embeds. The URLs can be recognized since
   // they're in the following form: youtube.com/v/VIDEO_ID. So, we check to see
   // if the given URL does follow that format.
-  if (!url.DomainIs("youtube.com") && !url.DomainIs("youtube-nocookie.com"))
+  if (!url.DomainIs("youtube.com") && !url.DomainIs("youtube.test") &&
+      !url.DomainIs("youtube-nocookie.com"))
     return GURL();
   if (url.path().find("/v/") != 0)
     return GURL();
