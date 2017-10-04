@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0a53b24_ed001799",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-04T19:09:08Z",
+      "side": 1,
+      "message": "Instead of std::max(LayoutUnit(), something_else), can\u0027t you use LayoutUnit::ClampNegativeToZero()?",
+      "revId": "48af8902fd3b369091b9a950d1bfca148a289319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
