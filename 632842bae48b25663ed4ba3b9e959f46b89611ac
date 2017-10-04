@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b01b8964_b4b63bec",
+        "filename": "content/renderer/gpu/gpu_benchmarking_extension.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-04T16:58:32Z",
+      "side": 1,
+      "message": "I don\u0027t know enough about this system to know if these space conversions are correct.  Is there somebody else who knows this better who can review it?\n\nAlternatively, can you add more tests? Such as ones that include a page scale factor and edge case differentiation between an error on one pixel and a successful one on the pixel next to it? I\u0027m not quite sure what the correct view rect is for this test either.\n\nIt seems like maybe a test that using the default start_x/start_y from SmoothScrollBy and having that succeed would be good as well?\n\nSorry for all the questions.  I just don\u0027t know this code enough to review this well.",
+      "revId": "632842bae48b25663ed4ba3b9e959f46b89611ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
