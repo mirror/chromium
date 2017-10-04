@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c84af1fd_b2ea9cdb",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-04T17:26:38Z",
+      "side": 1,
+      "message": "Let\u0027s use DoubleSize here.  We want to avoid losing precision for large values here.\n\nAlso remove the DoubleSize() call in InitCoordinates() below.",
+      "revId": "7d5d14c95dfbf9e94eb84c0543c313ebe54db3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f73c75_79ccc7c4",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-04T17:26:38Z",
+      "side": 1,
+      "message": "Please use DoublePoint instead.",
+      "revId": "7d5d14c95dfbf9e94eb84c0543c313ebe54db3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07318832_dbd5a144",
+        "filename": "third_party/WebKit/Source/core/events/PointerEventFactory.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-04T17:26:38Z",
+      "side": 1,
+      "message": "Ditto.\n\nSame elsewhere.",
+      "revId": "7d5d14c95dfbf9e94eb84c0543c313ebe54db3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
