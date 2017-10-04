@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26f8864f_ed6461c7",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T05:43:37Z",
+      "side": 1,
+      "message": "This probably should be a const std::string\u0026 (I realise that it\u0027s a const char* on all call sites and needs to be converted back into a const char* here, but it\u0027s just unusual/scary to have a C-string interface, and there is no performance consideration here).\n\nIf you really want it to be a C string, please change to const char* rather than const char[].",
+      "range": {
+        "startLine": 74,
+        "startChar": 22,
+        "endLine": 74,
+        "endChar": 32
+      },
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c44f085_bf26d789",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T05:43:37Z",
+      "side": 1,
+      "message": "The \"Rel\" seems unnecessary (these tests aren\u0027t testing the \"rel\" attribute specifically, are they? That just happens to be the parameter.)",
+      "range": {
+        "startLine": 333,
+        "startChar": 35,
+        "endLine": 333,
+        "endChar": 38
+      },
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23cdf67_29cd68f5",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T05:43:37Z",
+      "side": 1,
+      "message": "I think this is normally at the bottom of the file.",
+      "revId": "eab5703aa186858adb0ce32a7c7eb3f93fabac7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
