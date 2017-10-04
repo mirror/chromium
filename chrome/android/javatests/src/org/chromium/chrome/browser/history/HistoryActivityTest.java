@@ -193,7 +193,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertEquals(1, mHistoryProvider.removeItemsCallback.getCallCount());
         assertEquals(3, mAdapter.getItemCount());
         assertEquals(View.VISIBLE, mRecyclerView.getVisibility());
-        assertEquals(View.GONE, mHistoryManager.getEmptyViewForTests().getVisibility());
+        assertEquals(View.GONE, mHistoryManager.getEmptyView().getVisibility());
     }
 
     @SmallTest
@@ -219,7 +219,7 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         assertEquals(1, mHistoryProvider.removeItemsCallback.getCallCount());
         assertFalse(mHistoryManager.getSelectionDelegateForTests().isSelectionEnabled());
         assertEquals(View.GONE, mRecyclerView.getVisibility());
-        assertEquals(View.VISIBLE, mHistoryManager.getEmptyViewForTests().getVisibility());
+        assertEquals(View.VISIBLE, mHistoryManager.getEmptyView().getVisibility());
     }
 
     @SmallTest
