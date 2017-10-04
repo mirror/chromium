@@ -1027,8 +1027,16 @@ bool PaintLayerScrollableArea::HasHorizontalOverflow() const {
   LayoutUnit client_width =
       LayoutContentRect(kIncludeScrollbars).Width() -
       VerticalScrollbarWidth(kIgnorePlatformAndCSSOverlayScrollbarSize);
-  if (NeedsRelayout() && !HadVerticalScrollbarBeforeRelayout())
+  bool vertical_scroll_added_during_layout =
+      NeedsRelayout() && !HadVerticalScrollbarBeforeRelayout();
+  // Ignore vertical scrollbar added for the first root layer layout. See:
+  // |ForceVerticalScrollbarForFirstLayout|.
+  bool initial_root_layer_vertical_scroll =
+      RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
+      Box().IsLayoutView() && !Box().EverHadLayout();
+  if (vertical_scroll_added_during_layout || initial_root_layer_vertical_scroll)
     client_width += VerticalScrollbarWidth();
+
   LayoutUnit scroll_width(ScrollWidth());
   LayoutUnit box_x = Box().Location().X();
   return SnapSizeToPixel(scroll_width, box_x) >
