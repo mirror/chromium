@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "102b5cab_1320c315",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCCertificate-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-04T11:10:42Z",
+      "side": 1,
+      "message": "This and all the other FAIL-\u003ePASS make me very happy :)",
+      "range": {
+        "startLine": 3,
+        "startChar": 5,
+        "endLine": 3,
+        "endChar": 12
+      },
+      "revId": "69c05e57034e1fd92feb6b18eba15b4f9be37687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6008d446_f10f893e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webrtc/RTCPeerConnection-constructor-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-10-04T11:10:42Z",
+      "side": 1,
+      "message": "Ah, this is interesting, PASS-\u003eFAIL. So the mock was masking problems and not just the passes.",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "69c05e57034e1fd92feb6b18eba15b4f9be37687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
