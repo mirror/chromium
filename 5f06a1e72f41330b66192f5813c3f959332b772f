@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "099022fa_38cb0db7",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-04T06:05:59Z",
+      "side": 1,
+      "message": "Ah, right. WTF::Function\u003c\u003e::Reset() seems a missing part.\nI\u0027m adding it as http://crrev.com/700294.",
+      "parentUuid": "f2d913f7_d0399ffc",
+      "range": {
+        "startLine": 105,
+        "startChar": 15,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "5f06a1e72f41330b66192f5813c3f959332b772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35222eb9_94780d36",
         "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
         "patchSetId": 6
