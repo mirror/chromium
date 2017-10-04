@@ -28,29 +28,36 @@ Process* GlobalDumpGraph::CreateGraphForProcess(base::ProcessId process_id) {
   return id_to_dump_iterator.first->second.get();
 }
 
-Node* GlobalDumpGraph::CreateNode(Process* process_graph) {
-  all_nodes_.emplace_front(process_graph);
+Node* GlobalDumpGraph::CreateNode(Process* process_graph, bool weak) {
+  all_nodes_.emplace_front(process_graph, weak);
   return &*all_nodes_.begin();
 }
 
 Process::Process(GlobalDumpGraph* global_graph)
-    : global_graph_(global_graph), root_(global_graph->CreateNode(this)) {}
+    : global_graph_(global_graph),
+      root_(global_graph->CreateNode(this, false)) {}
 Process::~Process() {}
 
 Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
-                          base::StringPiece path) {
+                          base::StringPiece path,
+                          bool weak) {
   std::string path_string = path.as_string();
   base::StringTokenizer tokenizer(path_string, "/");
 
   // Perform a tree traversal, creating the nodes if they do not
   // already exist on the path to the child.
   Node* current = root_;
-  while (tokenizer.GetNext()) {
+  bool has_next = tokenizer.GetNext();
+  while (has_next) {
     base::StringPiece key = tokenizer.token_piece();
     Node* parent = current;
     current = current->GetChild(key);
+
+    has_next = tokenizer.GetNext();
     if (!current) {
-      current = global_graph_->CreateNode(this);
+      // Only create the node with the specified weakness if it is the
+      // leaf node.
+      current = global_graph_->CreateNode(this, has_next ? false : weak);
       parent->InsertChild(key, current);
     }
   }
@@ -73,7 +80,8 @@ Node* Process::FindNode(base::StringPiece path) {
   return current;
 }
 
-Node::Node(Process* dump_graph) : dump_graph_(dump_graph) {}
+Node::Node(Process* dump_graph, bool weak)
+    : dump_graph_(dump_graph), weak_(weak) {}
 Node::~Node() {}
 
 Node* Node::GetChild(base::StringPiece name) {
