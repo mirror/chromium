@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea8a19f5_aaf1a242",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: this metric is more about usage - how often do users launch web apps using different display modes. :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 61
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5481fae4_6013acad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/LaunchMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: add @param displayMode",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8cf7be_00096346",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/LaunchMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: this should go at the top of the file, before the static members, or at the very least above the native methods (by convention the native methods go last)",
+      "range": {
+        "startLine": 90,
+        "startChar": 19,
+        "endLine": 90,
+        "endChar": 24
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8881993e_4d18101e",
+        "filename": "chrome/browser/android/metrics/launch_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: since you introduced a new class called HomeScreenLaunch, do you mind renaming this enum, perhaps to HomeScreenLaunchType?",
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69584d50_272a0d28",
         "filename": "chrome/browser/android/metrics/launch_metrics.cc",
         "patchSetId": 1
@@ -22,6 +108,76 @@
       "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "110acbba_a7d212b2",
+        "filename": "chrome/browser/android/metrics/launch_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69584d50_272a0d28",
+      "range": {
+        "startLine": 33,
+        "startChar": 34,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0b9f3a5_dc0b2ba2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40368,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: I would remove this second sentence (especially because third_party/WebKit is about to move to third_party/blink)",
+      "range": {
+        "startLine": 40368,
+        "startChar": 4,
+        "endLine": 40368,
+        "endChar": 55
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "479839dd_09b6cd9a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40372,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-04T23:11:58Z",
+      "side": 1,
+      "message": "Nit: \"Minimal UI\"",
+      "range": {
+        "startLine": 40372,
+        "startChar": 24,
+        "endLine": 40372,
+        "endChar": 33
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
