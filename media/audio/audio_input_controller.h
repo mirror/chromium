@@ -110,14 +110,11 @@ class MEDIA_EXPORT AudioInputController
     // The initial "muted" state of the underlying stream is sent along with the
     // OnCreated callback, to avoid the stream being treated as unmuted until an
     // OnMuted callback has had time to be processed.
-    virtual void OnCreated(AudioInputController* controller,
-                           bool initially_muted) = 0;
-    virtual void OnError(AudioInputController* controller,
-                         ErrorCode error_code) = 0;
-    virtual void OnLog(AudioInputController* controller,
-                       const std::string& message) = 0;
+    virtual void OnCreated(bool initially_muted) = 0;
+    virtual void OnError(ErrorCode error_code) = 0;
+    virtual void OnLog(const std::string& message) = 0;
     // Called whenever the muted state of the underlying stream changes.
-    virtual void OnMuted(AudioInputController* controller, bool is_muted) = 0;
+    virtual void OnMuted(bool is_muted) = 0;
 
    protected:
     virtual ~EventHandler() {}

@@ -37,16 +37,16 @@ using ::testing::StrictMock;
 
 namespace content {
 
-media::AudioParameters Params() {
-  return media::AudioParameters::UnavailableDeviceParams();
-}
-
 namespace {
 
 const int kRenderProcessId = 1;
 const int kRenderFrameId = 5;
 const int kStreamId = 50;
 const char kDefaultDeviceId[] = "";
+
+media::AudioParameters Params() {
+  return media::AudioParameters::UnavailableDeviceParams();
+}
 
 class MockAudioMirroringManager : public AudioMirroringManager {
  public:
