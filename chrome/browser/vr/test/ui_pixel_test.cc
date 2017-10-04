@@ -106,10 +106,10 @@ void UiPixelTest::DrawUi(const gfx::Vector3dF& laser_direction,
 
 std::unique_ptr<SkBitmap> UiPixelTest::SaveCurrentFrameBufferToSkBitmap() {
   // Read pixels from frame buffer.
-  uint32_t* pixels =
-      new uint32_t[frame_buffer_size_.width() * frame_buffer_size_.height()];
+  std::unique_ptr<uint32_t[]> pixels = base::MakeUnique<uint32_t[]>(
+      frame_buffer_size_.width() * frame_buffer_size_.height());
   glReadPixels(0, 0, frame_buffer_size_.width(), frame_buffer_size_.height(),
-               GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+               GL_RGBA, GL_UNSIGNED_BYTE, pixels.get());
   if (glGetError() != GL_NO_ERROR) {
     return nullptr;
   }
@@ -134,7 +134,7 @@ std::unique_ptr<SkBitmap> UiPixelTest::SaveCurrentFrameBufferToSkBitmap() {
   if (!bitmap->installPixels(SkImageInfo::MakeN32(frame_buffer_size_.width(),
                                                   frame_buffer_size_.height(),
                                                   kOpaque_SkAlphaType),
-                             pixels,
+                             pixels.release(),
                              sizeof(uint32_t) * frame_buffer_size_.width(),
                              [](void* pixels, void* context) {
                                delete[] static_cast<uint32_t*>(pixels);
