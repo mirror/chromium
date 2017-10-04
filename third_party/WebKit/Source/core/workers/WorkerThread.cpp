@@ -249,10 +249,11 @@ void WorkerThread::StartRunningDebuggerTasksOnPauseOnWorkerThread() {
   do {
     task =
         inspector_task_runner_->TakeNextTask(InspectorTaskRunner::kWaitForTask);
-    if (task)
-      task();
+    if (!task)
+      break;
+    std::move(task).Run();
     // Keep waiting until execution is resumed.
-  } while (task && paused_in_debugger_);
+  } while (paused_in_debugger_);
   ThreadDebugger::IdleFinished(GetIsolate());
 }
 
@@ -572,7 +573,7 @@ void WorkerThread::PerformDebuggerTaskOnWorkerThread(CrossThreadClosure task) {
         CustomCountHistogram, scoped_us_counter,
         ("WorkerThread.DebuggerTask.Time", 0, 10000000, 50));
     ScopedUsHistogramTimer timer(scoped_us_counter);
-    task();
+    std::move(task).Run();
   }
   ThreadDebugger::IdleStarted(GetIsolate());
   {
@@ -586,7 +587,7 @@ void WorkerThread::PerformDebuggerTaskDontWaitOnWorkerThread() {
   CrossThreadClosure task = inspector_task_runner_->TakeNextTask(
       InspectorTaskRunner::kDontWaitForTask);
   if (task)
-    task();
+    std::move(task).Run();
 }
 
 void WorkerThread::SetThreadState(const MutexLocker& lock,
