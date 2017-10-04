@@ -9,8 +9,10 @@
 
 #include <limits>
 #include <string>
+#include <utility>
 #include <vector>
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
@@ -125,7 +127,8 @@ ChromeRenderFrameObserver::ChromeRenderFrameObserver(
     content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame),
       translate_helper_(nullptr),
-      phishing_classifier_(nullptr) {
+      phishing_classifier_(nullptr),
+      weak_factory_(this) {
   registry_.AddInterface(
       base::Bind(&ChromeRenderFrameObserver::OnImageContextMenuRendererRequest,
                  base::Unretained(this)));
@@ -374,9 +377,14 @@ void ChromeRenderFrameObserver::DidCommitProvisionalLoad(
 #if !defined(OS_ANDROID)
   if ((render_frame()->GetEnabledBindings() &
        content::BINDINGS_POLICY_WEB_UI)) {
-    for (const auto& script : webui_javascript_)
-      render_frame()->ExecuteJavaScript(script);
-    webui_javascript_.clear();
+    // Postpone ExecuteJavaScript to make sure it executes *after* the browser
+    // has been notified about the commit (i.e. after the browser is aware of
+    // the new origin the scripts should be able to access).
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::Bind(
+            &ChromeRenderFrameObserver::ExecuteAccumulatedWebUIJavascript,
+            weak_factory_.GetWeakPtr()));
   }
 #endif
 }
@@ -467,6 +475,12 @@ void ChromeRenderFrameObserver::OnPhishingDetectorRequest(
 #endif
 
 #if !defined(OS_ANDROID)
+void ChromeRenderFrameObserver::ExecuteAccumulatedWebUIJavascript() {
+  for (const auto& script : webui_javascript_)
+    render_frame()->ExecuteJavaScript(script);
+  webui_javascript_.clear();
+}
+
 void ChromeRenderFrameObserver::OnWebUITesterRequest(
     chrome::mojom::WebUITesterAssociatedRequest request) {
   web_ui_tester_bindings_.AddBinding(this, std::move(request));
