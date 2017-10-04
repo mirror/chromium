@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f7ede2a_03d60922",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "q: What can a compromised parent do with this Window?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cbb99ec_4b88480f",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "q: Why is the return token optional?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3184fa45_74359839",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1507,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this support multiple embed roots? (comment?)",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f40b996_ff83a8f6",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "aside: WindowTrees can own themselves?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23caa1e_3144caaa",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "aside: I learn all kinds of new things reviewing code...",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d2cde3_65d3d0c7",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "optional nit: s/the/a/ or \"the WindowTreeClient previously scheduled for an embed with the given |token| from ScheduleEmbed().",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647e4863_fc753287",
+        "filename": "services/ui/ws/window_tree.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "Can you explain this part a bit more? Why defer to the parent? Is this because the parent or an ancestor (the browser) is going to be calling ScheduleEmbed?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94ce369_ab802530",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "q: Why use a nested block here? (ditto below)",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0a0678_e7bb9ff6",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "optional nit: order this first like WindowTree and the order of operations.",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fd810b_56775509",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2095,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "nit: block comment, like \"Schedule an embed for client3 on [the root|wt_client1\u0027s] WindowTree.\"",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c816ebd4_24de3453",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "nit: block comment, like \"Have client2 execute the scheduled embed using a token shared from its parent, wt_client1.\"",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf17796_113d8b42",
+        "filename": "services/ui/ws/window_tree_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2109,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "nit: also test an incorrect or null token, and maybe with an incorrect tree?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586b608a_6bb9909e",
+        "filename": "ui/aura/mus/window_port_mus.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "optional nit: use |const mojom::WindowTree::ScheduleEmbedCallback\u0026 callback| here and elsewhere if you drop the base::optional?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62350aa_5fa26350",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "Why does WindowTreeClient encapsulate this failure? Aren\u0027t callers curious?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb060ef_f2f4e7d3",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "Why AdaptCallbackForRepeating? Aren\u0027t mojo callbacks OnceCallbacks?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5901183f_57b9b01f",
+        "filename": "ui/aura/mus/window_tree_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-04T01:25:04Z",
+      "side": 1,
+      "message": "Add a comment like window_port_mus.h?",
+      "revId": "aaeff34d4aedc222ccb977734cb40b2f78a51666",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
