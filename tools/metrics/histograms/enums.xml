@@ -31731,7 +31731,8 @@ from previous Chrome versions.
   <int value="1" label="Successful Finish"/>
   <int value="2" label="Cancelled due to timeout"/>
   <int value="3" label="Cancelled by printer"/>
-  <int value="4" label="Lost track of job"/>
+  <int value="4" label="Filter failed"/>
+  <int value="5" label="Lost track of job"/>
 </enum>
 
 <enum name="PrintPreviewFailureType">
