@@ -299,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ea90895b_d62a7ad0",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:52:04Z",
+      "side": 1,
+      "message": "Sorry not done. I do current_gc_data_.visitor.reset() above so the remaining stuff is basic info about the last GC. Actually I use this current_gc_data_.reason instead of ThreadHeap::LastGCReason() in ThreadState::PostSweep.",
+      "parentUuid": "35b05e5a_a45e1a73",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b423a1f2_80e15b7f",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
