@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28f76bb_5d02b433",
+        "filename": "ash/message_center/message_center_button_bar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-04T02:38:14Z",
+      "side": 1,
+      "message": "Could you change the name of method to SetQuietModeState (or something like that).\n\nSince this is not a handler and this class represents UI, I\u0027d prefer to use active naming rather than passive. And other methods in this class has active names: SetSettingsAndQuietModeButtonsEnabled or SetCloseAllButtonEnabled.",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 25
+      },
+      "revId": "14ef4a6eb29942190adbc5682f6e513607420178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f5b483_3cf44afe",
+        "filename": "ash/message_center/notifier_settings_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-10-04T02:38:14Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 25
+      },
+      "revId": "14ef4a6eb29942190adbc5682f6e513607420178",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
