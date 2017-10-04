@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "338d9250_1511fb27",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-04T23:59:41Z",
+      "side": 1,
+      "message": "stdout\u003dsubprocess.DEVNULL doesn\u0027t work here?",
+      "revId": "cbab35aa383821cab32995a9602b12854fa8d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
