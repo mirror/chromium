@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c36eb7ed_4249c3ca",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-10-04T11:32:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3de3abb4_3914c4eb",
+      "revId": "a660a07eb58d0315618fd8e6977c9f45c37dbd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "199fdd78_0b1e71bb",
         "filename": "services/device/generic_sensor/platform_sensor_provider_win.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "a660a07eb58d0315618fd8e6977c9f45c37dbd72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9561d2ee_f6bb81d3",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-10-04T11:32:27Z",
+      "side": 1,
+      "message": "This is for \u0027lazy creation\u0027. The sensor_thread is created on \u0027start\u0027 PlatformSensorProviderWin::StartSensorThread(), or when fake sensor manager is provided from unit tests, after that, thread started / stopped when needed.",
+      "parentUuid": "199fdd78_0b1e71bb",
+      "revId": "a660a07eb58d0315618fd8e6977c9f45c37dbd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
