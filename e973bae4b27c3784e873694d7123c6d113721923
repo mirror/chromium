@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "39b5c727_14262ac1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-04T14:32:09Z",
+      "side": 1,
+      "message": "The reason for the 1 day timeout is that I in https://codereview.chromium.org/2948713002/ I introduce BackgroundTaskScheduler which schedules updates to occur sometime in the next day. My goal with the metric was to identify cases where the file does not get deleted when it should.\n\nI guess you want a metric which just records how many files there are in total? Personally, I don\u0027t think that the metric that you are suggesting is very actionable. In particular, the metric that you are suggesting will not tell us whether there are cases where the delete logic is not run",
+      "parentUuid": "e2627c7b_d28db720",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c58afe83_627f494e",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "writtenOn": "2017-10-04T03:20:46Z",
       "side": 1,
       "message": "Is it impossible to test the histogram now that it\u0027s a JUnit test? It would be very good if we could explicitly test the histogram by putting some update files in the directory and verifying that the right number is recorded.",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103b0991_56552831",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-04T14:32:09Z",
+      "side": 1,
+      "message": "Yes, it is possible. As a matter of principle, I would prefer not to test UMA metric recording (though I know that there are many tests which test UMA metric recording).\n\nTo me testing UMA metric recording sounds too much like testing \"the implementation\" instead of \"desired behavior\".",
+      "parentUuid": "c58afe83_627f494e",
       "range": {
         "startLine": 66,
         "startChar": 8,
