@@ -618,7 +618,8 @@ OpenObjectFileContainingPcAndGetStartAddress(uint64_t pc,
     //   mapped high at address space (in particular, higher than
     //   shadow memory of the tool), so the module can't be the
     //   first entry.
-    base_address = ((num_maps == 1) ? 0U : start_address) - file_offset;
+    // base_address = ((num_maps == 1) ? 0U : start_address) - file_offset;
+    base_address = start_address - file_offset;
 
     // Skip to file name.  "cursor" now points to dev.  We need to
     // skip at least two spaces for dev and inode.

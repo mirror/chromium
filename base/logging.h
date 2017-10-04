@@ -348,7 +348,7 @@ const LogSeverity LOG_NUM_SEVERITIES = 4;
 #if defined(NDEBUG)
 const LogSeverity LOG_DFATAL = LOG_ERROR;
 #else
-const LogSeverity LOG_DFATAL = LOG_FATAL;
+const LogSeverity LOG_DFATAL = LOG_ERROR;
 #endif
 
 // A few definitions of macros that don't generate much code. These are used
@@ -818,7 +818,7 @@ DEFINE_CHECK_OP_IMPL(GT, > )
 #if defined(SYZYASAN)
 BASE_EXPORT extern LogSeverity LOG_DCHECK;
 #else
-const LogSeverity LOG_DCHECK = LOG_FATAL;
+const LogSeverity LOG_DCHECK = LOG_ERROR;
 #endif
 
 #else  // DCHECK_IS_ON()
