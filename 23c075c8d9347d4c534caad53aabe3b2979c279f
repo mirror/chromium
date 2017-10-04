@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77e32571_f7ea4b14",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "809e9c8b_5be5f7d7",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43f9c4f4_a17c2c9a",
         "filename": "ash/highlighter/highlighter_controller.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1533c035_b9836a51",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43f9c4f4_a17c2c9a",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17bb3bd9_9ec9f7c9",
+        "filename": "ash/highlighter/highlighter_controller_test_api.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c1d666_b9b221e6",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40bd22dd_51d5187e",
         "filename": "ash/mojo_interface_factory.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d506eac_255aaac2",
+        "filename": "ash/mojo_interface_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "40bd22dd_51d5187e",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0787ee55_a5955cd1",
+        "filename": "ash/mojo_interface_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done.\nMoved BindImeControllerRequestOnMainThread too, as it was out of order. Please let me know if I should not have.",
+      "parentUuid": "8b5d4ce7_c7d4d93b",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd61e74a_85977575",
         "filename": "ash/public/interfaces/highlighter_controller.mojom",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3897fd5d_9d190ac6",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd61e74a_85977575",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "737d2e63_0c3a1d11",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9346289d_9df4f971",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22b47312_36d3f4e4",
         "filename": "ash/public/interfaces/highlighter_controller.mojom",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dd7431_caf54199",
+        "filename": "ash/public/interfaces/highlighter_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b47312_36d3f4e4",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b81ce051_520d8a54",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Folded this call into HighlighterControllerTestApi instead",
+      "parentUuid": "0dc2ceaf_30334316",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2662d5c6_649ab144",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
         "patchSetId": 1
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-02T18:32:05Z",
       "side": 1,
       "message": "Is it possible to write some kind of small test for this? It doesn\u0027t do much, but it might grow, and it would be nice to either have a unit test that shows how to instantiate it, or a browser test showing how to access it.",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa91e33b_eee53fdb",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Added a test to ArcVoiceInteractionFrameworkServiceTest",
+      "parentUuid": "2662d5c6_649ab144",
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +366,24 @@
       "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b491c4_6127191b",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_highlighter_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-04T23:59:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f282fd_ac4e5bbf",
+      "revId": "23c075c8d9347d4c534caad53aabe3b2979c279f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
