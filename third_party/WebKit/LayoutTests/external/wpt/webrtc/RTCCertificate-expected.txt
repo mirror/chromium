@@ -1,8 +1,8 @@
 This is a testharness.js-based test.
 PASS Constructing RTCPeerConnection with expired certificate should reject with InvalidAccessError
-FAIL Calling setConfiguration with different set of certs should reject with InvalidModificationError assert_throws: function "() =>\n        pc.setConfiguration({\n          certificates: [cert2]\n        })" did not throw
+PASS Calling setConfiguration with different set of certs should reject with InvalidModificationError
 FAIL RTCCertificate should have at least one fingerprint promise_test: Unhandled rejection with value: object "TypeError: fingerprints[0] is not iterable"
-FAIL RTCPeerConnection({ certificates }) should generate offer SDP with fingerprint of provided certificate promise_test: Unhandled rejection with value: object "OperationError: TEST_ERROR"
-FAIL RTCPeerConnection({ certificates }) should generate offer SDP with fingerprint of all provided certificates promise_test: Unhandled rejection with value: object "OperationError: TEST_ERROR"
+PASS RTCPeerConnection({ certificates }) should generate offer SDP with fingerprint of provided certificate
+FAIL RTCPeerConnection({ certificates }) should generate offer SDP with fingerprint of all provided certificates assert_true: Expect fingerprint line to be found in SDP with value \r\na=fingerprint:sha-256 73:1E:1C:AD:8E:E1:BC:3C:AA:CA:39:2E:53:90:EA:39:D8:D7:D9:C6:1B:0B:D5:3D:CF:EE:0E:1D:7D:D2:A4:85\r\n expected true got false
 Harness: the test ran to completion.
 
