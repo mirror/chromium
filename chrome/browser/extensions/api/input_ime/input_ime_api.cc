@@ -40,10 +40,14 @@ ImeObserver::ImeObserver(const std::string& extension_id, Profile* profile)
     : extension_id_(extension_id), profile_(profile) {}
 
 void ImeObserver::OnActivate(const std::string& component_id) {
-  if (extension_id_.empty() ||
-      !HasListener(input_ime::OnActivate::kEventName)) {
-    LOG(ERROR) << "Can't send onActivate event to \"" << extension_id_ << "\"";
+  if (extension_id_.empty())
     return;
+
+  // If the IME extension listens onActivate events, add it to the list of
+  // listened events here to make sure that the extension is loaded.
+  if (!HasListener(input_ime::OnActivate::kEventName)) {
+    extensions::EventRouter::Get(profile_)->AddLazyEventListener(
+        input_ime::OnActivate::kEventName, extension_id_);
   }
 
   std::unique_ptr<base::ListValue> args(input_ime::OnActivate::Create(
@@ -200,7 +204,8 @@ bool ImeObserver::ShouldForwardKeyEvent() const {
 }
 
 bool ImeObserver::HasListener(const std::string& event_name) const {
-  return extensions::EventRouter::Get(profile_)->HasEventListener(event_name);
+  return extensions::EventRouter::Get(profile_)->ExtensionHasEventListener(
+      extension_id_, event_name);
 }
 
 std::string ImeObserver::ConvertInputContextType(
