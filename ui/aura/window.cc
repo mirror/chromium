@@ -40,6 +40,7 @@
 #include "ui/aura/window_tree_host.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/event_target_iterator.h"
@@ -263,12 +264,10 @@ gfx::Rect Window::GetBoundsInScreen() const {
 
 void Window::SetTransform(const gfx::Transform& transform) {
   for (WindowObserver& observer : observers_)
-    observer.OnWindowTransforming(this);
+    observer.OnWindowTargetTransformChanging(this);
   gfx::Transform old_transform = layer()->transform();
   layer()->SetTransform(transform);
   port_->OnDidChangeTransform(old_transform, transform);
-  for (WindowObserver& observer : observers_)
-    observer.OnWindowTransformed(this);
 }
 
 void Window::SetLayoutManager(LayoutManager* layout_manager) {
@@ -1064,6 +1063,11 @@ void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds) {
 void Window::OnLayerOpacityChanged(float old_opacity, float new_opacity) {
   for (WindowObserver& observer : observers_)
     observer.OnWindowOpacityChanged(this, old_opacity, new_opacity);
+}
+
+void Window::OnLayerTransformed() {
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowTransformed(this);
 }
 
 bool Window::CanAcceptEvent(const ui::Event& event) {
