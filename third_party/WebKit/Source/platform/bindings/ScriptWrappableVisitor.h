@@ -18,7 +18,10 @@ namespace blink {
 class HeapObjectHeader;
 class ScriptWrappable;
 class ScriptWrappableVisitor;
+template <typename T>
+class Supplement;
 class TraceWrapperBase;
+class TraceWrapperBaseForSupplement;
 template <typename T>
 class TraceWrapperV8Reference;
 
@@ -205,11 +208,24 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer {
     // mark wrappers.
   }
 
-  // Catch all handlers needed because of mixins.
-  void DispatchTraceWrappers(const void*) const { CHECK(false); }
+  // 
+  void DispatchTraceWrappersImpl(const TraceWrapperBaseForSupplement*) const;
+  template <typename T>
+  void DispatchTraceWrappers(const Supplement<T>* traceable) const {
+    const TraceWrapperBaseForSupplement* base = traceable;
+    DispatchTraceWrappersImpl(base);
+  }
+  // Catch all handlers needed because of mixins except for Supplement<T>.
+  void DispatchTraceWrappers(const void*) const { NOTREACHED(); }
 
-  // Catch all handlers needed because of mixins.
-  void MarkWrappersInAllWorlds(const void*) const { CHECK(false); }
+  // 
+  template <typename T>
+  void MarkWrappersInAllWorlds(const Supplement<T>*) const {
+    // A Supplement<T> which is not a ScriptWrappable never points to a V8
+    // wrapper.
+  }
+  // Catch all handlers needed because of mixins except for Supplement<T>.
+  void MarkWrappersInAllWorlds(const void*) const { NOTREACHED(); }
 
   // v8::EmbedderHeapTracer interface.
 
