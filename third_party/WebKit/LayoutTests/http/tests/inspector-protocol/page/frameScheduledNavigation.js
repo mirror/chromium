@@ -8,11 +8,14 @@
     frame.src = '${testRunner.url('resources/navigation-chain1.html')}';
   `);
 
-  for (var i = 0; i < 5; i++) {
+  for (var i = 0; i < 6; i++) {
     var msg = await dp.Page.onceFrameScheduledNavigation();
+    var http_method = '';
+    if (msg.params.hasOwnProperty('formSubmissionMethod'))
+      http_method = ' with method ' + msg.params.formSubmissionMethod;
     testRunner.log('Scheduled navigation with delay ' + msg.params.delay +
                    ' and reason ' + msg.params.reason + ' to url ' +
-                   msg.params.url.split('/').pop());
+                   msg.params.url.split('/').pop() + http_method);
     await dp.Page.onceFrameStartedLoading();
     // This event should be received before the scheduled navigation is cleared.
     testRunner.log('Started loading');

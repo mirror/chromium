@@ -8,12 +8,15 @@
 
 namespace blink {
 
-ScheduledNavigation::ScheduledNavigation(Reason reason,
-                                         double delay,
-                                         Document* origin_document,
-                                         bool replaces_current_item,
-                                         bool is_location_change)
+ScheduledNavigation::ScheduledNavigation(
+    Reason reason,
+    Optional<FormSubmissionMethod> form_submission_method,
+    double delay,
+    Document* origin_document,
+    bool replaces_current_item,
+    bool is_location_change)
     : reason_(reason),
+      form_submission_method_(form_submission_method),
       delay_(delay),
       origin_document_(origin_document),
       replaces_current_item_(replaces_current_item),

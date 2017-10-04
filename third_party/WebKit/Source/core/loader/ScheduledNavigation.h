@@ -5,6 +5,7 @@
 #ifndef ScheduledNavigation_h
 #define ScheduledNavigation_h
 
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 
@@ -29,7 +30,13 @@ class ScheduledNavigation
     kReload,
   };
 
+  enum class FormSubmissionMethod {
+    kPost,
+    kGet,
+  };
+
   ScheduledNavigation(Reason,
+                      Optional<FormSubmissionMethod>,
                       double delay,
                       Document* origin_document,
                       bool replaces_current_item,
@@ -43,6 +50,9 @@ class ScheduledNavigation
   virtual bool ShouldStartTimer(LocalFrame*) { return true; }
 
   Reason GetReason() const { return reason_; }
+  const Optional<FormSubmissionMethod>& GetFormSubmissionMethod() const {
+    return form_submission_method_;
+  }
   double Delay() const { return delay_; }
   Document* OriginDocument() const { return origin_document_.Get(); }
   bool ReplacesCurrentItem() const { return replaces_current_item_; }
@@ -56,6 +66,7 @@ class ScheduledNavigation
 
  private:
   Reason reason_;
+  Optional<FormSubmissionMethod> form_submission_method_;
   double delay_;
   Member<Document> origin_document_;
   bool replaces_current_item_;

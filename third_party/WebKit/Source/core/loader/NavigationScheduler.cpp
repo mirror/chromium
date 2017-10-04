@@ -119,6 +119,7 @@ class ScheduledURLNavigation : public ScheduledNavigation {
                          bool replaces_current_item,
                          bool is_location_change)
       : ScheduledNavigation(reason,
+                            WTF::nullopt,
                             delay,
                             origin_document,
                             replaces_current_item,
@@ -265,7 +266,12 @@ class ScheduledReload final : public ScheduledNavigation {
 
  private:
   explicit ScheduledReload(LocalFrame* frame)
-      : ScheduledNavigation(Reason::kReload, 0.0, nullptr, true, true),
+      : ScheduledNavigation(Reason::kReload,
+                            WTF::nullopt,
+                            0.0,
+                            nullptr,
+                            true,
+                            true),
         frame_(frame) {}
 
   Member<LocalFrame> frame_;
@@ -286,6 +292,7 @@ class ScheduledPageBlock final : public ScheduledNavigation {
  private:
   ScheduledPageBlock(Document* origin_document, int reason)
       : ScheduledNavigation(Reason::kPageBlock,
+                            WTF::nullopt,
                             0.0,
                             origin_document,
                             true,
@@ -326,12 +333,17 @@ class ScheduledFormSubmission final : public ScheduledNavigation {
   ScheduledFormSubmission(Document* document,
                           FormSubmission* submission,
                           bool replaces_current_item)
-      : ScheduledNavigation(Reason::kFormSubmission,
-                            0,
-                            document,
-                            replaces_current_item,
-                            true),
+      : ScheduledNavigation(
+            Reason::kFormSubmission,
+            submission->Method() == FormSubmission::kGetMethod
+                ? ScheduledNavigation::FormSubmissionMethod::kGet
+                : ScheduledNavigation::FormSubmissionMethod::kPost,
+            0,
+            document,
+            replaces_current_item,
+            true),
         submission_(submission) {
+    DCHECK_NE(submission->Method(), FormSubmission::kDialogMethod);
     DCHECK(submission_->Form());
   }
 
