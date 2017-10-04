@@ -6,6 +6,7 @@
 #define BlinkMessagePortMessage_h
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "core/CoreExport.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 
 namespace blink {
@@ -14,7 +15,7 @@ namespace blink {
 // type can be serialized as a blink::mojom::MessagePortMessage struct.
 // This is the renderer-side equivalent of blink::MessagePortMessage, where this
 // struct uses blink types, while the other struct uses std:: types.
-struct BlinkMessagePortMessage {
+struct CORE_EXPORT BlinkMessagePortMessage {
   BlinkMessagePortMessage();
   ~BlinkMessagePortMessage();
 
