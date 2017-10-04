@@ -70,6 +70,30 @@
       "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a66ccd_c87bb2f1",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-04T08:32:24Z",
+      "side": 1,
+      "message": "Done as suggested. Note that I could not use your proposed method name as the code is not about incognito, but rather about the Windows 10 version.\n\nObservation: I personally still preferred my original test as it was actually testing that the if condition was correct. In the new code, if somebody by mistake changes the function ShouldUseWin10OnboardingTabs to return false in all cases, all the unit tests will continue to pass. But I guess this may be personal preference, so I went with your suggestion as you are the owner of this code and know it better than I do.",
+      "parentUuid": "821474e7_0b41fd07",
+      "range": {
+        "startLine": 461,
+        "startChar": 0,
+        "endLine": 464,
+        "endChar": 6
+      },
+      "revId": "734669b77f2ac505b85f8afd3910f03d39c0d225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
