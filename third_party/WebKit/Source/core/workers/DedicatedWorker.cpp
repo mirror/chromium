@@ -36,19 +36,27 @@ DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
                                       "The context provided is invalid.");
     return nullptr;
   }
-  DedicatedWorker* worker = new DedicatedWorker(context);
-  if (worker->Initialize(context, url, exception_state))
-    return worker;
-  return nullptr;
+
+  KURL script_url = ResolveURL(context, url, exception_state,
+                               WebURLRequest::kRequestContextScript);
+  if (script_url.IsEmpty())
+    return nullptr;
+
+  DedicatedWorker* worker = new DedicatedWorker(context, script_url);
+  worker->Start();
+  return worker;
 }
 
-DedicatedWorker::DedicatedWorker(ExecutionContext* context)
-    : AbstractWorker(context), context_proxy_(nullptr) {}
+DedicatedWorker::DedicatedWorker(ExecutionContext* context,
+                                 const KURL& script_url)
+    : AbstractWorker(context),
+      script_url_(script_url),
+      context_proxy_(CreateMessagingProxy(context)) {
+  DCHECK(context_proxy_);
+}
 
 DedicatedWorker::~DedicatedWorker() {
   DCHECK(IsMainThread());
-  if (!context_proxy_)
-    return;
   context_proxy_->ParentObjectDestroyed();
 }
 
@@ -56,7 +64,6 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
                                   RefPtr<SerializedScriptValue> message,
                                   const MessagePortArray& ports,
                                   ExceptionState& exception_state) {
-  DCHECK(context_proxy_);
   // Disentangle the port in preparation for sending it to the remote context.
   MessagePortChannelArray channels = MessagePort::DisentanglePorts(
       ExecutionContext::From(script_state), ports, exception_state);
@@ -66,39 +73,27 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
                                                  std::move(channels));
 }
 
-bool DedicatedWorker::Initialize(ExecutionContext* context,
-                                 const String& url,
-                                 ExceptionState& exception_state) {
-  KURL script_url =
-      ResolveURL(url, exception_state, WebURLRequest::kRequestContextScript);
-  if (script_url.IsEmpty())
-    return false;
-
+void DedicatedWorker::Start() {
   WebURLRequest::FetchRequestMode fetch_request_mode =
       WebURLRequest::kFetchRequestModeSameOrigin;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode =
       WebURLRequest::kFetchCredentialsModeSameOrigin;
-  if (script_url.ProtocolIsData()) {
+  if (script_url_.ProtocolIsData()) {
     fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
     fetch_credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
   }
 
   script_loader_ = WorkerScriptLoader::Create();
   script_loader_->LoadAsynchronously(
-      *context, script_url, WebURLRequest::kRequestContextWorker,
+      *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,
       fetch_request_mode, fetch_credentials_mode,
-      context->GetSecurityContext().AddressSpace(),
+      GetExecutionContext()->GetSecurityContext().AddressSpace(),
       WTF::Bind(&DedicatedWorker::OnResponse, WrapPersistent(this)),
       WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this)));
-
-  context_proxy_ = CreateMessagingProxy(context);
-
-  return true;
 }
 
 void DedicatedWorker::terminate() {
-  if (context_proxy_)
-    context_proxy_->TerminateGlobalScope();
+  context_proxy_->TerminateGlobalScope();
 }
 
 void DedicatedWorker::ContextDestroyed(ExecutionContext*) {
@@ -110,8 +105,7 @@ void DedicatedWorker::ContextDestroyed(ExecutionContext*) {
 bool DedicatedWorker::HasPendingActivity() const {
   // The worker context does not exist while loading, so we must ensure that the
   // worker object is not collected, nor are its event listeners.
-  return (context_proxy_ && context_proxy_->HasPendingActivity()) ||
-         script_loader_;
+  return context_proxy_->HasPendingActivity() || script_loader_;
 }
 
 DedicatedWorkerMessagingProxy* DedicatedWorker::CreateMessagingProxy(
