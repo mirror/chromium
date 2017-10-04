@@ -104,6 +104,14 @@ void BackgroundFetchBridge::GetIds(GetIdsCallback callback) {
                        ConvertToBaseCallback(std::move(callback)));
 }
 
+void BackgroundFetchBridge::AddRegistrationObserver(
+    const String& id,
+    mojom::blink::BackgroundFetchRegistrationObserverPtr observer) {
+  GetService()->AddRegistrationObserver(
+      GetSupplementable()->WebRegistration()->RegistrationId(),
+      GetSecurityOrigin(), id, std::move(observer));
+}
+
 SecurityOrigin* BackgroundFetchBridge::GetSecurityOrigin() {
   return GetSupplementable()->GetExecutionContext()->GetSecurityOrigin();
 }

@@ -150,6 +150,16 @@ void BackgroundFetchServiceImpl::GetIds(int64_t service_worker_registration_id,
       service_worker_registration_id, std::move(callback));
 }
 
+void BackgroundFetchServiceImpl::AddRegistrationObserver(
+    int64_t service_worker_registration_id,
+    const url::Origin& origin,
+    const std::string& id,
+    blink::mojom::BackgroundFetchRegistrationObserverPtr observer) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  background_fetch_context_->AddRegistrationObserver(
+      service_worker_registration_id, origin, id, std::move(observer));
+}
+
 bool BackgroundFetchServiceImpl::ValidateId(const std::string& id) {
   if (id.empty() || id.size() > kMaxIdLength) {
     bad_message::ReceivedBadMessage(render_process_id_,

@@ -25,6 +25,7 @@ namespace content {
 class BackgroundFetchJobController;
 struct BackgroundFetchOptions;
 class BackgroundFetchRegistrationId;
+class BackgroundFetchRegistrationNotifier;
 class BlobHandle;
 class BrowserContext;
 class ServiceWorkerContextWrapper;
@@ -56,6 +57,14 @@ class CONTENT_EXPORT BackgroundFetchContext
   // nullptr if it does not exist. Must be immediately used by the caller.
   BackgroundFetchJobController* GetActiveFetch(
       const BackgroundFetchRegistrationId& registration_id) const;
+
+  // Verifies the validity of the given registration properties and registers
+  // the |observer| to be notified of progress events when appropriate.
+  void AddRegistrationObserver(
+      int64_t service_worker_registration_id,
+      const url::Origin& origin,
+      const std::string& id,
+      blink::mojom::BackgroundFetchRegistrationObserverPtr observer);
 
   BackgroundFetchDataManager& data_manager() { return data_manager_; }
 
@@ -103,6 +112,8 @@ class CONTENT_EXPORT BackgroundFetchContext
   BackgroundFetchDataManager data_manager_;
   BackgroundFetchEventDispatcher event_dispatcher_;
   BackgroundFetchDelegateProxy delegate_proxy_;
+
+  std::unique_ptr<BackgroundFetchRegistrationNotifier> registration_notifier_;
 
   // Map of the Background Fetch fetches that are currently in-progress. Must
   // be destroyed before |data_manager_|.

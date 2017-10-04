@@ -69,6 +69,12 @@ class BackgroundFetchBridge final
   // invoke the |callback| with the ids when the Mojo call has completed.
   void GetIds(GetIdsCallback);
 
+  // Registers the |observer| to receive progress events for the background
+  // fetch registration identified by |id|.
+  void AddRegistrationObserver(
+      const String& id,
+      mojom::blink::BackgroundFetchRegistrationObserverPtr);
+
  private:
   explicit BackgroundFetchBridge(ServiceWorkerRegistration&);
 

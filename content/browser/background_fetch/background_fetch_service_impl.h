@@ -61,6 +61,11 @@ class CONTENT_EXPORT BackgroundFetchServiceImpl
   void GetIds(int64_t service_worker_registration_id,
               const url::Origin& origin,
               GetIdsCallback callback) override;
+  void AddRegistrationObserver(
+      int64_t service_worker_registration_id,
+      const url::Origin& origin,
+      const std::string& id,
+      blink::mojom::BackgroundFetchRegistrationObserverPtr observer) override;
 
  private:
   // Validates and returns whether the |id| contains a valid value. The

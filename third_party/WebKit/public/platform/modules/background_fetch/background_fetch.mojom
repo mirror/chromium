@@ -46,6 +46,15 @@ struct BackgroundFetchRegistration {
   string title;
 };
 
+interface BackgroundFetchRegistrationObserver {
+  // Notifies the BackgroundFetchRegistration about progress in the fetches that
+  // are part of it. The JavaScript `progress` event will be fired.
+  OnProgress(uint64 upload_total,
+             uint64 uploaded,
+             uint64 download_total,
+             uint64 downloaded);
+};
+
 interface BackgroundFetchService {
   // Creates a new Background Fetch registration identified by |id| with the
   // given |options| for the sequence of |requests|.
@@ -85,4 +94,9 @@ interface BackgroundFetchService {
   GetIds(int64 service_worker_registration_id, url.mojom.Origin origin)
       => (BackgroundFetchError error,
           array<string> ids);
+
+  // Registers the |observer| to receive events for the given registration.
+  AddRegistrationObserver(int64 service_worker_registration_id,
+                          url.mojom.Origin origin, string id,
+                          BackgroundFetchRegistrationObserver observer);
 };
