@@ -48,6 +48,10 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
 
   AppMenu* app_menu_for_testing() { return menu_.get(); }
 
+  void set_background_color_needed(bool background_color_needed) {
+    background_color_needed_ = background_color_needed;
+  }
+
   // Whether the app/hotdogs menu is currently showing.
   bool IsMenuShowing() const;
 
@@ -90,6 +94,7 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
   std::unique_ptr<views::LabelButtonBorder> CreateDefaultBorder()
       const override;
   gfx::Rect GetThemePaintRect() const override;
+  void PaintButtonContents(gfx::Canvas* canvas) override;
   bool GetDropFormats(
       int* formats,
       std::set<ui::Clipboard::FormatType>* format_types) override;
@@ -123,6 +128,10 @@ class AppMenuButton : public views::MenuButton, public TabStripModelObserver {
 
   // True if the app menu should use the new animated icon.
   bool should_use_new_icon_ = false;
+
+  // True if the app menu button should set a background color when painting to
+  // draw attention to the button itself.
+  bool background_color_needed_ = false;
 
   // Any trailing margin to be applied. Used when the browser is in
   // a maximized state to extend to the full window width.

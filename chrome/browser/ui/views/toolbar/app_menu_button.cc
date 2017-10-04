@@ -25,6 +25,9 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
+#include "third_party/skia/include/core/SkColorFilter.h"
+#include "third_party/skia/include/effects/SkBlurMaskFilter.h"
+#include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -252,6 +255,19 @@ gfx::Rect AppMenuButton::GetThemePaintRect() const {
   gfx::Rect rect(MenuButton::GetThemePaintRect());
   rect.Inset(0, 0, margin_trailing_, 0);
   return rect;
+}
+
+void AppMenuButton::PaintButtonContents(gfx::Canvas* canvas) {
+  if (background_color_needed_) {
+    cc::PaintFlags flags;
+    flags.setAntiAlias(true);
+    const SkColor stroke_color = GetNativeTheme()->GetSystemColor(
+        ui::NativeTheme::kColorId_ProminentButtonColor);
+    flags.setColor(stroke_color);
+    canvas->DrawRect(GetLocalBounds(), flags);
+  } else {
+    views::MenuButton::PaintButtonContents(canvas);
+  }
 }
 
 bool AppMenuButton::GetDropFormats(
