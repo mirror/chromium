@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "83da7f86_abc47ccd",
+        "filename": "device/hid/hid_manager_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-04T00:22:55Z",
+      "side": 1,
+      "message": "Yes, it is probably safe but there is nothing stopping it from being unsafe. Using std::unique_ptr here to properly document the transfer of ownership makes it definitely safe.",
+      "parentUuid": "fad1c88a_f4f0e3f6",
+      "revId": "a8e5d67214379e268752c488ab591153a94e26e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edd8af64_9a3b2fbe",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 13
