@@ -354,7 +354,9 @@ std::string GetSpdyProxyAuthValue() {
 
 bool IsGoogleChromeAPIKeyUsed() {
 #if defined(GOOGLE_CHROME_BUILD) || defined(USE_OFFICIAL_GOOGLE_API_KEYS)
-  return true;
+  // Make sure it is not overwritten by command line.
+  const std::string client_id = g_api_key_cache.Get().GetClientID(CLIENT_MAIN);
+  return client_id == GOOGLE_CLIENT_ID_MAIN || client_id == DUMMY_API_TOKEN;
 #else
   return false;
 #endif
