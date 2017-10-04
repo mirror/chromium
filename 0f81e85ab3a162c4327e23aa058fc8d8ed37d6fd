@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb8f30d8_a474beae",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-04T20:54:31Z",
+      "side": 1,
+      "message": "This part is new. The rest of the block was just moved into the class, replacing a param with a member.",
+      "range": {
+        "startLine": 2613,
+        "startChar": 0,
+        "endLine": 2616,
+        "endChar": 58
+      },
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
