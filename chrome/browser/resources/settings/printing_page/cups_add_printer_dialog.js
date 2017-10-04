@@ -127,20 +127,20 @@ Polymer({
     // We're abandoning discovery in favor of manual specification, so
     // drop the selection if one exists.
     this.selectedPrinter = getEmptyPrinter_();
-    this.$$('add-printer-dialog').close();
+    this.close();
     this.fire('open-manually-add-printer-dialog');
   },
 
   /** @private */
   onCancelTap_: function() {
     this.stopDiscoveringPrinters_();
-    this.$$('add-printer-dialog').close();
+    this.close();
   },
 
   /** @private */
   switchToConfiguringDialog_: function() {
     this.stopDiscoveringPrinters_();
-    this.$$('add-printer-dialog').close();
+    this.close();
     this.fire('open-configuring-printer-dialog');
   },
 });
@@ -205,9 +205,14 @@ Polymer({
     },
   },
 
+  close: function() {
+    this.$$('add-printer-dialog').close();
+    this.fire('setup-abandoned');
+  },
+
   /** @private */
   onCancelTap_: function() {
-    this.$$('add-printer-dialog').close();
+    this.close();
   },
 
   /** @private */
@@ -242,14 +247,14 @@ Polymer({
         loadTimeData.getStringF('printerConfiguringMessage', this.printerName);
   },
 
-  /** @private */
-  onCancelConfiguringTap_: function() {
+  close: function() {
     this.$$('add-printer-dialog').close();
     this.fire('configuring-dialog-closed');
   },
 
-  close: function() {
-    this.$$('add-printer-dialog').close();
+  /** @private */
+  onCancelConfiguringTap_: function() {
+    this.close();
   },
 });
 
@@ -310,6 +315,7 @@ Polymer({
     'open-discovery-printers-dialog': 'openDiscoveryPrintersDialog_',
     'open-manufacturer-model-dialog': 'openManufacturerModelDialog_',
     'no-detected-printer': 'onNoDetectedPrinter_',
+    'setup-abandoned': 'setupAbandoned_',
   },
 
   /** @override */
@@ -457,6 +463,12 @@ Polymer({
       this.newPrinter = getEmptyPrinter_();
       this.openManuallyAddPrinterDialog_();
     }
+  },
+
+  /** @private */
+  setupAbandoned_: function() {
+    settings.CupsPrintersBrowserProxyImpl.getInstance().cancelPrinterSetUp(
+        this.newPrinter);
   },
 
   /**
