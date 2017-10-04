@@ -16,6 +16,24 @@
       "revId": "234549d7facd3a965d128bcaa8441790c62cc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586aeef5_1b215ef4",
+        "filename": "device/vr/features/features.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-10-04T19:55:58Z",
+      "side": 1,
+      "message": "I think I had blindly copied the above line.  Removed.",
+      "parentUuid": "1f01090f_223529e6",
+      "revId": "234549d7facd3a965d128bcaa8441790c62cc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
