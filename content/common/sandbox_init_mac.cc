@@ -11,8 +11,12 @@
 #include "content/common/sandbox_mac.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/sandbox_init.h"
+#include "media/gpu/vt_video_decode_accelerator_mac.h"
 #include "sandbox/mac/seatbelt.h"
 #include "services/service_manager/sandbox/sandbox_type.h"
+#include "third_party/icu/source/common/unicode/uchar.h"
+#include "ui/base/layout.h"
+#include "ui/gl/init/gl_factory.h"
 
 namespace content {
 
@@ -23,6 +27,16 @@ bool InitializeSandbox(service_manager::SandboxType sandbox_type,
                        base::OnceClosure hook) {
   // Warm up APIs before turning on the sandbox.
   Sandbox::SandboxWarmup(sandbox_type);
+
+  // Peform content-specific warm-ups.
+  if (sandbox_type == service_manager::SANDBOX_TYPE_GPU) {
+    // Preload either the desktop GL or the osmesa so, depending on the
+    // --use-gl flag.
+    gl::init::InitializeGLOneOff();
+
+    // Preload VideoToolbox.
+    media::InitializeVideoToolbox();
+  }
 
   // Execute the post warmup callback.
   if (!hook.is_null())
