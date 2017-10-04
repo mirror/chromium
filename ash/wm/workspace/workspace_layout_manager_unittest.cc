@@ -60,6 +60,10 @@
 #include "ui/events/base_event_utils.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_test_util.h"
+#include "ui/keyboard/keyboard_ui.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/window_util.h"
@@ -116,9 +120,10 @@ display::Display GetDisplayNearestWindow(aura::Window* window) {
   return display::Screen::GetScreen()->GetDisplayNearestWindow(window);
 }
 
-void DisableNewVKMode() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  command_line->AppendSwitch(::switches::kDisableNewVirtualKeyboardBehavior);
+void EnableStickyKeyboard() {
+  keyboard::KeyboardController::ResetInstance(new keyboard::KeyboardController(
+      base::MakeUnique<keyboard::FakeKeyboardUI>(), nullptr));
+  keyboard::KeyboardController::GetInstance()->set_keyboard_locked(true);
 }
 
 }  // namespace
@@ -1534,7 +1539,8 @@ class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
 
   void ShowKeyboard() {
     layout_manager_->OnKeyboardBoundsChanging(keyboard_bounds_);
-    restore_work_area_insets_ = GetPrimaryDisplay().GetWorkAreaInsets();
+    restore_work_area_insets_ =
+        display::Screen::GetScreen()->GetPrimaryDisplay().GetWorkAreaInsets();
     Shell::Get()->SetDisplayWorkAreaInsets(
         Shell::GetPrimaryRootWindow(),
         gfx::Insets(0, 0, keyboard_bounds_.height(), 0));
@@ -1548,7 +1554,8 @@ class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
 
   // Initializes the keyboard bounds using the bottom half of the work area.
   void InitKeyboardBounds() {
-    gfx::Rect work_area(GetPrimaryDisplay().work_area());
+    gfx::Rect work_area(
+        display::Screen::GetScreen()->GetPrimaryDisplay().work_area());
     keyboard_bounds_.SetRect(work_area.x(),
                              work_area.y() + work_area.height() / 2,
                              work_area.width(), work_area.height() / 2);
@@ -1568,7 +1575,7 @@ class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
 // is resized to fit the remaining workspace area.
 TEST_F(WorkspaceLayoutManagerKeyboardTest, ChildWindowFocused) {
   // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
+  EnableStickyKeyboard();
 
   // See comment at top of file for why this is needed.
   CustomFrameViewAshSizeLock min_size_lock;
@@ -1601,7 +1608,7 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest, ChildWindowFocused) {
 
 TEST_F(WorkspaceLayoutManagerKeyboardTest, AdjustWindowForA11yKeyboard) {
   // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
+  EnableStickyKeyboard();
 
   // See comment at top of file for why this is needed.
   CustomFrameViewAshSizeLock min_size_lock;
@@ -1654,7 +1661,7 @@ TEST_F(WorkspaceLayoutManagerKeyboardTest, AdjustWindowForA11yKeyboard) {
 
 TEST_F(WorkspaceLayoutManagerKeyboardTest, IgnoreKeyboardBoundsChange) {
   // Append the flag to cause work area change in non-sticky mode.
-  DisableNewVKMode();
+  EnableStickyKeyboard();
   InitKeyboardBounds();
 
   std::unique_ptr<aura::Window> window(CreateTestWindow(keyboard_bounds()));
