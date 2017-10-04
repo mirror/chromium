@@ -16,6 +16,24 @@
       "revId": "e54d4cd4d44206d7454e315a6993d07178885826",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ef8a30_50bab7ac",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 40692,
+      "author": {
+        "id": 1243287
+      },
+      "writtenOn": "2017-10-04T23:39:28Z",
+      "side": 1,
+      "message": "I split it out into three separate histograms",
+      "parentUuid": "7dd57f02_5a005e68",
+      "revId": "e54d4cd4d44206d7454e315a6993d07178885826",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
