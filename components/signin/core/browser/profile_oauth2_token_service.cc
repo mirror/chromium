@@ -6,13 +6,17 @@
 
 #include "build/build_config.h"
 #include "components/pref_registry/pref_registry_syncable.h"
+#include "components/signin/core/browser/account_info.h"
+#include "components/signin/core/browser/account_tracker_service.h"
 #if defined(OS_IOS)
 #include "components/signin/core/common/signin_pref_names.h"
 #endif
 
 ProfileOAuth2TokenService::ProfileOAuth2TokenService(
-    std::unique_ptr<OAuth2TokenServiceDelegate> delegate)
-    : OAuth2TokenService(std::move(delegate)), all_credentials_loaded_(false) {
+    std::unique_ptr<OAuth2TokenServiceDelegate> delegate,
+    AccountTrackerService* account_tracker)
+    : OAuth2TokenService(std::move(delegate)),
+      account_tracker_(account_tracker) {
   AddObserver(this);
 }
 
@@ -33,6 +37,7 @@ void ProfileOAuth2TokenService::RegisterProfilePrefs(
 void ProfileOAuth2TokenService::Shutdown() {
   CancelAllRequests();
   GetDelegate()->Shutdown();
+  account_tracker_ = nullptr;
 }
 
 void ProfileOAuth2TokenService::LoadCredentials(
@@ -47,6 +52,14 @@ bool ProfileOAuth2TokenService::AreAllCredentialsLoaded() {
 void ProfileOAuth2TokenService::UpdateCredentials(
     const std::string& account_id,
     const std::string& refresh_token) {
+#ifndef NDEBUG
+  // Check that the account was previously seeded in the account tracker service
+  // before updating the credentials.
+  AccountInfo account_info = account_tracker_->GetAccountInfo(account_id);
+  DCHECK_EQ(account_id, account_info.account_id);
+  DCHECK(!account_info.email.empty());
+  DCHECK(!account_info.gaia.empty());
+#endif
   GetDelegate()->UpdateCredentials(account_id, refresh_token);
 }
 

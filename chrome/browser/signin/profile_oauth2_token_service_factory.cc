@@ -66,6 +66,6 @@ KeyedService* ProfileOAuth2TokenServiceFactory::BuildServiceInstanceFor(
       AccountTrackerServiceFactory::GetInstance()->GetForProfile(profile));
 #endif
   ProfileOAuth2TokenService* service =
-      new ProfileOAuth2TokenService(std::move(delegate));
+      new ProfileOAuth2TokenService(std::move(delegate), AccountTrackerServiceFactory::GetInstance()->GetForProfile(profile));
   return service;
 }
