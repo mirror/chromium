@@ -22,6 +22,29 @@
       "revId": "b3cde948d10b5fe0d422f3b75bca081614a86de5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25689e6d_53b0f469",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxUrlEmphasizerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-04T09:49:03Z",
+      "side": 1,
+      "message": "I wonder whether just removing the calls to `CommandLine.init(null)` is enough... The base runner already has that, and it\u0027s at the right point. The Chrome runner initializes the command line from the file on disk, but is that what we want in most cases? It just feels like that might cause inadvertent side effects (e.g. from having an old command line file lying around on disk), which then causes developers to add calls to CommandLine.init(null), which fix that issue temporarily but cause a DCHECK later down the line because the native command line gets reset...",
+      "range": {
+        "startLine": 41,
+        "startChar": 9,
+        "endLine": 41,
+        "endChar": 15
+      },
+      "revId": "b3cde948d10b5fe0d422f3b75bca081614a86de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
