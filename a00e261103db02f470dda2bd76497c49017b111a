@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c35392ae_b2674293",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this \"... show surveys related to the Chrome Home experiment.\"",
+      "range": {
+        "startLine": 27,
+        "startChar": 59,
+        "endLine": 27,
+        "endChar": 74
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cf6847_34da91aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "nit: startDownload?",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 36
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef92963_0dd1b1a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "EmptyTabModelSelectorObserver will provide an empty implementation for the methods you\u0027re not implementing.",
+      "range": {
+        "startLine": 94,
+        "startChar": 47,
+        "endLine": 94,
+        "endChar": 69
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514288c2_f30db6d3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "This notification will occur for any tab added to the model, including those in the background. I think it makes more sense to add a TabModelObserver to the tab model and listen for #didSelectTab().\n\nWhen the appropriate TabModel* event happens, we can re-do the check for tab !\u003d null \u0026\u0026 tab.getWebContents() !\u003d null to make sure we can now show the survey. If the checks pass, we should remove the observer.",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 51
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05dbfd9_8cdc517f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "Let\u0027s add do one of the following to make sure we capture the discussion from the previous patchset:\n - add a TODO(danielpark) with some details about improving this in the future\n - add a comment to the existing but with details about this (and other outstanding items)\n - create a new bug",
+      "range": {
+        "startLine": 136,
+        "startChar": 20,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f417e417_eefe1700",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "This code comment is out of date since there is no longer an #initialize() method.",
+      "range": {
+        "startLine": 13,
+        "startChar": 58,
+        "endLine": 13,
+        "endChar": 92
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5691175_1e8fece7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "nit: s/started/run",
+      "range": {
+        "startLine": 37,
+        "startChar": 84,
+        "endLine": 37,
+        "endChar": 91
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a28a3d_8592e7a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-04T23:48:04Z",
+      "side": 1,
+      "message": "nit: remove \"by the survey\".",
+      "range": {
+        "startLine": 55,
+        "startChar": 39,
+        "endLine": 55,
+        "endChar": 72
+      },
+      "revId": "a00e261103db02f470dda2bd76497c49017b111a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
