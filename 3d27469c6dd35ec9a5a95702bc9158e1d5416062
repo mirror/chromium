@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c9a387c_51257f6a",
+        "filename": "components/arc/bluetooth/bluetooth_type_converters.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-10-04T09:08:59Z",
+      "side": 0,
+      "message": "Shouldn\u0027t this be null in JSON-encoded form, not empty string? I guess you technically don\u0027t need this since the decoder defaults to creating NULLTYPE values, but it\u0027d still be more consistent (plus you can drop this case handler).",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "3d27469c6dd35ec9a5a95702bc9158e1d5416062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
