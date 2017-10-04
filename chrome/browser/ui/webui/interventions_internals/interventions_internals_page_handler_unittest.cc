@@ -26,13 +26,12 @@ constexpr char kClientLoFiDescription[] = "Client LoFi Previews";
 constexpr char kOfflineDesciption[] = "Offline Previews";
 
 std::unordered_map<std::string, mojom::PreviewsStatusPtr> passedInParams;
+std::vector<mojom::MessageLogPtr> passedInLogs;
 
 void MockGetPreviewsEnabledCallback(
     std::unordered_map<std::string, mojom::PreviewsStatusPtr> params) {
   passedInParams = std::move(params);
 }
-
-}  // namespace
 
 class InterventionsInternalsPageHandlerTest : public testing::Test {
  public:
@@ -54,6 +53,7 @@ class InterventionsInternalsPageHandlerTest : public testing::Test {
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
+  TestPreviewsLogger* logger_;
   mojom::InterventionsInternalsPageHandlerPtr pageHandlerPtr;
   mojom::InterventionsInternalsPageHandlerRequest request;
   std::unique_ptr<InterventionsInternalsPageHandler> pageHandler;
@@ -144,3 +144,5 @@ TEST_F(InterventionsInternalsPageHandlerTest, OfflinePreviewsEnabled) {
   EXPECT_EQ(kOfflineDesciption, offline_previews->second->description);
   EXPECT_TRUE(offline_previews->second->enabled);
 }
+
+}  // namespace
