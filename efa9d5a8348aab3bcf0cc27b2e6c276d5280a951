@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e160b4_9bd57d36",
+        "filename": "cc/layers/render_surface_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-04T16:40:12Z",
+      "side": 1,
+      "message": "Where does this come from? ceil((2 * 1000) / some tile size)^2? I think this can be made clear by calculating it in the expectation.",
+      "range": {
+        "startLine": 156,
+        "startChar": 12,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "efa9d5a8348aab3bcf0cc27b2e6c276d5280a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
