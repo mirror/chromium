@@ -16,6 +16,24 @@
       "revId": "c23238753932312c791912e90d8e3c00f38aacd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c708dfbc_ccb61658",
+        "filename": "third_party/errorprone/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T20:02:20Z",
+      "side": 0,
+      "message": "Really good question. Removed, will commit if bots are happy.",
+      "parentUuid": "efc46dde_30c3f39b",
+      "revId": "c23238753932312c791912e90d8e3c00f38aacd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
