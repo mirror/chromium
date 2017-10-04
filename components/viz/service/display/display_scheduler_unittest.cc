@@ -420,6 +420,11 @@ TEST_F(DisplaySchedulerWaitForAllSurfacesTest, WaitForAllSurfacesBeforeDraw) {
   scheduler_.ProcessSurfaceDamage(sid1, ack, false);
   EXPECT_GE(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
+  // Stray BeginFrameAcks for older BeginFrames are ignored.
+  ack.sequence_number--;
+  scheduler_.ProcessSurfaceDamage(sid1, ack, false);
+  EXPECT_GE(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   scheduler_.BeginFrameDeadlineForTest();
 
   // System should be idle now because we had a frame without damage. Restore it
