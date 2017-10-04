@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf8dcaf6_d4cee84a",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab1cede_15f02100",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24b1d213_ac4e8675",
         "filename": "ash/session/session_controller.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c564dc41_e183ad43",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:46:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b1d213_ac4e8675",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +201,24 @@
       "side": 1,
       "message": "I guess it is arguable of whether to add it here. For a), we can move the boolean flag into SessionController to provide similar test support. For b), I understand it makes sense to put this side-by-side with RequestShutdown but OTOH, sign-out is a user session concept. \n\nI am slightly inclined to put it in SessionController but don\u0027t feel strong enough to block the CL.",
       "parentUuid": "51372162_d3cc3f7c",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d65f57_96cf10f4",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-04T22:46:31Z",
+      "side": 1,
+      "message": "Fair enough. Done.",
+      "parentUuid": "8ddc044a_1149eb6a",
       "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
