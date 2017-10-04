@@ -149,6 +149,10 @@ class ProfileInfoCache : public ProfileInfoInterface,
   bool GetProfileAttributesWithPath(const base::FilePath& path,
                                     ProfileAttributesEntry** entry) override;
 
+  // Updates the position of the profile at the given index so that the list
+  // of profiles is still sorted.
+  void UpdateSortForProfileIndex(size_t index);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ProfileAttributesStorageTest,
                            DownloadHighResAvatarTest);
@@ -161,10 +165,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
   std::vector<std::string>::iterator FindPositionForProfile(
       const std::string& search_key,
       const base::string16& search_name);
-
-  // Updates the position of the profile at the given index so that the list
-  // of profiles is still sorted.
-  void UpdateSortForProfileIndex(size_t index);
 
   // Will be removed SOON with ProfileInfoCache tests. Do not use!
   // Loads or uses an already loaded high resolution image of the

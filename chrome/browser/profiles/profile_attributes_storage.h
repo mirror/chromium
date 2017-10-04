@@ -92,10 +92,29 @@ class ProfileAttributesStorage
       const std::string& key,
       const base::FilePath& image_path) const;
 
+  // Saves the avatar |image| at |image_path|. This is used both for the GAIA
+  // profile pictures and the ProfileAvatarDownloader that is used to download
+  // the high res avatars.
+  void SaveAvatarImageAtPath(const base::FilePath& profile_path,
+                             const gfx::Image* image,
+                             const std::string& key,
+                             const base::FilePath& image_path);
+
+  // Save the GAIA image of a profile, and returns the file name of the new
+  // avatar image. Returns an empty string if |image| is null.
+  std::string ProfileAttributesStorage::SaveGAIAImageAndGetNewAvatarFileName(
+      const base::FilePath& profile_path,
+      const gfx::Image* image,
+      const std::string& key,
+      const std::string& old_file_name);
+
   // Checks whether the high res avatar at index |icon_index| exists, and if it
   // does not, calls |DownloadHighResAvatar|.
   void DownloadHighResAvatarIfNeeded(size_t icon_index,
                                      const base::FilePath& profile_path);
+
+  bool HasCachedAvatarImage(const std::string& storage_key);
+  void EraseCachedAvatarImage(const std::string& storage_key);
 
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
@@ -111,6 +130,8 @@ class ProfileAttributesStorage
 
   // Notifies observers. The following methods are accessed by
   // ProfileAttributesEntry.
+  void NotifyOnProfileNameChanged(const base::FilePath& profile_path,
+                                  const base::string16& old_profile_name) const;
   void NotifyOnProfileAvatarChanged(const base::FilePath& profile_path) const;
 
  protected:
@@ -124,14 +145,6 @@ class ProfileAttributesStorage
   // with path |profile_path|.
   void DownloadHighResAvatar(size_t icon_index,
                              const base::FilePath& profile_path);
-
-  // Saves the avatar |image| at |image_path|. This is used both for the GAIA
-  // profile pictures and the ProfileAvatarDownloader that is used to download
-  // the high res avatars.
-  void SaveAvatarImageAtPath(const base::FilePath& profile_path,
-                             const gfx::Image* image,
-                             const std::string& key,
-                             const base::FilePath& image_path);
 
   PrefService* prefs_;
   base::FilePath user_data_dir_;

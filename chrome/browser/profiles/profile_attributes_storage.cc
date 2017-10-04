@@ -102,6 +102,11 @@ void SaveBitmap(std::unique_ptr<ImageData> data,
                                    callback);
 }
 
+void DeleteBitmap(const base::FilePath& image_path) {
+  base::AssertBlockingAllowed();
+  base::DeleteFile(image_path, false);
+}
+
 void RunCallbackIfFileMissing(const base::FilePath& file_path,
                               const base::Closure& callback) {
   base::AssertBlockingAllowed();
@@ -325,12 +330,24 @@ const gfx::Image* ProfileAttributesStorage::LoadAvatarPictureFromPath(
   return nullptr;
 }
 
+bool ProfileAttributesStorage::HasCachedAvatarImage(
+    const std::string& storage_key) {
+  return cached_avatar_images_.count(storage_key);
+}
+
 void ProfileAttributesStorage::AddObserver(Observer* obs) {
   observer_list_.AddObserver(obs);
 }
 
 void ProfileAttributesStorage::RemoveObserver(Observer* obs) {
   observer_list_.RemoveObserver(obs);
+}
+
+void ProfileAttributesStorage::NotifyOnProfileNameChanged(
+    const base::FilePath& profile_path,
+    const base::string16& old_profile_name) const {
+  for (auto& observer : observer_list_)
+    observer.OnProfileNameChanged(profile_path, old_profile_name);
 }
 
 void ProfileAttributesStorage::NotifyOnProfileAvatarChanged(
@@ -428,6 +445,34 @@ void ProfileAttributesStorage::SaveAvatarImageAtPath(
         FROM_HERE,
         base::BindOnce(&SaveBitmap, base::Passed(&data), image_path, callback));
   }
+}
+
+std::string ProfileAttributesStorage::SaveGAIAImageAndGetNewAvatarFileName(
+    const base::FilePath& profile_path,
+    const gfx::Image* image,
+    const std::string& key,
+    const std::string& old_file_name) {
+  if (!image) {
+    // Delete the old bitmap from cache.
+    cached_avatar_images_.erase(key);
+
+    // If there is a old bitmap, delete it from disk.
+    if (!old_file_name.empty()) {
+      base::FilePath image_path = profile_path.AppendASCII(old_file_name);
+      file_task_runner_->PostTask(FROM_HERE,
+                                  base::BindOnce(&DeleteBitmap, image_path));
+    }
+    return std::string();
+  }
+
+  std::string new_file_name =
+      old_file_name.empty() ? profiles::kGAIAPictureFileName : old_file_name;
+  base::FilePath image_path = profile_path.AppendASCII(new_file_name);
+
+  // Save the new bitmap to disk, and update the cache.
+  SaveAvatarImageAtPath(profile_path, image, key, image_path);
+
+  return new_file_name;
 }
 
 void ProfileAttributesStorage::OnAvatarPictureLoaded(
