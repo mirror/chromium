@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c495b8b6_c64da0e6",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T15:10:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b7c02c4_955b6d80",
+      "revId": "f0899633a36efc6198bebabed2f8a9bd4e34c314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3878aaae_b4d8a95d",
         "filename": "chrome/browser/ui/views/external_protocol_dialog_browsertest.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5db7dc84_a78b5e54",
+        "filename": "chrome/browser/ui/views/external_protocol_dialog_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T15:10:27Z",
+      "side": 1,
+      "message": "There 2 things are equal / equivalent: web_contents-\u003eGetMainFrame()-\u003eGetProcess() \u003d\u003d web_contents-\u003eGetRenderViewHost()-\u003eGetProcess().\n\nI am using the latter, because the pair (process_id, routing_id) in the code here identifies a RenderView (not a RenderFrame).  In other pieces of code (where the pair identifies a RenderFrame) I did indeed use web_contents-\u003eGetMainFrame()-\u003eGetProcess() - for example see https://chromium-review.googlesource.com/c/chromium/src/+/689136/2/chrome/browser/media/webrtc/media_stream_devices_controller_browsertest.cc.",
+      "parentUuid": "3878aaae_b4d8a95d",
+      "revId": "f0899633a36efc6198bebabed2f8a9bd4e34c314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd8b19d4_28a5f6a6",
         "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "f0899633a36efc6198bebabed2f8a9bd4e34c314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7276ed53_c4351945",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T15:10:27Z",
+      "side": 1,
+      "message": "You are right that this is also a problematic call - thanks for highlighting it.  I think this falls under the umbrella of https://crbug.com/767526 and is something that is beyond the scope of this CL (which is part of an effort to get rid of WebContents::GetRenderProcessHost and hopefully avoid similar issues in the future).",
+      "parentUuid": "fd8b19d4_28a5f6a6",
+      "revId": "f0899633a36efc6198bebabed2f8a9bd4e34c314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
