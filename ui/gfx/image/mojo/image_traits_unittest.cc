@@ -15,6 +15,7 @@
 #include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/image/image_skia_source.h"
 #include "ui/gfx/image/image_unittest_util.h"
+#include "ui/gfx/image/mojo/image_skia_struct_traits.h"
 #include "ui/gfx/image/mojo/image_traits_test_service.mojom.h"
 
 namespace gfx {
@@ -151,6 +152,7 @@ TEST_F(ImageTraitsTest, ImageSkia) {
   image.GetRepresentation(2.0f);
 
   ImageSkia output;
+  // mojom::ImageSkia::[Des|S]erialize does not persist handles in the struct.
   service()->EchoImageSkia(image, &output);
 
   EXPECT_TRUE(test::AreImagesEqual(Image(output), Image(image)));
