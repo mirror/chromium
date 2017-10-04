@@ -326,6 +326,30 @@
     },
     {
       "key": {
+        "uuid": "56601113_a21c9403",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "As discussed f2f, not invoking this function here, but the new API WritersDoomEntryRestartTransactions",
+      "parentUuid": "ff9d2888_3a9aaf19",
+      "range": {
+        "startLine": 162,
+        "startChar": 12,
+        "endLine": 162,
+        "endChar": 37
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df4694e9_9e801bfe",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 45
@@ -394,6 +418,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60513024_2e0561c3",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Yes, its been removed in a later patch.",
+      "parentUuid": "0dc1c62b_fd85b84b",
+      "range": {
+        "startLine": 268,
+        "startChar": 2,
+        "endLine": 268,
+        "endChar": 20
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -560,6 +608,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124d3c16_ef677fbb",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20707115_2ab125a4",
+      "range": {
+        "startLine": 618,
+        "startChar": 20,
+        "endLine": 618,
+        "endChar": 52
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -821,6 +893,30 @@
     },
     {
       "key": {
+        "uuid": "173e7fba_6b55b5d1",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 45
+      },
+      "lineNbr": 637,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Marking Resolved",
+      "parentUuid": "bb31efc5_a0670bf8",
+      "range": {
+        "startLine": 637,
+        "startChar": 20,
+        "endLine": 637,
+        "endChar": 38
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b4a6b40_7d10a3e3",
         "filename": "net/http/http_transaction.h",
         "patchSetId": 45
@@ -841,6 +937,30 @@
       "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb2ae91_8d7852a5",
+        "filename": "net/http/http_transaction.h",
+        "patchSetId": 45
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "The comment has been rephrased in a later patch.",
+      "parentUuid": "3b4a6b40_7d10a3e3",
+      "range": {
+        "startLine": 127,
+        "startChar": 56,
+        "endLine": 127,
+        "endChar": 61
+      },
+      "revId": "4098bb307fb0018fd06f454aee2e8c749048d4b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

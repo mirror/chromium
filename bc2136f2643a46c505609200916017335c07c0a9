@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6eb55cfd_b63dad65",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Not really, It depends on Writers::RemoveTransaction to invoke WritersDoneWritingToEntry or not based on if writers is empty and there is not an async truncate operation pending",
+      "parentUuid": "bec870b8_130b3130",
+      "range": {
+        "startLine": 424,
+        "startChar": 20,
+        "endLine": 424,
+        "endChar": 25
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd56ee0f_f76a0a53",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 49
@@ -45,6 +69,30 @@
       "revId": "bc2136f2643a46c505609200916017335c07c0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b932f8_60b61a6e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Changed the header variable to be the same as this.",
+      "parentUuid": "bd56ee0f_f76a0a53",
+      "range": {
+        "startLine": 201,
+        "startChar": 29,
+        "endLine": 201,
+        "endChar": 46
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ffd05316_936664b6",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Because we are not in do loop but coming here from Read() call.",
+      "parentUuid": "08ee868b_c10bc89b",
+      "range": {
+        "startLine": 386,
+        "startChar": 20,
+        "endLine": 386,
+        "endChar": 38
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70c683e8_57251481",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 49
@@ -91,6 +163,30 @@
       "revId": "bc2136f2643a46c505609200916017335c07c0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32680cee_7baeaa85",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 2012,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Got assigned from done_headers_queue to writers. This completes the headers phase and returns to the consumer who can then invoke Read on it.",
+      "parentUuid": "70c683e8_57251481",
+      "range": {
+        "startLine": 2012,
+        "startChar": 24,
+        "endLine": 2012,
+        "endChar": 33
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "66e4c85e_8b1a0430",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 2082,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "I meant to remove this block. Done",
+      "parentUuid": "65e74606_036062ed",
+      "range": {
+        "startLine": 2082,
+        "startChar": 6,
+        "endLine": 2082,
+        "endChar": 12
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfa5d7a_a5efef2b",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 49
@@ -137,6 +257,30 @@
       "revId": "bc2136f2643a46c505609200916017335c07c0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a9c8b1_97a7b67e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 3045,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "It wasn\u0027t obvious in DoUpdateCachedResponseComplete\nAdded checks there for non-null before calling.",
+      "parentUuid": "1cfa5d7a_a5efef2b",
+      "range": {
+        "startLine": 3045,
+        "startChar": 2,
+        "endLine": 3045,
+        "endChar": 28
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6e5fdd00_60d97bc7",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b13aec0_12079684",
+      "range": {
+        "startLine": 438,
+        "startChar": 12,
+        "endLine": 438,
+        "endChar": 16
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8f59b0d_de1d70e3",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 49
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "156eeeb5_bd0406e7",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 49
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8f59b0d_de1d70e3",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 28
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2024b66_234d799d",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 49
@@ -206,6 +398,30 @@
       "revId": "bc2136f2643a46c505609200916017335c07c0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b47e7f_e69a5959",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 49
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Because the transaction is the one that reads it from the cached entry and uses it in its state machine",
+      "parentUuid": "a2024b66_234d799d",
+      "range": {
+        "startLine": 46,
+        "startChar": 9,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "bc2136f2643a46c505609200916017335c07c0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

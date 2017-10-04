@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "5b3f506a_09772f02",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Invoking the new API WritersDoomEntryRestartTransactions here instead.",
+      "parentUuid": "ad4b3d80_cda8ba87",
+      "range": {
+        "startLine": 104,
+        "startChar": 10,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a582371d_cc8d892e",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 46
@@ -482,6 +506,30 @@
       "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f57b46b_56cee412",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-04T16:16:03Z",
+      "side": 1,
+      "message": "Changed this as discussed in f2f meeting.",
+      "parentUuid": "4de4ddb0_8b36fbb6",
+      "range": {
+        "startLine": 177,
+        "startChar": 6,
+        "endLine": 177,
+        "endChar": 12
+      },
+      "revId": "dd9da7ed53b12900600f3d1ca952cb6cacb948bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
