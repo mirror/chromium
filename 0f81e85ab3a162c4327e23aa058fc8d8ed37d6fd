@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "b69c516a_acf0f69f",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-04T23:29:24Z",
+      "side": 1,
+      "message": "Can this textual description be updated to a valid JSDoc declaration? This file is being type-checked yet (see 1 and 2), so better types would give us better type coverage.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/pdf/elements/viewer-bookmark/compiled_resources2.gyp?l\u003d8\n[2] https://bugs.chromium.org/p/chromium/issues/detail?id\u003d721073\nbut it would be a step in that direction.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49cac16_653b1498",
         "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
         "patchSetId": 10
