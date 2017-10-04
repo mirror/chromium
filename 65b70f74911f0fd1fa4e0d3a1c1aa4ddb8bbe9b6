@@ -22,6 +22,30 @@
       "revId": "65b70f74911f0fd1fa4e0d3a1c1aa4ddb8bbe9b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba76fdd_988b13cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-04T18:27:18Z",
+      "side": 1,
+      "message": "How about let\u0027s only add it to ChromeTabbedActivity? This way we have a good way of turning it on/off through preInflationStartup and finishNativeInitialization.\n\nIdeally I\u0027d prefer if ChromeApplication would call PureJavaExceptionHandler.installHandler. Ideally it would be turned off through native after it calls base::android::InitJavaExceptionReporter() in chrome_main_delegate.cc.",
+      "parentUuid": "bc9b48db_1f7c25f3",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 40
+      },
+      "revId": "65b70f74911f0fd1fa4e0d3a1c1aa4ddb8bbe9b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
