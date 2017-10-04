@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14597de0_61c8927b",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-04T14:53:57Z",
+      "side": 1,
+      "message": "Create a private helper method to return the duration.",
+      "revId": "869d4b0c9c71585a277f48d0a8452e32f0b7fa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadf0ce0_ae93ff3b",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-04T14:53:57Z",
+      "side": 1,
+      "message": "As with slide duration, I think it makes sense to have a default value and a setter method to set this mode.",
+      "revId": "869d4b0c9c71585a277f48d0a8452e32f0b7fa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e1a980_b6e8e56a",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-04T14:53:57Z",
+      "side": 1,
+      "message": "Use an enum. e.g.\nenum Timing {\n  CONSISTENT_SPEED,  // Duration is proportional to current progress.\n  CONSTANT_DURATION, // Duration is always |slide_duration_|\n}\n\n// Timing to use for animation. Defaults to CONSISTENT_SPEED.\nTiming slide_timing_;",
+      "revId": "869d4b0c9c71585a277f48d0a8452e32f0b7fa7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
