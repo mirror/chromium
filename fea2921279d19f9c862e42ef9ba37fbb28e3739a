@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92bbc6cc_6dd70d9e",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-04T17:18:34Z",
+      "side": 1,
+      "message": "|Index| usually refers to a caret or selection. A likely more appropriate term here would be text length or size.",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2467e49c_683ff4cf",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-04T17:18:34Z",
+      "side": 1,
+      "message": "Yikes; good catch.",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd815e96_b0591fc0",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-04T17:18:34Z",
+      "side": 1,
+      "message": "What is 0 here? Let\u0027s make it a named constant e.g.\nconstexpr int32_t kMeaningOfZeroIsWhat \u003d 0;",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "02436d8f_e843f2a6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-10-04T17:18:34Z",
+      "side": 1,
+      "message": "I\u0027m not clear on this change. Doesn\u0027t TalkBack call\nPreviousAtGranularity\nwhen moving backward and not this function?",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
