@@ -22,6 +22,30 @@
       "revId": "a4959cadb614ace466edffe101a87ea66dfaf480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa7b670_5aac560e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-04T23:20:57Z",
+      "side": 1,
+      "message": "No, only if the user clicks on the dialog. So in the case the user presses the back button, it will be hidden without making a decision (and shown again on next startup).",
+      "parentUuid": "1518f6f6_02e4c91c",
+      "range": {
+        "startLine": 355,
+        "startChar": 17,
+        "endLine": 355,
+        "endChar": 59
+      },
+      "revId": "a4959cadb614ace466edffe101a87ea66dfaf480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
