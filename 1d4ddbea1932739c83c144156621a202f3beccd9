@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "693230e2_b91e38ee",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-04T17:54:56Z",
+      "side": 1,
+      "message": "Yeah, that looks much better. Changed it to that.",
+      "parentUuid": "729eab07_187fa646",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d63c07e1_130e6b15",
         "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f631a975_a4f0534b",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-04T17:54:56Z",
+      "side": 1,
+      "message": "I like the flipping better without the extra buffer. Used PixMap::writable_addr32() to make that easier.",
+      "parentUuid": "d63c07e1_130e6b15",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd1b6d43_10c2d24b",
         "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ea654e_0087b105",
+        "filename": "chrome/browser/vr/test/ui_pixel_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-04T17:54:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd1b6d43_10c2d24b",
+      "revId": "1d4ddbea1932739c83c144156621a202f3beccd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
