@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "7c9e0240_48a29680",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2591,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "This goes in the header now.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8f30d8_a474beae",
         "filename": "pdf/pdfium/pdfium_engine.cc",
         "patchSetId": 10
@@ -74,6 +91,115 @@
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80bfebfa_cbf7fe12",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "I\u0027m too lazy to look it up, but when we pass the y-value as is to JS here, is that in the correct coordinate space?",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba88b87_d6ea8142",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb8f30d8_a474beae",
+      "range": {
+        "startLine": 2613,
+        "startChar": 0,
+        "endLine": 2616,
+        "endChar": 58
+      },
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18119a67_10ed8f74",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "Check the return value. As is, |y_in_pixels| goes uninitialized if GetPageYTarget) return false.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40d7f5a1_809cb8cf",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "Probably should make |target| required. Otherwise, what\u0027s the point of calling this method at all?",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c70f99_0d087028",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "Why not make the out param an int* ? Then TraverseBookmarks() won\u0027t have to pass in a LinkTarget solely for the purpose of getting the y field.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774c1631_e18c53cb",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-04T21:40:06Z",
+      "side": 1,
+      "message": "Returns ... and fills ..., just like GetLinkTarget() above.",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
