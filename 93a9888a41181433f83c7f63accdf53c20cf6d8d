@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4d5fd103_68e04b09",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T11:08:10Z",
+      "side": 1,
+      "message": "What I pointed out is that [type\u003d\"html\"] does not seem to have any effect in this CL.\n\nIn files_quick_view.html, I see\n\u003cdiv id\u003d\"innerContentPanel\" type$\u003d\"[[type]]\" ...\nThis means, the type attribute is assigned by |type| property of \u003cfiles-quick-view\u003e, which is \u0027document\u0027. So, this selector does not match any element.\nCould you double check?",
+      "parentUuid": "9133bfd1_d88b3f1f",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be274d18_f0cddcaf",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Thanks for bringing that to my attention, I never completely scrolled down my test html file!\nI\u0027ve made a few tests (specifying margin or border instead of padding, and moving it to pre instead), but neither seemed to solve the issue of the lost pixels at the bottom.\n\nThe problem when not somehow limiting the max height is that pre will be several thousand pixels high, so the browser won\u0027t display the scroll bars. Always displaying the scroll bars will include files that don\u0027t need them. Do you have any idea on how to solve that issue that doesn\u0027t use absolute pixel values (which will cause problems when resizing the window)?",
       "parentUuid": "be274d18_f0cddcaf",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd98792d_4f888f19",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-10-04T11:08:10Z",
+      "side": 1,
+      "message": "Maybe calc() in CSS helps?\nhttps://developer.mozilla.org/en-US/docs/Web/CSS/calc",
+      "parentUuid": "b51ec60d_84a15b51",
       "range": {
         "startLine": 22,
         "startChar": 10,
