@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a9da6b69_beea2fc4",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T23:55:40Z",
+      "side": 1,
+      "message": "I see.  I forgot to check if the delegate was created before trying to send events, which was causing the problems I saw.",
+      "parentUuid": "a10c013c_07c87758",
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4362a11b_7b192c2c",
         "filename": "components/exo/pointer_gesture_pinch_delegate.h",
         "patchSetId": 1
@@ -170,6 +188,30 @@
       "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3426fd14_f62a7222",
+        "filename": "components/exo/pointer_gesture_pinch_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178142
+      },
+      "writtenOn": "2017-10-04T23:55:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6e26b8f8_637f6a24",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "c160df584f04f2403bf54f188f8de6ebc7071cc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
