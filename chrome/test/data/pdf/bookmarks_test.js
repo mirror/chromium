@@ -29,10 +29,19 @@ var tests = [
 
     // Check pages.
     chrome.test.assertEq(0, firstBookmark.page);
-    chrome.test.assertEq(1, firstNestedBookmark.page);
-    chrome.test.assertEq(2, secondBookmark.page);
-    chrome.test.assertEq(undefined, uriBookmark.page);
+    chrome.test.assertEq(166, firstBookmark.y);
+    chrome.test.assertEq(undefined, firstBookmark.uri);
 
+    chrome.test.assertEq(1, firstNestedBookmark.page);
+    chrome.test.assertEq(166, firstNestedBookmark.y);
+    chrome.test.assertEq(undefined, firstNestedBookmark.uri);
+
+    chrome.test.assertEq(2, secondBookmark.page);
+    chrome.test.assertEq(166, secondBookmark.y);
+    chrome.test.assertEq(undefined, secondBookmark.uri);
+
+    chrome.test.assertEq(undefined, uriBookmark.page);
+    chrome.test.assertEq(undefined, uriBookmark.y);
     chrome.test.assertEq('http://www.chromium.org', uriBookmark.uri);
 
     chrome.test.succeed();
