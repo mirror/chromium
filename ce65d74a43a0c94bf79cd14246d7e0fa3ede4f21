@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca595868_9ec7dd34",
+        "filename": "base/i18n/bidi_line_iterator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Done.\n\nYou\u0027re totally right. I\u0027m not sure why I made it so complicated; this way doesn\u0027t require ICU holding onto a pointer to BiDiLineIterator throughout its lifetime.",
+      "parentUuid": "032d73ef_6e88fe32",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cbd7579_c0593cc6",
         "filename": "base/i18n/bidi_line_iterator.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd07a32_5da1f25f",
+        "filename": "base/i18n/bidi_line_iterator.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "I did this as an optimization. I know, premature optimization, but since this is called once per each character of a URL, I thought it would be worth it.\n\nCan\u0027t speak for other architectures, but out of interest I looked at the output of the LLVM x86 compiler. With strchr, it just calls memchr (iterates over a string). With this switch statement, it makes a super duper efficient bit test, equivalent to this:\n\n  c -\u003d 35;\n  return c \u003c\u003d 29 \u0026\u0026 ((0x34801809 \u003e\u003e (c \u0026 0x1f)) \u0026 1) ? U_LEFT_TO_RIGHT\n                                                     : U_BIDI_CLASS_DEFAULT;\n\nAdded a comment explaining that this is for performance.",
+      "parentUuid": "2cbd7579_c0593cc6",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fb7f18b6_0a34e6ff",
+        "filename": "base/i18n/bidi_line_iterator.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6be4755_b53273c7",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e288582c_db0146c4",
         "filename": "base/i18n/bidi_line_iterator_unittest.cc",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d279959_f8497ba5",
+        "filename": "base/i18n/bidi_line_iterator_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Oops, I forgot that was the whole point of adding this file.\n\nI added a test, copied from the new test in RenderText (the interleaved punctuation / Hebrew characters). This makes the test in RenderText a bit redundant (since that\u0027s more of an end-to-end test while this is the unit test of the behaviour), but I think it\u0027s fine to keep it.",
+      "parentUuid": "e288582c_db0146c4",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e1cabe0f_eda5518c",
+        "filename": "base/i18n/bidi_line_iterator_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2254f40_0482328e",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48a2163a_e5ac7295",
         "filename": "chrome/browser/flag_descriptions.h",
         "patchSetId": 22
@@ -101,6 +191,24 @@
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98a34cc6_b6164085",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a2163a_e5ac7295",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4f414bdf_80220e00",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3725,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf7310c_8a2eb4e4",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd99f5a8_a741b369",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 22
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6b7b57c0_a16e9a51",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3764,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "Just a personal style preference (I always use -- in date ranges to approximate an en dash, as explained in [1]: \"the sequence of one, two, or three hyphens could then correspond to the hyphen, en dash, and em dash, respectively\").\n\nBut that\u0027s OK, I\u0027ll change it.\n\n[1] https://en.wikipedia.org/wiki/Dash#Encoding_and_keyboard_shortcuts",
+      "parentUuid": "dd99f5a8_a741b369",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ace37ca0_6ff0a84b",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 22
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-03T15:33:33Z",
       "side": 1,
       "message": "q: is the whitespace before abc intentional? (ditto on line 3806)",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e4c0ee_27c67445",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 3800,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "I don\u0027t know what your client is showing you, but there is no whitespace in that string.\n\n(This weird display issue is kind of why I usually avoid putting Unicode characters in code, but you requested this previously.)",
+      "parentUuid": "ace37ca0_6ff0a84b",
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "b447407e_8a9ddfbb",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "This is imposed by git cl format.",
+      "parentUuid": "185f1903_47d89533",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca068fd3_9d1669ce",
         "filename": "ui/gfx/text_constants.h",
         "patchSetId": 22
@@ -186,6 +366,24 @@
       "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e62299a_1aee3537",
+        "filename": "ui/gfx/text_constants.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-04T09:29:37Z",
+      "side": 1,
+      "message": "git cl format does this too. It must align all the columns but if it\u0027s broken by a full-line comment, it considers it a separate section for the purpose of alignment.\n\nThis would automatically fix itself when the above comment is removed.",
+      "parentUuid": "ca068fd3_9d1669ce",
+      "revId": "ce65d74a43a0c94bf79cd14246d7e0fa3ede4f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
