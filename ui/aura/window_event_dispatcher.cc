@@ -730,18 +730,16 @@ void WindowEventDispatcher::OnWindowBoundsChanged(Window* window,
   }
 }
 
-void WindowEventDispatcher::OnWindowTransforming(Window* window) {
-  if (!host_->window()->Contains(window))
-    return;
-
-  SynthesizeMouseMoveAfterChangeToWindow(window);
+void WindowEventDispatcher::OnWindowTargetTransformChanging(
+    Window* window,
+    const gfx::Transform& new_transform) {
+  if (!synthesize_mouse_move_ && host_->window()->Contains(window))
+    SynthesizeMouseMoveAfterChangeToWindow(window);
 }
 
 void WindowEventDispatcher::OnWindowTransformed(Window* window) {
-  if (!host_->window()->Contains(window))
-    return;
-
-  SynthesizeMouseMoveAfterChangeToWindow(window);
+  if (!synthesize_mouse_move_ && host_->window()->Contains(window))
+    SynthesizeMouseMoveAfterChangeToWindow(window);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
