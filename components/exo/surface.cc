@@ -454,6 +454,12 @@ gfx::Rect Surface::CommitSurfaceHierarchy(
         pending_state_.buffer_scale != state_.buffer_scale ||
         pending_state_.buffer_transform != state_.buffer_transform;
 
+    // If the current state is fully transparent, the last submit frame will not
+    // include the TextureDrawQuad for the resource, so the resource should be
+    // released and need update again.
+    if (!state_.alpha && pending_state_.alpha)
+      needs_update_resource_ = true;
+
     state_ = pending_state_;
     pending_state_.only_visible_on_secure_output = false;
 
