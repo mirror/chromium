@@ -81,6 +81,7 @@
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
+#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
@@ -164,6 +165,7 @@
 #include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/db/database_manager.h"
+#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/security_interstitials/core/ssl_error_ui.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -3294,6 +3296,19 @@ ChromeContentBrowserClient::CreateThrottlesForNavigation(
           BackgroundTabNavigationThrottle::MaybeCreateThrottleFor(handle);
   if (background_tab_navigation_throttle)
     throttles.push_back(std::move(background_tab_navigation_throttle));
+#endif
+
+#if defined(SAFE_BROWSING_DB_LOCAL) && !defined(OS_CHROMEOS)
+  Profile* profile = Profile::FromBrowserContext(
+                      handle->GetWebContents()->GetBrowserContext());
+  safe_browsing::ChromePasswordProtectionService* pps =
+      safe_browsing::ChromePasswordProtectionService::GetPasswordProtectionService(profile);
+  std::unique_ptr<content::NavigationThrottle> password_protection_navigation_throttle =
+    pps->MaybeCreateNavigationThrottle(handle);
+  if (password_protection_navigation_throttle) {
+    LOG(ERROR)<<"Created throttle";
+    throttles.push_back(std::move(password_protection_navigation_throttle));
+  }
 #endif
 
   std::unique_ptr<content::NavigationThrottle> pdf_iframe_throttle =

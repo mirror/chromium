@@ -252,8 +252,16 @@ void ChromePasswordProtectionService::OnUserAction(
           NOTREACHED();
           break;
       }
+      LOG(ERROR)<<"On modal dialog done, Current request size "<<requests().size();
+      for (auto it = requests_.begin(); it != requests_.end(); it++) {
+        if (it->get()->web_contents() == web_contents) {
+          requests_.erase(it);
+          break;
+        }
+      }
       MaybeFinishCollectingThreatDetails(
           web_contents, action == PasswordProtectionService::CHANGE_PASSWORD);
+
       break;
     case PasswordProtectionService::CHROME_SETTINGS:
       DCHECK_EQ(PasswordProtectionService::CHANGE_PASSWORD, action);

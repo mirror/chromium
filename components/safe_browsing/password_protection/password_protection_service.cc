@@ -23,8 +23,10 @@
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/db/whitelist_checker_client.h"
 #include "components/safe_browsing/features.h"
+#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
@@ -155,7 +157,7 @@ bool PasswordProtectionService::ShouldShowModalWarning(
     SyncAccountType account_type,
     VerdictType verdict_type) {
   return base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning) &&
-         trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT &&
+         trigger_type == LoginReputationClientRequest::PASSWORD_REUSE_EVENT;/* &&
          matches_sync_password &&
          account_type ==
              LoginReputationClientRequest::PasswordReuseEvent::GMAIL &&
@@ -163,7 +165,7 @@ bool PasswordProtectionService::ShouldShowModalWarning(
           (verdict_type == LoginReputationClientResponse::LOW_REPUTATION &&
            base::GetFieldTrialParamByFeatureAsBool(
                kGoogleBrandedPhishingWarning, "warn_on_low_reputation",
-               false)));
+               false)));*/
 }
 
 void PasswordProtectionService::OnWarningShown(WebContents* web_contents,
@@ -379,8 +381,9 @@ void PasswordProtectionService::StartRequest(
           password_form_frame_url, matches_sync_password, matching_domains,
           trigger_type, password_field_exists, this, GetRequestTimeoutInMS()));
 
-  request->Start();
-  requests_.insert(std::move(request));
+  auto result = requests_.insert(std::move(request));
+  DCHECK(result.first != requests_.end());
+  (*result.first)->Start();
 }
 
 void PasswordProtectionService::MaybeStartPasswordFieldOnFocusRequest(
@@ -442,12 +445,13 @@ void PasswordProtectionService::RequestFinished(
             request->trigger_type(), request->matches_sync_password(),
             GetSyncAccountType(), response->verdict_type())) {
       ShowModalWarning(request->web_contents(), response->verdict_token());
+      request->SetModalWarningShown(true);
     }
   }
-
+ // content::WebContents* web_contents = request->web_contents();
   // Finished processing this request. Remove it from pending list.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
-    if (it->get() == request) {
+    if (it->get() == request && !request->modal_warning_shown()) {
       requests_.erase(it);
       break;
     }
@@ -790,6 +794,30 @@ void PasswordProtectionService::LogPasswordEntryRequestOutcome(
     UMA_HISTOGRAM_ENUMERATION(kProtectedPasswordEntryRequestOutcomeHistogram,
                               reason, MAX_OUTCOME);
   }
+}
+
+std::unique_ptr<PasswordProtectionNavigationThrottle>
+PasswordProtectionService::MaybeCreateNavigationThrottle(
+    content::NavigationHandle* navigation_handle) {
+  if (!base::FeatureList::IsEnabled(kGaiaPasswordReuseReporting))
+    return nullptr;
+
+  content::WebContents* web_contents = navigation_handle->GetWebContents();
+  LOG(ERROR)<<"MaybeCreateThrottle: request count: "<<requests_.size();
+  for (scoped_refptr<PasswordProtectionRequest> request : requests_) {
+    LOG(ERROR)<<"Request type: "<<request->trigger_type();
+    if (request->web_contents() == web_contents &&
+        request->trigger_type() == safe_browsing::LoginReputationClientRequest::PASSWORD_REUSE_EVENT) {
+      LOG(ERROR)<<"Find a inflight request";
+      bool modal_warning_shown = request->modal_warning_shown();
+      std::unique_ptr<PasswordProtectionNavigationThrottle> throttle =
+          base::MakeUnique<PasswordProtectionNavigationThrottle>(navigation_handle, modal_warning_shown);
+      if (!modal_warning_shown)
+        request->AddThrottle(throttle.get());
+      return throttle;
+    }
+  }
+  return nullptr;
 }
 
 }  // namespace safe_browsing

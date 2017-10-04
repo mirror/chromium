@@ -20,6 +20,8 @@ class GURL;
 
 namespace safe_browsing {
 
+class PasswordProtectionNavigationThrottle;
+
 // UMA metrics
 extern const char kPasswordOnFocusVerdictHistogram[];
 extern const char kAnyPasswordEntryVerdictHistogram[];
@@ -88,6 +90,14 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
   }
 
   bool matches_sync_password() { return matches_sync_password_; }
+
+  bool modal_warning_shown() const {return modal_warning_shown_; }
+
+  void SetModalWarningShown(bool warning_shown) { modal_warning_shown_ = warning_shown;}
+
+  void AddThrottle(PasswordProtectionNavigationThrottle* throttle) {
+    throttles_.insert(throttle);
+  }
 
  private:
   friend class base::RefCountedThreadSafe<PasswordProtectionRequest>;
@@ -168,6 +178,10 @@ class PasswordProtectionRequest : public base::RefCountedThreadSafe<
 
   // Needed for canceling tasks posted to different threads.
   base::CancelableTaskTracker tracker_;
+
+  std::set<PasswordProtectionNavigationThrottle*> throttles_;
+
+  bool modal_warning_shown_;
 
   base::WeakPtrFactory<PasswordProtectionRequest> weakptr_factory_;
   DISALLOW_COPY_AND_ASSIGN(PasswordProtectionRequest);
