@@ -79,11 +79,7 @@ void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
         base::Bind(&SiteDataCountingHelper::GetLocalStorageUsageInfoCallback,
                    base::Unretained(this), special_storage_policy);
     dom_storage->GetLocalStorageUsage(local_callback);
-    tasks_ += 1;
-    auto session_callback =
-        base::Bind(&SiteDataCountingHelper::GetSessionStorageUsageInfoCallback,
-                   base::Unretained(this), special_storage_policy);
-    dom_storage->GetSessionStorageUsage(session_callback);
+    // TODO(dullweber): Enable session storage counting when it works correctly.
   }
 
 #if BUILDFLAG(ENABLE_PLUGINS)
