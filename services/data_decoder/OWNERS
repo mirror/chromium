@@ -1,2 +1,6 @@
 per-file manifest.json=set noparent
 per-file manifest.json=file://ipc/SECURITY_OWNERS
+
+# For JSON related classes.
+bauerb@chromium.org
+rsesek@chromium.org

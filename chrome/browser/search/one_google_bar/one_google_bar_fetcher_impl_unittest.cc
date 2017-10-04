@@ -16,12 +16,12 @@
 #include "base/time/time.h"
 #include "chrome/browser/search/one_google_bar/one_google_bar_data.h"
 #include "components/google/core/browser/google_url_tracker.h"
-#include "components/safe_json/testing_json_parser.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/test_url_fetcher_factory.h"
 #include "net/url_request/url_request_status.h"
 #include "net/url_request/url_request_test_util.h"
+#include "services/data_decoder/public/cpp/testing_json_parser.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -111,7 +111,7 @@ class OneGoogleBarFetcherImplTest : public testing::Test {
   // ThreadTaskRunnerHandle to be set.
   base::MessageLoop message_loop_;
 
-  safe_json::TestingJsonParser::ScopedFactoryOverride factory_override_;
+  data_decoder::TestingJsonParser::ScopedFactoryOverride factory_override_;
 
   net::TestURLFetcherFactory url_fetcher_factory_;
 
