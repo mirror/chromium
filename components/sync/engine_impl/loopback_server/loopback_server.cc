@@ -586,6 +586,9 @@ bool LoopbackServer::DeSerializeState(
   for (int i = 0; i < proto.keystore_keys_size(); ++i)
     keystore_keys_.push_back(proto.keystore_keys(i));
   for (int i = 0; i < proto.entities_size(); ++i) {
+    if (syncer::CommitOnlyTypes().Has(GetModelTypeFromSpecifics(proto.entities(i).entity().specifics()))) {
+      continue;
+    }
     entities_[proto.entities(i).entity().id_string()] =
         LoopbackServerEntity::CreateEntityFromProto(proto.entities(i));
   }

@@ -134,7 +134,7 @@ SyncerError ModelTypeWorker::ProcessGetUpdatesResponse(
         update_entity->client_defined_unique_tag();
 
     // TODO(crbug.com/516866): this wouldn't be true for bookmarks.
-    DCHECK(!client_tag_hash.empty());
+    //DCHECK(!client_tag_hash.empty());
 
     // Prepare the message for the model thread.
     EntityData data;

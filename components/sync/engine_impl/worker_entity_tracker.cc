@@ -135,7 +135,7 @@ void WorkerEntityTracker::ReceiveUpdate(const UpdateResponseData& update) {
     return;
 
   highest_gu_response_version_ = update.response_version;
-  DCHECK(!update.entity->id.empty());
+  //DCHECK(!update.entity->id.empty());
   id_ = update.entity->id;
 
   // Got an applicable update newer than any pending updates. It must be safe
