@@ -393,7 +393,6 @@ public class LibraryLoader {
         if (mCommandLineSwitched) {
             return;
         }
-        nativeInitCommandLine(CommandLine.getJavaSwitchesOrNull());
         CommandLine.enableNativeProxy();
         mCommandLineSwitched = true;
     }
@@ -490,15 +489,13 @@ public class LibraryLoader {
     }
 
     /**
-     * Override the library loader (normally with a mock) for testing.
+     * Override the library loader (normally w ith a mock) for testing.
      * @param loader the mock library loader.
      */
     @VisibleForTesting
     public static void setLibraryLoaderForTesting(LibraryLoader loader) {
         sInstance = loader;
     }
-
-    private native void nativeInitCommandLine(String[] initCommandLine);
 
     // Only methods needed before or during normal JNI registration are during System.OnLoad.
     // nativeLibraryLoaded is then called to register everything else.  This process is called
