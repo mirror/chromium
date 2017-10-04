@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd5110eb_c4b54871",
+        "filename": "chrome/browser/chromeos/attestation/attestation_policy_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "no longer needed.",
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffc473af_9cc7acbe",
+        "filename": "chromeos/attestation/attestation_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "no longer needed.",
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b485149c_e759ef90",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "no longer needed.",
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bba199b_17a76cfc",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "Nobody will be able to understand this sentence in future without looking at the git history.\nCould you just write a short description about what this is?",
+      "range": {
+        "startLine": 77,
+        "startChar": 16,
+        "endLine": 77,
+        "endChar": 26
+      },
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625d3f5c_4cbb0988",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "chromeos::DataMethodCallback was already ambiguous, but chromeos::Data is even more ambiguous.\nHow about something more specific, like TpmAttestationData?",
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a80319d_c1a8ebdc",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-04T11:20:52Z",
+      "side": 1,
+      "message": "This is not wrong, but IIUC it\u0027s not what this value is meant to be.\n(see the service implementation https://chromium.git.corp.google.com/chromiumos/platform2/+/a0cbb19dfc35d23ceda49290195de06e765f0e65/cryptohome/service_monolithic.cc#303)\n\nHow about something like \"True when the operation succeeded\"?",
+      "revId": "d30f87100cdc219013884b3db92ee131fe2e7450",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
