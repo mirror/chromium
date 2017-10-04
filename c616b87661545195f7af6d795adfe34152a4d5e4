@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a0686f_7cd07c4b",
+        "filename": "ui/aura/mus/text_input_client_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T21:21:41Z",
+      "side": 1,
+      "message": "Generally for unix_hacker style functions we inline in the header.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 1
+      },
+      "revId": "c616b87661545195f7af6d795adfe34152a4d5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf54a0f_541dcc45",
+        "filename": "ui/base/ime/chromeos/mock_ime_candidate_window_handler.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-04T21:21:41Z",
+      "side": 1,
+      "message": "You need to initialize the value of this.",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 35
+      },
+      "revId": "c616b87661545195f7af6d795adfe34152a4d5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
