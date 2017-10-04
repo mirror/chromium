@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f70ac79_11880c81",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-04T14:51:19Z",
+      "side": 1,
+      "message": "could you please keep alphabetical order (see the comment at the top of the file)?. I know some changes that broke this rule went in, but we still want to keep it.",
+      "revId": "135a3f76fb31c2d780d9ead3abebedd647fe7457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
