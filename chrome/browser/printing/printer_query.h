@@ -30,6 +30,7 @@ class PrinterQuery : public PrintJobWorkerOwner {
     ASK_USER,
   };
 
+  // Can only be called on IO.
   PrinterQuery(int render_process_id, int render_frame_id);
 
   // PrintJobWorkerOwner implementation.
@@ -54,6 +55,10 @@ class PrinterQuery : public PrintJobWorkerOwner {
 
   // Updates the current settings with |new_settings| dictionary values.
   void SetSettings(std::unique_ptr<base::DictionaryValue> new_settings,
+                   const base::Closure& callback);
+
+  // Updates the current settings with |new_settings|.
+  void SetSettings(std::unique_ptr<printing::PrintSettings> new_settings,
                    const base::Closure& callback);
 
   // Stops the worker thread since the client is done with this object.
