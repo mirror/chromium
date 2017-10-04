@@ -171,29 +171,34 @@ TEST_F(SafeBrowsingApiHandlerUtilTest, NoSubresourceFilterSubTypes) {
 
 TEST_F(SafeBrowsingApiHandlerUtilTest, SubresourceFilterSubTypes) {
   const struct {
-    const char* pattern_type;
+    const char* type;
     const char* warning;
-    ThreatPatternType expected_pattern_type;
+    std::set<std::string> expected_types;
     bool expected_warning;
   } test_cases[] = {
-      {"BETTER_ADS", "true", ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS,
-       true},
-      {"ALL_ADS", "asdf", ThreatPatternType::SUBRESOURCE_FILTER_ALL_ADS, false},
-      {"ABUSIVE_ADS", "false",
-       ThreatPatternType::SUBRESOURCE_FILTER_ABUSIVE_ADS, false},
-      {"", "false", ThreatPatternType::NONE, false},
+      {"BETTER_ADS,ABUSIVE", "true", {"BETTER_ADS", "ABUSIVE"}, true},
+      {"ALL_ADS", "asdf", {"ALL_ADS"}, false},
+      {nullptr, "false", {}, false},
+      {", ", "false", {}, false},
   };
   for (const auto& test_case : test_cases) {
-    std::string json = base::StringPrintf(
-        "{\"matches\":[{\"threat_type\":\"13\", "
-        "\"sf_pattern_type\":\"%s\", \"warning\":\"%s\"}]}",
-        test_case.pattern_type, test_case.warning);
+    std::string json;
+    if (test_case.type) {
+      json = base::StringPrintf(
+          "{\"matches\":[{\"threat_type\":\"13\", "
+          "\"sf_type\":\"%s\", \"warning\":\"%s\"}]}",
+          test_case.type, test_case.warning);
+    } else {
+      json = base::StringPrintf(
+          "{\"matches\":[{\"threat_type\":\"13\", \"warning\":\"%s\"}]}",
+          test_case.warning);
+    }
     ASSERT_EQ(UMA_STATUS_MATCH, ResetAndParseJson(json));
     EXPECT_EQ(SB_THREAT_TYPE_SUBRESOURCE_FILTER, threat_);
 
     ThreatMetadata expected;
-    expected.threat_pattern_type = test_case.expected_pattern_type;
     expected.warning = test_case.expected_warning;
+    expected.subresource_filter_types = test_case.expected_types;
     EXPECT_EQ(expected, meta_);
   }
 }
