@@ -344,6 +344,8 @@ void FindBarHost::OnVisibilityChanged() {
     visible_bounds = host()->GetWindowBoundsInScreen();
   browser_view()->immersive_mode_controller()->OnFindBarVisibleBoundsChanged(
       visible_bounds);
+
+  find_bar_controller_->FindBarVisiblityChanged();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
