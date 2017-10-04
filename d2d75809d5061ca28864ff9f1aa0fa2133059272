@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04bb02bd_47ef2b37",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T09:41:50Z",
+      "side": 1,
+      "message": "Let\u0027s avoid calling observers when nothing has changed - let\u0027s save a throttling_state_ is a member in WebFrameSchedulerImpl and have a UpdateThrottlingState function, which will call CalculateThrottlingState, compare it with the old one and notify observers when necessary.",
+      "range": {
+        "startLine": 367,
+        "startChar": 4,
+        "endLine": 367,
+        "endChar": 63
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424de12f_767a482f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T09:41:50Z",
+      "side": 1,
+      "message": "nit: Let\u0027s call it SetPageStopped for consistency.",
+      "range": {
+        "startLine": 49,
+        "startChar": 7,
+        "endLine": 49,
+        "endChar": 29
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b91795_6176b103",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-04T09:41:50Z",
+      "side": 1,
+      "message": "Shall we add a test for this? :)",
+      "range": {
+        "startLine": 93,
+        "startChar": 37,
+        "endLine": 93,
+        "endChar": 61
+      },
+      "revId": "d2d75809d5061ca28864ff9f1aa0fa2133059272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
