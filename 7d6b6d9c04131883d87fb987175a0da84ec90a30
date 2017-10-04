@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a7c9c62_70f257ac",
+        "filename": "chrome/browser/android/ntp/most_visited_sites_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-04T05:19:11Z",
+      "side": 1,
+      "message": "I believe many namings could be overly abstract, and I am under the impression all clicks must first be preceded by an impression, so it makes sense logically to me. Isn\u0027t that also consistent with our idea (or practice) to log metrics\u0026breakdowns equally for clicks and impressions in order to infer CTR?",
+      "parentUuid": "aa84626a_06f9484b",
+      "range": {
+        "startLine": 274,
+        "startChar": 17,
+        "endLine": 274,
+        "endChar": 34
+      },
+      "revId": "7d6b6d9c04131883d87fb987175a0da84ec90a30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49e0d937_df58e6c1",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 3
