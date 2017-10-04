@@ -22,6 +22,30 @@
       "revId": "a3893730cf12d7b203bff38669c1d73cb454a437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "647fb990_16bedcc7",
+        "filename": "chrome/browser/ui/search/search_tab_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T14:54:13Z",
+      "side": 1,
+      "message": "Ooops.  You\u0027re right - I initially removed the const, but later decided that WebContents::GetMainFrame should be made const (and then forgot to revert the const removal here).\n\nDone.",
+      "parentUuid": "4f98a754_1716d3e1",
+      "range": {
+        "startLine": 62,
+        "startChar": 73,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "a3893730cf12d7b203bff38669c1d73cb454a437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
