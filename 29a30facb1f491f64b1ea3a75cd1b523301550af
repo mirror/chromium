@@ -52,6 +52,24 @@
       "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9caff56_598d02ab",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-04T20:46:24Z",
+      "side": 1,
+      "message": "I\u0027m considering this new domain only a temporary home for BeginFrame related commands (a place where we can experiment and shape them, thus \"experimental\" in the name of the domain) - since we are aiming to support them in non-headless mode eventually too. (See also earlier discussion about the domain name in this review - an alternative would be to put these commands into the emulation domain - or another new domain that isn\u0027t headless-specific). Virtual time is not a headless-specific feature either, so moving it to HeadlessExperimental doesn\u0027t seem a good fit. If we can come up with a good name for a new domain for BeginFrameControl / virtual time, I wouldn\u0027t be opposed to moving them there.\n\nI intend to make it possible to pass virtual times to the BeginFrame command - right now, that\u0027s still rather tricky because we don\u0027t know the renderer\u0027s virtual time stamp from the devtools client.",
+      "parentUuid": "5ce79e4e_6ba4111b",
+      "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
