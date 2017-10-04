@@ -209,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "ef83b6bb_5c06ad91",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Added validation to ensure SetReceiver is only called once and only from receiver main frame. I am thinking of splitting PresentationServiceImpl into controller and receiver versions, which should make the code a bit cleaner.",
+      "parentUuid": "44b89c86_07b27870",
+      "revId": "469e135069420661d0e1bc13ab7d0605ce961eea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "754a1674_74511971",
         "filename": "content/renderer/presentation/presentation_dispatcher.cc",
         "patchSetId": 17

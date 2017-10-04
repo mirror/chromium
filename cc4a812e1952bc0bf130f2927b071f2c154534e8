@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ecc7fef6_9dac1545",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Yeah, I think it\u0027s possible to use RFH* directly. Added TODO.",
+      "parentUuid": "ea5bb383_c72b6fa0",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 54
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83da38cb_bba92eb5",
         "filename": "content/browser/presentation/presentation_service_impl.cc",
         "patchSetId": 24
@@ -39,6 +63,24 @@
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baa6c082_d2e65659",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "When a 1-UA presentation is terminated, the offscreen tab that hosts the presentation is destroyed.\n\nPresentation receivers cannot navigate; this is enforced by sandboxing flags and also NavigationPolicy.\n\nNot sure what happens if a crash happens either. Since this happens in an offscreen tab, the user cannot refresh, so the only option for them is to terminate the presentation. (or the offscreen tab terminates itself when it detects capturer count is zero, which might happen in the event of a crash; need to check with miu@)",
+      "parentUuid": "83da38cb_bba92eb5",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "bdc3405f_0e9ae512",
+        "filename": "content/browser/presentation/presentation_service_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "See other comment about splitting up PresentationServiceImpl into controller/receiver versions. Added TODO for that. I think that is more or less the same as the factory pattern you mentioned, unless you meant something else?",
+      "parentUuid": "0a3d7cf8_e223e46c",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae92fe2a_76f5608a",
         "filename": "content/browser/presentation/presentation_service_impl.h",
         "patchSetId": 24
@@ -70,6 +130,30 @@
       "writtenOn": "2017-10-02T20:38:04Z",
       "side": 1,
       "message": "I thought this was per-frame (and the object connecting) is also per-frame?",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 72
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb897655_edda44ff",
+        "filename": "content/browser/presentation/presentation_service_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Yes, this object is per-frame. Right now it can be connected from PresentationController and PresentationDispatcher, both of which are per-frame. We have both right now because we haven\u0027t fully moved off PresentationDispatcher yet. Once this is fully onion souped there will only be one connection again to PresentationServiceImpl. Another solution would be to introduce a temporary API for PresentationController to obtain the PresentationService mojo ptr from PresentationDispatcher. Since PresentationController eventually has to have its own PresentationService mojo ptr though I figure I would do it now.",
+      "parentUuid": "ae92fe2a_76f5608a",
       "range": {
         "startLine": 69,
         "startChar": 0,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "0c454d53_2803c260",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "It\u0027s been a while but looking at the code, receiver_ is set for all frames of an offscreen tab. I can see if I can add a Document::IsInMainFrame check in PresentationReceiver::From to prevent the PresentationReceiver from being created on non-main frames.",
+      "parentUuid": "2b5f6b90_bf7ce161",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b938e6d_afd67750",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -113,6 +215,24 @@
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a5f637_e5029c7a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Agh it looks like either way will result in a destruction of a WTF::String since it gets created by default. Better to copy an empty WTF::Vector than an non-empty one though.",
+      "parentUuid": "3b938e6d_afd67750",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "a3dfee23_c2d34bcd",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Yes one of the layout tests covers this.",
+      "parentUuid": "ccdcd821_62c50d58",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 289,
+        "endChar": 15
+      },
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb16c0d5_dc094b61",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -150,6 +294,24 @@
       "writtenOn": "2017-10-02T20:38:04Z",
       "side": 1,
       "message": "Hmm... my impression is that we can only have one presentation per controller at a time. Could we do something simpler and just close the message pipe in DoClose / DoTerminate? That would allow this to be signalled more easily (and allow to avoid checking that the frame itself is still attached).",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604d9d1f_2aaf635d",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "We can actually have multiple presentation connections in the same frame at the same time. For contorller connections we actually have to signal the browser side to perform cleanups in addition, which is what this call is doing. But there are some opportunities to make the signalling a bit more straightforward (maybe we can consider adding a separate per-connection mojo interface for doing controls related to state change)",
+      "parentUuid": "fb16c0d5_dc094b61",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "ced7f3c4_ab5ea72e",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e92c32b1_9c0a4a09",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cda97220_412f49cd",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "29651323_ebcfad29",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Ok, I will pass in an empty callback here (I assume this will get properly handled by mojo, but I can do some testing to verify)",
+      "parentUuid": "cda97220_412f49cd",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd73aceb_cd927cbc",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
         "patchSetId": 24
@@ -201,6 +399,24 @@
       "writtenOn": "2017-10-02T20:38:04Z",
       "side": 1,
       "message": "AFAICT, this should only be called once (based on the calls from PresentationDispatcher), but it seems like this allows it to be called more than once? When would that happen?\n\nAlso, since this is called through the Blink public API, is it actually possible for client to be null below? Presumably, when we called up into //content (in DidFinishDocumentLoad, the client should not be null? Also, given that the other path to reach this (via SetReceiver) ultimately comes from accessing the JS property (which already checks that the frame is not detached: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/presentation/Presentation.cpp?rcl\u003d9527cb23fb5328b0fef0efbe8147a3adaf876f0a\u0026l\u003d54), it also seems like that case should always have a frame and client as well.",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fece71_694a4305",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "True, this should probably only be called once from PresentationDispatcher, and it is the only caller. I renamed the method to Init().\n\nAs for GetFrame(), I was hitting a nullptr in one of the layout tests. DidFinishDocumentLoad() was getting called during test tear down. To fix this we just need to disassociate PresentationReceiver from PresentationDispatcher during ContextDestroyed, which is also what we do for PresentationController.",
+      "parentUuid": "cd73aceb_cd927cbc",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "3dedb1f9_57b04385",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Per other comment, this may be possible if we split presentation connection state-change controls into a per-connection interface, *and* we need to differentiate between a close and terminate signal (since different cleanup routines are required for each on the browser side). I looked into doing this for a future patch but I am not totally convinced that such a solution would be much cleaner (given that we already have a PresentationConnection mojo ptr whose other end may not be in the browser process, i.e. 1-UA mode)",
+      "parentUuid": "bcbdab70_b420dc14",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "521135dc_b115b256",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
         "patchSetId": 24
@@ -241,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "5a737d20_fd27e26f",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "521135dc_b115b256",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f4a095b_b10bb7b6",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
         "patchSetId": 24
@@ -252,6 +504,24 @@
       "writtenOn": "2017-10-02T20:38:04Z",
       "side": 1,
       "message": "I\u0027m not entirely sure how this class integrates with the presentation API: is this for things like casting media elements?",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c141561_acb33355",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-04T18:46:17Z",
+      "side": 1,
+      "message": "The new RemotePlayback pipeline is implemented on top of Presentation, this makes sense because they share the same implementation in the backend (Media Router).\n - This class uses Presentation screen availability to detect potential devices to initiate remote playback for a media element.\n- A remote playback session is implemented as a presentation connection.",
+      "parentUuid": "3f4a095b_b10bb7b6",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
