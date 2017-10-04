@@ -81,7 +81,8 @@ void ServiceWorkerSubresourceLoader::StartRequest(
 void ServiceWorkerSubresourceLoader::OnFetchEventFinished(
     ServiceWorkerStatusCode status,
     base::Time dispatch_event_time) {
-  if (status != SERVICE_WORKER_OK) {
+  if (status != SERVICE_WORKER_OK &&
+      status != SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED) {
     // TODO(kinuko): Log the failure.
     // If status is not OK response callback may not be called.
     weak_factory_.InvalidateWeakPtrs();
@@ -145,6 +146,7 @@ void ServiceWorkerSubresourceLoader::StartResponse(
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
     CommitResponseHeaders();
+    DCHECK(url_loader_client_.is_bound());
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(body_as_stream->stream));
     // TODO(falken): Call CommitCompleted() when stream finished.
@@ -183,6 +185,7 @@ void ServiceWorkerSubresourceLoader::StartResponse(
 
 void ServiceWorkerSubresourceLoader::CommitResponseHeaders() {
   DCHECK_EQ(Status::kStarted, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   // TODO(kinuko): Fill the ssl_info.
   url_loader_client_->OnReceiveResponse(response_head_,
@@ -192,6 +195,7 @@ void ServiceWorkerSubresourceLoader::CommitResponseHeaders() {
 
 void ServiceWorkerSubresourceLoader::CommitCompleted(int error_code) {
   DCHECK_LT(status_, Status::kCompleted);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
   ResourceRequestCompletionStatus completion_status;
   completion_status.error_code = error_code;
@@ -235,6 +239,7 @@ void ServiceWorkerSubresourceLoader::OnReceiveResponse(
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   DCHECK_EQ(Status::kStarted, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kSentHeader;
   if (response_head.headers->response_code() >= 400) {
     DVLOG(1) << "Blob::OnReceiveResponse got error: "
@@ -277,12 +282,14 @@ void ServiceWorkerSubresourceLoader::OnTransferSizeUpdated(
 
 void ServiceWorkerSubresourceLoader::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
+  DCHECK(url_loader_client_.is_bound());
   url_loader_client_->OnStartLoadingResponseBody(std::move(body));
 }
 
 void ServiceWorkerSubresourceLoader::OnComplete(
     const ResourceRequestCompletionStatus& status) {
   DCHECK_EQ(Status::kSentHeader, status_);
+  DCHECK(url_loader_client_.is_bound());
   status_ = Status::kCompleted;
   url_loader_client_->OnComplete(status);
 }
