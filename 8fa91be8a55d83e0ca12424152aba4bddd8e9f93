@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fff6d53_dc9670cd",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T14:57:12Z",
+      "side": 1,
+      "message": "You seem not using String class in this file.",
+      "revId": "8fa91be8a55d83e0ca12424152aba4bddd8e9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe6167c_ec5a4386",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-04T14:57:12Z",
+      "side": 1,
+      "message": "Add one empty line.",
+      "revId": "8fa91be8a55d83e0ca12424152aba4bddd8e9f93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
