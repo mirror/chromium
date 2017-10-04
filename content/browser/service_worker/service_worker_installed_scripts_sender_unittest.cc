@@ -336,7 +336,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
   sender->Start();
 
   while (kExpectedScriptInfoMap.size() > 0) {
-    EXPECT_FALSE(sender->IsFinished());
+    EXPECT_FALSE(sender->IsStreamingFinished());
     EXPECT_EQ(SenderFinishedReason::kNotFinished, sender->finished_reason());
     auto script_info = renderer_manager->WaitUntilTransferInstalledScript();
     EXPECT_TRUE(
@@ -346,7 +346,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, SendScripts) {
     kExpectedScriptInfoMap.erase(script_info->script_url);
   }
 
-  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_TRUE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kSuccess, sender->finished_reason());
 }
 
@@ -394,7 +394,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
   ASSERT_TRUE(renderer_manager);
 
   sender->Start();
-  EXPECT_FALSE(sender->IsFinished());
+  EXPECT_FALSE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kNotFinished, sender->finished_reason());
 
   {
@@ -408,7 +408,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendBody) {
     base::RunLoop().RunUntilIdle();
   }
 
-  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_TRUE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kConnectionError, sender->finished_reason());
 }
 
@@ -456,7 +456,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
   ASSERT_TRUE(renderer_manager);
 
   sender->Start();
-  EXPECT_FALSE(sender->IsFinished());
+  EXPECT_FALSE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kNotFinished, sender->finished_reason());
 
   {
@@ -470,7 +470,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, FailedToSendMetaData) {
     base::RunLoop().RunUntilIdle();
   }
 
-  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_TRUE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kMetaDataSenderError,
             sender->finished_reason());
 }
@@ -533,7 +533,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, Histograms) {
   sender->Start();
 
   while (kExpectedScriptInfoMap.size() > 0) {
-    EXPECT_FALSE(sender->IsFinished());
+    EXPECT_FALSE(sender->IsStreamingFinished());
     EXPECT_EQ(SenderFinishedReason::kNotFinished, sender->finished_reason());
     auto script_info = renderer_manager->WaitUntilTransferInstalledScript();
     EXPECT_TRUE(
@@ -543,7 +543,7 @@ TEST_F(ServiceWorkerInstalledScriptsSenderTest, Histograms) {
     kExpectedScriptInfoMap.erase(script_info->script_url);
   }
 
-  EXPECT_TRUE(sender->IsFinished());
+  EXPECT_TRUE(sender->IsStreamingFinished());
   EXPECT_EQ(SenderFinishedReason::kSuccess, sender->finished_reason());
 
   // The histogram should be recorded when reading the script.

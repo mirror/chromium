@@ -10,6 +10,7 @@ import "url/mojo/url.mojom";
 // Contains information about the scripts of an installed service worker.
 struct ServiceWorkerInstalledScriptsInfo {
   ServiceWorkerInstalledScriptsManager& manager_request;
+  ServiceWorkerInstalledScriptsManagerHost manager_host_ptr;
   array<url.mojom.Url> installed_urls;
 };
 
@@ -27,6 +28,13 @@ struct ServiceWorkerScriptInfo {
   // meta data is available.
   handle<data_pipe_consumer>? meta_data;
   uint64 meta_data_size;
+};
+
+// Browser-side interface to request installed scripts from the renderer.
+interface ServiceWorkerInstalledScriptsManagerHost {
+  // Requests to send the installed scripts over
+  // ServiceWorkerInstalledScriptsManager::TransferInstalledScript.
+  RequestInstalledScript(url.mojom.Url script_url);
 };
 
 // Renderer-side interface. The browser uses this interface to send
