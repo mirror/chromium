@@ -16,6 +16,24 @@
       "revId": "f17ef72f75ddb81ea8f45a9ff2f150da5c11254d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53f98ce_48964bd7",
+        "filename": "ash/message_center/notifier_settings_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-04T01:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a839684d_27eafd68",
+      "revId": "f17ef72f75ddb81ea8f45a9ff2f150da5c11254d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
