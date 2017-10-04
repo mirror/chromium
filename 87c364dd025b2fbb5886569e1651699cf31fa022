@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d256715c_02f34345",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadManagerService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-04T19:05:13Z",
+      "side": 1,
+      "message": "Hmm actually what happens if the flag is on and something tries to grab the service before native is loaded?  Does that happen and will that crash?",
+      "range": {
+        "startLine": 198,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 69
+      },
+      "revId": "87c364dd025b2fbb5886569e1651699cf31fa022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
