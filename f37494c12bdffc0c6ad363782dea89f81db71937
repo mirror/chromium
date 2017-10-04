@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b59fee46_172cdeb7",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T15:10:00Z",
+      "side": 1,
+      "message": "Can you add the function for |all_possible_password| and use it in PasswordFormToJSON (in a separate CL)?",
+      "range": {
+        "startLine": 359,
+        "startChar": 15,
+        "endLine": 359,
+        "endChar": 45
+      },
+      "revId": "f37494c12bdffc0c6ad363782dea89f81db71937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
