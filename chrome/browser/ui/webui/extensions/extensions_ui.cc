@@ -291,17 +291,22 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
               GURL(extension_urls::GetWebstoreExtensionsCategoryURL()),
               g_browser_process->GetApplicationLocale()).spec()));
 
+  source->AddResourcePath("drag_and_drop_handler.js",
+                          IDR_EXTENSIONS_DRAG_AND_DROP_HANDLER_JS);
+  source->AddResourcePath("shortcut_util.js", IDR_EXTENSIONS_SHORTCUT_UTIL_JS);
+
+#if BUILDFLAG(OPTIMIZE_WEBUI)
+  source->AddResourcePath("crisper.js", IDR_MD_EXTENSIONS_CRISPER_JS);
+  source->SetDefaultResource(IDR_MD_EXTENSIONS_VULCANIZED_HTML);
+  source->UseGzip();
+#else
   // Add all MD Extensions resources.
   for (size_t i = 0; i < kExtensionsResourcesSize; ++i) {
     source->AddResourcePath(kExtensionsResources[i].name,
                             kExtensionsResources[i].value);
   }
-
-  source->AddResourcePath("drag_and_drop_handler.js",
-                          IDR_EXTENSIONS_DRAG_AND_DROP_HANDLER_JS);
-  source->AddResourcePath("shortcut_util.js", IDR_EXTENSIONS_SHORTCUT_UTIL_JS);
-
   source->SetDefaultResource(IDR_MD_EXTENSIONS_EXTENSIONS_HTML);
+#endif
 
   return source;
 }
