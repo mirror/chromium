@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "0d6df84b_a2b0aa29",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T18:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f4eeb2_22c5d663",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29be42fd_c24bfdbb",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8
@@ -178,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "0a9c8a61_7cb6350d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T18:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29be42fd_c24bfdbb",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eceb4aee_2acbf125",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 8
@@ -192,6 +228,24 @@
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00206de7_a2f88b74",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T18:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eceb4aee_2acbf125",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -514,6 +568,24 @@
       "side": 1,
       "message": "Oh,then let\u0027s fix that. I thought you had already added that.\n\nAdd the password and other logging lines to the log function and a simple test that just validates that calling the log function with the PASSWORD field type group generates the right metric. Similarly for OTHER (i.e., you can test both logging functions with a call to the one that maps FieldTypeGroup to FormType.)",
       "parentUuid": "097f369e_1d5f7679",
+      "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9aa2c615_cf7c4682",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 93586,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-04T18:56:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77f37005_af275bbc",
       "revId": "5d0b81022319f6346f0443b16c89bf3cbe6c3500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
