@@ -2010,6 +2010,45 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   sink_->ClearMessages();
 }
 
+TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
+       SyntheticWheelEndEventShouldHaveNoModifiers) {
+  view_->InitAsChild(nullptr);
+  view_->Show();
+  sink_->ClearMessages();
+
+  // Simulates the mouse wheel event with ctrl modifier applied.
+  ui::MouseWheelEvent wheel(gfx::Vector2d(1, 1), gfx::Point(), gfx::Point(),
+                            ui::EventTimeForNow(), ui::EF_CONTROL_DOWN, 0);
+  view_->OnMouseEvent(&wheel);
+  const WebInputEvent* input_event =
+      GetInputEventFromMessage(*sink_->GetMessageAt(0));
+  const WebMouseWheelEvent* wheel_event =
+      static_cast<const WebMouseWheelEvent*>(input_event);
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseBegan, wheel_event->phase);
+  SendInputEventACK(blink::WebInputEvent::kMouseWheel,
+                    INPUT_EVENT_ACK_STATE_CONSUMED);
+  EXPECT_FALSE(WebInputEventTraits::CanCauseScroll(*wheel_event));
+  sink_->ClearMessages();
+
+  // Let the MouseWheelPhaseHandler::mouse_wheel_end_dispatch_timer_ fire. A
+  // synthetic wheel event with zero deltas and kPhaseEnded will be sent.
+  base::RunLoop run_loop;
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, run_loop.QuitClosure(),
+      base::TimeDelta::FromMilliseconds(
+          kDefaultMouseWheelLatchingTransactionMs));
+  run_loop.Run();
+
+  input_event = GetInputEventFromMessage(*sink_->GetMessageAt(0));
+  const WebMouseWheelEvent* wheel_end_event =
+      static_cast<const WebMouseWheelEvent*>(input_event);
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseEnded, wheel_end_event->phase);
+  EXPECT_EQ(blink::WebInputEvent::kNoModifiers,
+            wheel_end_event->GetModifiers());
+  EXPECT_TRUE(WebInputEventTraits::CanCauseScroll(*wheel_end_event));
+  sink_->ClearMessages();
+}
+
 // Tests that a gesture fling start with touchpad source stops the
 // RenderWidgetHostViewEventHandler::mouse_wheel_phase_timer_ and no synthetic
 // wheel event will be sent.

@@ -78,6 +78,10 @@ void MouseWheelPhaseHandler::SendSyntheticWheelEventWithPhaseEnded(
   mouse_wheel_event.phase = blink::WebMouseWheelEvent::kPhaseEnded;
   mouse_wheel_event.dispatch_type =
       blink::WebInputEvent::DispatchType::kEventNonBlocking;
+  // This wheel event shouldn't have any modifiers since wheel events
+  // with zero delta are not sent to JS, and cannot get preventDefaulted
+  // based on their modifiers.
+  mouse_wheel_event.SetModifiers(blink::WebInputEvent::kNoModifiers);
   if (should_route_event) {
     host_->delegate()->GetInputEventRouter()->RouteMouseWheelEvent(
         host_view_, &mouse_wheel_event,
