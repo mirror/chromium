@@ -183,7 +183,8 @@ public final class CronetUrlRequest extends UrlRequestBase {
         if (mInitialMethod == null) {
             mInitialMethod = "POST";
         }
-        mUploadDataStream = new CronetUploadDataStream(uploadDataProvider, executor);
+        mUploadDataStream =
+                new CronetUploadDataStream(uploadDataProvider, executor, CronetUrlRequest.this);
     }
 
     @Override
@@ -221,10 +222,10 @@ public final class CronetUrlRequest extends UrlRequestBase {
                                 "Requests with upload data must have a Content-Type.");
                     }
                     mStarted = true;
+                    mUploadDataStream.initializeWithRequest(CronetUrlRequest.this);
                     mUploadDataStream.postTaskToExecutor(new Runnable() {
                         @Override
                         public void run() {
-                            mUploadDataStream.initializeWithRequest(CronetUrlRequest.this);
                             synchronized (mUrlRequestAdapterLock) {
                                 if (isDoneLocked()) {
                                     return;
