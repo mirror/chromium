@@ -34,6 +34,24 @@
       "revId": "99dc3ec6f7e959256ce4ca6fa6f9b22beefffd8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a92b01c_2a1211ce",
+        "filename": "third_party/WebKit/Source/core/dom/FlatTreeTraversal.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-04T03:07:59Z",
+      "side": 1,
+      "message": "It looks I had introduced FirstWithin in the CL.\nAs far as I see the CL, it would make sense to use FirstWithin, which is consistent with existing traversal, such as ElementTraversal.",
+      "parentUuid": "1d81f1b6_8b777d81",
+      "revId": "99dc3ec6f7e959256ce4ca6fa6f9b22beefffd8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
