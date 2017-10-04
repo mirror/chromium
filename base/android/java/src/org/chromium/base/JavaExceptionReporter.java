@@ -9,6 +9,7 @@ import android.support.annotation.UiThread;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
+import org.chromium.chrome.browser.crash.PureJavaExceptionHandler;
 
 /**
  * This UncaughtExceptionHandler will create a breakpad minidump when there is an uncaught
@@ -58,6 +59,8 @@ public class JavaExceptionReporter implements Thread.UncaughtExceptionHandler {
     private static void installHandler(boolean crashAfterReport) {
         Thread.setDefaultUncaughtExceptionHandler(new JavaExceptionReporter(
                 Thread.getDefaultUncaughtExceptionHandler(), crashAfterReport));
+        // We no longer need the pure java exception handler now that native is available.
+        PureJavaExceptionHandler.uninstallHandler();
     }
 
     private static native void nativeReportJavaException(boolean crashAfterReport, Throwable e);
