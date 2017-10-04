@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3caa4e59_3ab7a27c",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-04T18:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bbc6cc_6dd70d9e",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2467e49c_683ff4cf",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T17:18:34Z",
       "side": 1,
       "message": "Yikes; good catch.",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc4fb595_81e73f3d",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-04T18:10:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2467e49c_683ff4cf",
       "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "273df9af_7581ce76",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-04T18:10:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd815e96_b0591fc0",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02436d8f_e843f2a6",
         "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T17:18:34Z",
       "side": 1,
       "message": "I\u0027m not clear on this change. Doesn\u0027t TalkBack call\nPreviousAtGranularity\nwhen moving backward and not this function?",
+      "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "197f9dd6_cd9a607a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1241685
+      },
+      "writtenOn": "2017-10-04T18:10:12Z",
+      "side": 1,
+      "message": "This change is not exactly for backward move, it is for the forward move. Initially this had \"mSelectionEndIndex\" instead of \"mSelectionStartIndex\" and it worked fine because \"mSelectionEndIndex\" was never initialized in the code correctly. Now since we made the change to assign \"mSelectionEndIndex\" its correct value, we need to pass the startIndex here and not the EndIndex.",
+      "parentUuid": "02436d8f_e843f2a6",
       "revId": "fea2921279d19f9c862e42ef9ba37fbb28e3739a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
