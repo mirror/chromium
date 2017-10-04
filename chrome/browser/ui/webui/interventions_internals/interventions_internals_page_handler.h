@@ -8,21 +8,34 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_handler.h"
+#include "components/previews/core/previews_log.h"
+#include "components/previews/core/previews_log_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 class InterventionsInternalsPageHandler
-    : public mojom::InterventionsInternalsPageHandler,
+    : public previews::MessageLogObserver,
+      public mojom::InterventionsInternalsPageHandler,
       public MojoWebUIHandler {
  public:
   explicit InterventionsInternalsPageHandler(
       mojom::InterventionsInternalsPageHandlerRequest request);
   ~InterventionsInternalsPageHandler() override;
 
-  // mojom::InterventionsInternalsPageHandler.
+  // mojom::InterventionsInternalsPageHandler:
   void GetPreviewsEnabled(GetPreviewsEnabledCallback callback) override;
+
+  // mojom::InterventionsInternalsPageHandler:
+  void SetClientPage(mojom::InterventionsInternalsPagePtr page) override;
+
+  // previews::MessageLogObserver:
+  void OnNewMessageLogAdded(
+      previews::PreviewsLogger::MessageLog message) override;
 
  private:
   mojo::Binding<mojom::InterventionsInternalsPageHandler> binding_;
+
+  // Handle back to the page by which we can pass in new log messages.
+  mojom::InterventionsInternalsPagePtr page_;
 
   DISALLOW_COPY_AND_ASSIGN(InterventionsInternalsPageHandler);
 };

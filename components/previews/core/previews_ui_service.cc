@@ -52,6 +52,10 @@ void PreviewsUIService::LogPreviewNavigation(const GURL& url,
       PreviewsLogger::PreviewNavigation(url, type, opt_out, time));
 }
 
+PreviewsLogger* PreviewsUIService::previews_logger() const {
+  return logger_.get();
+}
+
 void PreviewsUIService::ClearBlackList(base::Time begin_time,
                                        base::Time end_time) {
   DCHECK(thread_checker_.CalledOnValidThread());
