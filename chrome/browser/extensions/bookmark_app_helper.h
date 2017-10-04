@@ -20,6 +20,8 @@
 
 class ExtensionService;
 class FaviconDownloader;
+struct InstallableData;
+class InstallableManager;
 class Profile;
 class SkBitmap;
 
@@ -113,11 +115,16 @@ class BookmarkAppHelper : public content::NotificationObserver {
  protected:
   // Protected methods for testing.
 
-  // Called by the WebContents when the manifest has been downloaded. If there
-  // is no manifest, or the WebContents is destroyed before the manifest could
-  // be downloaded, this is called with an empty manifest.
-  void OnDidGetManifest(const GURL& manifest_url,
-                        const content::Manifest& manifest);
+  // Called by the InstallableManager when the installability check is
+  // completed.
+  void OnDidPerformInstallableCheck(const InstallableData& data);
+
+  // Called when a manifest has been downloaded. If there is no manifest, or the
+  // WebContents is destroyed before the manifest could be downloaded, this is
+  // called with an empty manifest.
+  void OnDidGetInstallabilityInfo(const GURL& manifest_url,
+                                  const content::Manifest& manifest,
+                                  bool is_installable);
 
   // Performs post icon download tasks including installing the bookmark app.
   virtual void OnIconsDownloaded(
@@ -159,6 +166,8 @@ class BookmarkAppHelper : public content::NotificationObserver {
   scoped_refptr<extensions::CrxInstaller> crx_installer_;
 
   content::NotificationRegistrar registrar_;
+
+  InstallableManager* installable_manager_;
 
   // With fast tab unloading enabled, shutting down can cause BookmarkAppHelper
   // to be destroyed before the bookmark creation bubble. Use weak pointers to

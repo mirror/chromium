@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -25,6 +26,9 @@
 #include "chrome/browser/extensions/favicon_downloader.h"
 #include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/extensions/tab_helper.h"
+#include "chrome/browser/installable/installable_data.h"
+#include "chrome/browser/installable/installable_manager.h"
+#include "chrome/browser/installable/installable_params.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/app_list_service.h"
 #include "chrome/browser/ui/app_list/app_list_util.h"
@@ -33,6 +37,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/browser/webshare/share_target_pref_helper.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
@@ -548,14 +553,16 @@ BookmarkAppHelper::BookmarkAppHelper(Profile* profile,
     : profile_(profile),
       contents_(contents),
       web_app_info_(web_app_info),
-      crx_installer_(
-          extensions::CrxInstaller::CreateSilent(ExtensionSystem::Get(profile)
-                                                     ->extension_service())),
+      crx_installer_(extensions::CrxInstaller::CreateSilent(
+          ExtensionSystem::Get(profile)->extension_service())),
+      installable_manager_(InstallableManager::FromWebContents(contents_)),
       weak_factory_(this) {
-  web_app_info_.open_as_window =
-      profile_->GetPrefs()->GetInteger(
-          extensions::pref_names::kBookmarkAppCreationLaunchType) ==
-      extensions::LAUNCH_TYPE_WINDOW;
+  if (!base::FeatureList::IsEnabled(features::kDesktopPWAWindowing)) {
+    web_app_info_.open_as_window =
+        profile_->GetPrefs()->GetInteger(
+            extensions::pref_names::kBookmarkAppCreationLaunchType) ==
+        extensions::LAUNCH_TYPE_WINDOW;
+  }
 
   // The default app title is the page title, which can be quite long. Limit the
   // default name used to something sensible.
@@ -584,8 +591,14 @@ void BookmarkAppHelper::Create(const CreateBookmarkAppCallback& callback) {
   // Do not fetch the manifest for extension URLs.
   if (contents_ &&
       !contents_->GetVisibleURL().SchemeIs(extensions::kExtensionScheme)) {
-    contents_->GetManifest(base::Bind(&BookmarkAppHelper::OnDidGetManifest,
-                                      weak_factory_.GetWeakPtr()));
+    // Null in tests. OnDidGetInstallabilityInfo is called via a testing API.
+    if (installable_manager_) {
+      InstallableParams params;
+      params.check_installable = true;
+      installable_manager_->GetData(
+          params, base::Bind(&BookmarkAppHelper::OnDidPerformInstallableCheck,
+                             weak_factory_.GetWeakPtr()));
+    }
   } else {
     OnIconsDownloaded(true, std::map<GURL, std::vector<SkBitmap>>());
   }
@@ -599,15 +612,28 @@ void BookmarkAppHelper::CreateFromAppBanner(
   DCHECK(manifest.start_url.is_valid());
 
   callback_ = callback;
-  OnDidGetManifest(manifest_url, manifest);
+  // App banner triggers are always installable.
+  OnDidGetInstallabilityInfo(manifest_url, manifest, true);
 }
 
-void BookmarkAppHelper::OnDidGetManifest(const GURL& manifest_url,
-                                         const content::Manifest& manifest) {
+void BookmarkAppHelper::OnDidPerformInstallableCheck(
+    const InstallableData& data) {
+  OnDidGetInstallabilityInfo(data.manifest_url, data.manifest,
+                             data.is_installable);
+}
+
+void BookmarkAppHelper::OnDidGetInstallabilityInfo(
+    const GURL& manifest_url,
+    const content::Manifest& manifest,
+    bool is_installable) {
   DCHECK(manifest_url.is_valid() || manifest.IsEmpty());
 
   if (contents_->IsBeingDestroyed())
     return;
+
+  web_app_info_.installable = is_installable
+                                  ? WebApplicationInfo::INSTALLABLE_YES
+                                  : WebApplicationInfo::INSTALLABLE_NO;
 
   UpdateWebAppInfoFromManifest(manifest, &web_app_info_);
 
@@ -724,6 +750,15 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
   extensions::LaunchType launch_type = web_app_info_.open_as_window
                                            ? extensions::LAUNCH_TYPE_WINDOW
                                            : extensions::LAUNCH_TYPE_REGULAR;
+
+  if (base::FeatureList::IsEnabled(features::kDesktopPWAWindowing)) {
+    DCHECK_NE(WebApplicationInfo::INSTALLABLE_UNKNOWN,
+              web_app_info_.installable);
+    launch_type =
+        web_app_info_.installable == WebApplicationInfo::INSTALLABLE_YES
+            ? extensions::LAUNCH_TYPE_WINDOW
+            : extensions::LAUNCH_TYPE_REGULAR;
+  }
   profile_->GetPrefs()->SetInteger(
       extensions::pref_names::kBookmarkAppCreationLaunchType, launch_type);
 
