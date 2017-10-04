@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "203989a6_c3081eb3",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-04T07:54:41Z",
+      "side": 1,
+      "message": "Hum, looks like I reviewed both changes but I think we were initially making this per-thread cache when we introduced off-main-thread fetch, but then it gotten removed when we landed:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618716/21/third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp#120\n\nI think we probably need to make it back to thread-specific one?",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
