@@ -121,25 +121,42 @@ void MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::OnFrame(
                       ->getMediaVideoFrame();
     video_frame->set_timestamp(elapsed_timestamp);
   } else {
-    scoped_refptr<webrtc::PlanarYuvBuffer> yuv_buffer;
-    media::VideoPixelFormat pixel_format;
-    if (buffer->type() == webrtc::VideoFrameBuffer::Type::kI444) {
-      yuv_buffer = buffer->GetI444();
-      pixel_format = media::PIXEL_FORMAT_YV24;
-    } else {
-      yuv_buffer = buffer->ToI420();
-      pixel_format = media::PIXEL_FORMAT_YV12;
-    }
-    gfx::Size size(yuv_buffer->width(), yuv_buffer->height());
+    gfx::Size size(buffer->width(), buffer->height());
+
     // Make a shallow copy. Both |frame| and |video_frame| will share a single
     // reference counted frame buffer. Const cast and hope no one will overwrite
     // the data.
-    video_frame = media::VideoFrame::WrapExternalYuvData(
-        pixel_format, size, gfx::Rect(size), size, yuv_buffer->StrideY(),
-        yuv_buffer->StrideU(), yuv_buffer->StrideV(),
-        const_cast<uint8_t*>(yuv_buffer->DataY()),
-        const_cast<uint8_t*>(yuv_buffer->DataU()),
-        const_cast<uint8_t*>(yuv_buffer->DataV()), elapsed_timestamp);
+    // TODO(magjed): Update media::VideoFrame to support const data so we don't
+    // need to const cast here.
+
+    rtc::scoped_refptr<const webrtc::I420BufferInterface> i420_buffer =
+        buffer->ToI420();
+    if (i420_buffer->HasAlpha()) {
+      video_frame = media::VideoFrame::WrapExternalYuvaData(
+          media::PIXEL_FORMAT_YV12A, size, gfx::Rect(size), size,
+          i420_buffer->StrideY(), i420_buffer->StrideU(),
+          i420_buffer->StrideV(), i420_buffer->StrideA(),
+          const_cast<uint8_t*>(i420_buffer->DataY()),
+          const_cast<uint8_t*>(i420_buffer->DataU()),
+          const_cast<uint8_t*>(i420_buffer->DataV()),
+          const_cast<uint8_t*>(i420_buffer->DataA()), elapsed_timestamp);
+    } else {
+      scoped_refptr<webrtc::PlanarYuvBuffer> yuv_buffer;
+      media::VideoPixelFormat pixel_format;
+      if (buffer->type() == webrtc::VideoFrameBuffer::Type::kI444) {
+        yuv_buffer = buffer->GetI444();
+        pixel_format = media::PIXEL_FORMAT_YV24;
+      } else {
+        yuv_buffer = buffer->ToI420();
+        pixel_format = media::PIXEL_FORMAT_YV12;
+      }
+      video_frame = media::VideoFrame::WrapExternalYuvData(
+          pixel_format, size, gfx::Rect(size), size, yuv_buffer->StrideY(),
+          yuv_buffer->StrideU(), yuv_buffer->StrideV(),
+          const_cast<uint8_t*>(yuv_buffer->DataY()),
+          const_cast<uint8_t*>(yuv_buffer->DataU()),
+          const_cast<uint8_t*>(yuv_buffer->DataV()), elapsed_timestamp);
+    }
     if (!video_frame)
       return;
     // The bind ensures that we keep a reference to the underlying buffer.
