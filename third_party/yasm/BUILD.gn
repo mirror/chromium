@@ -67,7 +67,7 @@ if (current_toolchain == host_toolchain) {
 
   config("yasm_config") {
     include_dirs = [
-      "source/config/$host_os",
+      "source/config/$current_os",
       "source/patched-yasm",
     ]
     defines = [ "HAVE_CONFIG_H" ]
