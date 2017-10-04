@@ -282,6 +282,30 @@
       "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af768915_1f9166db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunFlowSequencer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-04T17:14:36Z",
+      "side": 1,
+      "message": "I see what you mean now. The code before the CL was dealing with this case in DefaultSearchEngineFirstRunFragment#setUserVisibleHint() and in FirstRunActivity#createPostNativePageSequence() https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/firstrun/FirstRunActivity.java?rcl\u003d7fd8022434b56cbd6834f6a540c705406a5cda04\u0026l\u003d165",
+      "parentUuid": "4386e851_e45df784",
+      "range": {
+        "startLine": 217,
+        "startChar": 58,
+        "endLine": 217,
+        "endChar": 84
+      },
+      "revId": "47ef1197cf5eea41cb3a8031d3a8d5bd6a68f2de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
