@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8af958f_df35818f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bef528f_0e087a0a",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36f1a9b7_cffd5f46",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5fbe4f_b0fe008f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1498,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36f1a9b7_cffd5f46",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "951ec3e8_f8267a2d",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1501,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8afbdd_f9b255db",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d13451af_2e14fe88",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9413fc4_db28f7a9",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d13451af_2e14fe88",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "843b6f99_0fba53f0",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1571,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done. In doing so I\u0027ve removed them from marking_time_in_milliseconds.",
+      "parentUuid": "a37c98ab_4ad271dc",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68859c80_6aede953",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -118,6 +208,24 @@
       "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd72472_02210f5f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1580,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68859c80_6aede953",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "7149482b_f987f738",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cecd4baa_468f3cf6",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ae0a76_f1ff0ece",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "35b05e5a_a45e1a73",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1596,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ae0a76_f1ff0ece",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b423a1f2_80e15b7f",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 7
@@ -169,6 +313,24 @@
       "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f30e58d_fd432a09",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1600,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-10-04T05:26:09Z",
+      "side": 1,
+      "message": "Done. PrepareForSweep needs to be called before TakeSnapshot so I had to move TakeSnapshot into PreSweep too.",
+      "parentUuid": "b423a1f2_80e15b7f",
+      "revId": "f34093c41ccacf2cb9ef24c7af692443647e75d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
