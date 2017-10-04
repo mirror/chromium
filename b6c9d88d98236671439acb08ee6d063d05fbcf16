@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51522c09_cdf120d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "latency",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 7
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f76572_1bd77761",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "Let\u0027s clarify that this is so that we get proper metrics coverage when wheel latching is enabled.",
+      "range": {
+        "startLine": 14,
+        "startChar": 50,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeab00a_9a1550fa",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 19702,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "Let\u0027s clarify that this excludes the first scroll update.",
+      "range": {
+        "startLine": 19702,
+        "startChar": 56,
+        "endLine": 19702,
+        "endChar": 0
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327edd0f_4bf2b972",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "Does this macro handle the case where the input string changes? Some of them don\u0027t.",
+      "range": {
+        "startLine": 178,
+        "startChar": 4,
+        "endLine": 178,
+        "endChar": 60
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a19cd0_38254805",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "Do we have the wheel case covered in Rappor?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1513993_65fa2c4c",
+        "filename": "ui/latency/latency_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-04T14:48:58Z",
+      "side": 1,
+      "message": "Do we have the wheel case covered in UKM?",
+      "range": {
+        "startLine": 187,
+        "startChar": 4,
+        "endLine": 187,
+        "endChar": 26
+      },
+      "revId": "b6c9d88d98236671439acb08ee6d063d05fbcf16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
