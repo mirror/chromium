@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb78cca3_bb6f75db",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-04T22:45:45Z",
+      "side": 1,
+      "message": "I\u0027ve started working on a follow-up CL that modifies this part of the code, so will make this change then.",
+      "parentUuid": "f8a91fc6_16f36cec",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "183ac7cf_1f1f926d",
         "filename": "chrome/browser/resources/md_extensions/error_page.html",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T22:53:31Z",
       "side": 1,
       "message": "Is it OK to break lines within the class attribute\u0027s value? Even if it works, probably more readable to move the entire attribute declaration in the 2nd line.",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f4c999_74b83ecb",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-04T22:45:45Z",
+      "side": 1,
+      "message": "The entire declaration with indentation is 80+ cols, so I resorted to this not-so-nice line break.",
+      "parentUuid": "183ac7cf_1f1f926d",
       "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6376dba4_5a043822",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-04T22:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d1c8193_88399ab7",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "beff93b8_be0dc611",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f77b7633_36ecc539",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-04T22:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "beff93b8_be0dc611",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28743ce1_78ca9b3a",
         "filename": "chrome/browser/resources/md_extensions/error_page.js",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e10ea7ab_e955b1de",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-04T22:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28743ce1_78ca9b3a",
+      "revId": "1b33faf80dccdf1259efc58e762e2b78f2004724",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
