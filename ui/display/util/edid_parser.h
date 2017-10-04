@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "base/compiler_specific.h"
+#include "third_party/skia/include/core/SkColorSpace.h"
 #include "ui/display/util/display_util_export.h"
 
 namespace gfx {
@@ -46,6 +48,12 @@ DISPLAY_UTIL_EXPORT bool ParseOutputDeviceData(
 DISPLAY_UTIL_EXPORT bool ParseOutputOverscanFlag(
     const std::vector<uint8_t>& edid,
     bool* flag);
+
+// Extracts from |edid| the |primaries| chromaticity coordinates (CIE xy
+// coordinates for Red, Green and Blue channels and for the White Point).
+DISPLAY_UTIL_EXPORT bool ParseChromaticityCoordinates(
+    const std::vector<uint8_t>& edid,
+    SkColorSpacePrimaries* primaries) WARN_UNUSED_RESULT;
 
 }  // namespace display
 
