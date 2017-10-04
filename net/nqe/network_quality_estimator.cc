@@ -268,7 +268,7 @@ NetworkQualityEstimator::NetworkQualityEstimator(
   current_network_id_ = GetCurrentNetworkID();
 
   throughput_analyzer_.reset(new nqe::internal::ThroughputAnalyzer(
-      params_.get(), base::ThreadTaskRunnerHandle::Get(),
+      this, params_.get(), base::ThreadTaskRunnerHandle::Get(),
       base::Bind(&NetworkQualityEstimator::OnNewThroughputObservationAvailable,
                  base::Unretained(this)),
       net_log_));
@@ -413,6 +413,12 @@ void NetworkQualityEstimator::NotifyHeadersReceived(const URLRequest& request) {
                                    tick_clock_->NowTicks(), signal_strength_,
                                    NETWORK_QUALITY_OBSERVATION_SOURCE_HTTP);
   AddAndNotifyObserversOfRTT(http_rtt_observation);
+  throughput_analyzer_->NotifyBytesRead(request);
+}
+
+void NetworkQualityEstimator::NotifyBytesRead(const URLRequest& request) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  throughput_analyzer_->NotifyBytesRead(request);
 }
 
 void NetworkQualityEstimator::RecordAccuracyAfterMainFrame(
