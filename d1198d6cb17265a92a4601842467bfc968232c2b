@@ -22,6 +22,30 @@
       "revId": "d1198d6cb17265a92a4601842467bfc968232c2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafa9963_8b4d75c1",
+        "filename": "tools/perf/contrib/vr_benchmarks/webvr_sample_pages.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-04T01:15:12Z",
+      "side": 1,
+      "message": "+1. I also usually avoid parameter names that are only different by a single character. It\u0027s easy to make a typo and write s.t like \"for url_parameters in url_parameters:\" (especially with editor\u0027s autocomplete feature)",
+      "parentUuid": "2773bcb6_52b02f9f",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "d1198d6cb17265a92a4601842467bfc968232c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
