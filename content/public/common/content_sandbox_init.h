@@ -19,7 +19,7 @@
 namespace base {
 class CommandLine;
 class FilePath;
-}
+}  // namespace base
 
 namespace sandbox {
 namespace bpf_dsl {
@@ -27,7 +27,7 @@ class Policy;
 }
 struct SandboxInterfaceInfo;
 enum ResultCode : int;
-}
+}  // namespace sandbox
 
 namespace content {
 class SandboxedProcessLauncherDelegate;
