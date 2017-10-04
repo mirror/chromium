@@ -148,12 +148,13 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   }
 
   void PressPowerButton() {
-    power_button_controller_->OnPowerButtonEvent(true, tick_clock_->NowTicks());
+    power_button_controller_->PowerButtonEventReceived(true,
+                                                       tick_clock_->NowTicks());
   }
 
   void ReleasePowerButton() {
-    power_button_controller_->OnPowerButtonEvent(false,
-                                                 tick_clock_->NowTicks());
+    power_button_controller_->PowerButtonEventReceived(false,
+                                                       tick_clock_->NowTicks());
   }
 
   void UnlockScreen() {

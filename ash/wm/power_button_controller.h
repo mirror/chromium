@@ -24,11 +24,12 @@ namespace ash {
 
 class LockStateController;
 class PowerButtonDisplayController;
+class PowerButtonScreenshotController;
 class TabletPowerButtonController;
 
-// Handles power & lock button events which may result in the locking or
-// shutting down of the system as well as taking screen shots while in maximize
-// mode.
+// Handles power & lock button events. The power button event may vary in taking
+// screenshot while in tablet mode, tablet power button behavior or clamshell
+// locking.
 class ASH_EXPORT PowerButtonController
     : public ui::EventHandler,
       public display::DisplayConfigurator::Observer,
@@ -42,8 +43,10 @@ class ASH_EXPORT PowerButtonController
     has_legacy_power_button_ = legacy;
   }
 
-  // Called when the power or lock buttons are pressed or released.
+  // Handles clamshell power button behavior.
   void OnPowerButtonEvent(bool down, const base::TimeTicks& timestamp);
+
+  // Handles lock button behavior.
   void OnLockButtonEvent(bool down, const base::TimeTicks& timestamp);
 
   // Overridden from ui::EventHandler:
@@ -71,6 +74,11 @@ class ASH_EXPORT PowerButtonController
   // true. Otherwise, returns false.
   bool TriggerDisplayOffTimerForTesting() WARN_UNUSED_RESULT;
 
+  PowerButtonScreenshotController*
+  power_button_screenshot_controller_for_test() {
+    return screenshot_controller_.get();
+  }
+
   TabletPowerButtonController* tablet_power_button_controller_for_test() {
     return tablet_controller_.get();
   }
@@ -80,6 +88,10 @@ class ASH_EXPORT PowerButtonController
   // based on the current command line.
   void ProcessCommandLine();
 
+  // Called by |clamshell_screenshot_timer_| to start clamshell power button
+  // behavior.
+  void OnClamshellScreenshotTimeout();
+
   // Called by |display_off_timer_| to force backlights off shortly after the
   // screen is locked. Only used when |force_clamshell_power_button_| is true.
   void ForceDisplayOffAfterLock();
@@ -87,13 +99,6 @@ class ASH_EXPORT PowerButtonController
   // Are the power or lock buttons currently held?
   bool power_button_down_ = false;
   bool lock_button_down_ = false;
-
-  // True when the volume down button is being held down.
-  bool volume_down_pressed_ = false;
-
-  // Volume to be restored after a screenshot is taken by pressing the power
-  // button while holding VKEY_VOLUME_DOWN.
-  int volume_percent_before_screenshot_ = 0;
 
   // Has the screen brightness been reduced to 0%?
   bool brightness_is_zero_ = false;
@@ -123,8 +128,17 @@ class ASH_EXPORT PowerButtonController
   // Used to interact with the display.
   std::unique_ptr<PowerButtonDisplayController> display_controller_;
 
+  // Handles events for power button screenshot.
+  std::unique_ptr<PowerButtonScreenshotController> screenshot_controller_;
+
   // Handles events for convertible/tablet devices.
   std::unique_ptr<TabletPowerButtonController> tablet_controller_;
+
+  // Started when clamshell power button is pressed and volume key is not
+  // pressed on tablet mode. Stopped when clamshell power button is released or
+  // volume key is pressed. Runs OnClamshellScreenshotTimeout to start clamshell
+  // power button behavior.
+  base::OneShotTimer clamshell_screenshot_timer_;
 
   // Used to run ForceDisplayOffAfterLock() shortly after the screen is locked.
   // Only started when |force_clamshell_power_button_| is true.

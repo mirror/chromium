@@ -17,12 +17,10 @@
 #include "ash/shutdown_reason.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_screenshot_delegate.h"
 #include "ash/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/power_button_controller.h"
 #include "ash/wm/session_state_animator.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/test_session_state_animator.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -51,8 +49,8 @@ void CheckCalledCallback(bool* flag) {
 // ShutdownController that tracks how many shutdown requests have been made.
 class TestShutdownController : public ShutdownController {
  public:
-  TestShutdownController() {}
-  ~TestShutdownController() override {}
+  TestShutdownController() = default;
+  ~TestShutdownController() override = default;
 
   int num_shutdown_requests() const { return num_shutdown_requests_; }
 
@@ -71,7 +69,7 @@ class TestShutdownController : public ShutdownController {
 
 class LockStateControllerTest : public AshTestBase {
  public:
-  LockStateControllerTest() {}
+  LockStateControllerTest() = default;
   ~LockStateControllerTest() override = default;
 
   void SetUp() override {
@@ -115,10 +113,7 @@ class LockStateControllerTest : public AshTestBase {
     power_button_controller_ = Shell::Get()->power_button_controller();
   }
 
-  void GenerateMouseMoveEvent() {
-    ui::test::EventGenerator generator(Shell::GetPrimaryRootWindow());
-    generator.MoveMouseTo(10, 10);
-  }
+  void GenerateMouseMoveEvent() { GetEventGenerator().MoveMouseTo(10, 10); }
 
   int NumShutdownRequests() {
     return test_shutdown_controller_.num_shutdown_requests() +
@@ -332,11 +327,6 @@ class LockStateControllerTest : public AshTestBase {
   void SystemUnlocks() {
     lock_state_controller_->OnLockStateChanged(false);
     GetSessionControllerClient()->UnlockScreen();
-  }
-
-  void EnableTabletMode(bool enable) {
-    Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(
-        enable);
   }
 
   void Initialize(bool legacy_button, LoginStatus status) {
@@ -1115,76 +1105,6 @@ TEST_F(LockStateControllerTest, CancelClamshellDisplayOffAfterLock) {
   EXPECT_FALSE(power_button_controller_->TriggerDisplayOffTimerForTesting());
   EXPECT_FALSE(power_manager_client_->backlights_forced_off());
   SystemUnlocks();
-}
-
-TEST_F(LockStateControllerTest, Screenshot) {
-  TestScreenshotDelegate* delegate = GetScreenshotDelegate();
-  delegate->set_can_take_screenshot(true);
-
-  EnableTabletMode(false);
-
-  // Screenshot handling should not be active when not in tablet mode.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressKey(ui::VKEY_VOLUME_DOWN);
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseKey(ui::VKEY_VOLUME_DOWN);
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  EnableTabletMode(true);
-
-  // Pressing power alone does not take a screenshot.
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Press & release volume then pressing power does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressKey(ui::VKEY_VOLUME_DOWN);
-  ReleaseKey(ui::VKEY_VOLUME_DOWN);
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Pressing power and then volume does not take a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressPowerButton();
-  ReleasePowerButton();
-  PressKey(ui::VKEY_VOLUME_DOWN);
-  ReleaseKey(ui::VKEY_VOLUME_DOWN);
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
-
-  // Holding volume down and pressing power takes a screenshot.
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  PressKey(ui::VKEY_VOLUME_DOWN);
-  PressPowerButton();
-  ReleasePowerButton();
-  ReleaseKey(ui::VKEY_VOLUME_DOWN);
-  EXPECT_EQ(1, delegate->handle_take_screenshot_count());
-}
-
-// Tests that volume down key event is properly handled by power button
-// controller when system tray bubble is shown. This is a regression test for
-// crbug.com/765473.
-TEST_F(LockStateControllerTest, VolumeDownKeyWithTrayBubbleShown) {
-  TestScreenshotDelegate* delegate = GetScreenshotDelegate();
-  delegate->set_can_take_screenshot(true);
-  EnableTabletMode(true);
-
-  ASSERT_EQ(0, delegate->handle_take_screenshot_count());
-  // Simulate that pressing volume down key triggers volume bubble view.
-  PressKey(ui::VKEY_VOLUME_DOWN);
-  SystemTray* tray = GetPrimarySystemTray();
-  tray->ShowDefaultView(BUBBLE_CREATE_NEW, false /* show_by_click */);
-  // Release volume down key while tray bubble is still shown.
-  ASSERT_TRUE(tray->IsSystemBubbleVisible());
-  ReleaseKey(ui::VKEY_VOLUME_DOWN);
-  tray->CloseBubble();
-  EXPECT_FALSE(tray->IsSystemBubbleVisible());
-  // Now press power button, verify that it doesn't do screenshot.
-  PressPowerButton();
-  ReleasePowerButton();
-  EXPECT_EQ(0, delegate->handle_take_screenshot_count());
 }
 
 }  // namespace ash
