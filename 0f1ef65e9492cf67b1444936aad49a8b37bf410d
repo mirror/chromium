@@ -16,6 +16,24 @@
       "revId": "0f1ef65e9492cf67b1444936aad49a8b37bf410d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a8a984a_9b2b0cdd",
+        "filename": "third_party/WebKit/Source/build/scripts/make_names.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-10-04T06:00:21Z",
+      "side": 1,
+      "message": "Temporarily yes. I\u0027ll rename source file names to snake_case soon.",
+      "parentUuid": "f60444c6_0e96680d",
+      "revId": "0f1ef65e9492cf67b1444936aad49a8b37bf410d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
