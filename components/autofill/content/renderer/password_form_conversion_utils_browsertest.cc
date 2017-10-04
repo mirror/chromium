@@ -15,6 +15,7 @@
 #include "components/autofill/content/renderer/form_autofill_util.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/core/browser/form_structure.h"
+#include "components/autofill/core/common/form_field_data.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "content/public/test/render_view_test.h"
@@ -213,7 +214,8 @@ class MAYBE_PasswordFormConversionUtilsTest : public content::RenderViewTest {
       if (with_user_input) {
         const base::string16 element_value = input_element->Value().Utf16();
         user_input[control_elements[i]] =
-            std::make_pair(base::MakeUnique<base::string16>(element_value), 0U);
+            std::make_pair(base::MakeUnique<base::string16>(element_value),
+                           FieldPropertiesFlags::USER_TYPED);
       }
     }
 
