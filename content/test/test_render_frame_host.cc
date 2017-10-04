@@ -418,6 +418,7 @@ void TestRenderFrameHost::SendNavigateWithParams(
         std::string("Content-Type: ") + contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
+  params->contents_mime_type = contents_mime_type_;
   DidCommitProvisionalLoad(
       base::MakeUnique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params));
   last_commit_was_error_page_ = params->url_is_unreachable;

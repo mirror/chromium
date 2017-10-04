@@ -3618,4 +3618,13 @@ TEST_F(WebContentsImplTest, ResetJavaScriptDialogOnUserNavigate) {
   contents()->SetJavaScriptDialogManagerForTesting(nullptr);
 }
 
+TEST_F(WebContentsImplTest, SetMimeType) {
+  std::string mime = "video/mp4";
+  RenderFrameHostTester::For(contents()->GetMainFrame())->
+      SetContentsMimeType(mime);
+  contents()->NavigateAndCommit(GURL("http://a.com"));
+
+  EXPECT_EQ(mime, contents()->GetContentsMimeType());
+}
+
 }  // namespace content
