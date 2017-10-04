@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b65d5038_2b4b2ea6",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "If this is going to be used with content then we don\u0027t want to always start this thread, right? How do you think we should control that?",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3285938d_e73f8d77",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "TODO(crbug.com/609317)",
+      "range": {
+        "startLine": 84,
+        "startChar": 5,
+        "endLine": 84,
+        "endChar": 27
+      },
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5a715b9_af87c829",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "Is there any reason you don\u0027t bind this when constructing |binding_|?",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13bf53d_16d50557",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "Does this need to be called from the IO thread, if it\u0027s not on the GpuThread or CompositorThread, then? There should probably be a header comment with requirements.",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce6c328_dc12d808",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "nit: |wait| to be consistent with header?",
+      "range": {
+        "startLine": 204,
+        "startChar": 62,
+        "endLine": 204,
+        "endChar": 67
+      },
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "469b9c6a_57dbbaec",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "Totally optional, but it would probably be clearer just to do base::Passed(MakeRequest(\u0026gpu_main)) here?",
+      "range": {
+        "startLine": 51,
+        "startChar": 34,
+        "endLine": 51,
+        "endChar": 42
+      },
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd11316c_604145f0",
+        "filename": "services/ui/ws/gpu_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "Just curious, does calling Thread::Stop() wait for the task in the task queue to finish running before stopping the thread?",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3d9d39_0ba0b83c",
+        "filename": "services/ui/ws/gpu_host.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-10-04T13:05:57Z",
+      "side": 1,
+      "message": "A comment explaining why this variable is here would be useful, since it\u0027s kind of subtle?",
+      "revId": "8a9aa37bc48922ffd026b1222d93fab4f3e8ed24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
