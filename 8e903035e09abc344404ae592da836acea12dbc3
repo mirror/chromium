@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f213a2c8_23f6217b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-04T17:25:17Z",
+      "side": 1,
+      "message": "We have separate collapsed_border_values_valid_ and collapsed_border_values_ because there are cases that we invalidate the collapsed borders by setting collapsed_border_values_valid_ to false but the recomputed collapsed borders are the same as before. In these cases we won\u0027t invalidate anything.\n\nUpdateCollapsedBorderValues() doesn\u0027t track lengths of collapsed borders -\n layout change should trigger repaint of them, but we missed invalidation of the rows into which the spanning cell overhangs. Previously for rowspan/colspan changes, the recomputed collapsed borders will be the same as before and |changed| in UpdateCollapsedBorderValues() would be false, so we now set collapsed_border_values_ to nullptr here to ensure |changed|.",
+      "parentUuid": "6818b547_b35b2675",
+      "revId": "8e903035e09abc344404ae592da836acea12dbc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "688bca54_31065993",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.cpp",
         "patchSetId": 3
