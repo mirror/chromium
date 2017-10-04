@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b838e1b8_7e3e168e",
+        "filename": "components/cronet/android/api/src/org/chromium/net/CronetEngine.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:18:15Z",
+      "side": 1,
+      "message": "public API needs javadoc",
+      "range": {
+        "startLine": 183,
+        "startChar": 14,
+        "endLine": 183,
+        "endChar": 15
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae2a557_e9e50a63",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:18:15Z",
+      "side": 1,
+      "message": "Would it make sense to have this function return \u0027false\u0027 on failure?",
+      "range": {
+        "startLine": 897,
+        "startChar": 7,
+        "endLine": 897,
+        "endChar": 17
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6744cc73_16b9f185",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:18:15Z",
+      "side": 1,
+      "message": "Is this because Brotli ignores subsequent calls to BrotliSetDictionaryData?",
+      "range": {
+        "startLine": 910,
+        "startChar": 25,
+        "endLine": 910,
+        "endChar": 26
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eafc5c3_ba0ad7f8",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetEngineBuilderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:18:15Z",
+      "side": 1,
+      "message": "So, calling this method will now just be silently ignored?",
+      "range": {
+        "startLine": 189,
+        "startChar": 11,
+        "endLine": 189,
+        "endChar": 34
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8fd5ba1_dffcc0a9",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/CronetEngineBuilderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-10-04T19:18:15Z",
+      "side": 1,
+      "message": "Does it make sense to check dictionaryData.isDirect() here?",
+      "range": {
+        "startLine": 197,
+        "startChar": 32,
+        "endLine": 197,
+        "endChar": 46
+      },
+      "revId": "97cbf11a78b6f4e7b203939124c27dab5c05eb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
