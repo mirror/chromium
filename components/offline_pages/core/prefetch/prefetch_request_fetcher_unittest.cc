@@ -72,7 +72,7 @@ PrefetchRequestStatus PrefetchRequestFetcherTest::RunFetcher(
     std::string* data_received) {
   base::MockCallback<PrefetchRequestFetcher::FinishedCallback> callback;
   std::unique_ptr<PrefetchRequestFetcher> fetcher =
-      PrefetchRequestFetcher::CreateForPost(kTestURL, kTestMessage,
+      PrefetchRequestFetcher::CreateForPost(kTestURL, "", kTestMessage,
                                             request_context(), callback.Get());
 
   PrefetchRequestStatus status;
