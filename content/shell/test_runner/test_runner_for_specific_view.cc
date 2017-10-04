@@ -513,10 +513,8 @@ void TestRunnerForSpecificView::DumpPageImportanceSignals() {
 
   std::string message = base::StringPrintf(
       "WebPageImportanceSignals:\n"
-      "  hadFormInteraction: %s\n"
-      "  issuedNonGetFetchFromScript: %s\n",
-      signals->HadFormInteraction() ? "true" : "false",
-      signals->IssuedNonGetFetchFromScript() ? "true" : "false");
+      "  hadFormInteraction: %s\n",
+      signals->HadFormInteraction() ? "true" : "false");
   if (delegate())
     delegate()->PrintMessage(message);
 }
