@@ -36,6 +36,7 @@ namespace content {
 
 class AppCacheNavigationHandle;
 class ChromeAppCacheService;
+class DelayedSubframeThrottle;
 class NavigationUIData;
 class NavigatorDelegate;
 class ResourceRequestBody;
@@ -93,7 +94,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       int pending_nav_entry_id,
       bool started_from_context_menu,
       CSPDisposition should_check_main_world_csp,
-      bool is_form_submission);
+      bool is_form_submission,
+      bool is_delayed_subframe_request = false);
   ~NavigationHandleImpl() override;
 
   // Used to track the state the navigation is currently in.
@@ -396,6 +398,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // url we're navigating to.
   void SetExpectedProcess(RenderProcessHost* expected_process);
 
+  void OnFrameVisible();
+
  private:
   friend class NavigationHandleImplTest;
 
@@ -408,7 +412,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
                        int pending_nav_entry_id,
                        bool started_from_context_menu,
                        CSPDisposition should_check_main_world_csp,
-                       bool is_form_submission);
+                       bool is_form_submission,
+                       bool is_delayed_subframe_request = false);
 
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
@@ -613,6 +618,10 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // Used in tests. Called when the navigation is deferred by one of the
   // NavigationThrottles.
   base::Closure on_defer_callback_for_testing_;
+
+  bool is_delayed_subframe_request_;
+
+  base::WeakPtr<DelayedSubframeThrottle> weak_delayed_subframe_throttle_;
 
   base::WeakPtrFactory<NavigationHandleImpl> weak_factory_;
 

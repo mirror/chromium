@@ -1441,6 +1441,13 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       triggering_event_info, frame_load_request.Form());
 }
 
+void FrameLoader::FrameVisible() {
+  if (frame_ && frame_->Client()) {
+    frame_->Client()->DispatchFrameVisible();
+    TakeObjectSnapshot();
+  }
+}
+
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             FrameLoadType type,
                             NavigationPolicy navigation_policy,
@@ -1519,6 +1526,17 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   Client()->DispatchDidStartProvisionalLoad(provisional_document_loader_,
                                             resource_request);
   DCHECK(provisional_document_loader_);
+
+  if (!frame_->IsMainFrame() && frame_load_request.getShouldDelayRequest()) {
+      Frame * parent = frame_->Tree().Parent();
+      frame_->is_deferred = true;
+      if (parent->IsRemoteFrame()) {
+          LOG(INFO) << "Remote frame encountered when local frame expected";
+      }
+      else if (parent->IsLocalFrame()) {
+          ((LocalFrame*)parent)->GetDocument()->CheckCompleted();
+      }
+  }
 
   if (navigation_policy == kNavigationPolicyCurrentTab) {
     provisional_document_loader_->StartLoading();
