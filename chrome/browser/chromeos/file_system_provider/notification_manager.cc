@@ -8,13 +8,14 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/chrome_app_icon_loader.h"
-#include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
+#include "chrome/browser/notifications/notification.h"
+#include "chrome/browser/notifications/notification_common.h"
+#include "chrome/browser/notifications/notification_display_service.h"
+#include "chrome/browser/notifications/notification_display_service_factory.h"
+#include "chrome/browser/notifications/notification_handler.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "ui/base/l10n/l10n_util.h"
-#include "ui/message_center/message_center.h"
-#include "ui/message_center/notification.h"
-#include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
 
@@ -25,27 +26,63 @@ namespace {
 // Extension icon size for the notification.
 const int kIconSize = 48;
 
-// Forwards notification events to the notification manager.
-class ProviderNotificationDelegate
-    : public message_center::NotificationDelegate {
+class FileSystemProviderNotificationHandler : public NotificationHandler {
  public:
-  // Passing a raw pointer is safe here, since the life of each notification is
-  // shorter than life of the |notification_manager|.
-  explicit ProviderNotificationDelegate(
-      NotificationManager* notification_manager)
-      : notification_manager_(notification_manager) {}
+  static FileSystemProviderNotificationHandler* GetInstance(Profile* profile) {
+    NotificationDisplayService* service =
+        NotificationDisplayServiceFactory::GetForProfile(profile);
+    NotificationHandler* handler = service->GetNotificationHandler(
+        NotificationCommon::FILE_SYSTEM_PROVIDER);
+    if (handler)
+      return static_cast<FileSystemProviderNotificationHandler*>(handler);
 
-  void ButtonClick(int button_index) override {
-    notification_manager_->OnButtonClick(button_index);
+    auto* file_system_provider_handler =
+        new FileSystemProviderNotificationHandler();
+    service->AddNotificationHandler(
+        NotificationCommon::FILE_SYSTEM_PROVIDER,
+        base::WrapUnique(file_system_provider_handler));
+    return file_system_provider_handler;
   }
 
-  void Close(bool by_user) override { notification_manager_->OnClose(); }
+  ~FileSystemProviderNotificationHandler() override {}
+
+  void OnClose(Profile* profile,
+               const std::string& origin,
+               const std::string& notification_id,
+               bool by_user) override {
+    DCHECK(managers_.count(notification_id));
+    managers_[notification_id]->OnClose();
+  }
+
+  void OnClick(Profile* profile,
+               const std::string& origin,
+               const std::string& notification_id,
+               const base::Optional<int>& action_index,
+               const base::Optional<base::string16>& reply) override {
+    // TODO(estade): make this condition a DCHECK?
+    if (!action_index)
+      return;
+
+    DCHECK(managers_.count(notification_id));
+    managers_[notification_id]->OnButtonClick(*action_index);
+  }
+
+  void Register(const std::string& id, NotificationManager* manager) {
+    DCHECK_EQ(0U, managers_.count(id));
+    managers_[id] = manager;
+  }
+
+  void Unregister(const std::string& id) {
+    size_t erased = managers_.erase(id);
+    DCHECK_EQ(1U, erased);
+  }
 
  private:
-  ~ProviderNotificationDelegate() override {}
-  NotificationManager* notification_manager_;  // Not owned.
+  FileSystemProviderNotificationHandler() {}
 
-  DISALLOW_COPY_AND_ASSIGN(ProviderNotificationDelegate);
+  std::map<std::string, NotificationManager*> managers_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileSystemProviderNotificationHandler);
 };
 
 }  // namespace
@@ -56,12 +93,17 @@ NotificationManager::NotificationManager(
     : profile_(profile),
       file_system_info_(file_system_info),
       icon_loader_(
-          new extensions::ChromeAppIconLoader(profile, kIconSize, this)) {}
+          new extensions::ChromeAppIconLoader(profile, kIconSize, this)) {
+  FileSystemProviderNotificationHandler::GetInstance(profile)->Register(
+      GetNotificationId(), this);
+}
 
 NotificationManager::~NotificationManager() {
+  FileSystemProviderNotificationHandler::GetInstance(profile_)->Unregister(
+      GetNotificationId());
   if (callbacks_.size()) {
-    g_browser_process->message_center()->RemoveNotification(
-        file_system_info_.mount_path().value(), false /* by_user */);
+    NotificationDisplayServiceFactory::GetForProfile(profile_)->Close(
+        NotificationCommon::FILE_SYSTEM_PROVIDER, GetNotificationId());
   }
 }
 
@@ -69,26 +111,19 @@ void NotificationManager::ShowUnresponsiveNotification(
     int id,
     const NotificationCallback& callback) {
   callbacks_[id] = callback;
-
-  if (callbacks_.size() == 1) {
-    g_browser_process->message_center()->AddNotification(CreateNotification());
-  } else {
-    g_browser_process->message_center()->UpdateNotification(
-        file_system_info_.mount_path().value(), CreateNotification());
-  }
+  ShowNotification();
 }
 
 void NotificationManager::HideUnresponsiveNotification(int id) {
   callbacks_.erase(id);
 
   if (callbacks_.size()) {
-    g_browser_process->message_center()->UpdateNotification(
-        file_system_info_.mount_path().value(), CreateNotification());
+    ShowNotification();
     return;
   }
 
-  g_browser_process->message_center()->RemoveNotification(
-      file_system_info_.mount_path().value(), false /* by_user */);
+  NotificationDisplayServiceFactory::GetForProfile(profile_)->Close(
+      NotificationCommon::FILE_SYSTEM_PROVIDER, GetNotificationId());
 }
 
 void NotificationManager::OnButtonClick(int button_index) {
@@ -102,12 +137,14 @@ void NotificationManager::OnClose() {
 void NotificationManager::OnAppImageUpdated(const std::string& id,
                                             const gfx::ImageSkia& image) {
   extension_icon_.reset(new gfx::Image(image));
-  g_browser_process->message_center()->UpdateNotification(
-      file_system_info_.mount_path().value(), CreateNotification());
+  ShowNotification();
 }
 
-std::unique_ptr<message_center::Notification>
-NotificationManager::CreateNotification() {
+std::string NotificationManager::GetNotificationId() {
+  return file_system_info_.mount_path().value();
+}
+
+void NotificationManager::ShowNotification() {
   if (!extension_icon_.get())
     icon_loader_->FetchImage(file_system_info_.extension_id());
 
@@ -117,27 +154,26 @@ NotificationManager::CreateNotification() {
           IDS_FILE_SYSTEM_PROVIDER_UNRESPONSIVE_ABORT_BUTTON)));
 
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      file_system_info_.mount_path().value());
-  notifier_id.profile_id =
-      multi_user_util::GetAccountIdFromProfile(profile_).GetUserEmail();
+      message_center::NotifierId::SYSTEM_COMPONENT, GetNotificationId());
 
-  std::unique_ptr<message_center::Notification> notification(
-      new message_center::Notification(
-          message_center::NOTIFICATION_TYPE_SIMPLE,
-          file_system_info_.mount_path().value(),
-          base::UTF8ToUTF16(file_system_info_.display_name()),
-          l10n_util::GetStringUTF16(
-              callbacks_.size() == 1
-                  ? IDS_FILE_SYSTEM_PROVIDER_UNRESPONSIVE_WARNING
-                  : IDS_FILE_SYSTEM_PROVIDER_MANY_UNRESPONSIVE_WARNING),
-          extension_icon_.get() ? *extension_icon_.get() : gfx::Image(),
-          base::string16(),  // display_source
-          GURL(), notifier_id, rich_notification_data,
-          new ProviderNotificationDelegate(this)));
+  Notification notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, GetNotificationId(),
+      base::UTF8ToUTF16(file_system_info_.display_name()),
+      l10n_util::GetStringUTF16(
+          callbacks_.size() == 1
+              ? IDS_FILE_SYSTEM_PROVIDER_UNRESPONSIVE_WARNING
+              : IDS_FILE_SYSTEM_PROVIDER_MANY_UNRESPONSIVE_WARNING),
+      extension_icon_.get() ? *extension_icon_.get() : gfx::Image(),
+      notifier_id,
+      base::string16(),  // display_source
+      GURL("chrome://file_system_provider"), GetNotificationId(),
+      rich_notification_data, nullptr);
 
-  notification->SetSystemPriority();
-  return notification;
+  notification.SetSystemPriority();
+
+  NotificationDisplayServiceFactory::GetForProfile(profile_)->Display(
+      NotificationCommon::FILE_SYSTEM_PROVIDER, GetNotificationId(),
+      notification);
 }
 
 void NotificationManager::OnNotificationResult(NotificationResult result) {

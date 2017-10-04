@@ -42,7 +42,8 @@ class NotificationCommon {
     EXTENSION = 2,
     PRODUCT_EOL = 3,
     DOWNLOAD = 4,
-    TYPE_MAX = DOWNLOAD,
+    FILE_SYSTEM_PROVIDER = 5,
+    TYPE_MAX = FILE_SYSTEM_PROVIDER,
   };
 
   // A struct that contains extra data about a notification specific to one of
