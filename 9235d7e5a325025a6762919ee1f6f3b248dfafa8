@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4bb019e7_7416ea91",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/BreakpointManager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:24:26Z",
+      "side": 1,
+      "message": "@return {!Promise}",
+      "revId": "9235d7e5a325025a6762919ee1f6f3b248dfafa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20568fd3_d139271f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:24:26Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "9235d7e5a325025a6762919ee1f6f3b248dfafa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50ea6cc_b61df497",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:24:26Z",
+      "side": 1,
+      "message": "We should call it scriptHash. Do we expose hash in Location? That one we should name scriptHash as well.",
+      "range": {
+        "startLine": 256,
+        "startChar": 33,
+        "endLine": 256,
+        "endChar": 37
+      },
+      "revId": "9235d7e5a325025a6762919ee1f6f3b248dfafa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0f0521_1959d372",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:24:26Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "9235d7e5a325025a6762919ee1f6f3b248dfafa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e539c9_31a62516",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-04T22:24:26Z",
+      "side": 1,
+      "message": "We do not use this error on the call site, let\u0027s not pass it.",
+      "revId": "9235d7e5a325025a6762919ee1f6f3b248dfafa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
