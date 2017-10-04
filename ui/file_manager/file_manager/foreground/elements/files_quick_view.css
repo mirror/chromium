@@ -102,6 +102,7 @@ paper-button:focus:not(:active) {
 }
 
 #innerContentPanel[type="audio"],
+#innerContentPanel[type="html"],
 #innerContentPanel[type="image"],
 #innerContentPanel[type="video"] {
   align-self: center;
