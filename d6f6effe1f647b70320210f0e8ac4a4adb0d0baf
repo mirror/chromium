@@ -16,6 +16,24 @@
       "revId": "d6f6effe1f647b70320210f0e8ac4a4adb0d0baf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8a6f0d_e2d3b51f",
+        "filename": "cc/animation/animation_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-04T21:17:34Z",
+      "side": 0,
+      "message": "Put LayerTreeMutatorClient back.\n\nI can\u0027t see that CL to avoid it.  Purists would say that the new CL should re-add it unless it lands before the cleanup.",
+      "parentUuid": "5981bbf3_d937e6c4",
+      "revId": "d6f6effe1f647b70320210f0e8ac4a4adb0d0baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
