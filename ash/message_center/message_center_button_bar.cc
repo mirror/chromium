@@ -5,9 +5,11 @@
 #include "ash/message_center/message_center_button_bar.h"
 
 #include "ash/message_center/message_center_view.h"
+#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/canvas.h"
@@ -26,19 +28,33 @@
 #include "ui/views/controls/button/menu_button_listener.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/controls/menu/menu_runner.h"
+#include "ui/views/controls/separator.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/painter.h"
 
 using message_center::MessageCenter;
 using message_center::NotifierSettingsProvider;
+using views::Button;
 
 namespace ash {
 
 namespace {
+// TODO(tetsui): Remove when back arrow is removed.
 constexpr int kButtonSize = 40;
-}  // namespace
 
+constexpr int kVectorButtonSize = 20;
+constexpr gfx::Insets kVectorButtonPadding(14);
+constexpr SkColor kButtonBarBackgroundColor = SkColorSetRGB(0xFF, 0xFF, 0xFF);
+constexpr SkColor kActiveButtonColor = SkColorSetARGB(0xFF, 0x5A, 0x5A, 0x5A);
+constexpr SkColor kInactiveButtonColor = SkColorSetARGB(0x8A, 0x5A, 0x5A, 0x5A);
+constexpr SkColor kTextColor = SkColorSetARGB(0xFF, 0x0, 0x0, 0x0);
+constexpr SkColor kButtonSeparatorColor = SkColorSetARGB(0x1F, 0x0, 0x0, 0x0);
+constexpr int kTextFontSize = 14;
+constexpr int kSeparatorHeight = 24;
+constexpr gfx::Insets kSeparatorPadding(12, 0, 12, 0);
+
+// TODO(tetsui): Remove when back arrow is removed.
 views::ToggleImageButton* CreateNotificationCenterButton(
     views::ButtonListener* listener,
     int normal_id,
@@ -67,6 +83,35 @@ views::ToggleImageButton* CreateNotificationCenterButton(
   return button;
 }
 
+// "Roboto-Medium, 14sp" is specified in the mock.
+gfx::FontList GetFontListForNotificationLabel() {
+  gfx::Font default_font;
+  int font_size_delta = kTextFontSize - default_font.GetFontSize();
+  gfx::Font font = default_font.Derive(font_size_delta, gfx::Font::NORMAL,
+                                       gfx::Font::Weight::MEDIUM);
+  DCHECK_EQ(kTextFontSize, font.GetFontSize());
+  return gfx::FontList(font);
+}
+
+void SetDefaultButtonStyle(views::Button* button) {
+  button->SetFocusForPlatform();
+  button->SetFocusPainter(views::Painter::CreateSolidFocusPainter(
+      message_center::kFocusBorderColor, gfx::Insets(1, 2, 2, 2)));
+  button->SetBorder(views::CreateEmptyBorder(kVectorButtonPadding));
+
+  // TODO(tetsui): Add ripple effect to the buttons.
+}
+
+views::Separator* CreateVerticalSeparator() {
+  views::Separator* separator = new views::Separator;
+  separator->SetPreferredHeight(kSeparatorHeight);
+  separator->SetColor(kButtonSeparatorColor);
+  separator->SetBorder(views::CreateEmptyBorder(kSeparatorPadding));
+  return separator;
+}
+
+}  // namespace
+
 // MessageCenterButtonBar /////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 MessageCenterButtonBar::MessageCenterButtonBar(
@@ -84,10 +129,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       settings_button_(nullptr),
       quiet_mode_button_(nullptr) {
   SetPaintToLayer();
-  SetBackground(
-      views::CreateSolidBackground(MessageCenterView::kBackgroundColor));
-
-  ui::ResourceBundle& resource_bundle = ui::ResourceBundle::GetSharedInstance();
+  SetBackground(views::CreateSolidBackground(kButtonBarBackgroundColor));
 
   title_arrow_ = CreateNotificationCenterButton(
       this, IDR_NOTIFICATION_ARROW, IDR_NOTIFICATION_ARROW_HOVER,
@@ -100,45 +142,54 @@ MessageCenterButtonBar::MessageCenterButtonBar(
   notification_label_ = new views::Label(title);
   notification_label_->SetAutoColorReadabilityEnabled(false);
   notification_label_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-  notification_label_->SetEnabledColor(message_center::kRegularTextColor);
+  notification_label_->SetEnabledColor(kTextColor);
+  notification_label_->SetFontList(GetFontListForNotificationLabel());
   AddChildView(notification_label_);
 
   button_container_ = new views::View;
   button_container_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal));
-  quiet_mode_button_ = CreateNotificationCenterButton(
-      this, IDR_NOTIFICATION_DO_NOT_DISTURB,
-      IDR_NOTIFICATION_DO_NOT_DISTURB_HOVER,
-      IDR_NOTIFICATION_DO_NOT_DISTURB_PRESSED,
-      IDS_ASH_MESSAGE_CENTER_QUIET_MODE_BUTTON_TOOLTIP);
-  quiet_mode_button_->SetToggledImage(
-      views::Button::STATE_NORMAL,
-      resource_bundle.GetImageSkiaNamed(
-          IDR_NOTIFICATION_DO_NOT_DISTURB_PRESSED));
-  quiet_mode_button_->SetToggledImage(
-      views::Button::STATE_HOVERED,
-      resource_bundle.GetImageSkiaNamed(
-          IDR_NOTIFICATION_DO_NOT_DISTURB_PRESSED));
-  quiet_mode_button_->SetToggledImage(
-      views::Button::STATE_PRESSED,
-      resource_bundle.GetImageSkiaNamed(
-          IDR_NOTIFICATION_DO_NOT_DISTURB_PRESSED));
-  SetQuietModeState(message_center->IsQuietMode());
-  button_container_->AddChildView(quiet_mode_button_);
-
-  close_all_button_ = CreateNotificationCenterButton(
-      this, IDR_NOTIFICATION_CLEAR_ALL, IDR_NOTIFICATION_CLEAR_ALL_HOVER,
-      IDR_NOTIFICATION_CLEAR_ALL_PRESSED,
-      IDS_ASH_MESSAGE_CENTER_CLEAR_ALL_BUTTON_TOOLTIP);
+  close_all_button_ = new views::ImageButton(this);
   close_all_button_->SetImage(
-      views::Button::STATE_DISABLED,
-      *resource_bundle.GetImageSkiaNamed(IDR_NOTIFICATION_CLEAR_ALL_DISABLED));
+      Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(kNotificationCenterClearAllIcon, kVectorButtonSize,
+                            kActiveButtonColor));
+  close_all_button_->SetImage(
+      Button::STATE_DISABLED,
+      gfx::CreateVectorIcon(kNotificationCenterClearAllIcon, kVectorButtonSize,
+                            kInactiveButtonColor));
+  close_all_button_->SetTooltipText(l10n_util::GetStringUTF16(
+      IDS_ASH_MESSAGE_CENTER_CLEAR_ALL_BUTTON_TOOLTIP));
+  SetDefaultButtonStyle(close_all_button_);
   button_container_->AddChildView(close_all_button_);
+  button_container_->AddChildView(CreateVerticalSeparator());
 
-  settings_button_ = CreateNotificationCenterButton(
-      this, IDR_NOTIFICATION_SETTINGS, IDR_NOTIFICATION_SETTINGS_HOVER,
-      IDR_NOTIFICATION_SETTINGS_PRESSED,
-      IDS_ASH_MESSAGE_CENTER_SETTINGS_BUTTON_TOOLTIP);
+  quiet_mode_button_ = new views::ToggleImageButton(this);
+  quiet_mode_button_->SetImage(
+      Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOffIcon,
+                            kVectorButtonSize, kInactiveButtonColor));
+  // This is OK because ImageSkia will be copied in ToggleImageButton.
+  gfx::ImageSkia quiet_mode_toggle_icon =
+      gfx::CreateVectorIcon(kNotificationCenterDoNotDisturbOnIcon,
+                            kVectorButtonSize, kActiveButtonColor);
+  quiet_mode_button_->SetToggledImage(Button::STATE_NORMAL,
+                                      &quiet_mode_toggle_icon);
+  quiet_mode_button_->SetTooltipText(l10n_util::GetStringUTF16(
+      IDS_ASH_MESSAGE_CENTER_QUIET_MODE_BUTTON_TOOLTIP));
+  SetQuietModeState(message_center->IsQuietMode());
+  SetDefaultButtonStyle(quiet_mode_button_);
+  button_container_->AddChildView(quiet_mode_button_);
+  button_container_->AddChildView(CreateVerticalSeparator());
+
+  settings_button_ = new views::ImageButton(this);
+  settings_button_->SetImage(
+      Button::STATE_NORMAL,
+      gfx::CreateVectorIcon(kNotificationCenterSettingsIcon, kVectorButtonSize,
+                            kActiveButtonColor));
+  settings_button_->SetTooltipText(l10n_util::GetStringUTF16(
+      IDS_ASH_MESSAGE_CENTER_SETTINGS_BUTTON_TOOLTIP));
+  SetDefaultButtonStyle(settings_button_);
   button_container_->AddChildView(settings_button_);
 
   SetCloseAllButtonEnabled(!settings_initially_visible);
@@ -147,6 +198,8 @@ MessageCenterButtonBar::MessageCenterButtonBar(
 }
 
 void MessageCenterButtonBar::ViewVisibilityChanged() {
+  // TODO(tetsui): Remove GridLayout and use BoxLayout.
+  // The view will be simple enough for BoxLayout after back arrow removal.
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   views::ColumnSet* column = layout->AddColumnSet(0);
   constexpr int kFooterLeftMargin = 4;
@@ -156,7 +209,7 @@ void MessageCenterButtonBar::ViewVisibilityChanged() {
     column->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
                       0.0f, views::GridLayout::FIXED, kButtonSize, 0);
   } else {
-    constexpr int kLeftPaddingWidthForNonArrows = 16;
+    constexpr int kLeftPaddingWidthForNonArrows = 12;
     column->AddPaddingColumn(0.0f, kLeftPaddingWidthForNonArrows);
   }
 
@@ -165,29 +218,20 @@ void MessageCenterButtonBar::ViewVisibilityChanged() {
                     views::GridLayout::USE_PREF, 0, 0);
 
   // Fills in the remaining space between "Notifications" and buttons.
-  gfx::ImageSkia* settings_image =
-      ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
-          IDR_NOTIFICATION_SETTINGS);
-  const int image_margin =
-      std::max(0, (kButtonSize - settings_image->width()) / 2);
-  column->AddPaddingColumn(1.0f, image_margin);
+  column->AddPaddingColumn(1.0f, 0);
 
   // The button area column.
   column->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0.0f,
                     views::GridLayout::USE_PREF, 0, 0);
 
-  constexpr int kFooterRightMargin = 14;
-  const int right_margin = std::max(0, kFooterRightMargin - image_margin);
-  column->AddPaddingColumn(0, right_margin);
-
-  constexpr int kFooterTopMargin = 6;
+  constexpr int kFooterTopMargin = 4;
   layout->AddPaddingRow(0, kFooterTopMargin);
   layout->StartRow(0, 0, kButtonSize);
   if (title_arrow_->visible())
     layout->AddView(title_arrow_);
   layout->AddView(notification_label_);
   layout->AddView(button_container_);
-  constexpr int kFooterBottomMargin = 3;
+  constexpr int kFooterBottomMargin = 4;
   layout->AddPaddingRow(0, kFooterBottomMargin);
 }
 
