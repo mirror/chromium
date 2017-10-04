@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e5c023_eb0a8176",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-04T04:14:41Z",
+      "side": 1,
+      "message": "Can you update the name? How about EnableStickyMode()?",
+      "range": {
+        "startLine": 123,
+        "startChar": 5,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "e7c0f7f0552157faf6d6375ec44b981eb16a0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51ac2c92_63556359",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1603,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-04T04:14:41Z",
+      "side": 1,
+      "message": "Can you minimize the diff by not moving other tests?",
+      "range": {
+        "startLine": 1526,
+        "startChar": 0,
+        "endLine": 1603,
+        "endChar": 1
+      },
+      "revId": "e7c0f7f0552157faf6d6375ec44b981eb16a0ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
