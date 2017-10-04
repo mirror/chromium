@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc968347_f5c3824e",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9108512_c4e8bd5a",
+      "range": {
+        "startLine": 744,
+        "startChar": 17,
+        "endLine": 744,
+        "endChar": 23
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fedf385_e7de347b",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bfb8fe_c5367c94",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fedf385_e7de347b",
+      "range": {
+        "startLine": 783,
+        "startChar": 29,
+        "endLine": 783,
+        "endChar": 0
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c46cc5da_0e9efe05",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "\u003e Hm, can this actually happen? If so, then this is probably still racy. Could you instead check the computed style in the inline JS above, and immediately send the WaitForFadeIn message if opacity is already 1?\n\nI don\u0027t think it\u0027s racy, because the observer starts listening before we check opacity. But it\u0027s simpler to check in the JS, so I\u0027ve moved the check there.",
+      "parentUuid": "8e97d153_c57641cf",
+      "range": {
+        "startLine": 786,
+        "startChar": 54,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9992a774_2e02460e",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce3e295_99cb7325",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9992a774_2e02460e",
+      "range": {
+        "startLine": 787,
+        "startChar": 29,
+        "endLine": 787,
+        "endChar": 0
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "82a99474_a37a3bd0",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 844,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "124b5e54_e6a74c64",
+      "range": {
+        "startLine": 844,
+        "startChar": 44,
+        "endLine": 844,
+        "endChar": 50
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb9ad1b_cacca66c",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddb849d_6f086cce",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-04T08:43:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb9ad1b_cacca66c",
+      "range": {
+        "startLine": 900,
+        "startChar": 42,
+        "endLine": 900,
+        "endChar": 73
+      },
+      "revId": "93a7e7dd1afb6da8bffba82ce501bdb7fec9eddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
