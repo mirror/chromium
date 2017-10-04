@@ -334,7 +334,8 @@ void OnSyntheticGestureCompleted(CallbackAndContext* callback_and_context) {
   }
 }
 
-bool BeginSmoothScroll(v8::Isolate* isolate,
+bool BeginSmoothScroll(GpuBenchmarkingContext* context,
+                       gin::Arguments* args,
                        mojom::InputInjectorPtr& injector,
                        float pixels_to_scroll,
                        v8::Local<v8::Function> callback,
@@ -344,33 +345,36 @@ bool BeginSmoothScroll(v8::Isolate* isolate,
                        bool prevent_fling,
                        float start_x,
                        float start_y) {
-  GpuBenchmarkingContext context;
-  if (!context.Init(false))
-    return false;
-
   // Convert coordinates from CSS pixels to density independent pixels (DIPs).
-  float page_scale_factor = context.web_view()->PageScaleFactor();
+  float page_scale_factor = context->web_view()->PageScaleFactor();
+  gfx::Rect rect = context->render_view_impl()->GetWidget()->ViewRect();
+  rect -= rect.OffsetFromOrigin();
+  if (!rect.Contains(start_x * page_scale_factor,
+                     start_y * page_scale_factor)) {
+    args->ThrowTypeError("Start point not in bounds");
+    return false;
+  }
 
   if (gesture_source_type == SyntheticGestureParams::MOUSE_INPUT) {
     // Ensure the mouse is centered and visible, in case it will
     // trigger any hover or mousemove effects.
-    context.web_view()->SetIsActive(true);
+    context->web_view()->SetIsActive(true);
     blink::WebRect contentRect =
-        context.web_view()->MainFrame()->VisibleContentRect();
+        context->web_view()->MainFrame()->VisibleContentRect();
     blink::WebMouseEvent mouseMove(
         blink::WebInputEvent::kMouseMove, blink::WebInputEvent::kNoModifiers,
         ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
     mouseMove.SetPositionInWidget(
         (contentRect.x + contentRect.width / 2) * page_scale_factor,
         (contentRect.y + contentRect.height / 2) * page_scale_factor);
-    context.web_view()->HandleInputEvent(
+    context->web_view()->HandleInputEvent(
         blink::WebCoalescedInputEvent(mouseMove));
-    context.web_view()->SetCursorVisibilityState(true);
+    context->web_view()->SetCursorVisibilityState(true);
   }
 
   scoped_refptr<CallbackAndContext> callback_and_context =
-      new CallbackAndContext(isolate, callback,
-                             context.web_frame()->MainWorldScriptContext());
+      new CallbackAndContext(args->isolate(), callback,
+                             context->web_frame()->MainWorldScriptContext());
 
   SyntheticSmoothScrollGestureParams gesture_params;
 
@@ -422,7 +426,8 @@ bool BeginSmoothScroll(v8::Isolate* isolate,
   return true;
 }
 
-bool BeginSmoothDrag(v8::Isolate* isolate,
+bool BeginSmoothDrag(GpuBenchmarkingContext* context,
+                     gin::Arguments* args,
                      mojom::InputInjectorPtr& injector,
                      float start_x,
                      float start_y,
@@ -431,17 +436,20 @@ bool BeginSmoothDrag(v8::Isolate* isolate,
                      v8::Local<v8::Function> callback,
                      int gesture_source_type,
                      float speed_in_pixels_s) {
-  GpuBenchmarkingContext context;
-  if (!context.Init(false))
+  // Convert coordinates from CSS pixels to density independent pixels (DIPs).
+  float page_scale_factor = context->web_view()->PageScaleFactor();
+  gfx::Rect rect = context->render_view_impl()->GetWidget()->ViewRect();
+  rect -= rect.OffsetFromOrigin();
+  if (!rect.Contains(start_x * page_scale_factor,
+                     start_y * page_scale_factor)) {
+    args->ThrowTypeError("Start point not in bounds");
     return false;
+  }
   scoped_refptr<CallbackAndContext> callback_and_context =
-      new CallbackAndContext(isolate, callback,
-                             context.web_frame()->MainWorldScriptContext());
+      new CallbackAndContext(args->isolate(), callback,
+                             context->web_frame()->MainWorldScriptContext());
 
   SyntheticSmoothDragGestureParams gesture_params;
-
-  // Convert coordinates from CSS pixels to density independent pixels (DIPs).
-  float page_scale_factor = context.web_view()->PageScaleFactor();
 
   gesture_params.start_point.SetPoint(start_x * page_scale_factor,
                                       start_y * page_scale_factor);
@@ -704,7 +712,7 @@ bool GpuBenchmarking::SmoothScrollBy(gin::Arguments* args) {
   }
 
   EnsureRemoteInterface();
-  return BeginSmoothScroll(args->isolate(), input_injector_, pixels_to_scroll,
+  return BeginSmoothScroll(&context, args, input_injector_, pixels_to_scroll,
                            callback, gesture_source_type, direction,
                            speed_in_pixels_s, true, start_x, start_y);
 }
@@ -733,7 +741,7 @@ bool GpuBenchmarking::SmoothDrag(gin::Arguments* args) {
   }
 
   EnsureRemoteInterface();
-  return BeginSmoothDrag(args->isolate(), input_injector_, start_x, start_y,
+  return BeginSmoothDrag(&context, args, input_injector_, start_x, start_y,
                          end_x, end_y, callback, gesture_source_type,
                          speed_in_pixels_s);
 }
@@ -764,7 +772,7 @@ bool GpuBenchmarking::Swipe(gin::Arguments* args) {
 
   EnsureRemoteInterface();
   return BeginSmoothScroll(
-      args->isolate(), input_injector_, -pixels_to_scroll, callback,
+      &context, args, input_injector_, -pixels_to_scroll, callback,
       1,  // TOUCH_INPUT
       direction, speed_in_pixels_s, false, start_x, start_y);
 }
