@@ -48,10 +48,11 @@ public class ChromeHomePromoDialog extends PromoDialog {
 
     @Override
     public void onClick(View view) {
-        if (mSwitchStateShouldEnable != FeatureUtilities.isChromeHomeEnabled()) {
-            FeatureUtilities.switchChromeHomeUserSetting(mSwitchStateShouldEnable);
-            restartChromeInstances();
-        }
+        boolean restartRequired =
+                mSwitchStateShouldEnable != FeatureUtilities.isChromeHomeEnabled();
+        FeatureUtilities.switchChromeHomeUserSetting(mSwitchStateShouldEnable);
+
+        if (restartRequired) restartChromeInstances();
 
         // There is only one button for this dialog, so dismiss on any click.
         dismiss();

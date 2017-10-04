@@ -344,6 +344,18 @@ public class FeatureUtilities {
     }
 
     /**
+     * @return Whether the Chrome Home promo should be shown for cold-start.
+     */
+    public static boolean shouldShowChromeHomePromoForStartup() {
+        if (!ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) return false;
+
+        ChromePreferenceManager prefManager = ChromePreferenceManager.getInstance();
+
+        // Don't show the promo is the user has Chrome Home enabled.
+        return !prefManager.isChromeHomeUserPreferenceSet() && !isChromeHomeEnabled();
+    }
+
+    /**
      * @return Whether or not showing the Doodle in the Chrome Home NTP is enabled.
      */
     public static boolean isChromeHomeDoodleEnabled() {
