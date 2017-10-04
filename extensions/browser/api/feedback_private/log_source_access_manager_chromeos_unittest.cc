@@ -22,7 +22,58 @@ using api::feedback_private::ReadLogSourceParams;
 
 using LogSourceAccessManagerTest = FeedbackPrivateApiUnittestBase;
 
-TEST_F(LogSourceAccessManagerTest, MaxNumberOfOpenLogSources) {
+TEST_F(LogSourceAccessManagerTest, MaxNumberOfOpenLogSourcesSameExtension) {
+  const base::TimeDelta timeout(base::TimeDelta::FromMilliseconds(0));
+  LogSourceAccessManager::SetRateLimitingTimeoutForTesting(&timeout);
+
+  LogSourceAccessManager manager(browser_context());
+
+  // Create a dummy callback to pass to FetchFromSource().
+  LogSourceAccessManager::ReadLogSourceCallback callback =
+      base::Bind([](const ReadLogSourceResult&) {});
+
+  const std::string extension_id = "extension";
+
+  // Open 10 readers for LOG_SOURCE_MESSAGES.
+  ReadLogSourceParams messages_params;
+  messages_params.incremental = false;
+  messages_params.source = LOG_SOURCE_MESSAGES;
+  for (size_t i = 0; i < 10; ++i) {
+    EXPECT_TRUE(
+        manager.FetchFromSource(messages_params, extension_id, callback))
+        << i;
+    EXPECT_EQ(i + 1,
+              manager.GetNumActiveResourcesForSource(LOG_SOURCE_MESSAGES));
+  }
+  EXPECT_EQ(0U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_UILATEST));
+
+  // Open 10 readers for LOG_SOURCE_UILATEST.
+  ReadLogSourceParams ui_latest_params;
+  ui_latest_params.incremental = false;
+  ui_latest_params.source = LOG_SOURCE_UILATEST;
+  for (size_t i = 0; i < 10; ++i) {
+    EXPECT_TRUE(
+        manager.FetchFromSource(ui_latest_params, extension_id, callback))
+        << i;
+    EXPECT_EQ(i + 1,
+              manager.GetNumActiveResourcesForSource(LOG_SOURCE_UILATEST));
+  }
+  EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_MESSAGES));
+
+  // Can't open more readers for LOG_SOURCE_MESSAGES or LOG_SOURCE_UILATEST.
+  EXPECT_FALSE(
+      manager.FetchFromSource(messages_params, extension_id, callback));
+  EXPECT_FALSE(
+      manager.FetchFromSource(ui_latest_params, extension_id, callback));
+  EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_MESSAGES));
+  EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_UILATEST));
+
+  // Wait for all asynchronous operations to complete.
+  base::RunLoop().RunUntilIdle();
+}
+
+TEST_F(LogSourceAccessManagerTest,
+       MaxNumberOfOpenLogSourcesDifferentExtensions) {
   const base::TimeDelta timeout(base::TimeDelta::FromMilliseconds(0));
   LogSourceAccessManager::SetRateLimitingTimeoutForTesting(&timeout);
 
@@ -68,11 +119,8 @@ TEST_F(LogSourceAccessManagerTest, MaxNumberOfOpenLogSources) {
   EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_UILATEST));
 
   // Can't open more readers for LOG_SOURCE_UILATEST.
-  for (int i = 0; i < 10; ++i, ++count) {
-    EXPECT_FALSE(manager.FetchFromSource(
-        ui_latest_params, base::StringPrintf("extension %d", count), callback))
-        << count;
-  }
+  EXPECT_FALSE(manager.FetchFromSource(
+      ui_latest_params, base::StringPrintf("extension %d", count), callback));
   EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_MESSAGES));
   EXPECT_EQ(10U, manager.GetNumActiveResourcesForSource(LOG_SOURCE_UILATEST));
 
