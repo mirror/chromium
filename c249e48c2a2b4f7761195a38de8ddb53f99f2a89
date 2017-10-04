@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "329ef2c5_b25dddfe",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T22:58:19Z",
+      "side": 1,
+      "message": "It is unfortunate that this CL preserves this ugliness, rather than having WebUIImpl handle IPC messages by overriding WebContentsObserver::OnMessageReceived(const IPC::Message\u0026, RenderFrameHost* sender).  Unfortunately making WebUIImpl implement WebContentsObserver leads to other issues (e.g. when to stop observing, what to do with conflicting method names like WebUIImpl::RenderFrameCreated).",
+      "range": {
+        "startLine": 811,
+        "startChar": 0,
+        "endLine": 815,
+        "endChar": 3
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19c2a2f_5251305a",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T22:58:19Z",
+      "side": 1,
+      "message": "This seems like a good reason for landing the CL, right?  We get a more correct security checks + we will be able to remove WebContents::GetRenderProcessHost.  Yay?\n\nNote that the security checks are agnostic-to and compatible-with all of 1) disallowing any web pages in WebUI, 2) disallowing any subframes in WebUI, 3) pushing webframes in WebUI to OOPIFs.",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fb89527_e6cea1a5",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T22:58:19Z",
+      "side": 1,
+      "message": "Ideally, this would be removed, but we cannot quite use RenderFrameHost::GetLastCommittedURL.  One reason is that some WebUI scripts execute before DidCommitProvisionalLoad is sent (see https://crbug.com/766329).",
+      "range": {
+        "startLine": 1693,
+        "startChar": 20,
+        "endLine": 1693,
+        "endChar": 24
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea08fb44_50f08efa",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-04T22:58:19Z",
+      "side": 1,
+      "message": "These are just fixes for IWYU issues found by |git cl lint|.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 17
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
