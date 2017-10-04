@@ -19,7 +19,11 @@
 #ifndef SANDBOX_WIN_SRC_SANDBOX_H_
 #define SANDBOX_WIN_SRC_SANDBOX_H_
 
+#if !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
 #include <windows.h>
+#else
+#include "sandbox/fuzzer/fuzzer_types.h"
+#endif
 
 #include "base/memory/ref_counted.h"
 #include "sandbox/win/src/sandbox_policy.h"
