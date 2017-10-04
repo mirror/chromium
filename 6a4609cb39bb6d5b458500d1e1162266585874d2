@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "42b6d72f_5039be5c",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-04T00:50:19Z",
+      "side": 1,
+      "message": "Empirically:\nI looked at embedders in the Chromium repo and they all have the same story:\nContentBrowserClient owned by a ContentMainDelegate on the stack in int main():\n  chrome/app/chrome_main.cc:63\n  chromecast/app/cast_main.cc:9\n  content/shell/app/shell_content_main.cc:14\n  content/shell/app/shell_main.cc:44\n  ash/shell/content/shell_with_content_main.cc:25\n  extensions/shell/app/shell_main.cc:26\n  headless/lib/browser/headless_browser_impl.cc:63\n\nPer offline discussion, will follow up a definitive answer on this asynchronously, in https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/euvxNn8PEDY or with jam@.\nAdded a TODO for that.",
+      "parentUuid": "61f8ef5e_0abeb511",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a47558_6a5b1bb5",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 7
