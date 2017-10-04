@@ -146,6 +146,9 @@ class StartupTabProviderImpl : public StartupTabProvider {
   // additional profile).
   static GURL GetWelcomePageUrl(bool use_later_run_variant);
 
+  // Returns true is the Windows 10 specific onboarding tabs should be used.
+  static bool ShouldUseWin10OnboardingTabs();
+
 #if defined(OS_WIN)
   // Gets the URL for the Windows 10 Welcome page. If |use_later_run_variant| is
   // true, a URL parameter will be appended so as to access the variant page
