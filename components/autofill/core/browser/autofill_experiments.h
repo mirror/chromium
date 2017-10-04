@@ -43,9 +43,9 @@ extern const base::Feature kAutofillUpstreamRequestCvcIfMissing;
 extern const base::Feature kAutofillUpstreamShowGoogleLogo;
 extern const base::Feature kAutofillUpstreamShowNewUi;
 extern const base::Feature kAutofillUpstreamUseAutofillProfileComparator;
+extern const base::Feature kAutofillSendBillingCustomerNumber;
 extern const char kCreditCardSigninPromoImpressionLimitParamKey[];
 extern const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[];
-extern const char kAutofillUpstreamMaxMinutesSinceAutofillProfileUseKey[];
 
 #if defined(OS_MACOSX)
 extern const base::Feature kCreditCardAutofillTouchBar;
@@ -139,6 +139,11 @@ bool IsAutofillUpstreamShowGoogleLogoExperimentEnabled();
 // Returns whether the experiment is enabled where Chrome Upstream displays a
 // new save card bubble/infobar design.
 bool IsAutofillUpstreamShowNewUiExperimentEnabled();
+
+// Returns whether the experiment is enabled where Chrome reads billing customer
+// number from priority preference and send along with UploadCardRequest and
+// FullCardRequest.
+bool IsAutofillSendBillingCustomerNumberExperimentEnabled();
 
 #if defined(OS_MACOSX)
 // Returns whether the Credit Card Autofill Touch Bar experiment is enabled.
