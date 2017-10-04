@@ -2132,6 +2132,17 @@ fuzzer_test("feature_policy_fuzzer") {
   seed_corpus = "//testing/libfuzzer/fuzzers/feature_policy_corpus"
 }
 
+fuzzer_test("shaping_fuzzer") {
+  sources = [
+    "fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+  ]
+  deps = [
+    ":blink_fuzzer_test_support",
+    ":platform",
+    "//third_party/icu",
+  ]
+}
+
 # Fuzzer template for WTF::TextCodec.
 template("blink_text_codec_fuzzer") {
   forward_variables_from(invoker, "*")
