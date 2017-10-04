@@ -6,13 +6,13 @@
 
 #include "base/strings/string_tokenizer.h"
 
-namespace memory_instrumentation {
-
 using base::trace_event::MemoryAllocatorDumpGuid;
 using Process = GlobalDumpGraph::Process;
 using Node = GlobalDumpGraph::Node;
 
-GlobalDumpGraph::GlobalDumpGraph() {}
+// Create the shared memory graph as the graph will the null process id.
+GlobalDumpGraph::GlobalDumpGraph()
+    : shared_memory_graph_(CreateGraphForProcess(base::kNullProcessId)) {}
 GlobalDumpGraph::~GlobalDumpGraph() {}
 
 Process* GlobalDumpGraph::CreateGraphForProcess(base::ProcessId process_id) {

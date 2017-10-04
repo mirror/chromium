@@ -118,7 +118,7 @@ class GlobalDumpGraph {
 
   const GuidNodeMap& nodes_by_guid() const { return nodes_by_guid_; }
   GlobalDumpGraph::Process* shared_memory_graph() const {
-    return shared_memory_graph_.get();
+    return shared_memory_graph_;
   }
   const ProcessDumpGraphMap& process_dump_graphs() const {
     return process_dump_graphs_;
@@ -131,8 +131,11 @@ class GlobalDumpGraph {
 
   std::forward_list<Node> all_nodes_;
   GuidNodeMap nodes_by_guid_;
-  std::unique_ptr<GlobalDumpGraph::Process> shared_memory_graph_;
+
+  // The order of these two members matters because |shared_memory_graph_| is
+  // initialized by inserting into |process_dump_graphs_|
   ProcessDumpGraphMap process_dump_graphs_;
+  GlobalDumpGraph::Process* shared_memory_graph_;
 
   DISALLOW_COPY_AND_ASSIGN(GlobalDumpGraph);
 };
