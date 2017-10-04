@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da4c12d_863986bc",
+        "filename": "third_party/WebKit/Source/core/workers/AbstractWorker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T05:08:56Z",
+      "side": 1,
+      "message": "Since execution_context-\u003eGetContentSecurityPolicy() is repeated thrice, would this be better as:\n\nif (ContentSecurityPolicy* csp \u003d execution_context-\u003eGetContentSecurityPolicy) {\n  if (!csp-\u003eAllowRequest() || !csp-\u003eAllowWorker()) {\n     ThrowSecurityError();\n  }\n}",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749c6771_f476fc6f",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T05:08:56Z",
+      "side": 1,
+      "message": "DCHECK(IsMainThread()) also?",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111eab85_eb69edee",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T05:08:56Z",
+      "side": 1,
+      "message": "Is this class only used on the main thread?",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe1dba3_24d864dd",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorker.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-04T05:08:56Z",
+      "side": 1,
+      "message": "// Starts the worker.",
+      "revId": "e8cdd09726f07d6871d49e73d8a49aac088131bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
