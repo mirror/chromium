@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5833a51a_07681e90",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "nit: LayoutPoint point(event.PositionInWidget());",
+      "range": {
+        "startLine": 452,
+        "startChar": 2,
+        "endLine": 452,
+        "endChar": 76
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7a172ff_757e8a3c",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "nit: LayoutPoint(point_in_root_frame)",
+      "range": {
+        "startLine": 1099,
+        "startChar": 6,
+        "endLine": 1099,
+        "endChar": 65
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360513cb_d75a10a9",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3130,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "nit: here and elsewhere, use the LayoutPoint(WebPoint) constructor (it\u0027s really an IntPoint but WebPoint has an implicit conversion to IntPoint).",
+      "range": {
+        "startLine": 3130,
+        "startChar": 34,
+        "endLine": 3130,
+        "endChar": 69
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98659fb8_76cd8439",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3201,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "call this with LayoutPoint(point_in_viewport). I suspect it\u0027s calling the IntPoint version of these methods right now and only converting to LayoutPoint on assignment into point_in_root_frame.",
+      "range": {
+        "startLine": 3201,
+        "startChar": 53,
+        "endLine": 3201,
+        "endChar": 70
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9c997c_7c949abc",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3543,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "This method is only ever called in PerformMediaPlayerAction. Just inline it there and remove this method. Also, no need to cast the incoming value there to a LayoutPoint since it\u0027s coming from the browser which is physical, integer pixels.",
+      "range": {
+        "startLine": 3543,
+        "startChar": 27,
+        "endLine": 3543,
+        "endChar": 54
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa17444_ab6d1162",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3662,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "Where possible, make the \"Int\" version call the \"Layout\" version and just round that.",
+      "range": {
+        "startLine": 3657,
+        "startChar": 11,
+        "endLine": 3662,
+        "endChar": 15
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83a7cf5_d2f4cff8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "Do you still need this new FloatPoint overload? If not, remove it.",
+      "range": {
+        "startLine": 645,
+        "startChar": 2,
+        "endLine": 645,
+        "endChar": 54
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee89df01_888793d3",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T14:49:50Z",
+      "side": 1,
+      "message": "nit: You can remove this, it\u0027s already a LayoutPoint",
+      "range": {
+        "startLine": 357,
+        "startChar": 32,
+        "endLine": 357,
+        "endChar": 43
+      },
+      "revId": "77814ddaa349cf86d95bc60a68b1d3cb76399ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
