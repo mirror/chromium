@@ -31,6 +31,7 @@ class PrefetchRequestFetcher : public net::URLFetcherDelegate {
       const FinishedCallback& callback);
 
   // Creates a fetcher that will sends a POST request to the server.
+  // |extra_header| will be added if it is not empty.
   static std::unique_ptr<PrefetchRequestFetcher> CreateForPost(
       const GURL& url,
       const std::string& message,
