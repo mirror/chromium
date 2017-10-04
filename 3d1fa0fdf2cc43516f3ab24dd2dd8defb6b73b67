@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2488d47d_30a10456",
+        "filename": "gpu/ipc/common/gpu_memory_buffer_support.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T14:27:56Z",
+      "side": 1,
+      "message": "nit: unnecessary",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "3d1fa0fdf2cc43516f3ab24dd2dd8defb6b73b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e890871_1c859d62",
+        "filename": "ui/gl/test/gl_image_test_template.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-04T14:27:56Z",
+      "side": 1,
+      "message": "I prefer not having any run-time conditionals for these tests to keep things simple and never give the appearance that a test is succeeding when not running properly. Let\u0027s remove this ShouldRunTest code and instead mark the GLImageDXGI tests as disabled by default. That way people can still run them manually on devices where they are expected to work. Fine if the tests fail or crash when someone tries to run them without device support.\n\nI\u0027ll think more about if it makes sense to support run-time conditionals for these tests as a follow up.",
+      "revId": "3d1fa0fdf2cc43516f3ab24dd2dd8defb6b73b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
