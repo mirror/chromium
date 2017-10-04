@@ -21,6 +21,7 @@ class DedicatedWorkerMessagingProxy;
 class ExceptionState;
 class ExecutionContext;
 class ScriptState;
+class WorkerOptions;
 class WorkerScriptLoader;
 
 // Implementation of the Worker interface defined in the WebWorker HTML spec:
@@ -40,6 +41,7 @@ class CORE_EXPORT DedicatedWorker final
  public:
   static DedicatedWorker* Create(ExecutionContext*,
                                  const String& url,
+                                 const WorkerOptions&,
                                  ExceptionState&);
 
   ~DedicatedWorker() override;

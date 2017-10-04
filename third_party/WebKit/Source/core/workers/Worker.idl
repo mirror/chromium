@@ -30,7 +30,7 @@
 [
     ActiveScriptWrappable,
     DependentLifetime,
-    Constructor(DOMString scriptUrl),
+    Constructor(USVString scriptURL, optional WorkerOptions options),
     ConstructorCallWith=ExecutionContext,
     // TODO(foolip): Exposed=(Window,Worker),
     RaisesException=Constructor,
