@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc03a51_6ccd44a5",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-04T18:32:17Z",
+      "side": 1,
+      "message": "Why did you change this\ndefault_match_-\u003e\nto\nmatches_.front()\n?\n\nI think it\u0027s confusing because you didn\u0027t do the same substitution everywhere in this \"if\" block, just this one section.",
+      "range": {
+        "startLine": 159,
+        "startChar": 22,
+        "endLine": 159,
+        "endChar": 23
+      },
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62070ff3_0a059bbc",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-04T18:32:17Z",
+      "side": 1,
+      "message": "This function is confusing.  I think it might be wrong.  Shouldn\u0027t we set the new value for default_match to point to point to end only if *other_was_end*?  I.e., is test backwards?\n\n(and ditto below)",
+      "range": {
+        "startLine": 286,
+        "startChar": 34,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
