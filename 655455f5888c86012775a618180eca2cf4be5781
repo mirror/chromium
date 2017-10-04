@@ -16,6 +16,29 @@
       "revId": "655455f5888c86012775a618180eca2cf4be5781",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0576d8c3_96f779cd",
+        "filename": "components/arc/common/voice_interaction_arc_home.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1232844
+      },
+      "writtenOn": "2017-10-04T21:15:27Z",
+      "side": 1,
+      "message": "How\u0027s this going to affect Android side? Is it a seamless or we\u0027d expect a short period of non-functioning?",
+      "range": {
+        "startLine": 35,
+        "startChar": 9,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "655455f5888c86012775a618180eca2cf4be5781",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
