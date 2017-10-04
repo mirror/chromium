@@ -22,6 +22,30 @@
       "revId": "7746c1011060fb7e802f6a230121cbaeead6d73c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910f64d5_a95d095a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-10-04T18:08:10Z",
+      "side": 1,
+      "message": "Ah, I think I used the wrong CL - updated to 170526551. Good catch, thanks!",
+      "parentUuid": "cf57f501_d2db178e",
+      "range": {
+        "startLine": 16,
+        "startChar": 29,
+        "endLine": 16,
+        "endChar": 50
+      },
+      "revId": "7746c1011060fb7e802f6a230121cbaeead6d73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
