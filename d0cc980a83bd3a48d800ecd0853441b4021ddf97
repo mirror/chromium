@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5cc0167_ddf29ea1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 20
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T15:49:06Z",
+      "side": 1,
+      "message": "nit: scroll-customization, unnecessary calls to apply/distributeScroll handlers",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 72
+      },
+      "revId": "d0cc980a83bd3a48d800ecd0853441b4021ddf97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a63cff0_330f5138",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-04T15:49:06Z",
+      "side": 1,
+      "message": "So if I\u0027m understanding this API correctly, unless the author sets a `scroll-customization` value, it\u0027ll default to None in which case we won\u0027t call any of the installed handlers. Is that correct?\n\nI suspect in its current form, this will break viewport actions. Overscroll glow and URL bar movement occur through an ApplyScroll installed by Blink on the HTML element (and changeable by document.rootScroller). You\u0027d need to either apply an exception here for Element that is the TopDocumentRootScrollerController::GlobalRootScroller or modify TDRSC to also set this property correctly.\n\nHave you run this through the try bots? I\u0027d be interested to know if they miss this since that\u0027d imply lacking test coverage.",
+      "range": {
+        "startLine": 731,
+        "startChar": 6,
+        "endLine": 731,
+        "endChar": 43
+      },
+      "revId": "d0cc980a83bd3a48d800ecd0853441b4021ddf97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
