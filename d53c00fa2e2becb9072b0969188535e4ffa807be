@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6ca245_80e5a0aa",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-04T23:04:52Z",
+      "side": 1,
+      "message": "nit: Looks like this is not needed. Once pref_change_registrar_ is in scope of this object.",
+      "range": {
+        "startLine": 127,
+        "startChar": 17,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f9dd28_2b142734",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-04T23:04:52Z",
+      "side": 1,
+      "message": "nit: can be private?",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72cba2b_197e62f7",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-04T23:04:52Z",
+      "side": 1,
+      "message": "nit: I would set this by default. I know it set as a chain call in CTOR but it is not clear.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
