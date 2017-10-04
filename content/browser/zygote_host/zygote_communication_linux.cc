@@ -158,7 +158,7 @@ pid_t ZygoteCommunication::ForkRequest(
     }
 
     // Read the reply, which pickles the PID and an optional UMA enumeration.
-    static const unsigned kMaxReplyLength = 2048;
+    static const unsigned kMaxReplyLength = 4096;
     char buf[kMaxReplyLength];
     const ssize_t len = ReadReply(buf, sizeof(buf));
 
