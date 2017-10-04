@@ -8,6 +8,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -57,6 +58,12 @@
 
 #if defined(OS_WIN)
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
+#endif
+
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
 #endif
 
 int ManagePasswordsBubbleView::auto_signin_toast_timeout_ = 3;
@@ -545,6 +552,19 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_ &&
+      parent_->model()->pending_password().passwords_has_autofilled_value) {
+    bool authenticated = true;
+#if defined(OS_WIN)
+    authenticated =
+        password_manager_util_win::AuthenticateUser(parent_->parent_window());
+#elif defined(OS_MACOSX)
+    authenticated = password_manager_util_mac::AuthenticateUser();
+//        parent_->web_contents()->GetNativeView());
+#endif
+    if (!authenticated)
+      return;
+  }
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);
