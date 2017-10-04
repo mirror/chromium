@@ -16423,6 +16423,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2159" label="SyncXhrInPageDismissal"/>
   <int value="2160" label="AsyncXhrInPageDismissal"/>
   <int value="2161" label="V8LineOrParagraphSeparatorAsLineTerminator"/>
+  <int value="2162" label="DeepCombinatorInStaticProfile"/>
+  <int value="2163" label="PseudoShadowInStaticProfile"/>
 </enum>
 
 <enum name="FeedbackSource">
