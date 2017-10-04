@@ -16,6 +16,24 @@
       "revId": "135a3f76fb31c2d780d9ead3abebedd647fe7457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78533486_afbfe7b7",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-04T15:05:36Z",
+      "side": 1,
+      "message": "\u003e could you please keep alphabetical order (see the comment at the top of the file)?. I know some changes that broke this rule went in, but we still want to keep it.\nyes, sure. Thanks. PTAL",
+      "parentUuid": "1f70ac79_11880c81",
+      "revId": "135a3f76fb31c2d780d9ead3abebedd647fe7457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
