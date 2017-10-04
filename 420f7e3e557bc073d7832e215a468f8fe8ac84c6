@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe84528_dd2e0cf8",
+        "filename": "ash/session/session_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T22:05:02Z",
+      "side": 1,
+      "message": "nit: Strip \"CallClient\" part since that is implied.",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 17
+      },
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a75d3fc_325960d1",
+        "filename": "ash/session/test_session_controller_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T22:05:02Z",
+      "side": 1,
+      "message": "Call Reset() that would also reset session state to LOGIN_PRIMARY.",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5906717c_745a0256",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-04T22:05:02Z",
+      "side": 1,
+      "message": "Why do we need to wrap SessionController call here instead of letting call sites to call it directly?",
+      "revId": "420f7e3e557bc073d7832e215a468f8fe8ac84c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
