@@ -22,6 +22,30 @@
       "revId": "e973bae4b27c3784e873694d7123c6d113721923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59dc1175_4ede4667",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDirectoryManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-04T01:39:41Z",
+      "side": 1,
+      "message": "Note that |count| is also incremented on line 164\n\nRecording the UMA in WebappDirectoryManager#cleanUpDirectories() makes sense to me because if we were going to add a function which deletes all old WebAPK update files (including those for WebAPKs which have not been launched for ages), we would do this cleanup in WebappDirectoryManager#cleanUpDirectories()\n\nWebappDirectoryManager#cleanUpDirectories() is called from WebappActivity#onStartWithNative\nChecking whether there is a pending update is done by WebappActivity#initDeferredStartupForActivity()",
+      "parentUuid": "58f79939_844cb40a",
+      "range": {
+        "startLine": 158,
+        "startChar": 22,
+        "endLine": 158,
+        "endChar": 27
+      },
+      "revId": "e973bae4b27c3784e873694d7123c6d113721923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
