@@ -786,7 +786,7 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
   /**
    * @param {function()} callback
    */
-  _updateInDebugger(callback) {
+  async _updateInDebugger(callback) {
     if (this._debuggerModel.target().isDisposed()) {
       this._cleanUpAfterDebuggerIsGone();
       callback();
@@ -812,7 +812,7 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
             script.sourceURL, null, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
       } else {
         newState = new Bindings.BreakpointManager.Breakpoint.State(
-            null, debuggerLocation.scriptId, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
+            null, script.hash, debuggerLocation.lineNumber, debuggerLocation.columnNumber, condition);
       }
     } else if (this._breakpoint._currentState && this._breakpoint._currentState.url) {
       var position = this._breakpoint._currentState;
@@ -842,16 +842,19 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
       return;
     }
 
-    var updateCallback = this._didSetBreakpointInDebugger.bind(this, callback);
-    if (newState.url) {
-      this._debuggerModel.setBreakpointByURL(
-          newState.url, newState.lineNumber, newState.columnNumber, this._breakpoint.condition(), updateCallback);
-    } else if (newState.scriptId) {
-      this._debuggerModel.setBreakpointBySourceId(
-          /** @type {!SDK.DebuggerModel.Location} */ (debuggerLocation), condition, updateCallback);
-    }
-
+    var result;
     this._currentState = newState;
+    if (newState.url) {
+      result = await this._debuggerModel.setBreakpointByURL(
+          newState.url, newState.lineNumber, newState.columnNumber, newState.condition);
+    } else if (newState.hash) {
+      result = await this._debuggerModel.setBreakpointByHash(
+          newState.hash, newState.lineNumber, newState.columnNumber, newState.condition);
+    }
+    if (result && result.locations && result.breakpointId)
+      this._didSetBreakpointInDebugger(callback, result.breakpointId, result.locations);
+    else
+      this._didSetBreakpointInDebugger(callback, null, []);
   }
 
   /**
@@ -961,14 +964,14 @@ Bindings.BreakpointManager.ModelBreakpoint = class {
 Bindings.BreakpointManager.Breakpoint.State = class {
   /**
    * @param {?string} url
-   * @param {?string} scriptId
+   * @param {?string} hash
    * @param {number} lineNumber
    * @param {number} columnNumber
    * @param {string} condition
    */
-  constructor(url, scriptId, lineNumber, columnNumber, condition) {
+  constructor(url, hash, lineNumber, columnNumber, condition) {
     this.url = url;
-    this.scriptId = scriptId;
+    this.hash = hash;
     this.lineNumber = lineNumber;
     this.columnNumber = columnNumber;
     this.condition = condition;
@@ -982,11 +985,7 @@ Bindings.BreakpointManager.Breakpoint.State = class {
   static equals(stateA, stateB) {
     if (!stateA || !stateB)
       return false;
-
-    if (stateA.scriptId || stateB.scriptId)
-      return false;
-
-    return stateA.url === stateB.url && stateA.lineNumber === stateB.lineNumber &&
+    return stateA.url === stateB.url && stateA.hash === stateB.hash && stateA.lineNumber === stateB.lineNumber &&
         stateA.columnNumber === stateB.columnNumber && stateA.condition === stateB.condition;
   }
 };
