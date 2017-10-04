@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ea5c097_ff263d50",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T14:41:05Z",
+      "side": 1,
+      "message": "Thanks, it looks that this comment is obsolete. This issue is reported in lines 397-400, and there is already comment about it.",
+      "parentUuid": "9c4f42e3_289b8000",
+      "range": {
+        "startLine": 384,
+        "startChar": 2,
+        "endLine": 385,
+        "endChar": 25
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94360cfd_f50eb47c",
         "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d835a01c_a747d71b",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T14:41:05Z",
+      "side": 1,
+      "message": "It\u0027s just design decision, I\u0027ve updated comment to reflect it.",
+      "parentUuid": "94360cfd_f50eb47c",
+      "range": {
+        "startLine": 390,
+        "startChar": 2,
+        "endLine": 390,
+        "endChar": 71
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49db12b2_9133c12a",
         "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c36568_d4dab153",
+        "filename": "components/autofill/content/renderer/page_passwords_analyser.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-04T14:41:05Z",
+      "side": 1,
+      "message": "Thanks, it makes sense. Done",
+      "parentUuid": "49db12b2_9133c12a",
+      "range": {
+        "startLine": 406,
+        "startChar": 47,
+        "endLine": 406,
+        "endChar": 50
+      },
+      "revId": "37283c6f2b9da622ee78a41d476a1557e3f745bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
