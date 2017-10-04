@@ -17,6 +17,7 @@
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerContentSettingsClient.h"
+#include "core/workers/WorkerOptions.h"
 #include "core/workers/WorkerScriptLoader.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
@@ -27,6 +28,7 @@ namespace blink {
 
 DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
                                          const String& url,
+                                         const WorkerOptions& options,
                                          ExceptionState& exception_state) {
   DCHECK(IsMainThread());
   Document* document = ToDocument(context);
@@ -43,7 +45,7 @@ DedicatedWorker* DedicatedWorker::Create(ExecutionContext* context,
     return nullptr;
 
   DedicatedWorker* worker = new DedicatedWorker(context, script_url);
-  worker->Start();
+  worker->Start(options);
   return worker;
 }
 
@@ -76,24 +78,29 @@ void DedicatedWorker::postMessage(ScriptState* script_state,
                                                  std::move(channels));
 }
 
-void DedicatedWorker::Start() {
-  DCHECK(IsMainThread());
-  WebURLRequest::FetchRequestMode fetch_request_mode =
-      WebURLRequest::kFetchRequestModeSameOrigin;
-  WebURLRequest::FetchCredentialsMode fetch_credentials_mode =
-      WebURLRequest::kFetchCredentialsModeSameOrigin;
-  if (script_url_.ProtocolIsData()) {
-    fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
-    fetch_credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
-  }
+enum class WorkerType { kClassic, kModule };
 
-  script_loader_ = WorkerScriptLoader::Create();
-  script_loader_->LoadAsynchronously(
-      *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,
-      fetch_request_mode, fetch_credentials_mode,
-      GetExecutionContext()->GetSecurityContext().AddressSpace(),
-      WTF::Bind(&DedicatedWorker::OnResponse, WrapPersistent(this)),
-      WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this)));
+WorkerType ParseWorkerTypeOption(const String& worker_type_option) {
+  if (worker_type_option == "classic")
+    return WorkerType::kClassic;
+  if (worker_type_option == "module")
+    return WorkerType::kModule;
+  NOTREACHED();
+  return WorkerType::kClassic;
+}
+
+void DedicatedWorker::Start(const WorkerOptions& options) {
+  switch (ParseWorkerTypeOption(options.type())) {
+    case WorkerType::kClassic:
+      LoadClassicScript();
+      // StartWorkerGlobalScope() will be called after script loading.
+      return;
+    case WorkerType::kModule:
+      StartWorkerGlobalScope(String() /* source_text*/,
+                             String() /* referrer_policy */);
+      return;
+  }
+  NOTREACHED() << options.type();
 }
 
 void DedicatedWorker::terminate() {
@@ -132,6 +139,25 @@ DedicatedWorkerMessagingProxy* DedicatedWorker::CreateMessagingProxy(
   return new DedicatedWorkerMessagingProxy(context, this, worker_clients);
 }
 
+void DedicatedWorker::LoadClassicScript() {
+  WebURLRequest::FetchRequestMode fetch_request_mode =
+      WebURLRequest::kFetchRequestModeSameOrigin;
+  WebURLRequest::FetchCredentialsMode fetch_credentials_mode =
+      WebURLRequest::kFetchCredentialsModeSameOrigin;
+  if (script_url_.ProtocolIsData()) {
+    fetch_request_mode = WebURLRequest::kFetchRequestModeNoCORS;
+    fetch_credentials_mode = WebURLRequest::kFetchCredentialsModeInclude;
+  }
+
+  script_loader_ = WorkerScriptLoader::Create();
+  script_loader_->LoadAsynchronously(
+      *GetExecutionContext(), script_url_, WebURLRequest::kRequestContextWorker,
+      fetch_request_mode, fetch_credentials_mode,
+      GetExecutionContext()->GetSecurityContext().AddressSpace(),
+      WTF::Bind(&DedicatedWorker::OnResponse, WrapPersistent(this)),
+      WTF::Bind(&DedicatedWorker::OnFinished, WrapPersistent(this)));
+}
+
 void DedicatedWorker::OnResponse() {
   DCHECK(IsMainThread());
   probe::didReceiveScriptResponse(GetExecutionContext(),
@@ -145,13 +171,17 @@ void DedicatedWorker::OnFinished() {
   } else if (script_loader_->Failed()) {
     DispatchEvent(Event::CreateCancelable(EventTypeNames::error));
   } else {
-    context_proxy_->StartWorkerGlobalScope(
-        script_loader_->Url(), GetExecutionContext()->UserAgent(),
-        script_loader_->SourceText(), script_loader_->GetReferrerPolicy());
     probe::scriptImported(GetExecutionContext(), script_loader_->Identifier(),
                           script_loader_->SourceText());
   }
   script_loader_ = nullptr;
+}
+
+void DedicatedWorker::StartWorkerGlobalScope(const String& source_text,
+                                             const String& referrer_policy) {
+  context_proxy_->StartWorkerGlobalScope(script_url_,
+                                         GetExecutionContext()->UserAgent(),
+                                         source_text, referrer_policy);
 }
 
 const AtomicString& DedicatedWorker::InterfaceName() const {
