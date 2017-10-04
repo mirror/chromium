@@ -101,7 +101,7 @@ bool ParamTraits<net::HttpRequestHeaders>::Read(const base::Pickle* m,
         !net::HttpUtil::IsValidHeaderName(pair.key) ||
         !net::HttpUtil::IsValidHeaderValue(pair.value))
       return false;
-    r->SetHeader(pair.key, pair.value);
+    r->SetHeader(std::move(pair.key), std::move(pair.value));
   }
   return true;
 }

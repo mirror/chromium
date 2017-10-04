@@ -110,12 +110,18 @@ class NET_EXPORT HttpRequestHeaders {
   // in the vector remains the same.  When comparing |key|, case is ignored.
   // The caller must ensure that |key| passes HttpUtil::IsValidHeaderName() and
   // |value| passes HttpUtil::IsValidHeaderValue().
-  void SetHeader(const base::StringPiece& key, const base::StringPiece& value);
+  template <typename S1, typename S2>
+  void SetHeader(S1&& key, S2&& value) {
+    SetHeaderWithCheck(std::string(std::forward<S1>(key)),
+                       std::string(std::forward<S2>(value)));
+  }
+
+  void SetHeaderWithCheck(std::string key, std::string value);
 
   // Does the same as above but without internal DCHECKs for validations.
   void SetHeaderWithoutCheckForTesting(const base::StringPiece& key,
                                        const base::StringPiece& value) {
-    SetHeaderInternal(key, value);
+    SetHeaderInternal(std::string(key), std::string(value));
   }
 
   // Sets the header value pair for |key| and |value|, if |key| does not exist.
@@ -179,8 +185,7 @@ class NET_EXPORT HttpRequestHeaders {
   HeaderVector::iterator FindHeader(const base::StringPiece& key);
   HeaderVector::const_iterator FindHeader(const base::StringPiece& key) const;
 
-  void SetHeaderInternal(const base::StringPiece& key,
-                         const base::StringPiece& value);
+  void SetHeaderInternal(std::string key, std::string value);
 
   HeaderVector headers_;
 

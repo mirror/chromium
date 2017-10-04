@@ -53,7 +53,6 @@ HttpRequestHeaders::HeaderKeyValuePair::HeaderKeyValuePair(
     : key(key.data(), key.size()), value(value.data(), value.size()) {
 }
 
-
 HttpRequestHeaders::Iterator::Iterator(const HttpRequestHeaders& headers)
     : started_(false),
       curr_(headers.headers_.begin()),
@@ -92,11 +91,11 @@ void HttpRequestHeaders::Clear() {
   headers_.clear();
 }
 
-void HttpRequestHeaders::SetHeader(const base::StringPiece& key,
-                                   const base::StringPiece& value) {
+void HttpRequestHeaders::SetHeaderWithCheck(std::string key,
+                                            std::string value) {
   DCHECK(HttpUtil::IsValidHeaderName(key)) << key;
   DCHECK(HttpUtil::IsValidHeaderValue(value)) << key << ":" << value;
-  SetHeaderInternal(key, value);
+  SetHeaderInternal(std::move(key), std::move(value));
 }
 
 void HttpRequestHeaders::SetHeaderIfMissing(const base::StringPiece& key,
@@ -105,7 +104,7 @@ void HttpRequestHeaders::SetHeaderIfMissing(const base::StringPiece& key,
   DCHECK(HttpUtil::IsValidHeaderValue(value));
   HeaderVector::iterator it = FindHeader(key);
   if (it == headers_.end())
-    headers_.push_back(HeaderKeyValuePair(key, value));
+    headers_.emplace_back(key, value);
 }
 
 void HttpRequestHeaders::RemoveHeader(const base::StringPiece& key) {
@@ -225,13 +224,15 @@ HttpRequestHeaders::FindHeader(const base::StringPiece& key) const {
   return headers_.end();
 }
 
-void HttpRequestHeaders::SetHeaderInternal(const base::StringPiece& key,
-                                           const base::StringPiece& value) {
+void HttpRequestHeaders::SetHeaderInternal(std::string key, std::string value) {
   HeaderVector::iterator it = FindHeader(key);
   if (it != headers_.end())
-    it->value.assign(value.data(), value.size());
-  else
-    headers_.push_back(HeaderKeyValuePair(key, value));
+    it->value = std::move(value);
+  else {
+    headers_.emplace_back();
+    headers_.end()->key = std::move(key);
+    headers_.end()->value = std::move(value);
+  }
 }
 
 }  // namespace net
