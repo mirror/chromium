@@ -52,6 +52,24 @@
       "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecab2e9a_dd61d19b",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-05T20:53:09Z",
+      "side": 1,
+      "message": "Then I guess the inconsistency of the generated event with the underlying event wouldn\u0027t cause any issue.",
+      "parentUuid": "7a1c91ab_358ba296",
+      "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
