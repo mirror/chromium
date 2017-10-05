@@ -1,0 +1,322 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20bb2170_c1e2ac49",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "Can you add a comment above this an example of what this text looks like on the page.\n\n// Formats the string to look like \"dd/mm/yyyy hh:mm:ss: [type] some description [url.com]\"",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe870187_60182f85",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "While you\u0027re here, can you look into why the previews show up in reverse alphabetical order, and either address it in this CL or another one.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57271ee5_939a2d33",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "nit: can you put quotes around navigation type",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad50413_d2b10ad1",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "Add the this to previewloggers observers here?",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b42be1_37409ccb",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "DCHECK page_ before posting to it",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20657d0_50f46279",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "There is this weird commenting thing surrounding interfaces in general:\n\n// interface:\nFirstInterfaceMethod() override;\nSecondInterfaceMethod() override;\nThirdInterfaceMethod() override;\n\nSo no vertical space between them, and no comment between them unless a comment is warranted to explain the specific implementation of this classes method.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df375c44_18f04252",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "I wouldn\u0027t take a permanent ref to this. Just add a virtual method to get the PreviewsLogger in the handler when you need it (see other comments about add or remove placement).",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1474f28_dbd74549",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "I\u0027d do the remove in the handlers destructor instead of this one.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b9e454f_aa9805fe",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "I\u0027d add the observer once the page is is in the handler. See other comment.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10df685a_692f6adb",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "When an observer is added, you should post a task for later (e.g., post a task to this class) that will iterate through the existing messages and forward them 1 at a time to the observer that was jsut added, so that we don\u0027t need a separate mojo method for fetching the first 10 records.",
+      "range": {
+        "startLine": 46,
+        "startChar": 21,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791eaf2e_401c1fca",
+        "filename": "components/previews/core/previews_log.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "Likewise, use the observerlist methods",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78178b08_6cf39bd8",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "I just realized when you switch class names you didn\u0027t switch file names, would it be possible for you to do that in this CL if the diffs look nice on gerrit still (or a follow-up CL if the diffs don\u0027t look nice)",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03b27d0_702be7bf",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be exposed for testing. You should be able to do something like:\naddObserver(testObserver)\ndo something\nEXPECT_TRUE(ObserverMethodCalled())",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44761437_2485045c",
+        "filename": "components/previews/core/previews_log.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "Can you use base::ObserverList?",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6916b8ea_6e0b8b91",
+        "filename": "components/previews/core/previews_log_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "The file name should match the class name.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9567554f_2c2453b4",
+        "filename": "components/previews/core/previews_log_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need the \"Virtualized ... subclasses\" as it\u0027s pretty clear it\u0027s and interface.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9e3cb2_31547adf",
+        "filename": "components/previews/core/previews_log_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "Can you make the method a pure virtual (i.e., \"\u003d0\")",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007c259f_d9de1b80",
+        "filename": "components/previews/core/previews_log_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T20:18:14Z",
+      "side": 1,
+      "message": "If you change this to pure virtual, you shouldn\u0027t need this macro, as the sublcasses should add the macro they want.",
+      "revId": "2db7ba29a8ce8e5d366d22574c6b8a8186213fba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
