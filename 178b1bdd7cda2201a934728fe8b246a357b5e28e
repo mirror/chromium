@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f16a4664_768bbe33",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-05T18:00:46Z",
+      "side": 1,
+      "message": "This actually will eventually break things because creating animators is a result of ticking with updated animation state. We create animations as a result of cc telling us that we have animations so we would never need mutate, which means we\u0027d never call mutate and never create animators.\n\nThis should be in cc checking IsWorkletAnimationPlayer (added by Majid\u0027s patch) but for now we can do this to keep the test code working - let\u0027s call it HasAnimators and leave a todo for Majid to remove it in his patch.",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "178b1bdd7cda2201a934728fe8b246a357b5e28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
