@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "838c854d_91ec5bd5",
+        "filename": "extensions/browser/event_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-05T21:52:21Z",
+      "side": 0,
+      "message": "This was incorrect: I kept on switching between this CL\u0027s branch and old CL\u0027s branch and somehow ended up with this. This didn\u0027t matter for I80f0ae097772500f41c7509435b878762d55ff98, because its test would only look at listeners from EventListenerMap.\nThe test added here didn\u0027t work then primarily because of channel override issue (see service_worker_apitest.cc). Now it works :)",
+      "range": {
+        "startLine": 809,
+        "startChar": 13,
+        "endLine": 809,
+        "endChar": 40
+      },
+      "revId": "679ae771d747c9192482fddd6d8e6df4770335fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
