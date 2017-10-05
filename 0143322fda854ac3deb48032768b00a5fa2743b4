@@ -16,6 +16,24 @@
       "revId": "0143322fda854ac3deb48032768b00a5fa2743b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f47c1902_6ab9f860",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-05T22:30:41Z",
+      "side": 1,
+      "message": "Done. Changed it to M66/M70 since M70 is the future date we committed to in the blog post, might as well call it out. Also fixed a wording mishap here (\"The certificate used to load ... uses an SSL certificate that...\" \u003d\u003e \"The SSL certificate used to load ... will be distrusted...\")",
+      "parentUuid": "87d0838a_c7901205",
+      "revId": "0143322fda854ac3deb48032768b00a5fa2743b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
