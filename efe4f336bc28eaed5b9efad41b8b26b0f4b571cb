@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40d983c7_4eb991e5",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetDocument.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T14:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f7326bf_60cc4ae2",
+      "range": {
+        "startLine": 574,
+        "startChar": 2,
+        "endLine": 574,
+        "endChar": 27
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa98177_ae2a03da",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.h",
         "patchSetId": 22
@@ -119,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "fc0cbf74_6c5eabba",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T14:49:06Z",
+      "side": 1,
+      "message": "Discussed offline.  We\u0027ll discuss/address this point later.  We agreed to go with this way in this CL for the time being.",
+      "parentUuid": "82061106_ad2d604a",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 55
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4f314b_5eced25f",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 22
@@ -139,6 +187,30 @@
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c1141a_4debb93c",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T14:49:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be4f314b_5eced25f",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "3a0cd724_ff195467",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T14:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4cf5fc6_283eb41b",
+      "range": {
+        "startLine": 212,
+        "startChar": 50,
+        "endLine": 212,
+        "endChar": 60
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7700935c_494c054c",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 22
@@ -179,6 +275,24 @@
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0532823_b9089c14",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T14:49:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7700935c_494c054c",
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
