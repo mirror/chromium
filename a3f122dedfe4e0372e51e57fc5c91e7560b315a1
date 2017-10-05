@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50e71196_fb6bec3f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/img-crossorigin-no-credentials-prompt.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-05T10:02:46Z",
+      "side": 1,
+      "message": "\u003chead\u003e",
+      "revId": "a3f122dedfe4e0372e51e57fc5c91e7560b315a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b42f51de_f0fd7fce",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/img-crossorigin-no-credentials-prompt.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-05T10:02:46Z",
+      "side": 1,
+      "message": "missing closing tag",
+      "revId": "a3f122dedfe4e0372e51e57fc5c91e7560b315a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
