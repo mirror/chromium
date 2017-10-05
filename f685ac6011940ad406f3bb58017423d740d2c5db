@@ -16,6 +16,24 @@
       "revId": "f685ac6011940ad406f3bb58017423d740d2c5db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbdea47_ff2f5d4f",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-05T08:14:43Z",
+      "side": 1,
+      "message": "There\u0027s no |pause_check_during_suspend| in the first version, since it\u0027s implicitly true. To keep the interface and contract clear, I added a third private ctor called by the two public.",
+      "parentUuid": "ed6e5661_3240d0ed",
+      "revId": "f685ac6011940ad406f3bb58017423d740d2c5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
