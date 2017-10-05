@@ -16,6 +16,24 @@
       "revId": "6d90fb5712985cf0c3220b1c727dfbb8e66fa86f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef321cae_e2340a48",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-05T15:49:10Z",
+      "side": 1,
+      "message": "That wouldn\u0027t work.\nThe two reasons are that WebMediaConstraints has only one basic.\nThe other is that track settings must be computed using only the advanced constraints for the track. The constraints for other tracks should affect format selection, but not track settings, which are only for one track. Hence the distinction of calling the others \"extra constraints\".",
+      "parentUuid": "5aa22e9d_ba8c0755",
+      "revId": "6d90fb5712985cf0c3220b1c727dfbb8e66fa86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
