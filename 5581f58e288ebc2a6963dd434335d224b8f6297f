@@ -34,6 +34,24 @@
       "revId": "5581f58e288ebc2a6963dd434335d224b8f6297f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b30ce90_a1f526d4",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-05T20:50:04Z",
+      "side": 1,
+      "message": "This\u0027ll work on linux if you\u0027re not setting lld explicitly in the args, since the logic in compiler.gni will default it to false for the nacl toolchains.\n\nI agree that !is_nacl is probably a good idea to make things more explicit and less fragile.\n\ntarget_arch !\u003d \"win\" (a) isn\u0027t a valid thing, did you mean target_os? (b) may not be what you want since you\u0027d probably want current_os/current_arch.",
+      "parentUuid": "9434ae8f_c8d53baf",
+      "revId": "5581f58e288ebc2a6963dd434335d224b8f6297f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
