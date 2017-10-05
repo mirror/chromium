@@ -878,6 +878,40 @@ Status ExecuteGetWindowSize(Session* session,
   return Status(kOk);
 }
 
+Status ExecuteSetWindowRect(Session* session,
+                            const base::DictionaryValue& params,
+                            std::unique_ptr<base::Value>* value) {
+  double width = 0;
+  double height = 0;
+  double x = 0;
+  double y = 0;
+
+  ChromeDesktopImpl* desktop = NULL;
+  Status status = session->chrome->GetAsDesktop(&desktop);
+  if (status.IsError())
+    return status;
+
+  status = desktop->ExitFullscreen(session->window);
+  if (status.IsError())
+    return status;
+
+  if (params.GetDouble("x", &x) && params.GetDouble("y", &y)) {
+    status = desktop->SetWindowPosition(session->window, static_cast<int>(x),
+                                        static_cast<int>(y));
+    if (status.IsError())
+      return status;
+  }
+  if (params.GetDouble("width", &width) &&
+      params.GetDouble("height", &height)) {
+    status = desktop->SetWindowSize(session->window, static_cast<int>(x),
+                                    static_cast<int>(y));
+    if (status.IsError())
+      return status;
+  }
+
+  return ExecuteGetWindowRect(session, params, value);
+}
+
 Status ExecuteSetWindowSize(Session* session,
                             const base::DictionaryValue& params,
                             std::unique_ptr<base::Value>* value) {

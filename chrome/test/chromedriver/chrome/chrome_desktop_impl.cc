@@ -248,6 +248,17 @@ Status ChromeDesktopImpl::GetWindowPosition(const std::string& target_id,
   return Status(kOk);
 }
 
+Status ChromeDesktopImpl::ExitFullscreen(const std::string& target_id) {
+  Window window;
+  Status status = GetWindow(target_id, &window);
+  if (status.IsError())
+    return status;
+
+  auto bounds = base::MakeUnique<base::DictionaryValue>();
+  bounds->SetString("windowState", "normal");
+  return SetWindowBounds(window.id, std::move(bounds));
+}
+
 Status ChromeDesktopImpl::GetWindowSize(const std::string& target_id,
                                         int* width,
                                         int* height) {
