@@ -22,6 +22,30 @@
       "revId": "749000385dc91f534dc7bef8f38d4d6074564432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab301fa_48959636",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-05T14:56:58Z",
+      "side": 1,
+      "message": "It actually is better in my own experience, in weird ways, see:\n\nhttps://godbolt.org/g/dfhEUs\n\nThough this is a little compiler-dependent.",
+      "parentUuid": "8e3e0934_abb04884",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "749000385dc91f534dc7bef8f38d4d6074564432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
