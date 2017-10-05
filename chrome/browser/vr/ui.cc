@@ -28,7 +28,10 @@ Ui::Ui(UiBrowserInterface* browser,
                                                model_.get(),
                                                ui_initial_state)),
       input_manager_(base::MakeUnique<vr::UiInputManager>(scene_.get())),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  model_->started_for_autopresentation =
+      ui_initial_state.web_vr_autopresentation_expected;
+}
 
 Ui::~Ui() = default;
 
@@ -121,11 +124,16 @@ void Ui::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
 }
 
 void Ui::OnWebVrFrameAvailable() {
+  model_->web_vr_timeout_state = kWebVrNoTimeout;
   scene_manager_->OnWebVrFrameAvailable();
 }
 
+void Ui::OnWebVrTimeoutPending() {
+  model_->web_vr_timeout_state = kWebVrTimeoutPending;
+}
+
 void Ui::OnWebVrTimedOut() {
-  scene_manager_->OnWebVrTimedOut();
+  model_->web_vr_timeout_state = kWebVrTimedOut;
 }
 
 }  // namespace vr

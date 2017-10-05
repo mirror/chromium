@@ -92,11 +92,14 @@ static constexpr base::TimeDelta kWebVRFenceCheckTimeout =
     base::TimeDelta::FromMicroseconds(2000);
 
 static constexpr int kWebVrInitialFrameTimeoutSeconds = 5;
+static constexpr int kWebVrSpinnerTimeoutSeconds = 2;
 
 static constexpr gfx::PointF kOutOfBoundsPoint = {-0.5f, -0.5f};
 
 static constexpr int kNumSamplesPerPixelBrowserUi = 2;
 static constexpr int kNumSamplesPerPixelWebVr = 1;
+
+static bool hack_slow_web_vr_app = true;
 
 // Provides the direction the head is looking towards as a 3x1 unit vector.
 gfx::Vector3dF GetForwardVector(const gfx::Transform& head_pose) {
@@ -377,6 +380,9 @@ void VrShellGl::OnContentFrameAvailable() {
 }
 
 void VrShellGl::OnWebVRFrameAvailable() {
+  if (hack_slow_web_vr_app)
+    return;
+
   // A "while" loop here is a bad idea. It's legal to call
   // UpdateTexImage repeatedly even if no frames are available, but
   // that does *not* wait for a new frame, it just reuses the most
@@ -400,6 +406,7 @@ void VrShellGl::OnWebVRFrameAvailable() {
     ScheduleWebVrFrameTimeout();
   } else {
     webvr_frame_timeout_.Cancel();
+    webvr_spinner_timeout_.Cancel();
   }
 }
 
@@ -409,8 +416,14 @@ void VrShellGl::ScheduleWebVrFrameTimeout() {
   // screens correctly. For now just ensure we receive a first frame.
   if (webvr_frames_received_ > 0) {
     webvr_frame_timeout_.Cancel();
+    webvr_spinner_timeout_.Cancel();
     return;
   }
+  webvr_spinner_timeout_.Reset(
+      base::Bind(&VrShellGl::OnWebVrTimeoutPending, base::Unretained(this)));
+  task_runner_->PostDelayedTask(
+      FROM_HERE, webvr_spinner_timeout_.callback(),
+      base::TimeDelta::FromSeconds(kWebVrSpinnerTimeoutSeconds));
   webvr_frame_timeout_.Reset(
       base::Bind(&VrShellGl::OnWebVrFrameTimedOut, base::Unretained(this)));
   task_runner_->PostDelayedTask(
@@ -420,6 +433,10 @@ void VrShellGl::ScheduleWebVrFrameTimeout() {
 
 void VrShellGl::OnWebVrFrameTimedOut() {
   ui_->OnWebVrTimedOut();
+}
+
+void VrShellGl::OnWebVrTimeoutPending() {
+  ui_->OnWebVrTimeoutPending();
 }
 
 void VrShellGl::GvrInit(gvr_context* gvr_api) {
@@ -452,8 +469,7 @@ void VrShellGl::InitializeRenderer() {
   render_size_default_ = {render_size_default.width,
                           render_size_default.height};
 
-  specs_[kFramePrimaryBuffer].SetSamples(
-      web_vr_mode_ ? kNumSamplesPerPixelWebVr : kNumSamplesPerPixelBrowserUi);
+  specs_[kFramePrimaryBuffer].SetSamples(2);
   specs_[kFrameWebVrBrowserUiBuffer].SetSize(
       {render_size_default.width / kWebVrBrowserUiSizeFactor,
        render_size_default.height / kWebVrBrowserUiSizeFactor});
@@ -734,10 +750,12 @@ void VrShellGl::HandleControllerAppButtonActivity(
                                   base::Unretained(ui_.get()), direction));
       }
     }
-    if (direction == vr::UiInterface::NONE)
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE, base::Bind(&vr::UiInterface::OnAppButtonClicked,
-                                base::Unretained(ui_.get())));
+    if (direction == vr::UiInterface::NONE) {
+      hack_slow_web_vr_app = false;
+      //      base::ThreadTaskRunnerHandle::Get()->PostTask(
+      //          FROM_HERE, base::Bind(&vr::UiInterface::OnAppButtonClicked,
+      //                                base::Unretained(ui_.get())));
+    }
   }
 }
 
@@ -1036,7 +1054,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
 }
 
 bool VrShellGl::ShouldDrawWebVr() {
-  return web_vr_mode_ && ui_->ShouldRenderWebVr();
+  return web_vr_mode_ && ui_->ShouldRenderWebVr() && webvr_frames_received_ > 0;
 }
 
 void VrShellGl::DrawWebVr() {
@@ -1067,6 +1085,7 @@ void VrShellGl::OnPause() {
   controller_->OnPause();
   gvr_api_->PauseTracking();
   webvr_frame_timeout_.Cancel();
+  webvr_spinner_timeout_.Cancel();
 }
 
 void VrShellGl::OnResume() {

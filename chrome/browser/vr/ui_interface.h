@@ -37,6 +37,7 @@ class UiInterface {
   virtual void OnProjMatrixChanged(const gfx::Transform& proj_matrix) = 0;
   virtual void OnWebVrFrameAvailable() = 0;
   virtual void OnWebVrTimedOut() = 0;
+  virtual void OnWebVrTimeoutPending() = 0;
 };
 
 }  // namespace vr
