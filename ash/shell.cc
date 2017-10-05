@@ -417,7 +417,7 @@ bool Shell::ShouldSaveDisplaySettings() {
 }
 
 NightLightController* Shell::night_light_controller() {
-  DCHECK(NightLightController::IsFeatureEnabled());
+  DCHECK(switches::IsNightLightEnabled());
   return night_light_controller_.get();
 }
 
@@ -842,7 +842,7 @@ Shell::~Shell() {
 void Shell::Init(const ShellInitParams& init_params) {
   const Config config = shell_port_->GetAshConfig();
 
-  if (NightLightController::IsFeatureEnabled())
+  if (switches::IsNightLightEnabled())
     night_light_controller_ = base::MakeUnique<NightLightController>();
 
   touch_devices_controller_ = std::make_unique<TouchDevicesController>();

@@ -10,6 +10,7 @@
 
 #include "ash/login_status.h"
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/cpp/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
@@ -313,7 +314,7 @@ void SystemTray::CreateItems() {
   AddTrayItem(base::MakeUnique<TrayKeyboardBrightness>(this));
   tray_caps_lock_ = new TrayCapsLock(this);
   AddTrayItem(base::WrapUnique(tray_caps_lock_));
-  if (NightLightController::IsFeatureEnabled()) {
+  if (switches::IsNightLightEnabled()) {
     tray_night_light_ = new TrayNightLight(this);
     AddTrayItem(base::WrapUnique(tray_night_light_));
   }
