@@ -11,8 +11,9 @@ namespace content {
 
 WebGraphicsContext3DProviderImpl::WebGraphicsContext3DProviderImpl(
     scoped_refptr<ui::ContextProviderCommandBuffer> provider,
-    bool software_rendering)
-    : provider_(std::move(provider)), software_rendering_(software_rendering) {}
+    bool software_compositing)
+    : provider_(std::move(provider)),
+      software_compositing_(software_compositing) {}
 
 WebGraphicsContext3DProviderImpl::~WebGraphicsContext3DProviderImpl() {}
 
@@ -32,8 +33,8 @@ gpu::Capabilities WebGraphicsContext3DProviderImpl::GetCapabilities() {
   return provider_->ContextCapabilities();
 }
 
-bool WebGraphicsContext3DProviderImpl::IsSoftwareRendering() const {
-  return software_rendering_;
+bool WebGraphicsContext3DProviderImpl::UsingSoftwareCompositing() const {
+  return software_compositing_;
 }
 
 void WebGraphicsContext3DProviderImpl::SetLostContextCallback(

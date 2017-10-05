@@ -36,7 +36,7 @@ class WebGraphicsContext3DProviderForTests
       : gl_(std::move(gl)) {}
 
   gpu::gles2::GLES2Interface* ContextGL() override { return gl_.get(); }
-  bool IsSoftwareRendering() const override { return false; }
+  bool UsingSoftwareCompositing() const override { return false; }
 
   // Not used by WebGL code.
   GrContext* GetGrContext() override { return nullptr; }
