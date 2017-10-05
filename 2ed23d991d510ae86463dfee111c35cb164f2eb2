@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7aa75f12_9ced3b67",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T21:31:03Z",
+      "side": 1,
+      "message": "HttpServerPrefsManager now dumps state on destruction, so we don\u0027t lose anything, but that requires it outlive the pref store, which it depends on, but does not depend on it, so this CL requires re-ordering the URLRequestContext relative to the CronetPrefsManager.  I\u0027ve resolved the HostCachePersistenceManager issue by making PrepareForShutdown destroy it, which detaches it from the HostCache (Dependency does seem a bit backwards there...).\n\nI\u0027ve updated the comment to say before the nqe and after context_.",
+      "parentUuid": "82e22f09_c3102d35",
+      "range": {
+        "startLine": 229,
+        "startChar": 28,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5fee9cc_1f26f49e",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
         "patchSetId": 25
@@ -68,6 +92,30 @@
       "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302e1a30_ee40ca8c",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T21:31:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f393c7b3_c5ee8d1d",
+      "range": {
+        "startLine": 238,
+        "startChar": 9,
+        "endLine": 238,
+        "endChar": 10
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
