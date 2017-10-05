@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2009-2016 Erik Doernenburg and contributors
+ *  Copyright (c) 2015-2016 Erik Doernenburg and contributors
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
@@ -14,31 +14,40 @@
  *  under the License.
  */
 
-#import "OCMNotificationPoster.h"
+#import "OCMBlockArgCaller.h"
+#import "NSInvocation+OCMAdditions.h"
 
 
-@implementation OCMNotificationPoster
+@implementation OCMBlockArgCaller
 
-- (id)initWithNotification:(id)aNotification
+- (instancetype)initWithBlockArguments:(NSArray *)someArgs
 {
-    if ((self = [super init]))
+    self = [super init];
+    if(self)
     {
-        notification = [aNotification retain];
+        arguments = [someArgs copy];
     }
-	
-	return self;
+    return self;
 }
 
 - (void)dealloc
 {
-	[notification release];
-	[super dealloc];
+    [arguments release];
+    [super dealloc];
 }
 
-- (void)handleInvocation:(NSInvocation *)anInvocation
+- (id)copyWithZone:(NSZone *)zone
 {
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
+    return [self retain];
 }
 
+- (void)handleArgument:(id)aBlock
+{
+    if(aBlock)
+    {
+        NSInvocation *inv = [NSInvocation invocationForBlock:aBlock withArguments:arguments];
+        [inv invokeWithTarget:aBlock];
+    }
+}
 
 @end

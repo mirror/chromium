@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2009-2015 Erik Doernenburg and contributors
+ *  Copyright (c) 2009-2016 Erik Doernenburg and contributors
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
@@ -14,14 +14,13 @@
  *  under the License.
  */
 
-#import <objc/runtime.h>
-#import "OCMockObject.h"
 #import "OCPartialMockObject.h"
+#import <objc/runtime.h>
 #import "NSMethodSignature+OCMAdditions.h"
 #import "NSObject+OCMAdditions.h"
-#import "OCMFunctions.h"
+#import "OCMFunctionsPrivate.h"
 #import "OCMInvocationStub.h"
-
+#import "OCMockObject.h"
 
 @implementation OCPartialMockObject
 
@@ -30,9 +29,10 @@
 - (id)initWithObject:(NSObject *)anObject
 {
     NSParameterAssert(anObject != nil);
-    [self assertClassIsSupported:[anObject class]];
-	[super initWithClass:[anObject class]];
-	realObject = [anObject retain];
+    Class const class = [self classToSubclassForObject:anObject];
+    [self assertClassIsSupported:class];
+    [super initWithClass:class];
+    realObject = [anObject retain];
     [self prepareObjectForInstanceMethodMocking];
 	return self;
 }
@@ -69,6 +69,21 @@
         [[NSException exceptionWithName:NSInvalidArgumentException reason:reason userInfo:nil] raise];
 }
 
+    - (Class)classToSubclassForObject : (id)object {
+  /* object_getClass() gives us the actual class backing the object, whereas
+   * [object class] is sometimes overridden, by KVO or CoreData, for example, to
+   * return a subclass.
+   *
+   * With KVO, if we replace and subclass the actual class, as returned by
+   * object_getClass(), we lose notifications. So, in that case only, we return
+   * the class reported by the class method.
+   */
+
+  if ([object observationInfo] != NULL)
+    return [object class];
+
+  return object_getClass(object);
+}
 
 #pragma mark  Extending/overriding superclass behaviour
 
@@ -76,10 +91,12 @@
 {
     if(realObject != nil)
     {
-        OCMSetAssociatedMockForObject(nil, realObject);
-        object_setClass(realObject, [self mockedClass]);
-        [realObject release];
-        realObject = nil;
+      Class partialMockClass = object_getClass(realObject);
+      OCMSetAssociatedMockForObject(nil, realObject);
+      object_setClass(realObject, [self mockedClass]);
+      [realObject release];
+      realObject = nil;
+      objc_disposeClassPair(partialMockClass);
     }
     [super stopMocking];
 }
@@ -126,8 +143,11 @@
     class_addMethod(subclass, @selector(class), myObjectClassImp, objectClassTypes);
 
     /* Adding forwarder for most instance methods to allow for verify after run */
-    NSArray *methodBlackList = @[@"class", @"forwardingTargetForSelector:", @"methodSignatureForSelector:", @"forwardInvocation:",
-            @"allowsWeakReference", @"retainWeakReference", @"isBlock"];
+    NSArray* methodBlackList = @[
+      @"class", @"forwardingTargetForSelector:", @"methodSignatureForSelector:",
+      @"forwardInvocation:", @"allowsWeakReference", @"retainWeakReference",
+      @"isBlock", @"retainCount", @"retain", @"release", @"autorelease"
+    ];
     [NSObject enumerateMethodsInClass:mockedClass usingBlock:^(Class cls, SEL sel) {
         if((cls == [NSObject class]) || (cls == [NSProxy class]))
             return;

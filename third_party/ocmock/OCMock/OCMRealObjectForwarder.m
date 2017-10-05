@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2010-2015 Erik Doernenburg and contributors
+ *  Copyright (c) 2010-2016 Erik Doernenburg and contributors
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
@@ -14,11 +14,10 @@
  *  under the License.
  */
 
-#import <objc/runtime.h>
-#import "OCPartialMockObject.h"
 #import "OCMRealObjectForwarder.h"
-#import "OCMFunctions.h"
-
+#import <objc/runtime.h>
+#import "OCMFunctionsPrivate.h"
+#import "OCPartialMockObject.h"
 
 @implementation OCMRealObjectForwarder
 

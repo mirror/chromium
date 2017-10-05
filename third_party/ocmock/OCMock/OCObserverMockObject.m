@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2009-2015 Erik Doernenburg and contributors
+ *  Copyright (c) 2009-2016 Erik Doernenburg and contributors
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
@@ -15,10 +15,9 @@
  */
 
 #import "OCObserverMockObject.h"
-#import "OCMObserverRecorder.h"
+#import "OCMFunctionsPrivate.h"
 #import "OCMLocation.h"
-#import "OCMFunctions.h"
-
+#import "OCMObserverRecorder.h"
 
 @implementation OCObserverMockObject
 
@@ -61,7 +60,9 @@
 
 - (void)autoRemoveFromCenter:(NSNotificationCenter *)aCenter
 {
+  @synchronized(centers) {
     [centers addObject:aCenter];
+  }
 }
 
 
@@ -70,8 +71,10 @@
 - (id)expect
 {
 	OCMObserverRecorder *recorder = [[[OCMObserverRecorder alloc] init] autorelease];
-	[recorders addObject:recorder];
-	return recorder;
+        @synchronized(recorders) {
+          [recorders addObject:recorder];
+        }
+        return recorder;
 }
 
 - (void)verify
@@ -81,26 +84,34 @@
 
 - (void)verifyAtLocation:(OCMLocation *)location
 {
-    if([recorders count] == 1)
-    {
-        NSString *description = [NSString stringWithFormat:@"%@: expected notification was not observed: %@",
-         [self description], [[recorders lastObject] description]];
-        OCMReportFailure(location, description);
+  @synchronized(recorders) {
+    if ([recorders count] == 1) {
+      NSString* description = [NSString
+          stringWithFormat:@"%@: expected notification was not observed: %@",
+                           [self description],
+                           [[recorders lastObject] description]];
+      OCMReportFailure(location, description);
+    } else if ([recorders count] > 0) {
+      NSString* description = [NSString
+          stringWithFormat:@"%@ : %@ expected notifications were not observed.",
+                           [self description], @([recorders count])];
+      OCMReportFailure(location, description);
     }
-    else if([recorders count] > 0)
-    {
-        NSString *description = [NSString stringWithFormat:@"%@ : %@ expected notifications were not observed.",
-         [self description], @([recorders count])];
-        OCMReportFailure(location, description);
     }
 }
 
 
 #pragma mark  Receiving recording requests via macro
 
-- (void)notificationWithName:(NSString *)name object:(id)sender
-{
-    [[self expect] notificationWithName:name object:sender];
+- (NSNotification*)notificationWithName:(NSString*)name object:(id)sender {
+  return [[self expect] notificationWithName:name object:sender];
+}
+
+- (NSNotification*)notificationWithName:(NSString*)name
+                                 object:(id)sender
+                               userInfo:(NSDictionary*)userInfo {
+  return
+      [[self expect] notificationWithName:name object:sender userInfo:userInfo];
 }
 
 
@@ -108,19 +119,20 @@
 
 - (void)handleNotification:(NSNotification *)aNotification
 {
-	NSUInteger i, limit;
-	
-	limit = expectationOrderMatters ? 1 : [recorders count];
-	for(i = 0; i < limit; i++)
-	{
-		if([[recorders objectAtIndex:i] matchesNotification:aNotification])
-		{
-			[recorders removeObjectAtIndex:i];
-			return;
-		}
-	}
-	[NSException raise:NSInternalInconsistencyException format:@"%@: unexpected notification observed: %@", [self description], 
-	  [aNotification description]];
+  @synchronized(recorders) {
+    NSUInteger i, limit;
+
+    limit = expectationOrderMatters ? 1 : [recorders count];
+    for (i = 0; i < limit; i++) {
+      if ([[recorders objectAtIndex:i] matchesNotification:aNotification]) {
+        [recorders removeObjectAtIndex:i];
+        return;
+      }
+    }
+  }
+  [NSException raise:NSInternalInconsistencyException
+              format:@"%@: unexpected notification observed: %@",
+                     [self description], [aNotification description]];
 }
 
 

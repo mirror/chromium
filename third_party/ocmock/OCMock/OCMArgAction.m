@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2009-2016 Erik Doernenburg and contributors
+ *  Copyright (c) 2015-2016 Erik Doernenburg and contributors
  *
  *  Licensed under the Apache License, Version 2.0 (the "License"); you may
  *  not use these files except in compliance with the License. You may obtain
@@ -14,30 +14,14 @@
  *  under the License.
  */
 
-#import "OCMNotificationPoster.h"
+#import "OCMArgAction.h"
 
 
-@implementation OCMNotificationPoster
+@implementation OCMArgAction
 
-- (id)initWithNotification:(id)aNotification
+- (void)handleArgument:(id)argument
 {
-    if ((self = [super init]))
-    {
-        notification = [aNotification retain];
-    }
-	
-	return self;
-}
 
-- (void)dealloc
-{
-	[notification release];
-	[super dealloc];
-}
-
-- (void)handleInvocation:(NSInvocation *)anInvocation
-{
-	[[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 
