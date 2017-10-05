@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07c6940f_a5ee03f5",
+        "filename": "testing/scripts/check_network_annotations.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T17:44:50Z",
+      "side": 1,
+      "message": "docstring",
+      "revId": "1e0ada1f6db3a26a62a2fb42242420cae91a6a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daac911d_72d78ea8",
+        "filename": "tools/traffic_annotation/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T17:44:50Z",
+      "side": 1,
+      "message": "trailing whitespace",
+      "revId": "1e0ada1f6db3a26a62a2fb42242420cae91a6a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9aba70_605babbb",
+        "filename": "tools/traffic_annotation/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T17:44:50Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "1e0ada1f6db3a26a62a2fb42242420cae91a6a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7329cd16_375b78d7",
+        "filename": "tools/traffic_annotation/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T17:44:50Z",
+      "side": 1,
+      "message": "So, in the hypothetical case that clang learns some new language construct that requires this tool to be rebuilt, what happens? I\u0027d like this readme to say\n\n\"In $(that_case), disable this tool and file bug on $person and they\u0027ll rebuild this and reenable\".",
+      "revId": "1e0ada1f6db3a26a62a2fb42242420cae91a6a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3339f1a_f5c7b691",
+        "filename": "tools/traffic_annotation/scripts/check_annotations.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T17:44:50Z",
+      "side": 1,
+      "message": "Isn\u0027t looking for \"toolchain.ninja\" in the root more reliable? (optional comment)",
+      "revId": "1e0ada1f6db3a26a62a2fb42242420cae91a6a91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
