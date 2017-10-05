@@ -587,6 +587,9 @@ class TestExpectationsModel(object):
 
         self._shorten_filename = shorten_filename or (lambda x: x)
 
+    def all_lines(self):
+        return self._test_to_expectation_line.values()
+
     def _merge_test_map(self, self_map, other_map):
         for test in other_map:
             new_expectations = set(other_map[test])
