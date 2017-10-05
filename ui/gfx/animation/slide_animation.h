@@ -47,6 +47,11 @@ namespace gfx {
 // }
 class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
  public:
+  enum Timing {
+    kConstantSpeed,     // Duration is proportional to the current progress.
+    kDampenedDuration,  // Duration is dampened.
+  };
+
   explicit SlideAnimation(AnimationDelegate* target);
   ~SlideAnimation() override;
 
@@ -67,6 +72,10 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   int GetSlideDuration() const { return slide_duration_; }
   void SetTweenType(Tween::Type tween_type) { tween_type_ = tween_type; }
 
+  // Dampens the slide duration based on the current progress and
+  // |dampening_value_|.
+  void SetDampenedDuration(int dampening_value);
+
   double GetCurrentValue() const override;
   // TODO(bruthig): Fix IsShowing() and IsClosing() to be consistent. e.g.
   // IsShowing() will currently return true after the 'show' animation has been
@@ -78,6 +87,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   class TestApi;
 
  private:
+  // Gets the duration based on |slide_timing_|.
+  int GetDuration();
+
   // Overridden from Animation.
   void AnimateToState(double state) override;
 
@@ -88,6 +100,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   // Used to determine which way the animation is going.
   bool showing_;
 
+  // Timing to use for animation. Defaults to kConstantSpeed.
+  Timing slide_timing_;
+
   // Animation values. These are a layer on top of Animation::state_ to
   // provide the reversability.
   double value_start_;
@@ -97,6 +112,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   // How long a hover in/out animation will last for. This defaults to
   // kHoverFadeDurationMS, but can be overridden with SetDuration.
   int slide_duration_;
+
+  // The value used for when |slide_timing_| is set to kDampenedDuration.
+  int dampening_value_;
 
   DISALLOW_COPY_AND_ASSIGN(SlideAnimation);
 };
