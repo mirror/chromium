@@ -22,6 +22,30 @@
       "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a7d287_b39c32d7",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-05T22:37:03Z",
+      "side": 1,
+      "message": "Oh, I see. I can make db IO not to wait for a delay, so premature StartDownload call will be pushed to db.\n\nAlso not sure why other things using android job scheduler don\u0027t have this issue. Probably I can dig a bit further.",
+      "parentUuid": "592e9a13_ac21a5e9",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
