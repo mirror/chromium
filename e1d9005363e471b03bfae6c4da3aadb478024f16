@@ -137,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "d2b9bbfb_55b862d9",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T20:08:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c92ea8_484e3f57",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dc8aeb9_a380241d",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
         "patchSetId": 2
