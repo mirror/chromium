@@ -46,6 +46,23 @@
       "revId": "7af36895aed21beb249c10ea8dfd8f2c62e02539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce2a5a84_6f38d2e0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-05T17:49:51Z",
+      "side": 0,
+      "message": "Any particular reason for removing these tests?",
+      "revId": "7af36895aed21beb249c10ea8dfd8f2c62e02539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
