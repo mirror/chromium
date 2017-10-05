@@ -158,8 +158,15 @@ struct TestURLInfo {
     {"http://7.com/5a", "Five A", 8, 0, 64},  // never typed.
 
     // For match URL formatting test.
-    {"https://www.abc.def.com/path", "URL with subdomain", 4, 4, 80},
-    {"https://www.hij.com/path", "URL with www only", 4, 4, 80},
+    {"https://www.abc.def.com/path", "URL with subdomain", 10, 10, 80},
+    {"https://www.hij.com/path", "URL with www only", 10, 10, 80},
+
+    // For What you typed in history tests.
+    {"https://wytih/", "What you typed in history main", 1, 1, 80},
+    {"https://www.wytih/", "What you typed in history main", 3, 3, 80},
+    {"https://www.wytih/page", "What you typed in history page", 4, 4, 80},
+    {"ftp://wytih/file", "What you typed in history file", 5, 5, 80},
+    {"https://www.wytih/files", "What you typed in history file", 6, 6, 80},
 };
 
 class FakeAutocompleteProviderClient : public MockAutocompleteProviderClient {
@@ -644,6 +651,24 @@ TEST_F(HistoryURLProviderTest, WhatYouTyped) {
   };
   RunTest(ASCIIToUTF16("https://wytmatch foo bar"), std::string(), false,
           results_3, arraysize(results_3));
+
+  const UrlAndLegalDefault results_4[] = {{"https://wytih/", true},
+                                          {"https://www.wytih/", true},
+                                          {"https://www.wytih/files", true},
+                                          {"ftp://wytih/file", true}};
+  ASSERT_NO_FATAL_FAILURE(RunTest(ASCIIToUTF16("wytih"), std::string(), false,
+                                  results_4, arraysize(results_4)));
+
+  const UrlAndLegalDefault results_5[] = {{"https://www.wytih/", true},
+                                          {"https://www.wytih/files", true},
+                                          {"https://www.wytih/page", true}};
+  ASSERT_NO_FATAL_FAILURE(RunTest(ASCIIToUTF16("www.wytih"), std::string(),
+                                  false, results_5, arraysize(results_5)));
+
+  const UrlAndLegalDefault results_6[] = {{"ftp://wytih/file", true},
+                                          {"https://www.wytih/files", true}};
+  ASSERT_NO_FATAL_FAILURE(RunTest(ASCIIToUTF16("wytih/file"), std::string(),
+                                  false, results_6, arraysize(results_6)));
 }
 
 TEST_F(HistoryURLProviderTest, Fixup) {
