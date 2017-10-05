@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db17336b_4e0ca176",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-05T20:44:32Z",
+      "side": 1,
+      "message": "Fixed (copied from the old code, I thought it was intentional for some reason)",
+      "parentUuid": "e4ab5ec3_6980bb20",
+      "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ddb557e_7bc3f4b9",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d50e13d_af262565",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-05T20:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ddb557e_7bc3f4b9",
+      "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "d3b9116f_e854f911",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-05T20:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6948beb_75ba6107",
+      "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f44b8947_706bca60",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
         "patchSetId": 7
@@ -118,6 +172,24 @@
       "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09aee9d_f20f0af3",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-05T20:44:32Z",
+      "side": 1,
+      "message": "lpy and I are working on a solution that we will implement in a follow up CL.",
+      "parentUuid": "f44b8947_706bca60",
+      "revId": "c220d1609de8162c8b82e68a6eaeff0e4c4f9161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
