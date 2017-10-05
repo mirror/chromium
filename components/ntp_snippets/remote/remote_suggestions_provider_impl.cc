@@ -382,8 +382,6 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       database_(std::move(database)),
       image_fetcher_(std::move(image_fetcher), pref_service, database_.get()),
       status_service_(std::move(status_service)),
-      fetch_when_ready_(false),
-      fetch_when_ready_interactive_(false),
       clear_history_dependent_state_when_initialized_(false),
       clock_(base::MakeUnique<base::DefaultClock>()),
       prefetched_pages_tracker_(std::move(prefetched_pages_tracker)),
@@ -465,13 +463,6 @@ void RemoteSuggestionsProviderImpl::RefetchWhileDisplaying(
     debug_logger_->Log(
         FROM_HERE,
         "fallback because the articles category is not displayed yet");
-    // TODO(jkrcal): If the provider is not ready() we fallback to
-    // RefetchInTheBackground which post-pones the FetchSuggestions() task until
-    // the provider gets ready. When the provider gets ready, the provider calls
-    // FetchSuggestions() directly, without flipping the category status as
-    // implemented in this function. We should postpone the
-    // RefetchWhileDisplaying task here, instead (or deal with postponing in the
-    // scheduler only).
     RefetchInTheBackground(std::move(callback));
     return;
   }
@@ -532,12 +523,7 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     bool interactive_request,
     FetchStatusCallback callback) {
   debug_logger_->Log(FROM_HERE, /*message=*/std::string());
-  if (!ready()) {
-    fetch_when_ready_ = true;
-    fetch_when_ready_interactive_ = interactive_request;
-    fetch_when_ready_callback_ = std::move(callback);
-    return;
-  }
+  DCHECK(ready());
 
   MarkEmptyCategoriesAsLoading();
 
@@ -629,9 +615,7 @@ void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
 }
 
 bool RemoteSuggestionsProviderImpl::AreArticlesAvailable() {
-  if (!ready()) {
-    return false;
-  }
+  DCHECK(ready());
   auto articles_it = category_contents_.find(articles_category_);
   DCHECK(articles_it != category_contents_.end());
   CategoryContent& content = articles_it->second;
@@ -1354,11 +1338,6 @@ void RemoteSuggestionsProviderImpl::EnterStateReady() {
 
   auto article_category_it = category_contents_.find(articles_category_);
   DCHECK(article_category_it != category_contents_.end());
-  if (fetch_when_ready_) {
-    FetchSuggestions(fetch_when_ready_interactive_,
-                     std::move(fetch_when_ready_callback_));
-    fetch_when_ready_ = false;
-  }
 
   for (const auto& item : category_contents_) {
     Category category = item.first;
@@ -1503,8 +1482,11 @@ void RemoteSuggestionsProviderImpl::EnterState(State state) {
 
       DVLOG(1) << "Entering state: READY";
       state_ = State::READY;
-      NotifyStateChanged();
       EnterStateReady();
+      // This notification may cause the scheduler to ask the provider to do a
+      // refetch. We want to do it as the last step, when the state change here
+      // in the provider is completed.
+      NotifyStateChanged();
       break;
 
     case State::DISABLED:

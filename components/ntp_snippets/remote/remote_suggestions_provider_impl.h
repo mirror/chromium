@@ -432,20 +432,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // The service that provides events and data about the signin and sync state.
   std::unique_ptr<RemoteSuggestionsStatusService> status_service_;
 
-  // TODO(tschumann): All "fetch-when-available" logic should live in the
-  // RemoteSuggestionsScheduler. Remove this here. Instead, the scheduler should
-  // also call ready() before forwarding requests. If the provider becomes
-  // ready, it calls OnProviderActivated() which will process triggers queued in
-  // the scheduler.
-  // Set to true if FetchSuggestions is called while the service isn't ready.
-  // The fetch will be executed once the service enters the READY state.
-  // TODO(jkrcal): create a struct and have here just one base::Optional<>?
-  bool fetch_when_ready_;
-
-  // The parameters for the fetch to perform later.
-  bool fetch_when_ready_interactive_;
-  FetchStatusCallback fetch_when_ready_callback_;
-
   // Set to true if ClearHistoryDependentState is called while the service isn't
   // ready. The nuke will be executed once the service finishes initialization
   // or enters the READY state.
