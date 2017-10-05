@@ -16,6 +16,14 @@
 namespace blink {
 namespace scheduler {
 
+namespace {
+
+void RunCrossThreadClosure(CrossThreadClosure task) {
+  task();
+}
+
+}  // namespace
+
 RefPtr<WebTaskRunnerImpl> WebTaskRunnerImpl::Create(
     scoped_refptr<TaskQueue> task_queue) {
   return WTF::AdoptRef(new WebTaskRunnerImpl(std::move(task_queue)));
@@ -51,6 +59,39 @@ base::TimeTicks WebTaskRunnerImpl::Now() const {
 scoped_refptr<base::SingleThreadTaskRunner>
 WebTaskRunnerImpl::ToSingleThreadTaskRunner() {
   return task_queue_.get();
+}
+
+// Use a custom function for base::Bind instead of convertToBaseCallback to
+// avoid copying the closure later in the call chain. Copying the bound state
+// can lead to data races with ref counted objects like StringImpl. See
+// crbug.com/679915 for more details.
+void WebTaskRunnerImpl::PostTask(const WebTraceLocation& location,
+                                 CrossThreadClosure task) {
+  task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+      base::BindOnce(&RunCrossThreadClosure, std::move(task)), location,
+      base::TimeDelta(), false));
+}
+
+void WebTaskRunnerImpl::PostDelayedTask(const WebTraceLocation& location,
+                                        CrossThreadClosure task,
+                                        TimeDelta delay) {
+  task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+      base::BindOnce(&RunCrossThreadClosure, std::move(task)), location, delay,
+      false));
+}
+
+void WebTaskRunnerImpl::PostTask(const WebTraceLocation& location,
+                                 WTF::Closure task) {
+  task_queue_->PostTaskWithMetadata(
+      TaskQueue::PostedTask(ConvertToBaseCallback(std::move(task)), location,
+                            base::TimeDelta(), false));
+}
+
+void WebTaskRunnerImpl::PostDelayedTask(const WebTraceLocation& location,
+                                        WTF::Closure task,
+                                        TimeDelta delay) {
+  task_queue_->PostTaskWithMetadata(TaskQueue::PostedTask(
+      ConvertToBaseCallback(std::move(task)), location, delay, false));
 }
 
 }  // namespace scheduler

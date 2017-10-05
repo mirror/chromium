@@ -15,6 +15,14 @@
 namespace blink {
 namespace scheduler {
 
+namespace {
+
+void RunCrossThreadClosure(CrossThreadClosure task) {
+  task();
+}
+
+}  // namespace
+
 class FakeWebTaskRunner::Data : public WTF::ThreadSafeRefCounted<Data> {
  public:
   Data() : time_(0.0) {}
@@ -123,6 +131,33 @@ void FakeWebTaskRunner::AdvanceTimeAndRun(double delta_seconds) {
 std::deque<std::pair<base::OnceClosure, double>>
 FakeWebTaskRunner::TakePendingTasksForTesting() {
   return std::move(data_->task_queue_);
+}
+
+void FakeWebTaskRunner::PostTask(const WebTraceLocation& location,
+                                 CrossThreadClosure task) {
+  base_task_runner_->PostDelayedTask(
+      location, base::BindOnce(&RunCrossThreadClosure, std::move(task)),
+      base::TimeDelta());
+}
+
+void FakeWebTaskRunner::PostDelayedTask(const WebTraceLocation& location,
+                                        CrossThreadClosure task,
+                                        TimeDelta delay) {
+  base_task_runner_->PostDelayedTask(
+      location, base::BindOnce(&RunCrossThreadClosure, std::move(task)), delay);
+}
+
+void FakeWebTaskRunner::PostTask(const WebTraceLocation& location,
+                                 WTF::Closure task) {
+  base_task_runner_->PostDelayedTask(
+      location, ConvertToBaseCallback(std::move(task)), base::TimeDelta());
+}
+
+void FakeWebTaskRunner::PostDelayedTask(const WebTraceLocation& location,
+                                        WTF::Closure task,
+                                        TimeDelta delay) {
+  base_task_runner_->PostDelayedTask(
+      location, ConvertToBaseCallback(std::move(task)), delay);
 }
 
 }  // namespace scheduler

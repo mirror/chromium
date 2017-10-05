@@ -28,6 +28,14 @@ class PLATFORM_EXPORT WebTaskRunnerImpl : public WebTaskRunner {
   double MonotonicallyIncreasingVirtualTimeSeconds() const override;
   scoped_refptr<base::SingleThreadTaskRunner> ToSingleThreadTaskRunner()
       override;
+  void PostTask(const WebTraceLocation&, CrossThreadClosure) override;
+  void PostDelayedTask(const WebTraceLocation&,
+                       CrossThreadClosure,
+                       TimeDelta delay) override;
+  void PostTask(const WebTraceLocation&, WTF::Closure) override;
+  void PostDelayedTask(const WebTraceLocation&,
+                       WTF::Closure,
+                       TimeDelta delay) override;
 
   TaskQueue* GetTaskQueue() const { return task_queue_.get(); }
 

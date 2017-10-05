@@ -28,6 +28,14 @@ class FakeWebTaskRunner : public WebTaskRunner {
   double VirtualTimeSeconds() const override;
   double MonotonicallyIncreasingVirtualTimeSeconds() const override;
   SingleThreadTaskRunnerRefPtr ToSingleThreadTaskRunner() override;
+  void PostTask(const WebTraceLocation&, CrossThreadClosure) override;
+  void PostDelayedTask(const WebTraceLocation&,
+                       CrossThreadClosure,
+                       TimeDelta delay) override;
+  void PostTask(const WebTraceLocation&, WTF::Closure) override;
+  void PostDelayedTask(const WebTraceLocation&,
+                       WTF::Closure,
+                       TimeDelta delay) override;
 
   void RunUntilIdle();
   void AdvanceTimeAndRun(double delta_seconds);

@@ -240,6 +240,8 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
                                   base::OnceClosure task,
                                   base::TimeDelta delay) override;
 
+  bool PostTaskWithMetadata(PostedTask task);
+
  protected:
   explicit TaskQueue(std::unique_ptr<internal::TaskQueueImpl> impl);
   ~TaskQueue() override;

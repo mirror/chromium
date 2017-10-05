@@ -52,6 +52,10 @@ bool TaskQueue::PostNonNestableDelayedTask(const base::Location& from_here,
       PostedTask(std::move(task), from_here, delay, /* nestable */ false));
 }
 
+bool TaskQueue::PostTaskWithMetadata(PostedTask task) {
+  return impl_->PostDelayedTask(std::move(task));
+}
+
 std::unique_ptr<TaskQueue::QueueEnabledVoter>
 TaskQueue::CreateQueueEnabledVoter() {
   return impl_->CreateQueueEnabledVoter(this);
