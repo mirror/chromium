@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd43950d_460c2a2d",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e47a16_28b95cf3",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a28cd08_fc198eb4",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 20
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2b54e7cc_4670d676",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "ExtensionRegistrar shouldn\u0027t care (yet) when Reload is triggered. ExtensionService decides whether to call ReplaceReloadedExtension.\n\nIn your scenario, I think UnloadExtension would be called in the 2nd step, so the extension would be removed from ExtensionService\u0027s reloading_extensions_. ExtensionService would then just add the \"reloaded\" extension as a disabled extension, instead of calling ReplaceReloadedExtension.",
+      "parentUuid": "8a28cd08_fc198eb4",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6136728_cbe4ce89",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 20
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-03T13:20:15Z",
       "side": 1,
       "message": "Is it worth making this a StrictMock so that we can verify these calls?",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2467f04_9ac06325",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "My feeling is the ExtensionService tests should cover that.\n\nUnrelatedly, I\u0027ll test that ExtensionRegistrar behaves correctly when CanEnable/DisableExtension return false. But that makes this a stub, not a mock.",
+      "parentUuid": "e6136728_cbe4ce89",
       "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

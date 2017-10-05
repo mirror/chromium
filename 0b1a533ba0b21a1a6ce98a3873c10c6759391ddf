@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d4efcc26_80688cbb",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "Added the boolean. (I do want to avoid the trap of adding parameters instead of separate functions, but I think it helps in this case.)",
+      "parentUuid": "1a2d95f7_10da0f95",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ca1353_f51014b6",
         "filename": "chrome/browser/extensions/extension_service.cc",
         "patchSetId": 17
@@ -105,6 +123,24 @@
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa24be8c_d6f161dc",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a65edc44_e9b130e6",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -161,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "e98440f6_5908485e",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "Already done.",
+      "parentUuid": "44160ea0_4d609569",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8cc6ff4_b6d9ff86",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17
@@ -208,6 +262,24 @@
       "side": 1,
       "message": "Why is that bad?",
       "parentUuid": "7fe52eb7_3e619f8d",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70dbe3c_fdc2c4f6",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "I wouldn\u0027t say it\u0027s bad, but it leads to slightly different behavior. For an extension that is not loaded, but isn\u0027t disabled/blacklisted in prefs, currently ExtensionPrefs::SetExtensionEnabled is called. If we return early in that case, we\u0027d start skipping that call.\n\nExtensionPrefs::SetExtensionEnabled might have side effects even when an extension is neither loaded nor set as disabled in prefs (eg, we notify observers who would otherwise not know about it). It probably shouldn\u0027t, but it might.\n\nThe comment I made for it says:\n\n  // Returns true if the extension is enabled (including terminated), or if it\n  // is not loaded but isn\u0027t explicitly disabled in preferences.\n\nBut EnableExtension should explicitly enable the extension in prefs if possible.",
+      "parentUuid": "fac3eaec_070055b6",
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -405,6 +477,24 @@
       "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c45955c_3747f0ad",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-05T20:09:33Z",
+      "side": 1,
+      "message": "OK, the comments should now be more correct.",
+      "parentUuid": "7b4c8e5a_4c124f26",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
