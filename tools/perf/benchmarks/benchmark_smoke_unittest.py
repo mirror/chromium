@@ -30,7 +30,7 @@ from benchmarks import speedometer
 from benchmarks import v8_browsing
 
 
-def SmokeTestGenerator(benchmark, num_pages=1):
+def SmokeTestGenerator(benchmark, num_pages=1, max_values=1000):
   """Generates a benchmark that includes first N pages from pageset.
 
   Args:
@@ -70,6 +70,11 @@ def SmokeTestGenerator(benchmark, num_pages=1):
     benchmark_module.AddCommandLineArgs(parser)
     benchmark.SetArgumentDefaults(parser)
     options.MergeDefaultValues(parser.get_default_values())
+
+    if hasattr(options, 'assert_values_less_than'):
+      story_set = benchmark().CreateStorySet(options)
+      options.assert_values_less_than = (
+        max_values / (len(story_set.stories) * options.pageset_repeat))
 
     benchmark.ProcessCommandLineArgs(None, options)
     benchmark_module.ProcessCommandLineArgs(None, options)
