@@ -32,6 +32,7 @@
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_init_params.h"
+#include "ash/wayland/wayland_server_controller.h"
 #include "ash/wm/ash_focus_rules.h"
 #include "ash/wm/window_state.h"
 #include "base/memory/ptr_util.h"
@@ -310,6 +311,7 @@ void WindowManager::OnWmConnected() {
   CreateShell();
   if (show_primary_host_on_connect_)
     Shell::GetPrimaryRootWindow()->GetHost()->Show();
+  wayland_server_controller_ = WaylandServerController::CreateIfNecessary();
 }
 
 void WindowManager::OnWmSetBounds(aura::Window* window,
