@@ -1490,8 +1490,10 @@ static const CSSValue& ValueForBorderRadiusCorner(LengthSize radius,
   return list;
 }
 
-static CSSFunctionValue* ValueForMatrixTransform(TransformationMatrix transform,
-                                                 const ComputedStyle& style) {
+static CSSFunctionValue* ValueForMatrixTransform(
+    const TransformationMatrix& transform_arg,
+    const ComputedStyle& style) {
+  TransformationMatrix transform = transform_arg;
   CSSFunctionValue* transform_value = nullptr;
   transform.Zoom(1 / style.EffectiveZoom());
   if (transform.IsAffine()) {
