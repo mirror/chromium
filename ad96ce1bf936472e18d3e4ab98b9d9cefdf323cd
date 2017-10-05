@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff3a1f6_0bcf83b2",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "it would really be great if we don\u0027t have to add one more binary. Doing so means updating the installer etc (which could also mean updating the uninstaller or upgrade code)",
+      "range": {
+        "startLine": 584,
+        "startChar": 2,
+        "endLine": 584,
+        "endChar": 16
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83420be_6f457d50",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "nit: we don\u0027t need to do this if the caller is resumeio_callsite",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c5fc70_d757a314",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "nit: is it correct to return true if caller is 0? Perhaps we should put a DCHECK at the top if we never expect caller to be 0.",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aefa765_38cd4372",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "this is a nice optimization",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 6
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5778e3db_5d9ee4f4",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "nit: \"try to look the caller up\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 33
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8586fc_c957abcc",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "{}\n(since the whole condition+statement is \u003e2 lines)",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b240357_dc3a8941",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "If we call this function directly from AudioManagerMac, then could we simply have it there and not need a header for it or to declare it as extern \"C\"?",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198bc931_87fb7254",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "DCHECK",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516c4fe9_92737b54",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "can we put this file in a mac specific subfolder?  Also, is \u0027chrome\u0027 a necessary part of the name? If it is, then perhaps it should rather be called \u0027chromium\u0027 to make it clear that this isn\u0027t only applicable to google\u0027s chrome build.",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858e0564_431c0aa6",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "nit: \"...early so that there are no other...\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 24,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c0bbcd_bcee6655",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "will this part be removed?",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf90b3dd_bb7dda39",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-05T11:30:01Z",
+      "side": 1,
+      "message": "I assume we could move this call into AudioManagerMac as a one-time initialization step?",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
