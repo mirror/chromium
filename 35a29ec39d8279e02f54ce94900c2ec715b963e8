@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91b2a4cb_eb54af74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "s/This is ready to make/This patch is a preparation for/\nCould you google \"ready to\"?",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a59260_bf10513d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |selection|.\nSelection().SetSelection(SetSelectionTextToBody(...)) is enough.",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc8463b_d3f54c1d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |selection|.\nSelection().SetSelection(SetSelectionTextToBody(...)) is enough.",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986dec31_18c39cae",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |selection|.\nSelection().SetSelection(SetSelectionTextToBody(...)) is enough.",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a481f3e_1dcf3d28",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "optional nit: We don\u0027t need to have single-quote(\u0027).",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b475e54c_ccdb5eef",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have |selection|.\nSelection().SetSelection(SetSelectionTextToBody(...)) is enough.",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cbaba8_aa3b5184",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T08:56:37Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to \\\"",
+      "revId": "35a29ec39d8279e02f54ce94900c2ec715b963e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
