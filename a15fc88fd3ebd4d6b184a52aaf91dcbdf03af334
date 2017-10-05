@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa4ecf0_a04a2209",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-05T20:12:15Z",
+      "side": 1,
+      "message": "Definitely not now but at some point we need to change this to float as well.\nbokan@ then the type here should be WebFloatPoint? Right?\neirage@, I cc\u0027ed you on another change that is related to this.",
+      "revId": "a15fc88fd3ebd4d6b184a52aaf91dcbdf03af334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
