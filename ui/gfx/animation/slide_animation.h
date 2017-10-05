@@ -47,6 +47,11 @@ namespace gfx {
 // }
 class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
  public:
+  enum Timing {
+    kConstantSpeed,     // Duration is proportional to the current progress.
+    kConstantDuration,  // Duration is always |slide_duration|.
+  };
+
   explicit SlideAnimation(AnimationDelegate* target);
   ~SlideAnimation() override;
 
@@ -67,6 +72,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   int GetSlideDuration() const { return slide_duration_; }
   void SetTweenType(Tween::Type tween_type) { tween_type_ = tween_type; }
 
+  // Sets the duration to |slide_duration| regardless of current progress.
+  void SetConstantDuration();
+
   double GetCurrentValue() const override;
   // TODO(bruthig): Fix IsShowing() and IsClosing() to be consistent. e.g.
   // IsShowing() will currently return true after the 'show' animation has been
@@ -78,6 +86,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
   class TestApi;
 
  private:
+  // Gets the duration based on |slide_timing_|.
+  int GetDuration();
+
   // Overridden from Animation.
   void AnimateToState(double state) override;
 
@@ -87,6 +98,9 @@ class ANIMATION_EXPORT SlideAnimation : public LinearAnimation {
 
   // Used to determine which way the animation is going.
   bool showing_;
+
+  // Timing to use for animation. Defaults to kConstantSpeed.
+  Timing slide_timing_;
 
   // Animation values. These are a layer on top of Animation::state_ to
   // provide the reversability.
