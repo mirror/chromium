@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13e09cbc_44496967",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-05T17:45:46Z",
+      "side": 1,
+      "message": "MaybeWrapWithGPUSandboxHook().",
+      "parentUuid": "07ea29bc_5d586348",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "9c38141d5a0b14a86ab55afae77b5da4c908d3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5843c1b3_3eb9946f",
         "filename": "content/common/sandbox_init_mac.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "9c38141d5a0b14a86ab55afae77b5da4c908d3d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e451c4f5_1eb5555e",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-05T17:45:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5843c1b3_3eb9946f",
+      "revId": "9c38141d5a0b14a86ab55afae77b5da4c908d3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
