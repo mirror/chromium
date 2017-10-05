@@ -8,11 +8,16 @@
 
 namespace memory_instrumentation {
 
-using base::trace_event::MemoryAllocatorDumpGuid;
-using Process = GlobalDumpGraph::Process;
-using Node = GlobalDumpGraph::Node;
+namespace {
 
-GlobalDumpGraph::GlobalDumpGraph() {}
+using base::trace_event::MemoryAllocatorDumpGuid;
+using Process = memory_instrumentation::GlobalDumpGraph::Process;
+using Node = memory_instrumentation::GlobalDumpGraph::Node;
+
+}  // namespace
+
+GlobalDumpGraph::GlobalDumpGraph()
+    : shared_memory_graph_(std::make_unique<Process>(this)) {}
 GlobalDumpGraph::~GlobalDumpGraph() {}
 
 Process* GlobalDumpGraph::CreateGraphForProcess(base::ProcessId process_id) {
