@@ -1,0 +1,446 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9241035b_a8ee8fa1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Nit: Add comment that the automations are pretty arbitrary?\n\nYou forgot setValueCurveAtTime, if you\u0027re intending to test all the methods.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfcb5fa_ca9b6bc0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "I think you need a test that the defaultValue for the gain worklet is actually used.\n\nAnd one for when the value setter is called.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a50807e_cecb3e6d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Maybe use non-default values for this test?\n\nAlso, since AudioWorkletNodeOptions is optional, you need a test for this and verify that the constructed node has the right values.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42ae943_721f3dbb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "\"let testNode \u003d ...\" here, and delete line 66?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6b8490_07066830",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Better to move this inside the forEach on line 93?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe834a28_bd14f864",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Should there be a test when the module file doesn\u0027t exist?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302df6ef_90595f57",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/bypass-processor.js",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Don\u0027t really need anything in the body do we?  It\u0027s not actually being used to process anything.\n\nIf so, maybe delete this and just use dummy-processor.js instead?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a32face_03313fb5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/window-audio-worklet.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Don\u0027t you need some kind of should().notThrow() or something?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee58ac1_8358b474",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d117bcff_d403ef88",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "scope seems not to be used here?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8cbf3b_844dd80c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Why the check here?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d93c401_0075050f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Maybe use for (auto inputBus : inputBuses) to iterate over the inputBuses array?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb58a41_c950a657",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "CreateOrNull can return nullptr, right?  Then you need DCHECK at least to catch this case.\n\nOr maybe the right thing is just to call Create, and crash if we don\u0027t have enough memory to allocate this space.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82c5db1_1d338b87",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Likewise, what if CreateOrNull returned nullptr?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3a4d809_47913901",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "param_array can be nullptr.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b012c53_bef6e884",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "What prevents you from doing that now? I think you should if possible.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f0df1e7_8629541e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Do you need to do a sanity range check for channel_count?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea387d04_70fedae0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Let\u0027s not use \"o\" as the index.  It\u0027s hard to distinguish \"o\" vs \"O\" vs \"0\". Here and in other places.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe9871f_3bd18af5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Likewise, can we not use \"i\" for the index?  It\u0027s hard to distinguish \"i\" vs \"I\" vs \"1\".",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3b0bfd_0c78e888",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "\"processor\" -\u003e \"processor_\" in comment?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a396c702_042300b6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Consider using ExceptionMessages::IndexOutsideRange to get uniform error message.",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83894eb_c45e4074",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Maybe use \"|\" instead of \":\" to mark the two sides?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d778cb57_5990d997",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Not really sure what the tail time and latency should be here.  Maybe 0 for both and leave it up to the developer to keep the node alive if the inputs are gone?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db05581_b6cdd5af",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.idl",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Typo: \"followings\" -\u003e \"the following\"",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62a140b2_c5cbaffe",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Why move this around?",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb974d2_bbf73099",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.idl",
+        "patchSetId": 22
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T20:44:24Z",
+      "side": 1,
+      "message": "Typo: \"following\" -\u003e \"the following\"",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
