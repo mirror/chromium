@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "724ab3d1_78b71ca9",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s exactly what I said; I *do* think RenderText should own the eliding code in the long term. If that is too difficult to accomplish correctly and expediently, then this short-/mid-term workaround approach might be reasonable.\n\n(Please let me know if I definitely had some reasoning *against* implementing eliding in RenderText, or in a helper that accesses RenderText internals to elide more efficiently; I don\u0027t clearly recall expressing that sentiment)",
+      "parentUuid": "81f09d04_04479887",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2

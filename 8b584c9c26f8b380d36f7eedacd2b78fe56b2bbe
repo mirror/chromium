@@ -1,0 +1,299 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b96ea00_fde94815",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Please describe |offset| a bit better, it adjusts the starting position of the component, right?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57e4bd1_0adf1e16",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand this function (or perhaps its usage)... Why does it decrement the beginning of *every* component by offset? Shouldn\u0027t it take into account the order of the components? ie. If we shorten the URL\u0027s path, that shouldn\u0027t affect the position of the scheme.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc97939a_cb6cf0c6",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "nit: base::ClampToRange here and below.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a3ccfe_6afbe3c6",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Use component-\u003ereset() instead.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29eb13a7_304befa1",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "I\u0027m confused about how this CL addresses your concerns wrt DIRECTIONALITY_AS_URL. Nothing here seems to use that, but I guess similar behavior emerges from the use of per-component eliding?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b3938d_fecec2b5",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Combine this with line 511?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dbe247_c92f0db4",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this GetStringWidthF use DIRECTIONALITY_AS_URL? (the width of the string rendered with the standard bidi algorithm may be different than the width of the string rendered with forced LTR component ordering)",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878e19c4_d7205a73",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "What does \"without worry about scheme or host\" mean?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7099d7e_aa34328b",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "What does \"general elided text\" mean?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fffadb7_2f47b6ac",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "ditto q for DIRECTIONALITY_AS_URL",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5293df5c_67509893",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "It might be nice to extract a helper for the block at 522, 544, and 558. Or a more general helper that takes a component and direction, and knows to find the start of the component and elide_tail the trailing text or elide_head the preceding text, so you can do:\n  string \u003d ElideUrlStep(string, parsed, width, gfx::ELIDE_TAIL, url::Parsed::PATH);\n  string \u003d ElideUrlStep(string, parsed, width, gfx::ELIDE_HEAD, url::Parsed::HOST);\nIt seems like that could make this function a bit clearer, but maybe not?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2722c4e7_58bc5e30",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Remind me, why not replace the existing ElideUrl above? (it seems like the prior reviewers preferred that too). Otherwise, why would anyone use ElideUrl instead of this? Comment about the reasoning for keeping the old function, mark it as deprecated if that makes sense, and file a bug to move existing users to the new \u0027secure\u0027 function.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2236a0_482225fe",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Is \" : int\" needed here?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362ab2a6_fbbed435",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "nit: move into RunElisionParsingTest",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b328482e_c210d3e4",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Ditto directionality q",
+      "range": {
+        "startLine": 171,
+        "startChar": 13,
+        "endLine": 171,
+        "endChar": 28
+      },
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19336c14_49870e0b",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Add a new elision test for RTL, at least something basic for sanity to start.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae0f29f_f764209d",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T00:38:37Z",
+      "side": 1,
+      "message": "Is it intentional that this resolves to the path component? (will it be gray? should it be host/black?)",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
