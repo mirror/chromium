@@ -52,6 +52,24 @@
       "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c4fb689_1cb52628",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-05T20:35:09Z",
+      "side": 1,
+      "message": "I\u0027m going to go with the string-valued variable for now. \n\nWe don\u0027t have a good way to do asserts on a valid list of values, but we could probably hack something with a hook if needed.",
+      "parentUuid": "b50b47b7_f9e6c2a0",
+      "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
