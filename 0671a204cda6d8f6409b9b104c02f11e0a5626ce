@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dee8f61_ab84c54f",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Why clearing notification is delayed?",
+      "range": {
+        "startLine": 754,
+        "startChar": 15,
+        "endLine": 754,
+        "endChar": 60
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddc063e_98430e19",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Is this called for small file? Or is this called only if zipping takes some amount of time?",
+      "range": {
+        "startLine": 758,
+        "startChar": 14,
+        "endLine": 758,
+        "endChar": 24
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4494130a_348b17d2",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "create will clear and create the notification every call. Can we use update here?",
+      "range": {
+        "startLine": 765,
+        "startChar": 33,
+        "endLine": 765,
+        "endChar": 39
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84a8f8a4_bd7b1c5e",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "very small nit: period at the end of sentence to be consistent with other comments.",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 43
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665e8965_672065ed",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "nit: wrap sentence with using up to the char limit.",
+      "range": {
+        "startLine": 176,
+        "startChar": 7,
+        "endLine": 176,
+        "endChar": 57
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fbacc3e_000d5562",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "We can put rootEntry.getFile call in a promise and handle the error case with the catch.",
+      "range": {
+        "startLine": 195,
+        "startChar": 14,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09be1128_b5f252f4",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "nit: wrong indent",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 4
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c16f36_b99e09fb",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "this.requestAccessPermissionForVolumes_",
+      "range": {
+        "startLine": 213,
+        "startChar": 13,
+        "endLine": 213,
+        "endChar": 77
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74f4121_9d697c27",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Do we need to resolve all entries if we only used the first one?",
+      "range": {
+        "startLine": 221,
+        "startChar": 14,
+        "endLine": 221,
+        "endChar": 21
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2434d806_64e66bac",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Is there a case where entries can have different parents?",
+      "range": {
+        "startLine": 223,
+        "startChar": 18,
+        "endLine": 223,
+        "endChar": 27
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666284fe_4b4bfdf9",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Is it sure that this function won\u0027t be called twice for a same entry?",
+      "range": {
+        "startLine": 287,
+        "startChar": 8,
+        "endLine": 287,
+        "endChar": 41
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71365eed_9c694d10",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/compressor.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Is there any reason not to increment this in WRITE_CHUNK? If I check onWriteChunk_, data seems to have length.",
+      "range": {
+        "startLine": 561,
+        "startChar": 6,
+        "endLine": 561,
+        "endChar": 51
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6e5d4c_d90d885e",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/file-operation-utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "File name should be file_operation_utils.js",
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e995e3e_1fea89fa",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/file-operation-utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-10-05T07:35:13Z",
+      "side": 1,
+      "message": "Why do we need to decompose the number part here? I think if user tries to zip \"test (20171005).txt\", the expected file name would be \"test (20171005).zip\" rather than \"test.zip\". I think simply appending number only when file name collision happens would be enough.",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "0671a204cda6d8f6409b9b104c02f11e0a5626ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
