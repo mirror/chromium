@@ -684,6 +684,28 @@ void VRDisplay::submitFrame() {
     }
   }
 
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
+  // Other devices may have different preferences. Do this step as late
+  // as possible before SubmitFrame to ensure we can do as much work as
+  // possible in parallel with the previous frame's rendering.
+  //
+  // Due to Qualcomm scheduling issues, we must avoid executing
+  // render-initiating GL commands for the new frame before the previous frame
+  // finishes rendering. If they overlap, the new frame slows down rendering
+  // for the old one. Specifically this appears to be triggered when converting
+  // DrawingBuffer's offscreen FBO to a texture. See http://crbug.com/747159
+  // "Frames rendering in a fast/slow pattern".
+  {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
   RefPtr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
@@ -726,21 +748,6 @@ void VRDisplay::submitFrame() {
   auto mailbox = static_image->GetMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
   auto sync_token = static_image->GetSyncToken();
-
-  // Wait for the previous render to finish, to avoid losing frames in the
-  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
-  // Other devices may have different preferences. Do this step as late
-  // as possible before SubmitFrame to ensure we can do as much work as
-  // possible in parallel with the previous frame's rendering.
-  {
-    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
-    while (pending_previous_frame_render_) {
-      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
-        DLOG(ERROR) << "Failed to receive SubmitFrame response";
-        break;
-      }
-    }
-  }
 
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
