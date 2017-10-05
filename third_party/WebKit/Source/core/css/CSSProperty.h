@@ -91,10 +91,6 @@ class CSSProperty {
 
   const CSSValue* Value() const { return value_.Get(); }
 
-  static CSSPropertyID ResolveDirectionAwareProperty(CSSPropertyID,
-                                                     TextDirection,
-                                                     WritingMode);
-
   static void FilterEnabledCSSPropertiesIntoVector(const CSSPropertyID*,
                                                    size_t length,
                                                    Vector<CSSPropertyID>&);
