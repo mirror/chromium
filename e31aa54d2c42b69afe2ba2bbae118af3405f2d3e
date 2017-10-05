@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "996a4d3a_86ff9cc1",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done. Also made naming consistent with Blink, and removed all the old |tag|s lying around.\n\n593 lines inserted \u0026 534 deleted since my last iteration of the patch :p",
+      "parentUuid": "329a6a5e_eb68ec49",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9fdd7d6_a8d570b1",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493eab1b_b9b58acd",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it this way for now, since this exactly mirrors the \"bgfetch_registration_developer_id_to_unique_id_\" stored by the persistent version, and it\u0027s helpful to keep them working the same way. This and |registrations_| will both go away anyway once we finish switching over to persistent storage.",
+      "parentUuid": "b9fdd7d6_a8d570b1",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4bd23af2_84eb06f8",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done, first one only I\u0027m afraid :)",
+      "parentUuid": "ea346d76_91d51fdd",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2806d799_1ed351d2",
         "filename": "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a191e04_47ae6bca",
+        "filename": "content/browser/background_fetch/background_fetch_embedded_worker_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2806d799_1ed351d2",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4fedd835_f01bb3e0",
+        "filename": "content/browser/background_fetch/background_fetch_registration_id.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df99b438_60d03892",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b773dd9b_fa22d13f",
         "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c241ba1d_4e18b54e",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b773dd9b_fa22d13f",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "8cdb950b_b7c14730",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchedEvent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c513f991_0fc36a68",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9ce3414_e911a18d",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085343cf_c70d4860",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T19:06:32Z",
+      "side": 1,
+      "message": "Done, and service_worker_registration_id and origin as well, since we rely on |unique_id| to be unguessable.",
+      "parentUuid": "f9ce3414_e911a18d",
+      "revId": "e31aa54d2c42b69afe2ba2bbae118af3405f2d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
