@@ -5972,12 +5972,27 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     EXPECT_EQ("", root_entry->frame_unique_name());
     EXPECT_EQ(3U, entry->root_node()->children.size());
 
-    // * The first child of the main frame is named and has two more children.
+    // * There exists a child of the main frame named "1-1-name".
     FrameTreeNode* frame = root->child_at(0);
     FrameNavigationEntry* frame_entry = entry->GetFrameEntry(frame);
     EXPECT_NE(nullptr, frame_entry);
     EXPECT_EQ("1-1-name", frame_entry->frame_unique_name());
-    EXPECT_EQ(2U, entry->root_node()->children[0]->children.size());
+
+    // * Verify it also has two more children. Since child count is known only
+    // to the FrameNavigationEntry::TreeNode, traverse the root entry to find
+    // the correct one. The ordering of entries in the FrameNavigationEntry
+    // tree is not guaranteed to be the same as the order in the FrameTreeNode
+    // tree.  The latter depends on the order of frames committing navigations,
+    // which is undefined and depends on responses from the network.
+    NavigationEntryImpl::TreeNode* tree_node = nullptr;
+    for (auto& node : entry->root_node()->children) {
+      if (node->frame_entry == frame_entry) {
+        tree_node = node.get();
+        break;
+      }
+    }
+    EXPECT_TRUE(tree_node);
+    EXPECT_EQ(2U, tree_node->children.size());
   }
 
   // Removing the first child of the main frame should remove the corresponding
@@ -5991,7 +6006,19 @@ IN_PROC_BROWSER_TEST_F(NavigationControllerBrowserTest,
     FrameNavigationEntry* root_entry = entry->GetFrameEntry(root);
     EXPECT_NE(nullptr, root_entry);
     EXPECT_EQ(3U, entry->root_node()->children.size());
-    EXPECT_EQ(2U, entry->root_node()->children[0]->children.size());
+
+    // Find the correct node using the frame_unique_name, since the ordering
+    // is not guaranteed.
+    NavigationEntryImpl::TreeNode* tree_node = nullptr;
+    for (auto& node : entry->root_node()->children) {
+      if (node->frame_entry->frame_unique_name() == "1-1-name") {
+        tree_node = node.get();
+        break;
+      }
+    }
+
+    EXPECT_TRUE(tree_node);
+    EXPECT_EQ(2U, tree_node->children.size());
   }
 
   // Now, insert a frame with the same name as the previously removed one
