@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e4ee14_34defcce",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T04:56:09Z",
+      "side": 1,
+      "message": "nit: import",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fd656e_26248a22",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T04:56:09Z",
+      "side": 1,
+      "message": "(this and coordinate_conversion should be #import too)",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a441252_fbd81ef0",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T04:56:09Z",
+      "side": 1,
+      "message": "are all 3 required? i.e. what badness happens if dismissPopUp isn\u0027t swizzled out? (perhaps comment here). Same with attachPopUpWithFrame.",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ccf386_e3062479",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T04:56:09Z",
+      "side": 1,
+      "message": "The pattern for these usually goes\n\n CR_DEFINE_STATIC_LOCAL(HeadlessPopUpMethods, swizzler, ());\n ALLOW_UNUSED_LOCAL(swizzler);\n\n\n(you could also just make the constructor public and move into PlatformInitialize, but I guess Init() gives a stronger guarantee that the constructor isn\u0027t called twice).",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
