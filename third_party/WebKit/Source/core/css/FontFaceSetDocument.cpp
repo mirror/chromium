@@ -578,4 +578,9 @@ DEFINE_TRACE(FontFaceSetDocument) {
   FontFaceSet::Trace(visitor);
 }
 
+DEFINE_TRACE_WRAPPERS(FontFaceSetDocument) {
+  FontFaceSet::TraceWrappers(visitor);
+  Supplement<Document>::TraceWrappers(visitor);
+}
+
 }  // namespace blink
