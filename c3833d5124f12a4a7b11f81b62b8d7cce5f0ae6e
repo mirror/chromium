@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd1ed34b_e1029648",
+        "filename": "base/metrics/field_trial.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T23:17:49Z",
+      "side": 1,
+      "message": "!defined(OS_FUCHSIA)",
+      "range": {
+        "startLine": 1159,
+        "startChar": 11,
+        "endLine": 1159,
+        "endChar": 30
+      },
+      "revId": "c3833d5124f12a4a7b11f81b62b8d7cce5f0ae6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
