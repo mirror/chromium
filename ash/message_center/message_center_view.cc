@@ -444,9 +444,8 @@ void MessageCenterView::RemoveNotification(const std::string& notification_id,
 }
 
 std::unique_ptr<ui::MenuModel> MessageCenterView::CreateMenuModel(
-    const message_center::NotifierId& notifier_id,
-    const base::string16& display_source) {
-  return tray_->CreateNotificationMenuModel(notifier_id, display_source);
+    const message_center::Notification& notification) {
+  return tray_->CreateNotificationMenuModel(notification);
 }
 
 bool MessageCenterView::HasClickedListener(const std::string& notification_id) {
@@ -533,8 +532,11 @@ void MessageCenterView::AddNotificationAt(const Notification& notification,
 
   // TODO(yoshiki): Temporary disable context menu on custom notifications.
   // See crbug.com/750307 for detail.
-  if (notification.type() != message_center::NOTIFICATION_TYPE_CUSTOM)
+  if (notification.type() != message_center::NOTIFICATION_TYPE_CUSTOM &&
+      notification.delegate() &&
+      notification.delegate()->ShouldDisplaySettingsButton()) {
     view->set_context_menu_controller(&context_menu_controller_);
+  }
 
   view->set_scroller(scroller_);
   message_list_view_->AddNotificationAt(view, index);
