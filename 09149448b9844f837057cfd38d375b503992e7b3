@@ -46,6 +46,30 @@
       "revId": "09149448b9844f837057cfd38d375b503992e7b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb553d2_5b747ecd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-05T22:56:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "097dbcfc_34f7980b",
+      "range": {
+        "startLine": 94,
+        "startChar": 31,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "09149448b9844f837057cfd38d375b503992e7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
