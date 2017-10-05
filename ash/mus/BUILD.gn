@@ -86,6 +86,7 @@ source_set("lib") {
   public_deps = [
     "//ash",
     "//ash/public/cpp:ash_public_cpp",
+    "//ash/wayland",
     "//base",
     "//base:i18n",
     "//mash/public/interfaces",
