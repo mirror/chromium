@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a19436f_17301aaa",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:11:18Z",
+      "side": 1,
+      "message": "nit: You could add a TODO here about reconfiguring.",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767ecbb4_a4c09ca7",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:11:18Z",
+      "side": 1,
+      "message": "Can you add a test with two tracks and make sure stopping one track does not stop the source and that after it is stopped an applyConstraint that previously failed will start working?",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4abef23b_5cf54e53",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:11:18Z",
+      "side": 1,
+      "message": "console.l! Are these tests run? I would expect console.l to cause error loading the page.",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ebe428_127b31e0",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:11:18Z",
+      "side": 1,
+      "message": "Should we listen and make sure mute/unmute doesn\u0027t fire for track1 and track2 when applyConstraint is applied?",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
