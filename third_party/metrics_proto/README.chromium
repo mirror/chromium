@@ -1,0 +1,11 @@
+Name: Metrics Protos
+Version: 0
+Date: 2017/10/02
+License: BSD
+Security Critical: Yes
+
+Description:
+This package contains the protos that are used to upload metrics data to Google.
+
+Local Modifications:
+Not otherwise shipped.
