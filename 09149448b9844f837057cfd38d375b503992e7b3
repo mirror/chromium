@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82981334_7a656d51",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 30
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T22:40:14Z",
+      "side": 1,
+      "message": "we can\u0027t guarantee that this isn\u0027t an incognito tab, so I think we\u0027ll need the !isIncognito check here at least",
+      "range": {
+        "startLine": 94,
+        "startChar": 31,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "09149448b9844f837057cfd38d375b503992e7b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
