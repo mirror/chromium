@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39c06048_4be147bc",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "No need to focus, since the test doesn\u0027t trigger spellchecker.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 19
+      },
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "274f379b_3294e2c2",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Should be 21.",
+      "range": {
+        "startLine": 27,
+        "startChar": 21,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc624941_97d0f790",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04bb493a_73cbc9d4",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 23
+      },
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a522337_63f3b1e0",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6c9481_b6969cc4",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "For a text control element, we need to break into its user agent shadow DOM to set the marker:\n\nvar inner_editor \u003d internals.shadowRoot(input).getElementById(\u0027inner-editor\u0027);\nvar text \u003d inner_editor.firstChild;\nvar range \u003d ...",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8d3eccc_4996b8f8",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fab040_4a89ea86",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/spelling-markers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:23:32Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 25
+      },
+      "revId": "65a736382a35a09af1da23d88577fbbb7c1e7e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
