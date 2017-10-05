@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "668d5757_79bff8b5",
+        "filename": "chrome/browser/extensions/extension_creator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-05T19:46:21Z",
+      "side": 1,
+      "message": "Can this parameter be a reference to const type?",
+      "range": {
+        "startLine": 92,
+        "startChar": 40,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da964470_093adaa8",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-05T19:46:21Z",
+      "side": 1,
+      "message": "initialize",
+      "range": {
+        "startLine": 31,
+        "startChar": 18,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47293816_da4cbd0b",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-05T19:46:21Z",
+      "side": 1,
+      "message": "could use ?:",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
