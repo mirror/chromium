@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5b7628b_894c77d7",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T00:06:48Z",
+      "side": 1,
+      "message": "It should really be tied to the lifetime of the RenderFrame in the render process. See reply below for details.",
+      "parentUuid": "88cd1af2_aa516646",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afe24af0_5c040d34",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "afca11d0_711ac45c",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T00:06:48Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "afe24af0_5c040d34",
+      "range": {
+        "startLine": 24,
+        "startChar": 71,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dfef456_b479bae9",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
@@ -59,6 +107,24 @@
       "writtenOn": "2017-10-04T23:01:01Z",
       "side": 1,
       "message": "I probably missed this discussion elsewhere, but what is the race you\u0027re concerned with here?",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817c2dcf_d5f44d04",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T00:06:48Z",
+      "side": 1,
+      "message": "I vaguely remember he mentioned that there could be some race condition between WebContentsObserver events and legacy IPC. dcheng@ would have the details.",
+      "parentUuid": "5dfef456_b479bae9",
       "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "399c564e_1a48a4a1",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T00:06:48Z",
+      "side": 1,
+      "message": "I have no idea what those are :) So let me explain what I am doing so you can help me :)\n\nMedia components (media elements, CDM) are all tied to the lifetime of a RenderFrame in the render process. These components sometimes run some out-of-process (OOO) parts in a different process, e.g. a hardware-based video decoder running in the GPU process, but conceptually is owned by the media element in a RenderFrame in the renderer process. Those OOO parts may in turn need some other services in the browser process. Conceptually these services should be tied to the lifetime of RenderFrames in the render processes, hence the name FrameService. FrameServiceBase is introduced to be the base class of all these services to manage the lifetime.\n\nSee go/mojo-media-graph for details.\n\nAs I don\u0027t have much knowledge about how this should be enforced, I chat with dcheng@ and ended up with the current solution. If you see any problem please let me and dcheng@ know. Thanks!",
+      "parentUuid": "f273c465_34d6f6c8",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82430315_0fe2bfb6",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
@@ -93,6 +177,24 @@
       "writtenOn": "2017-10-04T23:01:01Z",
       "side": 1,
       "message": "Would it be better to move the function implementations in this header into frame_service_base.cc?",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f5274b_c7023520",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T00:06:48Z",
+      "side": 1,
+      "message": "This is a templated class. Moving function definition to the .cc file would require explicit instantiation of the templates...",
+      "parentUuid": "82430315_0fe2bfb6",
       "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
