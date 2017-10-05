@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2201b25_a565a627",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T01:19:00Z",
+      "side": 1,
+      "message": "nit: I think this should be a Binding\u003c\u003e instead of a BindingSet\u003c\u003e. Since there can only be one Client, I don\u0027t think it makes sense to allow multiple external services to bind. I would switch it to work like NightLightController. (Sorry I didn\u0027t notice this before.)",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e29711_1c02c5a1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T01:19:00Z",
+      "side": 1,
+      "message": "optional: Does this have to happen after the observers are added, or could it happen in the initializer list?",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bd6d36_27ee3403",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T01:19:00Z",
+      "side": 1,
+      "message": "I like how you\u0027re doing this attach/detach. It\u0027s a nice idea.",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27279eb_95dc6229",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T01:19:00Z",
+      "side": 1,
+      "message": "nit: Move into SetUp() if possible.",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b28970_358fae24",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T01:19:00Z",
+      "side": 1,
+      "message": "nit: This would be a little clearer if you reset the count around line 222 and this became EXPECT_EQ(0).",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
