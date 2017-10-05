@@ -7,6 +7,7 @@
 
 #include "core/layout/ng/geometry/ng_bfc_offset.h"
 #include "core/layout/ng/geometry/ng_border_edges.h"
+#include "core/layout/ng/geometry/ng_logical_rect.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_break_token.h"
@@ -47,6 +48,11 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGFragmentBuilder& SetOverflowSize(const NGLogicalSize&);
   NGFragmentBuilder& SetBlockOverflow(LayoutUnit);
+
+  const NGLogicalRect& ContentVisualRect() const {
+    return content_visual_rect_;
+  }
+  NGFragmentBuilder& AddContentVisualRect(const NGLogicalRect&);
 
   NGFragmentBuilder& AddChild(RefPtr<NGLayoutResult>, const NGLogicalOffset&);
   NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
@@ -187,6 +193,7 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
 
   NGLogicalSize size_;
   NGLogicalSize overflow_;
+  NGLogicalRect content_visual_rect_;
 
   Vector<RefPtr<NGPhysicalFragment>> children_;
   Vector<NGLogicalOffset> offsets_;

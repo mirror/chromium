@@ -4,10 +4,13 @@
 
 #include "core/layout/ng/inline/ng_line_box_fragment_builder.h"
 
+#include "core/layout/ng/geometry/ng_logical_rect.h"
 #include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
+#include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
@@ -72,15 +75,57 @@ void NGLineBoxFragmentBuilder::SetBreakToken(
   break_token_ = std::move(break_token);
 }
 
+NGLogicalRect NGLineBoxFragmentBuilder::ComputeLocalVisualRect() const {
+  DCHECK_EQ(offsets_.size(), children_.size());
+  NGLogicalRect visual_rect;
+  for (unsigned i = 0; i < children_.size(); i++) {
+    ComputeLocalVisualRect(*children_[i], offsets_[i], &visual_rect);
+  }
+  return visual_rect;
+}
+
+void NGLineBoxFragmentBuilder::ComputeLocalVisualRect(
+    const NGPhysicalFragment& physical_fragment,
+    const NGLogicalOffset& offset,
+    NGLogicalRect* visual_rect) const {
+  if (physical_fragment.IsText()) {
+    NGLogicalRect child_visual_rect =
+        ToNGPhysicalTextFragment(physical_fragment).ComputeLocalVisualRect();
+    child_visual_rect.offset += offset;
+    visual_rect->Unite(child_visual_rect);
+    return;
+  }
+
+  if (physical_fragment.IsBox()) {
+    // TODO(kojii): Add box's visual rect.
+
+    const LayoutObject* layout_object = physical_fragment.GetLayoutObject();
+    DCHECK(layout_object);
+    if (!layout_object->IsInline()) {
+      return;
+    }
+    DCHECK(!layout_object->IsAtomicInlineLevel() &&
+           !layout_object->IsFloatingOrOutOfFlowPositioned());
+
+    const auto& box_fragment = ToNGPhysicalBoxFragment(physical_fragment);
+    for (const auto& physical_child : box_fragment.Children()) {
+      NGFragment child(WritingMode(), *physical_child);
+      ComputeLocalVisualRect(*physical_child, offset + child.Offset(),
+                             visual_rect);
+    }
+    return;
+  }
+
+  NOTREACHED();
+}
+
 RefPtr<NGPhysicalLineBoxFragment>
 NGLineBoxFragmentBuilder::ToLineBoxFragment() {
   DCHECK_EQ(offsets_.size(), children_.size());
 
   NGWritingMode writing_mode(
       FromPlatformWritingMode(node_.Style().GetWritingMode()));
-  NGPhysicalSize physical_size =
-      NGLogicalSize(inline_size_, Metrics().LineHeight())
-          .ConvertToPhysical(writing_mode);
+  NGPhysicalSize physical_size = Size().ConvertToPhysical(writing_mode);
 
   for (size_t i = 0; i < children_.size(); ++i) {
     NGPhysicalFragment* child = children_[i].get();
@@ -93,7 +138,6 @@ NGLineBoxFragmentBuilder::ToLineBoxFragment() {
           Style(), physical_size, children_, metrics_,
           break_token_ ? std::move(break_token_)
                        : NGInlineBreakToken::Create(node_)));
-  fragment->UpdateVisualRect();
   return fragment;
 }
 

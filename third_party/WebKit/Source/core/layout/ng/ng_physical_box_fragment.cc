@@ -36,12 +36,6 @@ const NGBaseline* NGPhysicalBoxFragment::Baseline(
   return nullptr;
 }
 
-void NGPhysicalBoxFragment::UpdateVisualRect() const {
-  NGPhysicalContainerFragment::UpdateVisualRect();
-
-  // TODO(kojii): Add its own visual overflow (e.g., box-shadow)
-}
-
 RefPtr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset() const {
   Vector<RefPtr<NGPhysicalFragment>> children_copy(children_);
   Vector<NGBaseline> baselines_copy(baselines_);

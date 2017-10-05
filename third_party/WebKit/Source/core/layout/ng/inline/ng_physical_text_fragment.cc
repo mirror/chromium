@@ -4,15 +4,15 @@
 
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 
+#include "core/layout/ng/geometry/ng_logical_rect.h"
 #include "core/layout/ng/inline/ng_line_height_metrics.h"
 #include "core/style/ComputedStyle.h"
 
 namespace blink {
 
-void NGPhysicalTextFragment::UpdateVisualRect() const {
+NGLogicalRect NGPhysicalTextFragment::ComputeLocalVisualRect() const {
   if (!shape_result_) {
-    NGPhysicalFragment::UpdateVisualRect();
-    return;
+    return {};
   }
 
   // TODO(kojii): Copying InlineTextBox logic from
@@ -45,6 +45,10 @@ void NGPhysicalTextFragment::UpdateVisualRect() const {
   }
 
   LayoutRect visual_rect = EnclosingLayoutRect(visual_float_rect);
+#if 1
+  return {{visual_rect.X(), visual_rect.Y()},
+          {visual_rect.Width(), visual_rect.Height()}};
+#else
   switch (LineOrientation()) {
     case NGLineOrientation::kHorizontal:
       break;
@@ -60,7 +64,8 @@ void NGPhysicalTextFragment::UpdateVisualRect() const {
       break;
   }
 
-  SetVisualRect(visual_rect);
+  return visual_rect;
+#endif
 }
 
 }  // namespace blink
