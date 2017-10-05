@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2974c298_13706738",
+        "filename": "base/task_scheduler/task_traits.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:50:46Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to remove these APIs from the allowance description. Instead we want to make those properly use AssertBaseSyncPrimitivesAllowed().",
+      "revId": "3903d4f3c89f512d4750ab7da2f79c4e87d25407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9864f04_b40f7761",
         "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
         "patchSetId": 4
@@ -13,6 +30,24 @@
       "writtenOn": "2017-09-20T16:05:55Z",
       "side": 1,
       "message": "This doesn\u0027t use //base sync primitives. Assuming this merely needs BlockingAllowed.",
+      "revId": "3903d4f3c89f512d4750ab7da2f79c4e87d25407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f963c387_a17fde12",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:50:46Z",
+      "side": 1,
+      "message": "Looks like you removed it? I\u0027d keep AssertBlockingAllowed() at least as this seems to be the intent.",
+      "parentUuid": "f9864f04_b40f7761",
       "revId": "3903d4f3c89f512d4750ab7da2f79c4e87d25407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -33,6 +68,24 @@
       "revId": "3903d4f3c89f512d4750ab7da2f79c4e87d25407",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25800c1d_e659cd55",
+        "filename": "chrome/browser/printing/print_job.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:50:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11faafbe_68690dd9",
+      "revId": "3903d4f3c89f512d4750ab7da2f79c4e87d25407",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
