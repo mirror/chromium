@@ -16,6 +16,24 @@
       "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee0cde0_4f982d62",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1230425
+      },
+      "writtenOn": "2017-10-05T20:07:58Z",
+      "side": 1,
+      "message": "I think event\u0027s coordinates wouldn\u0027t be changed after created, so when try to get the event coordinates use getter, new event will always has same coordinates with the old event, that should be ok.",
+      "parentUuid": "159e3334_65426871",
+      "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
