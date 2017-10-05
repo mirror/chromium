@@ -184,6 +184,24 @@
     },
     {
       "key": {
+        "uuid": "a3000e24_dd1b88fb",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T02:00:39Z",
+      "side": 1,
+      "message": "I talked with xhwang and jrummell on Monday: the lifetime should be tied to document (the idea is to strongly associate an origin with these services). So you\u0027re right--this should check that the navigation is not a same document navigation.",
+      "parentUuid": "d8007569_a3b3fae1",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82430315_0fe2bfb6",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
