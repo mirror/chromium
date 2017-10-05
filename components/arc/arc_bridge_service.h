@@ -47,6 +47,7 @@ class VoiceInteractionArcHomeInstance;
 class VoiceInteractionFrameworkInstance;
 class VolumeMounterInstance;
 class WallpaperInstance;
+class ImeManagerInstance;
 
 }  // namespace mojom
 
@@ -120,6 +121,9 @@ class ArcBridgeService {
     return &volume_mounter_;
   }
   InstanceHolder<mojom::WallpaperInstance>* wallpaper() { return &wallpaper_; }
+  InstanceHolder<mojom::ImeManagerInstance>* ime_manager() {
+    return &ime_manager_;
+  }
 
  private:
   InstanceHolder<mojom::AccessibilityHelperInstance> accessibility_helper_;
@@ -157,6 +161,7 @@ class ArcBridgeService {
       voice_interaction_framework_;
   InstanceHolder<mojom::VolumeMounterInstance> volume_mounter_;
   InstanceHolder<mojom::WallpaperInstance> wallpaper_;
+  InstanceHolder<mojom::ImeManagerInstance> ime_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcBridgeService);
 };

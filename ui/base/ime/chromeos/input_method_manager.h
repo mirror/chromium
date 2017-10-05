@@ -79,6 +79,8 @@ class UI_BASE_IME_EXPORT InputMethodManager {
     virtual void InputMethodChanged(InputMethodManager* manager,
                                     Profile* profile,
                                     bool show_message) = 0;
+    virtual void ActiveInputMethodsChanged(
+        InputMethodManager* manager) {}
   };
 
   // CandidateWindowObserver is notified of events related to the candidate

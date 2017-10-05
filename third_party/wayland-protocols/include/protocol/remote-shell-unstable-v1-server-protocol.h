@@ -147,14 +147,18 @@ extern const struct wl_interface zcr_notification_surface_v1_interface;
  * shell surfaces.
  */
 enum zcr_remote_shell_v1_container {
-	/**
-	 * default container
-	 */
-	ZCR_REMOTE_SHELL_V1_CONTAINER_DEFAULT = 1,
-	/**
-	 * system modal container
-	 */
-	ZCR_REMOTE_SHELL_V1_CONTAINER_OVERLAY = 2,
+  /**
+   * default container
+   */
+  ZCR_REMOTE_SHELL_V1_CONTAINER_DEFAULT = 1,
+  /**
+   * system modal container
+   */
+  ZCR_REMOTE_SHELL_V1_CONTAINER_OVERLAY = 2,
+  /**
+   * IME window container
+   */
+  ZCR_REMOTE_SHELL_V1_CONTAINER_IME_WINDOW = 3,
 };
 #endif /* ZCR_REMOTE_SHELL_V1_CONTAINER_ENUM */
 
