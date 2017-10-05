@@ -77,6 +77,7 @@ void PrinterEventTracker::RecordUsbPrinterInstalled(
   SetEventType(&event, mode);
   SetPpdInfo(&event, detected.printer.ppd_reference());
   SetUsbInfo(&event, detected);
+  VLOG(1) << "USB Printer Installed";
   events_.push_back(event);
 }
 
@@ -91,6 +92,7 @@ void PrinterEventTracker::RecordIppPrinterInstalled(const Printer& printer,
   SetEventType(&event, mode);
   SetPpdInfo(&event, printer.ppd_reference());
   SetNetworkPrinterInfo(&event, printer);
+  VLOG(1) << "Network Printer Installed";
   events_.push_back(event);
 }
 
@@ -104,6 +106,7 @@ void PrinterEventTracker::RecordUsbSetupAbandoned(
   metrics::PrinterEventProto event;
   event.set_event_type(metrics::PrinterEventProto::SETUP_ABANDONED);
   SetUsbInfo(&event, detected);
+  VLOG(1) << "USB Setup Abandoned";
   events_.push_back(event);
 }
 
@@ -116,6 +119,7 @@ void PrinterEventTracker::RecordSetupAbandoned(const Printer& printer) {
   metrics::PrinterEventProto event;
   event.set_event_type(metrics::PrinterEventProto::SETUP_ABANDONED);
   SetNetworkPrinterInfo(&event, printer);
+  VLOG(1) << "Network Printer Abandoned";
   events_.push_back(event);
 }
 
@@ -129,12 +133,14 @@ void PrinterEventTracker::RecordPrinterRemoved(const Printer& printer) {
   event.set_event_type(metrics::PrinterEventProto::PRINTER_DELETED);
   SetNetworkPrinterInfo(&event, printer);
   SetPpdInfo(&event, printer.ppd_reference());
+  VLOG(1) << "Printer Removed";
   events_.push_back(event);
 }
 
 void PrinterEventTracker::FlushPrinterEvents(
     std::vector<metrics::PrinterEventProto>* events) {
   base::AutoLock l(lock_);
+  VLOG(1) << "Sweep events";
   events->swap(events_);
   events_.clear();
 }

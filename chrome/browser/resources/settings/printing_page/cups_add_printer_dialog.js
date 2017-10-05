@@ -150,12 +150,12 @@ Polymer({
 
   properties: {
     /** @type {!CupsPrinterInfo} */
-    newPrinter: {type: Object, notify: true, value: getEmptyPrinter_},
+    activePrinter: {type: Object, notify: true, value: getEmptyPrinter_},
   },
 
   /** @private */
   switchToDiscoveryDialog_: function() {
-    this.newPrinter = getEmptyPrinter_();
+    this.activePrinter = getEmptyPrinter_();
     this.$$('add-printer-dialog').close();
     this.fire('open-discovery-printers-dialog');
   },
@@ -168,8 +168,8 @@ Polymer({
   /** @private */
   addPressed_: function() {
     // Set the default printer queue to be "ipp/print".
-    if (!this.newPrinter.printerQueue) {
-      this.set('newPrinter.printerQueue', 'ipp/print');
+    if (!this.activePrinter.printerQueue) {
+      this.set('activePrinter.printerQueue', 'ipp/print');
     }
     this.$$('add-printer-dialog').close();
     this.fire('open-configuring-printer-dialog');
@@ -187,7 +187,7 @@ Polymer({
    * @private
    */
   onProtocolChange_: function(event) {
-    this.set('newPrinter.printerProtocol', event.target.value);
+    this.set('activePrinter.printerProtocol', event.target.value);
   },
 });
 
@@ -320,6 +320,7 @@ Polymer({
 
   /** @override */
   ready: function() {
+    console.log("Attach listeners");
     this.addWebUIListener('on-add-cups-printer', this.onAddPrinter_.bind(this));
     this.addWebUIListener(
         'on-manually-add-discovered-printer',
@@ -467,8 +468,9 @@ Polymer({
 
   /** @private */
   setupAbandoned_: function() {
-    settings.CupsPrintersBrowserProxyImpl.getInstance().cancelPrinterSetUp(
-        this.newPrinter);
+    console.log("Abandon printing " + this.newPrinter);
+    //settings.CupsPrintersBrowserProxyImpl.getInstance()
+     //   .cancelPrinterSetUp(this.newPrinter);
   },
 
   /**
@@ -480,6 +482,8 @@ Polymer({
    * @private
    */
   switchDialog_: function(fromDialog, toDialog, domIfBooleanName) {
+    console.log("What is printer " + this.newPrinter);
+    console.log("From, to " + fromDialog + " " + toDialog);
     this.previousDialog_ = fromDialog;
     this.currentDialog_ = toDialog;
 
@@ -502,6 +506,7 @@ Polymer({
    */
   onManuallyAddDiscoveredPrinter_: function(printer) {
     this.newPrinter = printer;
+    console.log("Does this do anything " + this.newPrinter);
     this.switchToManufacturerDialog_();
   },
 
