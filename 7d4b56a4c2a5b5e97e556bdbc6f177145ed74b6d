@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c4de1e0_718b285e",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T02:57:35Z",
+      "side": 0,
+      "message": "Hooray for fewer in-process delegate methods!",
+      "revId": "7d4b56a4c2a5b5e97e556bdbc6f177145ed74b6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
