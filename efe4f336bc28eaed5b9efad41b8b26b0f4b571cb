@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8f7326bf_60cc4ae2",
+        "filename": "third_party/WebKit/Source/core/css/FontFaceSetDocument.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T12:47:41Z",
+      "side": 1,
+      "message": "Unrelated: FontFaceSet::Trace, should cover the EventTargetWithInlineData::Trace.\n\nYou got it right with wrapper tracing :)",
+      "range": {
+        "startLine": 574,
+        "startChar": 2,
+        "endLine": 574,
+        "endChar": 27
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fa98177_ae2a03da",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.h",
         "patchSetId": 22
@@ -66,6 +89,29 @@
         "startChar": 13,
         "endLine": 66,
         "endChar": 29
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82061106_ad2d604a",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T12:47:41Z",
+      "side": 1,
+      "message": "I really don\u0027t like this infrastructure here. When I tried this I just relied on the fact that the classes that used the mixin had TraceWrapperBase. They anyways have to have it for tracing wrappers themselves.",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 55
       },
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
