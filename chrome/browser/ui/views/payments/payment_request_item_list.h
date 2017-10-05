@@ -138,7 +138,8 @@ class PaymentRequestItemList {
   // hierarchy.
   std::unique_ptr<views::View> CreateListView();
 
-  // Deselects the currently selected item and selects |item| instead.
+  // Deselects the currently selected item and selects |item| instead. Takes a
+  // raw pointer to allow Items to invoke it passing |this|.
   void SelectItem(Item* item);
 
   PaymentRequestDialogView* dialog() { return dialog_; }
@@ -149,8 +150,8 @@ class PaymentRequestItemList {
   // putting the list in a state where no item is selected.
   void UnselectSelectedItem();
 
-  std::vector<std::unique_ptr<Item>> items_;
-  Item* selected_item_;
+  std::vector<std::shared_ptr<Item>> items_;
+  std::weak_ptr<Item> selected_item_;
   PaymentRequestDialogView* dialog_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestItemList);
