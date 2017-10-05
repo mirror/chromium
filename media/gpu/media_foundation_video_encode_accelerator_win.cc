@@ -322,9 +322,13 @@ bool MediaFoundationVideoEncodeAccelerator::TryToSetupEncodeOnSeparateThread(
 }
 
 // static
-void MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization() {
-  for (const wchar_t* mfdll : kMediaFoundationVideoEncoderDLLs)
-    ::LoadLibrary(mfdll);
+bool MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization() {
+  for (const wchar_t* mfdll : kMediaFoundationVideoEncoderDLLs) {
+    if (!::LoadLibrary(mfdll)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 bool MediaFoundationVideoEncodeAccelerator::CreateHardwareEncoderMFT() {
@@ -495,7 +499,8 @@ bool MediaFoundationVideoEncodeAccelerator::IsResolutionSupported(
 
 void MediaFoundationVideoEncodeAccelerator::NotifyError(
     VideoEncodeAccelerator::Error error) {
-  DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
+  DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread() ||
+         encode_client_task_runner_->BelongsToCurrentThread());
   main_client_task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::NotifyError, main_client_, error));
 }
@@ -660,9 +665,13 @@ void MediaFoundationVideoEncodeAccelerator::ReturnBitstreamBuffer(
 
   memcpy(buffer_ref->shm->memory(), encode_output->memory(),
          encode_output->size());
+  // Ensure SharedMemory in |buffer_ref| can be released before the posted task
+  // is executed.
+  const auto ref_id = buffer_ref->id;
+  buffer_ref.reset();
   encode_client_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&Client::BitstreamBufferReady, encode_client_, buffer_ref->id,
+      base::Bind(&Client::BitstreamBufferReady, encode_client_, ref_id,
                  encode_output->size(), encode_output->keyframe,
                  encode_output->capture_timestamp));
 }

@@ -21,7 +21,13 @@ source_set("encoder") {
     "webrtc_video_encoder_vpx.h",
   ]
 
-  configs += [ "//build/config/compiler:wexit_time_destructors" ]
+  public_configs = [
+    "//third_party/skia:skia_public",
+  ]
+
+  configs += [
+    "//build/config/compiler:wexit_time_destructors",
+  ]
 
   deps = [
     ":vpx_codec",
