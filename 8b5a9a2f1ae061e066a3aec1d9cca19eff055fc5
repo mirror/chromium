@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a1f36b_c849847f",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:39:08Z",
+      "side": 1,
+      "message": "nit: This is rather verbose. What do you think of mDidNotifyBothSelectionClients?",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea9acc6b_e1c26d8b",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:39:08Z",
+      "side": 1,
+      "message": "Should we assertFalse(didRunBothActiveNotification());?",
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2ffab7_26b72f4d",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:39:08Z",
+      "side": 1,
+      "message": "Should we have a test that checks that we can\u0027t call #set and #add with the same client?",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 36
+      },
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
