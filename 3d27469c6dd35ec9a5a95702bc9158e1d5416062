@@ -22,6 +22,30 @@
       "revId": "3d27469c6dd35ec9a5a95702bc9158e1d5416062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc01435_39b3f8c0",
+        "filename": "components/arc/bluetooth/bluetooth_type_converters.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T08:12:01Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "3c9a387c_51257f6a",
+      "range": {
+        "startLine": 127,
+        "startChar": 6,
+        "endLine": 127,
+        "endChar": 60
+      },
+      "revId": "3d27469c6dd35ec9a5a95702bc9158e1d5416062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
