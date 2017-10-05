@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "79478d0f_61a70bb9",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-05T21:30:46Z",
+      "side": 1,
+      "message": "Just send a FYI to chromium-dev that you will be removing current unused files by next week, and if anyone is using it, to let you know.\n\nthen delete all files and put a OWNERS file with our usernames in there.",
+      "parentUuid": "406b2645_d51fead1",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea0cc8b2_cdc8735f",
         "filename": "testing/libfuzzer/getting_started.md",
         "patchSetId": 2
