@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "1103d098_ec3e07b2",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-05T20:33:40Z",
+      "side": 1,
+      "message": "So you\u0027re saying that the hard-coded number is bad? :)... Of course it is.\n\nI think the issue here is that we\u0027re working with widget bounds, not the view bounds. IIRC, the widget bounds includes the space around the view necessary to display a blended drop-shadow. Of course, I may be way off the mark here as well.\n\nThe location_bar_view is what contains the OmniBox and the various icons. That why that view is used.\n\nOf course, this whole function will go away if we use the bubble infrastructure.",
+      "parentUuid": "c577758b_a4367afc",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f30ed46_25740175",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 8
@@ -406,6 +430,30 @@
       "side": 1,
       "message": "Other bubbles can appear in a popup. For example, if the popup has a password field we\u0027ll still show the passwords bubble, just anchored to the address bar (the icon appears as well). The find bar should just do the same thing in that case.",
       "parentUuid": "8c898608_ea93ef0f",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1ad6d6_c5a5b832",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-05T20:33:40Z",
+      "side": 1,
+      "message": "\u003e Other bubbles can appear in a popup. For example, if the popup has a password field we\u0027ll still show the passwords bubble, just anchored to the address bar (the icon appears as well). The find bar should just do the same thing in that case.\n\nI\u0027m investigating this whole thing right now. I\u0027m not sure at this point how long this will take. I\u0027ll probably have something by middle-to-the-end of next week.",
+      "parentUuid": "1ebdab47_f384ea2a",
       "range": {
         "startLine": 18,
         "startChar": 9,
