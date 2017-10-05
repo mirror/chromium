@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "0d41462e_e7eb6acd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-10-05T16:55:04Z",
+      "side": 1,
+      "message": "As long as we are logically consistent within the NG types I don\u0027t have a storng preference for whether we do offset-offset\u003dsize or offset-offset\u003doffset.\n\nMatching the existing Layout[Rect|Size|Offset] classes here is *not* important. Especially since they tend to be rather inconsistent.\n\nMorten\u0027s argument that \"operators should behave in the least surprising way\" sounds like a good guiding principle to me.",
+      "parentUuid": "de992323_a90e6f73",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
