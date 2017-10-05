@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4969481_ea930f06",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:01:18Z",
+      "side": 1,
+      "message": "nit: Could you use early-return style?\n\nif (IsValidDocument(document) \u0026\u0026 selection.IsValidFor(document))\n  return evt-\u003eGetText();\nediting_state-\u003eAbort();\nreturn String();\n\nIn this way, we don\u0027t need to have |new_text|, defined in L66.",
+      "revId": "3066571a6b5bbca72ce9bc30ebfb36c84a5efa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83aed99_3c6d9d60",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:01:18Z",
+      "side": 1,
+      "message": "nit: Could you swap condition to reduce indentation?\n\nif (IsValidDocument(document))\n  return result;\nediting_state-\u003eAbort();\nreturn result;",
+      "revId": "3066571a6b5bbca72ce9bc30ebfb36c84a5efa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
