@@ -42,12 +42,13 @@ void StringToIds(const std::string& str, std::vector<uint32_t>* list) {
   }
 }
 
-bool UseSwiftShader(const base::CommandLine& command_line) {
+bool ShouldUseSoftwarePath(const base::CommandLine& command_line) {
   if (!command_line.HasSwitch(switches::kUseGL))
     return false;
   std::string use_gl = command_line.GetSwitchValueASCII(switches::kUseGL);
-  return (use_gl == gl::kGLImplementationSwiftShaderForWebGLName ||
-          use_gl == gl::kGLImplementationSwiftShaderName);
+  // For gl::kGLImplementationSwiftShaderName used in testing, Chrome wants to
+  // run through the hardware accelerated paths for GPU features.
+  return (use_gl == gl::kGLImplementationSwiftShaderForWebGLName);
 }
 
 GpuFeatureStatus GetGpuRasterizationFeatureStatus(
@@ -79,7 +80,7 @@ GpuFeatureStatus GetGpuRasterizationFeatureStatus(
 GpuFeatureStatus GetWebGLFeatureStatus(
     const std::set<int>& blacklisted_features,
     const base::CommandLine& command_line) {
-  if (UseSwiftShader(command_line))
+  if (ShouldUseSoftwarePath(command_line))
     return kGpuFeatureStatusSoftware;
   if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL))
     return kGpuFeatureStatusBlacklisted;
@@ -89,10 +90,20 @@ GpuFeatureStatus GetWebGLFeatureStatus(
 GpuFeatureStatus GetWebGL2FeatureStatus(
     const std::set<int>& blacklisted_features,
     const base::CommandLine& command_line) {
-  if (UseSwiftShader(command_line))
+  if (ShouldUseSoftwarePath(command_line))
     return kGpuFeatureStatusSoftware;
   if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_WEBGL2))
     return kGpuFeatureStatusBlacklisted;
+  return kGpuFeatureStatusEnabled;
+}
+
+GpuFeatureStatus Get2DCanvasFeatureStatus(
+    const std::set<int>& blacklisted_features,
+    const base::CommandLine& command_line) {
+  if (ShouldUseSoftwarePath(command_line))
+    return kGpuFeatureStatusSoftware;
+  if (blacklisted_features.count(GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS))
+    return kGpuFeatureStatusSoftware;
   return kGpuFeatureStatusEnabled;
 }
 
@@ -230,6 +241,8 @@ GpuFeatureInfo ComputeGpuFeatureInfo(const GPUInfo& gpu_info,
       GetWebGLFeatureStatus(blacklisted_features, *command_line);
   gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_WEBGL2] =
       GetWebGL2FeatureStatus(blacklisted_features, *command_line);
+  gpu_feature_info.status_values[GPU_FEATURE_TYPE_ACCELERATED_2D_CANVAS] =
+      Get2DCanvasFeatureStatus(blacklisted_features, *command_line);
 
   std::set<base::StringPiece> all_disabled_extensions;
   std::string disabled_gl_extensions_value =
