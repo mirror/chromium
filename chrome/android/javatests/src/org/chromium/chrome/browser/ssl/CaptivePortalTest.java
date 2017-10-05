@@ -142,6 +142,9 @@ public class CaptivePortalTest {
                 RecordHistogram.getHistogramValueCountForTesting(
                         "interstitial.ssl_error_handler", HANDLE_ALL));
         Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE));
+        Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "interstitial.ssl_error_handler", CAPTIVE_PORTAL_CERT_FOUND));
         Assert.assertEquals(0,
@@ -157,10 +160,41 @@ public class CaptivePortalTest {
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "interstitial.ssl_error_handler", HANDLE_ALL));
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting("interstitial.ssl_error_handler",
+                        SHOW_CAPTIVE_PORTAL_INTERSTITIAL_OVERRIDABLE));
         Assert.assertEquals(0,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "interstitial.ssl_error_handler", CAPTIVE_PORTAL_CERT_FOUND));
         Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", OS_REPORTS_CAPTIVE_PORTAL));
+    }
+
+    @Test
+    @CommandLineFlags.Add({"disable-features=CaptivePortalInterstitial"})
+    public void testOSReportsCaptivePortal_FeatureDisabled() throws Exception {
+        CaptivePortalHelper.setOSReportsCaptivePortalForTesting(true);
+
+        Tab tab = mActivityTestRule.getActivity().getActivityTab();
+        ChromeTabUtils.loadUrlOnUiThread(
+                tab, mServer.getURL("/chrome/test/data/android/navigate/simple.html"));
+        waitForInterstitial(tab.getWebContents(), true);
+        Assert.assertTrue(tab.isShowingInterstitialPage());
+
+        new TabTitleObserver(tab, "Privacy error")
+                .waitForTitleUpdate(INTERSTITIAL_TITLE_UPDATE_TIMEOUT_SECONDS);
+
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", HANDLE_ALL));
+        Assert.assertEquals(1,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", SHOW_SSL_INTERSTITIAL_OVERRIDABLE));
+        Assert.assertEquals(0,
+                RecordHistogram.getHistogramValueCountForTesting(
+                        "interstitial.ssl_error_handler", CAPTIVE_PORTAL_CERT_FOUND));
+        Assert.assertEquals(0,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "interstitial.ssl_error_handler", OS_REPORTS_CAPTIVE_PORTAL));
     }
