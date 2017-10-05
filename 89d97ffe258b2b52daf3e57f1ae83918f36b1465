@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cceea44_195a8101",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "I still think this line is unnecessary.",
+      "range": {
+        "startLine": 287,
+        "startChar": 6,
+        "endLine": 287,
+        "endChar": 58
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42d547dc_1a0bffdf",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "I added this comment, but I\u0027m not sure there\u0027s any value to it. Also, technically it does do the default allocation, but then it erases it with an arbitrary color, which in my mind is *not* the default allocation.",
+      "range": {
+        "startLine": 405,
+        "startChar": 73,
+        "endLine": 406,
+        "endChar": 37
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fed1e1c2_065e5496",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "Maybe update the name to reflect that it fills with an arbitrary color?",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 407,
+        "endChar": 15
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c05133_251e081d",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "Why ASSERT_GE (Greater-than-or-Equal)? Don\u0027t you know the size of the file? Can\u0027t this be ASSERT_GT (Greater-Than)?",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 443,
+        "endChar": 11
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b420f1a_7c493d47",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "The decoder (really the ImageFrame) will store this as an unowned pointer. allocator will be destructed first, leaving the ImageFrame with a hanging pointer. It won\u0027t access it, but it would be good practice to set it back to nullptr.",
+      "range": {
+        "startLine": 450,
+        "startChar": 11,
+        "endLine": 450,
+        "endChar": 29
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8245e5b4_6e860fbc",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "You probably want ASSERT_TRUE here. Wouldn\u0027t want to dereference |frame| down below if it\u0027s null.",
+      "range": {
+        "startLine": 453,
+        "startChar": 2,
+        "endLine": 453,
+        "endChar": 13
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c64ba6_b4b73ab3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "Could you add some context (comments) to this? I suppose that the partial frame does not reach this pixel?",
+      "range": {
+        "startLine": 455,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 41
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84af636b_c4432f16",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "ASSERT_GT?",
+      "range": {
+        "startLine": 463,
+        "startChar": 2,
+        "endLine": 463,
+        "endChar": 11
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966899e0_2ae92126",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "ASSERT_TRUE",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 13
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc99216f_a8c6de1f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "Oh, haha, this one threw me for a loop. I was thinking that the decoder should have failed, since the second frame was incomplete. But that\u0027s only because the decoder won\u0027t be called (by Chrome) until all the data is available in the second frame. (Maybe worth a comment here?)",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 34
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95319b9d_88f1d81f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-10-05T15:17:03Z",
+      "side": 1,
+      "message": "Again, some context would be helpful. I suppose this number is the color of the first frame? (And not the color filled by the Allocator?) Maybe you could make this explicit by checking frame 0 (and the Allocator color)?",
+      "range": {
+        "startLine": 473,
+        "startChar": 2,
+        "endLine": 473,
+        "endChar": 49
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
