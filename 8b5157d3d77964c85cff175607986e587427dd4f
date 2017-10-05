@@ -777,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "29882f9a_5e4a585d",
+        "filename": "services/proxy_resolver/proxy_resolver_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-05T17:19:01Z",
+      "side": 1,
+      "message": "Oops, removed.",
+      "parentUuid": "6769d954_caa3edd3",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "885c31e1_74929f36",
         "filename": "services/proxy_resolver/proxy_resolver_service.h",
         "patchSetId": 20
@@ -788,6 +812,30 @@
       "writtenOn": "2017-10-05T16:20:38Z",
       "side": 1,
       "message": "Should we have test coverage of this code?  The new browser test does cover it a bit (Note:  I\u0027m honestly not sure about this).",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbc9d05_ba894367",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-05T17:19:01Z",
+      "side": 1,
+      "message": "We are testing the functionality with the browser test, I don\u0027t think we need to test the service directly.",
+      "parentUuid": "885c31e1_74929f36",
       "range": {
         "startLine": 17,
         "startChar": 29,
