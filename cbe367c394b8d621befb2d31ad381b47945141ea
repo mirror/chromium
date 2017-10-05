@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55746821_88480000",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 5
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-05T19:18:21Z",
+      "side": 1,
+      "message": "Other cases where we list multiple bugs are space separated, https://cs.chromium.org/search/?q\u003dfile:TestExpectations+crbug%5C.com%5C/.*crbug%5C.com%5C/\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nDo they not parse correctly with spaces?",
+      "range": {
+        "startLine": 1519,
+        "startChar": 16,
+        "endLine": 1519,
+        "endChar": 17
+      },
+      "revId": "cbe367c394b8d621befb2d31ad381b47945141ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
