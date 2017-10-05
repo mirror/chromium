@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "db418955_e7363706",
+        "filename": "components/translate/core/common/translate_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-05T03:22:44Z",
+      "side": 1,
+      "message": "Chinese is the only case we know of now.\nIf support for variants is added in the future we will change this file accordingly. ;-)",
+      "parentUuid": "bd647b21_3831d066",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "394f9615_a52566ec",
         "filename": "extensions/browser/extension_function_histogram_value.h",
         "patchSetId": 8
