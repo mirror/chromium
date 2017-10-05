@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed47222_4a66d1cc",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-05T21:07:57Z",
+      "side": 1,
+      "message": "s/scripts/script",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a16ffc_cafdb20c",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-05T21:07:57Z",
+      "side": 1,
+      "message": "FYI, remember to update this path when you move it to testing/coverage or tools/coverage or whatever. Lets do this sooner than later.",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0cc8b2_cdc8735f",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-05T21:07:57Z",
+      "side": 1,
+      "message": "you have directory containing `llvm-symbolizer` binary added in `$PATH`",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980e6426_f723540d",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001279
+      },
+      "writtenOn": "2017-10-05T21:07:57Z",
+      "side": 1,
+      "message": "s/may specify/can set",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
