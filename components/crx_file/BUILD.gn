@@ -6,8 +6,7 @@ import("//third_party/protobuf/proto_library.gni")
 
 static_library("crx_file") {
   sources = [
-    "crx2_file.cc",
-    "crx2_file.h",
+    "crx_file.h",
     "crx_verifier.cc",
     "crx_verifier.h",
     "id_util.cc",
@@ -15,6 +14,23 @@ static_library("crx_file") {
   ]
 
   deps = [
+    "//base",
+    "//crypto",
+  ]
+
+  public_deps = [
+    ":crx3_proto",
+  ]
+}
+
+static_library("crx_creator") {
+  sources = [
+    "crx_creator.cc",
+    "crx_creator.h",
+  ]
+
+  deps = [
+    ":crx_file",
     "//base",
     "//crypto",
   ]

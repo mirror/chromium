@@ -17,8 +17,8 @@
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
-#include "components/crx_file/crx2_file.h"
 #include "components/crx_file/crx3.pb.h"
+#include "components/crx_file/crx_file.h"
 #include "components/crx_file/id_util.h"
 #include "crypto/secure_hash.h"
 #include "crypto/secure_util.h"
@@ -259,13 +259,13 @@ VerifierResult Verify(
 
   // Magic number.
   bool diff = false;
-  char buffer[kCrx2FileHeaderMagicSize] = {};
-  if (file.ReadAtCurrentPos(buffer, kCrx2FileHeaderMagicSize) !=
-      kCrx2FileHeaderMagicSize)
+  char buffer[kCrxFileHeaderMagicSize] = {};
+  if (file.ReadAtCurrentPos(buffer, kCrxFileHeaderMagicSize) !=
+      kCrxFileHeaderMagicSize)
     return VerifierResult::ERROR_HEADER_INVALID;
-  if (!strncmp(buffer, kCrxDiffFileHeaderMagic, kCrx2FileHeaderMagicSize))
+  if (!strncmp(buffer, kCrxDiffFileHeaderMagic, kCrxFileHeaderMagicSize))
     diff = true;
-  else if (strncmp(buffer, kCrx2FileHeaderMagic, kCrx2FileHeaderMagicSize))
+  else if (strncmp(buffer, kCrxFileHeaderMagic, kCrxFileHeaderMagicSize))
     return VerifierResult::ERROR_HEADER_INVALID;
   file_hash->Update(buffer, sizeof(buffer));
 
