@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "717fc67a_2091928b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-05T08:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "877ecfe0_f17b86a1",
+      "range": {
+        "startLine": 31,
+        "startChar": 59,
+        "endLine": 31,
+        "endChar": 62
+      },
+      "revId": "1bc2aa7b10f71d2a585bd89aa43d724277fee99a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6d03d1_b7334831",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-05T08:29:42Z",
       "side": 1,
       "message": "Looks like you are the first to try to use Grit resources in Blink, so you get to hit all the fun issues.\n\nIf Blink starts to use more resources via Grit, having to add #pragmas in every file that uses it does not scale. There has to be a better way. I did a code search for \"Wunknown-pragmas\" and nobody else has to pass in -Wunknown-pragmas manually. The \"this is expected\" magic comes from the config named \"grit_config\" in tools/grit/grit_rule.gni. For whatever reason, that config is not applying here. This may really be a GN dependency problem. My suggestion is to ask agrieve@ and estevenson@ about this, since they are more familiar with enable_resource_whitelist_generation.",
+      "revId": "1bc2aa7b10f71d2a585bd89aa43d724277fee99a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4e2ff9_2686780b",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-05T08:44:16Z",
+      "side": 1,
+      "message": "Okay I will submit this and follow up with them separately",
+      "parentUuid": "ca6d03d1_b7334831",
       "revId": "1bc2aa7b10f71d2a585bd89aa43d724277fee99a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
