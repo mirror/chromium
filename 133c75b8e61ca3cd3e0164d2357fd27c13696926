@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b01d2d8f_36944b5f",
+        "filename": "headless/lib/browser/headless_network_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T06:15:37Z",
+      "side": 1,
+      "message": "Is this needed? If we are using DevToolsNetworksTransaction then it should remove it from the request already",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 80
+      },
+      "revId": "133c75b8e61ca3cd3e0164d2357fd27c13696926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
