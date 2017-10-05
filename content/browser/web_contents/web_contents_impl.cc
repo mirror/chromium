@@ -3494,23 +3494,26 @@ bool WebContentsImpl::GetClosedByUserGesture() const {
   return closed_by_user_gesture_;
 }
 
-void WebContentsImpl::ViewSource() {
+void WebContentsImpl::ViewSource(RenderFrameHost* render_frame_host) {
   if (!delegate_)
     return;
 
-  NavigationEntry* entry = GetController().GetLastCommittedEntry();
-  if (!entry)
+  NavigationEntryImpl* entry = GetController().GetLastCommittedEntry();
+  FrameNavigationEntry* frame_entry = entry->GetFrameEntry(
+      static_cast<RenderFrameHostImpl*>(render_frame_host)->frame_tree_node());
+  if (!frame_entry)
     return;
 
-  delegate_->ViewSourceForTab(this, entry->GetURL());
-}
+  OpenURLParams params(
+      GURL(kViewSourceScheme + std::string(":") + frame_entry->url().spec()),
+      Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      ui::PAGE_TRANSITION_LINK, false);
+  std::string ignored_content_type;
+  params.post_data = frame_entry->GetPostData(&ignored_content_type);
+  params.uses_post = params.post_data != nullptr;
 
-void WebContentsImpl::ViewFrameSource(const GURL& url,
-                                      const PageState& page_state) {
-  if (!delegate_)
-    return;
-
-  delegate_->ViewSourceForFrame(this, url, page_state);
+  delegate_->OpenURLFromTab(WebContents::FromRenderFrameHost(render_frame_host),
+                            params);
 }
 
 int WebContentsImpl::GetMinimumZoomPercent() const {
