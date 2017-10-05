@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a21b19e_28a376ec",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-05T16:21:11Z",
+      "side": 1,
+      "message": "Nit: Could you wrap this in its own anonymous namespace block since you\u0027re not actually trying to define headless::GetSSLKeyLogFile()?",
+      "revId": "dd0270ee1d4cb75b364a1a1101225b5308199e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
