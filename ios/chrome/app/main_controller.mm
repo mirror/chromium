@@ -31,6 +31,7 @@
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_service.h"
 #include "components/payments/core/features.h"
+#include "components/payments/core/web_payment_request.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/url_formatter/url_formatter.h"
@@ -145,7 +146,6 @@
 #include "ios/web/net/request_tracker_impl.h"
 #include "ios/web/net/web_http_protocol_handler_delegate.h"
 #import "ios/web/public/navigation_manager.h"
-#include "ios/web/public/payments/payment_request.h"
 #include "ios/web/public/web_capabilities.h"
 #include "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_view_creation_util.h"
@@ -2420,14 +2420,14 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 
   std::string payment_id =
       startupInformation.startupParameters.externalURLParams
-          .find(web::kPaymentRequestIDExternal)
+          .find(payments::kPaymentRequestIDExternal)
           ->second;
   if (paymentAppLauncher->payment_request_id() != payment_id)
     return NO;
 
   std::string payment_response =
       startupInformation.startupParameters.externalURLParams
-          .find(web::kPaymentRequestDataExternal)
+          .find(payments::kPaymentRequestDataExternal)
           ->second;
   paymentAppLauncher->ReceiveResponseFromIOSPaymentInstrument(payment_response);
   [startupInformation setStartupParameters:nil];
