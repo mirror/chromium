@@ -21,7 +21,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
@@ -40,6 +39,7 @@
 #include "third_party/WebKit/public/platform/modules/notifications/WebNotificationConstants.h"
 #include "third_party/crashpad/crashpad/client/crashpad_client.h"
 #include "ui/base/l10n/l10n_util_mac.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -122,7 +122,8 @@ void RecordXPCEvent(XPCConnectionEvent event) {
                             XPC_CONNECTION_EVENT_COUNT);
 }
 
-base::string16 CreateNotificationTitle(const Notification& notification) {
+base::string16 CreateNotificationTitle(
+    const message_center::Notification& notification) {
   base::string16 title;
   if (notification.type() == message_center::NOTIFICATION_TYPE_PROGRESS) {
     title += base::FormatPercent(notification.progress());
@@ -132,13 +133,15 @@ base::string16 CreateNotificationTitle(const Notification& notification) {
   return title;
 }
 
-bool IsPersistentNotification(const Notification& notification) {
+bool IsPersistentNotification(
+    const message_center::Notification& notification) {
   return notification.never_timeout() ||
          notification.type() == message_center::NOTIFICATION_TYPE_PROGRESS;
 }
 
-base::string16 CreateNotificationContext(const Notification& notification,
-                                         bool requires_attribution) {
+base::string16 CreateNotificationContext(
+    const message_center::Notification& notification,
+    bool requires_attribution) {
   if (!requires_attribution)
     return notification.context_message();
 
@@ -223,7 +226,7 @@ void NotificationPlatformBridgeMac::Display(
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,
-    const Notification& notification,
+    const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   base::scoped_nsobject<NotificationBuilder> builder(
       [[NotificationBuilder alloc]
@@ -265,7 +268,7 @@ void NotificationPlatformBridgeMac::Display(
     [builder setButtons:buttonOne secondaryButton:buttonTwo];
   }
 
-  // Tag
+  // Tag FIXME
   if (!notification.tag().empty()) {
     [builder setTag:base::SysUTF8ToNSString(notification.tag())];
 

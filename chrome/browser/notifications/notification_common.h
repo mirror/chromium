@@ -71,7 +71,19 @@ struct PersistentNotificationMetadata : public NotificationCommon::Metadata {
 
   static const PersistentNotificationMetadata* From(const Metadata* metadata);
 
+  std::string tag;  // Matches content::PlatformNotification::tag
   GURL service_worker_scope;
+};
+
+// Metadata for NON_PERSISTENT notifications.
+struct NonPersistentNotificationMetadata : public NotificationCommon::Metadata {
+  NonPersistentNotificationMetadata();
+  ~NonPersistentNotificationMetadata() override;
+
+  static const NonPersistentNotificationMetadata* From(
+      const Metadata* metadata);
+
+  std::string tag;  // Matches content::PlatformNotification::tag
 };
 
 #endif  // CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_COMMON_H_
