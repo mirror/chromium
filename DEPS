@@ -544,6 +544,11 @@ deps = {
   'src/third_party/swiftshader':
     Var('swiftshader_git') + '/SwiftShader.git' + '@' +  Var('swiftshader_revision'),
 
+  'src/third_party/tensorflow/src': {
+    'url': Var('chromium_git') + '/external/github.com/tensorflow/tensorflow.git' + '@' + '48c54eee17b35ebc15e274e36632eccb76072f7d',
+    'condition': 'checkout_linux',
+  },
+
   'src/third_party/ub-uiautomator/lib': {
       'url': Var('chromium_git') + '/chromium/third_party/ub-uiautomator.git' + '@' + '00270549ce3161ae72ceb24712618ea28b4f9434',
       'condition': 'checkout_android',
