@@ -40,7 +40,8 @@ class GPU_EXPORT ShaderTranslatorCache
       ShShaderSpec shader_spec,
       const ShBuiltInResources* resources,
       ShShaderOutput shader_output_language,
-      ShCompileOptions driver_bug_workarounds);
+      ShCompileOptions workarounds_to_add,
+      ShCompileOptions workarounds_to_remove);
 
  private:
   friend class ShaderTranslatorCacheTest_InitParamComparable_Test;
@@ -51,19 +52,22 @@ class GPU_EXPORT ShaderTranslatorCache
     ShShaderSpec shader_spec;
     ShBuiltInResources resources;
     ShShaderOutput shader_output_language;
-    ShCompileOptions driver_bug_workarounds;
+    ShCompileOptions workarounds_to_add;
+    ShCompileOptions workarounds_to_remove;
 
     ShaderTranslatorInitParams(sh::GLenum shader_type,
                                ShShaderSpec shader_spec,
                                const ShBuiltInResources& resources,
                                ShShaderOutput shader_output_language,
-                               ShCompileOptions driver_bug_workarounds) {
+                               ShCompileOptions workarounds_to_add,
+                               ShCompileOptions workarounds_to_remove) {
       memset(this, 0, sizeof(*this));
       this->shader_type = shader_type;
       this->shader_spec = shader_spec;
       this->resources = resources;
       this->shader_output_language = shader_output_language;
-      this->driver_bug_workarounds = driver_bug_workarounds;
+      this->workarounds_to_add = workarounds_to_add;
+      this->workarounds_to_remove = workarounds_to_remove;
     }
 
     ShaderTranslatorInitParams(const ShaderTranslatorInitParams& params) {

@@ -4088,6 +4088,10 @@ bool GLES2DecoderImpl::InitializeShaderTranslator() {
   if (workarounds().rewrite_float_unary_minus_operator)
     driver_bug_workarounds |= SH_REWRITE_FLOAT_UNARY_MINUS_OPERATOR;
 
+  ShCompileOptions workarounds_to_remove = 0;
+  if (workarounds().dont_initialize_uninitialized_locals)
+    workarounds_to_remove |= SH_INITIALIZE_UNINITIALIZED_LOCALS;
+
   resources.WEBGL_debug_shader_precision =
       group_->gpu_preferences().emulate_shader_precision;
 
@@ -4096,7 +4100,7 @@ bool GLES2DecoderImpl::InitializeShaderTranslator() {
 
   vertex_translator_ = shader_translator_cache()->GetTranslator(
       GL_VERTEX_SHADER, shader_spec, &resources, shader_output_language,
-      driver_bug_workarounds);
+      driver_bug_workarounds, workarounds_to_remove);
   if (!vertex_translator_.get()) {
     LOG(ERROR) << "Could not initialize vertex shader translator.";
     Destroy(true);
@@ -4105,7 +4109,7 @@ bool GLES2DecoderImpl::InitializeShaderTranslator() {
 
   fragment_translator_ = shader_translator_cache()->GetTranslator(
       GL_FRAGMENT_SHADER, shader_spec, &resources, shader_output_language,
-      driver_bug_workarounds);
+      driver_bug_workarounds, workarounds_to_remove);
   if (!fragment_translator_.get()) {
     LOG(ERROR) << "Could not initialize fragment shader translator.";
     Destroy(true);
