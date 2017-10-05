@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c7e5f1e_45e5c497",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T17:06:06Z",
+      "side": 1,
+      "message": "The Mojo docs say that sources should list \"Any private implementation sources needed for the StructTraits definition\": https://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings/README.md#enabling-a-new-type-mapping\n\nThe build might have worked without this change because (wild guess) //content interfaces aren\u0027t used in Blink. I definitely get compile errors without it now.",
+      "parentUuid": "9cd0c5d6_ea12f1aa",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0c36ec92_175cfa85",
+        "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T17:06:06Z",
+      "side": 1,
+      "message": "Gah, I completely forgot. Thank you very much for catching this!\n\nI used SERVICES_NETWORK_PUBLIC_CPP_COOKIE_MANAGER_STRUCT_TRAITS_H_ based on the other trait file in this directory and on cpplint.",
+      "parentUuid": "5066ef94_737ba30a",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 47
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9cf91c6_eaa1a98d",
         "filename": "third_party/WebKit/Source/modules/BUILD.gn",
         "patchSetId": 14
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e99239c3_ae2f2b76",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T17:06:06Z",
+      "side": 1,
+      "message": "We don\u0027t. I moved it back to deps. Thank you for catching!",
+      "parentUuid": "f9cf91c6_eaa1a98d",
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b280c442_81f9ed22",
         "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
         "patchSetId": 14
@@ -79,6 +145,24 @@
       "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a9bed5_5c032e2a",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T17:06:06Z",
+      "side": 1,
+      "message": "¯\\_(ツ)_/¯\n\nI can look into that in a separate CL if you\u0027d like. I think the trybots have the answer :)",
+      "parentUuid": "b280c442_81f9ed22",
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
