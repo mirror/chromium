@@ -835,7 +835,8 @@ bool RemoteSuggestionsSchedulerImpl::IsReadyForBackgroundFetches() const {
   }
 
   if (schedule_.is_empty()) {
-    return false;  // Background fetches are disabled in general.
+    return false;  // Background fetches are disabled in general or the provider
+                   // is not active yet.
   }
   if (!eula_state_->IsEulaAccepted()) {
     return false;  // No background fetches are allowed before EULA is accepted.
