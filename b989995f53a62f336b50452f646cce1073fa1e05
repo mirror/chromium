@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9665b318_0d3ea93f",
+        "filename": "chrome/common/extensions/api/_permission_features.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T02:42:51Z",
+      "side": 1,
+      "message": "align // with previous line",
+      "revId": "b989995f53a62f336b50452f646cce1073fa1e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

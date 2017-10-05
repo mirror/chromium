@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f3d6ebcd_0f788aaf",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T02:42:51Z",
+      "side": 1,
+      "message": "can you clarify this a little - chat app is very generic.\n\nAlso, can you have someone from the enterprise team take a look (e.g. one of this file\u0027s file-specific owners)",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d06c032_b82ae072",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 5
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "for acquiring the Wi-Fi hotspot name.",
       "parentUuid": "5d06c032_b82ae072",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f89ca3e2_19717813",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T02:42:51Z",
+      "side": 1,
+      "message": "is that absolutely necessary (and I\u0027m not sure why a demo app would need that)? The api gives the app a lot of power.",
+      "parentUuid": "ecdea12d_d0c45cc1",
       "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
