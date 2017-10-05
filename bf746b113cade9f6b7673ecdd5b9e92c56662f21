@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97d4a12_1b3bfa3c",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T02:11:32Z",
+      "side": 1,
+      "message": "In script streaming, at this point do we not have csp and referrer policy and origin trial tokens yet set in creation_params? It might make more sense to DCHECK on all of those to make clear why we\u0027re early returning (I the comment is reassuring that we\u0027ll do the work eventually, but doesn\u0027t explain why we don\u0027t do the work now).",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a56969_d804f033",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T02:11:32Z",
+      "side": 1,
+      "message": "nit: add oxford comma (\"a,b, and c\") for clarity",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c697ef_f9451769",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T02:11:32Z",
+      "side": 1,
+      "message": "This comment moved from WorkerThread to ServiceWorkerGlobalScope... is it still accurate?",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
