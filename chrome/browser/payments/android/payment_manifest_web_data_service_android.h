@@ -41,6 +41,7 @@ class PaymentManifestWebDataServiceAndroid : public WebDataServiceConsumer {
   void AddPaymentMethodManifest(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& unused_obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
       const base::android::JavaParamRef<jstring>& jmethod_name,
       const base::android::JavaParamRef<jobjectArray>& japp_package_names);
 
@@ -48,6 +49,7 @@ class PaymentManifestWebDataServiceAndroid : public WebDataServiceConsumer {
   void AddPaymentWebAppManifest(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& unused_obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
       const base::android::JavaParamRef<jobjectArray>& jmanifest_sections);
 
   // Gets the payment |jmethod_name|'s manifest asynchronously from the web data
@@ -55,6 +57,7 @@ class PaymentManifestWebDataServiceAndroid : public WebDataServiceConsumer {
   bool GetPaymentMethodManifest(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& unused_obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
       const base::android::JavaParamRef<jstring>& jmethod_name,
       const base::android::JavaParamRef<jobject>& jcallback);
 
@@ -64,6 +67,7 @@ class PaymentManifestWebDataServiceAndroid : public WebDataServiceConsumer {
   bool GetPaymentWebAppManifest(
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& unused_obj,
+      const base::android::JavaParamRef<jobject>& jweb_contents,
       const base::android::JavaParamRef<jstring>& japp_package_name,
       const base::android::JavaParamRef<jobject>& jcallback);
 

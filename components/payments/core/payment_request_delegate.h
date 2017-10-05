@@ -9,6 +9,7 @@
 
 namespace payments {
 
+class PaymentManifestWebDataService;
 class PaymentRequest;
 
 class PaymentRequestDelegate : public PaymentRequestBaseDelegate {
@@ -28,6 +29,14 @@ class PaymentRequestDelegate : public PaymentRequestBaseDelegate {
 
   // Returns whether the browser window is active.
   virtual bool IsBrowserWindowActive() const = 0;
+
+  // Returns the web data service for caching payment method manifests. The
+  // result should be kept in a scoped_refptr. The return value is not already
+  // in a scoped_refptr to avoid having to include the header for
+  // PaymentManifestWebDataService in test code, which is required with
+  // scoped_refptr even when returning nullptr.
+  virtual PaymentManifestWebDataService* GetPaymentManifestWebDataService()
+      const = 0;
 };
 
 }  // namespace payments

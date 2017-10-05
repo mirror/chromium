@@ -29,6 +29,7 @@ class RegionDataLoader;
 namespace payments {
 
 class JourneyLogger;
+class ManifestVerifier;
 class PaymentInstrument;
 class PaymentRequestDelegate;
 
@@ -236,14 +237,12 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
                                  const GURL& frame_origin,
                                  content::PaymentAppProvider::PaymentApps apps);
 
-  // Creates ServiceWorkerPaymentInstrument according to requested payment
-  // methods of the payment request.
-  void CreateServiceWorkerPaymentApps(
-      content::BrowserContext* context,
-      const GURL& top_level_origin,
-      const GURL& frame_origin,
-      content::PaymentAppProvider::PaymentApps& apps,
-      std::vector<GURL>& requested_method_urls);
+  // The ManifestVerifier::VerifyCallback.
+  void OnPaymentAppsVerified(content::BrowserContext* context,
+                             const GURL& top_level_origin,
+                             const GURL& frame_origin,
+                             content::PaymentAppProvider::PaymentApps apps);
+  void OnPaymentAppsVerifierFinishedUsingResources();
 
   // Checks whether the user has at least one instrument that satisfies the
   // specified supported payment methods and call the |callback| to return the
@@ -288,6 +287,8 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
   PaymentsProfileComparator profile_comparator_;
 
   base::ObserverList<Observer> observers_;
+
+  std::unique_ptr<ManifestVerifier> payment_app_manifest_verifier_;
 
   base::WeakPtrFactory<PaymentRequestState> weak_ptr_factory_;
 

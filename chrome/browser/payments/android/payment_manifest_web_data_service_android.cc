@@ -11,13 +11,29 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
-#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/webdata/common/web_data_results.h"
+#include "content/public/browser/web_contents.h"
 #include "jni/PaymentManifestWebDataService_jni.h"
 
 namespace payments {
+namespace {
+
+scoped_refptr<payments::PaymentManifestWebDataService> GetService(
+    const base::android::JavaParamRef<jobject>& jweb_contents) {
+  content::WebContents* web_contents =
+      content::WebContents::FromJavaWebContents(jweb_contents);
+  if (web_contents == nullptr)
+    return nullptr;
+
+  return WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
+      Profile::FromBrowserContext(web_contents->GetBrowserContext()),
+      ServiceAccessType::EXPLICIT_ACCESS);
+}
+
+}  // namespace
 
 PaymentManifestWebDataServiceAndroid::PaymentManifestWebDataServiceAndroid(
     JNIEnv* env,
@@ -109,16 +125,13 @@ void PaymentManifestWebDataServiceAndroid::Destroy(
 void PaymentManifestWebDataServiceAndroid::AddPaymentMethodManifest(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& unused_obj,
+    const base::android::JavaParamRef<jobject>& jweb_contents,
     const base::android::JavaParamRef<jstring>& jmethod_name,
     const base::android::JavaParamRef<jobjectArray>& japps_package_names) {
   std::vector<std::string> apps_package_names;
   base::android::AppendJavaStringArrayToStringVector(env, japps_package_names,
                                                      &apps_package_names);
-
-  scoped_refptr<payments::PaymentManifestWebDataService> web_data_service =
-      WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-          ProfileManager::GetActiveUserProfile(),
-          ServiceAccessType::EXPLICIT_ACCESS);
+  auto web_data_service = GetService(jweb_contents);
   if (web_data_service == nullptr)
     return;
 
@@ -130,11 +143,9 @@ void PaymentManifestWebDataServiceAndroid::AddPaymentMethodManifest(
 void PaymentManifestWebDataServiceAndroid::AddPaymentWebAppManifest(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& unused_obj,
+    const base::android::JavaParamRef<jobject>& jweb_contents,
     const base::android::JavaParamRef<jobjectArray>& jmanifest_sections) {
-  scoped_refptr<payments::PaymentManifestWebDataService> web_data_service =
-      WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-          ProfileManager::GetActiveUserProfile(),
-          ServiceAccessType::EXPLICIT_ACCESS);
+  auto web_data_service = GetService(jweb_contents);
   if (web_data_service == nullptr)
     return;
 
@@ -177,12 +188,10 @@ void PaymentManifestWebDataServiceAndroid::AddPaymentWebAppManifest(
 bool PaymentManifestWebDataServiceAndroid::GetPaymentMethodManifest(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& unused_obj,
+    const base::android::JavaParamRef<jobject>& jweb_contents,
     const base::android::JavaParamRef<jstring>& jmethod_name,
     const base::android::JavaParamRef<jobject>& jcallback) {
-  scoped_refptr<payments::PaymentManifestWebDataService> web_data_service =
-      WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-          ProfileManager::GetActiveUserProfile(),
-          ServiceAccessType::EXPLICIT_ACCESS);
+  auto web_data_service = GetService(jweb_contents);
   if (web_data_service == nullptr)
     return false;
 
@@ -198,12 +207,10 @@ bool PaymentManifestWebDataServiceAndroid::GetPaymentMethodManifest(
 bool PaymentManifestWebDataServiceAndroid::GetPaymentWebAppManifest(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& unused_obj,
+    const base::android::JavaParamRef<jobject>& jweb_contents,
     const base::android::JavaParamRef<jstring>& japp_package_name,
     const base::android::JavaParamRef<jobject>& jcallback) {
-  scoped_refptr<payments::PaymentManifestWebDataService> web_data_service =
-      WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-          ProfileManager::GetActiveUserProfile(),
-          ServiceAccessType::EXPLICIT_ACCESS);
+  auto web_data_service = GetService(jweb_contents);
   if (web_data_service == nullptr)
     return false;
 

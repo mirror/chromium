@@ -1064,10 +1064,10 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
     }
 
     private void findApps(final Set<String> methodNames) throws Throwable {
-        mRule.runOnUiThread(() -> AndroidPaymentAppFinder.find(
-                mRule.getActivity().getCurrentContentViewCore().getWebContents(), methodNames,
-                new PaymentManifestWebDataService(), mDownloader, new PaymentManifestParser(),
-                mPackageManager, AndroidPaymentAppFinderTest.this));
+        WebContents webContents = mRule.getActivity().getCurrentContentViewCore().getWebContents();
+        mRule.runOnUiThread(() -> AndroidPaymentAppFinder.find(webContents, methodNames,
+                new PaymentManifestWebDataService(webContents), mDownloader,
+                new PaymentManifestParser(), mPackageManager, AndroidPaymentAppFinderTest.this));
         CriteriaHelper.pollInstrumentationThread(new Criteria() {
             @Override
             public boolean isSatisfied() {

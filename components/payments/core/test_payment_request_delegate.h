@@ -74,6 +74,8 @@ class TestPaymentRequestDelegate : public PaymentRequestDelegate {
   std::string GetAuthenticatedEmail() const override;
   PrefService* GetPrefService() override;
   bool IsBrowserWindowActive() const override;
+  PaymentManifestWebDataService* GetPaymentManifestWebDataService()
+      const override;
 
   autofill::TestAddressNormalizer* test_address_normalizer();
   void DelayFullCardRequestCompletion();
