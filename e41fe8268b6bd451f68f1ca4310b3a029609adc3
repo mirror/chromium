@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "248d68e3_7de8e4d0",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-05T18:13:10Z",
+      "side": 1,
+      "message": "any reason for this change?",
+      "range": {
+        "startLine": 383,
+        "startChar": 55,
+        "endLine": 383,
+        "endChar": 59
+      },
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53f48faf_87159205",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 13
@@ -132,6 +155,29 @@
       "writtenOn": "2017-10-05T13:34:09Z",
       "side": 1,
       "message": "Would be good to test some failing cases - especially if you choose to validate that only from_bookmark() apps can use it.",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e9243c_075c5b93",
+        "filename": "components/sync/protocol/proto_visitors.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-05T18:13:10Z",
+      "side": 1,
+      "message": "nit: could you have these visits be in the same order they\u0027re defined in the proto?",
+      "range": {
+        "startLine": 126,
+        "startChar": 34,
+        "endLine": 126,
+        "endChar": 0
+      },
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
