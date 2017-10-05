@@ -11,6 +11,7 @@
 #include "base/sha1.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "components/version_info/version_info.h"
 #include "crypto/sha2.h"
 #include "net/base/escape.h"
 #include "net/base/ip_address.h"
@@ -221,15 +222,36 @@ ListIdentifier::ListIdentifier(const ListUpdateResponse& response)
 V4ProtocolConfig::V4ProtocolConfig(const std::string& client_name,
                                    bool disable_auto_update,
                                    const std::string& key_param,
+                                   const std::string& report_url_prefix,
                                    const std::string& version)
     : client_name(client_name),
       disable_auto_update(disable_auto_update),
       key_param(key_param),
+      report_url_prefix(report_url_prefix),
       version(version) {}
 
 V4ProtocolConfig::V4ProtocolConfig(const V4ProtocolConfig& other) = default;
 
 V4ProtocolConfig::~V4ProtocolConfig() {}
+
+// ThreatMetadata ------------------------------------------------------------
+ThreatMetadata::ThreatMetadata()
+    : threat_pattern_type(ThreatPatternType::NONE) {}
+
+ThreatMetadata::ThreatMetadata(const ThreatMetadata& other) = default;
+
+ThreatMetadata::~ThreatMetadata() {}
+
+bool ThreatMetadata::operator==(const ThreatMetadata& other) const {
+  return threat_pattern_type == other.threat_pattern_type &&
+         api_permissions == other.api_permissions &&
+         population_id == other.population_id &&
+         experimental == other.experimental;
+}
+
+bool ThreatMetadata::operator!=(const ThreatMetadata& other) const {
+  return !operator==(other);
+}
 
 // static
 base::TimeDelta V4ProtocolManagerUtil::GetNextBackOffInterval(
@@ -574,6 +596,13 @@ bool V4ProtocolManagerUtil::GetIPV6AddressFromString(
   if (address->IsIPv4())
     *address = net::ConvertIPv4ToIPv4MappedIPv6(*address);
   return address->IsIPv6();
+}
+
+// static
+std::string V4ProtocolManagerUtil::GetProductVersion() {
+  if (version_info::GetVersionNumber().empty())
+    return "0.1";
+  return version_info::GetVersionNumber();
 }
 
 // static

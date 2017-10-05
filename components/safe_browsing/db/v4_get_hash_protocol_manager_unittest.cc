@@ -14,7 +14,7 @@
 #include "base/test/simple_test_clock.h"
 #include "base/time/time.h"
 #include "components/safe_browsing/db/safebrowsing.pb.h"
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/safe_browsing/db/v4_test_util.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "net/base/escape.h"

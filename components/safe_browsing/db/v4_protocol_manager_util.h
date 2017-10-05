@@ -61,12 +61,16 @@ struct V4ProtocolConfig {
   // The Google API key.
   std::string key_param;
 
+  // The prefix URL to use for sending reports to Safe Browsing API service.
+  std::string report_url_prefix;
+
   // Current product version sent in each request.
   std::string version;
 
   V4ProtocolConfig(const std::string& client_name,
                    bool disable_auto_update,
                    const std::string& key_param,
+                   const std::string& report_url_prefix,
                    const std::string& version);
   V4ProtocolConfig(const V4ProtocolConfig& other);
   ~V4ProtocolConfig();
@@ -251,6 +255,55 @@ enum V4OperationResult {
   OPERATION_RESULT_MAX = 7
 };
 
+// Metadata that indicates what kind of URL match this is.
+enum class ThreatPatternType : int {
+  NONE = 0,                        // Pattern type didn't appear in the metadata
+  MALWARE_LANDING = 1,             // The match is a malware landing page
+  MALWARE_DISTRIBUTION = 2,        // The match is a malware distribution page
+  SOCIAL_ENGINEERING_ADS = 3,      // The match is a social engineering ads page
+  SOCIAL_ENGINEERING_LANDING = 4,  // The match is a social engineering landing
+                                   // page
+  PHISHING = 5,                    // The match is a phishing page
+
+  // The match is a better ads standard violating page
+  SUBRESOURCE_FILTER_BETTER_ADS = 6,
+
+  // The match is an abusive ads violating page
+  SUBRESOURCE_FILTER_ABUSIVE_ADS = 7,
+
+  // The match violates both better ads standard and abusive policies
+  SUBRESOURCE_FILTER_ALL_ADS = 8,
+  THREAT_PATTERN_TYPE_MAX_VALUE
+};
+
+// Metadata that was returned by a GetFullHash call. This is the parsed version
+// of the PB (from Pver3, or Pver4 local) or JSON (from Pver4 via GMSCore).
+// Some fields are only applicable to certain lists.
+struct ThreatMetadata {
+  ThreatMetadata();
+  ThreatMetadata(const ThreatMetadata& other);
+  ~ThreatMetadata();
+
+  bool operator==(const ThreatMetadata& other) const;
+  bool operator!=(const ThreatMetadata& other) const;
+
+  // Type of blacklisted page. Used on malware and UwS lists.
+  // This will be NONE if it wasn't present in the reponse.
+  ThreatPatternType threat_pattern_type;
+
+  // Set of permissions blocked. Used with threat_type API_ABUSE.
+  // This will be empty if it wasn't present in the response.
+  std::set<std::string> api_permissions;
+
+  // Opaque base64 string used for user-population experiments in pver4.
+  // This will be empty if it wasn't present in the response.
+  std::string population_id;
+
+  // Used with threat type SUBRESOURCE_FILTER. Indicates that the site is only a
+  // match for experimental configurations.
+  bool experimental = false;
+};
+
 // A class that provides static methods related to the Pver4 protocol.
 class V4ProtocolManagerUtil {
  public:
@@ -327,6 +380,8 @@ class V4ProtocolManagerUtil {
 
   static bool GetIPV6AddressFromString(const std::string& ip_address,
                                        net::IPAddress* address);
+
+  static std::string GetProductVersion();
 
   // Converts a IPV4 or IPV6 address in |ip_address| to the SHA1 hash of the
   // corresponding packed IPV6 address in |hashed_encoded_ip|, and adds an
