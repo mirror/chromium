@@ -35,8 +35,6 @@ class SharedGpuContextTestBase : public Test {
     SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
   }
 
-  bool IsUnitTest() { return true; }
-
   GLES2InterfaceType gl_;
 };
 
@@ -87,7 +85,10 @@ TEST_F(SharedGpuContextTest, AccelerateImageBufferSurfaceAutoRecovery) {
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
   IntSize size(10, 10);
   std::unique_ptr<ImageBufferSurface> surface =
-      WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
+      WTF::WrapUnique(new AcceleratedImageBufferSurface(
+          size,
+          CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat,
+                            kNonOpaque, kPixelOpsIgnoreGamma)));
   EXPECT_TRUE(surface->IsValid());
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
 }
@@ -102,8 +103,7 @@ TEST_F(SharedGpuContextTest, Canvas2DLayerBridgeAutoRecovery) {
   std::unique_ptr<Canvas2DLayerBridge> bridge =
       WTF::WrapUnique(new Canvas2DLayerBridge(
           size, 0, /*msaa sample count*/
-          kNonOpaque, Canvas2DLayerBridge::kEnableAcceleration, color_params,
-          IsUnitTest()));
+          Canvas2DLayerBridge::kEnableAcceleration, color_params));
   EXPECT_TRUE(bridge->IsAccelerated());
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
   bridge->BeginDestruction();
@@ -127,7 +127,10 @@ TEST_F(BadSharedGpuContextTest, AccelerateImageBufferSurfaceCreationFails) {
   // fail gracefully
   IntSize size(10, 10);
   std::unique_ptr<ImageBufferSurface> surface =
-      WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
+      WTF::WrapUnique(new AcceleratedImageBufferSurface(
+          size,
+          CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat,
+                            kNonOpaque, kPixelOpsIgnoreGamma)));
   EXPECT_FALSE(surface->IsValid());
 }
 
@@ -141,7 +144,10 @@ class FakeMailboxGenerator {
 TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
   IntSize size(10, 10);
   std::unique_ptr<ImageBufferSurface> surface =
-      WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
+      WTF::WrapUnique(new AcceleratedImageBufferSurface(
+          size,
+          CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat,
+                            kNonOpaque, kPixelOpsIgnoreGamma)));
   EXPECT_TRUE(surface->IsValid());
   RefPtr<StaticBitmapImage> image =
       surface->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
@@ -177,7 +183,10 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
 TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
   IntSize size(10, 10);
   std::unique_ptr<ImageBufferSurface> surface =
-      WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
+      WTF::WrapUnique(new AcceleratedImageBufferSurface(
+          size,
+          CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat,
+                            kNonOpaque, kPixelOpsIgnoreGamma)));
   EXPECT_TRUE(surface->IsValid());
   RefPtr<StaticBitmapImage> image =
       surface->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
@@ -205,8 +214,9 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
 
   // Re-creating surface should recycle the old GrTexture inside skia
-  surface =
-      WTF::WrapUnique(new AcceleratedImageBufferSurface(size, kNonOpaque));
+  surface = WTF::WrapUnique(new AcceleratedImageBufferSurface(
+      size, CanvasColorParams(kSRGBCanvasColorSpace, kRGBA8CanvasPixelFormat,
+                              kNonOpaque, kPixelOpsIgnoreGamma)));
   EXPECT_TRUE(surface->IsValid());
   image =
       surface->NewImageSnapshot(kPreferAcceleration, kSnapshotReasonUnitTests);
