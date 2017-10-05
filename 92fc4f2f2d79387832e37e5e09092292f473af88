@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "50c02eff_abd1769d",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T14:47:03Z",
+      "side": 1,
+      "message": "The process will not run out of memory even if the GC is slow. If the process is running out of memory, all other threads will be blocked until the GC thread finishes its work. If that fix works, it would be the simplest one.",
+      "parentUuid": "d73658cf_6a5b3c70",
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df79ae2f_843e488d",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/TestUrlRequestCallback.java",
         "patchSetId": 3
