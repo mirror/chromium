@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ee2443_62ce7828",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-05T21:12:23Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 242,
+        "startChar": 70,
+        "endLine": 242,
+        "endChar": 76
+      },
+      "revId": "043aa2e1bfb4d97dca9d8a02c8ab7760df8c3611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

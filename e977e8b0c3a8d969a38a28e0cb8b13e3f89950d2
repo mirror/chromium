@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "a76d45a9_2f5a53d1",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-05T21:12:23Z",
+      "side": 1,
+      "message": "Cool, can you explicitly mention this in the CL description?",
+      "parentUuid": "252cd356_241ae884",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6df486a_183fd8ae",
         "filename": "extensions/renderer/native_renderer_messaging_service.h",
         "patchSetId": 8
@@ -272,6 +290,30 @@
     },
     {
       "key": {
+        "uuid": "2ad749ce_c44197a6",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-05T21:12:23Z",
+      "side": 1,
+      "message": "Sure.",
+      "parentUuid": "aa9663f3_32b04744",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27be8b7d_e53c78fd",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 8
@@ -342,6 +384,30 @@
       "side": 1,
       "message": "Looking back, it looks like this can\u0027t be -1.  It was originally going to be if the opener didn\u0027t specify a callback, but now we don\u0027t even persist the opener information if that\u0027s the case.  Removed the if\u0027s here and below.  Good catch!",
       "parentUuid": "709aad0b_5ce4f829",
+      "range": {
+        "startLine": 340,
+        "startChar": 25,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ff8b050_cc104f6e",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-05T21:12:23Z",
+      "side": 1,
+      "message": "Great, thanks.",
+      "parentUuid": "b7fd15e7_dcd2e23a",
       "range": {
         "startLine": 340,
         "startChar": 25,
