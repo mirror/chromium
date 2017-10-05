@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79c8404c_f41ebb13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-05T16:46:27Z",
+      "side": 1,
+      "message": "As discussed on chat, you should get Chrome UI review approval before adding a new channel, since it\u0027s difficult to roll them back as channel properties get persisted forever by Android.* (Maybe also an opportunity to get feedback on the proposal we discussed to merge this persistent pwa notification with the unbound webapk disclosure notification, which I\u0027m very much in favour of).\n\n[*] See the clank channels readme at https://chromium.googlesource.com/chromium/src/+/master/chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/README.md",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8851d7_40eb9683",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-05T16:46:27Z",
+      "side": 1,
+      "message": "nit: Prefix comment with \u0027Not adding to startup channels because..\u0027 for clarity.",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
