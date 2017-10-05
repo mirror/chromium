@@ -46,6 +46,29 @@
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be4f314b_5eced25f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T11:19:47Z",
+      "side": 1,
+      "message": "I am not a big fan of this special casing here. We are adding all this machinery for a single (!) case when tracing a document.",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 207,
+        "endChar": 28
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
