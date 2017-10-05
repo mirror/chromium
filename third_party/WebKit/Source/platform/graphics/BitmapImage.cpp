@@ -574,7 +574,7 @@ Optional<size_t> BitmapImage::StartAnimationInternal(const double time) {
   // Note that |desired_frame_start_time_| is always set to the time at which
   // |next_frame| should be displayed.
   size_t frames_advanced = 0u;
-  for (; FrameIsReceivedAtIndex(next_frame);
+  for (; all_data_received_ || FrameIsReceivedAtIndex(next_frame);
        next_frame = (current_frame_index_ + 1) % FrameCount()) {
     // Should we skip the next frame?
     // TODO(vmpstr): This function can probably deal in TimeTicks/TimeDelta
