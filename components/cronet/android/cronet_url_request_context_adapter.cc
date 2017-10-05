@@ -31,6 +31,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/statistics_recorder.h"
 #include "base/single_thread_task_runner.h"
+#include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/values.h"
@@ -333,6 +334,8 @@ void CronetURLRequestContextAdapter::InitializeOnNetworkThread(
   DCHECK(GetNetworkTaskRunner()->BelongsToCurrentThread());
   DCHECK(!is_context_initialized_);
   DCHECK(proxy_config_service_);
+
+  base::DisallowBlocking();
 
   // TODO(mmenke):  Add method to have the builder enable SPDY.
   net::URLRequestContextBuilder context_builder;
