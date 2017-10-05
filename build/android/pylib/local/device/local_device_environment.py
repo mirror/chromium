@@ -122,8 +122,8 @@ def OptionalPerTestLogcat(
 
 class LocalDeviceEnvironment(environment.Environment):
 
-  def __init__(self, args, _error_func):
-    super(LocalDeviceEnvironment, self).__init__()
+  def __init__(self, args, output_manager, _error_func):
+    super(LocalDeviceEnvironment, self).__init__(output_manager)
     self._blacklist = (device_blacklist.Blacklist(args.blacklist_file)
                        if args.blacklist_file
                        else None)
