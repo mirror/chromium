@@ -26,10 +26,11 @@
 #include "platform/scheduler/renderer/main_thread_task_queue.h"
 #include "platform/scheduler/renderer/render_widget_signals.h"
 #include "platform/scheduler/renderer/renderer_metrics_helper.h"
+#include "platform/scheduler/renderer/renderer_scheduler_types.h"
 #include "platform/scheduler/renderer/task_cost_estimator.h"
 #include "platform/scheduler/renderer/user_model.h"
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
-#include "platform/scheduler/util/tracing_helper.h"
+#include "platform/scheduler/util/renderer_scheduler_tracing.h"
 #include "public/platform/scheduler/renderer/renderer_scheduler.h"
 
 namespace base {
@@ -58,38 +59,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
       public QueueingTimeEstimator::Client,
       public base::trace_event::TraceLog::AsyncEnabledStateObserver {
  public:
-  // Keep RendererScheduler::UseCaseToString in sync with this enum.
-  enum class UseCase {
-    // No active use case detected.
-    NONE,
-    // A continuous gesture (e.g., scroll, pinch) which is being driven by the
-    // compositor thread.
-    COMPOSITOR_GESTURE,
-    // An unspecified touch gesture which is being handled by the main thread.
-    // Note that since we don't have a full view of the use case, we should be
-    // careful to prioritize all work equally.
-    MAIN_THREAD_CUSTOM_INPUT_HANDLING,
-    // A continuous gesture (e.g., scroll, pinch) which is being driven by the
-    // compositor thread but also observed by the main thread. An example is
-    // synchronized scrolling where a scroll listener on the main thread changes
-    // page layout based on the current scroll position.
-    SYNCHRONIZED_GESTURE,
-    // A gesture has recently started and we are about to run main thread touch
-    // listeners to find out the actual gesture type. To minimize touch latency,
-    // only input handling work should run in this state.
-    TOUCHSTART,
-    // A page is loading.
-    LOADING,
-    // A continuous gesture (e.g., scroll) which is being handled by the main
-    // thread.
-    MAIN_THREAD_GESTURE,
-    // Must be the last entry.
-    USE_CASE_COUNT,
-    FIRST_USE_CASE = NONE,
-  };
-  static const char* UseCaseToString(UseCase use_case);
-  static const char* RAILModeToString(v8::RAILMode rail_mode);
-
   RendererSchedulerImpl(scoped_refptr<SchedulerTqmDelegate> main_task_runner);
   ~RendererSchedulerImpl() override;
 
@@ -564,7 +533,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     TaskCostEstimator loading_task_cost_estimator;
     TaskCostEstimator timer_task_cost_estimator;
     IdleTimeEstimator idle_time_estimator;
-    UseCase current_use_case;
+    UseCaseValue current_use_case;  // UseCase.
     Policy current_policy;
     base::TimeTicks current_policy_expiration_time;
     base::TimeTicks estimated_next_frame_begin;
@@ -577,14 +546,14 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     int navigation_task_expected_count;
     ExpensiveTaskPolicy expensive_task_policy;
     bool renderer_hidden;
-    bool renderer_backgrounded;
+    RendererBackgroundedValue renderer_backgrounded;  // bool.
     bool renderer_paused;
     bool stopping_when_backgrounded_enabled;
     bool stopped_when_backgrounded;
     bool was_shutdown;
-    bool loading_tasks_seem_expensive;
-    bool timer_tasks_seem_expensive;
-    bool touchstart_expected_soon;
+    LoadingTasksSeemsExpensiveValue loading_tasks_seem_expensive;  // bool.
+    TimerTasksSeemsExpensiveValue timer_tasks_seem_expensive;  // bool.
+    TouchstartExpectedSoonValue touchstart_expected_soon;  // bool.
     bool have_seen_a_begin_main_frame;
     bool have_reported_blocking_intervention_in_current_policy;
     bool have_reported_blocking_intervention_since_navigation;
@@ -592,7 +561,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool begin_frame_not_expected_soon;
     bool in_idle_period_for_testing;
     bool use_virtual_time;
-    bool is_audio_playing;
+    AudioPlayingValue is_audio_playing;  // bool.
     bool compositor_will_send_main_frame_not_expected;
     bool virtual_time_stopped;
     bool has_navigated;
@@ -604,12 +573,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     WakeUpBudgetPool* wake_up_budget_pool;                // Not owned.
     RendererMetricsHelper metrics_helper;
     RendererProcessType process_type;
-    StateTracer<kTracingCategoryNameDefault> use_case_tracer;
-    StateTracer<kTracingCategoryNameDefault> backgrounding_tracer;
-    StateTracer<kTracingCategoryNameDefault> audio_playing_tracer;
-    StateTracer<kTracingCategoryNameDefault> touchstart_expected_soon_tracer;
-    StateTracer<kTracingCategoryNameInfo> loading_tasks_seem_expensive_tracer;
-    StateTracer<kTracingCategoryNameInfo> timer_tasks_seem_expensive_tracer;
   };
 
   struct AnyThread {

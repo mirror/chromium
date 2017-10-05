@@ -61,13 +61,13 @@ class StateTracer {
     }
   }
 
- private:
-  bool is_enabled() {
+  bool is_enabled() const {
     bool result = false;
     TRACE_EVENT_CATEGORY_GROUP_ENABLED(category, &result);  // Cached.
     return result;
   }
 
+ private:
   const char* const name_;  // Not owned.
   const void* const object_;  // Not owned.
 
