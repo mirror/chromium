@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e9c705a_facd8dea",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-05T21:34:44Z",
+      "side": 1,
+      "message": "It is needed coz |job_settings| is set and passed by browser who is not aware of\nwhether the doc is modifiable. Only default value is used there.\n|source_is_html| is used to check this. So it needs to be set here.",
+      "parentUuid": "6fb11249_901635b6",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97c48c1b_16f85e8d",
         "filename": "printing/print_settings_conversion.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b318f7e_d8a39f22",
+        "filename": "printing/print_settings_conversion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-05T21:34:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c48c1b_16f85e8d",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
