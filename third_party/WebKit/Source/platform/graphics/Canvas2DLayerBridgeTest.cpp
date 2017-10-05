@@ -199,9 +199,12 @@ class Canvas2DLayerBridgeTest : public Test {
 
     {
       // Fallback case.
-      GrContext* gr = SharedGpuContext::ContextProviderWrapper()
-                          ->ContextProvider()
-                          ->GetGrContext();
+      bool using_software_compositing;
+      GrContext* gr =
+          SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+              ->ContextProvider()
+              ->GetGrContext();
+      EXPECT_FALSE(using_software_compositing);
       Canvas2DLayerBridgePtr bridge(WTF::WrapUnique(
           new Canvas2DLayerBridge(IntSize(300, 150), 0, kNonOpaque,
                                   Canvas2DLayerBridge::kEnableAcceleration,
@@ -303,7 +306,9 @@ class Canvas2DLayerBridgeTest : public Test {
     // Get a new context provider so that the WeakPtr to the old one is null.
     // This is the test to make sure that ReleaseMailboxImageResource() handles
     // null context_provider_wrapper properly.
-    SharedGpuContext::ContextProviderWrapper();
+    bool using_software_compositing;
+    SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+    EXPECT_FALSE(using_software_compositing);
     release_callback->Run(gpu::SyncToken(), lost_resource);
   }
 

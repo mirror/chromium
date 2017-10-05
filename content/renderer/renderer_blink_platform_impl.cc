@@ -711,12 +711,6 @@ bool RendererBlinkPlatformImpl::IsThreadedCompositingEnabled() {
   return thread && thread->compositor_task_runner().get();
 }
 
-bool RendererBlinkPlatformImpl::IsGPUCompositingEnabled() {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  return !command_line.HasSwitch(switches::kDisableGpuCompositing);
-}
-
 bool RendererBlinkPlatformImpl::IsThreadedAnimationEnabled() {
   RenderThreadImpl* thread = RenderThreadImpl::current();
   return thread ? thread->IsThreadedAnimationEnabled() : true;
@@ -1068,8 +1062,6 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
     share_context = share_provider_impl->context_provider();
   }
 
-  bool is_software_rendering = gpu_channel_host->gpu_info().software_rendering;
-
   // This is an offscreen context. Generally it won't use the default
   // frame buffer, in that case don't request any alpha, depth, stencil,
   // antialiasing. But we do need those attributes for the "own
@@ -1107,8 +1099,11 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
           GURL(top_document_web_url), automatic_flushes, support_locking,
           gpu::SharedMemoryLimits(), attributes, share_context,
           ui::command_buffer_metrics::OFFSCREEN_CONTEXT_FOR_WEBGL));
+  bool is_software_compositing =
+      RenderThreadImpl::current()->IsGpuCompositingDisabled(provider.get());
+
   return base::MakeUnique<WebGraphicsContext3DProviderImpl>(
-      std::move(provider), is_software_rendering);
+      std::move(provider), is_software_compositing);
 }
 
 //------------------------------------------------------------------------------
@@ -1132,10 +1127,11 @@ RendererBlinkPlatformImpl::CreateSharedOffscreenGraphicsContext3DProvider() {
   if (!host)
     return nullptr;
 
-  bool is_software_rendering = host->gpu_info().software_rendering;
+  bool is_software_compositing =
+      RenderThreadImpl::current()->IsGpuCompositingDisabled(provider.get());
 
   return base::MakeUnique<WebGraphicsContext3DProviderImpl>(
-      std::move(provider), is_software_rendering);
+      std::move(provider), is_software_compositing);
 }
 
 //------------------------------------------------------------------------------
