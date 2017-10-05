@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ca9b6c1_c74c32ab",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-05T18:28:46Z",
+      "side": 1,
+      "message": "nit: maybe DBCount or Clients instead of Users?",
+      "range": {
+        "startLine": 1373,
+        "startChar": 48,
+        "endLine": 1373,
+        "endChar": 53
+      },
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0325f89_9436ad6f",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-05T18:28:46Z",
+      "side": 1,
+      "message": "Do we need the case of GetSharedWebBlockCache() \u003d\u003d GetSharedBrowserBlockCache() here as well? we will be recording 0s only in other cases",
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53eaa80_bbb44b4b",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-05T18:28:46Z",
+      "side": 1,
+      "message": "Nit: maybe SharedReadCacheType? SharedReadCache sounds like it is the cache itself. Not particularly here but the member |TrackedDBImpl::shared_block_cache_| does.",
+      "range": {
+        "startLine": 246,
+        "startChar": 7,
+        "endLine": 246,
+        "endChar": 22
+      },
+      "revId": "0f75604a6cda5f9d551d7851b835730b8cc46fb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
