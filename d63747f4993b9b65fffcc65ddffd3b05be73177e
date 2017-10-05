@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d023add_14e42b6c",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Does this mean we startup tracing starts later, i.e. we get less data?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862a34b8_c38ef213",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Is it possible that ArcTracingAgentImpl::StopAndFlush or ArcTracingAgentImpl::OnArcTracingStopped is called at destruction, when the UI thread\u0027s message loop will not run after joining the IO thread, meaning this callback might sit on the message loop\u0027s queue and never run? or equivalently, this gets deleted before the callback is run?\nIf so, should we pick things up in the destructor?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92682c34_bb5330ea",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Can we add a DCHECK that fd_watcher_ is null? Otherwise here we would destroy it on the wrong thread, which I believe would do the wrong thing (TLS lookups)",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc10662a_67e8712c",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Did you mean BrowserThread::UI?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f335dda_c5aa16cf",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Why not simply making the destructor public?\nIt is publicly accessible anyway, from the base class.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372eeea3_4fe5f472",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "I have to say, using cc here is odd!\nIt\u0027s not a problem, since content already depends on cc/.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f4f68a_dd688f01",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "I don\u0027t understand the purpose of ArcTracingReader\u0027s weak_ptr_factory_. It is never explicitly invalidated, so it is only invalidated when deleted, according to this, on the UI thread after other threads are stopped. Since it is used to post tasks onto the IO thread, if the above is true, it serves no purpose (will never cancel tasks). If the above is not true, then it is unsafe.\n\nAs is, it is more confusing than anything. I think we should make it explicit that ArcTracingReader must outlive the IO thread, and then use Unretained when posting tasks, which is safe then.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606b2409_2700d57f",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "What makes Unretained safe? Could you document?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19cdf05_72466c53",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Is this called on the UI thread? Could you add a DCHECK, that would clarify things, in particular relative to lifetime.\n\nIs this class guaranteed to outlive the IO thread? If not the Unretained used in this file are not safe.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d96e06_9d77f157",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "nit: typo Connecto-\u003eConnect",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb963091_672baa85",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "I assume this function is called on the UI thread (?), or at least not the IO thread. This makes reading battor_agent_ a data race, since it is written on the IO thread. Should this test be moved to StopAndFlushOnIOThread?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42e92be_e6feafa0",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "What guarantees safety wrt access to recorder_? It is written on both the UI (?) thread in StopAndFlush and here on the IO thread. In particular, is it possible that StopAndFlush is called again before OnStopTracingComplete is done running, in which case we\u0027d have a data race. Noting that \"done running\" from the pov of the UI thread is not a well-defined condition without synchronization.\n\nMaybe it would make sense to pass the recorder to StopAndFlushOnIOThread and set recorder_ there?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80f69cc_83f3ab7f",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T22:56:18Z",
+      "side": 1,
+      "message": "Ditto, reading battor_agent_ here is a data race (I assume we\u0027re not on the IO thread).",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
