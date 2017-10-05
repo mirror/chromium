@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a27964f0_eeab6750",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-05T20:22:59Z",
+      "side": 1,
+      "message": "Update this comment to reflect the new terminology(i.e the optional doesn\u0027t have a value)",
+      "revId": "2dc32d5afc711367aab72a0342343dd09104b9ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eafbf3f_0729d449",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-05T20:22:59Z",
+      "side": 1,
+      "message": "You could use has_value here if you don\u0027t like the way \u0027!!\u0027 looks; I think it would be a bit clearer",
+      "revId": "2dc32d5afc711367aab72a0342343dd09104b9ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035c6495_7d4ca674",
+        "filename": "third_party/WebKit/public/platform/WebString.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-10-05T20:22:59Z",
+      "side": 1,
+      "message": "Any reason this can\u0027t be s.IsNull() ? base::nullopt : base::make_optional(s.Utf16())\nReading a negated expression is (slightly) harder than the alternative",
+      "revId": "2dc32d5afc711367aab72a0342343dd09104b9ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
