@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ddeb1961_02fc09c2",
+        "filename": "ash/accelerators/exit_warning_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c18c085a_a59706b4",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19ef881d_e395ebd0",
         "filename": "ash/session/session_aborted_dialog.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b9c975b_9383a19d",
+        "filename": "ash/session/session_aborted_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19ef881d_e395ebd0",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f136f675_e531638e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6199d606_5607ce5e",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a8d2f43_53fb4aa0",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T00:27:33Z",
       "side": 1,
       "message": "q: why not system_tray_controller()-\u003eSignOut()?",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e09c1ffd_754a53dc",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Addressed separately, this will use session_controller()-\u003eRequestSignOut()",
+      "parentUuid": "3a8d2f43_53fb4aa0",
       "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "fff7aa57_fadc91c3",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62bef969_ead2f0e6",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8dd9bad_77c39576",
         "filename": "ash/shell/shell_delegate_impl.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a618000_de9a588c",
+        "filename": "ash/shell/shell_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8dd9bad_77c39576",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "bc670a55_d37cca94",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c74b89_d7278f92",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92b97725_f5276103",
         "filename": "ash/wm/lock_state_controller.cc",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-04T00:27:33Z",
       "side": 1,
       "message": "Would it make more sense to move the SystemTrayController function here, or (more simply) move most callers over to using this controller? (LockStateController seems more canonical for signout and would include this tracking and early return)",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8b0815_8a670dcd",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Addressed Separately.",
+      "parentUuid": "92b97725_f5276103",
       "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "77d9070d_1f1d235d",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a169ed5f_0ce430c5",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4589bd8f_b00f73e1",
         "filename": "ash/wm/lock_state_controller_unittest.cc",
         "patchSetId": 1
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "6364d021_a39aa872",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4589bd8f_b00f73e1",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f58842c2_72c523eb",
         "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de94c75_3ea19e3a",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T00:54:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f58842c2_72c523eb",
+      "revId": "d423bfdd2b9913528bb0d8fc5fee61e44fe1439a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
