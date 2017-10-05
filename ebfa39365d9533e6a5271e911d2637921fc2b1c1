@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe759ee_d9b4670d",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t this be \"core/html/parser/HTMLTokenizer.h\"?",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d41fbe4_5903ce34",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "nit: newline after system header",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e00a6b_a55a79b5",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "nit: using namespace is not allowed. You can just wrap a function in namespace blink {} and call it from LLVMFuzzerTestOneInput.",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a913a608_ca11d57a",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "Can you use FuzzedDataProvider::remaining_bytes() instead? Here and elsewhere.",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9b7054_d144dd2b",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a5946a8_6083db1e",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T16:38:04Z",
+      "side": 1,
+      "message": "This seems more readable like:\n\nwhile (bool token_generated \u003d tokenizer-\u003eNextToken(input, token) {\n  token.Clear();\n}",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
