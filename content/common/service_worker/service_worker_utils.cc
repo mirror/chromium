@@ -156,6 +156,21 @@ std::string ServiceWorkerUtils::ErrorTypeToString(
   return oss.str();
 }
 
+// static
+ServiceWorkerStatusCode ServiceWorkerUtils::EventStatusToStatusCode(
+    blink::mojom::ServiceWorkerEventStatus status) {
+  switch (status) {
+    case blink::mojom::ServiceWorkerEventStatus::COMPLETED:
+      return SERVICE_WORKER_OK;
+    case blink::mojom::ServiceWorkerEventStatus::REJECTED:
+      return SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED;
+    case blink::mojom::ServiceWorkerEventStatus::ABORTED:
+      return SERVICE_WORKER_ERROR_ABORT;
+  }
+  NOTREACHED();
+  return SERVICE_WORKER_ERROR_FAILED;
+}
+
 bool LongestScopeMatcher::MatchLongest(const GURL& scope) {
   if (!ServiceWorkerUtils::ScopeMatches(scope, url_))
     return false;
