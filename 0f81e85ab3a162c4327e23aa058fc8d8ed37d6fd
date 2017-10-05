@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "95d355f2_29b86eca",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-05T23:14:49Z",
+      "side": 1,
+      "message": "See example at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/controls/settings_dropdown_menu.js?q\u003d%22@typedef+%7B%22+file:%5Esrc/chrome/browser/resources/settings/+package:%5Echromium$\u0026dr\u003dC\u0026l\u003d37,8.",
+      "parentUuid": "2da3b170_2c00ede1",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c49cac16_653b1498",
         "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
         "patchSetId": 10
