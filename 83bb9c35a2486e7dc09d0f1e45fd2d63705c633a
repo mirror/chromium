@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "63eeff9a_91eb7861",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad8ea747_7adeecfc",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2ca0a8_0aa38138",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61499ea2_143a7461",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:51:42Z",
+      "side": 1,
+      "message": "Done. Created ash/message_center/message_center_style.h and shared common constants.",
+      "parentUuid": "aa2ca0a8_0aa38138",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "07237831_50997b58",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ad15be1_3aeef933",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb1af0a9_4386e169",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5aed02d4_2f31f0fb",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb1af0a9_4386e169",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7a8087e_9f1e0161",
         "filename": "ash/message_center/message_center_button_bar.cc",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fcf134b_1ce69dab",
+        "filename": "ash/message_center/message_center_button_bar.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7a8087e_9f1e0161",
+      "revId": "83bb9c35a2486e7dc09d0f1e45fd2d63705c633a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
