@@ -117,6 +117,42 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToQuicVersionUnsupported) {
             QuicVersionLabelToQuicVersion(MakeQuicTag('F', 'A', 'K', 'E')));
 }
 
+TEST_F(QuicVersionsTest, QuicVersionLabelToHandshakeProtocol) {
+// TODO(rtenneti): Enable checking of Log(ERROR) messages.
+#if 0
+  ScopedMockLog log(kDoNotCaptureLogsYet);
+  EXPECT_CALL(log, Log(_, _, _)).Times(0);
+  log.StartCapturingLogs();
+#endif
+
+  for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
+    QuicVersionLabel version_label =
+        QuicVersionToQuicVersionLabel(kSupportedQuicVersions[i]);
+    EXPECT_EQ(PROTOCOL_QUIC_CRYPTO,
+              QuicVersionLabelToHandshakeProtocol(version_label));
+  }
+
+  // Test a TLS version:
+  FLAGS_quic_supports_tls_handshake = true;
+  QuicTag tls_tag;
+  if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+    tls_tag = MakeQuicTag('T', '0', '4', '1');
+  } else {
+    tls_tag = MakeQuicTag('1', '4', '0', 'T');
+  }
+  EXPECT_EQ(PROTOCOL_TLS1_3, QuicVersionLabelToHandshakeProtocol(tls_tag));
+
+  FLAGS_quic_supports_tls_handshake = false;
+#if 0
+#ifndef NDEBUG
+  EXPECT_CALL(log, Log(base_logging::INFO, _,
+                       "Unsupported QuicVersionLabel version: T041"))
+      .Times(1);
+#endif
+#endif
+  EXPECT_EQ(PROTOCOL_UNSUPPORTED, QuicVersionLabelToHandshakeProtocol(tls_tag));
+}
+
 TEST_F(QuicVersionsTest, QuicVersionToString) {
   EXPECT_EQ("QUIC_VERSION_35", QuicVersionToString(QUIC_VERSION_35));
   EXPECT_EQ("QUIC_VERSION_UNSUPPORTED",
