@@ -65,6 +65,7 @@ public class CronetStressTest {
             UrlRequest request = builder.build();
             request.start();
             callback.blockForDone();
+            callback.shutdownExecutor();
             assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         }
     }
