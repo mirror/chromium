@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "932a1960_6cf2f177",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/web_task_runner_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-05T09:27:30Z",
+      "side": 1,
+      "message": "Could I ask you to replace these true/false constants with an enum (kNestable/kNonNestable)? This would greatly help readability, especially here.",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 30
+      },
+      "revId": "806a942b31b79cb0c5f27f720e81c47cba76e7c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd9255d_1c9097a9",
+        "filename": "third_party/WebKit/Source/platform/WebTaskRunner.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-05T09:27:30Z",
+      "side": 0,
+      "message": "Let\u0027s follow SingleThreadTaskRunner\u0027s example here: let\u0027s have a protected virtual method PostDelayedTask(base::OnceCallback) here and make other methods in WebTaskRunner call this PostDelayedTask method and override one only in WebTaskRunnerImpl and FakeWebTaskRunner.\n\nThis approach will mean that we construct TaskQueue::PostedTask only in one place, making plumbing metadata easier and also should make merging SingleThreadTaskRunner and WebTaskRunner slightly easier.",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "9da284ba7ab742893cba73c1078908eac5d3a6d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
