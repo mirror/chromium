@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "77c72739_f6fd73e4",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-05T19:51:56Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1ad593_154bfc8c",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
         "patchSetId": 7
@@ -13,6 +36,29 @@
       "writtenOn": "2017-10-05T08:12:58Z",
       "side": 1,
       "message": "add \"margin: 8px\" explicitly to make sure that the (100vh - 16px) always works.",
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d022cbd5_6dba71e8",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-05T19:51:56Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 15,
+        "endLine": 1,
+        "endChar": 19
+      },
       "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -36,6 +82,23 @@
         "endLine": 20,
         "endChar": 36
       },
+      "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55171bf9_05485d91",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-05T19:51:56Z",
+      "side": 1,
+      "message": "Add subtype here.",
       "revId": "b592213a5b5c317dacccfe50cd82444017f8e7f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
