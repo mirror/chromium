@@ -22,6 +22,29 @@
       "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394f9615_a52566ec",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T00:54:48Z",
+      "side": 1,
+      "message": "^^^",
+      "range": {
+        "startLine": 1262,
+        "startChar": 67,
+        "endLine": 1262,
+        "endChar": 0
+      },
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
