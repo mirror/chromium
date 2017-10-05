@@ -57,6 +57,9 @@ class IncognitoWindowTracker : public FeatureTracker,
   // views::WidgetObserver:
   void OnWidgetDestroying(views::Widget* widget) override;
 
+  // Gets the app menu button from the last active browser.
+  AppMenuButton* GetAppMenuButton();
+
   IncognitoWindowPromoBubbleView* incognito_promo() { return incognito_promo_; }
 
   // FeatureTracker:
