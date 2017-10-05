@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f63e8de3_095c966e",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T15:01:48Z",
+      "side": 1,
+      "message": "Wow, looking at this a bit more, it looks like it\u0027s used in only one spot:\nhttps://cs.chromium.org/search/?q\u003dcopy_ex+file:%5C.gn\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nThe one spot doesn\u0027t use many of the available options, and still ends up passing through --arguments directly anyways!\n\nI wonder if you\u0027d we willing to simplify this a bit by just defining an action() in both of these spots and removing this template? For your new usage, you actually don\u0027t need a depfile either since your list of inputs is known.\n\nAlternatively, I also wouldn\u0027t mind leaving this template here, but removing the ability to copy unknown inputs (remove stamp, clear, depfile). That\u0027s the main thing we\u0027ve tried to avoid in GN that existed in GYP (we use .zip instead of stamps+directories of uncertain contents)",
+      "parentUuid": "10eeb865_3142ad13",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058b00fe_0f7a194c",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 2
