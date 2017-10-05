@@ -16,6 +16,24 @@
       "revId": "5475162c957f2ebd21c749bf6e49d7e388b74dc1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9b74c0_b533dfaa",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-10-05T13:24:48Z",
+      "side": 1,
+      "message": "\u003e if (username_correction_found)\n\u003e   metrics_recorder_-\u003eRecordDetailedUserAction(...::kCorrectedUsernameInForm);\n\u003e (see other occurrences of RecordDetailedUserAction).\n\u003e \n\u003e In password_form_metrics_recorder.h:\n\u003e \n\u003e enum class DetailedUserAction {\n\u003e     kUnknown \u003d 0,\n\u003e     ...\n\u003e     // Interactions with form.\n\u003e     kCorrectedUsernameInForm \u003d 200,\n\u003e };\n\nDone.",
+      "parentUuid": "699f51e3_59253506",
+      "revId": "5475162c957f2ebd21c749bf6e49d7e388b74dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
