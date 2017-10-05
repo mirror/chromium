@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcb2a424_5be77340",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T23:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1996a81_1b2ccddc",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b98c097c_5c5aedd0",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e6df7543_60b1fef6",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T23:12:43Z",
+      "side": 1,
+      "message": "That works. Thanks!",
+      "parentUuid": "b98c097c_5c5aedd0",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b06f1875_f25b4b3e",
         "filename": "chromecast/net/BUILD.gn",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T22:47:54Z",
       "side": 1,
       "message": "Isn\u0027t Android also Linux? Not sure..",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2e50ce_ce4f26d5",
+        "filename": "chromecast/net/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T23:12:43Z",
+      "side": 1,
+      "message": "is_linux is not for android builds, see https://chromium.googlesource.com/chromium/src/build/+/master/config/BUILDCONFIG.gn#282",
+      "parentUuid": "b06f1875_f25b4b3e",
       "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
