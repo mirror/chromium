@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "178d2db5_0ef0394d",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T03:18:40Z",
+      "side": 1,
+      "message": "I was just seeing that logic in two places and would like it to be moved to one place if possible. Whatever you think is most appropriate is fine.",
+      "parentUuid": "d975f676_b827171e",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "866c872a_901598a0",
         "filename": "components/exo/display.h",
         "patchSetId": 10
