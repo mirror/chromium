@@ -74,4 +74,10 @@ SetSelectionOptions::Builder::SetShouldShrinkNextTap(bool new_value) {
   return *this;
 }
 
+SetSelectionOptions::Builder&
+SetSelectionOptions::Builder::SetShouldShrinkNextTap(bool new_value) {
+  data_.should_shrink_next_tap_ = new_value;
+  return *this;
+}
+
 }  // namespace blink
