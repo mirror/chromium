@@ -592,17 +592,18 @@ void FaviconHandler::OnFaviconDataForInitialURLFromFaviconService(
                       !favicon_bitmap_results.empty();
 
   if (has_valid_result) {
+    // Progapate mappings to all redirects, in case the redirect chain is
+    // different from the one observed when SetFavicon() was called.
+    if (!delegate_->IsOffTheRecord()) {
+      service_->CloneFaviconMappingsForPages(last_page_url_, icon_types_,
+                                             page_urls_);
+    }
+
     // The db knows the favicon (although it may be out of date). Set the
     // favicon now, and if the favicon turns out to be expired (or the wrong
     // url) we'll fetch later on. This way the user doesn't see a flash of the
     // default favicon.
     NotifyFaviconUpdated(favicon_bitmap_results);
-
-    // For strict correctness, we should also set the database icon mappings for
-    // other URLs in |page_urls_| (same-document navigations like fragment
-    // navigations) because there is no guarantee that there is a mapping for
-    // the other page URLs (e.g. |last_page_url_| has a mapping because it's
-    // bookmarked but the rest don't).
   }
 
   if (current_candidate())
