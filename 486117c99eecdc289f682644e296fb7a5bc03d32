@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d4ec8cbc_06cf9bca",
+        "filename": "third_party/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-05T20:21:53Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "6a288351_3079a5b2",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9b3c85e_a3d645a7",
         "filename": "third_party/freetype/BUILD.gn",
         "patchSetId": 8
