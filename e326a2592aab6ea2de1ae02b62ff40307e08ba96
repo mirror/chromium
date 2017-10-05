@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2cb394_6b6e0b1e",
+        "filename": "device/hid/mock_hid_connection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-05T17:19:37Z",
+      "side": 1,
+      "message": "This field is unused.",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4f2582_e996fa15",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-05T17:19:37Z",
+      "side": 1,
+      "message": "EXPECT_EQ(buffer-\u003esize(), sizeof(expected) - 1);",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ff84f3_158c5ed4",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-05T17:19:37Z",
+      "side": 1,
+      "message": "EXPECT_EQ(buffer-\u003esize(), sizeof(expected) - 1);",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
