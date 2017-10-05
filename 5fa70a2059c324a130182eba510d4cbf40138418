@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26642500_c46425a0",
+        "filename": "ash/wayland/wayland_server_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T20:10:03Z",
+      "side": 1,
+      "message": "nit: controller",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "5fa70a2059c324a130182eba510d4cbf40138418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58774427_b045489b",
+        "filename": "ash/wayland/wayland_server_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T20:10:03Z",
+      "side": 1,
+      "message": "please move this to ash/public/cpp/ash_switches.h/cc",
+      "range": {
+        "startLine": 51,
+        "startChar": 10,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "5fa70a2059c324a130182eba510d4cbf40138418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604252e1_c6cad240",
+        "filename": "ash/wayland/wayland_server_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T20:10:03Z",
+      "side": 1,
+      "message": "s/exo/controller/",
+      "range": {
+        "startLine": 24,
+        "startChar": 54,
+        "endLine": 24,
+        "endChar": 57
+      },
+      "revId": "5fa70a2059c324a130182eba510d4cbf40138418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
