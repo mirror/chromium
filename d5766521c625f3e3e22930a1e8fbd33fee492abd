@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3967675e_6546fce8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-05T23:52:58Z",
+      "side": 1,
+      "message": "No, this test case is not for Windows only, we need this behavior on at least both Windows and Linux.",
+      "parentUuid": "78a3bd7e_2add5a79",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21d2da80_1bb752bb",
         "filename": "base/memory/shared_memory_unittest.cc",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "617fb00b_48ddd711",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-05T23:52:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21d2da80_1bb752bb",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cc522f3_b51557f8",
         "filename": "base/memory/shared_memory_win.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8811d7_fe8e9dcb",
+        "filename": "base/memory/shared_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-05T23:52:58Z",
+      "side": 1,
+      "message": "Because I was debugging on Windows. The top three checks should not be platform dependent, they can be shared with different implementations.\nChanged to DLOG.",
+      "parentUuid": "3cc522f3_b51557f8",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
