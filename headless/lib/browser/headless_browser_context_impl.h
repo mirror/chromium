@@ -15,6 +15,7 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
 #include "headless/lib/browser/headless_browser_context_options.h"
+#include "headless/lib/browser/headless_network_conditions.h"
 #include "headless/lib/browser/headless_url_request_context_getter.h"
 #include "headless/public/headless_browser.h"
 #include "headless/public/headless_browser_context.h"
@@ -109,6 +110,10 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
                               int net_error,
                               bool canceled_by_devtools);
 
+  void SetNetworkConditions(
+      std::unique_ptr<HeadlessNetworkConditions> conditions);
+  HeadlessNetworkConditions* GetNetworkConditions();
+
  private:
   HeadlessBrowserContextImpl(
       HeadlessBrowserImpl* browser,
@@ -138,6 +143,8 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   std::unique_ptr<content::PermissionManager> permission_manager_;
 
   std::string id_;
+
+  std::unique_ptr<HeadlessNetworkConditions> network_conditions_;
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessBrowserContextImpl);
 };
