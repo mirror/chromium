@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5c85e73_24a531ae",
+        "filename": "headless/lib/browser/headless_network_conditions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:32:51Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "9790deb1ce49dd9d41f5f2af570490eef457eb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99cdcb76_1312efc5",
+        "filename": "headless/lib/browser/headless_network_conditions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:32:51Z",
+      "side": 1,
+      "message": "I would personally make this a struct and pass it by value (since you don\u0027t actually need any methods on it), but that\u0027s up to headless owners.",
+      "revId": "9790deb1ce49dd9d41f5f2af570490eef457eb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
