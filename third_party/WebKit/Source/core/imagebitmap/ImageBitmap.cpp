@@ -72,27 +72,33 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
           options.colorSpaceConversion() ==
               kSRGBImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else if (options.colorSpaceConversion() ==
                  kLinearRGBImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else if (options.colorSpaceConversion() ==
                  kP3ImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(kP3CanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else if (options.colorSpaceConversion() ==
                  kRec2020ImageBitmapColorSpaceConversion) {
         parsed_options.color_params.SetCanvasColorSpace(
             kRec2020CanvasColorSpace);
         parsed_options.color_params.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+        parsed_options.color_params.SetLinearPixelMath(true);
       } else {
         NOTREACHED()
             << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
             << options.colorSpaceConversion();
       }
     } else {
+      // TODO(ccameron): Linear pixel math should not be set here.
       DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
       parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+      parsed_options.color_params.SetLinearPixelMath(true);
     }
   }
 

@@ -33,8 +33,13 @@ gfx::ColorSpace::PrimaryID GetPrimaryID(CanvasColorSpace color_space) {
 CanvasColorParams::CanvasColorParams() = default;
 
 CanvasColorParams::CanvasColorParams(CanvasColorSpace color_space,
-                                     CanvasPixelFormat pixel_format)
-    : color_space_(color_space), pixel_format_(pixel_format) {}
+                                     CanvasPixelFormat pixel_format,
+                                     bool linear_pixel_math)
+    : color_space_(color_space),
+      pixel_format_(pixel_format),
+      linear_pixel_math_(linear_pixel_math) {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
+}
 
 CanvasColorParams::CanvasColorParams(const SkImageInfo& info) {
   color_space_ = kLegacyCanvasColorSpace;
@@ -44,20 +49,24 @@ CanvasColorParams::CanvasColorParams(const SkImageInfo& info) {
   // format).
   if (!info.colorSpace())
     return;
-  if (SkColorSpace::Equals(info.colorSpace(), SkColorSpace::MakeSRGB().get()))
+
+  linear_pixel_math_ = true;
+  if (SkColorSpace::Equals(info.colorSpace(), SkColorSpace::MakeSRGB().get())) {
     color_space_ = kSRGBCanvasColorSpace;
-  else if (SkColorSpace::Equals(
-               info.colorSpace(),
-               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
-                                     SkColorSpace::kRec2020_Gamut)
-                   .get()))
+  } else if (SkColorSpace::Equals(
+                 info.colorSpace(),
+                 SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                       SkColorSpace::kRec2020_Gamut)
+                     .get())) {
     color_space_ = kRec2020CanvasColorSpace;
-  else if (SkColorSpace::Equals(
-               info.colorSpace(),
-               SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
-                                     SkColorSpace::kDCIP3_D65_Gamut)
-                   .get()))
+  } else if (SkColorSpace::Equals(
+                 info.colorSpace(),
+                 SkColorSpace::MakeRGB(SkColorSpace::kLinear_RenderTargetGamma,
+                                       SkColorSpace::kDCIP3_D65_Gamut)
+                     .get())) {
     color_space_ = kP3CanvasColorSpace;
+  }
+
   if (info.colorType() == kRGBA_F16_SkColorType)
     pixel_format_ = kF16CanvasPixelFormat;
 }
@@ -70,11 +79,22 @@ void CanvasColorParams::SetCanvasPixelFormat(CanvasPixelFormat pixel_format) {
   pixel_format_ = pixel_format;
 }
 
+void CanvasColorParams::SetLinearPixelMath(bool linear_pixel_math) {
+  linear_pixel_math_ = linear_pixel_math;
+}
+
+CanvasColorSpace CanvasColorParams::color_space() const {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
+  return color_space_;
+}
+
 bool CanvasColorParams::LinearPixelMath() const {
-  return color_space_ != kLegacyCanvasColorSpace;
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
+  return linear_pixel_math_;
 }
 
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
   switch (color_space_) {
     case kLegacyCanvasColorSpace:
       return nullptr;
@@ -106,6 +126,7 @@ uint8_t CanvasColorParams::BytesPerPixel() const {
 }
 
 gfx::ColorSpace CanvasColorParams::GetSamplerGfxColorSpace() const {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
   gfx::ColorSpace::PrimaryID primary_id = GetPrimaryID(color_space_);
 
   // TODO(ccameron): This needs to take into account whether or not this texture
@@ -119,6 +140,7 @@ gfx::ColorSpace CanvasColorParams::GetSamplerGfxColorSpace() const {
 }
 
 gfx::ColorSpace CanvasColorParams::GetStorageGfxColorSpace() const {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
   gfx::ColorSpace::PrimaryID primary_id = GetPrimaryID(color_space_);
 
   gfx::ColorSpace::TransferID transfer_id =
@@ -130,6 +152,7 @@ gfx::ColorSpace CanvasColorParams::GetStorageGfxColorSpace() const {
 }
 
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpace() const {
+  DCHECK_EQ(linear_pixel_math_, color_space_ != kLegacyCanvasColorSpace);
   SkColorSpace::Gamut gamut = SkColorSpace::kSRGB_Gamut;
   switch (color_space_) {
     case kLegacyCanvasColorSpace:

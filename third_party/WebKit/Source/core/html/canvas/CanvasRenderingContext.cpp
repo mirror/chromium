@@ -37,9 +37,11 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
+      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat, false),
       creation_attributes_(attrs) {
+  // TODO(ccameron): Linear pixel math should not be true by default.
   color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+  color_params_.SetLinearPixelMath(true);
   if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
     if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
       color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);

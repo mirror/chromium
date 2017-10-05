@@ -33,13 +33,16 @@ class PLATFORM_EXPORT CanvasColorParams {
  public:
   // The default constructor will create an output-blended 8-bit surface.
   CanvasColorParams();
-  CanvasColorParams(CanvasColorSpace, CanvasPixelFormat);
+  CanvasColorParams(CanvasColorSpace,
+                    CanvasPixelFormat,
+                    bool linear_pixel_math);
   explicit CanvasColorParams(const SkImageInfo&);
-  CanvasColorSpace color_space() const { return color_space_; }
+  CanvasColorSpace color_space() const;
   CanvasPixelFormat pixel_format() const { return pixel_format_; }
 
   void SetCanvasColorSpace(CanvasColorSpace);
   void SetCanvasPixelFormat(CanvasPixelFormat);
+  void SetLinearPixelMath(bool);
 
   // Returns true if the canvas does all blending and interpolation in linear
   // color space. If false, then the canvas does blending and interpolation in
@@ -67,6 +70,7 @@ class PLATFORM_EXPORT CanvasColorParams {
  private:
   CanvasColorSpace color_space_ = kLegacyCanvasColorSpace;
   CanvasPixelFormat pixel_format_ = kRGBA8CanvasPixelFormat;
+  bool linear_pixel_math_ = false;
 };
 
 }  // namespace blink

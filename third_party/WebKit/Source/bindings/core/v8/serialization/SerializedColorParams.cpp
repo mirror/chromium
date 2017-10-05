@@ -68,25 +68,31 @@ SerializedColorParams::SerializedColorParams(
 
 CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
   CanvasColorSpace color_space = kLegacyCanvasColorSpace;
+  bool linear_pixel_math = false;
   switch (color_space_) {
     case SerializedColorSpace::kLegacy:
       color_space = kLegacyCanvasColorSpace;
+      linear_pixel_math = false;
       break;
     case SerializedColorSpace::kSRGB:
       color_space = kSRGBCanvasColorSpace;
+      linear_pixel_math = true;
       break;
     case SerializedColorSpace::kRec2020:
       color_space = kRec2020CanvasColorSpace;
+      linear_pixel_math = true;
       break;
     case SerializedColorSpace::kP3:
       color_space = kP3CanvasColorSpace;
+      linear_pixel_math = true;
       break;
   }
 
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (pixel_format_ == SerializedPixelFormat::kF16)
     pixel_format = kF16CanvasPixelFormat;
-  return CanvasColorParams(color_space, pixel_format);
+
+  return CanvasColorParams(color_space, pixel_format, linear_pixel_math);
 }
 
 CanvasColorSpace SerializedColorParams::GetColorSpace() const {
