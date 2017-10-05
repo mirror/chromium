@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3d98c45_095e940b",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T14:09:48Z",
+      "side": 1,
+      "message": "Option 2. Maybe it would be better if we add a new overloaded constructor that accepts the executor service. The default constructor will create the service internally.",
+      "range": {
+        "startLine": 60,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcb0d310_a2e73d98",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T14:09:48Z",
+      "side": 1,
+      "message": "Option 1. What if we call callback.shutdownExecutor() here instead? Wouldn\u0027t it release the executor?",
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df79ae2f_843e488d",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/TestUrlRequestCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T14:09:48Z",
+      "side": 1,
+      "message": "This can throw NullPointerException now.",
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
