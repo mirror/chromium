@@ -144,6 +144,24 @@
       "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29aaed0b_d0d3511f",
+        "filename": "third_party/WebKit/Source/platform/Supplementable.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T15:14:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e6b0de6_e1310148",
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
