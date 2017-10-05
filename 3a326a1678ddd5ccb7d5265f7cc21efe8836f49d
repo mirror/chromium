@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4aeac812_ab0cb92c",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-05T18:30:57Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this. The rect is already in the coordinate space of the iframe, right? What does this conversion change that to?",
+      "revId": "3a326a1678ddd5ccb7d5265f7cc21efe8836f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5303f9d2_c8dafa96",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-10-05T18:30:57Z",
+      "side": 1,
+      "message": "Is this supposed to be rect_to_scroll?\n\nAlso, can you add a comment about what this call to EnclosingLayoutRect is doing?",
+      "range": {
+        "startLine": 4524,
+        "startChar": 42,
+        "endLine": 4524,
+        "endChar": 50
+      },
+      "revId": "3a326a1678ddd5ccb7d5265f7cc21efe8836f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
