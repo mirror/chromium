@@ -459,4 +459,13 @@ TEST_F(URLDatabaseTest, MigrationURLTableForAddingAUTOINCREMENT) {
   EXPECT_NE(info4.id(), info5.id());
 }
 
+TEST_F(URLDatabaseTest, URLTableContainsAUTOINCREMENTTest) {
+  CreateVersion33URLTable();
+  EXPECT_FALSE(URLTableContainsAUTOINCREMENT());
+
+  // Upgrade urls table.
+  RecreateURLTableWithAllContents();
+  EXPECT_TRUE(URLTableContainsAUTOINCREMENT());
+}
+
 }  // namespace history
