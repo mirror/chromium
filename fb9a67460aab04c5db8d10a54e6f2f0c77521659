@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e541481_22f167e7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-05T20:51:23Z",
+      "side": 1,
+      "message": "Does this affect sheet-open time on slow devices?",
+      "range": {
+        "startLine": 448,
+        "startChar": 4,
+        "endLine": 453,
+        "endChar": 5
+      },
+      "revId": "fb9a67460aab04c5db8d10a54e6f2f0c77521659",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
