@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553da27b_1c8d498c",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-05T15:41:56Z",
+      "side": 1,
+      "message": "supernit: in this case is pretty useful to have \"LayoutUnit available_size\" in the definition because otherwise it\u0027s impossible to know what that LayoutUnit is.",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a0881d_05d2fea7",
+        "filename": "third_party/WebKit/Source/core/layout/GridTrackSizingAlgorithm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-10-05T15:41:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "735e2b67b379d3d0f87264eb166e150e3c63ed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
