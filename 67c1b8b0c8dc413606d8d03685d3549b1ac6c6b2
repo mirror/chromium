@@ -16,6 +16,24 @@
       "revId": "67c1b8b0c8dc413606d8d03685d3549b1ac6c6b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc1a2f2_6f03e81d",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-10-05T14:47:07Z",
+      "side": 0,
+      "message": "Adding deprecated fields instead.",
+      "parentUuid": "a570e4a9_df6210a3",
+      "revId": "67c1b8b0c8dc413606d8d03685d3549b1ac6c6b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
