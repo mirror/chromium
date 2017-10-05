@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e0dfc51_d923c153",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-05T19:57:20Z",
+      "side": 1,
+      "message": "Could you add a comment here that we are setting the animation type to none to keep the compositor from animating this image.",
+      "range": {
+        "startLine": 408,
+        "startChar": 6,
+        "endLine": 408,
+        "endChar": 71
+      },
+      "revId": "8da1408e8404cedbe352a1cb94bdf111ea55e8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
