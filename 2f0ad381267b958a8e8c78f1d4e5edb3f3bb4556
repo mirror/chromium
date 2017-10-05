@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb01888c_55922184",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb59f75_1d2b8fc3",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c35744dc_06a89954",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b37c2a_7900b526",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Sorry, I asked not about it.\nI subscribe to SystemClockUpdated() because \"OffHours\" policy mode depends on current time and when device time is changed \"OffHours\"mode is changed too.\n\nMy question was about SystemCLockClient implementation.\n\"OffHours\" policy mode doesn\u0027t work until time is synchronized, therefore I need wait time synchronization.\nBut how should I wait?\nI can call dbus method SystemLastSyncInfo once per second and check the response (how it implemented on chromeos side). But maybe different way exists.\n\nbtw, I add observer methon to remove logic from SystemClockClient.",
+      "parentUuid": "c35744dc_06a89954",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "d94b8e7b_d704c74f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "089233b1_46aaeece",
+      "range": {
+        "startLine": 58,
+        "startChar": 49,
+        "endLine": 58,
+        "endChar": 54
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c436ff_a23dd30d",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 16
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "532873d1_6d7357ae",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c436ff_a23dd30d",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "107a451e_fe8d465b",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 16
@@ -90,6 +168,24 @@
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1f5508_abc7ca91",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "107a451e_fe8d465b",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "f74a8dd3_16fa8da2",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec7290aa_8a33a1be",
+      "range": {
+        "startLine": 168,
+        "startChar": 7,
+        "endLine": 168,
+        "endChar": 33
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f3fc934_ece8a528",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 16
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "0677f544_0fd25138",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "It\u0027s better to rename it everywhere (on chromeos side too).\nI didn\u0027t work in that repository.",
+      "parentUuid": "0f3fc934_ece8a528",
+      "range": {
+        "startLine": 170,
+        "startChar": 47,
+        "endLine": 170,
+        "endChar": 66
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34afc262_47641174",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 16
@@ -153,6 +297,24 @@
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159bf4f5_5f8e1b09",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34afc262_47641174",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +350,24 @@
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16b4ff7_69678978",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-05T12:44:28Z",
+      "side": 1,
+      "message": "I removed logic here and added new method SystemClockSynchronized() to observer class, which is called when system time is synchronized with network time.",
+      "parentUuid": "8999c758_2ce33ca6",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
