@@ -70,6 +70,30 @@
       "revId": "8d2e631ba24586929cdf3ee555a17ddec37c8fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b96b7e46_c3f14fad",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T18:28:05Z",
+      "side": 1,
+      "message": "Done. Aaah so simple. I don\u0027t know what I was searching for!",
+      "parentUuid": "d3f98059_38968d69",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "8d2e631ba24586929cdf3ee555a17ddec37c8fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
