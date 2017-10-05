@@ -487,7 +487,9 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
             base::MakeUnique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
         base::Time::Now());
-    std::move(finish_callback_).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback_)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
   }
 
  protected:
@@ -517,7 +519,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     embedded_worker_id_ = embedded_worker_id;
     fetch_event_id_ = fetch_event_id;
     response_callback_ = std::move(response_callback);
@@ -538,7 +541,8 @@ class DelayHelper : public EmbeddedWorkerTestHelper {
   int fetch_event_id_ = 0;
   mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_;
   mojom::FetchEventPreloadHandlePtr preload_handle_;
-  FetchCallback finish_callback_;
+  mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+      finish_callback_;
   ServiceWorkerURLRequestJobTest* test_;
   DISALLOW_COPY_AND_ASSIGN(DelayHelper);
 };
@@ -711,7 +715,8 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     context()->RemoveProviderHost(mock_render_process_id(), kProviderID);
     response_callback->OnResponse(
         ServiceWorkerResponse(
@@ -724,7 +729,9 @@ class ProviderDeleteHelper : public EmbeddedWorkerTestHelper {
             base::MakeUnique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
         base::Time::Now());
-    std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
   }
 
  private:
@@ -800,7 +807,8 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     response_callback->OnResponse(
         ServiceWorkerResponse(
             base::MakeUnique<std::vector<GURL>>(), 200, "OK",
@@ -812,7 +820,9 @@ class BlobResponder : public EmbeddedWorkerTestHelper {
             base::MakeUnique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
         base::Time::Now());
-    std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
   }
 
   std::string blob_uuid_;
@@ -899,7 +909,8 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     ASSERT_FALSE(stream_handle_.is_null());
     response_callback->OnResponseStream(
         ServiceWorkerResponse(
@@ -911,7 +922,9 @@ class StreamResponder : public EmbeddedWorkerTestHelper {
             base::MakeUnique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
         std::move(stream_handle_), base::Time::Now());
-    std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
   }
 
   blink::mojom::ServiceWorkerStreamHandlePtr stream_handle_;
@@ -1286,10 +1299,12 @@ class FailFetchHelper : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr /* response_callback */,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     SimulateWorkerStopped(embedded_worker_id);
     std::move(finish_callback)
-        .Run(SERVICE_WORKER_ERROR_ABORT, base::Time::Now());
+        .Run(blink::mojom::ServiceWorkerEventStatus::ABORTED,
+             base::Time::Now());
   }
 
  private:
@@ -1366,7 +1381,9 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
   ~EarlyResponseHelper() override {}
 
   void FinishWaitUntil() {
-    std::move(finish_callback_).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback_)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
   }
 
  protected:
@@ -1376,7 +1393,8 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& /* request */,
       mojom::FetchEventPreloadHandlePtr /* preload_handle */,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     finish_callback_ = std::move(finish_callback);
     response_callback->OnResponse(
         ServiceWorkerResponse(
@@ -1392,7 +1410,8 @@ class EarlyResponseHelper : public EmbeddedWorkerTestHelper {
   }
 
  private:
-  FetchCallback finish_callback_;
+  mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+      finish_callback_;
   DISALLOW_COPY_AND_ASSIGN(EarlyResponseHelper);
 };
 

@@ -55,7 +55,7 @@ class CONTENT_EXPORT ServiceWorkerSubresourceLoader
   void DeleteSoon();
 
   void StartRequest(const ResourceRequest& resource_request);
-  void OnFetchEventFinished(ServiceWorkerStatusCode status,
+  void OnFetchEventFinished(blink::mojom::ServiceWorkerEventStatus status,
                             base::Time dispatch_event_time);
 
   // mojom::ServiceWorkerFetchResponseCallback overrides:

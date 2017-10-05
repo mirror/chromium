@@ -47,6 +47,7 @@
 #include "content/common/service_worker/service_worker_messages.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "content/common/service_worker/service_worker_utils.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
@@ -806,20 +807,22 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
                        base::Unretained(this), done, result, request_id));
   }
 
-  void ReceiveInstallEventOnIOThread(const base::Closure& done,
-                                     ServiceWorkerStatusCode* out_result,
-                                     int request_id,
-                                     ServiceWorkerStatusCode status,
-                                     bool has_fetch_handler,
-                                     base::Time dispatch_event_time) {
-    version_->FinishRequest(request_id, status == SERVICE_WORKER_OK,
-                            dispatch_event_time);
+  void ReceiveInstallEventOnIOThread(
+      const base::Closure& done,
+      ServiceWorkerStatusCode* out_result,
+      int request_id,
+      blink::mojom::ServiceWorkerEventStatus status,
+      bool has_fetch_handler,
+      base::Time dispatch_event_time) {
+    version_->FinishRequest(
+        request_id, status == blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+        dispatch_event_time);
     version_->set_fetch_handler_existence(
         has_fetch_handler
             ? ServiceWorkerVersion::FetchHandlerExistence::EXISTS
             : ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST);
 
-    *out_result = status;
+    *out_result = ServiceWorkerUtils::EventStatusToStatusCode(status);
     if (!done.is_null())
       BrowserThread::PostTask(BrowserThread::UI, FROM_HERE, done);
   }

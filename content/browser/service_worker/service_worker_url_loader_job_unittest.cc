@@ -65,7 +65,8 @@ class NavigationPreloadLoaderClient final : public mojom::URLLoaderClient {
   NavigationPreloadLoaderClient(
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      EmbeddedWorkerTestHelper::FetchCallback finish_callback)
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback)
       : url_loader_(std::move(preload_handle->url_loader)),
         binding_(this, std::move(preload_handle->url_loader_client_request)),
         response_callback_(std::move(response_callback)),
@@ -112,7 +113,9 @@ class NavigationPreloadLoaderClient final : public mojom::URLLoaderClient {
             base::MakeUnique<
                 ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
         std::move(stream_handle), base::Time::Now());
-    std::move(finish_callback_).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback_)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
     stream_callback->OnCompleted();
     delete this;
   }
@@ -137,7 +140,8 @@ class NavigationPreloadLoaderClient final : public mojom::URLLoaderClient {
 
   // Callbacks that complete Helper::OnFetchEvent().
   mojom::ServiceWorkerFetchResponseCallbackPtr response_callback_;
-  EmbeddedWorkerTestHelper::FetchCallback finish_callback_;
+  mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+      finish_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationPreloadLoaderClient);
 };
@@ -254,7 +258,9 @@ class Helper : public EmbeddedWorkerTestHelper {
   // called.
   void RespondEarly() { response_mode_ = ResponseMode::kEarlyResponse; }
   void FinishWaitUntil() {
-    std::move(finish_callback_).Run(SERVICE_WORKER_OK, base::Time::Now());
+    std::move(finish_callback_)
+        .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+             base::Time::Now());
     base::RunLoop().RunUntilIdle();
   }
 
@@ -276,7 +282,8 @@ class Helper : public EmbeddedWorkerTestHelper {
       const ServiceWorkerFetchRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback,
-      FetchCallback finish_callback) override {
+      mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+          finish_callback) override {
     request_body_blob_ = request.blob;
     switch (response_mode_) {
       case ResponseMode::kDefault:
@@ -298,7 +305,9 @@ class Helper : public EmbeddedWorkerTestHelper {
                 base::MakeUnique<
                     ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
             base::Time::Now());
-        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        std::move(finish_callback)
+            .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+                 base::Time::Now());
         return;
       case ResponseMode::kStream:
         response_callback->OnResponseStream(
@@ -313,11 +322,15 @@ class Helper : public EmbeddedWorkerTestHelper {
                 base::MakeUnique<
                     ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
             std::move(stream_handle_), base::Time::Now());
-        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        std::move(finish_callback)
+            .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+                 base::Time::Now());
         return;
       case ResponseMode::kFallbackResponse:
         response_callback->OnFallback(base::Time::Now());
-        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        std::move(finish_callback)
+            .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+                 base::Time::Now());
         return;
       case ResponseMode::kNavigationPreloadResponse:
         // Deletes itself when done.
@@ -338,7 +351,8 @@ class Helper : public EmbeddedWorkerTestHelper {
         // ServiceWorkerContextClient would call this when it aborts all
         // callbacks after an unexpected stop.
         std::move(finish_callback)
-            .Run(SERVICE_WORKER_ERROR_ABORT, base::Time::Now());
+            .Run(blink::mojom::ServiceWorkerEventStatus::ABORTED,
+                 base::Time::Now());
         return;
       case ResponseMode::kEarlyResponse:
         finish_callback_ = std::move(finish_callback);
@@ -370,7 +384,9 @@ class Helper : public EmbeddedWorkerTestHelper {
                 base::MakeUnique<
                     ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
             base::Time::Now());
-        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        std::move(finish_callback)
+            .Run(blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+                 base::Time::Now());
         return;
     }
     NOTREACHED();
@@ -399,7 +415,8 @@ class Helper : public EmbeddedWorkerTestHelper {
   blink::mojom::ServiceWorkerStreamHandlePtr stream_handle_;
 
   // For ResponseMode::kEarlyResponse.
-  FetchCallback finish_callback_;
+  mojom::ServiceWorkerEventDispatcher::DispatchFetchEventCallback
+      finish_callback_;
 
   // For ResponseMode::kRedirect.
   GURL redirected_url_;
