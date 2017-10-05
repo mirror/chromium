@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a310fa54_91be96e4",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T19:55:25Z",
+      "side": 1,
+      "message": "Yes but this will transform it to parent frames layout view. |owner_object|-\u003eView() belongs to the document of the parent frame of the \u003ciframe\u003e.\n\nThe mix of this, and the transform in LocalFrameView::MaybeScrollRectToVisibleInRemoteParent tries to do this step:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBox.cpp?rcl\u003d1098538e5eeec1a11a7e67bdb67fc42127455648\u0026l\u003d703",
+      "parentUuid": "4aeac812_ab0cb92c",
+      "revId": "3a326a1678ddd5ccb7d5265f7cc21efe8836f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5303f9d2_c8dafa96",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "3a326a1678ddd5ccb7d5265f7cc21efe8836f49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050aa960_0b075397",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4524,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T19:55:25Z",
+      "side": 1,
+      "message": "Yes. Thanks for catching the typo.\n\nI added the comment and looking at this again.\n\nI also suspect we should not need either of these flag.\nkUseTransform is automatically applied here:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutObject.cpp?rcl\u003d0c4fa0d97be996cb2d1b9f464719008a44996ab4\u0026l\u003d2215\nand the other is supposed to return the quads in the local root space which is no different than the containing frame (GetFrame() is local root).",
+      "parentUuid": "5303f9d2_c8dafa96",
+      "range": {
+        "startLine": 4524,
+        "startChar": 42,
+        "endLine": 4524,
+        "endChar": 50
+      },
+      "revId": "3a326a1678ddd5ccb7d5265f7cc21efe8836f49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
