@@ -27,8 +27,10 @@ void MessageViewContextMenuController::ShowContextMenuForView(
     ui::MenuSourceType source_type) {
   // Assumes that the target view has to be MessageView.
   MessageView* message_view = static_cast<MessageView*>(source);
-  menu_model_ = controller_->CreateMenuModel(message_view->notifier_id(),
-                                             message_view->display_source());
+  Notification* notification =
+      MessageCenter::Get()->FindVisibleNotificationById(
+          message_view->notification_id());
+  menu_model_ = controller_->CreateMenuModel(notification);
 
   if (!menu_model_ || menu_model_->GetItemCount() == 0)
     return;
