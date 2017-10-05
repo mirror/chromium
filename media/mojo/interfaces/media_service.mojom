@@ -6,13 +6,17 @@ module media.mojom;
 
 import "media/mojo/interfaces/interface_factory.mojom";
 import "mojo/common/file_path.mojom";
+//import "sandbox/mac/mojom/seatbelt_extension_token.mojom";
 import "services/service_manager/public/interfaces/interface_provider.mojom";
 
+// FIXME: platform specific params
 interface MediaService {
   // Loads the CDM at |cdm_path| into the process.
   // Since the client will not know whether LoadCdm() has been called by a
   // previous MediaService instance, the client should always call it after
   // interface connection. If the CDM is already loaded, this will be a no-op.
+  //LoadCdm(mojo.common.mojom.FilePath cdm_path,
+  //        SeatbeltExtensionTokenProvider? seatbelt_extension_token_provider);
   LoadCdm(mojo.common.mojom.FilePath cdm_path);
 
   // Requests an InterfaceFactory. |host_interfaces| can optionally be used to
@@ -22,3 +26,8 @@ interface MediaService {
       InterfaceFactory& factory,
       service_manager.mojom.InterfaceProvider? host_interfaces);
 };
+
+//interface SeatbeltExtensionTokenProvider {
+//  [Sync]
+//  GetSeatbeltExtensionToken() => (sandbox.mac.mojom.SeatbeltExtensionToken token);
+//};
