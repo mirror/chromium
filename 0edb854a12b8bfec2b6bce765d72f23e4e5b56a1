@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8eb79fa8_98c1263a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-05T09:22:21Z",
+      "side": 1,
+      "message": "DCHECK_EQ?",
+      "range": {
+        "startLine": 641,
+        "startChar": 2,
+        "endLine": 641,
+        "endChar": 8
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da39e1d_b913223f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-10-05T09:22:21Z",
+      "side": 1,
+      "message": "This feels false, there would be a background fetch on startup instead, so the same time to fetch results. The issue is that the user may see old suggestions if they pull up CH after startup, but before the fetch ends.",
+      "range": {
+        "startLine": 773,
+        "startChar": 57,
+        "endLine": 774,
+        "endChar": 21
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
