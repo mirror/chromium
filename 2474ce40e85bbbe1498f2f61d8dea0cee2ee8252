@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4fd0ce8_75d14f7c",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "Probably not needed",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03402a52_a2cf4ccb",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f01270_9f201b65",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19af1cca_7cba443d",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8c2362_fa6a93b7",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "Not needed?",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ec050f_75b80437",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "nit: Have empty lines before and after \u0027namespace {\u0027 for consistency",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6444ec56_fb22c77a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "nit: I\u0027d name this expect_redirect_method given that all other \u0027expected\u0027 fields are prefixed with it",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f1ec33_aa53af1e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "nit: I know this code\u0027s following existing code, but I generally prefer letting a helper method return true/false rather than just doing EXPECT/ASSERT within it, mostly because error logs from EXPECT/ASSERT in a common helper method is less useful... but up to you.",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a47b6c65_db87e3ce",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3586,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T07:21:02Z",
+      "side": 1,
+      "message": "nit: ditto, I prefer using |expect_redirect_method| here, if net owners are fine",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
