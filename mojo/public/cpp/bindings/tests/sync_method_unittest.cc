@@ -12,6 +12,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread.h"
+#include "base/threading/thread_restrictions.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/tests/bindings_test_base.h"
@@ -408,6 +409,7 @@ class SequencedTaskRunnerTestBase {
   virtual ~SequencedTaskRunnerTestBase() = default;
 
   void RunTest() {
+    base::ScopedAllowBaseSyncPrimitivesForTesting allow_base_sync_primitives;
     SetUp();
     Run();
   }
@@ -469,9 +471,9 @@ void RunTestOnSequencedTaskRunner(
     std::unique_ptr<SequencedTaskRunnerTestBase> test) {
   base::RunLoop run_loop;
   test->Init(run_loop.QuitClosure());
-  base::CreateSequencedTaskRunnerWithTraits({base::WithBaseSyncPrimitives()})
-      ->PostTask(FROM_HERE, base::Bind(&SequencedTaskRunnerTestBase::RunTest,
-                                       base::Unretained(test.release())));
+  base::CreateSequencedTaskRunnerWithTraits({})->PostTask(
+      FROM_HERE, base::Bind(&SequencedTaskRunnerTestBase::RunTest,
+                            base::Unretained(test.release())));
   run_loop.Run();
 }
 
