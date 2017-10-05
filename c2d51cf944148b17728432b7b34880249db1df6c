@@ -16,6 +16,24 @@
       "revId": "c2d51cf944148b17728432b7b34880249db1df6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08dc750a_ce163bb4",
+        "filename": "chrome/browser/android/download/download_manager_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-05T18:28:14Z",
+      "side": 1,
+      "message": "Done,\n\nYeah, probably LOG and return is better. If developer accidentally calls this, we can just bail out.\n\nThis is actually a \"show some UI\" function, the name sounds like an event handle(like SomeObserver::OnStuffHappens) though. :(",
+      "parentUuid": "fe67a3d7_8ca50d13",
+      "revId": "c2d51cf944148b17728432b7b34880249db1df6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
