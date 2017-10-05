@@ -34,6 +34,24 @@
       "revId": "81ea2c9ba5e81fedae9dc39fa71a73ad0f6aca84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a194de1_690fc606",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T13:46:25Z",
+      "side": 1,
+      "message": "Ahh, I thought it was a desugar error this was working around. I\u0027d guess it\u0027d be best to leave lint run on the non-transformed code. Gradle is moving towards having desugar run as the final step, so certainly for them lint runs first.\n\nMaybe just call out in the comment that the conflict is with android lint.",
+      "parentUuid": "0ab26298_02e48a2d",
+      "revId": "81ea2c9ba5e81fedae9dc39fa71a73ad0f6aca84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
