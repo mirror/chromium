@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "03cb5edb_4b1dfd4d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T21:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c1ddd3_8b1afab9",
+      "range": {
+        "startLine": 10,
+        "startChar": 36,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e932962a_c62a5cd1",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 18
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "Looks like it\u0027s still needed based on the context the dcheng@ gave over chat (see https://crbug.com/769189 for an example of a race we want to prevent)",
       "parentUuid": "e932962a_c62a5cd1",
+      "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645d62fc_59d5a7ec",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T21:13:58Z",
+      "side": 1,
+      "message": "Added the bug for future ref.",
+      "parentUuid": "d24efada_bd174a3f",
       "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
