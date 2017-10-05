@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9434ae8f_c8d53baf",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-05T18:27:18Z",
+      "side": 1,
+      "message": "I think this needs to be target_arch !\u003d \"win\", else we\u0027ll try to use debug fission for the nacl parts of a win/lld build, which doesn\u0027t like -gsplit-dwarf.\n\nOn second thought, how come this works on linux? Should this have a !is_nacl?\n\n(context: https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Fchromium.fyi%2FCrWinClngLLDdbg%2F6854%2F%2B%2Frecipes%2Fsteps%2Fcompile%2F0%2Fstdout )",
+      "revId": "5581f58e288ebc2a6963dd434335d224b8f6297f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
