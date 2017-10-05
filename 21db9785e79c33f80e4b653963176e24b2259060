@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "4cebdecd_26b77f25",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1474,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T12:05:56Z",
+      "side": 1,
+      "message": "You got it! It\u0027s both really brittle, and really not something I want to re-architect in this patch. :)",
+      "parentUuid": "39c4f756_635373b3",
+      "range": {
+        "startLine": 1474,
+        "startChar": 25,
+        "endLine": 1474,
+        "endChar": 36
+      },
+      "revId": "21db9785e79c33f80e4b653963176e24b2259060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7519d1fb_231a70e8",
         "filename": "net/cookies/cookie_monster.h",
         "patchSetId": 1
@@ -82,6 +106,30 @@
       "writtenOn": "2017-09-26T18:22:43Z",
       "side": 1,
       "message": "Having not reading the impl yet, I\u0027m confused what happens to |creation_date_to_inherit| if DeleteAnyEquivalentCookie deletes more than one equivalent cookie. Is that possible? If so, do we care which one gets assigned to |creation_date_to_inherit|?",
+      "range": {
+        "startLine": 538,
+        "startChar": 5,
+        "endLine": 539,
+        "endChar": 75
+      },
+      "revId": "21db9785e79c33f80e4b653963176e24b2259060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd857477_d4d200f8",
+        "filename": "net/cookies/cookie_monster.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T12:05:56Z",
+      "side": 1,
+      "message": "As you probably read below, we CHECK if more than one cookie is found. That can\u0027t happen.",
+      "parentUuid": "7519d1fb_231a70e8",
       "range": {
         "startLine": 538,
         "startChar": 5,
@@ -114,6 +162,30 @@
       "revId": "21db9785e79c33f80e4b653963176e24b2259060",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1ceb21_912148d4",
+        "filename": "net/cookies/cookie_monster.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T12:05:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "432b7ff2_5419943b",
+      "range": {
+        "startLine": 547,
+        "startChar": 39,
+        "endLine": 547,
+        "endChar": 43
+      },
+      "revId": "21db9785e79c33f80e4b653963176e24b2259060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
