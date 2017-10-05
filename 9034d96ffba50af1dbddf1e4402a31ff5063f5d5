@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b74f6b3d_2f1f339d",
+        "filename": "third_party/WebKit/Tools/gdb/webkit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T19:18:02Z",
+      "side": 1,
+      "message": "Can we just call Utf8(0).data()? It works for me in gdb command line, but I\u0027m not sure how to do it here.",
+      "revId": "9034d96ffba50af1dbddf1e4402a31ff5063f5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
