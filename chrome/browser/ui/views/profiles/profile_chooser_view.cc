@@ -115,8 +115,6 @@ const int kMenuEdgeMargin = 16;
 
 const int kVerticalSpacing = 16;
 
-const int kTitleViewNativeWidgetOffset = 8;
-
 bool IsProfileChooser(profiles::BubbleViewMode mode) {
   return mode == profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
 }
@@ -140,12 +138,6 @@ views::Link* CreateLink(const base::string16& link_text,
   link_button->SetUnderline(false);
   link_button->set_listener(listener);
   return link_button;
-}
-
-bool HasAuthError(Profile* profile) {
-  const SigninErrorController* error =
-      SigninErrorControllerFactory::GetForProfile(profile);
-  return error && error->HasError();
 }
 
 std::string GetAuthErrorAccountId(Profile* profile) {
@@ -280,47 +272,6 @@ class BackgroundColorHoverButton : public views::LabelButton {
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundColorHoverButton);
 };
-
-// A view to host the GAIA webview overlapped with a back button.  This class
-// is needed to reparent the back button inside a native view so that on
-// windows, user input can be be properly routed to the button.
-class HostView : public views::View {
- public:
-  HostView() {}
-
- private:
-  // views::View:
-  void ViewHierarchyChanged(
-      const ViewHierarchyChangedDetails& details) override;
-
-  // The title itself and the overlaped widget that contains it.
-  views::View* title_view_ = nullptr;  // Not owned.
-  std::unique_ptr<views::Widget> title_widget_;
-
-  DISALLOW_COPY_AND_ASSIGN(HostView);
-};
-
-void HostView::ViewHierarchyChanged(
-    const ViewHierarchyChangedDetails& details) {
-  if (title_widget_ != nullptr || GetWidget() == nullptr)
-    return;
-
-  // The title view must be placed within its own widget so that it can
-  // properly receive user input when overlapped on another view.
-  views::Widget::InitParams params(
-      views::Widget::InitParams::TYPE_CONTROL);
-  params.parent = GetWidget()->GetNativeView();
-  params.opacity = views::Widget::InitParams::TRANSLUCENT_WINDOW;
-  params.ownership = views::Widget::InitParams::WIDGET_OWNS_NATIVE_WIDGET;
-  title_widget_.reset(new views::Widget);
-  title_widget_->Init(params);
-  title_widget_->SetContentsView(title_view_);
-
-  gfx::Rect bounds(title_view_->GetPreferredSize());
-  title_view_->SetBoundsRect(bounds);
-  bounds.Offset(kTitleViewNativeWidgetOffset, kTitleViewNativeWidgetOffset);
-  title_widget_->SetBounds(bounds);
-}
 
 }  // namespace
 
@@ -624,15 +575,6 @@ void ProfileChooserView::Init() {
   if (oauth2_token_service)
     oauth2_token_service->AddObserver(this);
 
-  // If view mode is PROFILE_CHOOSER but there is an auth error, force
-  // ACCOUNT_MANAGEMENT mode.
-  if (IsProfileChooser(view_mode_) && HasAuthError(browser_->profile()) &&
-      signin::IsAccountConsistencyMirrorEnabled() &&
-      avatar_menu_->GetItemAt(avatar_menu_->GetActiveProfileIndex())
-          .signed_in) {
-    view_mode_ = profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT;
-  }
-
   // The arrow keys can be used to tab between items.
   AddAccelerator(ui::Accelerator(ui::VKEY_DOWN, ui::EF_NONE));
   AddAccelerator(ui::Accelerator(ui::VKEY_UP, ui::EF_NONE));
@@ -665,9 +607,7 @@ void ProfileChooserView::OnRefreshTokenAvailable(
       view_mode_ == profiles::BUBBLE_VIEW_MODE_GAIA_REAUTH) {
     // The account management UI is only available through the
     // --account-consistency=mirror flag.
-    ShowViewFromMode(signin::IsAccountConsistencyMirrorEnabled()
-                         ? profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT
-                         : profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   }
 }
 
@@ -680,20 +620,6 @@ void ProfileChooserView::OnRefreshTokenRevoked(const std::string& account_id) {
 
 void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
                                   AvatarMenu* avatar_menu) {
-  // The account management view should only be displayed if the active profile
-  // is signed in.
-  if (view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT) {
-    DCHECK(signin::IsAccountConsistencyMirrorEnabled());
-    const AvatarMenu::Item& active_item = avatar_menu->GetItemAt(
-        avatar_menu->GetActiveProfileIndex());
-    if (!active_item.signed_in) {
-      // This is the case when the user selects the sign out option in the user
-      // menu upon encountering unrecoverable errors. Afterwards, the profile
-      // chooser view is shown instead of the account management view.
-      view_to_display = profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER;
-    }
-  }
-
   if (browser_->profile()->IsSupervised() &&
       (view_to_display == profiles::BUBBLE_VIEW_MODE_GAIA_ADD_ACCOUNT ||
        view_to_display == profiles::BUBBLE_VIEW_MODE_ACCOUNT_REMOVAL)) {
@@ -841,13 +767,8 @@ void ProfileChooserView::ButtonPressed(views::Button* sender,
   } else if (sender == gaia_signin_cancel_button_) {
     // The account management view is only available with the
     // --account-consistency=mirror flag.
-    bool account_management_available =
-        SigninManagerFactory::GetForProfile(browser_->profile())
-            ->IsAuthenticated() &&
-        signin::IsAccountConsistencyMirrorEnabled();
-    ShowViewFromMode(account_management_available ?
-        profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT :
-        profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
+
+    ShowViewFromMode(profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER);
   } else if (sender == current_profile_card_) {
     avatar_menu_->EditProfile(avatar_menu_->GetActiveProfileIndex());
     PostActionPerformed(ProfileMetrics::PROFILE_DESKTOP_MENU_EDIT_IMAGE);
@@ -1122,10 +1043,7 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
   columns->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 1,
                      views::GridLayout::USE_PREF, 0, 0);
   grid_layout->AddPaddingRow(0, 0);
-  const int num_labels =
-      (avatar_item.signed_in && !signin::IsAccountConsistencyMirrorEnabled())
-          ? 2
-          : 1;
+  const int num_labels = (avatar_item.signed_in) ? 2 : 1;
   int profile_card_height =
       kImageSide + 2 * (kBadgeSpacing + vertical_spacing_small);
   const int line_height = profile_card_height / num_labels;
@@ -1169,29 +1087,16 @@ views::View* ProfileChooserView::CreateCurrentProfileView(
 
   // The available links depend on the type of profile that is active.
   if (avatar_item.signed_in) {
-    if (signin::IsAccountConsistencyMirrorEnabled()) {
-      base::string16 button_text = l10n_util::GetStringUTF16(
-          IsProfileChooser(view_mode_)
-              ? IDS_PROFILES_PROFILE_MANAGE_ACCOUNTS_BUTTON
-              : IDS_PROFILES_PROFILE_HIDE_MANAGE_ACCOUNTS_BUTTON);
-      manage_accounts_button_ =
-          new BackgroundColorHoverButton(this, button_text);
-      manage_accounts_button_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-      manage_accounts_button_->SetMinSize(
-          gfx::Size(kFixedMenuWidth, kButtonHeight));
-      view->AddChildView(manage_accounts_button_);
-    } else {
-      views::Label* email_label = new views::Label(avatar_item.username);
-      current_profile_card->set_subtitle(email_label);
-      email_label->SetAutoColorReadabilityEnabled(false);
-      email_label->SetElideBehavior(gfx::ELIDE_EMAIL);
-      email_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
-      grid_layout->StartRow(1, 0);
-      // Skip first column for the profile icon.
-      grid_layout->SkipColumns(1);
-      grid_layout->AddView(email_label, 1, 1, views::GridLayout::LEADING,
-                           views::GridLayout::LEADING);
-    }
+    views::Label* email_label = new views::Label(avatar_item.username);
+    current_profile_card->set_subtitle(email_label);
+    email_label->SetAutoColorReadabilityEnabled(false);
+    email_label->SetElideBehavior(gfx::ELIDE_EMAIL);
+    email_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    grid_layout->StartRow(1, 0);
+    // Skip first column for the profile icon.
+    grid_layout->SkipColumns(1);
+    grid_layout->AddView(email_label, 1, 1, views::GridLayout::LEADING,
+                         views::GridLayout::LEADING);
 
     current_profile_card_->SetAccessibleName(
         l10n_util::GetStringFUTF16(
