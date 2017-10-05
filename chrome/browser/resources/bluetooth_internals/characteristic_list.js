@@ -67,12 +67,35 @@ cr.define('characteristic_list', function() {
   CharacteristicListItem.prototype = {
     __proto__: ExpandableListItem.prototype,
 
+    showAllProperties: function() {
+      var propertiesBtnClass = '.show-all-properties' +
+          this.info.id.substr(
+              this.info.id.lastIndexOf('/') + 1, this.info.id.length);
+
+      this.showallBtn_ = document.querySelector(propertiesBtnClass);
+
+      var buttonparent = this;
+
+      this.showallBtn_.addEventListener('click', function() {
+        if (buttonparent.show_all_properties === false) {
+          buttonparent.show_all_properties = true;
+          this.textContent = 'Hide';
+          buttonparent.propertiesFieldSet_.redraw(true);
+        } else {
+          buttonparent.show_all_properties = false;
+          this.textContent = 'Show All';
+          buttonparent.propertiesFieldSet_.redraw(false);
+        }
+      }, false);
+    },
+
     /**
      * Decorates the element as a characteristic list item. Creates and caches
      * two fieldsets for displaying property values.
      * @override
      */
     decorate: function() {
+
       this.classList.add('characteristic-list-item');
 
       /** @private {!object_fieldset.ObjectFieldSet} */
@@ -83,33 +106,46 @@ cr.define('characteristic_list', function() {
         'uuid.uuid': this.info.uuid.uuid,
       });
 
+
+
       /** @private {!object_fieldset.ObjectFieldSet} */
       this.propertiesFieldSet_ = new object_fieldset.ObjectFieldSet();
       this.propertiesFieldSet_.setPropertyDisplayNames(
           PROPERTIES_PROPERTY_NAMES);
       var Property = interfaces.BluetoothDevice.Property;
-      this.propertiesFieldSet_.setObject({
-        broadcast: (this.info.properties & Property.BROADCAST) > 0,
-        read: (this.info.properties & Property.READ) > 0,
-        write_without_response:
-            (this.info.properties & Property.WRITE_WITHOUT_RESPONSE) > 0,
-        write: (this.info.properties & Property.WRITE) > 0,
-        notify: (this.info.properties & Property.NOTIFY) > 0,
-        indicate: (this.info.properties & Property.INDICATE) > 0,
-        authenticated_signed_writes:
-            (this.info.properties & Property.AUTHENTICATED_SIGNED_WRITES) > 0,
-        extended_properties:
-            (this.info.properties & Property.EXTENDED_PROPERTIES) > 0,
-        reliable_write: (this.info.properties & Property.RELIABLE_WRITE) > 0,
-        writable_auxiliaries:
-            (this.info.properties & Property.WRITABLE_AUXILIARIES) > 0,
-        read_encrypted: (this.info.properties & Property.READ_ENCRYPTED) > 0,
-        write_encrypted: (this.info.properties & Property.WRITE_ENCRYPTED) > 0,
-        read_encrypted_authenticated:
-            (this.info.properties & Property.READ_ENCRYPTED_AUTHENTICATED) > 0,
-        write_encrypted_authenticated:
-            (this.info.properties & Property.WRITE_ENCRYPTED_AUTHENTICATED) > 0,
-      });
+
+      this.show_all_properties = false;
+
+      this.propertiesFieldSet_.setObject(
+          {
+            broadcast: (this.info.properties & Property.BROADCAST) > 0,
+            read: (this.info.properties & Property.READ) > 0,
+            write_without_response:
+                (this.info.properties & Property.WRITE_WITHOUT_RESPONSE) > 0,
+            write: (this.info.properties & Property.WRITE) > 0,
+            notify: (this.info.properties & Property.NOTIFY) > 0,
+            indicate: (this.info.properties & Property.INDICATE) > 0,
+            authenticated_signed_writes:
+                (this.info.properties & Property.AUTHENTICATED_SIGNED_WRITES) >
+                0,
+            extended_properties:
+                (this.info.properties & Property.EXTENDED_PROPERTIES) > 0,
+            reliable_write:
+                (this.info.properties & Property.RELIABLE_WRITE) > 0,
+            writable_auxiliaries:
+                (this.info.properties & Property.WRITABLE_AUXILIARIES) > 0,
+            read_encrypted:
+                (this.info.properties & Property.READ_ENCRYPTED) > 0,
+            write_encrypted:
+                (this.info.properties & Property.WRITE_ENCRYPTED) > 0,
+            read_encrypted_authenticated:
+                (this.info.properties & Property.READ_ENCRYPTED_AUTHENTICATED) >
+                0,
+            write_encrypted_authenticated:
+                (this.info.properties &
+                 Property.WRITE_ENCRYPTED_AUTHENTICATED) > 0,
+          },
+          this.show_all_properties);
 
       /** @private {!value_control.ValueControl} */
       this.valueControl_ = new value_control.ValueControl();
@@ -148,6 +184,14 @@ cr.define('characteristic_list', function() {
       var propertiesHeader = document.createElement('h4');
       propertiesHeader.textContent = 'Properties';
 
+      var propertiesBtn = document.createElement('button');
+      propertiesBtn.textContent = 'Show All';
+      var propertiesBtnClass = 'show-all-properties' +
+          this.info.id.substr(
+              this.info.id.lastIndexOf('/') + 1, this.info.id.length);
+      propertiesBtn.classList.add(propertiesBtnClass);
+      propertiesHeader.appendChild(propertiesBtn);
+
       var propertiesDiv = document.createElement('div');
       propertiesDiv.classList.add('flex');
       propertiesDiv.appendChild(this.propertiesFieldSet_);
@@ -171,6 +215,11 @@ cr.define('characteristic_list', function() {
       infoDiv.appendChild(this.descriptorList_);
 
       this.expandedContent_.appendChild(infoDiv);
+
+      var parent = this;
+      setTimeout(function() {
+        parent.showAllProperties();
+      }, 0);
     },
 
     /** @override */

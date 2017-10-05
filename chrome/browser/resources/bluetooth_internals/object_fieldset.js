@@ -42,9 +42,9 @@ cr.define('object_fieldset', function() {
      * Sets the object data to be displayed in the fieldset.
      * @param {!Object} value
      */
-    setObject: function(value) {
+    setObject: function(value, showAll = true) {
       this.value = value;
-      this.redraw();
+      this.redraw(showAll);
     },
 
     /**
@@ -59,31 +59,34 @@ cr.define('object_fieldset', function() {
     /**
      * Deletes and recreates the table structure with current object data.
      */
-    redraw: function() {
+    redraw: function(showAll = true) {
       this.innerHTML = '';
 
       Object.keys(this.value).forEach(function(propName) {
-        var name = this.nameMap_[propName] || propName;
         var value = this.value[propName];
-        var newField = document.createElement('div');
-        newField.classList.add('status');
+        if (value || showAll) {
+          var name = this.nameMap_[propName] || propName;
 
-        var nameDiv = document.createElement('div');
-        nameDiv.textContent = name + ':';
-        newField.appendChild(nameDiv);
+          var newField = document.createElement('div');
+          newField.classList.add('status');
 
-        var valueDiv = document.createElement('div');
-        valueDiv.dataset.field = propName;
+          var nameDiv = document.createElement('div');
+          nameDiv.textContent = name + ':';
+          newField.appendChild(nameDiv);
 
-        if (typeof(value) === 'boolean') {
-          valueDiv.classList.add('toggle-status');
-          valueDiv.classList.toggle('checked', value);
-        } else {
-          valueDiv.textContent = String(value);
+          var valueDiv = document.createElement('div');
+          valueDiv.dataset.field = propName;
+
+          if (typeof(value) === 'boolean') {
+            valueDiv.classList.add('toggle-status');
+            valueDiv.classList.toggle('checked', value);
+          } else {
+            valueDiv.textContent = String(value);
+          }
+
+          newField.appendChild(valueDiv);
+          this.appendChild(newField);
         }
-
-        newField.appendChild(valueDiv);
-        this.appendChild(newField);
       }, this);
     },
   };
