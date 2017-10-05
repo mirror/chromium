@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "663bdc34_ce64d9cf",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-05T00:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ac3dfb3_da407bf5",
+      "revId": "c582aaa742b899ae7224cc85f5c5f77797039ffb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ba0d4ad_8504ad18",
         "filename": "gpu/config/gpu_util.cc",
         "patchSetId": 7
