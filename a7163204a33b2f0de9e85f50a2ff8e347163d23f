@@ -22,6 +22,29 @@
       "revId": "a7163204a33b2f0de9e85f50a2ff8e347163d23f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5b90d0_708535ea",
+        "filename": "ash/wayland/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T22:07:32Z",
+      "side": 1,
+      "message": "Please avoid having this code directly depend upon ash. It\u0027s going to be all to easy to add a cycle with this. I think you can remove this dep by either pushing the config check to the call sites, or having the call sites supply the config.",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "a7163204a33b2f0de9e85f50a2ff8e347163d23f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
