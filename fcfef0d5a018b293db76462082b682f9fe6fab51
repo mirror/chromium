@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a45f947_6b6f874a",
+        "filename": "chrome/browser/ui/startup/startup_tab_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T19:08:50Z",
+      "side": 1,
+      "message": "This will crash if output is empty. Please add an ASSERT above this, e.g.\nASSERT_FALSE(output.empty);",
+      "range": {
+        "startLine": 461,
+        "startChar": 4,
+        "endLine": 461,
+        "endChar": 13
+      },
+      "revId": "fcfef0d5a018b293db76462082b682f9fe6fab51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
