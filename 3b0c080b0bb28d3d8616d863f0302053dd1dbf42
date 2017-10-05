@@ -103,6 +103,24 @@
       "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9f9991_ba80eb06",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-05T00:34:33Z",
+      "side": 1,
+      "message": "Discussion on https://crbug.com/771752.",
+      "parentUuid": "09548db0_1f04200b",
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
