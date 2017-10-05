@@ -70,6 +70,24 @@
       "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dcd7cfa_debb7dd2",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-05T01:02:12Z",
+      "side": 1,
+      "message": "Where is it used?\n\nI guess it won\u0027t work because it has DISALLOW_NEW_EXCEPT_PLACEMENT_NEW.",
+      "parentUuid": "d95f6820_1a0868af",
+      "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
