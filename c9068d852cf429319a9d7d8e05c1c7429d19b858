@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ffe8e7c_0829e845",
+        "filename": "ash/session/test_session_controller_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T16:35:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9faa31_7937630e",
+      "revId": "c9068d852cf429319a9d7d8e05c1c7429d19b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47222482_ac54a7ef",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T02:57:35Z",
       "side": 1,
       "message": "Code should just be calling SessionController::GetSessionState(). Does that not work? TestSessionControllerClient::SetSessionState() should just be pushing it into SessionController.",
+      "revId": "c9068d852cf429319a9d7d8e05c1c7429d19b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47dcd363_17c5bbbd",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T16:35:58Z",
+      "side": 1,
+      "message": "Yep, that works. Done.",
+      "parentUuid": "47222482_ac54a7ef",
       "revId": "c9068d852cf429319a9d7d8e05c1c7429d19b858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
