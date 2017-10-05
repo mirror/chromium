@@ -43,7 +43,7 @@ Vector<CSSParserToken, 32> CSSTokenizer::TokenizeToEOF() {
       case kEOFToken:
         return tokens;
       default:
-        tokens.Append(token);
+        tokens.push_back(token);
         break;
     }
   }
