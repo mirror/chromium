@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ff0542a_72433745",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T22:13:24Z",
+      "side": 1,
+      "message": "Are these changes OK, or do we really have to support unattached elements?",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d02251_9f532646",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T22:13:24Z",
+      "side": 1,
+      "message": "Does it make sense to customize scroll for an element without a box?",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
