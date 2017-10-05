@@ -103,7 +103,7 @@ public class DownloadForegroundServiceManager {
         // Stop the foreground service.
         // In the pending case, this will stop the foreground immediately after it was started.
         if (!isActive(downloadUpdate.mDownloadStatus)) {
-            stopAndUnbindService(downloadUpdate.mDownloadStatus == DownloadStatus.CANCEL);
+            stopAndUnbindService(downloadUpdate.mDownloadStatus);
             cleanDownloadUpdateQueue();
             return;
         }
@@ -221,25 +221,32 @@ public class DownloadForegroundServiceManager {
     /** Helper code to stop and unbind service. */
 
     @VisibleForTesting
-    void stopAndUnbindService(boolean isCancelled) {
+    void stopAndUnbindService(DownloadStatus downloadStatus) {
         mIsServiceBound = false;
 
         if (mBoundService != null) {
-            stopAndUnbindServiceInternal(isCancelled);
+            stopAndUnbindServiceInternal(downloadStatus);
             mBoundService = null;
         }
 
         // If the download isn't cancelled,  need to relaunch the notification so it is no longer
         // pinned to the foreground service.
-        if (!isCancelled && Build.VERSION.SDK_INT < 24) {
+        if (downloadStatus == DownloadStatus.COMPLETE && Build.VERSION.SDK_INT < 24) {
             relaunchPinnedNotification();
         }
         mPinnedNotificationId = INVALID_NOTIFICATION_ID;
     }
 
     @VisibleForTesting
-    void stopAndUnbindServiceInternal(boolean isCancelled) {
-        mBoundService.stopDownloadForegroundService(isCancelled);
+    void stopAndUnbindServiceInternal(DownloadStatus downloadStatus) {
+        // Disassociate notification from foreground, if possible.
+        boolean detachNotification =
+                downloadStatus == DownloadStatus.PAUSE || downloadStatus == DownloadStatus.COMPLETE;
+        // Kill the notification if canceled or cannot be detached (to be fixed later).
+        boolean killNotification = downloadStatus == DownloadStatus.CANCEL
+                || downloadStatus == DownloadStatus.COMPLETE;
+
+        mBoundService.stopDownloadForegroundService(detachNotification, killNotification);
         ContextUtils.getApplicationContext().unbindService(mConnection);
         DownloadForegroundServiceObservers.removeObserver(
                 DownloadNotificationServiceObserver.class);
