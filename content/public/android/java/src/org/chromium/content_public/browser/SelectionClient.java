@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.content_public.browser;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -113,9 +113,12 @@ public interface SelectionClient {
     void cancelAllRequests();
 
     /**
-     * Sets TextClassifier for the Smart Text selection. Pass null argument to use the system
-     * classifier
+     * Sets the TextClassifier for the Smart Text Selection feature. Pass {@code null} to use the
+     * system classifier.
      */
+    // clang-format is confused by the java 8 usage of default in an interface.
+    // TODO(donnd): remove this once it's supported.
+    // clang-format off
     default void setTextClassifier(TextClassifier textClassifier) {}
 
     /**
@@ -133,4 +136,5 @@ public interface SelectionClient {
     default TextClassifier getCustomTextClassifier() {
         return null;
     }
+        // clang-format on
 }

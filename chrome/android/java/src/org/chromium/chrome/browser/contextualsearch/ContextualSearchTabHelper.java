@@ -9,6 +9,7 @@ import android.view.ContextMenu;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.SelectionClientManager;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.locale.LocaleManager;
@@ -27,6 +28,9 @@ import org.chromium.net.NetworkChangeNotifier;
  */
 public class ContextualSearchTabHelper
         extends EmptyTabObserver implements NetworkChangeNotifier.ConnectionTypeObserver {
+    /** The Tab that this helper tracks. */
+    private final Tab mTab;
+
     /**
      * Notification handler for Contextual Search events.
      */
@@ -42,18 +46,26 @@ public class ContextualSearchTabHelper
      */
     private GestureStateListener mGestureStateListener;
 
-    private long mNativeHelper;
+    /**
+     * Manages incoming calls to Smart Select when available, along with the optional
+     * Contextual Search client that comes and goes periodically.
+     */
+    private SelectionClientManager mSelectionClientManager;
 
-    private final Tab mTab;
+    private long mNativeHelper;
 
     /**
      * Creates a contextual search tab helper for the given tab.
      * @param tab The tab whose contextual search actions will be handled by this helper.
      */
-    public static void createForTab(Tab tab) {
-        new ContextualSearchTabHelper(tab);
+    public static ContextualSearchTabHelper createForTab(Tab tab) {
+        return new ContextualSearchTabHelper(tab);
     }
 
+    /**
+     * Constructs a Tab helper that can enable and disable Contextual Search based on Tab activity.
+     * @param tab The {@link Tab} we're tracking.
+     */
     private ContextualSearchTabHelper(Tab tab) {
         mTab = tab;
         tab.addObserver(this);
@@ -61,6 +73,7 @@ public class ContextualSearchTabHelper
         if (NetworkChangeNotifier.isInitialized()) {
             NetworkChangeNotifier.addConnectionTypeObserver(this);
         }
+        updateSelectionClientManager();
     }
 
     // ============================================================================================
@@ -195,7 +208,9 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener == null && manager != null) {
             mGestureStateListener = manager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            updateSelectionClientManager();
+            cvc.setSelectionClient(mSelectionClientManager.addContextualSearchSelectionClient(
+                    manager.getContextualSearchSelectionClient()));
         }
     }
 
@@ -209,7 +224,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.setSelectionClient(mSelectionClientManager.removeContextualSearchSelectionClient());
         }
     }
 
@@ -251,6 +266,27 @@ public class ContextualSearchTabHelper
             return ((ChromeActivity) activity).getContextualSearchManager();
         }
         return null;
+    }
+
+    /**
+     * Updates the SelectionClientManager private instance that we maintain, if needed.
+     * Should be called whenever the current {@link ContentViewCore} changes.
+     */
+    private void updateSelectionClientManager() {
+        ContentViewCore contentViewCore = mTab.getActiveContentViewCore();
+        if (contentViewCore == null
+                || contentViewCore == mBaseContentViewCore && mSelectionClientManager != null)
+            return;
+
+        // Set up the SelectionClientManager for this ContentViewCore.
+        mBaseContentViewCore = contentViewCore;
+        mSelectionClientManager =
+                new SelectionClientManager(contentViewCore, mTab.getWindowAndroid());
+        ContextualSearchManager contextualSearchManager = getContextualSearchManager();
+        if (contextualSearchManager != null) {
+            contextualSearchManager.suppressContextualSearchForSmartSelection(
+                    mSelectionClientManager.isSmartSelectionEnabledInChrome());
+        }
     }
 
     // ============================================================================================
