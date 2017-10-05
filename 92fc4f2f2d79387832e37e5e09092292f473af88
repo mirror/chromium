@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bd2a9012_06ccaa91",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-05T14:22:09Z",
+      "side": 1,
+      "message": "If we pass in the ExecutorService, mThread would still be null.",
+      "parentUuid": "d3d98c45_095e940b",
+      "range": {
+        "startLine": 60,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 74
+      },
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcb0d310_a2e73d98",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d73658cf_6a5b3c70",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetStressTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-05T14:22:09Z",
+      "side": 1,
+      "message": "It probably will. Using fewer threads is probably a good thing in the test though, in case where the GC is slow.",
+      "parentUuid": "dcb0d310_a2e73d98",
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df79ae2f_843e488d",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/TestUrlRequestCallback.java",
         "patchSetId": 3
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-05T14:09:48Z",
       "side": 1,
       "message": "This can throw NullPointerException now.",
+      "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b85d92_8f01f8a9",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/TestUrlRequestCallback.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-05T14:22:09Z",
+      "side": 1,
+      "message": "If the user of TestUrlRequestCallback uses their own executor, they shouldn\u0027t call this method right?",
+      "parentUuid": "df79ae2f_843e488d",
       "revId": "92fc4f2f2d79387832e37e5e09092292f473af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
