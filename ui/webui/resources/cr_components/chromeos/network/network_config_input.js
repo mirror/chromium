@@ -8,6 +8,8 @@
 Polymer({
   is: 'network-config-input',
 
+  behaviors: [I18nBehavior],
+
   properties: {
     label: String,
 
@@ -16,6 +18,43 @@ Polymer({
     value: {
       type: String,
       notify: true,
-    }
+    },
+
+    password: Boolean,
+
+    showPassword: {
+      type: Boolean,
+      value: false,
+    },
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getInputType_: function() {
+    return (this.password && !this.showPassword) ? 'password' : 'text';
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getIconClass_: function() {
+    return this.showPassword ? 'icon-visibility-off' : 'icon-visibility';
+  },
+
+  /**
+   * @return {string}
+   * @private
+   */
+  getShowPasswordTitle_: function() {
+    return this.showPassword ? this.i18n('hidePassword') :
+                               this.i18n('showPassword');
+  },
+
+  /** @private */
+  onShowPasswordTap_: function() {
+    this.showPassword = !this.showPassword;
   },
 });
