@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0311e4a_a4571c4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-10-05T10:39:08Z",
+      "side": 1,
+      "message": "nit: removed?",
+      "range": {
+        "startLine": 11,
+        "startChar": 193,
+        "endLine": 11,
+        "endChar": 198
+      },
+      "revId": "83e987d517416deaef39fd239ed34cad074d2a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
