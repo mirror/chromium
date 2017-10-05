@@ -260,6 +260,10 @@ public class FeatureUtilities {
                         ? false
                         : ChromeFeatureList.isEnabled(
                                   ChromeFeatureList.CHROME_HOME_PERSONALIZED_OMNIBOX_SUGGESTIONS));
+
+        if (!isChromeHomeEnabled && manager.isChromeHomeUserPreferenceSet()) {
+            manager.clearChromeHomeUserPreference();
+        }
     }
 
     /**
