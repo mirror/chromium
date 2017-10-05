@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ec99b8a_b9737985",
+        "filename": "components/encrypted_messages/DEPS",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-05T15:09:47Z",
+      "side": 1,
+      "message": "if you include headers from boringssl, some build target should also depend on it",
+      "revId": "ec462c554ce6cdde23a5088c97295c6db817aa28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
