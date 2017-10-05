@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0e1f7b_472592f0",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T21:46:28Z",
+      "side": 1,
+      "message": "This seemed simpler than trying to create a new handler (Because of the OnceCallback and waiting for a partial file to be destroyed)",
+      "range": {
+        "startLine": 324,
+        "startChar": 7,
+        "endLine": 324,
+        "endChar": 21
+      },
+      "revId": "aa74ee918f5ae3f3d2afdd78c8311b0648c43669",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
