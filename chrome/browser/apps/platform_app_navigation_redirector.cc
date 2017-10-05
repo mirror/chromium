@@ -4,6 +4,8 @@
 
 #include "chrome/browser/apps/platform_app_navigation_redirector.h"
 
+#include <tuple>
+
 #include "apps/launcher.h"
 #include "base/bind.h"
 #include "base/logging.h"

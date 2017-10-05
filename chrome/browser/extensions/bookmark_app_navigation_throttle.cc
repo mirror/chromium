@@ -10,14 +10,17 @@
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/renderer_host/chrome_navigation_ui_data.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
+#include "chrome/browser/ui/extra_navigation_info_utils.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
+#include "extensions/browser/extension_navigation_ui_data.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -48,6 +51,53 @@ BookmarkAppNavigationThrottle::MaybeCreateThrottleFor(
   Profile* profile = Profile::FromBrowserContext(browser_context);
   if (profile->GetProfileType() == Profile::INCOGNITO_PROFILE) {
     DVLOG(1) << "Don't intercept: Navigation is in incognito.";
+    return nullptr;
+  }
+
+  extensions::ExtensionNavigationUIData* data =
+      static_cast<ChromeNavigationUIData*>(params.navigation_ui_data())
+          ->GetExtensionNavigationUIData();
+  WindowOpenDisposition disposition = data->disposition();
+  bool had_target_contents = data->had_target_contents();
+  bool is_from_app = data->is_from_app();
+
+  // CURRENT_TAB is used when clicking on links that just navigate the frame.
+  // We always want to intercept these navigations.
+  //
+  // FOREGROUND_TAB is used when clicking on links that open a new tab in the
+  // foreground e.g. target=_blank links, trying to open a tab inside an app
+  // window when there are no regular browser windows, Ctrl + Shift + Clicking
+  // a link, etc. We sometimes want to intercept these navigations; see if
+  // statement below.
+  //
+  // NEW_WINDOW is used when shift + clicking a link or when clicking
+  // "Open in new window" in the context menu. We want to intercept these
+  // navigations but only if they come from an app.
+  if (disposition != WindowOpenDisposition::CURRENT_TAB &&
+      disposition != WindowOpenDisposition::NEW_FOREGROUND_TAB &&
+      disposition != WindowOpenDisposition::NEW_WINDOW) {
+    // TODO(BEFORE LANDING): Uncomment once https://crrev.com/c/701814 lands.
+    // DVLOG(1) << "Don't intercept: Disposition is "
+    //          << ui::DispositionToString(disposition);
+    return nullptr;
+  }
+
+  // We only want to intercept foreground tab navigations when they had target
+  // contents, e.g. when a user clicks a target=_blank link or the page calls
+  // window.open(), the renderer creates a new window and passes a target
+  // contents. Foreground tab navigations that had no target contents include,
+  // Ctrl + Click a link inside an app window when there are no browser windows,
+  // and clicking the "Open link in new tab" context menu option.
+  if (disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB &&
+      !had_target_contents) {
+    DVLOG(1) << "Don't intercept: new foreground tab with no target contents.";
+    return nullptr;
+  }
+
+  // When a user Shift + Clicks a link inside an app we should open an app
+  // instead of a new browser window.
+  if (disposition == WindowOpenDisposition::NEW_WINDOW && !is_from_app) {
+    DVLOG(1) << "Don't intercept: new window not from app.";
     return nullptr;
   }
 
