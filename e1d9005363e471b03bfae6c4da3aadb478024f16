@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d2541ab_818f7ee3",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1638efb_250f55f1",
+      "range": {
+        "startLine": 716,
+        "startChar": 2,
+        "endLine": 716,
+        "endChar": 7
+      },
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fb8318c_c52e9e8f",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9640e5f8_3f810ab0",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb8318c_c52e9e8f",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "624ca22d_e20d8949",
         "filename": "ui/app_list/views/search_result_page_view.cc",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-10-05T18:19:02Z",
       "side": 1,
       "message": "Do we need to do next_focusable_view-\u003eRequestFocus() if it is contained?",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161acf8a_d70452e8",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "No, arrow keys and tab key focus movement are handled by FocusManager to trigger default behavior if the key event is not handled here.",
+      "parentUuid": "624ca22d_e20d8949",
       "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0b9ad66e_aa5b9d18",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc8aeb9_a380241d",
+      "range": {
+        "startLine": 200,
+        "startChar": 35,
+        "endLine": 200,
+        "endChar": 41
+      },
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0260a6a7_962ef457",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694b846a_8fed16fe",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0260a6a7_962ef457",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "5a272416_48fa2b34",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea6f61e_5d33d4eb",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e68eacaf_8fb2f77e",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
         "patchSetId": 2
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "f79c905b_44877b80",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68eacaf_8fb2f77e",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "497ce127_2cb29104",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 2
@@ -153,6 +297,24 @@
       "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "180945b1_9a41a6d8",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-10-05T18:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497ce127_2cb29104",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
