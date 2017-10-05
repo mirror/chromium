@@ -12,19 +12,29 @@ namespace ash {
 
 HighlighterControllerTestApi::HighlighterControllerTestApi(
     HighlighterController* instance)
-    : instance_(instance) {
-  instance_->SetObserver(this);
+    : binding_(this), instance_(instance) {
+  AttachClient();
 }
 
 HighlighterControllerTestApi::~HighlighterControllerTestApi() {
-  instance_->SetObserver(nullptr);
-  if (enabled_)
+  if (binding_.is_bound())
+    DetachClient();
+  if (instance_->enabled())
     instance_->SetEnabled(false);
   instance_->DestroyPointerView();
 }
 
-void HighlighterControllerTestApi::CallMetalayerDone() {
-  instance_->CallExitCallback();
+void HighlighterControllerTestApi::AttachClient() {
+  DCHECK(!binding_.is_bound());
+  ash::mojom::HighlighterControllerClientPtr client;
+  binding_.Bind(mojo::MakeRequest(&client));
+  instance_->AttachClient(std::move(client));
+}
+
+void HighlighterControllerTestApi::DetachClient() {
+  DCHECK(binding_.is_bound());
+  instance_->DetachClient();
+  binding_.Close();
 }
 
 void HighlighterControllerTestApi::SetEnabled(bool enabled) {
@@ -67,13 +77,19 @@ const FastInkPoints& HighlighterControllerTestApi::predicted_points() const {
   return instance_->highlighter_view_->predicted_points_;
 }
 
+bool HighlighterControllerTestApi::HandleEnabledStateChangedCalled() {
+  instance_->FlushMojoForTesting();
+  return handle_enabled_state_changed_called_;
+}
+
+bool HighlighterControllerTestApi::HandleSelectionCalled() {
+  instance_->FlushMojoForTesting();
+  return handle_selection_called_;
+}
+
 void HighlighterControllerTestApi::HandleSelection(const gfx::Rect& rect) {
   handle_selection_called_ = true;
   selection_ = rect;
-}
-
-void HighlighterControllerTestApi::HandleFailedSelection() {
-  handle_failed_selection_called_ = true;
 }
 
 void HighlighterControllerTestApi::HandleEnabledStateChange(bool enabled) {
