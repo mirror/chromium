@@ -485,11 +485,8 @@ public class ChromeTabbedActivity
                 if (!SigninPromoUtil.launchSigninPromoIfNeeded(this)) {
                     if (!DataReductionPromoScreen.launchDataReductionPromo(
                                 this, currentModel.isIncognito())) {
-                        // TODO(mdjones): Refine this triggering logic when promo is complete:
-                        // crbug.com/767738
-                        if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_PROMO)) {
-                            ChromeHomePromoDialog chDialog = new ChromeHomePromoDialog(this);
-                            chDialog.show();
+                        if (FeatureUtilities.shouldShowChromeHomePromoForStartup()) {
+                            new ChromeHomePromoDialog(this).show();
                         } else if (getBottomSheet() != null) {
                             getBottomSheet().showHelpBubbleIfNecessary();
                         }
@@ -1540,9 +1537,7 @@ public class ChromeTabbedActivity
                         if (getBottomSheet() != null
                                 && ChromeFeatureList.isEnabled(
                                            ChromeFeatureList.CHROME_HOME_PROMO)) {
-                            ChromeHomePromoDialog chDialog =
-                                    new ChromeHomePromoDialog(ChromeTabbedActivity.this);
-                            chDialog.show();
+                            new ChromeHomePromoDialog(ChromeTabbedActivity.this).show();
                             return;
                         }
 
