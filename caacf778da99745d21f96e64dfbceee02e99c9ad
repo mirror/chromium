@@ -116,6 +116,30 @@
     },
     {
       "key": {
+        "uuid": "328bc4cf_a6f49127",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T17:33:51Z",
+      "side": 1,
+      "message": "This has been fixed in PS 53. EraseTransaction takes the result as an argument now. The failing components and content_unittests in PS 52 test this.",
+      "parentUuid": "72a7b5a4_be933768",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 49
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42aeab41_b2ad154d",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -315,6 +339,30 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d37e18_f200a51f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T17:33:51Z",
+      "side": 1,
+      "message": "Yes, this has been done in PS 53.",
+      "parentUuid": "cd5abccf_77ab2f94",
+      "range": {
+        "startLine": 604,
+        "startChar": 53,
+        "endLine": 604,
+        "endChar": 59
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
