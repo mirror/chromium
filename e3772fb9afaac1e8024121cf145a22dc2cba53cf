@@ -16,6 +16,24 @@
       "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3331c9_c2b7ab0a",
+        "filename": "ash/message_center/message_center_style.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T18:25:57Z",
+      "side": 1,
+      "message": "Done. Am I making sense?\n\nOther interpretations:\n- Move to ui/message_center -\u003e many platforms depend on ui/message_center, so may not be a good place to platform specific constants.\n- Rename to ash::message_center -\u003e we have to rewrite all message_center refenrece to ::message_center.",
+      "parentUuid": "5cf1012f_b91294a8",
+      "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
