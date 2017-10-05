@@ -16,6 +16,24 @@
       "revId": "86858f36beecf0309b4ce458538f8078d1126be3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67ec016_f795751f",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T21:27:11Z",
+      "side": 1,
+      "message": "Thanks. I think the way the property parsing is implemented is similar to that of \u0027touch-action\u0027. I added new test cases here as well as unit tests to CSSPropertyParserTest.",
+      "parentUuid": "98ac92ff_94a4206e",
+      "revId": "86858f36beecf0309b4ce458538f8078d1126be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
