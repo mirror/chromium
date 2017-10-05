@@ -45,6 +45,30 @@
       "revId": "e6e27577f8465d3299d651bad4823e0bff652d4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d054e5a8_cd107fb0",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 10421,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-10-05T09:32:37Z",
+      "side": 1,
+      "message": "Suggest: \"Your administrator requires you to sign in to Chrome.\"\n\nPer Google UX style, \"sign in to\" is three words. Suggest to drop \"with your account\" b/c the requirement to use their organization\u0027s credentials, as opposed to personal credentials, will likely be clear to the user in context.",
+      "parentUuid": "f8ec1a24_601dbbf3",
+      "range": {
+        "startLine": 10421,
+        "startChar": 52,
+        "endLine": 10421,
+        "endChar": 54
+      },
+      "revId": "e6e27577f8465d3299d651bad4823e0bff652d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
