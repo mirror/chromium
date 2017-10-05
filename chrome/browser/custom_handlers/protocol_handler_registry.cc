@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -29,6 +30,11 @@
 #include "net/base/network_delegate.h"
 #include "net/url_request/url_request_redirect_job.h"
 #include "ui/base/l10n/l10n_util.h"
+
+#if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#include "chrome/installer/util/shell_util.h"
+#endif
 
 using content::BrowserThread;
 using content::ChildProcessSecurityPolicy;
@@ -410,7 +416,22 @@ void ProtocolHandlerRegistry::InitProtocolSettings() {
     for (ProtocolHandlerMap::const_iterator p = default_handlers_.begin();
          p != default_handlers_.end(); ++p) {
       ProtocolHandler handler = p->second;
-      delegate_->RegisterWithOSAsDefaultClient(handler.protocol(), this);
+
+      shell_integration::DefaultWebClientState state =
+          shell_integration::IsDefaultProtocolClient(handler.protocol());
+
+      if (state == shell_integration::DefaultWebClientState::NOT_DEFAULT)
+        delegate_->RegisterWithOSAsDefaultClient(handler.protocol(), this);
+
+// TODO(chengx): Remove this metric after crbug/449569 is fixed.
+#if defined(OS_WIN)
+      // Log the default protocol client state for Windows 7.
+      if (ShellUtil::CanMakeChromeDefaultUnattended()) {
+        UMA_HISTOGRAM_ENUMERATION(
+            "DefaultProtocolClient.State", state,
+            shell_integration::DefaultWebClientState::NUM_DEFAULT_STATES);
+      }
+#endif
     }
   }
 }
