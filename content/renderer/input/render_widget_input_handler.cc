@@ -344,7 +344,7 @@ void RenderWidgetInputHandler::HandleInputEvent(
   if (callback) {
     std::move(callback).Run(ack_result, swap_latency_info,
                             std::move(event_overscroll),
-                            handling_touch_action_);
+                            std::move(handling_touch_action_));
   } else {
     DCHECK(!event_overscroll) << "Unexpected overscroll for un-acked event";
   }
@@ -407,6 +407,8 @@ bool RenderWidgetInputHandler::ProcessTouchAction(
     return false;
 
   handling_touch_action_ = touch_action;
+  if (touch_action == cc::kTouchActionAuto)
+    return false;
   return true;
 }
 

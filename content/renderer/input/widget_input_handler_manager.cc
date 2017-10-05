@@ -323,6 +323,7 @@ void WidgetInputHandlerManager::DidHandleInputEventAndOverscroll(
                             EVENT_CONSUMED_BY_COMPOSITOR);
       break;
     case INPUT_EVENT_ACK_STATE_NOT_CONSUMED:
+    case INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING:
     case INPUT_EVENT_ACK_STATE_SET_NON_BLOCKING_DUE_TO_FLING:
       renderer_scheduler_->DidHandleInputEventOnCompositorThread(
           *input_event, blink::scheduler::RendererScheduler::InputEventState::
