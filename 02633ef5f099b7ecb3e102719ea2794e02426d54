@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01d06cfa_842487a7",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T14:45:56Z",
+      "side": 1,
+      "message": "Would it make sense to try different options?",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c0781a_5ff6ef2c",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T14:45:56Z",
+      "side": 1,
+      "message": "Could you add a comment why we consume data by portions on this size? Also, does chunk of 1 byte length make sense here? Maybe we need at least 3, e.g. \"\u003cp\u003e\"? Sorry if it\u0027s stupid question :)",
+      "range": {
+        "startLine": 22,
+        "startChar": 61,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb944540_f937de40",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T14:45:56Z",
+      "side": 1,
+      "message": "Why do we create all these chunks and segments? What\u0027s wrong if we simply treat all the |data| as input and start looking for tokens in it? I assume that once \"tokenizer-\u003eNextToken\" returns false, we cannot continue? Could you please add a comment :)",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
