@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fcea61b7_5cec124f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "I actually meant a functional test.  Something like create the node with some default value.  Run for a bit, pause, and change the value, and continue.  Does the worklet still match the gain node?",
+      "parentUuid": "3791fd19_5b6bc6db",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a50807e_cecb3e6d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
         "patchSetId": 22
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "781d8842_92756e8d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "I didn\u0027t mean the DCHECK. I meant this if block.",
+      "parentUuid": "bd9e143b_2d6669fd",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d117bcff_d403ef88",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 22
@@ -352,6 +388,24 @@
     },
     {
       "key": {
+        "uuid": "a415e9b3_c821d5b9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65fd6b46_96f55753",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca8cbf3b_844dd80c",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 22
@@ -381,6 +435,24 @@
       "side": 1,
       "message": "Removed.",
       "parentUuid": "ca8cbf3b_844dd80c",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08680be4_9dc9bac6",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "As before, the if block, not the DCHECK.",
+      "parentUuid": "7ec7966a_5088db7d",
       "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -597,6 +669,24 @@
     },
     {
       "key": {
+        "uuid": "bcc23441_01e5ac59",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a237905_378007dc",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea387d04_70fedae0",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 22
@@ -801,6 +891,24 @@
       "side": 1,
       "message": "I think AudioWorkletNode is a black box from WebAudio engine\u0027s POV, so we should simply treat it with zero latency and zero tail time.\n\nOr does it look like more spec work? :/",
       "parentUuid": "d778cb57_5990d997",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f342bf_d0e39e23",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "I\u0027m ok with 0 here. Don\u0027t think we need any spec work; tail and latency is pretty loosely defined.",
+      "parentUuid": "cab8a29b_87a61685",
       "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

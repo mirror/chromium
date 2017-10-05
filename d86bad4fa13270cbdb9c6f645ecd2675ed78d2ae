@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "119efb93_4fb0be64",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-05T22:09:34Z",
+      "side": 1,
+      "message": "Nit: Easier to understand if written like count \u003c 1 || count \u003e 32.\n\nDon\u0027t we have some const value specifying 32 as the max number of channels?\n\nAh: BaseAudioContext::MaxNumberOfChannels()",
+      "revId": "d86bad4fa13270cbdb9c6f645ecd2675ed78d2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
