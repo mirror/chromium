@@ -24,8 +24,6 @@ class MEDIA_EXPORT AudioManagerAndroid : public AudioManagerBase {
                       AudioLogFactory* audio_log_factory);
   ~AudioManagerAndroid() override;
 
-  void InitializeIfNeeded();
-
   // Implementation of AudioManager.
   bool HasAudioOutputDevices() override;
   bool HasAudioInputDevices() override;

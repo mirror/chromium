@@ -67,13 +67,6 @@ AudioManagerAndroid::AudioManagerAndroid(
 
 AudioManagerAndroid::~AudioManagerAndroid() = default;
 
-void AudioManagerAndroid::InitializeIfNeeded() {
-  GetTaskRunner()->PostTask(
-      FROM_HERE,
-      base::Bind(base::IgnoreResult(&AudioManagerAndroid::GetJavaAudioManager),
-                 base::Unretained(this)));
-}
-
 void AudioManagerAndroid::ShutdownOnAudioThread() {
   AudioManagerBase::ShutdownOnAudioThread();
 
