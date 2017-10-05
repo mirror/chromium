@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d73f1da_f74d79c9",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContentsFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T03:55:44Z",
+      "side": 1,
+      "message": "Just to make sure: that reads data from the end of \"data\" buffer, right?",
+      "range": {
+        "startLine": 16,
+        "startChar": 30,
+        "endLine": 16,
+        "endChar": 52
+      },
+      "revId": "03a28a22e1cf42a60a12466472fcb3ced6a52b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e416476b_b616de82",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContentsFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T03:55:44Z",
+      "side": 1,
+      "message": "How much slower the whole target would be working if we create two contexts and do parsing twice?",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "03a28a22e1cf42a60a12466472fcb3ced6a52b11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
