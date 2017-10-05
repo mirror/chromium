@@ -2,6 +2,213 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b57706c_da51b5a4",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "Please make //components/payments/core/util depend on //components/payments/core instead of the other way around. That way, Chrome for desktop and Android will not be indirectly using the //components/payments/core/util code.\n\nAlso please add a -components/payments/core/util entry into //components/payments/core/DEPS to make sure this does not happen by accident.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 38
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e2678f_2848e24b",
+        "filename": "components/payments/core/payment_options.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "This function should live somewhere in //components/payments/core/util/.",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267f8df1_3b9b287f",
+        "filename": "components/payments/core/payment_options_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "Should not be necessary, from what I can tell by looking at this file.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 25
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc27c694_46774ee6",
+        "filename": "components/payments/core/payment_response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "Technically, \"this-\u003e\" is not necessary and is rarely (if ever) used in Chromium.\n\n(Here and elsewhere.)",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74705f69_cd922c62",
+        "filename": "components/payments/core/payment_response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "auto result \u003d std::make_unique\u003cbase::DictionaryValue\u003e();\n\nThen you can remove ptr_util.h include as well.\n\n(Here and elsewhere.)",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 76
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee9f138_99265017",
+        "filename": "components/payments/core/payment_response.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "At first glance, this function looks like it would be safe outside of util/ subdirectory, but it actually calls into JSON parser, so please move it into util/ as well.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 67
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1722fb93_6c634179",
+        "filename": "components/payments/core/payment_response_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "After you move the ToDictionaryValue() and FromDictionaryValue() functions to util/, their unit tests should follow.\n\n(Here and elsewhere.)",
+      "range": {
+        "startLine": 32,
+        "startChar": 45,
+        "endLine": 32,
+        "endChar": 64
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f271da_b37e8e66",
+        "filename": "components/payments/core/web_payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "These two are iOS specific without possibility of them being used on other platforms. Could they live in iOS specific directory somewhere?",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 48
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a591fa3_68a3c8e6",
+        "filename": "components/payments/core/web_payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T18:09:39Z",
+      "side": 1,
+      "message": "Technically this does not have to go into util/, because no JSON parsing happens inside, but you may want to move it there for consistency.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 63
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce329665_e4ea0639",
         "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
         "patchSetId": 1
