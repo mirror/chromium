@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0279410_414606cc",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-05T21:09:06Z",
+      "side": 1,
+      "message": "I hadn\u0027t reached the policy handler impl when I wrote the following... so I didn\u0027t realize that the sync/startup bits were still both TODO. Leaving comment for posterity though.\n\n---\n\nAdd another version of this test to validate that if the cc autofill is disabled by pref you don\u0027t get any autofill profiles loaded on startup.\n\nYou can look at the LogStoredCreditCardMetrics test to create cards of each type.\n\n // Make sure credit card data saved.\n - feature enabled\n - generate cards\n - Refresh\n - WaitOnPersoanDataChanges\n - verify num expected cards exist\n - disable pref\n - reset personal data manager (i.e., restart/reload)\n - verify num cards is 0",
+      "revId": "4c0c87192c9175e550ada16ba2c0ae747ea0ad37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
