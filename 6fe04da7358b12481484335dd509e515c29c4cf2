@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7dcfc01d_968a55a6",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-05T23:36:46Z",
+      "side": 1,
+      "message": "Sorry I might be wrong in the first place. It might make more sense to keep it visible unless the phantom window shows up (if it can be snapped) or unless the drag is completed. Otherwise user might not be able notice the indicator message. Could you check with Omri to see which way is better?",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20b3df07_234c5cee",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -19,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "bf7d797b_412f2833",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-05T23:36:46Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s needed either.",
+      "parentUuid": "20b3df07_234c5cee",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ca43ef_a842a896",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 3
@@ -30,6 +65,58 @@
       "writtenOn": "2017-10-05T18:58:59Z",
       "side": 1,
       "message": "I\u0027m not sure why, but without this, the view is sometimes draw below the selector times.\n\nAny ideas?",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cb67f2_282ba668",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-05T23:36:46Z",
+      "side": 1,
+      "message": "It looks like if you don\u0027t specify parent or context, ChromeViewsDelegate::CreateNativeWidget() will assign a default context, see https://cs.chromium.org/chromium/src/chrome/browser/ui/views/chrome_views_delegate_chromeos.cc?rcl\u003d42623bb999e96fdac9a07395a35b784ef706da6a\u0026l\u003d89. Thus the primary root window will decide when to put the overlay widget - it might be above the selector or might be below the selector. So I think you should explicitly initialize its parent here.",
+      "parentUuid": "f7ca43ef_a842a896",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7389c9a_05f21764",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-05T23:36:46Z",
+      "side": 1,
+      "message": "nit: ...., false /* clockwise */));",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed24aa78_f418fc39",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-05T23:36:46Z",
+      "side": 1,
+      "message": "nit: ditto",
       "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
