@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f616ee2_779ce639",
+        "filename": "chrome/browser/ui/ash/tablet_mode_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-05T20:54:01Z",
+      "side": 1,
+      "message": "Replicating these two methods will let us break a bunch of direct linking to tablet_mode_controller(), but I\u0027d like to wait until a follow-up patch to go through and switch them since there\u0027s a lot and this patch is already starting to get a bit big.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "a56a45d7042d8f1ed493d8577d2c09ed9cf4e539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
