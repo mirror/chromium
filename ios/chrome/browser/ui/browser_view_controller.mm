@@ -1959,18 +1959,24 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Position the toolbar next, either at the top of the browser view or
   // directly under the tabstrip.
-  CGRect toolbarFrame = [[_toolbarCoordinator view] frame];
+
+  [self addChildViewController:_toolbarCoordinator.webToolbarController];
+  //  viewController.view.frame = subview.bounds;
+  //  [subview addSubview:viewController.view];
+
+  CGRect toolbarFrame = [_toolbarCoordinator.webToolbarController.view frame];
   toolbarFrame.origin = CGPointMake(0, minY);
   toolbarFrame.size.width = widthOfView;
-  [[_toolbarCoordinator view] setFrame:toolbarFrame];
+  [_toolbarCoordinator.webToolbarController.view setFrame:toolbarFrame];
 
   // Place the infobar container above the content area.
   InfoBarContainerView* infoBarContainerView = _infoBarContainer->view();
   [self.view insertSubview:infoBarContainerView aboveSubview:_contentArea];
 
   // Place the toolbar controller above the infobar container.
-  [[self view] insertSubview:[_toolbarCoordinator view]
+  [[self view] insertSubview:_toolbarCoordinator.webToolbarController.view
                 aboveSubview:infoBarContainerView];
+  [_toolbarCoordinator.webToolbarController didMoveToParentViewController:self];
   minY += CGRectGetHeight(toolbarFrame);
 
   // Account for the toolbar's drop shadow.  The toolbar overlaps with the web
@@ -3794,7 +3800,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
                  editingText:![self isFirstResponder]];
 }
 
-#pragma mark -
+#pragma mark - URLLoader
 
 // Induce an intentional crash in the browser process.
 - (void)induceBrowserCrash {
@@ -4633,6 +4639,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   } else {
     relinquishedToolbarController = _toolbarCoordinator.webToolbarController;
   }
+  [_toolbarCoordinator.webToolbarController willMoveToParentViewController:nil];
+  [_toolbarCoordinator.webToolbarController.view removeFromSuperview];
+  [_toolbarCoordinator.webToolbarController removeFromParentViewController];
   _isToolbarControllerRelinquished = (relinquishedToolbarController != nil);
   return relinquishedToolbarController;
 }

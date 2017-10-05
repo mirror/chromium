@@ -28,11 +28,11 @@
                                        UrlLoader,
                                        WebToolbarDelegate>)dispatcher;
 
-@property(nonatomic, readonly, weak) id<ApplicationCommands,
-                                        BrowserCommands,
-                                        OmniboxFocuser,
-                                        UrlLoader,
-                                        WebToolbarDelegate>
+@property(nonatomic, weak) id<ApplicationCommands,
+                              BrowserCommands,
+                              OmniboxFocuser,
+                              UrlLoader,
+                              WebToolbarDelegate>
     dispatcher;
 
 // |YES| if the toolbar can show the forward arrow.

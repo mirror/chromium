@@ -33,47 +33,55 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
   __weak id<ApplicationCommands, BrowserCommands> _dispatcher;
 }
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  _stackViewToolbar =
+      [[UIView alloc] initWithFrame:[self specificControlsArea]];
+  [_stackViewToolbar setAutoresizingMask:UIViewAutoresizingFlexibleHeight |
+                                         UIViewAutoresizingFlexibleWidth];
+
+  _openNewTabButton = [[NewTabButton alloc] initWithFrame:CGRectZero];
+
+  [_openNewTabButton
+      setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin |
+                          UIViewAutoresizingFlexibleTrailingMargin()];
+  CGFloat buttonSize = [_stackViewToolbar bounds].size.height;
+  // Set the button's position.
+  LayoutRect newTabButtonLayout = LayoutRectMake(
+      kNewTabLeadingOffset, [_stackViewToolbar bounds].size.width, 0,
+      buttonSize, buttonSize);
+  [_openNewTabButton setFrame:LayoutRectGetRect(newTabButtonLayout)];
+  // Set button actions.
+  [_openNewTabButton addTarget:self
+                        action:@selector(sendNewTabCommand:)
+              forControlEvents:UIControlEventTouchUpInside];
+  [_openNewTabButton addTarget:self
+                        action:@selector(recordUserMetrics:)
+              forControlEvents:UIControlEventTouchUpInside];
+
+  self.shadowView.alpha = 0.0;
+  self.backgroundView.image = nil;
+  self.backgroundView.backgroundColor =
+      UIColorFromRGB(kBackgroundViewColor, kBackgroundViewColorAlpha);
+
+  [_stackViewToolbar addSubview:_openNewTabButton];
+  [self.view addSubview:_stackViewToolbar];
+
+  [[self stackButton] addTarget:_dispatcher
+                         action:@selector(dismissTabSwitcher)
+               forControlEvents:UIControlEventTouchUpInside];
+}
+
+//- (void)loadView {
+//
+//}
+
 - (instancetype)initWithDispatcher:
     (id<ApplicationCommands, BrowserCommands>)dispatcher {
   self = [super initWithStyle:ToolbarControllerStyleDarkMode
                    dispatcher:dispatcher];
   if (self) {
     _dispatcher = dispatcher;
-    _stackViewToolbar =
-        [[UIView alloc] initWithFrame:[self specificControlsArea]];
-    [_stackViewToolbar setAutoresizingMask:UIViewAutoresizingFlexibleHeight |
-                                           UIViewAutoresizingFlexibleWidth];
-
-    _openNewTabButton = [[NewTabButton alloc] initWithFrame:CGRectZero];
-
-    [_openNewTabButton
-        setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin |
-                            UIViewAutoresizingFlexibleTrailingMargin()];
-    CGFloat buttonSize = [_stackViewToolbar bounds].size.height;
-    // Set the button's position.
-    LayoutRect newTabButtonLayout = LayoutRectMake(
-        kNewTabLeadingOffset, [_stackViewToolbar bounds].size.width, 0,
-        buttonSize, buttonSize);
-    [_openNewTabButton setFrame:LayoutRectGetRect(newTabButtonLayout)];
-    // Set button actions.
-    [_openNewTabButton addTarget:self
-                          action:@selector(sendNewTabCommand:)
-                forControlEvents:UIControlEventTouchUpInside];
-    [_openNewTabButton addTarget:self
-                          action:@selector(recordUserMetrics:)
-                forControlEvents:UIControlEventTouchUpInside];
-
-    self.shadowView.alpha = 0.0;
-    self.backgroundView.image = nil;
-    self.backgroundView.backgroundColor =
-        UIColorFromRGB(kBackgroundViewColor, kBackgroundViewColorAlpha);
-
-    [_stackViewToolbar addSubview:_openNewTabButton];
-    [self.view addSubview:_stackViewToolbar];
-
-    [[self stackButton] addTarget:_dispatcher
-                           action:@selector(dismissTabSwitcher)
-                 forControlEvents:UIControlEventTouchUpInside];
   }
   return self;
 }

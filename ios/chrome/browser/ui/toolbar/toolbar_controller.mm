@@ -246,7 +246,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 @implementation ToolbarController
 
 @synthesize readingListModel = readingListModel_;
-@synthesize view = view_;
+@dynamic view;
 @synthesize backgroundView = backgroundView_;
 @synthesize shadowView = shadowView_;
 @synthesize toolsPopupController = toolsPopupController_;
@@ -262,143 +262,142 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   }
 }
 
+- (void)loadView {
+  InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
+  CGRect viewFrame = kToolbarFrame[idiom];
+  CGRect backgroundFrame = kBackgroundViewFrame[idiom];
+  CGRect stackButtonFrame = LayoutRectGetRect(kStackButtonFrame);
+  CGRect toolsMenuButtonFrame = LayoutRectGetRect(kToolsMenuButtonFrame[idiom]);
+
+  if (idiom == IPHONE_IDIOM) {
+    CGFloat statusBarOffset = [self statusBarOffset];
+    viewFrame.size.height += statusBarOffset;
+    backgroundFrame.size.height += statusBarOffset;
+    stackButtonFrame.origin.y += statusBarOffset;
+    toolsMenuButtonFrame.origin.y += statusBarOffset;
+  }
+  self.view = [[ToolbarView alloc] initWithFrame:viewFrame];
+  backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
+  toolsMenuButton_ =
+      [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
+                                              style:style_];
+  [toolsMenuButton_ addTarget:self.dispatcher
+                       action:@selector(showToolsMenu)
+             forControlEvents:UIControlEventTouchUpInside];
+  [toolsMenuButton_
+      setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
+                          UIViewAutoresizingFlexibleBottomMargin];
+
+  [self.view addSubview:backgroundView_];
+  [self.view addSubview:toolsMenuButton_];
+  [self.view setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                       UIViewAutoresizingFlexibleHeight];
+
+  if (idiom == IPAD_IDIOM) {
+    CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
+    shareButton_ = [[UIButton alloc] initWithFrame:shareButtonFrame];
+    [shareButton_
+        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
+                            UIViewAutoresizingFlexibleBottomMargin];
+    [self setUpButton:shareButton_
+           withImageEnum:ToolbarButtonNameShare
+         forInitialState:UIControlStateNormal
+        hasDisabledImage:YES
+           synchronously:NO];
+    [shareButton_ addTarget:self.dispatcher
+                     action:@selector(sharePage)
+           forControlEvents:UIControlEventTouchUpInside];
+    SetA11yLabelAndUiAutomationName(shareButton_, IDS_IOS_TOOLS_MENU_SHARE,
+                                    kToolbarShareButtonIdentifier);
+    [self.view addSubview:shareButton_];
+  }
+
+  CGRect shadowFrame = kShadowViewFrame[idiom];
+  shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
+  shadowView_ = [[UIImageView alloc] initWithFrame:shadowFrame];
+  [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  [shadowView_ setUserInteractionEnabled:NO];
+  [self.view addSubview:shadowView_];
+  [shadowView_ setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW)];
+
+  if (idiom == IPHONE_IDIOM) {
+    // iPad omnibox does not expand to full bleed.
+    CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
+    fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
+    fullBleedShadowView_ =
+        [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
+    [fullBleedShadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [fullBleedShadowView_ setUserInteractionEnabled:NO];
+    [fullBleedShadowView_ setAlpha:0];
+    [self.view addSubview:fullBleedShadowView_];
+    [fullBleedShadowView_
+        setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
+  }
+
+  transitionLayers_ =
+      [[NSMutableArray alloc] initWithCapacity:kTransitionLayerCapacity];
+
+  // UIImageViews do not default to userInteractionEnabled:YES.
+  [self.view setUserInteractionEnabled:YES];
+  [backgroundView_ setUserInteractionEnabled:YES];
+
+  UIImage* tile = [self getBackgroundImageForStyle:self.style];
+  [[self backgroundView] setImage:StretchableImageFromUIImage(tile, 0.0, 3.0)];
+
+  if (idiom == IPHONE_IDIOM) {
+    stackButton_ =
+        [[ToolbarCenteredButton alloc] initWithFrame:stackButtonFrame];
+    [[stackButton_ titleLabel]
+        setFont:[self fontForSize:kFontSizeFewerThanTenTabs]];
+    [stackButton_
+        setTitleColor:[UIColor colorWithWhite:kStackButtonNormalColors[style_]
+                                        alpha:1.0]
+             forState:UIControlStateNormal];
+    UIColor* highlightColor =
+        UIColorFromRGB(kStackButtonHighlightedColors[style_], 1.0);
+    [stackButton_ setTitleColor:highlightColor
+                       forState:UIControlStateHighlighted];
+
+    [stackButton_
+        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
+                            UIViewAutoresizingFlexibleBottomMargin];
+
+    [self setUpButton:stackButton_
+           withImageEnum:ToolbarButtonNameStack
+         forInitialState:UIControlStateNormal
+        hasDisabledImage:NO
+           synchronously:NO];
+    [self.view addSubview:stackButton_];
+  }
+  [self registerEventsForButton:toolsMenuButton_];
+
+  self.view.accessibilityIdentifier =
+      self.style == ToolbarControllerStyleIncognitoMode
+          ? kIncognitoToolbarIdentifier
+          : kToolbarIdentifier;
+  SetA11yLabelAndUiAutomationName(stackButton_, IDS_IOS_TOOLBAR_SHOW_TABS,
+                                  kToolbarStackButtonIdentifier);
+  SetA11yLabelAndUiAutomationName(toolsMenuButton_, IDS_IOS_TOOLBAR_SETTINGS,
+                                  kToolbarToolsMenuButtonIdentifier);
+  [self updateStandardButtons];
+
+  NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
+  [defaultCenter addObserver:self
+                    selector:@selector(applicationDidEnterBackground:)
+                        name:UIApplicationDidEnterBackgroundNotification
+                      object:nil];
+}
+
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
-  self = [super init];
+  self = [super initWithNibName:nil bundle:nil];
   if (self) {
     style_ = style;
     dispatcher_ = dispatcher;
     DCHECK_LT(style_, ToolbarControllerStyleMaxStyles);
 
-    InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
-    CGRect viewFrame = kToolbarFrame[idiom];
-    CGRect backgroundFrame = kBackgroundViewFrame[idiom];
-    CGRect stackButtonFrame = LayoutRectGetRect(kStackButtonFrame);
-    CGRect toolsMenuButtonFrame =
-        LayoutRectGetRect(kToolsMenuButtonFrame[idiom]);
-
-    if (idiom == IPHONE_IDIOM) {
-      CGFloat statusBarOffset = [self statusBarOffset];
-      viewFrame.size.height += statusBarOffset;
-      backgroundFrame.size.height += statusBarOffset;
-      stackButtonFrame.origin.y += statusBarOffset;
-      toolsMenuButtonFrame.origin.y += statusBarOffset;
-    }
-
-    view_ = [[ToolbarView alloc] initWithFrame:viewFrame];
-    backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
-    toolsMenuButton_ =
-        [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
-                                                style:style_];
-    [toolsMenuButton_ addTarget:self.dispatcher
-                         action:@selector(showToolsMenu)
-               forControlEvents:UIControlEventTouchUpInside];
-    [toolsMenuButton_
-        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
-
-    [view_ addSubview:backgroundView_];
-    [view_ addSubview:toolsMenuButton_];
-    [view_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [backgroundView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
-                                         UIViewAutoresizingFlexibleHeight];
-
-    if (idiom == IPAD_IDIOM) {
-      CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
-      shareButton_ = [[UIButton alloc] initWithFrame:shareButtonFrame];
-      [shareButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
-      [self setUpButton:shareButton_
-             withImageEnum:ToolbarButtonNameShare
-           forInitialState:UIControlStateNormal
-          hasDisabledImage:YES
-             synchronously:NO];
-      [shareButton_ addTarget:self.dispatcher
-                       action:@selector(sharePage)
-             forControlEvents:UIControlEventTouchUpInside];
-      SetA11yLabelAndUiAutomationName(shareButton_, IDS_IOS_TOOLS_MENU_SHARE,
-                                      kToolbarShareButtonIdentifier);
-      [view_ addSubview:shareButton_];
-    }
-
-    CGRect shadowFrame = kShadowViewFrame[idiom];
-    shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
-    shadowView_ = [[UIImageView alloc] initWithFrame:shadowFrame];
-    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [shadowView_ setUserInteractionEnabled:NO];
-    [view_ addSubview:shadowView_];
-    [shadowView_ setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW)];
-
-    if (idiom == IPHONE_IDIOM) {
-      // iPad omnibox does not expand to full bleed.
-      CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
-      fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
-      fullBleedShadowView_ =
-          [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
-      [fullBleedShadowView_
-          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-      [fullBleedShadowView_ setUserInteractionEnabled:NO];
-      [fullBleedShadowView_ setAlpha:0];
-      [view_ addSubview:fullBleedShadowView_];
-      [fullBleedShadowView_
-          setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW_FULL_BLEED)];
-    }
-
-    transitionLayers_ =
-        [[NSMutableArray alloc] initWithCapacity:kTransitionLayerCapacity];
-
-    // UIImageViews do not default to userInteractionEnabled:YES.
-    [view_ setUserInteractionEnabled:YES];
-    [backgroundView_ setUserInteractionEnabled:YES];
-
-    UIImage* tile = [self getBackgroundImageForStyle:style];
-    [[self backgroundView]
-        setImage:StretchableImageFromUIImage(tile, 0.0, 3.0)];
-
-    if (idiom == IPHONE_IDIOM) {
-      stackButton_ =
-          [[ToolbarCenteredButton alloc] initWithFrame:stackButtonFrame];
-      [[stackButton_ titleLabel]
-          setFont:[self fontForSize:kFontSizeFewerThanTenTabs]];
-      [stackButton_
-          setTitleColor:[UIColor colorWithWhite:kStackButtonNormalColors[style_]
-                                          alpha:1.0]
-               forState:UIControlStateNormal];
-      UIColor* highlightColor =
-          UIColorFromRGB(kStackButtonHighlightedColors[style_], 1.0);
-      [stackButton_ setTitleColor:highlightColor
-                         forState:UIControlStateHighlighted];
-
-      [stackButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
-
-      [self setUpButton:stackButton_
-             withImageEnum:ToolbarButtonNameStack
-           forInitialState:UIControlStateNormal
-          hasDisabledImage:NO
-             synchronously:NO];
-      [view_ addSubview:stackButton_];
-    }
-    [self registerEventsForButton:toolsMenuButton_];
-
-    self.view.accessibilityIdentifier =
-        style == ToolbarControllerStyleIncognitoMode
-            ? kIncognitoToolbarIdentifier
-            : kToolbarIdentifier;
-    SetA11yLabelAndUiAutomationName(stackButton_, IDS_IOS_TOOLBAR_SHOW_TABS,
-                                    kToolbarStackButtonIdentifier);
-    SetA11yLabelAndUiAutomationName(toolsMenuButton_, IDS_IOS_TOOLBAR_SETTINGS,
-                                    kToolbarToolsMenuButtonIdentifier);
-    [self updateStandardButtons];
-
-    NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
-    [defaultCenter addObserver:self
-                      selector:@selector(applicationDidEnterBackground:)
-                          name:UIApplicationDidEnterBackgroundNotification
-                        object:nil];
   }
   return self;
 }
@@ -434,7 +433,8 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   BOOL shareButtonShouldBeVisible = [self shareButtonShouldBeVisible];
   [shareButton_ setHidden:!shareButtonShouldBeVisible];
   NSMutableArray* standardButtons = [NSMutableArray array];
-  [standardButtons addObject:toolsMenuButton_];
+  if (toolsMenuButton_)
+    [standardButtons addObject:toolsMenuButton_];
   if (stackButton_)
     [standardButtons addObject:stackButton_];
   if (shareButtonShouldBeVisible)
@@ -442,9 +442,9 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   standardButtons_ = standardButtons;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
-  [self updateStandardButtons];
-}
+//- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+//  [self updateStandardButtons];
+//}
 
 - (void)applicationDidEnterBackground:(NSNotification*)notify {
   if (toolsPopupController_) {

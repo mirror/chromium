@@ -109,12 +109,12 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // buttons (forwarding to the delegate). This is not intended to be used
 // on its own, but to be subclassed by more specific toolbars that provide
 // more buttons in the empty space.
-@interface ToolbarController : NSObject<ActivityServicePositioner,
-                                        PopupMenuDelegate,
-                                        BubbleViewAnchorPointProvider>
+@interface ToolbarController : UIViewController<ActivityServicePositioner,
+                                                PopupMenuDelegate,
+                                                BubbleViewAnchorPointProvider>
 
 // The top-level toolbar view.
-@property(nonatomic, readonly, strong) ToolbarView* view;
+@property(nonatomic, strong) ToolbarView* view;
 // The view for the toolbar background image. This is a subview of |view| to
 // allow clients to alter the transparency of the background image without
 // affecting the other components of the toolbar.
@@ -148,6 +148,9 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+- (instancetype)initWithNibName:(NSString*)nibNameOrNil
+                         bundle:(NSBundle*)nibBundleOrNil NS_UNAVAILABLE;
 
 // Called when the application has entered the background.
 - (void)applicationDidEnterBackground:(NSNotification*)notify;

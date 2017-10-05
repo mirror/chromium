@@ -362,28 +362,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 @synthesize delegate = _delegate;
 @synthesize urlLoader = _urlLoader;
 
-- (instancetype)initWithDelegate:(id<WebToolbarDelegate>)delegate
-                       urlLoader:(id<UrlLoader>)urlLoader
-                    browserState:(ios::ChromeBrowserState*)browserState
-                      dispatcher:
-                          (id<ApplicationCommands, BrowserCommands>)dispatcher {
-  DCHECK(delegate);
-  DCHECK(urlLoader);
-  DCHECK(browserState);
-  _delegate = delegate;
-  _urlLoader = urlLoader;
-  _browserState = browserState;
-  _incognito = browserState->IsOffTheRecord();
-  ToolbarControllerStyle style =
-      (_incognito ? ToolbarControllerStyleIncognitoMode
-                  : ToolbarControllerStyleLightMode);
-  self = [super initWithStyle:style dispatcher:dispatcher];
-  if (!self)
-    return nil;
-
-  self.readingListModel =
-      ReadingListModelFactory::GetForBrowserState(browserState);
-
+- (void)viewDidLoad {
+  [super viewDidLoad];
   InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
   // Note that |_webToolbar| gets its frame set to -specificControlArea later in
   // this method.
@@ -662,7 +642,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   [self.view setDelegate:self];
 
   if (idiom == IPHONE_IDIOM) {
-    [[self stackButton] addTarget:dispatcher
+    [[self stackButton] addTarget:self.dispatcher
                            action:@selector(displayTabSwitcher)
                  forControlEvents:UIControlEventTouchUpInside];
   }
@@ -676,6 +656,42 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     }
   }
 #endif
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+}
+
+- (void)viewWillLayoutSubviews {
+}
+
+//- (void)loadView {
+//  [super loadView];
+//}
+
+- (instancetype)initWithDelegate:(id<WebToolbarDelegate>)delegate
+                       urlLoader:(id<UrlLoader>)urlLoader
+                    browserState:(ios::ChromeBrowserState*)browserState
+                      dispatcher:
+                          (id<ApplicationCommands, BrowserCommands>)dispatcher {
+  DCHECK(delegate);
+  DCHECK(urlLoader);
+  DCHECK(browserState);
+  _delegate = delegate;
+  _urlLoader = urlLoader;
+  _browserState = browserState;
+  _incognito = browserState->IsOffTheRecord();
+  ToolbarControllerStyle style =
+      (_incognito ? ToolbarControllerStyleIncognitoMode
+                  : ToolbarControllerStyleLightMode);
+  self = [super initWithStyle:style dispatcher:dispatcher];
+  if (!self)
+    return nil;
+
+  self.readingListModel =
+      ReadingListModelFactory::GetForBrowserState(browserState);
 
   return self;
 }

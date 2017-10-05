@@ -64,15 +64,17 @@
 
   _toolbarController =
       [[NewTabPageToolbarController alloc] initWithDispatcher:dispatcher];
+  //[self addChildViewController:_toolbarController];
   _toolbarController.readingListModel = readingListModel;
 
-  UIView* toolbarView = [_toolbarController view];
+  UIView* toolbarView = _toolbarController.view;
   CGRect toolbarFrame = self.bounds;
   toolbarFrame.size.height = ntp_header::kToolbarHeight;
   toolbarView.frame = toolbarFrame;
   [toolbarView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
   [self addSubview:[_toolbarController view]];
+  //[_toolbarController didMoveToParentViewController:self];
 }
 
 - (void)setCanGoForward:(BOOL)canGoForward {

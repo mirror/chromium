@@ -61,6 +61,93 @@ enum {
 @synthesize canGoBack = _canGoBack;
 @dynamic dispatcher;
 
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  [self.backgroundView setHidden:YES];
+
+  CGFloat boundingWidth = self.view.bounds.size.width;
+  LayoutRect backButtonLayout =
+      LayoutRectMake(kBackButtonLeading, boundingWidth, kButtonYOffset,
+                     kBackButtonSize.width, kBackButtonSize.height);
+  _backButton =
+      [[UIButton alloc] initWithFrame:LayoutRectGetRect(backButtonLayout)];
+  [_backButton setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
+                                   UIViewAutoresizingFlexibleBottomMargin];
+  LayoutRect forwardButtonLayout =
+      LayoutRectMake(kForwardButtonLeading, boundingWidth, kButtonYOffset,
+                     kForwardButtonSize.width, kForwardButtonSize.height);
+  _forwardButton =
+      [[UIButton alloc] initWithFrame:LayoutRectGetRect(forwardButtonLayout)];
+  [_forwardButton
+      setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
+                          UIViewAutoresizingFlexibleBottomMargin];
+  _omniboxFocuser = [[UIButton alloc] init];
+  [_omniboxFocuser
+      setAccessibilityLabel:l10n_util::GetNSString(IDS_ACCNAME_LOCATION)];
+
+  _omniboxFocuser.translatesAutoresizingMaskIntoConstraints = NO;
+
+  [self.view addSubview:_backButton];
+  [self.view addSubview:_forwardButton];
+  [self.view addSubview:_omniboxFocuser];
+  [NSLayoutConstraint activateConstraints:@[
+    [_omniboxFocuser.leadingAnchor
+        constraintEqualToAnchor:_forwardButton.trailingAnchor],
+    [_omniboxFocuser.trailingAnchor
+        constraintEqualToAnchor:self.view.trailingAnchor
+                       constant:-kOmniboxFocuserTrailing],
+    [_omniboxFocuser.topAnchor
+        constraintEqualToAnchor:_forwardButton.topAnchor],
+    [_omniboxFocuser.bottomAnchor
+        constraintEqualToAnchor:_forwardButton.bottomAnchor]
+  ]];
+
+  [_backButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, 0, 0, -10)];
+  [_forwardButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -7, 0, 0)];
+
+  // Set up the button images.
+  [self setUpButton:_backButton
+         withImageEnum:NTPToolbarButtonNameBack
+       forInitialState:UIControlStateDisabled
+      hasDisabledImage:YES
+         synchronously:NO];
+  [self setUpButton:_forwardButton
+         withImageEnum:NTPToolbarButtonNameForward
+       forInitialState:UIControlStateDisabled
+      hasDisabledImage:YES
+         synchronously:NO];
+
+  UILongPressGestureRecognizer* backLongPress =
+      [[UILongPressGestureRecognizer alloc]
+          initWithTarget:self
+                  action:@selector(handleLongPress:)];
+  [_backButton addGestureRecognizer:backLongPress];
+  [_backButton addTarget:self.dispatcher
+                  action:@selector(goBack)
+        forControlEvents:UIControlEventTouchUpInside];
+
+  UILongPressGestureRecognizer* forwardLongPress =
+      [[UILongPressGestureRecognizer alloc]
+          initWithTarget:self
+                  action:@selector(handleLongPress:)];
+  [_forwardButton addGestureRecognizer:forwardLongPress];
+  [_forwardButton addTarget:self.dispatcher
+                     action:@selector(goForward)
+           forControlEvents:UIControlEventTouchUpInside];
+
+  [_omniboxFocuser addTarget:self
+                      action:@selector(focusOmnibox:)
+            forControlEvents:UIControlEventTouchUpInside];
+
+  SetA11yLabelAndUiAutomationName(_backButton, IDS_ACCNAME_BACK, @"Back");
+  SetA11yLabelAndUiAutomationName(_forwardButton, IDS_ACCNAME_FORWARD,
+                                  @"Forward");
+
+  [[self stackButton] addTarget:self.dispatcher
+                         action:@selector(displayTabSwitcher)
+               forControlEvents:UIControlEventTouchUpInside];
+}
+
 - (instancetype)initWithDispatcher:(id<ApplicationCommands,
                                        BrowserCommands,
                                        OmniboxFocuser,
@@ -69,90 +156,7 @@ enum {
   self = [super initWithStyle:ToolbarControllerStyleLightMode
                    dispatcher:dispatcher];
   if (self) {
-    [self.backgroundView setHidden:YES];
-
-    CGFloat boundingWidth = self.view.bounds.size.width;
-    LayoutRect backButtonLayout =
-        LayoutRectMake(kBackButtonLeading, boundingWidth, kButtonYOffset,
-                       kBackButtonSize.width, kBackButtonSize.height);
-    _backButton =
-        [[UIButton alloc] initWithFrame:LayoutRectGetRect(backButtonLayout)];
-    [_backButton
-        setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
-    LayoutRect forwardButtonLayout =
-        LayoutRectMake(kForwardButtonLeading, boundingWidth, kButtonYOffset,
-                       kForwardButtonSize.width, kForwardButtonSize.height);
-    _forwardButton =
-        [[UIButton alloc] initWithFrame:LayoutRectGetRect(forwardButtonLayout)];
-    [_forwardButton
-        setAutoresizingMask:UIViewAutoresizingFlexibleTrailingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
-    _omniboxFocuser = [[UIButton alloc] init];
-    [_omniboxFocuser
-        setAccessibilityLabel:l10n_util::GetNSString(IDS_ACCNAME_LOCATION)];
-
-    _omniboxFocuser.translatesAutoresizingMaskIntoConstraints = NO;
-
-    [self.view addSubview:_backButton];
-    [self.view addSubview:_forwardButton];
-    [self.view addSubview:_omniboxFocuser];
-    [NSLayoutConstraint activateConstraints:@[
-      [_omniboxFocuser.leadingAnchor
-          constraintEqualToAnchor:_forwardButton.trailingAnchor],
-      [_omniboxFocuser.trailingAnchor
-          constraintEqualToAnchor:self.view.trailingAnchor
-                         constant:-kOmniboxFocuserTrailing],
-      [_omniboxFocuser.topAnchor
-          constraintEqualToAnchor:_forwardButton.topAnchor],
-      [_omniboxFocuser.bottomAnchor
-          constraintEqualToAnchor:_forwardButton.bottomAnchor]
-    ]];
-
-    [_backButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, 0, 0, -10)];
-    [_forwardButton setImageEdgeInsets:UIEdgeInsetsMakeDirected(0, -7, 0, 0)];
-
-    // Set up the button images.
-    [self setUpButton:_backButton
-           withImageEnum:NTPToolbarButtonNameBack
-         forInitialState:UIControlStateDisabled
-        hasDisabledImage:YES
-           synchronously:NO];
-    [self setUpButton:_forwardButton
-           withImageEnum:NTPToolbarButtonNameForward
-         forInitialState:UIControlStateDisabled
-        hasDisabledImage:YES
-           synchronously:NO];
-
-    UILongPressGestureRecognizer* backLongPress =
-        [[UILongPressGestureRecognizer alloc]
-            initWithTarget:self
-                    action:@selector(handleLongPress:)];
-    [_backButton addGestureRecognizer:backLongPress];
-    [_backButton addTarget:self.dispatcher
-                    action:@selector(goBack)
-          forControlEvents:UIControlEventTouchUpInside];
-
-    UILongPressGestureRecognizer* forwardLongPress =
-        [[UILongPressGestureRecognizer alloc]
-            initWithTarget:self
-                    action:@selector(handleLongPress:)];
-    [_forwardButton addGestureRecognizer:forwardLongPress];
-    [_forwardButton addTarget:self.dispatcher
-                       action:@selector(goForward)
-             forControlEvents:UIControlEventTouchUpInside];
-
-    [_omniboxFocuser addTarget:self
-                        action:@selector(focusOmnibox:)
-              forControlEvents:UIControlEventTouchUpInside];
-
-    SetA11yLabelAndUiAutomationName(_backButton, IDS_ACCNAME_BACK, @"Back");
-    SetA11yLabelAndUiAutomationName(_forwardButton, IDS_ACCNAME_FORWARD,
-                                    @"Forward");
-
-    [[self stackButton] addTarget:dispatcher
-                           action:@selector(displayTabSwitcher)
-                 forControlEvents:UIControlEventTouchUpInside];
+    // self.dispatcher = dispatcher;
   }
   return self;
 }
