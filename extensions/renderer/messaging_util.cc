@@ -42,12 +42,10 @@ std::unique_ptr<Message> MessageFromV8(v8::Local<v8::Context> context,
   std::string message;
   if (success) {
     message = gin::V8ToString(stringified);
-    // JSON.stringify can fail to produce a string value in one of two ways: it
-    // can throw an exception (as with unserializable objects), or it can return
-    // `undefined` (as with e.g. passing a function). If JSON.stringify returns
-    // `undefined`, the v8 API then coerces it to the string value "undefined".
-    // Check for this, and consider it a failure (since we didn't properly
-    // serialize a value).
+    // JSON.stringify can either fail (with unserializable objects) or can
+    // return undefined. If it returns undefined, the v8 API then coerces it to
+    // the string value "undefined". Throw an error if we were passed
+    // unserializable objects.
     success = message != "undefined";
   }
 
