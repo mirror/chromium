@@ -22,6 +22,30 @@
       "revId": "d88ece2105bc1b631aa6ec0f5240d97a1589b717",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6906a8_22e498ca",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebappDirectoryManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-10-05T03:22:24Z",
+      "side": 1,
+      "message": "Yes. This affects the result of WebappDirectoryManager#getBaseIntentsForAllTasks() which prevents |directory2| from getting deleted",
+      "parentUuid": "550d7fd0_c0b929b2",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 31
+      },
+      "revId": "d88ece2105bc1b631aa6ec0f5240d97a1589b717",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
