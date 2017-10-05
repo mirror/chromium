@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e1edcc_39a12e46",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-error-on-call-frame-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-05T19:24:06Z",
+      "side": 1,
+      "message": "This is no worse than w/ the old framework - doesn\u0027t seem great to have all these VM scripts in the call stacks but let\u0027s come up with a solution later because I think we\u0027ve solved the main issues with sourceURL. perhaps something like test://sources_test_runner/evaluation/0?",
+      "revId": "ca465fe645a5910bd36574174356239f1c98009f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
