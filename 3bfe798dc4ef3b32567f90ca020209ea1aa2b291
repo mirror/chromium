@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "e0867bce_069975d8",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-05T13:36:03Z",
+      "side": 1,
+      "message": "Sorry, I missed this question.\n\nWith your suggestion, you save an indirection through the client, but at the cost of introducing an additional interface and code to register/unregister. Both seem similar to me in terms of complexity.",
+      "parentUuid": "ef679a2b_17b9584b",
+      "range": {
+        "startLine": 482,
+        "startChar": 2,
+        "endLine": 482,
+        "endChar": 27
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc3e4f32_c743f15c",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 10
