@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80a2f17f_c5644295",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:06:17Z",
+      "side": 1,
+      "message": "Mention why this can return nullopt too",
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3378f4f5_601a3c80",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:06:17Z",
+      "side": 1,
+      "message": "Just looking at the interface, I\u0027m not sure if this is a TimeDelta, TimeTicks, or Time. Please use one of the time types from mojo/common/time.mojom",
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
