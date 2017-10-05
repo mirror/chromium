@@ -36,6 +36,7 @@
 #include "components/search_engines/default_search_manager.h"
 #include "components/search_engines/template_url_data.h"
 #include "extensions/browser/pref_names.h"
+#include "extensions/browser/scoped_ignore_content_verifier_for_test.h"
 #include "extensions/common/extension.h"
 #include "services/preferences/public/cpp/tracked/tracked_preference_histogram_names.h"
 
@@ -411,6 +412,10 @@ class PrefHashBrowserTestBase
   // orchestrated in AttackPreferencesOnDisk().
   virtual void VerifyReactionToPrefAttack() = 0;
 
+  // Prevent |ExtensionBrowserTest| from disabling extension content
+  // verification. This test manually manages extension content verification.
+  bool ShouldDisableContentVerification() override { return false; }
+
   int num_tracked_prefs() const { return num_tracked_prefs_; }
 
   const SettingsProtectionLevel protection_level_;
@@ -466,6 +471,10 @@ class PrefHashBrowserTestBase
 #if defined(OS_WIN)
   base::string16 registry_key_for_external_validation_;
 #endif
+
+  // Manually disable extension content verification to ensure it persists
+  // across the PRE test to the normal test.
+  extensions::ScopedIgnoreContentVerifierForTest ignore_content_verifier_;
 };
 
 }  // namespace

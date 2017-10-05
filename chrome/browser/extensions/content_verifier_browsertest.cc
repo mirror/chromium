@@ -476,7 +476,7 @@ class ContentVerifierTest : public ExtensionBrowserTest {
         switches::kExtensionContentVerificationEnforce);
   }
 
-  bool ShouldEnableContentVerification() override { return true; }
+  bool ShouldDisableContentVerification() override { return false; }
 
   virtual void OpenPageAndWaitForUnload() {
     ScopedContentVerifyJobDelegateOverride scoped_delegate(&delegate_);

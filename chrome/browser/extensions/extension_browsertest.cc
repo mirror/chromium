@@ -145,8 +145,8 @@ Profile* ExtensionBrowserTest::profile() {
   return profile_;
 }
 
-bool ExtensionBrowserTest::ShouldEnableContentVerification() {
-  return false;
+bool ExtensionBrowserTest::ShouldDisableContentVerification() {
+  return true;
 }
 
 // static
@@ -197,7 +197,7 @@ void ExtensionBrowserTest::SetUpOnMainThread() {
         test_extension_cache_.get());
   }
 
-  if (!ShouldEnableContentVerification()) {
+  if (ShouldDisableContentVerification()) {
     ignore_content_verification_.reset(
         new extensions::ScopedIgnoreContentVerifierForTest());
   }

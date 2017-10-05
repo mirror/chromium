@@ -78,7 +78,7 @@ class ExtensionBrowserTest : virtual public InProcessBrowserTest {
   // missing content verification hashes. The default implementation disables
   // content verification; this should be overridden by derived tests which care
   // about content verification.
-  virtual bool ShouldEnableContentVerification();
+  virtual bool ShouldDisableContentVerification();
 
   static const extensions::Extension* GetExtensionByPath(
       const extensions::ExtensionSet& extensions,
