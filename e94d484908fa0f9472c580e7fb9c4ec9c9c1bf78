@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e919febe_f73e1283",
+        "filename": "components/metrics/proto/chrome_user_metrics_extension.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T13:36:21Z",
+      "side": 1,
+      "message": "BTW, I\u0027m getting\nchrome_user_metrics_extension.proto: warning: Import extension_install.proto but not used.\nwhen compiling chrome.\n\nIs this required here / will be needed in the future / was it forgotten in ChromeUserMetricsExtension? Thanks!",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "e94d484908fa0f9472c580e7fb9c4ec9c9c1bf78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
