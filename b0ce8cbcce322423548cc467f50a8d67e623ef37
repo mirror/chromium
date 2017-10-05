@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93609440_93e7cfaf",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T15:35:26Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 109,
+        "startChar": 33,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "b0ce8cbcce322423548cc467f50a8d67e623ef37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
