@@ -8,7 +8,7 @@
 #include "base/time/clock.h"
 #include "base/time/default_clock.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
-#include "components/offline_pages/core/offline_time_utils.h"
+#include "components/offline_pages/core/offline_page_store_utils.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
 
@@ -24,7 +24,7 @@ bool MarkPageAccessedSync(const base::Time& last_access_time,
       " SET last_access_time = ?, access_count = access_count + 1"
       " WHERE offline_id = ?";
   sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
-  statement.BindInt64(0, ToDatabaseTime(last_access_time));
+  statement.BindInt64(0, store_utils::ToDatabaseTime(last_access_time));
   statement.BindInt64(1, offline_id);
   return statement.Run();
 }
