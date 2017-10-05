@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "675b0c9e_06c57a8f",
+        "filename": "ash/shell/shell_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T23:11:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "325317c9_b6ea95d8",
+      "revId": "efbb5a1a4f9950985254a648e4ced23b93d8c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d34f72f_7ef1da75",
         "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "efbb5a1a4f9950985254a648e4ced23b93d8c8b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c059c4f4_b278d8f6",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T23:11:05Z",
+      "side": 1,
+      "message": "Nope! Done.",
+      "parentUuid": "1d34f72f_7ef1da75",
+      "revId": "efbb5a1a4f9950985254a648e4ced23b93d8c8b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
