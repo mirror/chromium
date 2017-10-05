@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92a31fea_63107fb8",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:25:55Z",
+      "side": 1,
+      "message": "It would be good if we can structure this a little more like AddToHomescreenDataFetcher, which invokes InstallableManager to also fetch an icon, and then falls back to fetching a favicon if it didn\u0027t have a suitable manifest icon. InstallableManager is designed to do all of the PWA verification, including the icon, and it\u0027s a little weird that the first pass at icon handling isn\u0027t handled there. For instance, we have size and type expectations for PWA icons that InstallableManager enforces, but they are half skipped here (|check_installable| implies some icon checks, but not all of them since the icons aren\u0027t fetched).\n\nIs it possible to also specify |fetch_primary_icon| in the params passed to InstallableManager, stash that icon as a member on BookmarkAppHelper, and exclude that icon URL from the list that we get favicon downloader to fetch? That way InstallableManager is doing its full proper check.",
+      "range": {
+        "startLine": 647,
+        "startChar": 2,
+        "endLine": 647,
+        "endChar": 6
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb0938d_53ed7442",
+        "filename": "chrome/browser/extensions/bookmark_app_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:25:55Z",
+      "side": 1,
+      "message": "Nit: we can use std::make_unique now. :o",
+      "range": {
+        "startLine": 402,
+        "startChar": 35,
+        "endLine": 402,
+        "endChar": 45
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b25a6fe_6dbc6266",
+        "filename": "chrome/browser/ui/views/extensions/bookmark_app_confirmation_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:25:55Z",
+      "side": 1,
+      "message": "Nit: perhaps bulk up this comment to say that if desktop PWAs are enabled the browser will choose the display mode.",
+      "range": {
+        "startLine": 109,
+        "startChar": 30,
+        "endLine": 109,
+        "endChar": 39
+      },
+      "revId": "b55fcbb4fef9d3c9e2f4ed722398c58ff2db2b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
