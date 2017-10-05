@@ -14,6 +14,7 @@
 #include "content/public/common/resource_type.h"
 #include "content/public/common/service_worker_modes.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_error_type.mojom.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 #include "url/gurl.h"
 
 namespace content {
@@ -64,6 +65,9 @@ class ServiceWorkerUtils {
 
   static std::string ErrorTypeToString(
       blink::mojom::ServiceWorkerErrorType error);
+
+  CONTENT_EXPORT static ServiceWorkerStatusCode EventStatusToStatusCode(
+      blink::mojom::ServiceWorkerEventStatus status);
 };
 
 class CONTENT_EXPORT LongestScopeMatcher {

@@ -1080,7 +1080,7 @@ void ServiceWorkerVersion::OnGetClientsFinished(
 
 void ServiceWorkerVersion::OnSimpleEventFinished(
     int request_id,
-    ServiceWorkerStatusCode status,
+    blink::mojom::ServiceWorkerEventStatus status,
     base::Time dispatch_event_time) {
   PendingRequest* request = pending_requests_.Lookup(request_id);
   // |request| will be null when the request has been timed out.
@@ -1089,9 +1089,11 @@ void ServiceWorkerVersion::OnSimpleEventFinished(
   // Copy error callback before calling FinishRequest.
   StatusCallback callback = std::move(request->error_callback);
 
-  FinishRequest(request_id, status == SERVICE_WORKER_OK, dispatch_event_time);
+  FinishRequest(request_id,
+                status == blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+                dispatch_event_time);
 
-  std::move(callback).Run(status);
+  std::move(callback).Run(ServiceWorkerUtils::EventStatusToStatusCode(status));
 }
 
 void ServiceWorkerVersion::CountFeature(uint32_t feature) {
