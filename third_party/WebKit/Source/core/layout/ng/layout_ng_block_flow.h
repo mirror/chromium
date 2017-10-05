@@ -12,6 +12,8 @@
 
 namespace blink {
 
+struct NGBaseline;
+enum class NGBaselineAlgorithmType;
 class NGBreakToken;
 class NGConstraintSpace;
 struct NGInlineNodeData;
@@ -57,6 +59,8 @@ class CORE_EXPORT LayoutNGBlockFlow : public LayoutBlockFlow {
   void UpdateOutOfFlowBlockLayout();
 
   const NGPhysicalFragment* CurrentFragment() const;
+
+  const NGBaseline* Baseline(NGBaselineAlgorithmType) const;
 
   void UpdateMargins(const NGConstraintSpace&);
 
