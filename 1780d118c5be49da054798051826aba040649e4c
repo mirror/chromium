@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "16623e67_c69c5be3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T09:51:22Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t check LayoutPoint thanks.\n\nI agree both use cases exist, so I left another one as \"RelativeTo()\". What do you think by seeing an example in ng_inline_box_state.cc in this patch?\n\nI can remove \"offset + offset\", or remove both \"-\" operators and make both of them as functions. I\u0027m not strong to any options, could you suggest what you prefer?",
+      "parentUuid": "989db070_d6202a37",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
