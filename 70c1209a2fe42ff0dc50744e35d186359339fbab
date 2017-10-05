@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "570a726e_36583512",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-05T03:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b862dde8_2a81c9b0",
+      "range": {
+        "startLine": 91,
+        "startChar": 39,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24c94a07_d9117791",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
         "patchSetId": 22
@@ -68,6 +92,30 @@
       "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2c10d8_4a3a4ef0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-05T03:38:22Z",
+      "side": 1,
+      "message": "Leaning against this for two reasons:\n1) I removed this section in response to Bo\u0027s suggestion of reducing the amount of indirection (so now the manager is no longer also a client, instead it returns clients).\n2) I like having the bridge simple and readable because the bridge does not simply treat both clients the same.\nBut feel free to push back if you don\u0027t agree!",
+      "parentUuid": "24c94a07_d9117791",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "813f15b2_784cc810",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-05T03:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a91232_1c2c0630",
+      "range": {
+        "startLine": 382,
+        "startChar": 7,
+        "endLine": 382,
+        "endChar": 8
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7784853_a058f7e6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 22
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2d4b1d09_9153b9d7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-05T03:38:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7784853_a058f7e6",
+      "range": {
+        "startLine": 1215,
+        "startChar": 0,
+        "endLine": 1217,
+        "endChar": 99
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce00f1c1_80a94e8d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
         "patchSetId": 22
@@ -137,6 +233,30 @@
       "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4c0013_cc2a6863",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 22
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-05T03:38:22Z",
+      "side": 1,
+      "message": "That turned out to be a big win, thanks for suggesting it!\n\nI had considered doing this but was worried about destabilizing, because the CS Tab Helper needs to be constructed later in Tab.  But all the parameters needed for the TabHelper collapsed into just the Tab and all the knowledge of CS and SelectionClientManager is now in the TabHelper.  :-)",
+      "parentUuid": "ce00f1c1_80a94e8d",
+      "range": {
+        "startLine": 69,
+        "startChar": 16,
+        "endLine": 69,
+        "endChar": 41
+      },
+      "revId": "70c1209a2fe42ff0dc50744e35d186359339fbab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
