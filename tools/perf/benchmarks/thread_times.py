@@ -216,3 +216,20 @@ class ThreadTimesToughScrollingCases(_ThreadTimes):
       def SetExpectations(self):
         pass # Nothing disabled.
     return StoryExpectations()
+
+
+@benchmark.Owner(emails=['vmiura@chromium.org'])
+class ThreadTimesTop25Repaint(_ThreadTimes):
+  """Measures timeline metrics while performing smoothness action on key silk
+  cases."""
+  page_set = page_sets.Top25RepaintPageSet
+
+  @classmethod
+  def Name(cls):
+    return 'thread_times.top_25_repaint'
+
+  def GetExpectations(self):
+    class StoryExpectations(story.expectations.StoryExpectations):
+      def SetExpectations(self):
+        pass # Nothing disabled.
+    return StoryExpectations()
