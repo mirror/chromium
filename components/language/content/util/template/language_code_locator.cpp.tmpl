@@ -1,0 +1,22 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "components/language/util/language_code_locator.h"
+
+namespace language {
+
+LanguageCodeLocator::LanguageCodeLocator() : s2cell_lang_({
+  {% set c = 1 %}
+  {% for cell_lang_pair in cell_lang_pairs -%}
+    {"{{cell_lang_pair[0]}}", "{{cell_lang_pair[1]}}"}{% if c < cell_lang_pairs|length%},{% endif %}
+    {% set c = c + 1%}
+  {%- endfor %}
+}) {}
+
+std::vector<std::string> LanguageCodeLocator::GetLanguageCode(
+    double lat, double lng) {
+  // TODO(renjieliu): Implement this once s2 library is ready.
+}
+
+}  // namespace language
