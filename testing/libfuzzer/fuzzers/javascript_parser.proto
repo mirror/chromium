@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+package javascript_parser_proto_fuzzer;
+
+message Token {
+  enum Value {
+    LPAREN = 0;
+    RPAREN = 1;
+  }
+  required Value value = 1;
+}
+
+message Source {
+  repeated Token tokens = 1;
+}
