@@ -449,18 +449,16 @@ void BridgedNativeWidgetTest::PerformCommand(SEL sel) {
 
 void BridgedNativeWidgetTest::MakeSelection(int start, int end) {
   ui::TextInputClient* client = [ns_view_ textInputClient];
-  client->SetSelectionRange(gfx::Range(start, end));
+  const gfx::Range range(start, end);
 
-  // Though NSTextView has a selectionAffinity property, it does not seem to
-  // correspond to the selection direction. Hence we extend the selection from
-  //|start| to |end|.
-  [dummy_text_view_ setSelectedRange:NSMakeRange(start, 0)];
-  SEL sel = start > end ? @selector(moveBackwardAndModifySelection:)
-                        : @selector(moveForwardAndModifySelection:);
-  size_t delta = std::abs(end - start);
+  // Although a gfx::Range is directed, the underlying model will not choose an
+  // affinity until the cursor is moved.
+  client->SetSelectionRange(range);
 
-  for (size_t i = 0; i < delta; i++)
-    [dummy_text_view_ doCommandBySelector:sel];
+  // Set the range without an affinity. The first @selector sent to the text
+  // field determines the affinity. Note that Range::ToNSRange() may discard
+  // the direction since NSRange has no direction.
+  [dummy_text_view_ setSelectedRange:range.ToNSRange()];
 }
 
 void BridgedNativeWidgetTest::SetKeyDownEvent(NSEvent* event) {
