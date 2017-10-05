@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c1baa04f_f69175a8",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T21:32:23Z",
+      "side": 1,
+      "message": "Seems weird that the inversion didn\u0027t result in a crash - using the old order certainly did cause a crash, due to the new save-stuff-on-shutdown behavior of HttpServerPropertiesManager.",
+      "parentUuid": "a5fee9cc_1f26f49e",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f393c7b3_c5ee8d1d",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
         "patchSetId": 25
