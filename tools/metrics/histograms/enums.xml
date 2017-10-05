@@ -24625,6 +24625,7 @@ from previous Chrome versions.
   <int value="2077917024"
       label="enable-supervised-user-managed-bookmarks-folder"/>
   <int value="2079672348" label="ExperimentalKeyboardLockUI:disabled"/>
+  <int value="2085186092" label="BulkPrinters:disabled"/>
   <int value="2085438501" label="ChromeHome:enabled"/>
   <int value="2089897928" label="enable-audio-focus"/>
   <int value="2093235103" label="default-tile-width"/>
