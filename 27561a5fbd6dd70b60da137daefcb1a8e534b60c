@@ -346,6 +346,30 @@
     },
     {
       "key": {
+        "uuid": "8c898608_ea93ef0f",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-10-05T13:50:15Z",
+      "side": 1,
+      "message": "I explicitly asked about the issue of clicking the icon to close the find bar. See it and the response: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d651643#c32\n\n\u003e When the omnibox is hidden? Is that possible?\n\nI\u0027m assuming that it\u0027s possible since in BrowserViewLayout there are several locations which check whether it is present: browser_-\u003eSupportsWindowFeature(Browser::FEATURE_LOCATIONBAR); This is why the changes try and revert to the previous behavior if the OmniBox isn\u0027t present. This is also why I\u0027m a little skeptical about making this a bubble strictly tied to the OmniBox.\n\nThere are some cases where a popup (shudder) can be presented without an OmniBox... yet it\u0027s still searchable. Ctrl+F still works. Where does the find bar and the icon go in that case?",
+      "parentUuid": "0e2ad911_1a99087d",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c09f7a4_519d6f16",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 8
