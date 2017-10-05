@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "c577758b_a4367afc",
+        "filename": "chrome/browser/ui/views/frame/browser_view_layout.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-05T19:29:12Z",
+      "side": 1,
+      "message": "I\u0027m not saying that the hardcoded number is bad, although it is. I\u0027m saying that aligning things \"just so\" by putting in numbers is unacceptable. If we end up not making this a bubble, the correct way to position this would be (in pseudocode) x \u003d (omnibox.right - find_bar.width), y \u003d (omnibox.bottom)",
+      "parentUuid": "6924bff6_1b684ee9",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 20
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f30ed46_25740175",
         "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
         "patchSetId": 8
@@ -358,6 +382,30 @@
       "side": 1,
       "message": "I explicitly asked about the issue of clicking the icon to close the find bar. See it and the response: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d651643#c32\n\n\u003e When the omnibox is hidden? Is that possible?\n\nI\u0027m assuming that it\u0027s possible since in BrowserViewLayout there are several locations which check whether it is present: browser_-\u003eSupportsWindowFeature(Browser::FEATURE_LOCATIONBAR); This is why the changes try and revert to the previous behavior if the OmniBox isn\u0027t present. This is also why I\u0027m a little skeptical about making this a bubble strictly tied to the OmniBox.\n\nThere are some cases where a popup (shudder) can be presented without an OmniBox... yet it\u0027s still searchable. Ctrl+F still works. Where does the find bar and the icon go in that case?",
       "parentUuid": "0e2ad911_1a99087d",
+      "range": {
+        "startLine": 18,
+        "startChar": 9,
+        "endLine": 18,
+        "endChar": 16
+      },
+      "revId": "27561a5fbd6dd70b60da137daefcb1a8e534b60c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebdab47_f384ea2a",
+        "filename": "chrome/browser/ui/views/location_bar/find_bar_icon.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-10-05T19:29:12Z",
+      "side": 1,
+      "message": "Other bubbles can appear in a popup. For example, if the popup has a password field we\u0027ll still show the passwords bubble, just anchored to the address bar (the icon appears as well). The find bar should just do the same thing in that case.",
+      "parentUuid": "8c898608_ea93ef0f",
       "range": {
         "startLine": 18,
         "startChar": 9,
