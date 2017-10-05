@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "592e9a13_ac21a5e9",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-05T21:32:57Z",
+      "side": 1,
+      "message": "This feels a bit dangerous because things could shut down right after trying to schedule a download.  5 seconds is long enough that we might die before persisting the info?  Can we confirm that the offline prefetch team won\u0027t shut down until we ack that we\u0027ve accepted the download request?\n\nMaybe there\u0027s a way to delay download starts internally that we can look at in the future (assuming they wait for that ack).",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
