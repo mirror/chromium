@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89653c68_8c93e669",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T05:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e4ee14_34defcce",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 8
+      },
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12fd656e_26248a22",
         "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bbd262_83db87f8",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T05:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12fd656e_26248a22",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "86815092_0517f848",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T05:23:36Z",
+      "side": 1,
+      "message": "I thought it was but dismissPopUp is not needed\nattach is needed though, otherwise there\u0027s a crash when attaching a new popup after another is created.",
+      "parentUuid": "9a441252_fbd81ef0",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26ccf386_e3062479",
         "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187a4e26_d8b36a74",
+        "filename": "headless/lib/browser/headless_browser_impl_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T05:23:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26ccf386_e3062479",
+      "revId": "14e28dce2459a61d9f1ac8c9904d9baa46b69a40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
