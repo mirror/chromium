@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cda0ad1_8495fb4a",
+        "filename": "chrome/browser/extensions/extension_sync_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T11:59:25Z",
+      "side": 1,
+      "message": "nit: Comment now out of date?",
+      "range": {
+        "startLine": 587,
+        "startChar": 41,
+        "endLine": 587,
+        "endChar": 46
+      },
+      "revId": "bf303dde9ebc0d0275d686f67ce9c24fce5f104a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
