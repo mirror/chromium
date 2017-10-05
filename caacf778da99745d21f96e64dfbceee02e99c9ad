@@ -185,6 +185,30 @@
     },
     {
       "key": {
+        "uuid": "60c94f4e_a0dd994b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:32:13Z",
+      "side": 1,
+      "message": "Ah, I see that GetLoadState is a public method of HttpTransaction.",
+      "parentUuid": "cb8f8a32_ceefb6e7",
+      "range": {
+        "startLine": 298,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c385cf9_950c8e1f",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
