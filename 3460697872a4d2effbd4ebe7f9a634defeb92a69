@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d45457a_9cc4da71",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 13569,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T06:50:24Z",
+      "side": 0,
+      "message": "Hmm, I\u0027m confused – why is this being moved?  Was the enum previously incorrect?  AFAICT that is the case, but please confirm that this is not actually changing the semantics of e.g. what the value \"1197\" means in the logs.  Thanks.",
+      "range": {
+        "startLine": 13569,
+        "startChar": 77,
+        "endLine": 13569,
+        "endChar": 0
+      },
+      "revId": "3460697872a4d2effbd4ebe7f9a634defeb92a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
