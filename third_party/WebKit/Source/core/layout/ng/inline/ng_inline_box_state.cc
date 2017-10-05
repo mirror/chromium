@@ -248,7 +248,7 @@ void NGInlineLayoutStateStack::CreateBoxFragments(
     for (unsigned i = placeholder.fragment_start; i < placeholder.fragment_end;
          i++) {
       if (RefPtr<NGPhysicalFragment>& child = children[i]) {
-        box.AddChild(std::move(child), offsets[i] - box_offset);
+        box.AddChild(std::move(child), offsets[i].RelativeTo(box_offset));
         DCHECK(!children[i]);
       }
     }
