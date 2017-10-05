@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e88fd125_3c222435",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-05T12:54:53Z",
+      "side": 1,
+      "message": "We should be able to DCHECK that params are valid? In that case, the invalid enum value isn\u0027t needed.",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
