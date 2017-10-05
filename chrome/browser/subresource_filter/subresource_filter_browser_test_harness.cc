@@ -106,9 +106,25 @@ void SubresourceFilterBrowserTest::ConfigureAsPhishingURL(const GURL& url) {
       url, safe_browsing::GetUrlSocEngId(), metadata);
 }
 
+void SubresourceFilterBrowserTest::ConfigureAsPhishingURLWithWarning(
+    const GURL& url) {
+  safe_browsing::ThreatMetadata metadata;
+  metadata.warning = true;
+  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+      url, safe_browsing::GetUrlSocEngId(), metadata);
+}
+
 void SubresourceFilterBrowserTest::ConfigureAsSubresourceFilterOnlyURL(
     const GURL& url) {
   safe_browsing::ThreatMetadata metadata;
+  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
+      url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
+}
+
+void SubresourceFilterBrowserTest::
+    ConfigureAsSubresourceFilterOnlyURLWithWarning(const GURL& url) {
+  safe_browsing::ThreatMetadata metadata;
+  metadata.warning = true;
   database_helper_->MarkUrlAsMatchingListIdWithMetadata(
       url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
 }

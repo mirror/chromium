@@ -69,7 +69,8 @@ ContentSubresourceFilterDriverFactory::
 void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
-    const Configuration& matched_configuration) {
+    const Configuration& matched_configuration,
+    bool warning) {
   DCHECK(navigation_handle->IsInMainFrame());
   DCHECK(!navigation_handle->IsSameDocument());
   if (navigation_handle->GetNetErrorCode() != net::OK)
@@ -102,6 +103,13 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
       !activation_options().should_suppress_notifications &&
       base::FeatureList::IsEnabled(
           kSafeBrowsingSubresourceFilterExperimentalUI);
+
+  was_activated_with_warning_ = false;
+  if (warning && activation_decision_ == ActivationDecision::ACTIVATED) {
+    activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
+    state.activation_level = ActivationLevel::DISABLED;
+    was_activated_with_warning_ = true;
+  }
 
   SubresourceFilterObserverManager::FromWebContents(web_contents())
       ->NotifyPageActivationComputed(navigation_handle, activation_decision_,
@@ -163,13 +171,37 @@ void ContentSubresourceFilterDriverFactory::DidStartNavigation(
 
 void ContentSubresourceFilterDriverFactory::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
-  if (navigation_handle->IsInMainFrame() &&
-      !navigation_handle->IsSameDocument() &&
-      activation_decision_ == ActivationDecision::UNKNOWN &&
-      navigation_handle->HasCommitted()) {
-    activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
-    matched_configuration_ = Configuration();
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument()) {
+    return;
   }
+
+  if (!navigation_handle->HasCommitted())
+    return;
+
+  if (activation_decision_ != ActivationDecision::UNKNOWN &&
+      !was_activated_with_warning_)
+    return;
+
+  if (was_activated_with_warning_) {
+    was_activated_with_warning_ = false;
+    content::RenderFrameHost* frame_host =
+        navigation_handle->GetRenderFrameHost();
+    if (!activation_options().should_disable_ruleset_rules) {
+      frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
+                                      kActivationWarningConsoleMessage);
+    }
+    // Abusive warning message.
+    if (activation_options().should_strengthen_popup_blocker) {
+      frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
+                                      kDisallowNewWindowWarningMessage);
+    }
+  }
+
+  if (activation_decision_ == ActivationDecision::UNKNOWN)
+    activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
+
+  matched_configuration_ = Configuration();
 }
 
 }  // namespace subresource_filter
