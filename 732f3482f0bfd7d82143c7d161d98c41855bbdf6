@@ -70,6 +70,30 @@
       "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b3ae84_fa91d201",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-05T22:40:36Z",
+      "side": 1,
+      "message": "(1) \"android.app.searchable\" goes with \"android.intent.action.SEARCH\" and is used to implement \"Search Interface\", see https://developer.android.com/training/search/setup.html\n\nThere are no explicit requirements that those go together with MAIN/LAUNCHER intents. Also there are examples (https://developer.android.com/training/tv/discovery/searchable.html) where both those elements are the only things specified for the activity.\n\nThat said I still haven\u0027t found a way to test this.\n\n(2) It looks like supports_vr should also be in .Main. supports_vr adds DAYDREAM/CARDBOARD categories, which seem to be used to signify that activity is VR-compatible. Since supports_vr was in .Main (before it was renamed to .IntentDispatcher), it should remain there.\n\nSo I\u0027ll add supports_vr and reword the commit message.",
+      "parentUuid": "76b1c8e8_67759e76",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 53
+      },
+      "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
