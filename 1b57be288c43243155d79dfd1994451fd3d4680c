@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38f136aa_55f622d8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2694,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4ae6f68_79f5cd10",
+      "range": {
+        "startLine": 2694,
+        "startChar": 63,
+        "endLine": 2694,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fe8b861_987f8786",
         "filename": "chrome/browser/engagement/site_engagement_service.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66e6a62_8c225115",
+        "filename": "chrome/browser/engagement/site_engagement_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done, though this requires a static_cast\u003cint\u003e",
+      "parentUuid": "4fe8b861_987f8786",
+      "range": {
+        "startLine": 301,
+        "startChar": 27,
+        "endLine": 301,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ae91c6ea_bab89275",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b944e29_36cb3965",
+      "range": {
+        "startLine": 123,
+        "startChar": 50,
+        "endLine": 123,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae0b6992_a3497886",
         "filename": "components/history/core/browser/history_backend.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c72a6c_e8f9455f",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1381,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae0b6992_a3497886",
+      "range": {
+        "startLine": 1381,
+        "startChar": 75,
+        "endLine": 1381,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5dbc4215_f829669c",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb82d4d7_ee3b127c",
+      "range": {
+        "startLine": 187,
+        "startChar": 30,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55b9ec46_bc5a00a3",
         "filename": "components/history/core/browser/history_types.cc",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-29T09:05:11Z",
       "side": 1,
       "message": "Looks like this is the only call site for InitRedirects? If so, can we just inline it here?",
+      "range": {
+        "startLine": 188,
+        "startChar": 32,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810067b4_72780629",
+        "filename": "components/history/core/browser/history_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "It\u0027s also called in the provider code.",
+      "parentUuid": "55b9ec46_bc5a00a3",
       "range": {
         "startLine": 188,
         "startChar": 32,
@@ -160,6 +304,30 @@
       "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d713ed33_f9940393",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779ba23a_0328241f",
+      "range": {
+        "startLine": 128,
+        "startChar": 10,
+        "endLine": 128,
+        "endChar": 26
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "35f4d582_06cc52a6",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0678eb64_ab874378",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6da88ef_1bcf7ef4",
         "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
         "patchSetId": 2
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "8115d045_4884cd3d",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6da88ef_1bcf7ef4",
+      "range": {
+        "startLine": 19,
+        "startChar": 39,
+        "endLine": 19,
+        "endChar": 61
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc5851b_32d0fd62",
         "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
         "patchSetId": 2
@@ -276,6 +492,30 @@
       "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2859c94e_98e304e6",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T07:02:19Z",
+      "side": 1,
+      "message": "Done. Site engagement will respond to changes in history - we proportionally clear engagement relative to the number of URLs deleted. We also change engagement based on navigations. So having this respond to history changes makes sense for now.",
+      "parentUuid": "1cc5851b_32d0fd62",
+      "range": {
+        "startLine": 30,
+        "startChar": 74,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "1b57be288c43243155d79dfd1994451fd3d4680c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
