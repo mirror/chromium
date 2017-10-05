@@ -9,6 +9,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "content/common/devtools/devtools_network_conditions.h"
+#include "content/common/devtools/devtools_network_controller.h"
 #include "content/network/network_context.h"
 #include "content/public/common/content_switches.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -132,6 +134,19 @@ void NetworkServiceImpl::SetRawHeadersAccess(uint32_t process_id, bool allow) {
     processes_with_raw_headers_access_.insert(process_id);
   else
     processes_with_raw_headers_access_.erase(process_id);
+}
+
+void NetworkServiceImpl::SetNetworkConditions(
+    const std::string& profile_id,
+    mojom::NetworkConditionsPtr conditions) {
+  std::unique_ptr<DevToolsNetworkConditions> devtools_conditions;
+  if (conditions) {
+    devtools_conditions.reset(new DevToolsNetworkConditions(
+        conditions->offline, conditions->latency.InMillisecondsF(),
+        conditions->download_throughput, conditions->upload_throughput));
+  }
+  DevToolsNetworkController::SetNetworkState(profile_id,
+                                             std::move(devtools_conditions));
 }
 
 bool NetworkServiceImpl::HasRawHeadersAccess(uint32_t process_id) const {

@@ -268,6 +268,50 @@ TEST_F(NetworkServiceTestWithService, RawRequestAccessControl) {
   EXPECT_FALSE(client()->response_head().devtools_info.get());
 }
 
+TEST_F(NetworkServiceTestWithService, SetNetworkConditions) {
+  mojom::NetworkConditionsPtr network_conditions =
+      mojom::NetworkConditions::New();
+  network_conditions->offline = true;
+  service()->SetNetworkConditions("42", std::move(network_conditions));
+
+  ResourceRequest request;
+  request.url = test_server()->GetURL("/nocache.html");
+  request.method = "GET";
+
+  StartLoadingURL(request, 0);
+  client()->RunUntilComplete();
+  EXPECT_EQ(net::OK, client()->completion_status().error_code);
+
+  request.headers.AddHeaderFromString(
+      "X-DevTools-Emulate-Network-Conditions-Client-Id: 42");
+  StartLoadingURL(request, 0);
+  client()->RunUntilComplete();
+  EXPECT_EQ(net::ERR_INTERNET_DISCONNECTED,
+            client()->completion_status().error_code);
+
+  network_conditions = mojom::NetworkConditions::New();
+  network_conditions->offline = false;
+  service()->SetNetworkConditions("42", std::move(network_conditions));
+  StartLoadingURL(request, 0);
+  client()->RunUntilComplete();
+  EXPECT_EQ(net::OK, client()->completion_status().error_code);
+
+  network_conditions = mojom::NetworkConditions::New();
+  network_conditions->offline = true;
+  service()->SetNetworkConditions("42", std::move(network_conditions));
+
+  request.headers.AddHeaderFromString(
+      "X-DevTools-Emulate-Network-Conditions-Client-Id: 42");
+  StartLoadingURL(request, 0);
+  client()->RunUntilComplete();
+  EXPECT_EQ(net::ERR_INTERNET_DISCONNECTED,
+            client()->completion_status().error_code);
+  service()->SetNetworkConditions("42", nullptr);
+  StartLoadingURL(request, 0);
+  client()->RunUntilComplete();
+  EXPECT_EQ(net::OK, client()->completion_status().error_code);
+}
+
 }  // namespace
 
 }  // namespace content
