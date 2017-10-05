@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7fc761_50b16e5d",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browser_test_harness.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "While this is possible, I don\u0027t think we should test it, as ThreatMetadata says that the warning bit will only be used for SUBRESOURCE_FILTER threat type.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a3677f_37c449ab",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Can we test that no subresource warning messages are sent?",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e2462c9_4ff87bda",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "I think this test can be reduced to just testing the included_script.js path / navigation. I don\u0027t feel like the other navigations are testing anything more meaningful. Feel free to disagree.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be993479_0c8c56eb",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Can you do the change we talked about on hangouts and just make these tests use the sub-filter list?",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13e3b89c_09dda879",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Why? This makes it so we can\u0027t test that we\u0027re not in enforcement mode.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5240051f_abbcc8bb",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Can we expect that we get this message on navigation, not at popup time?",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4baf023_41e51f43",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "nit: remove this comment since it is stale.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774ad4c1_8d39b1f1",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "DCHECK(activation_decision_ !\u003d ActivationDecision::ACTIVATED || warning)\n\nSince we probably should never get warning without ACTIVATED, right?",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cad5144_736f1454",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "This method is getting complicated :(\n\nCan we rewrite to be something like:\n\nif (!main_frame || same_document || !has_committed)\n  return;\n\nif (activation_decision \u003d\u003d UNKNOWN) {\n  activation_decision_ \u003d ActivationDecision::ACTIVATION_DISABLED;\n  matched_configuration_ \u003d Configuration();\n  was_activated_with_warning_ \u003d false;\n  return;\n} \n\nif (was_activated_with_warning_) {\n  DCHECK_EQ(ACTIVATION_DISABLED, activation_decision_);\n  ... add logging code here.\n}",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e5567ea_d0a8a245",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "To make this \"correct\", I think this case will also need !suppress_notifications.\n\nPlease add some detailed comments. E.g.\n\n// If the matched configuration *would have* triggered resource blocking, with associated\n// Error messages, log a warning.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d80b5f_e597b8e8",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "ditto here, let\u0027s just be a bit more clear.",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475e0fc1_9e7f8a5b",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Mention it should have the same lifetime as matched_configuration_",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2e9b09_c53a9158",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:08:51Z",
+      "side": 1,
+      "message": "Should we go with the plural: \"new tabs or windows\"?",
+      "revId": "2c21876b2eaf236fac7e79d57ff866efdc2a4c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
