@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95b7e999_395807e3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-05T16:26:08Z",
+      "side": 1,
+      "message": "Done. Sorry this was left over from when I had a debate in my head what to call intrinsic_block_size (auto_block_size was winning for a moment).",
+      "parentUuid": "52bf5620_ad95d28d",
+      "revId": "9d6cd2e5f181123a37119ac614981216363b548c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a5f7a49_26dfcc42",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T07:32:36Z",
       "side": 1,
       "message": "Only the block part of end_offset is used now. If you don\u0027t feel like cleaning it up in this (already big) CL, I can do it myself later, though.",
+      "revId": "9d6cd2e5f181123a37119ac614981216363b548c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b992c48a_4748ccd6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_column_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-05T16:26:08Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6a5f7a49_26dfcc42",
       "revId": "9d6cd2e5f181123a37119ac614981216363b548c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
