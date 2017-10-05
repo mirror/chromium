@@ -34,6 +34,24 @@
       "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b4e471_b4794acb",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-05T00:49:47Z",
+      "side": 1,
+      "message": "No, but in the first place we shouldn\u0027t use IDLDictionary outside of a machine stack because it is assuming that it\u0027s used on the machine stack (e.g., may hold a v8::Local handle, which is valid only while you\u0027re on the same stack). The Web IDL spec uses IDL dictionaries only on the stack.",
+      "parentUuid": "f3a37b2c_0f6ea820",
+      "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
