@@ -21,6 +21,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.bookmarks.BookmarkBridge.BookmarkItem;
+import org.chromium.chrome.browser.partnerbookmarks.PartnerBookmarksShim;
 import org.chromium.chrome.browser.widget.selection.SelectableListToolbar;
 import org.chromium.chrome.test.ChromeActivityTestCaseBase;
 import org.chromium.chrome.test.util.ActivityUtils;
@@ -82,6 +83,16 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
                 mBookmarkModel = new BookmarkModel(getActivity().getActivityTab().getProfile());
             }
         });
+    }
+
+    private void readPartnerBookmarks() throws InterruptedException {
+        // Do not read partner bookmarks in setUp(), so that the lazy reading is covered.
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                PartnerBookmarksShim.kickOffReading(getActivity());
+            }
+        });
         BookmarkTestUtil.waitForBookmarkModelLoaded();
     }
 
@@ -120,7 +131,7 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     @SmallTest
     public void testAddBookmark() throws InterruptedException {
         loadUrl(mTestPage);
-        // Click star button to bookmark the curent tab.
+        // Click star button to bookmark the current tab.
         MenuUtils.invokeCustomMenuActionSync(getInstrumentation(), getActivity(),
                 R.id.bookmark_this_page_id);
         // All actions with BookmarkModel needs to run on UI thread.
@@ -156,7 +167,8 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
     }
 
     @SmallTest
-    public void testUrlComposition() {
+    public void testUrlComposition() throws InterruptedException {
+        readPartnerBookmarks();
         BookmarkId mobileId = mBookmarkModel.getMobileFolderId();
         BookmarkId bookmarkBarId = mBookmarkModel.getDesktopFolderId();
         BookmarkId otherId = mBookmarkModel.getOtherFolderId();
@@ -312,7 +324,9 @@ public class BookmarkTest extends ChromeActivityTestCaseBase<ChromeActivity> {
         });
     }
 
-    private BookmarkId addBookmark(final String title, final String url) throws ExecutionException {
+    private BookmarkId addBookmark(final String title, final String url)
+            throws InterruptedException, ExecutionException {
+        readPartnerBookmarks();
         return ThreadUtils.runOnUiThreadBlocking(new Callable<BookmarkId>() {
             @Override
             public BookmarkId call() throws Exception {
