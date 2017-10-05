@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a68797f1_0cdf1a14",
+        "filename": "chrome/browser/chromeos/login/active_directory_login_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-05T08:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ae7c017_52191ebc",
+      "revId": "63bb081fd3c2fd95a672f94a7c487f98150df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "527adf94_986e6131",
         "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "63bb081fd3c2fd95a672f94a7c487f98150df0ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c4a9ee0_c7307ec5",
+        "filename": "chrome/browser/ui/webui/chromeos/login/signin_screen_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-10-05T08:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "527adf94_986e6131",
+      "revId": "63bb081fd3c2fd95a672f94a7c487f98150df0ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
