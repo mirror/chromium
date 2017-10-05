@@ -106,9 +106,9 @@ std::string DumpFrameState(const ExplodedFrameState& frame_state,
   }
 
   std::string url = test_runner::NormalizeLayoutTestURL(
-      base::UTF16ToUTF8(frame_state.url_string.string()));
+      base::UTF16ToUTF8(frame_state.url_string.value()));
   result.append(url);
-  const base::string16& target = frame_state.target.string();
+  const base::string16& target = frame_state.target.value();
   if (!target.empty()) {
     result.append(" (in frame \"");
     result.append(base::UTF16ToUTF8(target));
@@ -120,10 +120,10 @@ std::string DumpFrameState(const ExplodedFrameState& frame_state,
   std::sort(sorted_children.begin(), sorted_children.end(),
             [](const ExplodedFrameState& lhs, const ExplodedFrameState& rhs) {
               // Child nodes should always have a target (aka unique name).
-              DCHECK(!lhs.target.string().empty());
-              DCHECK(!rhs.target.string().empty());
-              return base::CompareCaseInsensitiveASCII(lhs.target.string(),
-                                                       rhs.target.string()) < 0;
+              DCHECK(!lhs.target.value().empty());
+              DCHECK(!rhs.target.value().empty());
+              return base::CompareCaseInsensitiveASCII(lhs.target.value(),
+                                                       rhs.target.value()) < 0;
             });
   for (const auto& child : sorted_children)
     result += DumpFrameState(child, indent + 4, false);
