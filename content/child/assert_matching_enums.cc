@@ -103,5 +103,7 @@ STATIC_ASSERT_ENUM(blink::kMenuSourceTouchHandle, ui::MENU_SOURCE_TOUCH_HANDLE);
 STATIC_ASSERT_ENUM(blink::kMenuSourceStylus, ui::MENU_SOURCE_STYLUS);
 STATIC_ASSERT_ENUM(blink::kMenuSourceAdjustSelection,
                    ui::MENU_SOURCE_ADJUST_SELECTION);
+STATIC_ASSERT_ENUM(blink::kMenuSourceSelectionReset,
+                   ui::MENU_SOURCE_SELECTION_RESET);
 
 } // namespace content
