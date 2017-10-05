@@ -10,11 +10,16 @@
 #include <memory>
 #include <ostream>
 #include <set>
+#include <string>
 
+#include "base/bind.h"
+#include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/installer/zucchini/disassembler.h"
 #include "chrome/installer/zucchini/element_detection.h"
+#include "chrome/installer/zucchini/ensemble.h"
 #include "chrome/installer/zucchini/io_utils.h"
+#include "chrome/installer/zucchini/zucchini.h"
 
 namespace zucchini {
 
@@ -67,6 +72,71 @@ status::Code ReadReferences(ConstBufferView image,
       }
     }
   }
+
+  return status::kStatusSuccess;
+}
+
+status::Code DetectAll(ConstBufferView image,
+                       std::vector<ConstBufferView>* sub_image_list,
+                       std::ostream& out) {
+  DCHECK_NE(sub_image_list, nullptr);
+  sub_image_list->clear();
+
+  size_t last_out_pos = 0;
+  size_t size = image.size();
+  size_t total_bytes_found = 0;
+
+  auto print_range = [&out](size_t pos, size_t size, const std::string& msg) {
+    out << "-- " << AsHex<8, size_t>(pos);
+    out << " +" << AsHex<8, size_t>(size);
+    out << ": " << msg << std::endl;
+  };
+
+  ElementFinder element_finder(image,
+                               base::Bind(DetectElementFromDisassembler));
+  for (auto element = element_finder.GetNext(); element;
+       element = element_finder.GetNext()) {
+    ConstBufferView sub_image = image[element->region()];
+    sub_image_list->push_back(sub_image);
+    size_t pos = sub_image.begin() - image.begin();
+    size_t prog_size = sub_image.size();
+    if (last_out_pos < pos)
+      print_range(last_out_pos, pos - last_out_pos, "?");
+    auto disasm = MakeDisassemblerOfType(sub_image, element->exe_type);
+    print_range(pos, prog_size, disasm->GetExeTypeString());
+    total_bytes_found += prog_size;
+    last_out_pos = pos + prog_size;
+  }
+  if (last_out_pos < size)
+    print_range(last_out_pos, size - last_out_pos, "?");
+  out << std::endl;
+
+  // Print summary, using decimal instead of hexadecimal.
+  out << "Detected " << total_bytes_found << "/" << size << " bytes => ";
+  double percent = total_bytes_found * 100.0 / size;
+  out << base::StringPrintf("%.2f", percent) << "%." << std::endl;
+
+  return status::kStatusSuccess;
+}
+
+status::Code MatchAll(const PatchOptions& opts,
+                      ConstBufferView old_image,
+                      ConstBufferView new_image,
+                      std::ostream& out) {
+  EnsembleMatcher ensemble_matcher;
+  ensemble_matcher.SetVerbose(true);
+  if (!ensemble_matcher.RunMatch(old_image, new_image, opts.imposed_matches))
+    return status::kStatusFatal;
+  out << "Found " << ensemble_matcher.GetMatches().size()
+      << " nontrivial matches and " << ensemble_matcher.GetNumIdentical()
+      << " identical matches." << std::endl;
+  out << std::endl;
+  out << "To impose the same matches by command line, use: " << std::endl;
+  out << "  -impose=";
+  PrefixSep sep(",");
+  for (const ElementMatch& match : ensemble_matcher.GetMatches())
+    out << sep << match;
+  out << std::endl;
 
   return status::kStatusSuccess;
 }

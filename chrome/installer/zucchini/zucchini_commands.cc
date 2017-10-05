@@ -7,8 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <iostream>
 #include <ostream>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/files/file.h"
@@ -20,6 +20,7 @@
 #include "chrome/installer/zucchini/crc32.h"
 #include "chrome/installer/zucchini/io_utils.h"
 #include "chrome/installer/zucchini/mapped_file.h"
+#include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/patch_writer.h"
 #include "chrome/installer/zucchini/zucchini_integration.h"
 #include "chrome/installer/zucchini/zucchini_tools.h"
@@ -28,7 +29,10 @@ namespace {
 
 /******** Command-line Switches ********/
 
+constexpr char kSwitchDD[] = "dd";
 constexpr char kSwitchDump[] = "dump";
+constexpr char kSwitchImpose[] = "impose";
+constexpr char kSwitchKeep[] = "keep";
 constexpr char kSwitchRaw[] = "raw";
 
 }  // namespace
@@ -64,6 +68,9 @@ zucchini::status::Code MainGen(MainParams params) {
   if (!patch.IsValid())
     return zucchini::status::kStatusFileWriteError;
 
+  if (params.command_line.HasSwitch(kSwitchKeep))
+    patch.Keep();
+
   if (!patch_writer.SerializeInto(patch.region()))
     return zucchini::status::kStatusPatchWriteError;
 
@@ -86,11 +93,76 @@ zucchini::status::Code MainRead(MainParams params) {
     return zucchini::status::kStatusFileReadError;
 
   bool do_dump = params.command_line.HasSwitch(kSwitchDump);
-  zucchini::status::Code status = zucchini::ReadReferences(
+  zucchini::status::Code result = zucchini::ReadReferences(
       {input.data(), input.length()}, do_dump, params.out);
-  if (status != zucchini::status::kStatusSuccess)
+  if (result != zucchini::status::kStatusSuccess)
     params.err << "Fatal error found when dumping references." << std::endl;
-  return status;
+  return result;
+}
+
+zucchini::status::Code MainDetect(MainParams params) {
+  CHECK_EQ(1U, params.file_paths.size());
+  zucchini::MappedFileReader input(params.file_paths[0]);
+  if (!input.IsValid())
+    return zucchini::status::kStatusFileReadError;
+
+  std::vector<zucchini::ConstBufferView> sub_image_list;
+  zucchini::status::Code result = zucchini::DetectAll(
+      {input.data(), input.length()}, &sub_image_list, params.out);
+  if (result != zucchini::status::kStatusSuccess) {
+    params.err << "Fatal error found when detecting executables." << std::endl;
+    return result;
+  }
+
+  std::string fmt = params.command_line.GetSwitchValueASCII(kSwitchDD);
+  if (!fmt.empty() && !sub_image_list.empty()) {
+    // Count max number of digits, for proper 0-padding to filenames.
+    constexpr int kBufSize = 24;
+    int digs = 1;  // Note: 10 -> 1 digit, since we'd output "0" to "9".
+    for (size_t i = sub_image_list.size(); i > 10; i /= 10)
+      ++digs;
+    char buf[kBufSize];
+    // Print dd commands that can be used to extract detected executables.
+    params.out << std::endl;
+    params.out << "*** Commands to extract detected files ***" << std::endl;
+    for (size_t i = 0; i < sub_image_list.size(); ++i) {
+      // Render format filename: Substitute # with |i| rendered to text.
+      snprintf(buf, kBufSize, "%0*zu", digs, i);
+      std::string filename;
+      for (char ch : fmt) {
+        if (ch == '#')
+          filename += buf;
+        else
+          filename += ch;
+      }
+      zucchini::ConstBufferView sub_image = sub_image_list[i];
+      size_t skip = sub_image.begin() - input.data();
+      size_t count = sub_image.size();
+      params.out << "dd bs=1 if=" << params.file_paths[0].value();
+      params.out << " skip=" << skip << " count=" << count;
+      params.out << " of=" << filename << std::endl;
+    }
+  }
+  return zucchini::status::kStatusSuccess;
+}
+
+zucchini::status::Code MainMatch(MainParams params) {
+  CHECK_EQ(2U, params.file_paths.size());
+  zucchini::MappedFileReader old_image(params.file_paths[0]);
+  if (!old_image.IsValid())
+    return zucchini::status::kStatusFileReadError;
+  zucchini::MappedFileReader new_image(params.file_paths[1]);
+  if (!new_image.IsValid())
+    return zucchini::status::kStatusFileReadError;
+
+  zucchini::PatchOptions opts;
+  opts.imposed_matches = params.command_line.GetSwitchValueASCII(kSwitchImpose);
+  zucchini::status::Code result =
+      zucchini::MatchAll(opts, {old_image.data(), old_image.length()},
+                         {new_image.data(), new_image.length()}, params.out);
+  if (result != zucchini::status::kStatusSuccess)
+    params.err << "Fatal error found when matching executables." << std::endl;
+  return result;
 }
 
 zucchini::status::Code MainCrc32(MainParams params) {

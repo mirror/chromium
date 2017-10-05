@@ -6,6 +6,9 @@
 
 #include <algorithm>
 
+#include "base/logging.h"
+#include "chrome/installer/zucchini/address_translator.h"
+
 namespace zucchini {
 
 /******** Abs32GapFinder ********/
@@ -131,6 +134,128 @@ ConstBufferView Rel32FinderX64::Scan(ConstBufferView region) {
     }
     ++cursor;
   }
+  return {region.end(), 0};
+}
+
+/******** Rel32FinderARM32 ********/
+
+Rel32FinderARM32::Rel32FinderARM32(ConstBufferView image,
+                                   const AddressTranslator& translator)
+    : image_(image), offset_to_rva_(translator) {}
+
+Rel32FinderARM32::~Rel32FinderARM32() = default;
+
+ConstBufferView Rel32FinderARM32::ScanA32(ConstBufferView region) {
+  ConstBufferView::const_iterator cursor = region.begin();
+  // 4-byte alignment.
+  if ((cursor - image_.begin()) % 4)
+    cursor += 4 - (cursor - image_.begin()) % 4;
+
+  for (; region.end() - cursor >= 4; cursor += 4) {
+    offset_t offset = static_cast<offset_t>(cursor - image_.begin());
+    ARM32Rel32Parser parser(offset_to_rva_.Convert(offset));
+    uint32_t code32 = parser.FetchARMCode32(cursor);
+    arm_disp_t disp = 0;
+
+    if (parser.DecodeA24(code32, &disp)) {
+      rel32_ = {offset, parser.GetARMTargetRvaFromDisplacement(disp),
+                ARM32Rel32Parser::ADDR_A24};
+      return {cursor, 4};
+    }
+  }
+  rel32_ = {static_cast<offset_t>(region.end() - image_.begin()),
+            static_cast<offset_t>(region.end() - image_.begin()),
+            ARM32Rel32Parser::ADDR_NONE};
+
+  return {region.end(), 0};
+}
+
+ConstBufferView Rel32FinderARM32::ScanT32(ConstBufferView region) {
+  ConstBufferView::const_iterator cursor = region.begin();
+  // 2-byte alignment.
+  if ((cursor - image_.begin()) % 2)
+    cursor += (cursor - image_.begin()) % 2;
+
+  ConstBufferView::const_iterator next = region.end();
+  for (; region.end() - cursor >= 2; cursor = next) {
+    offset_t offset = static_cast<offset_t>(cursor - image_.begin());
+    ARM32Rel32Parser parser(offset_to_rva_.Convert(offset));
+    uint16_t code16 = parser.FetchTHUMB2Code16(cursor);
+    int instr_size = GetTHUMB2InstructionSize(code16);
+    next = cursor + instr_size;
+    arm_disp_t disp = 0;
+    ARM32Rel32Parser::AddrType type = ARM32Rel32Parser::ADDR_NONE;
+
+    if (instr_size == 2) {  // 16-bit THUMB2 instruction.
+      if (parser.DecodeT8(code16, &disp))
+        type = ARM32Rel32Parser::ADDR_T8;
+      else if (parser.DecodeT11(code16, &disp))
+        type = ARM32Rel32Parser::ADDR_T11;
+
+    } else {  // |instr_size == 4|: 32-bit THUMB2 instruction.
+      if (region.end() - cursor >= 4) {
+        uint32_t code32 = parser.FetchTHUMB2Code32(cursor);
+        if (parser.DecodeT21(code32, &disp))
+          type = ARM32Rel32Parser::ADDR_T21;
+        else if (parser.DecodeT24(code32, &disp))
+          type = ARM32Rel32Parser::ADDR_T24;
+      }
+    }
+    if (type != ARM32Rel32Parser::ADDR_NONE) {
+      rel32_ = {offset, parser.GetTHUMB2TargetRvaFromDisplacement(disp), type};
+      return ConstBufferView::FromRange(cursor, next);
+    }
+  }
+  rel32_ = {static_cast<offset_t>(region.end() - image_.begin()),
+            static_cast<offset_t>(region.end() - image_.begin()),
+            ARM32Rel32Parser::ADDR_NONE};
+
+  return {region.end(), 0};
+}
+
+ConstBufferView Rel32FinderARM32::Scan(ConstBufferView region) {
+  return is_thumb2_ ? ScanT32(region) : ScanA32(region);
+}
+
+/******** Rel32FinderAArch64 ********/
+
+Rel32FinderAArch64::Rel32FinderAArch64(ConstBufferView image,
+                                       const AddressTranslator& translator)
+    : image_(image), offset_to_rva_(translator) {}
+
+Rel32FinderAArch64::~Rel32FinderAArch64() = default;
+
+ConstBufferView Rel32FinderAArch64::Scan(ConstBufferView region) {
+  ConstBufferView::const_iterator cursor = region.begin();
+
+  // 4-byte alignment.
+  if ((cursor - image_.begin()) % 4)
+    cursor += 4 - (cursor - image_.begin()) % 4;
+
+  for (; region.end() - cursor >= 4; cursor += 4) {
+    offset_t offset = static_cast<offset_t>(cursor - image_.begin());
+    // For simplicity we assume RVA fits within 32-bits.
+    AArch64Rel32Parser parser(offset_to_rva_.Convert(offset));
+    uint32_t code32 = parser.Fetch(cursor);
+    arm_disp_t disp = 0;
+    AArch64Rel32Parser::AddrType type = AArch64Rel32Parser::ADDR_NONE;
+
+    if (parser.DecodeImmd14(code32, &disp)) {
+      type = AArch64Rel32Parser::ADDR_IMMD14;
+    } else if (parser.DecodeImmd19(code32, &disp)) {
+      type = AArch64Rel32Parser::ADDR_IMMD19;
+    } else if (parser.DecodeImmd26(code32, &disp)) {
+      type = AArch64Rel32Parser::ADDR_IMMD26;
+    }
+    if (type != AArch64Rel32Parser::ADDR_NONE) {
+      rel32_ = {offset, parser.GetTargetRvaFromDisplacement(disp), type};
+      return {cursor, 4};
+    }
+  }
+  rel32_ = {static_cast<offset_t>(region.end() - image_.begin()),
+            static_cast<offset_t>(region.end() - image_.begin()),
+            AArch64Rel32Parser::ADDR_NONE};
+
   return {region.end(), 0};
 }
 
