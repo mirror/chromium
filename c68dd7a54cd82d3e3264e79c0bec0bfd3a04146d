@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc0db3f5_cb12472e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/IntegrationTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-05T01:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c0127f2_77103eaa",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e5392f_234fba7a",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/PageMockTestRunner.js",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6b7a16de_17ec922e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/PageMockTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-05T01:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16e5392f_234fba7a",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e951426f_dcf59127",
         "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/SyntaxHighlightTestRunner.js",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b5d897_253f5195",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/SyntaxHighlightTestRunner.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-05T01:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e951426f_dcf59127",
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +127,30 @@
       "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199092d0_fa477406",
+        "filename": "third_party/WebKit/Source/devtools/front_end/test_runner/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-10-05T01:08:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33cae421_ef981880",
+      "range": {
+        "startLine": 4,
+        "startChar": 5,
+        "endLine": 4,
+        "endChar": 16
+      },
+      "revId": "c68dd7a54cd82d3e3264e79c0bec0bfd3a04146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
