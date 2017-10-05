@@ -6,7 +6,10 @@
 
 #include <lm.h>       // For NetGetJoinInformation
 #include <rpc.h>      // For struct GUID
-#include <shlwapi.h>  // For PathIsUNC()
+// <security.h> needs this.
+#define SECURITY_WIN32 1
+#include <security.h>  // For GetUserNameEx()
+#include <shlwapi.h>   // For PathIsUNC()
 #include <stddef.h>
 #include <userenv.h>  // For GPO functions
 
@@ -16,6 +19,7 @@
 #include <vector>
 
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/callback_helpers.h"
 #include "base/files/file_util.h"
 #include "base/json/json_reader.h"
@@ -289,6 +293,29 @@ void ParsePolicy(const RegistryDict* gpo_dict,
   policy->LoadFrom(policy_dict, level, scope, POLICY_SOURCE_PLATFORM);
 }
 
+// Returns a name, using the |get_name| callback, which may refuse the call if
+// the name is longer than _MAX_PATH. So this helper function takes care of the
+// retry with the required size.
+bool GetName(const base::Callback<BOOL(LPWSTR, LPDWORD)>& get_name,
+             base::string16* name) {
+  DCHECK(name);
+  DWORD size = _MAX_PATH;
+  if (!get_name.Run(base::WriteInto(name, size), &size)) {
+    if (::GetLastError() != ERROR_MORE_DATA)
+      return false;
+    // Try again with the required size. This time it must work, the size should
+    // not have changed in between the two calls.
+    if (!get_name.Run(base::WriteInto(name, size), &size))
+      return false;
+  }
+  return true;
+}
+
+// To convert the weird BOOLEAN return value type of ::GetUserNameEx().
+BOOL GetUserNameExBool(EXTENDED_NAME_FORMAT format, LPTSTR name, PULONG size) {
+  return !!::GetUserNameEx(format, name, size);
+}
+
 // Make sure to use the real NetGetJoinInformation, otherwise fallback to the
 // linked one.
 bool IsDomainJoined() {
@@ -345,12 +372,41 @@ void CollectEnterpriseUMAs() {
                             base::win::SUITE_LAST);
 
   base::UmaHistogramBoolean("EnterpriseCheck.IsDomainJoined", IsDomainJoined());
-  base::UmaHistogramBoolean("EnterpriseCheck.InDomain",
-                            base::win::IsEnrolledToDomain());
-  base::UmaHistogramBoolean("EnterpriseCheck.IsManaged",
-                            base::win::IsDeviceRegisteredWithManagement());
-  base::UmaHistogramBoolean("EnterpriseCheck.IsEnterpriseUser",
-                            base::win::IsEnterpriseManaged());
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.InDomain",
+                        base::win::IsEnrolledToDomain());
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsManaged",
+                        base::win::IsDeviceRegisteredWithManagement());
+  UMA_HISTOGRAM_BOOLEAN("EnterpriseCheck.IsEnterpriseUser",
+                        base::win::IsEnterpriseManaged());
+
+  base::string16 machine_name;
+  if (GetName(base::Bind(&::GetComputerNameEx, ::ComputerNameDnsHostname),
+              &machine_name)) {
+    base::string16 user_name;
+    if (GetName(base::Bind(&GetUserNameExBool, ::NameSamCompatible),
+                &user_name)) {
+      // A local user has the machine name in it's sam compatible name, e.g.,
+      // 'MACHINE_NAME\username', otherwise it is perfixed with the domain name
+      // as opposed to the machine, e.g., 'COMPANY\username'.
+      UMA_HISTOGRAM_BOOLEAN(
+          "EnterpriseCheck.IsLocalUser",
+          base::StartsWith(user_name, machine_name,
+                           base::CompareCase::INSENSITIVE_ASCII) &&
+              user_name[machine_name.size()] == L'\\');
+    }
+
+    base::string16 full_machine_name;
+    if (GetName(
+            base::Bind(&::GetComputerNameEx, ::ComputerNameDnsFullyQualified),
+            &full_machine_name)) {
+      // ComputerNameDnsFullyQualified is the same as the
+      // ComputerNameDnsHostname when not domain joined, otherwise it has a
+      // suffix.
+      UMA_HISTOGRAM_BOOLEAN(
+          "EnterpriseCheck.IsLocalMachine",
+          base::EqualsCaseInsensitiveASCII(machine_name, full_machine_name));
+    }
+  }
 }
 
 }  // namespace
