@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98ac92ff_94a4206e",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scroll-customization-property.html",
+        "patchSetId": 29
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-10-05T19:46:10Z",
+      "side": 1,
+      "message": "https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action says that, for touch-action, \u0027\"pan-left pan-right\" is invalid since \"pan-x\" is simpler\u0027.  For consistency, this new CSS property should behave the same.  Could you make sure \"pan-left pan-right\" are invalid in the same way as touch-action and add a test case verifying the exact failure behavior?",
+      "revId": "86858f36beecf0309b4ce458538f8078d1126be3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
