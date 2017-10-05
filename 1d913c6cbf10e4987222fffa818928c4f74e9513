@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c76491da_7a98e055",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:39:40Z",
+      "side": 1,
+      "message": "rdsmith@, I had the same issue with KURL struct traits. I ended up leaving sources empty and listing the .cc directly in the platform target\u0027s sources...",
+      "parentUuid": "0d07fa69_c1195053",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
