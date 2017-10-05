@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "159e3334_65426871",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-05T19:41:44Z",
+      "side": 1,
+      "message": "Doesn\u0027t this function return a truncated version of screen_x when the event is not pointerevent? Then we store a truncated version in the next event. Right? Doesn\u0027t that cause any inconsistency?",
+      "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
