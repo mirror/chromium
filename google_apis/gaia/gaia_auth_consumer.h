@@ -10,6 +10,7 @@
 #include <vector>
 
 class GoogleServiceAuthError;
+struct OAuthMultiloginResult;
 
 namespace net {
 typedef std::vector<std::string> ResponseCookies;
@@ -100,6 +101,8 @@ class GaiaAuthConsumer {
 
   virtual void OnGetTokenResponseSuccess(const ClientOAuthResult& result) {}
   virtual void OnGetTokenResponseError(const GoogleServiceAuthError& error) {}
+
+  virtual void OnOAuthMultiloginResult(const OAuthMultiloginResult& result) {}
 };
 
 #endif  // GOOGLE_APIS_GAIA_GAIA_AUTH_CONSUMER_H_

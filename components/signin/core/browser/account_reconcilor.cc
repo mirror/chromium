@@ -513,6 +513,25 @@ void AccountReconcilor::FinishReconcile() {
   }
 
   bool rebuild_cookie = first_account_mismatch || (removed_from_cookie > 0);
+
+  //////////////////
+  if (first_account.empty()) {
+    DCHECK(signin::IsAccountConsistencyDiceEnabled());
+    PerformLogoutAllAccountsAction();
+    gaia_accounts_.clear();
+    RevokeAllSecondaryTokens();
+  } else {
+    // Create a list of accounts that need to be added to the Gaia cookie.
+    add_to_cookie_.push_back(first_account);
+    for (size_t i = 0; i < chrome_accounts_.size(); ++i) {
+      if (chrome_accounts_[i] != first_account)
+        add_to_cookie_.push_back(chrome_accounts_[i]);
+    }
+
+    cookie_manager_service_->StartOAuthMultilogin();
+  }
+
+  /*
   std::vector<gaia::ListedAccount> original_gaia_accounts =
       gaia_accounts_;
   if (rebuild_cookie) {
@@ -566,6 +585,7 @@ void AccountReconcilor::FinishReconcile() {
   signin_metrics::LogSigninAccountReconciliation(
       chrome_accounts_.size(), added_to_cookie, removed_from_cookie,
       !first_account_mismatch, first_execution_, number_gaia_accounts);
+      */
   first_execution_ = false;
   CalculateIfReconcileIsDone();
   if (!is_reconcile_started_)
