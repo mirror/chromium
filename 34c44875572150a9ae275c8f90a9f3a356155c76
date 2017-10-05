@@ -408,6 +408,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe31bcb_3fd859e8",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T13:15:01Z",
+      "side": 1,
+      "message": "You\u0027re right, we shouldn\u0027t introduce \"frecency\" as yet another term for \"most visited\"/\"top sites\".\nMaybe call the interface just \"TopSitesProvider\" and then this implementation can be \"MostVisitedProvider\", or \"MostVisitedTopSitesProvider\" if we want to be wordy? Or \"DefaultTopSitesProvider\" would be fine with me too.",
+      "parentUuid": "4e834e4b_f13a01a3",
+      "range": {
+        "startLine": 28,
+        "startChar": 79,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
