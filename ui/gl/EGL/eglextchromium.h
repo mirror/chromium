@@ -4,8 +4,8 @@
 
 // This file contains Chromium-specific EGL extensions declarations.
 
-#ifndef GPU_EGL_EGLEXTCHROMIUM_H_
-#define GPU_EGL_EGLEXTCHROMIUM_H_
+#ifndef UI_GL_EGL_EGLEXTCHROMIUM_H_
+#define UI_GL_EGL_EGLEXTCHROMIUM_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -29,8 +29,50 @@ typedef EGLBoolean (EGLAPIENTRYP PFNEGLGETSYNCVALUESCHROMIUMPROC)
 #endif
 #endif
 
+/* Chromium-specific support for EGL_EXT_image_flush_external extension */
+#ifndef EGL_EXT_image_flush_external
+#define EGL_EXT_image_flush_external 1
+#ifdef EGL_EGLEXT_PROTOTYPES
+EGLAPI EGLBoolean EGLAPIENTRY
+eglImageFlushExternalEXT(EGLDisplay dpy,
+                         EGLImageKHR image,
+                         const EGLint* attrib_list);
+#else
+typedef EGLBoolean(EGLAPIENTRYP PFNGLEGLIMAGEFLUSHEXTERNALEXT)(
+    EGLDisplay dpy,
+    EGLImageKHR image,
+    const EGLint* attrib_list);
+#endif
+#endif
+
+#ifndef EGL_ANGLE_stream_producer_d3d_texture_nv12
+#define EGL_ANGLE_stream_producer_d3d_texture_nv12
+#define EGL_D3D_TEXTURE_SUBRESOURCE_ID_ANGLE 0x33AB
+typedef EGLBoolean(
+    EGLAPIENTRYP PFNEGLCREATESTREAMPRODUCERD3DTEXTURENV12ANGLEPROC)(
+    EGLDisplay dpy,
+    EGLStreamKHR stream,
+    const EGLAttrib* attrib_list);
+typedef EGLBoolean(EGLAPIENTRYP PFNEGLSTREAMPOSTD3DTEXTURENV12ANGLEPROC)(
+    EGLDisplay dpy,
+    EGLStreamKHR stream,
+    void* texture,
+    const EGLAttrib* attrib_list);
+#ifdef EGL_EGLEXT_PROTOTYPES
+EGLAPI EGLBoolean EGLAPIENTRY
+eglCreateStreamProducerD3DTextureNV12ANGLE(EGLDisplay dpy,
+                                           EGLStreamKHR stream,
+                                           const EGLAttrib* attrib_list);
+EGLAPI EGLBoolean EGLAPIENTRY
+eglStreamPostD3DTextureNV12ANGLE(EGLDisplay dpy,
+                                 EGLStreamKHR stream,
+                                 void* texture,
+                                 const EGLAttrib* attrib_list);
+#endif
+#endif
+
 #ifdef __cplusplus
 }
 #endif
 
-#define  // GPU_EGL_EGLEXTCHROMIUM_H_
+#define  // UI_GL_EGL_EGLEXTCHROMIUM_H_
