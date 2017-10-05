@@ -87,8 +87,6 @@ class IconLoader {
 
   IconGroup group_;
 
-  IconSize icon_size_;
-
   IconLoadedCallback callback_;
 
   DISALLOW_COPY_AND_ASSIGN(IconLoader);
