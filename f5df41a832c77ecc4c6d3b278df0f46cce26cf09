@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9bb057d_f60ffc93",
+        "filename": "chrome/browser/sync/test/integration/bookmarks_helper.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-05T18:29:07Z",
+      "side": 1,
+      "message": "maybe move the assertion out of this method and into the CheckHasNoFavicon (after the wait) method, and call this OnGotFaviconCallback? That way we could reuse the callback for other favicon related things in the future.",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 32
+      },
+      "revId": "f5df41a832c77ecc4c6d3b278df0f46cce26cf09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32645d8e_db5f192f",
+        "filename": "components/sync_bookmarks/bookmark_change_processor.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 937,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-10-05T18:29:07Z",
+      "side": 1,
+      "message": "Just to be safe, it would be good to also condition this on the bitmap data being empty. In the case of the url being empty, but there being data, we can fall back to the previous behavior (setting the icon url to the page url).",
+      "range": {
+        "startLine": 937,
+        "startChar": 0,
+        "endLine": 937,
+        "endChar": 28
+      },
+      "revId": "f5df41a832c77ecc4c6d3b278df0f46cce26cf09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
