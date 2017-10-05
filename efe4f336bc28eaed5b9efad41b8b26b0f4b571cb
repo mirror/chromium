@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fa98177_ae2a03da",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T08:58:21Z",
+      "side": 1,
+      "message": "This is necessary because of two base classes of Supplement\u003cT\u003e.\n\nHaving two Supplement\u003cT\u003e as base classes, ImageBitmapFactories cannot upcast to Supplement\u003cT\u003e because of ambiguity.  Then, \"const ImageBitmapFactories*\" best matches with \"const void*\", and we hit NOTREACHED() in ScriptWrappableVisitor.  :(\n\nIn order to resolve this ambiguity, I made ImageBitmapFactories inherit from TraceWrapperBase.  Then, \"const ImageBitmapFactories*\" best matches with \"const TraceWrapperBase*\", which is a better match with \"const Supplement\u003cT\u003e*\".",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
