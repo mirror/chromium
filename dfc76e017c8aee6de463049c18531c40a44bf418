@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3189e81f_5cb84c20",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "This image could be from an SVG image or image element.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c4ce2a_32588d0a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "sync? Since this is apparently always a BitmapImage.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f44d10_da5ca908",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "ditto - BitmapImage it seems.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0c248fc_74e2074a",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "BitmapImage, so sync? (same comment throughout this file)",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c69cd5_bcd4aaa5",
+        "filename": "third_party/WebKit/Source/core/layout/shapes/Shape.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "non-encoded image, so sync?",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a18fd1d_3ae61693",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "Is this correct? Is ImageLoader for all images?",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a8c5fc_bc79bb06",
+        "filename": "third_party/WebKit/Source/core/paint/NinePieceImagePainter.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "non-encoded image, so sync?",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591686c2_887bf625",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInfo.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "It seems there is a ParseAttribute virtual method on all Element subclasses. Other classes\nappear to parse important attributes this way and store their result on the Element.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6390932_1dd2f9dc",
+        "filename": "third_party/WebKit/Source/core/paint/ThemePainterDefault.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "I think we should have sync here, since this is a user agent-supplied button.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ad414f_5536da89",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "not encoded, so sync?",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28affc11_d00cd396",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "Default this to sync?",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10dc49b7_0a1d60bd",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-10-05T20:56:20Z",
+      "side": 1,
+      "message": "This is for directly composited images, so need to plumb the developer setting here.",
+      "revId": "dfc76e017c8aee6de463049c18531c40a44bf418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
