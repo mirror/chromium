@@ -16,6 +16,24 @@
       "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a37b2c_0f6ea820",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-05T00:46:11Z",
+      "side": 1,
+      "message": "Is that possible for a type inheriting from IDLDictionary?",
+      "parentUuid": "bb48f67a_b51297db",
+      "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
