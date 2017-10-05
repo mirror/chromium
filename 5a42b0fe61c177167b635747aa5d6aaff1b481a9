@@ -244,6 +244,24 @@
       "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eb7b20_667f04c9",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T19:30:26Z",
+      "side": 1,
+      "message": "Missed this comment.\nIn this case shelf controller moved to extension app controller.  ARC controller is discarded after executing L2238-2240. So closing ARC window does not affect shelf.",
+      "parentUuid": "9c95dab6_9d795f91",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
