@@ -60,13 +60,16 @@ void WorkerOrWorkletGlobalScope::CountDeprecation(WebFeature feature) {
   ReportingProxy().CountDeprecation(feature);
 }
 
-ResourceFetcher* WorkerOrWorkletGlobalScope::GetResourceFetcher() {
+ResourceFetcher* WorkerOrWorkletGlobalScope::Fetcher() const {
   DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());
   DCHECK(!IsMainThreadWorkletGlobalScope());
   if (resource_fetcher_)
     return resource_fetcher_;
-  WorkerFetchContext* fetch_context = WorkerFetchContext::Create(*this);
-  resource_fetcher_ = ResourceFetcher::Create(fetch_context);
+  WorkerOrWorkletGlobalScope* mutable_scope =
+      const_cast<WorkerOrWorkletGlobalScope*>(this);
+  WorkerFetchContext* fetch_context =
+      WorkerFetchContext::Create(*mutable_scope);
+  mutable_scope->resource_fetcher_ = ResourceFetcher::Create(fetch_context);
   return resource_fetcher_;
 }
 
