@@ -201,9 +201,10 @@ void ScopedTransformOverviewWindow::BeginScopedAnimation(
     OverviewAnimationType animation_type,
     ScopedAnimationSettings* animation_settings) {
   for (auto* window : GetTransientTreeIterator(GetOverviewWindow())) {
-    animation_settings->push_back(
-        base::MakeUnique<ScopedOverviewAnimationSettings>(animation_type,
-                                                          window));
+    auto settings = base::MakeUnique<ScopedOverviewAnimationSettings>(
+        animation_type, window);
+    settings->DeferPaint();
+    animation_settings->push_back(std::move(settings));
   }
 }
 
