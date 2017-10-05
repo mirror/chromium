@@ -526,7 +526,6 @@ public class Tab
             CipherFactory.getInstance().triggerKeyGeneration();
         }
 
-        ContextualSearchTabHelper.createForTab(this);
         MediaSessionTabHelper.createForTab(this);
 
         if (creationState != null) {
@@ -1649,6 +1648,7 @@ public class Tab
         ChromeActionModeCallback actionModeCallback = new ChromeActionModeCallback(
                 mThemedApplicationContext, this, cvc.getActionModeCallbackHelper());
         cvc.setActionModeCallback(actionModeCallback);
+        ContextualSearchTabHelper.createForTab(this);
         return cvc;
     }
 
