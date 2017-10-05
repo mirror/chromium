@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d878cf4_eb82af1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabModelSelector.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:11:05Z",
+      "side": 1,
+      "message": "Should we just be calling saveTabListAsynchronously here?\n\nOne thing we could do is actually expose a method on this class (that basically is the contents of the ChromeTabbedActivity method) that would call the save at the end.  With this, we\u0027ll be calling this in quick succession for all the tabs being removed, so optimize that slightly by only doing it once at the end.\n\nThis optimization could be a TODO as well.",
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb49bf0_8f10bb32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:11:05Z",
+      "side": 1,
+      "message": "I wonder if we can do this without introducing a new launch type.  I think we could remove the launch type checks altogether and do:\n\nmIsDetached \u003d getActivity() \u003d\u003d null;\n\nAnytime you don\u0027t have an activity associated with your window android, you are detached.\n\nAs a separate CL, I think we should rename FROM_DETACHED to better reflect it\u0027s general use (FROM_SPECULATIVE_BACKGROUND_CREATION or something).  FROM_DETACHED is too conflated with reparenting IMO and we should make that clearer.",
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9623d17e_32cd8e5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:11:05Z",
+      "side": 1,
+      "message": "One thing I just realized is that this will be wrong for reparented tabs.  We should likely be recalculating the default theme color in the attach call.",
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e37b2285_cb6f1fa9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1451,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:11:05Z",
+      "side": 1,
+      "message": "Tangent unrelated, but I\u0027d love to still see a point where Tab calls this for all types and not just reparenting.  It would help us catch issues where values are getting out of date if set outside of this.\n\nMight need some tweaking here as all tabs might need to start as detached and only attached in either initialize or some other place.\n\nWe should keep this in might going forward.",
+      "range": {
+        "startLine": 1451,
+        "startChar": 16,
+        "endLine": 1451,
+        "endChar": 22
+      },
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e229dbd_0aeaf466",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 10
@@ -18,6 +92,29 @@
         "startChar": 78,
         "endLine": 2940,
         "endChar": 88
+      },
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bfc932_7aed28ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModel.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:11:05Z",
+      "side": 1,
+      "message": "as mentioned in my other comment, I think we should be able to not need this or any of the plumbing and have detached simply mean no activity available.  I believe all action types could infer that w/o new launch types.",
+      "range": {
+        "startLine": 72,
+        "startChar": 8,
+        "endLine": 72,
+        "endChar": 37
       },
       "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
