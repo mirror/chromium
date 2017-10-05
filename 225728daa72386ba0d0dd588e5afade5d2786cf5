@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e081aa47_5cf0086d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-05T17:36:57Z",
+      "side": 1,
+      "message": "Also remove this in DisableVirtualTimeForTesting and/or the destructor?",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 21
+      },
+      "revId": "225728daa72386ba0d0dd588e5afade5d2786cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
