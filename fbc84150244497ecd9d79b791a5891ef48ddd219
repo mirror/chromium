@@ -405,6 +405,30 @@
       "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf8cfe2_0fecdd20",
+        "filename": "chrome/browser/chromeos/printing/cups_print_job_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1241692
+      },
+      "writtenOn": "2017-10-05T17:19:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "508e3a2e_6b6a3f4e",
+      "range": {
+        "startLine": 479,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 36
+      },
+      "revId": "fbc84150244497ecd9d79b791a5891ef48ddd219",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
