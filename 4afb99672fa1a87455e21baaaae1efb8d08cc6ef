@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc816648_1698490b",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:03:33Z",
+      "side": 1,
+      "message": "MakeRequest is mojo boilerplate for setting up a message pipe, in preparation for talking to a remote interface: internally it makes a message pipe. It passes one end to the out param (which is an interface pointer: this is how you talk to the remote end of the interface), and it returns a request (which is passed to the actual implementation of the object, which uses something like mojo::Binding to \u0027accept\u0027 the connection request).\n\nAs for what happens if it\u0027s not called... I\u0027m really not sure how the child process histogramming works today. Hence my earlier request for maybe linking to some design docs in the mojom that would help make the cross-process dance of setting these up (or not setting them up, if not enabled) clearer.",
+      "parentUuid": "1f5d7850_d10337f8",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ff8597_8dc52ad1",
         "filename": "content/browser/histogram_controller.cc",
         "patchSetId": 19
@@ -167,6 +191,30 @@
       "side": 1,
       "message": "I think what\u0027s confusing is that these aren\u0027t child histograms but child histogram *messages*.  Perhaps the style for Mojo things is to not mention this explicitly -- I don\u0027t know -- but if not, could you make it more clear?\n\nBut yes, please change the name.  I suggest:  SetChildHistogramSharedMemory()",
       "parentUuid": "b8184522_85828fc2",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "914a670f_8438da40",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:03:33Z",
+      "side": 1,
+      "message": "As far as I can tell, nverne is using this to bootstrap child histogram set up in child processes (whether or not they\u0027re using persistent histograms). I was the one who suggested a factory pattern originally (perhaps incorrectly). To avoid further confusion, I think it would be helpful to have some more background on how this is expected to work for:\n- processes where child histograms use persistent memory. Presumably we expect the shmem allocator to be set up ASAP\n- processes where child histograms which don\u0027t use persistent memory. It looks like they just report histogram diffs, but it\u0027s not clear if any initialization is required.\n- other cases?",
+      "parentUuid": "2393aacc_d3c9b496",
       "range": {
         "startLine": 33,
         "startChar": 5,
