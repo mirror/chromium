@@ -30,6 +30,11 @@ class IdlenessDetectorTest : public ::testing::Test {
     return Detector()->network_2_quiet_ == -1 &&
            Detector()->network_0_quiet_ == -1;
   }
+  bool IsLongTaskIdlenessDetectionStarted() {
+    return Detector()->long_task_idle_ > 0;
+  }
+
+  bool IsLongTaskIdle() { return Detector()->long_task_idle_ == -1; }
 
   double NetworkQuietStartTime() {
     return Detector()->network_2_quiet_start_time_;
@@ -93,6 +98,31 @@ TEST_F(IdlenessDetectorTest, NetworkQuietWatchdogTimerFired) {
   platform_->RunForPeriodSeconds(3);
   EXPECT_FALSE(IsNetworkQuietTimerActive());
   EXPECT_TRUE(HadNetworkQuiet());
+}
+
+TEST_F(IdlenessDetectorTest, LongTaskIdlenessDetectionBasic) {
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(1.49);
+  EXPECT_FALSE(IsLongTaskIdle());
+  DidProcessTask(1.49, 1.50);
+  EXPECT_TRUE(IsLongTaskIdle());
+}
+
+TEST_F(IdlenessDetectorTest, LongTaskIdlenessDetectionReset) {
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(1.44);
+  DidProcessTask(1.44, 1.51);
+  EXPECT_FALSE(IsLongTaskIdle());
+  WillProcessTask(2.0);
+  EXPECT_FALSE(IsLongTaskIdle());
+  DidProcessTask(2.0, 2.03);
+  EXPECT_TRUE(IsLongTaskIdle());
+}
+
+TEST_F(IdlenessDetectorTest, LongTaskIdlenessDetectionWillProcessTask) {
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(1.55);
+  EXPECT_TRUE(IsLongTaskIdle());
 }
 
 }  // namespace blink
