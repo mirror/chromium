@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d9493c4_3e64c481",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T20:45:21Z",
+      "side": 1,
+      "message": "nit: Let\u0027s re-order this and avoid some indenting\n\nif (tab !\u003d null \u0026\u0026 tab.getWebContents() !\u003d null) {\n   showSurveyInfoBar();\n   return;\n}\n\nTabModel model \u003d ...\n// everything else.",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 58
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e504f5_5e48ef42",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T20:45:21Z",
+      "side": 1,
+      "message": "I think it makes sense to always use the normal model. Showing surveys in incognito seems a bit strange to me.",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 72
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fd2bf9_5cdb91d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T20:45:21Z",
+      "side": 1,
+      "message": "The TODO should have a short sentence about what needs to be done, e.g.\n\nTODO(danielpark): Refine logic for whether user has seen a survey (crbug.com/772081).",
+      "range": {
+        "startLine": 133,
+        "startChar": 8,
+        "endLine": 133,
+        "endChar": 44
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620d81ea_11ceaa4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T20:45:21Z",
+      "side": 1,
+      "message": "nit: will not be run.",
+      "range": {
+        "startLine": 37,
+        "startChar": 77,
+        "endLine": 37,
+        "endChar": 84
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
