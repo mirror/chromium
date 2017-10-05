@@ -543,6 +543,7 @@
     },
     {
       name: "LongTaskV2",
+      status: "test",
     },
     {
       name: "MediaCapabilities",

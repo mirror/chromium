@@ -427,6 +427,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   WebRuntimeFeatures::EnableModernMediaControls(
       base::FeatureList::IsEnabled(media::kUseModernMediaControls));
 
+  WebRuntimeFeatures::EnableLongTaskV2(
+      base::FeatureList::IsEnabled(features::kLongTaskV2));
+
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.
   for (const std::string& feature :

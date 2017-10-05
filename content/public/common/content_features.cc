@@ -144,6 +144,10 @@ const base::Feature kLoadingWithMojo {
 #endif
 };
 
+// Enables Long Task API V2
+const base::Feature kLongTaskV2{"LongTaskV2",
+                                base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables the memory coordinator.
 // WARNING:
 // The memory coordinator is not ready for use and enabling this may cause
