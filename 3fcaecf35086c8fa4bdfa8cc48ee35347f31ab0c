@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9db77cfd_78fb4955",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-05T02:14:41Z",
+      "side": 1,
+      "message": "Is this called on the UI thread?  I think various NCN constructors have requirements about being called on the UI thread.",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be7b611e_8e4a2c6e",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 16
@@ -13,6 +36,52 @@
       "writtenOn": "2017-10-04T20:02:21Z",
       "side": 1,
       "message": "I added two ifdefs to handle Android and ChromeOS, which both require setting up a NCNFactory.\n\nIt\u0027s unclear how we can support ChromeOS in Network Service, so I added an NOTIMPLEMENTED() per offline discussion with Matt.",
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a13e37_aeeced5b",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-05T02:14:41Z",
+      "side": 1,
+      "message": "Any reason net_log_ and network_change_manager_ are unique_ptrs instead of simple instances of these classes?",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 68
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18114084_e7436d4f",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-10-05T02:14:41Z",
+      "side": 1,
+      "message": "how do we get the actual initial connection type?",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 51
+      },
       "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
