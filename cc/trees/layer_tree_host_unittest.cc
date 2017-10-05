@@ -7903,7 +7903,7 @@ class LayerTreeHostTestQueueImageDecodeNonLazy : public LayerTreeHostTest {
     first_ = false;
 
     bitmap_.allocN32Pixels(10, 10);
-    PaintImage image = PaintImageBuilder()
+    PaintImage image = PaintImageBuilder::WithDefault()
                            .set_id(PaintImage::GetNextId())
                            .set_image(SkImage::MakeFromBitmap(bitmap_))
                            .TakePaintImage();
@@ -8063,7 +8063,7 @@ class LayerTreeHostTestImageAnimation : public LayerTreeHostTest {
     generator_ = sk_make_sp<FakePaintImageGenerator>(
         SkImageInfo::MakeN32Premul(500, 500, SkColorSpace::MakeSRGB()), frames);
     PaintImage image =
-        PaintImageBuilder()
+        PaintImageBuilder::WithDefault()
             .set_id(PaintImage::GetNextId())
             .set_paint_image_generator(generator_)
             .set_frame_index(0u)
