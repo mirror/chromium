@@ -262,6 +262,24 @@
       "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d525d88_4943a7f9",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T20:12:28Z",
+      "side": 1,
+      "message": "Okay, I guess that\u0027s reasonable.",
+      "parentUuid": "54eb7b20_667f04c9",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
