@@ -51,6 +51,24 @@
       "revId": "9627e792bb40c1031864f19496966022247d368c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f290604f_7312e36f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T01:10:30Z",
+      "side": 1,
+      "message": "Yea thought similarly... this is analogous to StartResponse() above.\n\nIf we go this route StartResponse() could also have a comment like\n\n// Used as the StartLoaderCallback passed to |loader_callback_| when the service worker provided a response. Returns the response to |client|.",
+      "parentUuid": "064d10a0_6afa06a7",
+      "revId": "9627e792bb40c1031864f19496966022247d368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
