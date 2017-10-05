@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae14d12f_135f4998",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-05T21:40:01Z",
+      "side": 1,
+      "message": "Release build on N5 userdebug device, the delay increased from 1ms to ~30ms. I think this should be OK.",
+      "parentUuid": "0fd7ae04_a5b5f419",
+      "range": {
+        "startLine": 1456,
+        "startChar": 8,
+        "endLine": 1459,
+        "endChar": 57
+      },
+      "revId": "a89618bd8fda6574176905d8ce4cedb3f33b36db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ad5630_621bcd18",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-05T18:28:18Z",
       "side": 1,
       "message": "I have reservations that this class is generally unusable in many regards without the partner bookmarks loaded.  That being said, BookmarkManager and the callers of isEditBookmarksEnabled seem to be the only really users of this (and the latter doesn\u0027t care about partner bookmarks).  Longer term, I think we should find a way to make this class more error proof.\n\nMaybe all APIs should be async so they\u0027d all defer till after partner bookmarks are loaded if needed?  Maybe just the APIs that matter?  You should be able to add a bookmark without partner bookmarks enabled, so maybe it is just the get status methods that would need to be async-ified.  Haven\u0027t given it too much thought, but I feel we should make this a bit less error prone as a followup somehow.",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "a89618bd8fda6574176905d8ce4cedb3f33b36db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f1a2b02_a62af3b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-10-05T21:40:01Z",
+      "side": 1,
+      "message": "Yes. This is quite error prone now. Currently the \"loaded\" signal means both user bookmarks and partner bookmarks are loaded. Separating into two might make sense.",
+      "parentUuid": "f7ad5630_621bcd18",
       "range": {
         "startLine": 25,
         "startChar": 13,
