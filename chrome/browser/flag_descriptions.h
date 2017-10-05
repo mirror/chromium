@@ -1489,6 +1489,9 @@ extern const char kEnableExternalDriveRenameDescription[];
 extern const char kEnableImeMenuName[];
 extern const char kEnableImeMenuDescription[];
 
+extern const char kEnableTabletSplitViewName[];
+extern const char kEnableTabletSplitViewDescription[];
+
 extern const char kEnableZipArchiverOnFileManagerName[];
 extern const char kEnableZipArchiverOnFileManagerDescription[];
 
