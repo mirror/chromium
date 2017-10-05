@@ -301,6 +301,10 @@ void ThreadState::VisitPersistents(Visitor* visitor) {
   }
 }
 
+void ThreadState::SearchPersistents(void* ptr) {
+  persistent_region_->SearchPersistentNodes(ptr);
+}
+
 ThreadState::GCSnapshotInfo::GCSnapshotInfo(size_t num_object_types)
     : live_count(Vector<int>(num_object_types)),
       dead_count(Vector<int>(num_object_types)),

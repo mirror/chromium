@@ -222,6 +222,8 @@ class PLATFORM_EXPORT ThreadState {
 
   ThreadHeap& Heap() const { return *heap_; }
 
+  void SearchPersistents(void*);
+
   // When ThreadState is detaching from non-main thread its
   // heap is expected to be empty (because it is going away).
   // Perform registered cleanup tasks and garbage collection

@@ -4235,6 +4235,7 @@ bool Document::CanAcceptChild(const Node& new_child,
 }
 
 Node* Document::cloneNode(bool deep, ExceptionState&) {
+  showLiveDocumentInstances();
   Document* clone = CloneDocumentWithoutChildren();
   clone->CloneDataFromDocument(*this);
   if (deep)
@@ -7178,8 +7179,11 @@ static WeakDocumentSet& liveDocumentSet() {
 void showLiveDocumentInstances() {
   WeakDocumentSet& set = liveDocumentSet();
   fprintf(stderr, "There are %u documents currently alive:\n", set.size());
-  for (blink::Document* document : set)
+  for (blink::Document* document : set) {
     fprintf(stderr, "- Document %p URL: %s\n", document,
             document->Url().GetString().Utf8().data());
+    blink::ThreadState::Current()->SearchPersistents(
+        static_cast<void*>(document));
+  }
 }
 #endif

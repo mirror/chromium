@@ -115,6 +115,8 @@ class PLATFORM_EXPORT PersistentRegion final {
   }
   ~PersistentRegion();
 
+  void SearchPersistentNodes(void* needle);
+
   PersistentNode* AllocatePersistentNode(void* self, TraceCallback trace) {
 #if DCHECK_IS_ON()
     ++persistent_count_;
