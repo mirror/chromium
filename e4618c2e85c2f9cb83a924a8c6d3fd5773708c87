@@ -16,6 +16,23 @@
       "revId": "e4618c2e85c2f9cb83a924a8c6d3fd5773708c87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc16d8ef_2caf6960",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/shadow-dom/event-post-dispatch.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-05T08:19:07Z",
+      "side": 1,
+      "message": "Could you add one more case, that relatedTarget is in the doucment tree, while\nthe target is inside shadow tree?\nIn that case, make sure both target and relatedTarget be set to null when the event\nstops at shadow root.",
+      "revId": "e4618c2e85c2f9cb83a924a8c6d3fd5773708c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
