@@ -981,7 +981,11 @@ by a child template that "extends" this file.
         <service android:name="org.chromium.content.app.SandboxedProcessService{{ i }}"
             android:process=":sandboxed_process{{ i }}"
             android:permission="{{ manifest_package }}.permission.CHILD_SERVICE"
+            {% if use_order_profiling is defined %}
+            android:isolatedProcess="false"
+            {% else %}
             android:isolatedProcess="true"
+            {% endif %}
             android:exported="{{sandboxed_service_exported|default(false)}}"
             {% if (sandboxed_service_exported|default(false)) == 'true' %}
             android:externalService="true"
