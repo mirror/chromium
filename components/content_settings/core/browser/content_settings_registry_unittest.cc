@@ -125,6 +125,22 @@ TEST_F(ContentSettingsRegistryTest, Iteration) {
   EXPECT_TRUE(cookies_found);
 }
 
+TEST_F(ContentSettingsRegistryTest, Inheritance) {
+  // Settings that control access to user data should not be inherited.
+  // Check that only popups, subresource filter and automatic downloads
+  // are inherited in incognito.
+  for (const ContentSettingsInfo* info : *registry()) {
+    ContentSettingsType type = info->website_settings_info()->type();
+    if (info->incognito_behavior() ==
+            ContentSettingsInfo::INHERIT_IN_INCOGNITO &&
+        !(type == CONTENT_SETTINGS_TYPE_POPUPS ||
+          type == CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS ||
+          type == CONTENT_SETTINGS_TYPE_ADS)) {
+      FAIL() << "Incorrect inheritance behavior for type: " << type;
+    }
+  }
+}
+
 TEST_F(ContentSettingsRegistryTest, IsDefaultSettingValid) {
   const ContentSettingsInfo* info =
       registry()->Get(CONTENT_SETTINGS_TYPE_COOKIES);
