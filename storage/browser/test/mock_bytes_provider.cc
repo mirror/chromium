@@ -33,6 +33,7 @@ void MockBytesProvider::RequestAsStream(
     mojo::ScopedDataPipeProducerHandle pipe) {
   if (stream_request_count_)
     ++*stream_request_count_;
+  base::ScopedAllowBaseSyncPrimitivesForTesting allow_base_sync_primitives;
   mojo::common::BlockingCopyFromString(
       std::string(reinterpret_cast<const char*>(data_.data()), data_.size()),
       pipe);
