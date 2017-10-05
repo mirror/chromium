@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed58e922_ceedb4ce",
+        "filename": "ios/clean/chrome/app/app_delegate.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-05T17:27:23Z",
+      "side": 1,
+      "message": "nit: fix spelling.",
+      "range": {
+        "startLine": 57,
+        "startChar": 39,
+        "endLine": 57,
+        "endChar": 54
+      },
+      "revId": "557d531d3764c0df8b46bf63446c58ed1ccea2f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878cc4be_e50d9c57",
+        "filename": "ios/clean/chrome/test/perf/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-05T17:27:23Z",
+      "side": 1,
+      "message": "I thought clean chrome is deprecated? Is this CL for clean chrome?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 54
+      },
+      "revId": "557d531d3764c0df8b46bf63446c58ed1ccea2f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
