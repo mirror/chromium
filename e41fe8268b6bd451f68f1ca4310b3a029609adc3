@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0f73767_da29c00e",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "This will crash if the above expectation fails, but crashes are quite a bit uglier for our testing structure.  Let\u0027s do:\n\nreturn iter \u003d\u003d browser_list.end() ? nullptr : *iter;\n(I think ^^ this was my original suggestion)\n\nor, if you prefer, remove the EXPECT_FALSE above and do:\n\nif (iter \u003d\u003d browser_list.end())\n  ADD_FAILURE() \u003c\u003c \"Could not find matching browser for: \u003c\u003c extension-\u003eid();\n  return nullptr;\n}\nreturn *iter;",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10289ff0_dc37af1c",
+        "filename": "chrome/browser/sync/test/integration/sync_app_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "nit: same length, and avoiding an unnecessary assignment:\nif (extension-\u003efrom_bookmark()) {\n  app_state-\u003ebookmark_app_scope \u003d\n      extensions::GetScopeURLFromBookmarkApp(extension);\n}",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f48faf_87159205",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "Is there any platform-agnostic way we can test the browser frame color to ensure it\u0027s being respected?",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27af8a2_62ddd0b2",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "Needed?  (Same for below)",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bb9a5a_2a94845d",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "nit: initialize",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d680d1_b578b72f",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "nittiest of nits: prefer base::ASCIIToUTF16() to avoid some unnecessary checks.",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25b24aca_d299a571",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "If you wanted to ensure that hosted apps can\u0027t use this, I think you could do something like:\n\nif (!extension-\u003efrom_bookmark()) {\n  *error \u003d base::ASCIIToUTF16(\"Only bookmark apps are allowed to use app.theme_color\");\n  return false;\n}",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32bcb0c_2ac2addf",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_manifest_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "Would be good to test some failing cases - especially if you choose to validate that only from_bookmark() apps can use it.",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

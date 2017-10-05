@@ -315,6 +315,24 @@
       "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b061933_1c737e93",
+        "filename": "extensions/common/manifest_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T13:34:09Z",
+      "side": 1,
+      "message": "manifest_features.json describes *all* possible features to be available in any manifest.  If a feature is not listed there, we generate an install warning.  (We should also avoid parsing the key, but I don\u0027t think we actually do... we should probably fix that.)\n\nNow, the trickiness - features can have \"parents\" if they are \"dotted\".  This is because we want things like \"background.page\" to be available in all cases that \"background\" is (or, for api_features, an API method is usually available if that API is available).  If a feature is not explicitly specified in the features.json file, then we assume it is just a child of the parent, and apply the parent\u0027s rules to it.\n\nNow, what\u0027s this mean here?  If we don\u0027t have a feature for \"app.theme_color\", then it will default availability to anything with \"app\" - which currently includes hosted apps, platform apps, and legacy packaged apps.\n\nWe don\u0027t yet have a separate class for bookmark apps vs hosted apps, so if you want to restrict it further, you\u0027ll have to find a way to do that in the parsing/validation of the handler.",
+      "parentUuid": "b59b0302_f65b6346",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
