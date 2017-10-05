@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e9066bf_de0acd00",
+        "filename": "third_party/leveldatabase/leveldb_chrome.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T23:40:06Z",
+      "side": 1,
+      "message": "Food for thought (for future CLs): Would it make sense to have all leveldb::Env variants in Chromium inherit from an empty leveldb::Env subclass, and use the type system to make sure that we only use Chromium-flavored Envs?",
+      "revId": "5fa3d05e59e554c6ff602767c1932cc6e9b0b71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
