@@ -1,0 +1,204 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca9df7d5_c765aa2e",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Personal style thoughts: I think it would have been clearer to just have three distinctly helper functions, rather than overloading the constructor like this.",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce10fa0_d94bfafb",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "I wonder if this should be technically marked const?",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e6b2b0_c7a0150b",
+        "filename": "chrome/profiling/backtrace_storage.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Maybe AssertAcquired on the lock as well.",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbcafbf_1fd65841",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Just default the move ctors as well? Or does this encounter the MSVC bug?",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0768f316_a29592ed",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Nit: auto is OK here",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 29
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6a8c89_a32f1c03",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Nit: auto tracking \u003d base::MakeRefCounted\u003cDumpProcessesForTracingTracking\u003e();",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c36707d_75e2d666",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "I would actually argue that this is not a great place to use auto (I guess we can assume it doesn\u0027t return a pointer though, given the set of warnings we implement... so maybe it\u0027s OK)",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1dca6c3_88f1975c",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Nit: std::move()",
+      "range": {
+        "startLine": 191,
+        "startChar": 20,
+        "endLine": 191,
+        "endChar": 31
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93087e5c_9726723c",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Nit: std::move()",
+      "range": {
+        "startLine": 220,
+        "startChar": 52,
+        "endLine": 220,
+        "endChar": 63
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29953915_e2d66bca",
+        "filename": "chrome/profiling/memlog_receiver_pipe.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T04:52:03Z",
+      "side": 1,
+      "message": "Nit: std::move() these please",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
