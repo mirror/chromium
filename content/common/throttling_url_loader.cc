@@ -5,6 +5,7 @@
 #include "content/common/throttling_url_loader.h"
 
 #include "base/single_thread_task_runner.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 
 namespace content {
@@ -19,21 +20,65 @@ class ThrottlingURLLoader::ForwardingThrottleDelegate
 
   // URLLoaderThrottle::Delegate:
   void CancelWithError(int error_code) override {
+    if (!loader_)
+      return;
+
+    loader_->inside_delegate_calls_++;
+
     loader_->CancelWithError(error_code);
+
+    // |loader_| may be destroyed by the call above, so we need to check whether
+    // this object is detached again.
+    if (loader_)
+      loader_->inside_delegate_calls_--;
   }
 
-  void Resume() override { loader_->StopDeferringForThrottle(throttle_); }
+  void Resume() override {
+    if (!loader_)
+      return;
+
+    loader_->inside_delegate_calls_++;
+
+    loader_->StopDeferringForThrottle(throttle_);
+
+    // |loader_| may be destroyed by the call above, so we need to check whether
+    // this object is detached again.
+    if (loader_)
+      loader_->inside_delegate_calls_--;
+  }
 
   void PauseReadingBodyFromNet() override {
+    if (!loader_)
+      return;
+
+    loader_->inside_delegate_calls_++;
+
     loader_->PauseReadingBodyFromNet(throttle_);
+
+    // |loader_| may be destroyed by the call above, so we need to check whether
+    // this object is detached again.
+    if (loader_)
+      loader_->inside_delegate_calls_--;
   }
 
   void ResumeReadingBodyFromNet() override {
+    if (!loader_)
+      return;
+
+    loader_->inside_delegate_calls_++;
+
     loader_->ResumeReadingBodyFromNet(throttle_);
+
+    // |loader_| may be destroyed by the call above, so we need to check whether
+    // this object is detached again.
+    if (loader_)
+      loader_->inside_delegate_calls_--;
   }
 
+  void Detach() { loader_ = nullptr; }
+
  private:
-  ThrottlingURLLoader* const loader_;
+  ThrottlingURLLoader* loader_;
   URLLoaderThrottle* const throttle_;
 
   DISALLOW_COPY_AND_ASSIGN(ForwardingThrottleDelegate);
@@ -115,7 +160,20 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
   return loader;
 }
 
-ThrottlingURLLoader::~ThrottlingURLLoader() {}
+ThrottlingURLLoader::~ThrottlingURLLoader() {
+  if (inside_delegate_calls_ > 0) {
+    // A throttle is calling into this object. In this case, delay destruction
+    // of the throttles, so that throttles don't need to worry about any
+    // delegate calls may destory them synchronously.
+    for (auto& entry : throttles_)
+      entry.delegate->Detach();
+
+    auto throttles =
+        std::make_unique<std::vector<ThrottleEntry>>(std::move(throttles_));
+    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
+                                                    std::move(throttles));
+  }
+}
 
 void ThrottlingURLLoader::FollowRedirect() {
   if (url_loader_)
@@ -390,7 +448,9 @@ void ThrottlingURLLoader::Resume() {
   if (loader_cancelled_ || deferred_stage_ == DEFERRED_NONE)
     return;
 
-  switch (deferred_stage_) {
+  auto prev_deferred_stage = deferred_stage_;
+  deferred_stage_ = DEFERRED_NONE;
+  switch (prev_deferred_stage) {
     case DEFERRED_START: {
       StartNow(start_info_->url_loader_factory, start_info_->routing_id,
                start_info_->request_id, start_info_->options,
@@ -415,7 +475,6 @@ void ThrottlingURLLoader::Resume() {
       NOTREACHED();
       break;
   }
-  deferred_stage_ = DEFERRED_NONE;
 }
 
 void ThrottlingURLLoader::PauseReadingBodyFromNet(URLLoaderThrottle* throttle) {
