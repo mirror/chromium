@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1139f91c_518cc72c",
+        "filename": "extensions/renderer/ipc_message_sender.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:47:49Z",
+      "side": 1,
+      "message": "Test coverage of IPCSender is tricky.  I\u0027d like it to be a simple enough class that it\u0027s test coverage can be in the form of end-to-end browser tests, and then have unittests for the components calling into it.  The main reason is because certain things here (most specifically the RenderFrame) are very hard to mock in testing (read: I have no idea how to do it short of creating a new test class that inherits content::RenderFrame and implements all of its virtual methods).\n\nI\u0027m happy to remove these for now, if you prefer, but I don\u0027t know how much more unit test coverage we\u0027ll have later.",
+      "parentUuid": "00b3e389_27f24457",
+      "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1145e09_06094dc4",
         "filename": "extensions/renderer/message_target.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c67d25_c5a98ba7",
+        "filename": "extensions/renderer/message_target.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:47:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1145e09_06094dc4",
+      "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +122,24 @@
       "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5693ea0_8c2eb8f3",
+        "filename": "extensions/renderer/message_target.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:47:49Z",
+      "side": 1,
+      "message": "One day, we\u0027ll be able to use all the nice C++ toys the other kids get. :)",
+      "parentUuid": "a0b02400_325d444d",
+      "revId": "66bb8f016a160e8dae4c05909eb382357cbe2967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
