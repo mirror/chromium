@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7363695b_d09074f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T22:01:36Z",
+      "side": 1,
+      "message": "Can we just put it below LauncherShortcutActivity#updateIncognitoShortcut() rather than adding a new block? That appears to be a catch-all.",
+      "parentUuid": "0752255b_b24292b3",
+      "range": {
+        "startLine": 1632,
+        "startChar": 8,
+        "endLine": 1632,
+        "endChar": 34
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d9493c4_3e64c481",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 29
