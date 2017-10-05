@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2d89995_ff8243c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T17:19:27Z",
+      "side": 1,
+      "message": "You can link to 638379 if you\u0027d like",
+      "revId": "945e118fde5ba2e895a039cb8759e84387c34ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3877e0a_9463a5b9",
         "filename": "third_party/WebKit/Source/platform/testing/FuzzedDataProvider.h",
         "patchSetId": 3
