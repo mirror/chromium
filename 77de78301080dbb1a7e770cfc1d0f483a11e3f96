@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb48f67a_b51297db",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-05T00:44:30Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t really want to introduce yet another heap-related class.\n\nCan we just make MediaTrackConstraints inherit from GarbageCollected?",
+      "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
