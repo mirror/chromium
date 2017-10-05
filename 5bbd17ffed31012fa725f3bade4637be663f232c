@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ac2e05b_28bc1dbd",
+        "filename": "chrome/test/base/always_on_top_window_killer_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T19:07:16Z",
+      "side": 1,
+      "message": "optional: I realize this name matches the api you are using, but image_path is a mildly confusing name (it makes me think of the path for an image, not the path of the process). How about process_path or owning_process_path? Same comment for the LOG statement.",
+      "range": {
+        "startLine": 70,
+        "startChar": 23,
+        "endLine": 70,
+        "endChar": 33
+      },
+      "revId": "5bbd17ffed31012fa725f3bade4637be663f232c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
