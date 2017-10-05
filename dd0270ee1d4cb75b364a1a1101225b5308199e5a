@@ -16,6 +16,24 @@
       "revId": "dd0270ee1d4cb75b364a1a1101225b5308199e5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c71b58f_c42a96f3",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1244413
+      },
+      "writtenOn": "2017-10-05T17:49:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a21b19e_28a376ec",
+      "revId": "dd0270ee1d4cb75b364a1a1101225b5308199e5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
