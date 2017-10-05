@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27b68cde_6794a15d",
+        "filename": "sandbox/fuzzer/sandbox_ipc_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T01:46:19Z",
+      "side": 1,
+      "message": "nit: \"\u003d {nullptr};\" ?",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "872e7e7b8ae7e28bf367af914ad453aab621dd58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
