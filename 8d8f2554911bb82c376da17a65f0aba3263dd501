@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e783d6a_dd5fe722",
+        "filename": "components/omnibox/browser/search_suggestion_parser.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-05T23:33:15Z",
+      "side": 1,
+      "message": "Is there some common logic for when icons are shown that this can share?  I worry that if we change UI designs somewhere, this code will get out of date.",
+      "revId": "8d8f2554911bb82c376da17a65f0aba3263dd501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
