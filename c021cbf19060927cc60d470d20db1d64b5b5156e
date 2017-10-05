@@ -272,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "a9a0ee81_3f8f35e4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40368,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:37:38Z",
+      "side": 1,
+      "message": "A good chunk of the enums here rely on the correlation of numbers in this way, but if you\u0027re okay keeping the filename up to date after the rename then this is fine by me.",
+      "parentUuid": "7cca528d_9d05309c",
+      "range": {
+        "startLine": 40368,
+        "startChar": 4,
+        "endLine": 40368,
+        "endChar": 55
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "479839dd_09b6cd9a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
