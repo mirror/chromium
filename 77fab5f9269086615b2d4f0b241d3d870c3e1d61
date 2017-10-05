@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886d3b44_a129ba13",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Does this begin network discovery? Is that an intended side effect of syncing the state?",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ccccce_73e69659",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Maybe split this into two methods - RegisterNativeMediaRouteProvider() and RegisterExtensionMediaRouteProvider() (to be combined with InitializeMediaRouteProviders())",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5e857b_ec485e85",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Per discussion we need to be careful about unwrapping the InterfacePtr.  If the object that gets this ptr is not aware of when the underlying message pipe becomes unbound (because of an error, etc.) then calls to this API appear to be just dropped on the floor.\n\nSee, for example, https://cs.chromium.org/chromium/src/out/Debug/gen/chrome/common/media_router/mojo/media_router.mojom.cc?rcl\u003d2420175c62680729e9da4d9501be910ce3bbf466\u0026l\u003d481\n\n\nThe owner if the InterfacePtr will need to make sure that these pointers are not used after its error handler is invoked.",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce40332_ce90ffd6",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Also per discussion I would like to think about a way to not treat the \"extension\" provider as a special case outside of how the media_route_providers_ map is set up.\n\nOne way would be to write a wrapper for the extension\u0027s MediaRouteProvider InterfacePtr that allows multiple entries in the media_route_providers_ map (\"cast\", \"dial\", etc.) to point to it.   The error handler for that message pipe would then remove all of the wrappers.\n\nAnother way is to have one InterfacePtr in the map and have an AddProvider(id, ptr)/RemoveProvider(id,ptr)/GetProvider(id) API that completely abstracts away the fact that multiple ids can map to a single Ptr.",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aea73a7_aebeb4a8",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Does this need to take a callback? I don\u0027t see any asynchronous operations and it runs on the same thread as the caller.",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a9d965_0f86100e",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Can this API be:\n\nSetSinks(provider_id, sinks)\nSetOrigins(provider_id, origins)",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6494cc11_fcc20233",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "sinks_query-\u003eNotifyObservers()",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a93e8e_867342b5",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "SetRoutes(provider_id, routes)\nSetJoinableRouteIds(provider_id, ...)",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8ff2fc_a36718b6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Can this code refactored to be: routes_query-\u003eNotifyObservers()",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b214df86_65148c31",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "This API exposes a lot of details about how the MediaSinksQuery keeps track of its internal state.  I would prefer a simpler API such as:\n\n\nSetSinks(provider_id, sinks)\nAdd/RemoveObservers()\nNotifyObservers();",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a323ad1b_a3607741",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "Similar comments about API design apply here as well.",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12139e0b_2a521f1d",
+        "filename": "chrome/common/media_router/mojo/media_router.mojom",
+        "patchSetId": 15
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-10-05T18:58:33Z",
+      "side": 1,
+      "message": "WIRED_SINK is slightly more accurate since it\u0027s possible to use USB or HDMI audio-only.",
+      "revId": "77fab5f9269086615b2d4f0b241d3d870c3e1d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
