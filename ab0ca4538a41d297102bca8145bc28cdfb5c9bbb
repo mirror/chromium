@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee4f5cf0_c43b1022",
+        "filename": "content/common/sandbox_policy_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-05T22:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d85169e_2bb30366",
+      "revId": "ab0ca4538a41d297102bca8145bc28cdfb5c9bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27a36762_353aa768",
         "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "ab0ca4538a41d297102bca8145bc28cdfb5c9bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52887a9_e4ca3d1e",
+        "filename": "content/renderer/renderer_main_platform_delegate_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-05T22:09:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27a36762_353aa768",
+      "revId": "ab0ca4538a41d297102bca8145bc28cdfb5c9bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
