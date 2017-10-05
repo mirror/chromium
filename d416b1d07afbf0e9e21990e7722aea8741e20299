@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2409ff71_52a34ff0",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:45:13Z",
+      "side": 1,
+      "message": "Would it be reasonable to make this a Mojo type converter? I\u0027d prefer to use a common pattern when marshalling from non-mojo to mojo (and vice versa), it just helps us if we need to audit these patterns.",
+      "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a0a7c0_2d369e0a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T21:45:13Z",
+      "side": 1,
+      "message": "Same comment about wrapping this in TypeConverter as well.",
+      "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc44e882_2edf736a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 7
