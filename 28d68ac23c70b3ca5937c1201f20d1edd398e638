@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5f3bbe8_61cf5b13",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-05T21:02:55Z",
+      "side": 1,
+      "message": "This change was necessary to fix a conflict with the new https entries. The conflict happened at test in L1224 (https://cs.chromium.org/chromium/src/components/omnibox/browser/history_url_provider_unittest.cc?l\u003d1224).",
+      "range": {
+        "startLine": 161,
+        "startChar": 59,
+        "endLine": 162,
+        "endChar": 66
+      },
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
