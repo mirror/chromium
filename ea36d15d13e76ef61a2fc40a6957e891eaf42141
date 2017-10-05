@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "2969418d_ada99701",
+        "filename": "third_party/WebKit/Source/modules/filesystem/LocalFileSystem.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T15:03:00Z",
+      "side": 1,
+      "message": "This is necessary, unfortunately.\n\nWithout this TraceWrapperBase, the overload resolution will be:\n\n  DispatchTraceWrappers(const TraceWrapperBase*);  // NO match\n\n  template \u003ctypename T\u003e\n  DispatchTraceWrappers(const Supplement\u003cT\u003e*);  // NO match because the candidates are Supplement\u003cLocalFrame\u003e and Supplement\u003cWorkerClient\u003e, which are ambiguous.\n\n  DispatchTraceWrappers(const void*) { CHECK(false); }  // MATCH!! \u003d\u003e CRASH\n\nUnfortunately, we don\u0027t hit a compile error due to the ambiguity because we have a single candidate \"const void*\".  If there is no \"const void*\" version, it\u0027s a compile error.\n\nThis is really itchy...",
+      "parentUuid": "4dd747b7_10f829c7",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e510eb1f_a5a6ce8f",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IndexedDBClient.h",
         "patchSetId": 23
