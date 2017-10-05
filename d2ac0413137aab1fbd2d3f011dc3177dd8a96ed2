@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d87d039_cc9dd48d",
+        "filename": "base/metrics/persistent_histogram_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T18:50:16Z",
+      "side": 1,
+      "message": "process_handle.h suggests using CrPRIdPid in the string format to portable serialize process handles to string. Can you use that?",
+      "range": {
+        "startLine": 878,
+        "startChar": 60,
+        "endLine": 878,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876fd767_eaaef732",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T18:50:16Z",
+      "side": 1,
+      "message": "Nit: SplitStringPiece to avoid extra temporary strings",
+      "range": {
+        "startLine": 176,
+        "startChar": 53,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8851bd_b7a7f846",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T18:50:16Z",
+      "side": 1,
+      "message": "Use base::HexStringToUInt() instead. (Although if you use CrPRIdPid - as I suggested in a different comment, then probably it should be a different function.\n\nAlso, can you have some unit test coverage that exercises the logic that generates these names and logic that parses them?",
+      "range": {
+        "startLine": 182,
+        "startChar": 60,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00dfc93_88d60f4f",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T18:50:16Z",
+      "side": 1,
+      "message": "Can you make a helper function for this part? i.e. IsProcessRunning(pid)",
+      "range": {
+        "startLine": 202,
+        "startChar": 6,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "d2ac0413137aab1fbd2d3f011dc3177dd8a96ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
