@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "d8007569_a3b3fae1",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-05T01:14:13Z",
+      "side": 1,
+      "message": "Thanks!  The cases I was curious about are things that would fire DidFinishNavigation without destroying the RenderFrame, or the blink::Document, or the HTMLMediaElement.  These are, for example, if you are at http://foo.com/bar and navigate to http://foo.com/bar#123, or if you navigate to something that doesn\u0027t commit (e.g., a URL that ends up being a download) which would leave the old document in place.  Many WebContentsObservers handle those cases in DidFinishNavigation by checking HasCommitted or IsSameDocument on the navigation_handle.  It seems your current code would still destroy this object in those cases, which I\u0027m not sure you want given your description.  OTOH, I think it matches the previous behavior in MediaDrmStorageImpl, so maybe this is handled elsewhere?  Perhaps worth testing these cases?\n\nI guess I\u0027m also still confused by whether the lifetime here is tied to a Document or RenderFrame.  You said RenderFrame in your comment, but being conceptually owned by the media element and calling Close() in DidFinishNavigation() kind of implies that it\u0027s a Document: e.g., navigating a frame from http://foo.com/1 to http://foo.com/2  won\u0027t switch to a new RenderFrame, but it will switch to a new Document and will destroy any media elements on http://foo.com/1.  We could probably clear this up very quickly with dcheng@, but I think he is OOO for the next two days.",
+      "parentUuid": "399c564e_1a48a4a1",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82430315_0fe2bfb6",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
@@ -198,6 +216,24 @@
       "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a578188_de1c6b52",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-05T01:14:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14f5274b_c7023520",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
