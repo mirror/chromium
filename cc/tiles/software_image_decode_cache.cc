@@ -73,18 +73,22 @@ class AutoDrawWithImageFinished {
  public:
   AutoDrawWithImageFinished(SoftwareImageDecodeCache* cache,
                             const DrawImage& draw_image,
-                            const DecodedDrawImage& decoded_draw_image)
+                            DecodedDrawImage decoded_draw_image)
       : cache_(cache),
         draw_image_(draw_image),
-        decoded_draw_image_(decoded_draw_image) {}
+        decoded_draw_image_(std::move(decoded_draw_image)) {}
   ~AutoDrawWithImageFinished() {
-    cache_->DrawWithImageFinished(draw_image_, decoded_draw_image_);
+    cache_->DrawWithImageFinished(draw_image_, std::move(decoded_draw_image_));
+  }
+
+  const DecodedDrawImage& decoded_draw_image() const {
+    return decoded_draw_image_;
   }
 
  private:
   SoftwareImageDecodeCache* cache_;
   const DrawImage& draw_image_;
-  const DecodedDrawImage& decoded_draw_image_;
+  DecodedDrawImage decoded_draw_image_;
 };
 
 class ImageDecodeTaskImpl : public TileTask {
@@ -634,10 +638,10 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   DCHECK(!exact_size_key.should_use_subrect());
 #endif
 
-  auto decoded_draw_image =
-      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image);
-  AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
-                                             decoded_draw_image);
+  AutoDrawWithImageFinished auto_finish_draw(
+      this, exact_size_draw_image,
+      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image));
+  auto& decoded_draw_image = auto_finish_draw.decoded_draw_image();
   if (!decoded_draw_image.image())
     return nullptr;
 
@@ -711,10 +715,10 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   DCHECK(!exact_size_key.should_use_subrect());
 #endif
 
-  auto decoded_draw_image =
-      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image);
-  AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
-                                             decoded_draw_image);
+  AutoDrawWithImageFinished auto_finish_draw(
+      this, exact_size_draw_image,
+      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image));
+  auto& decoded_draw_image = auto_finish_draw.decoded_draw_image();
   if (!decoded_draw_image.image())
     return nullptr;
 
@@ -761,7 +765,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
 
 void SoftwareImageDecodeCache::DrawWithImageFinished(
     const DrawImage& image,
-    const DecodedDrawImage& decoded_image) {
+    DecodedDrawImage decoded_image) {
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "SoftwareImageDecodeCache::DrawWithImageFinished", "key",
                ImageKey::FromDrawImage(image, color_type_).ToString());

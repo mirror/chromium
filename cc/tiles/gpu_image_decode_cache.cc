@@ -591,7 +591,7 @@ DecodedDrawImage GpuImageDecodeCache::GetDecodedImageForDraw(
 
 void GpuImageDecodeCache::DrawWithImageFinished(
     const DrawImage& draw_image,
-    const DecodedDrawImage& decoded_draw_image) {
+    DecodedDrawImage decoded_draw_image) {
   TRACE_EVENT0("cc", "GpuImageDecodeCache::DrawWithImageFinished");
 
   // We are being called during raster. The context lock must already be

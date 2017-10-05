@@ -26,7 +26,10 @@ DecodedDrawImage::DecodedDrawImage(sk_sp<const SkImage> image,
                        SkSize::Make(1.f, 1.f),
                        filter_quality) {}
 
-DecodedDrawImage::DecodedDrawImage(const DecodedDrawImage& other) = default;
+DecodedDrawImage::DecodedDrawImage(DecodedDrawImage&& other) = default;
+
+DecodedDrawImage& DecodedDrawImage::operator=(DecodedDrawImage&& other) =
+    default;
 
 DecodedDrawImage::~DecodedDrawImage() = default;
 

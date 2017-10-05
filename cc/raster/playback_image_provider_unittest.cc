@@ -36,9 +36,8 @@ class MockDecodeCache : public StubDecodeCache {
     return CreateDecode();
   }
 
-  void DrawWithImageFinished(
-      const DrawImage& draw_image,
-      const DecodedDrawImage& decoded_draw_image) override {
+  void DrawWithImageFinished(const DrawImage& draw_image,
+                             DecodedDrawImage decoded_draw_image) override {
     refed_image_count_--;
     EXPECT_GE(refed_image_count_, 0);
   }

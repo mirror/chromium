@@ -12,7 +12,7 @@ namespace {
 void UnrefImageFromCache(DrawImage draw_image,
                          ImageDecodeCache* cache,
                          DecodedDrawImage decoded_draw_image) {
-  cache->DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache->DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 }  // namespace
@@ -87,7 +87,7 @@ PlaybackImageProvider::GetDecodedDrawImage(const DrawImage& draw_image) {
   auto decoded_draw_image = cache_->GetDecodedImageForDraw(adjusted_image);
 
   return ScopedDecodedDrawImage(
-      decoded_draw_image,
+      std::move(decoded_draw_image),
       base::BindOnce(&UnrefImageFromCache, std::move(adjusted_image), cache_));
 }
 
