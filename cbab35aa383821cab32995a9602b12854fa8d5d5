@@ -16,6 +16,24 @@
       "revId": "cbab35aa383821cab32995a9602b12854fa8d5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b4cfb6_7f527849",
+        "filename": "tools/fuchsia/run-swarmed.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-10-05T00:17:42Z",
+      "side": 1,
+      "message": "Looks like that\u0027s only in relatively new Python3\u0027s. (Thanks for the tip though if we get there someday, I hadn\u0027t seen that before. :)",
+      "parentUuid": "338d9250_1511fb27",
+      "revId": "cbab35aa383821cab32995a9602b12854fa8d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
