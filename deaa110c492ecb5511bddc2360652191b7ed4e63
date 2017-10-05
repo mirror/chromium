@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19faa231_abd8bc30",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-05T12:51:03Z",
+      "side": 1,
+      "message": "The correct selection end is \"|bar1\"",
+      "revId": "deaa110c492ecb5511bddc2360652191b7ed4e63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
