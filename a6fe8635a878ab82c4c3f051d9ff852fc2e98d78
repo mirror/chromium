@@ -22,6 +22,30 @@
       "revId": "a6fe8635a878ab82c4c3f051d9ff852fc2e98d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c971e85a_bf772e57",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-05T00:01:52Z",
+      "side": 1,
+      "message": "Oh, nice! I didn\u0027t know the rows_decoded would be full for dependent frames.\n\nYou are right about a test.\nGIFImageDecoderTest.progressiveDecode did indeed fail.\nI just added tests specifically for these conditions (zero-fill \u0026 previous-fill). However, there is a curious problem with the current ImageDecoder class and how it isn\u0027t very unittest-able.\n\nWhen attempting to verify that it fails when expected, I did not zero-fill the first frame. But when the ImageDecoder allocated the frame, it happened to get a zero-filled piece of memory from the OS. So the zero-fill test couldn\u0027t confirm good or bad.\n\nThe second frame passed its previous-fill test because the rows_decoded matched the height.\n\nTo make ImageDecoder more unittest-able, all of a function\u0027s dependencies should be parameters (read: dependency injection). This is something I would want to change when we get to refactoring ImageDecoder. If the client passed in the buffer, they could have filled it with non-zeroes to confirm the zero-fill worked. Side benefit: Now the client owns the cache.\n\nLuckily, ImageDecoder has a way for me to provide an allocator. It only works for the first frame. So also luckily, I only need to confirm on the first frame. We have a workaround. :D",
+      "parentUuid": "878a5561_930db4b3",
+      "range": {
+        "startLine": 287,
+        "startChar": 6,
+        "endLine": 287,
+        "endChar": 58
+      },
+      "revId": "a6fe8635a878ab82c4c3f051d9ff852fc2e98d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
