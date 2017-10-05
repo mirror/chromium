@@ -322,9 +322,13 @@ bool MediaFoundationVideoEncodeAccelerator::TryToSetupEncodeOnSeparateThread(
 }
 
 // static
-void MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization() {
-  for (const wchar_t* mfdll : kMediaFoundationVideoEncoderDLLs)
-    ::LoadLibrary(mfdll);
+bool MediaFoundationVideoEncodeAccelerator::PreSandboxInitialization() {
+  for (const wchar_t* mfdll : kMediaFoundationVideoEncoderDLLs) {
+    if (!::LoadLibrary(mfdll)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 bool MediaFoundationVideoEncodeAccelerator::CreateHardwareEncoderMFT() {
@@ -495,7 +499,8 @@ bool MediaFoundationVideoEncodeAccelerator::IsResolutionSupported(
 
 void MediaFoundationVideoEncodeAccelerator::NotifyError(
     VideoEncodeAccelerator::Error error) {
-  DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
+  DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread() ||
+         encode_client_task_runner_->BelongsToCurrentThread());
   main_client_task_runner_->PostTask(
       FROM_HERE, base::Bind(&Client::NotifyError, main_client_, error));
 }
@@ -534,6 +539,16 @@ void MediaFoundationVideoEncodeAccelerator::EncodeTask(
 
   // Release frame after input is copied.
   frame = nullptr;
+
+  if (force_keyframe) {
+    VARIANT var;
+    var.vt = VT_UI4;
+    hr = codec_api_->SetValue(&CODECAPI_AVEncVideoForceKeyFrame, &var);
+    if (!SUCCEEDED(hr)) {
+      LOG(ERROR) << "Failed to set CODECAPI_AVEncVideoForceKeyFrame, "
+                    "HRESULT: 0x" << std::hex << hr;
+    }
+  }
 
   hr = encoder_->ProcessInput(input_stream_id_, input_sample_.Get(), 0);
   // According to MSDN, if encoder returns MF_E_NOTACCEPTING, we need to try

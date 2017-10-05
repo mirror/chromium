@@ -240,7 +240,10 @@ static_library("protocol") {
       ]
     }
 
-    deps += [ "//third_party/webrtc_overrides:init_webrtc" ]
+    deps += [
+      "//media",
+      "//third_party/webrtc_overrides:init_webrtc",
+    ]
   }
 
   if (enable_remoting_host) {

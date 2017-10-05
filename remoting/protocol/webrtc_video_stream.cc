@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "remoting/base/constants.h"
+#include "remoting/codec/webrtc_video_encoder_gpu.h"
 #include "remoting/codec/webrtc_video_encoder_proxy.h"
 #include "remoting/codec/webrtc_video_encoder_vpx.h"
 #include "remoting/protocol/frame_stats.h"
@@ -259,11 +260,8 @@ void WebrtcVideoStream::OnEncoderCreated(webrtc::VideoCodecType codec_type) {
         WebrtcVideoEncoderVpx::CreateForVP9(), encode_task_runner_);
   } else if (codec_type == webrtc::kVideoCodecH264) {
     LOG(ERROR) << "Using H264 video codec.";
-    // TODO(gusss): Whenever the H264 encoder is ready, this is how it will be
-    // initialized.
-    // encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
-    //     WebrtcVideoEncoderGpu::CreateForH264(), encode_task_runner_);
-    NOTIMPLEMENTED();
+    encoder_ = base::MakeUnique<WebrtcVideoEncoderProxy>(
+        WebrtcVideoEncoderGpu::CreateForH264(), encode_task_runner_);
   } else {
     LOG(FATAL) << "Unknown codec type: " << codec_type;
   }

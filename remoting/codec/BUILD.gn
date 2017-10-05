@@ -23,6 +23,10 @@ source_set("encoder") {
 
   configs += [ "//build/config/compiler:wexit_time_destructors" ]
 
+  public_configs = [
+    "//skia:skia_config",
+  ]
+
   deps = [
     ":vpx_codec",
     "//base/third_party/dynamic_annotations",

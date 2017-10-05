@@ -133,6 +133,7 @@ WebrtcFrameSchedulerSimple::~WebrtcFrameSchedulerSimple() {
 }
 
 void WebrtcFrameSchedulerSimple::OnKeyFrameRequested() {
+  LOG(ERROR) << "WebrtcFrameSchedulerSimple::OnKeyFrameRequested()";
   DCHECK(thread_checker_.CalledOnValidThread());
   encoder_ready_ = true;
   key_frame_request_ = true;
