@@ -50,6 +50,8 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
       gfx::Size size,
       gfx::BufferFormat format,
       const gfx::NativePixmapHandle& handle) override;
+  uint32_t GetGemHandleFromPrimeFd(int prime_fd) override;
+  void CloseGemHandle(uint32_t handle) override;
 
  private:
   std::unique_ptr<GLOzone> egl_implementation_;

@@ -5,6 +5,8 @@
 #include "ui/ozone/platform/drm/gpu/drm_thread.h"
 
 #include <gbm.h>
+#include <xf86drm.h>
+
 #include <utility>
 
 #include "base/command_line.h"
@@ -333,6 +335,27 @@ void DrmThread::AddBindingCursorDevice(
 void DrmThread::AddBindingDrmDevice(ozone::mojom::DrmDeviceRequest request) {
   TRACE_EVENT0("drm", "DrmThread::AddBindingDrmDevice");
   binding_.Bind(std::move(request));
+}
+
+void DrmThread::GetGemHandleFromPrimeFd(int prime_fd, uint32_t* handle) {
+  ui::DrmDevice* drm =
+      device_manager_->GetDrmDevice(gfx::kNullAcceleratedWidget).get();
+  DCHECK(drm);
+  struct drm_prime_handle prime_handle;
+  memset(&prime_handle, 0, sizeof(prime_handle));
+  prime_handle.fd = prime_fd;
+  drmIoctl(drm->get_fd(), DRM_IOCTL_PRIME_FD_TO_HANDLE, &prime_handle);
+  *handle = prime_handle.handle;
+}
+
+void DrmThread::CloseGemHandle(uint32_t handle) {
+  ui::DrmDevice* drm =
+      device_manager_->GetDrmDevice(gfx::kNullAcceleratedWidget).get();
+  DCHECK(drm);
+  struct drm_gem_close gem_close;
+  memset(&gem_close, 0, sizeof(gem_close));
+  gem_close.handle = handle;
+  drmIoctl(drm->get_fd(), DRM_IOCTL_GEM_CLOSE, &gem_close);
 }
 
 }  // namespace ui

@@ -99,6 +99,14 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
       gfx::BufferFormat format,
       const gfx::NativePixmapHandle& handle);
 
+  // DO NOT USE. This is a temporary workaround that allows protected
+  // buffer manager code to use DRM platform specific prime fd handles as
+  // unique identifiers.
+  // TODO(posciak): Remove after switching to better mechanims for identifying
+  // shared memory segments. crbug.com/771863
+  virtual uint32_t GetGemHandleFromPrimeFd(int prime_fd);
+  virtual void CloseGemHandle(uint32_t handle);
+
  protected:
   SurfaceFactoryOzone();
   virtual ~SurfaceFactoryOzone();

@@ -83,4 +83,19 @@ void DrmThreadProxy::AddBindingDrmDevice(
                  base::Unretained(&drm_thread_), base::Passed(&request)));
 }
 
+uint32_t DrmThreadProxy::GetGemHandleFromPrimeFd(int prime_fd) {
+  uint32_t handle = 0;
+  PostSyncTask(drm_thread_.task_runner(),
+               base::Bind(&DrmThread::GetGemHandleFromPrimeFd,
+                          base::Unretained(&drm_thread_), prime_fd,
+                          base::Unretained(&handle)));
+  return handle;
+}
+
+void DrmThreadProxy::CloseGemHandle(uint32_t handle) {
+  drm_thread_.task_runner()->PostTask(
+      FROM_HERE, base::Bind(&DrmThread::CloseGemHandle,
+                            base::Unretained(&drm_thread_), handle));
+}
+
 }  // namespace ui
