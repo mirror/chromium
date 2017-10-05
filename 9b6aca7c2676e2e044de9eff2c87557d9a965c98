@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "17f55dfa_9bfa39d7",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-05T20:25:28Z",
+      "side": 1,
+      "message": "\u003e TestServiceManagerContext creates a ServiceManagerContext which itself requires access to BrowserThread, so ScopedTaskEnvironment does not seem sufficient.\n\u003e It\u0027s unfortunate to have to pull these dependencies. I had at some point created a FakeServiceManagerContext class that would return a null connector (that we don\u0027t use in tests since we are using the TestingJsonParser::ScopedFactoryOverride) that would let callers retrieve the connector. If you think that\u0027s better, let me know.\n\nI don\u0027t have a strong opinion one way or another. I can see why service_manager_context.cc needs the IOThread, but it seems unfortunate that it\u0027s going a bit backwards w.r.t. the task scheduler migration.\n\n\u003e I also considered having a connector retriever object that would be set globally, so the public API would not require a connector. rockot@ doesn\u0027t think it\u0027s a good idea and it makes assumption on the lifetime of the connector.\n\nI agree that injecting it is better than assuming global state.",
+      "parentUuid": "96c334ab_69fd009a",
+      "revId": "9b6aca7c2676e2e044de9eff2c87557d9a965c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f76a7b64_e5cf4a71",
         "filename": "services/data_decoder/public/cpp/json_sanitizer.h",
         "patchSetId": 5
