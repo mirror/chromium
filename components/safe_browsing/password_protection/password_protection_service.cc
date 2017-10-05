@@ -23,8 +23,10 @@
 #include "components/safe_browsing/db/database_manager.h"
 #include "components/safe_browsing/db/whitelist_checker_client.h"
 #include "components/safe_browsing/features.h"
+#include "components/safe_browsing/password_protection/password_protection_navigation_throttle.h"
 #include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
@@ -442,12 +444,13 @@ void PasswordProtectionService::RequestFinished(
             request->trigger_type(), request->matches_sync_password(),
             GetSyncAccountType(), response->verdict_type())) {
       ShowModalWarning(request->web_contents(), response->verdict_token());
+      request->set_is_modal_warning_showing(true);
     }
   }
-
-  // Finished processing this request. Remove it from pending list.
+  // If |request| doesn't trigger any warning, remove it from pending list.
+  // Otherwise, they will be removed after modal dialog closes.
   for (auto it = requests_.begin(); it != requests_.end(); it++) {
-    if (it->get() == request) {
+    if (it->get() == request && !request->is_modal_warning_showing()) {
       requests_.erase(it);
       break;
     }
@@ -790,6 +793,29 @@ void PasswordProtectionService::LogPasswordEntryRequestOutcome(
     UMA_HISTOGRAM_ENUMERATION(kProtectedPasswordEntryRequestOutcomeHistogram,
                               reason, MAX_OUTCOME);
   }
+}
+
+std::unique_ptr<PasswordProtectionNavigationThrottle>
+PasswordProtectionService::MaybeCreateNavigationThrottle(
+    content::NavigationHandle* navigation_handle) {
+  content::WebContents* web_contents = navigation_handle->GetWebContents();
+  for (scoped_refptr<PasswordProtectionRequest> request : requests_) {
+    if (request->web_contents() == web_contents &&
+        request->trigger_type() ==
+            safe_browsing::LoginReputationClientRequest::PASSWORD_REUSE_EVENT) {
+      bool is_warning_showing = request->is_modal_warning_showing();
+      std::unique_ptr<PasswordProtectionNavigationThrottle> throttle =
+          base::MakeUnique<PasswordProtectionNavigationThrottle>(
+              navigation_handle, is_warning_showing);
+      // Make |request| keep track of throttles that are created when password
+      // reuse ping is in-flight.
+      if (!is_warning_showing)
+        request->AddThrottle(throttle.get());
+      return throttle;
+    }
+  }
+  LOG(ERROR) << "MaybeCreateNavigationThrottle3";
+  return nullptr;
 }
 
 }  // namespace safe_browsing
