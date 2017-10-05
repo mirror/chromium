@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d37729f_1c3096a8",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "Do we need both main and scroll-container?",
+      "revId": "a35d7cf82a3d25a6f000303c1868e74d0aa91158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e7103a_6cc4ee4c",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "Would scrollIntoViewIfNeeded(this.$.highlight) make things easier here?\n\nhttps://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoViewIfNeeded",
+      "revId": "a35d7cf82a3d25a6f000303c1868e74d0aa91158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
