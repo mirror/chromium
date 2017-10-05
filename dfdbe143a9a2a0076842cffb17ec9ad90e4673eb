@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "340c90a2_cfa34bbb",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-05T22:36:42Z",
+      "side": 1,
+      "message": "Is it possible to avoid making a copy here since GetAuthenticatedAccountInfo already returns an AccountInfo object?",
+      "range": {
+        "startLine": 606,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 69
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a7515d_a11db9e6",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-05T22:36:42Z",
+      "side": 1,
+      "message": "You probably want:\nCHECK(signin_manager)\nreturn ...\n\ninstead of:\nif (signin_manager)\n  return ..\nNOTREACHED();\nreturn",
+      "range": {
+        "startLine": 608,
+        "startChar": 2,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba8764d_c9608158",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-10-05T22:36:42Z",
+      "side": 1,
+      "message": "what\u0027s the advantage of \u0027\u0026\u0027 here?",
+      "range": {
+        "startLine": 613,
+        "startChar": 19,
+        "endLine": 613,
+        "endChar": 20
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
