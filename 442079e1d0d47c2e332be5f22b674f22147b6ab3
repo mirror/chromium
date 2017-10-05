@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03659c3f_e69f8f09",
+        "filename": "chrome/browser/custom_handlers/protocol_handler_registry.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T22:06:45Z",
+      "side": 1,
+      "message": "Please add documentation to this enum that its values are persisted to logs, and should therefore never be reused nor renumbered.",
+      "range": {
+        "startLine": 432,
+        "startChar": 74,
+        "endLine": 432,
+        "endChar": 0
+      },
+      "revId": "442079e1d0d47c2e332be5f22b674f22147b6ab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
