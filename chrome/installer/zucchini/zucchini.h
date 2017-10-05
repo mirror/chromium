@@ -5,6 +5,9 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 #define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
 
+#include <string>
+#include <vector>
+
 #include "chrome/installer/zucchini/buffer_view.h"
 #include "chrome/installer/zucchini/patch_reader.h"
 #include "chrome/installer/zucchini/patch_writer.h"
@@ -30,6 +33,14 @@ enum Code {
 };
 
 }  // namespace status
+
+struct PatchOptions {
+  // Imposed matches, represented as a string. See EnsembleMatcher for details.
+  // This is used by Zucchini-gen and Zucchini-match.
+  std::string imposed_matches;
+};
+
+// The functions below return true on success, and false on failure.
 
 // Generates ensemble patch from |old_image| to |new_image|, and writes it to
 // |patch_writer|.
