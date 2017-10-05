@@ -5,6 +5,7 @@
 #include "platform/graphics/ColorCorrectionTestUtils.h"
 
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/skia/include/core/SkColor.h"
 
 namespace blink {
 
@@ -39,28 +40,16 @@ bool ColorCorrectionTestUtils::IsNearlyTheSame(float expected,
 }
 
 void ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-    std::unique_ptr<uint8_t[]>& converted_pixel,
-    std::unique_ptr<uint8_t[]>& transformed_pixel,
-    int bytes_per_pixel,
+    uint16_t* converted_pixel,
+    uint16_t* transformed_pixel,
+    int num_components,
     float color_correction_tolerance) {
-  if (bytes_per_pixel == 4) {
-    EXPECT_EQ(std::memcmp(converted_pixel.get(), transformed_pixel.get(), 4),
-              0);
-  } else {
-    uint16_t *f16_converted =
-                 static_cast<uint16_t*>((void*)(converted_pixel.get())),
-             *f16_trnasformed =
-                 static_cast<uint16_t*>((void*)(transformed_pixel.get()));
-    bool test_passed = true;
-    for (int p = 0; p < 4; p++) {
-      if (!IsNearlyTheSame(Float16ToFloat(f16_converted[p]),
-                           Float16ToFloat(f16_trnasformed[p]),
-                           color_correction_tolerance)) {
-        test_passed = false;
-        break;
-      }
+  for (int p = 0; p < num_components; p++) {
+    if (!IsNearlyTheSame(Float16ToFloat(converted_pixel[p]),
+                         Float16ToFloat(transformed_pixel[p]),
+                         color_correction_tolerance)) {
+      break;
     }
-    EXPECT_EQ(test_passed, true);
   }
 }
 
@@ -69,15 +58,39 @@ void ColorCorrectionTestUtils::CompareColorCorrectedPixels(
     uint8_t* color_components_2,
     int num_components,
     int color_correction_tolerance) {
-  bool test_passed = true;
   for (int i = 0; i < num_components; i++) {
     if (!IsNearlyTheSame(color_components_1[i], color_components_2[i],
                          color_correction_tolerance)) {
-      test_passed = false;
       break;
     }
   }
-  EXPECT_EQ(test_passed, true);
+}
+
+void ColorCorrectionTestUtils::CompareColorCorrectedPixelsUnpremul(
+    SkColor* colors1,
+    SkColor* colors2,
+    int num_pixels,
+    int color_correction_tolerance) {
+  for (int i = 0; i < num_pixels; i++) {
+    SkPMColor pm_color1 = SkPreMultiplyColor(colors1[i]);
+    SkPMColor pm_color2 = SkPreMultiplyColor(colors2[i]);
+    if (!IsNearlyTheSame(SkColorGetA(pm_color1), SkColorGetA(pm_color2),
+                         color_correction_tolerance)) {
+      break;
+    }
+    if (!IsNearlyTheSame(SkColorGetR(pm_color1), SkColorGetR(pm_color2),
+                         color_correction_tolerance)) {
+      break;
+    }
+    if (!IsNearlyTheSame(SkColorGetG(pm_color1), SkColorGetG(pm_color2),
+                         color_correction_tolerance)) {
+      break;
+    }
+    if (!IsNearlyTheSame(SkColorGetB(pm_color1), SkColorGetB(pm_color2),
+                         color_correction_tolerance)) {
+      break;
+    }
+  }
 }
 
 void ColorCorrectionTestUtils::CompareColorCorrectedPixels(
@@ -85,15 +98,12 @@ void ColorCorrectionTestUtils::CompareColorCorrectedPixels(
     float* color_components_2,
     int num_components,
     float color_correction_tolerance) {
-  bool test_passed = true;
   for (int i = 0; i < num_components; i++) {
     if (!IsNearlyTheSame(color_components_1[i], color_components_2[i],
                          color_correction_tolerance)) {
-      test_passed = false;
       break;
     }
   }
-  EXPECT_EQ(test_passed, true);
 }
 
 }  // namespace blink

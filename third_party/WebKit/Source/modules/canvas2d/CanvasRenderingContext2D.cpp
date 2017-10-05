@@ -276,7 +276,7 @@ void CanvasRenderingContext2D::WillDrawImage(CanvasImageSource* source) const {
 }
 
 CanvasColorSpace CanvasRenderingContext2D::ColorSpace() const {
-  return color_params().color_space();
+  return ColorParams().ColorSpace();
 }
 
 String CanvasRenderingContext2D::ColorSpaceAsString() const {
@@ -284,7 +284,7 @@ String CanvasRenderingContext2D::ColorSpaceAsString() const {
 }
 
 CanvasPixelFormat CanvasRenderingContext2D::PixelFormat() const {
-  return color_params().pixel_format();
+  return ColorParams().PixelFormat();
 }
 
 void CanvasRenderingContext2D::Reset() {
@@ -931,7 +931,8 @@ void CanvasRenderingContext2D::getContextAttributes(
   settings.setAlpha(CreationAttributes().alpha());
   settings.setColorSpace(ColorSpaceAsString());
   settings.setPixelFormat(PixelFormatAsString());
-  settings.setLinearPixelMath(color_params().LinearPixelMath());
+  settings.setLinearPixelMath(ColorParams().GetGammaMode() ==
+                              kPixelOpsIgnoreGamma);
 }
 
 void CanvasRenderingContext2D::drawFocusIfNeeded(Element* element) {

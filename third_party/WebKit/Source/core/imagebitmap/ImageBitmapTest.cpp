@@ -76,8 +76,6 @@ class ImageBitmapTest : public ::testing::Test {
     // rendering flags to restore them on teardown.
     experimental_canvas_features =
         RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-    color_canvas_extensions =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
   }
   virtual void TearDown() {
     // Garbage collection is required prior to switching out the
@@ -90,8 +88,6 @@ class ImageBitmapTest : public ::testing::Test {
     ReplaceMemoryCacheForTesting(global_memory_cache_.Release());
     RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
         experimental_canvas_features);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions);
   }
 
   sk_sp<SkImage> image_, image2_;
@@ -101,7 +97,6 @@ class ImageBitmapTest : public ::testing::Test {
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
@@ -170,7 +165,6 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   HTMLImageElement* image =
       HTMLImageElement::Create(*Document::CreateForTest());
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -261,7 +255,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 
   // Set the runtime flags
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   return options;
 }
@@ -380,9 +373,16 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionHTMLImageElement) {
                              color_format32, src_pixel.get(), 1,
                              SkAlphaType::kPremul_SkAlphaType);
 
-    ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-        converted_pixel, transformed_pixel, image_info.bytesPerPixel(),
-        kWideGamutColorCorrectionTolerance);
+    if (image_info.bytesPerPixel() == 4) {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          converted_pixel.get(), transformed_pixel.get(), 4,
+          kWideGamutColorCorrectionTolerance);
+    } else {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          reinterpret_cast<uint16_t*>(converted_pixel.get()),
+          reinterpret_cast<uint16_t*>(transformed_pixel.get()), 4,
+          kWideGamutColorCorrectionTolerance);
+    }
   }
 }
 
@@ -497,9 +497,16 @@ TEST_F(ImageBitmapTest, MAYBE_ImageBitmapColorSpaceConversionImageBitmap) {
                              color_format32, src_pixel.get(), 1,
                              SkAlphaType::kPremul_SkAlphaType);
 
-    ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-        converted_pixel, transformed_pixel, image_info.bytesPerPixel(),
-        kWideGamutColorCorrectionTolerance);
+    if (image_info.bytesPerPixel() == 4) {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          converted_pixel.get(), transformed_pixel.get(), 4,
+          kWideGamutColorCorrectionTolerance);
+    } else {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          reinterpret_cast<uint16_t*>(converted_pixel.get()),
+          reinterpret_cast<uint16_t*>(transformed_pixel.get()), 4,
+          kWideGamutColorCorrectionTolerance);
+    }
   }
 }
 
@@ -605,9 +612,16 @@ TEST_F(ImageBitmapTest,
                              color_format32, src_pixel.get(), 1,
                              SkAlphaType::kPremul_SkAlphaType);
 
-    ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-        converted_pixel, transformed_pixel, image_info.bytesPerPixel(),
-        kWideGamutColorCorrectionTolerance);
+    if (image_info.bytesPerPixel() == 4) {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          converted_pixel.get(), transformed_pixel.get(), 4,
+          kWideGamutColorCorrectionTolerance);
+    } else {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          reinterpret_cast<uint16_t*>(converted_pixel.get()),
+          reinterpret_cast<uint16_t*>(transformed_pixel.get()), 4,
+          kWideGamutColorCorrectionTolerance);
+    }
   }
 }
 
@@ -694,9 +708,16 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
         SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat, src_pixel.get(),
         1, SkAlphaType::kPremul_SkAlphaType);
 
-    ColorCorrectionTestUtils::CompareColorCorrectedPixels(
-        converted_pixel, transformed_pixel, image_info.bytesPerPixel(),
-        kWideGamutColorCorrectionTolerance);
+    if (image_info.bytesPerPixel() == 4) {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          converted_pixel.get(), transformed_pixel.get(), 4,
+          kWideGamutColorCorrectionTolerance);
+    } else {
+      ColorCorrectionTestUtils::CompareColorCorrectedPixels(
+          reinterpret_cast<uint16_t*>(converted_pixel.get()),
+          reinterpret_cast<uint16_t*>(transformed_pixel.get()), 4,
+          kWideGamutColorCorrectionTolerance);
+    }
   }
 }
 

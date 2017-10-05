@@ -7,29 +7,9 @@
 
 #include "platform/runtime_enabled_features.h"
 
+typedef uint32_t SkColor;
+
 namespace blink {
-
-class ScopedEnableColorCanvasExtensions {
- public:
-  ScopedEnableColorCanvasExtensions()
-      : experimental_canvas_features_(
-            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()),
-        color_canvas_extensions_(
-            RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
-    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
-  }
-  ~ScopedEnableColorCanvasExtensions() {
-    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-        experimental_canvas_features_);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions_);
-  }
-
- private:
-  bool experimental_canvas_features_;
-  bool color_canvas_extensions_;
-};
 
 class ColorCorrectionTestUtils {
  public:
@@ -37,22 +17,25 @@ class ColorCorrectionTestUtils {
       float expected,
       float actual,
       float tolerance = wide_gamut_color_correction_tolerance_);
-  static void CompareColorCorrectedPixels(
-      std::unique_ptr<uint8_t[]>& converted_pixel,
-      std::unique_ptr<uint8_t[]>& transformed_pixel,
-      int bytes_per_pixel = 4,
-      float color_correction_tolerance =
-          wide_gamut_color_correction_tolerance_);
+
+  // 16-bit floats encoded into uint16_t
+  static void CompareColorCorrectedPixels(uint16_t* color_components_1,
+                                          uint16_t* color_components_2,
+                                          int num_components,
+                                          float tolerance);
+
   static void CompareColorCorrectedPixels(uint8_t* color_components_1,
                                           uint8_t* color_components_2,
-                                          int,
-                                          int);
-  static void CompareColorCorrectedPixels(
-      float* color_components_1,
-      float* color_components_2,
-      int num_components,
-      float color_correction_tolerance =
-          wide_gamut_color_correction_tolerance_);
+                                          int num_components,
+                                          int tolerance);
+  static void CompareColorCorrectedPixelsUnpremul(SkColor* colors1,
+                                                  SkColor* colors2,
+                                                  int num_pixels,
+                                                  int tolerance);
+  static void CompareColorCorrectedPixels(float* color_components_1,
+                                          float* color_components_2,
+                                          int num_components,
+                                          float color_correction_tolerance);
 
  private:
   static constexpr float wide_gamut_color_correction_tolerance_ = 0.01;

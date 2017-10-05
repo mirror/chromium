@@ -40,34 +40,15 @@ namespace blink {
 
 UnacceleratedImageBufferSurface::UnacceleratedImageBufferSurface(
     const IntSize& size,
-    OpacityMode opacity_mode,
     ImageInitializationMode initialization_mode,
     const CanvasColorParams& color_params)
-    : ImageBufferSurface(size, opacity_mode, color_params) {
-  SkAlphaType alpha_type =
-      (kOpaque == opacity_mode) ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
-  SkImageInfo info = SkImageInfo::Make(
-      size.Width(), size.Height(), color_params.GetSkColorType(), alpha_type);
-  // In legacy mode the backing SkSurface should not have any color space.
-  // If color correct rendering is enabled only for SRGB, still the backing
-  // surface should not have any color space and the treatment of legacy data
-  // as SRGB will be managed by wrapping the internal SkCanvas inside a
-  // SkColorSpaceXformCanvas. If color correct rendering is enbaled for other
-  // color spaces, we set the color space properly.
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled())
-    info = info.makeColorSpace(color_params.GetSkColorSpaceForSkSurfaces());
-
-  SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
-  surface_ = SkSurface::MakeRaster(
-      info, kOpaque == opacity_mode ? 0 : &disable_lcd_props);
+    : ImageBufferSurface(size, color_params) {
+  surface_ = SkSurface::MakeRaster(color_params.GetSkImageInfo(size),
+                                   color_params.GetSkSurfaceProps());
   if (!surface_)
     return;
 
-  sk_sp<SkColorSpace> xform_canvas_color_space = nullptr;
-  if (!color_params.LinearPixelMath())
-    xform_canvas_color_space = color_params.GetSkColorSpace();
-  canvas_ = WTF::WrapUnique(
-      new SkiaPaintCanvas(surface_->getCanvas(), xform_canvas_color_space));
+  canvas_ = ColorParams().PaintCanvasWrapper(surface_.get());
 
   // Always save an initial frame, to support resetting the top level matrix
   // and clip.

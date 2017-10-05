@@ -43,8 +43,6 @@ TEST_F(ImageDataTest, MAYBE_CreateImageDataTooBig) {
 // format. This function is used in BaseRenderingContext2D::getImageData.
 TEST_F(ImageDataTest,
        TestConvertPixelsFromCanvasPixelFormatToImageDataStorageFormat) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
   // Source pixels in RGBA32
   unsigned char rgba32_pixels[] = {255, 0,   0,   255,  // Red
                                    0,   0,   0,   0,    // Transparent
@@ -201,20 +199,14 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
   if (dst_pixel_format == kF16CanvasPixelFormat)
     dst_color_format = SkColorSpaceXform::ColorFormat::kRGBA_F16_ColorFormat;
 
-  sk_sp<SkColorSpace> src_sk_color_space = nullptr;
-  if (u8_array) {
-    src_sk_color_space =
-        CanvasColorParams(src_color_space, kRGBA8CanvasPixelFormat)
-            .GetSkColorSpaceForSkSurfaces();
-  } else {
-    src_sk_color_space =
-        CanvasColorParams(src_color_space, kF16CanvasPixelFormat)
-            .GetSkColorSpaceForSkSurfaces();
-  }
-
-  sk_sp<SkColorSpace> dst_sk_color_space =
-      CanvasColorParams(dst_color_space, dst_pixel_format)
-          .GetSkColorSpaceForSkSurfaces();
+  CanvasPixelFormat src_pixel_format =
+      u8_array ? kRGBA8CanvasPixelFormat : kF16CanvasPixelFormat;
+  CanvasColorParams src_color_params(src_color_space, src_pixel_format,
+                                     kNonOpaque, kPixelOpsRespectGamma);
+  CanvasColorParams dst_color_params(dst_color_space, dst_pixel_format,
+                                     kNonOpaque, kPixelOpsRespectGamma);
+  sk_sp<SkColorSpace> src_sk_color_space = src_color_params.GetSkColorSpace();
+  sk_sp<SkColorSpace> dst_sk_color_space = dst_color_params.GetSkColorSpace();
 
   // When the input dataArray is in Uint16, we normally should convert the
   // values from Little Endian to Big Endian before passing the buffer to
@@ -235,9 +227,6 @@ bool ConvertPixelsToColorSpaceAndPixelFormatForTest(
 // to convert image data from image data storage format to canvas pixel format.
 // This function is used in BaseRenderingContext2D::putImageData.
 TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   unsigned num_image_data_color_spaces = 3;
   CanvasColorSpace image_data_color_spaces[] = {
       kSRGBCanvasColorSpace, kRec2020CanvasColorSpace, kP3CanvasColorSpace,
@@ -361,9 +350,6 @@ TEST_F(ImageDataTest, TestGetImageDataInCanvasColorSettings) {
 
 // This test examines ImageData::CropRect()
 TEST_F(ImageDataTest, TestCropRect) {
-  // Enable color canvas extensions for this test
-  ScopedEnableColorCanvasExtensions color_canvas_extensions_enabler;
-
   const int num_image_data_storage_formats = 3;
   ImageDataStorageFormat image_data_storage_formats[] = {
       kUint8ClampedArrayStorageFormat, kUint16ArrayStorageFormat,
