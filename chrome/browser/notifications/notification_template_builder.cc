@@ -25,8 +25,13 @@ const char kBindingElementTemplateAttribute[] = "template";
 const char kButtonIndex[] = "buttonIndex=";
 const char kContent[] = "content";
 const char kForeground[] = "foreground";
+const char kInputElement[] = "input";
+const char kInputId[] = "id";
+const char kInputType[] = "type";
+const char kPlaceholderContent[] = "placeHolderContent";
+const char kText[] = "text";
+const char kUserResponse[] = "userResponse";
 const char kTextElement[] = "text";
-const char kTextElementIdAttribute[] = "id";
 const char kToastElement[] = "toast";
 const char kToastElementLaunchAttribute[] = "launch";
 const char kVisualElement[] = "visual";
@@ -130,7 +135,6 @@ void NotificationTemplateBuilder::EndBindingElement() {
 void NotificationTemplateBuilder::WriteTextElement(const std::string& id,
                                                    const std::string& content) {
   xml_writer_->StartElement(kTextElement);
-  xml_writer_->AddAttribute(kTextElementIdAttribute, id);
   xml_writer_->AppendElementContent(content);
   xml_writer_->EndElement();
 }
@@ -142,7 +146,24 @@ void NotificationTemplateBuilder::AddActions(
 
   StartActionsElement();
 
-  // TODO(finnur): Add inline replies.
+  bool inlineReply = false;
+  std::string placeholder;
+  for (const auto& button : buttons) {
+    if (button.type == message_center::ButtonType::TEXT) {
+      inlineReply = true;
+      placeholder = base::UTF16ToUTF8(button.placeholder).c_str();
+      break;
+    }
+  }
+
+  if (inlineReply) {
+    xml_writer_->StartElement(kInputElement);
+    xml_writer_->AddAttribute(kInputId, kUserResponse);
+    xml_writer_->AddAttribute(kInputType, kText);
+    xml_writer_->AddAttribute(kPlaceholderContent, placeholder);
+    xml_writer_->EndElement();
+  }
+
   for (size_t i = 0; i < buttons.size(); ++i) {
     const auto& button = buttons[i];
     WriteActionElement(button, i);
@@ -163,6 +184,7 @@ void NotificationTemplateBuilder::WriteActionElement(
     const message_center::ButtonInfo& button,
     int index) {
   // TODO(finnur): Implement button images (imageUri).
+
   xml_writer_->StartElement(kActionElement);
   xml_writer_->AddAttribute(kActivationType, kForeground);
   xml_writer_->AddAttribute(kContent, base::UTF16ToUTF8(button.title).c_str());
