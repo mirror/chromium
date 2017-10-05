@@ -111,8 +111,6 @@ class UI_BASE_EXPORT ListSelectionModel {
   int active_;
 
   int anchor_;
-
-  DISALLOW_COPY_AND_ASSIGN(ListSelectionModel);
 };
 
 }  // namespace ui
