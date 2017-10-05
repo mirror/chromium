@@ -34,6 +34,24 @@
       "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4097abd_56ac2a04",
+        "filename": "ash/message_center/message_center_style.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T18:36:16Z",
+      "side": 1,
+      "message": "Sorry, I was suggesting ash::message_center, just for these shared constants / functions. I do not think these should be in ::message_center. I think that should just work. If not, or if that seems too confusing, we could name this ash::message_center_style, which would be consistent with how we namespace constants like this elsewhere.",
+      "parentUuid": "5d3331c9_c2b7ab0a",
+      "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
