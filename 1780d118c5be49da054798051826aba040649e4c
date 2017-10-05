@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "766c9de2_30ec8d35",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T09:14:57Z",
+      "side": 1,
+      "message": "\"pointer - pointer\" is size_t, not a pointer, no?\n\nI\u0027m not strong if the existing model makes more sense, I can rename size-producing version to a function.",
+      "parentUuid": "e1fb8d66_5c63a829",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
