@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d99e0137_314770a4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-05T17:40:07Z",
+      "side": 1,
+      "message": "Well, if the provider is not activated (i.e. not ready()), schedule_ is empty. It was always the case and thus the post-poning code in the provider actually never got executed.\n\nI can make it more explicit by introducing a bool provider_is_active_. I had it in the previous version of the CL, only the unit-tests revealed that it is not needed as this is already stored in schedule_ and guarded by the if-statement here.",
+      "range": {
+        "startLine": 836,
+        "startChar": 65,
+        "endLine": 837,
+        "endChar": 40
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -22,6 +22,30 @@
       "revId": "0ac047509fdb90bd5a4dd459db2242a6bd018da6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fdc897_fe094dd2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-05T17:40:07Z",
+      "side": 1,
+      "message": "Ok, this is probably too risky. Anyway, this class is flooded with \"if(!ready()) return;\". I took an analogous way to Fetch() and at least call the callback before returning.",
+      "parentUuid": "0b6bc748_59b3565c",
+      "range": {
+        "startLine": 526,
+        "startChar": 18,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "0ac047509fdb90bd5a4dd459db2242a6bd018da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
