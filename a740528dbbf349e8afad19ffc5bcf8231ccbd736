@@ -70,6 +70,30 @@
       "revId": "a740528dbbf349e8afad19ffc5bcf8231ccbd736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c72692e_2d318922",
+        "filename": "chrome/browser/chromeos/file_system_provider/notification_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T16:34:12Z",
+      "side": 1,
+      "message": "\u003e \u003e Maybe we could do something like type\u003dEPHEMERAL and have a delegate in the Metadata? That would change the lifetime semantics of the Metadata.\n\u003e \n\u003e I like the idea of the EPHEMERAL (or GENERIC or w/e) handler holding onto a map from ID to delegate. What I don\u0027t like about the existing NotificationDelegate is that it\u0027s ref counted (which is bad for understanding object lifetimes and it\u0027s why we have these pass-through delegates in the first place).\n\nI\u0027m all for making the delegate lifetime clearer, the copy-all-the-time behaviour we have for message_center::Notification is horrible. I\u0027d like it to not use message_center::NotificationDelegate (just like I\u0027d like the NDS to move away from the message_center::Notification type), so that we can stop building all that code on platforms where we just use it as a data container.\n\n\u003e \u003e A standing concern is that we don\u0027t always know whether a notification is still showing on native platforms. (I.e. the Action Center gives us the `close` event when the notification dismisses to the notification center.) These are small objects, but there is a possibility we have to consider where they may leak.\n\u003e \n\u003e What is the action center?\n\nThe native Windows 10 notification center.\n\n\u003e Are you suggesting the Close calls won\u0027t be reliable?\n\nYes. Each platform has its own peculiarities: Mac OS X only fires the event when using the [Close] button, not when dismissing a notification in another way. On Android we\u0027ve seen the dismiss intent get lost in some older versions.\n\nThese things can also happen when Chrome isn\u0027t running at all, which is why an EPHEMERAL/GENERIC type must make sure to close the notifications on browser shutdown.\n\n\u003e When you say \"these are small objects\", are you referring to the delegates? I think the delegates should be in control of their own lifetime and not be ref counted. So then I would be more concerned about the handler calling back into a stale delegate, and while we could use WeakPtr I think it\u0027s better to demand notification clients unregister themselves if they exit early (i.e. before the notification has been interacted with) for some reason.\n\nWhen the provider of EPHEMERAL/GENERIC notifications goes away, it should take its notifications with them. The whole point of handlers vs. delegates is that we can fire events *whenever*.",
+      "parentUuid": "022b6c61_42fb29ef",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "a740528dbbf349e8afad19ffc5bcf8231ccbd736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
