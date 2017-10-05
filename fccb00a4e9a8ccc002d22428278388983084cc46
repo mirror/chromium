@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfd2e5b_6a0bf538",
+        "filename": "chromeos/dbus/cras_audio_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-05T13:51:34Z",
+      "side": 0,
+      "message": ":-(",
+      "revId": "fccb00a4e9a8ccc002d22428278388983084cc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
