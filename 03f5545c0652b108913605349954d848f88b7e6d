@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fd824fdb_d6ace8a5",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T03:00:00Z",
+      "side": 1,
+      "message": "Interchangeable, but \"ooma\" is pretty common. :)",
+      "parentUuid": "ed2e0bda_74aa85c8",
+      "range": {
+        "startLine": 86,
+        "startChar": 39,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4897095a_08eccf03",
         "filename": "chrome/browser/banners/app_banner_manager.cc",
         "patchSetId": 1
@@ -325,6 +349,30 @@
       "side": 1,
       "message": "In the context of reprompting, there is no situation where ReportStatus is not permitted to be called.  I think it would be better to either:\n\n(a) remove Waiting() (and so not check whether ReportStatus has been called), or\n(b) put a DCHECK(done_) in TrackingStatusReporter::~TrackingStatusReporter().\n\nWDYT?",
       "parentUuid": "3cf8744c_6b44a81d",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 24
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ca0ffd_5e866a5a",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T03:00:00Z",
+      "side": 1,
+      "message": "Option (b) isn\u0027t correct, because we could close the tab when we\u0027re waiting for beforeinstallprompt to resolve, which would call Stop() at a point where we have a TrackingStatusReporter around without a call to ReportStatus().\n\nI don\u0027t feel too strongly about this, but in the interests of keeping the functionality the same until the reprompting stuff lands I\u0027m okay with having Waiting() as you have currently.",
+      "parentUuid": "e1bbf795_c066e89f",
       "range": {
         "startLine": 310,
         "startChar": 17,

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e961f9fe_b852566f",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T03:00:00Z",
+      "side": 1,
+      "message": "This include isn\u0027t needed since it\u0027s present in the .h file.",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 16
+      },
+      "revId": "2c90256aa8ee3b7939859feeb3b9e6c3a1a20866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99163aa0_f4b0769d",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T03:00:00Z",
+      "side": 1,
+      "message": "Minor nit: put this above the enum class State definition so that the type things are together.",
+      "revId": "2c90256aa8ee3b7939859feeb3b9e6c3a1a20866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
