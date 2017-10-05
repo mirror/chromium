@@ -277,7 +277,7 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
     @Override
     public Tab createFrozenTab(TabState state, int id, int index) {
         Tab tab = Tab.createFrozenTabFromState(
-                id, state.isIncognito(), mNativeWindow, state.parentId, state);
+                id, state.isIncognito(), mNativeWindow, state.parentId, state, false);
         boolean selectTab = mOrderController.willOpenInForeground(TabLaunchType.FROM_RESTORE,
                 state.isIncognito());
         tab.initialize(
@@ -299,6 +299,7 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
             case FROM_LINK:
             case FROM_EXTERNAL_APP:
             case FROM_BROWSER_ACTIONS:
+            case FROM_BROWSER_ACTIONS_DETACHED:
                 transition = PageTransition.LINK | PageTransition.FROM_API;
                 break;
             case FROM_CHROME_UI:

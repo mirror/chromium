@@ -41,10 +41,10 @@ public class BrowserActionsTabCreatorManager implements TabCreatorManager {
 
         @Override
         public Tab createNewTab(LoadUrlParams loadUrlParams, TabLaunchType type, Tab parent) {
-            assert type == TabLaunchType.FROM_BROWSER_ACTIONS
+            assert type == TabLaunchType.FROM_BROWSER_ACTIONS_DETACHED
                     || type
                             == TabLaunchType.FROM_RESTORE
-                : "tab launch type should be FROM_BROWSER_ACTIONS or FROM_RESTORE";
+                : "tab launch type should be FROM_BROWSER_ACTIONS_DETACHED or FROM_RESTORE";
             Context context = ContextUtils.getApplicationContext();
             WindowAndroid windowAndroid = new WindowAndroid(context);
             Tab tab = Tab.createTabForLazyLoad(
@@ -56,7 +56,9 @@ public class BrowserActionsTabCreatorManager implements TabCreatorManager {
 
         @Override
         public Tab createFrozenTab(TabState state, int id, int index) {
-            Tab tab = Tab.createFrozenTabFromState(id, false, null, Tab.INVALID_TAB_ID, state);
+            Tab tab =
+                    Tab.createFrozenTabFromState(id, false, null, Tab.INVALID_TAB_ID, state, true);
+            tab.initialize(null, null, new TabDelegateFactory(), true, false);
             mTabModel.addTab(tab, index, TabLaunchType.FROM_RESTORE);
             return tab;
         }

@@ -19,7 +19,6 @@ import android.provider.Browser;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,7 @@ import android.widget.PopupWindow.OnDismissListener;
 
 import org.chromium.base.ApplicationStatus;
 import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
 import org.chromium.base.ObserverList;
 import org.chromium.base.ObserverList.RewindableIterator;
 import org.chromium.base.ThreadUtils;
@@ -503,7 +503,10 @@ public class Tab
                 ContextUtils.getApplicationContext(), ChromeActivity.getThemeId());
         mWindowAndroid = window;
         mLaunchType = type;
-        if (mLaunchType == TabLaunchType.FROM_DETACHED) mIsDetached = true;
+        if (mLaunchType == TabLaunchType.FROM_DETACHED
+                || mLaunchType == TabLaunchType.FROM_BROWSER_ACTIONS_DETACHED) {
+            mIsDetached = true;
+        }
 
         boolean useModernDesign = getActivity() != null && getActivity().getBottomSheet() != null;
 
@@ -1332,7 +1335,6 @@ public class Tab
                 didStartPageLoad(webContents.getVisibleUrl(), false);
             }
 
-            getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
         } finally {
             if (mTimestampMillis == INVALID_TIMESTAMP) {
                 mTimestampMillis = System.currentTimeMillis();
@@ -1425,35 +1427,54 @@ public class Tab
             TabDelegateFactory tabDelegateFactory, TabReparentingParams reparentingParams) {
         // TODO(yusufo): Share these calls with the construction related calls.
         // crbug.com/590281
+        activity.getCompositorViewHolder().prepareForTabReparenting();
 
+        attach(activity, tabDelegateFactory);
+
+        mIsTabStateDirty = true;
+
+        reparentingParams.finalizeTabReparenting();
+
+        for (TabObserver observer : mObservers) {
+            observer.onReparentingFinished(this);
+        }
+    }
+
+    /**
+     * Attaches the tab to the new activity and updates the tab and related objects to reference the
+     * new activity. This updates many delegates inside the tab and {@link ContentViewCore} both on
+     * java and native sides.
+     *
+     * @param activity  The new activity this tab should be associated with.
+     * @param tabDelegateFactory  The new delegate factory this tab should be using.
+     */
+    public void attach(ChromeActivity activity, TabDelegateFactory tabDelegateFactory) {
+        assert mIsDetached;
         updateWindowAndroid(activity.getWindowAndroid());
 
         // Update for the controllers that need the Compositor from the new Activity.
         attachTabContentManager(activity.getTabContentManager());
         mFullscreenManager = activity.getFullscreenManager();
-        activity.getCompositorViewHolder().prepareForTabReparenting();
         // Update the delegate factory, then recreate and propagate all delegates.
         mDelegateFactory = tabDelegateFactory;
         mWebContentsDelegate = mDelegateFactory.createWebContentsDelegate(this);
-        nativeUpdateDelegates(mNativeTabAndroid,
-                mWebContentsDelegate, mDelegateFactory.createContextMenuPopulator(this));
         mBrowserControlsVisibilityDelegate =
                 mDelegateFactory.createBrowserControlsVisibilityDelegate(this);
-        setInterceptNavigationDelegate(mDelegateFactory.createInterceptNavigationDelegate(this));
-        getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
 
-        reparentingParams.finalizeTabReparenting();
         mIsDetached = false;
-        nativeAttachDetachedTab(mNativeTabAndroid);
 
         // Reload the NativePage (if any), since the old NativePage has a reference to the old
         // activity.
         maybeShowNativePage(getUrl(), true);
 
-        mIsTabStateDirty = true;
+        nativeAttachDetachedTab(mNativeTabAndroid);
 
-        for (TabObserver observer : mObservers) {
-            observer.onReparentingFinished(this);
+        if (getWebContents() != null) {
+            nativeUpdateDelegates(mNativeTabAndroid, mWebContentsDelegate,
+                    mDelegateFactory.createContextMenuPopulator(this));
+            setInterceptNavigationDelegate(
+                    mDelegateFactory.createInterceptNavigationDelegate(this));
+            getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
         }
     }
 
@@ -1719,6 +1740,8 @@ public class Tab
 
             setInterceptNavigationDelegate(mDelegateFactory.createInterceptNavigationDelegate(
                     this));
+
+            getAppBannerManager().setIsEnabledForTab(mDelegateFactory.canShowAppBanners(this));
 
             if (mGestureStateListener == null) {
                 mGestureStateListener = createGestureStateListener();
@@ -2913,11 +2936,13 @@ public class Tab
      * on cold start that should be loaded when switched to. initialize() needs to be called
      * afterwards to complete the second level initialization.
      */
-    public static Tab createFrozenTabFromState(
-            int id, boolean incognito, WindowAndroid nativeWindow, int parentId, TabState state) {
+    public static Tab createFrozenTabFromState(int id, boolean incognito,
+            WindowAndroid nativeWindow, int parentId, TabState state, boolean isDetached) {
         assert state != null;
-        return new Tab(id, parentId, incognito, nativeWindow, TabLaunchType.FROM_RESTORE,
+        Tab tab = new Tab(id, parentId, incognito, nativeWindow, TabLaunchType.FROM_RESTORE,
                 TabCreationState.FROZEN_ON_RESTORE, state);
+        tab.mIsDetached = isDetached;
+        return tab;
     }
 
     /**

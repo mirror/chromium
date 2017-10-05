@@ -111,7 +111,7 @@ public class TabPersistentStoreTest {
         @Override
         public Tab createFrozenTab(TabState state, int id, int index) {
             Tab tab = Tab.createFrozenTabFromState(
-                    id, state.isIncognito(), null, state.parentId, state);
+                    id, state.isIncognito(), null, state.parentId, state, false);
             mSelector.getModel(mIsIncognito).addTab(tab, index, TabLaunchType.FROM_RESTORE);
             storeTabInfo(state, id);
             return tab;

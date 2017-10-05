@@ -67,6 +67,9 @@ public interface TabModel extends TabList {
 
         /** Opened in the background from Browser Actions context menu. */
         FROM_BROWSER_ACTIONS,
+
+        /** Opened in the background from Browser Actions but detached from ChromeActvity. */
+        FROM_BROWSER_ACTIONS_DETACHED,
     }
 
     /**
