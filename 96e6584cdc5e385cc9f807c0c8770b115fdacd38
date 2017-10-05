@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "57def296_ebd189b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-05T15:20:33Z",
+      "side": 1,
+      "message": "hate to beat a dead horse, but this should be \"handlers\" rather than \"handles\", right?",
+      "range": {
+        "startLine": 10,
+        "startChar": 76,
+        "endLine": 10,
+        "endChar": 83
+      },
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0e8ed4d_7ba2b192",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 26
@@ -19,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "83051029_22f2a68f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-05T15:20:33Z",
+      "side": 1,
+      "message": "+sahel@ has some insight into when we don\u0027t get direction in Begin and had to make this work for latching. She might be able to shed some light on how to fix this.",
+      "parentUuid": "a0e8ed4d_7ba2b192",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d365ccb_7eb53ac5",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 26
@@ -30,6 +71,47 @@
       "writtenOn": "2017-10-05T14:39:33Z",
       "side": 1,
       "message": "Is there any scenario where applyScroll or distributeScroll exist without ScrollCustomizationEnabled()? If so then this seems to be necessary.",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df02a531_04e78207",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-05T15:20:33Z",
+      "side": 1,
+      "message": "Yes, the viewport sets the ViewportScrollCallback on the \u003chtml\u003e Element as the applyScroll callback, even if ScrollCustomization isn\u0027t enabled (i.e. the web-facing API).",
+      "parentUuid": "6d365ccb_7eb53ac5",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cba86cdd_d30dff25",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-05T15:20:33Z",
+      "side": 1,
+      "message": "Please add this as an overload of RootScrollerUtil::IsGlobal and use that. It\u0027ll make the code here more readable and it\u0027ll help me keep track of all the places we have exceptions for RootScroller as I move stuff around.",
+      "range": {
+        "startLine": 746,
+        "startChar": 6,
+        "endLine": 749,
+        "endChar": 20
+      },
       "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
