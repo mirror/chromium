@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0efc460a_096d1f03",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Is it common to use base::Optional for policy code? I remember seeing similar code in Chrome OS device policy code that uses the LHS style:\nhttps://cs.corp.google.com/chromeos_public/src/aosp/external/libbrillo/policy/device_policy_impl.h?q\u003ddevice+policy+package:%5Echromeos_public$\u0026dr\u003dCSs\u0026l\u003d5",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "c81d5ad0d1bd736e56132229f057b0fa30754258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71123024_03511ff4",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Remove this, so you get a compiler error if someone adds a new value (and not a runtime error).",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 0
+      },
+      "revId": "c81d5ad0d1bd736e56132229f057b0fa30754258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

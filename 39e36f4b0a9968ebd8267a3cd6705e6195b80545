@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "f61c3124_9d299af0",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "I assume we\u0027re not generating enums since this is user policy and it uses IntegerPolicyProto? I guess it\u0027s fine then. You\u0027d have to define the enum yourself, which still means duplicating the definition of the numbers (which I was hoping to prevent), and the enum name is in the test name, so readability-wise it\u0027s not a big difference. I don\u0027t think you\u0027d have to cast, though, if you don\u0027t use an enum class.\n\nLet\u0027s leave it this way.",
+      "parentUuid": "4a1ae985_ec8a4d17",
+      "range": {
+        "startLine": 595,
+        "startChar": 70,
+        "endLine": 595,
+        "endChar": 73
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ced48b_18b24aee",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.cc",
         "patchSetId": 6
