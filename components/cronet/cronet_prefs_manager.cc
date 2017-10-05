@@ -7,6 +7,7 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/synchronization/waitable_event.h"
 #include "base/time/time.h"
 #include "components/cronet/host_cache_persistence_manager.h"
 #include "components/prefs/json_pref_store.h"
@@ -214,7 +215,7 @@ CronetPrefsManager::CronetPrefsManager(
   base::FilePath storage_file_path(storage_path);
 
   // Make sure storage directory has correct version.
-  InitializeStorageDirectory(storage_file_path);
+  InitializeStorageDirectorySync(file_task_runner.get(), storage_file_path);
   base::FilePath filepath =
       storage_file_path.Append(FILE_PATH_LITERAL(kPrefsDirectoryName))
           .Append(FILE_PATH_LITERAL(kPrefsFileName));
@@ -239,10 +240,9 @@ CronetPrefsManager::CronetPrefsManager(
     registry->RegisterListPref(kHostCachePref);
   }
 
-  {
-    SCOPED_UMA_HISTOGRAM_TIMER("Net.Cronet.PrefsInitTime");
-    pref_service_ = factory.Create(registry.get());
-  }
+  // Set the factory to the async mode, so it doesn't block doing file I/O.
+  factory.set_async(true);
+  pref_service_ = factory.Create(registry.get());
 
   http_server_properties_manager_ = new net::HttpServerPropertiesManager(
       new PrefServiceAdapter(pref_service_.get()), network_task_runner,
@@ -292,6 +292,26 @@ void CronetPrefsManager::PrepareForShutdown() {
   http_server_properties_manager_->ShutdownOnPrefSequence();
   if (network_qualities_prefs_manager_)
     network_qualities_prefs_manager_->ShutdownOnPrefSequence();
+}
+
+void CronetPrefsManager::InitializeStorageDirectorySync(
+    base::TaskRunner* file_runner,
+    const base::FilePath& storage_path) {
+  base::WaitableEvent lock(base::WaitableEvent::ResetPolicy::MANUAL,
+                           base::WaitableEvent::InitialState::NOT_SIGNALED);
+  file_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(
+          &CronetPrefsManager::InitializeStorageDirectoryOnFileThread,
+          base::Unretained(this), storage_path, &lock));
+  lock.Wait();
+}
+
+void CronetPrefsManager::InitializeStorageDirectoryOnFileThread(
+    const base::FilePath& storage_path,
+    base::WaitableEvent* lock) {
+  InitializeStorageDirectory(storage_path);
+  lock->Signal();
 }
 
 }  // namespace cronet
