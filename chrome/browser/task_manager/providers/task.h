@@ -14,6 +14,7 @@
 #include "base/process/process_handle.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
+#include "chrome/browser/task_manager/task_manager_observer.h"
 #include "third_party/WebKit/public/platform/WebCache.h"
 #include "ui/gfx/image/image_skia.h"
 
@@ -28,8 +29,8 @@ namespace task_manager {
 // shared by multiple tasks.
 class Task {
  public:
-  // Note that the declaration order here determines the default sort order
-  // in the task manager.
+  // IMPORTANT: Note that the declaration order here determines the sort order
+  // of the TaskManager. See the definition of SortKey below.
   enum Type {
     UNKNOWN = 0,
 
@@ -51,6 +52,53 @@ class Task {
     NACL,           /* A NativeClient loader or broker process. */
     SANDBOX_HELPER, /* A sandbox helper process. */
   };
+
+  // Task::SortKey is composed of a ProcessSortKey and a SecondarySortKey. The
+  // ProcessSortKey is the most important one, which orders Task processes in a
+  // user-understandable way.
+  //
+  // The value of the ProcessSortKey is determined by the first Task seen in a
+  // process, and inherited by later Tasks, so that same-process Tasks are
+  // always grouped together. The inclusion of the final TaskId member
+  // guarantees that each process has a unique ProcessSortKey, since a Task can
+  // be in only one process. However, it is important to note that the TaskIds
+  // embedded in the ProcessSortKey might actually outlive the Tasks that
+  // generated them, so they should not be regarded as valid Task IDs.
+  //
+  // For processes that do not have parent Tasks, the first three fields
+  // determine their position in the TaskManager. For processes that have parent
+  // Tasks, the first three fields are inherited from their parent (so that they
+  // are just after them in the overall ordering), and the next three fields
+  // determine their position relative to other children of the same parent.
+  //
+  // Using the Task::Type enum as the first field ensures that the Browser
+  // process comes first, other singleton processes come next, then the main
+  // body of renderer and extension processes (these are the most common), and
+  // plugin-like processes last.
+  //
+  // Within the range of RENDERER tasks, Tasks are likely to be associated with
+  // a tab, and so the tab ID is used to order tasks. For other tasks types, Tab
+  // ID is expected to be -1. Sorting by tab ID yields an order roughly equal to
+  // tab creation order.
+  //
+  // If Tab ID is not present (as with non-renderer tasks), the order will be
+  // determined by the TaskID (the third member). Task IDs are assigned in the
+  // order that the task manager observes processes being launched. so this
+  // roughly corresponds to process creation order.
+  using ProcessSortKey = std::tuple<Task::Type,  // main task type
+                                    int,         // main tab id
+                                    TaskId,      // main task
+                                    int,         // subtask tab id
+                                    Task::Type,  // subtask type
+                                    TaskId>;     // subtask id
+
+  // Secondary key that determines the order of tasks within a process.
+  using SecondarySortKey = std::tuple<bool,  // has parent task
+                                      int>;  // individual task tab id
+
+  // The user-understandable sorting of Tasks is the concatenation of the per-
+  // process and per-task orderings.
+  using SortKey = std::pair<ProcessSortKey, SecondarySortKey>;
 
   // Create a task with the given |title| and the given favicon |icon|. This
   // task runs on a process whose handle is |handle|. |rappor_sample| is the
@@ -145,6 +193,11 @@ class Task {
 
   int64_t task_id() const { return task_id_; }
 
+  // Access and assign the sort key. This value is meant to be assigned by the
+  // TaskManagerInterface instance that controls this Task.
+  const SortKey& sort_key() const { return sort_key_; }
+  void set_sort_key(const SortKey& key) { sort_key_ = key; }
+
   // Returns the instantaneous rate, in bytes per second, of network usage
   // (sent and received), as measured over the last refresh cycle.
   int64_t network_usage_rate() const {
@@ -175,6 +228,10 @@ class Task {
  private:
   // The unique ID of this task.
   const int64_t task_id_;
+
+  // This Task's sort key, as assigned by the TaskManagerInterface instance
+  // (e.g., TaskManagerImpl) that controls this Task.
+  SortKey sort_key_;
 
   // The sum of all bytes that have been uploaded from this task calculated at
   // the last refresh.

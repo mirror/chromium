@@ -112,6 +112,10 @@ const base::ProcessId& TestTaskManager::GetProcessId(TaskId task_id) const {
   return pid_;
 }
 
+const Task::SortKey& TestTaskManager::GetSortKey(TaskId task_id) const {
+  return sort_key_;
+}
+
 Task::Type TestTaskManager::GetType(TaskId task_id) const {
   return Task::UNKNOWN;
 }

@@ -30,7 +30,7 @@ namespace browsertest_util {
 namespace {
 
 // Helper class to run a message loop until a TaskManagerTester is in an
-// expected state. If timeout occurs, an ASCII version of the task manager's
+// expected state. If timeout occurs, a text version of the task manager's
 // contents, along with a summary of the expected state, are dumped to test
 // output, to assist debugging.
 class ResourceChangeObserver {
@@ -138,7 +138,7 @@ class ResourceChangeObserver {
     testing::Message task_manager_state_dump;
     task_manager_state_dump << "Waiting for exactly " << required_count_
                             << " matches of wildcard pattern \""
-                            << base::UTF16ToASCII(title_pattern_) << "\"";
+                            << base::UTF16ToUTF8(title_pattern_) << "\"";
     if (min_column_value_ > 0) {
       task_manager_state_dump << " && [" << GetColumnName()
                               << " >= " << min_column_value_ << "]";
@@ -149,7 +149,7 @@ class ResourceChangeObserver {
     for (int i = 0; i < task_manager_tester_->GetRowCount(); i++) {
       task_manager_state_dump
           << "\n  > " << std::setw(40) << std::left
-          << base::UTF16ToASCII(task_manager_tester_->GetRowTitle(i));
+          << base::UTF16ToUTF8(task_manager_tester_->GetRowTitle(i));
       if (min_column_value_ > 0) {
         task_manager_state_dump << " [" << GetColumnName()
                                 << " == " << GetColumnValue(i) << "]";
@@ -189,7 +189,7 @@ void WaitForTaskManagerStatToExceed(const base::string16& title_pattern,
 
 base::string16 MatchTab(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_TAB_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyTab() {
@@ -202,7 +202,7 @@ base::string16 MatchAboutBlankTab() {
 
 base::string16 MatchExtension(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_EXTENSION_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyExtension() {
@@ -211,7 +211,7 @@ base::string16 MatchAnyExtension() {
 
 base::string16 MatchApp(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_APP_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyApp() {
@@ -220,7 +220,7 @@ base::string16 MatchAnyApp() {
 
 base::string16 MatchWebView(const char* title) {
   return l10n_util::GetStringFUTF16(
-      IDS_EXTENSION_TASK_MANAGER_WEBVIEW_TAG_PREFIX, base::ASCIIToUTF16(title));
+      IDS_EXTENSION_TASK_MANAGER_WEBVIEW_TAG_PREFIX, base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyWebView() {
@@ -229,7 +229,7 @@ base::string16 MatchAnyWebView() {
 
 base::string16 MatchBackground(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_BACKGROUND_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyBackground() {
@@ -238,7 +238,7 @@ base::string16 MatchAnyBackground() {
 
 base::string16 MatchPrint(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_PRINT_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnyPrint() {
@@ -247,7 +247,7 @@ base::string16 MatchAnyPrint() {
 
 base::string16 MatchSubframe(const char* title) {
   return l10n_util::GetStringFUTF16(IDS_TASK_MANAGER_SUBFRAME_PREFIX,
-                                    base::ASCIIToUTF16(title));
+                                    base::UTF8ToUTF16(title));
 }
 
 base::string16 MatchAnySubframe() {
@@ -259,7 +259,7 @@ base::string16 MatchUtility(const base::string16& title) {
 }
 
 base::string16 MatchAnyUtility() {
-  return MatchUtility(base::ASCIIToUTF16("*"));
+  return MatchUtility(base::UTF8ToUTF16("*"));
 }
 
 }  // namespace browsertest_util
