@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f298b19e_89c8860a",
+        "filename": "chrome/android/java/res/drawable/ic_drive_document_24dp.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T23:15:11Z",
+      "side": 1,
+      "message": "Hmm...why do we need a 24dp version and a 36dp version?  Shouldn\u0027t vectors play nicely with resizing?  I know that this affects the intrinsic height of the icons, but it seems like we should be able to have one and set explicit sizing on our imageviews.",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
