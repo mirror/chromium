@@ -39,6 +39,24 @@
       "revId": "b0ce8cbcce322423548cc467f50a8d67e623ef37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d4f29bb_4e4dd279",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-10-05T17:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a701e11c_b29c5b83",
+      "revId": "b0ce8cbcce322423548cc467f50a8d67e623ef37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
