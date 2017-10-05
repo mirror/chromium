@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1fcf1ee0_380d59be",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf328ad6_f5b87d8e",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1998a356_cf72234f",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68319543_27910af6",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done. OTOH I\u0027d like to keep GetDefaultEcryptsMigrationAction in arc_policy_util, because it\u0027s used from here and existing_user_controller.cc. WDYT?",
+      "parentUuid": "1998a356_cf72234f",
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "d8563e9f_c1656467",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done (both)",
+      "parentUuid": "6a8ed7e9_aac03b68",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 70
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce6ced5b_9b31778f",
         "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
         "patchSetId": 6
@@ -100,6 +166,30 @@
       "writtenOn": "2017-10-05T09:54:20Z",
       "side": 1,
       "message": "Not your fault, but could you replace the ints with the enum values?\n0 -\u003e DeviceEcryptfsMigrationStrategyProto::UNSET\n1 -\u003e DeviceEcryptfsMigrationStrategyProto::DISALLOW_ARC\n2 -\u003e DeviceEcryptfsMigrationStrategyProto::ALLOW_MIGRATION\n(not sure why it goes up to 3 and 4 below?!?)",
+      "range": {
+        "startLine": 595,
+        "startChar": 70,
+        "endLine": 595,
+        "endChar": 73
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1ae985_ec8a4d17",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "We have two policies:\nDevice policy DeviceEcryptfsMigrationStrategy which was used for versions\u003c\u003dM60 and had range [0,2].\nUser policy EcryptfsMigrationStrategy which is used for versions \u003e\u003dM61 and has range [0,5].\nWhile this is marked as enum in policy_tempaltes.json, no enum actually gets generated on the C++ side (which is why we have arc::policy_util::EcryptfsMigrationAction enum).\n\nI\u0027m not sure here:\n- Using 0-5 verifies that those numbers actually match our enum definition.\n- Using the enum values would be nicer, except that it\u0027s much longer and we\u0027d need to static_cast\u003cint\u003e all of those values.\n\nI\u0027d lean on leaving this as is for now.\nWDYT?",
+      "parentUuid": "ce6ced5b_9b31778f",
       "range": {
         "startLine": 595,
         "startChar": 70,
@@ -129,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "ddeb2e44_f843b680",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ced48b_18b24aee",
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "125b88ce_a02df9a6",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 6
@@ -149,6 +257,30 @@
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c8aedb3_d6382283",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "125b88ce_a02df9a6",
+      "range": {
+        "startLine": 1026,
+        "startChar": 6,
+        "endLine": 1027,
+        "endChar": 57
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "079c33fc_0d2ec66e",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b454ba1f_237734a0",
+      "range": {
+        "startLine": 1028,
+        "startChar": 2,
+        "endLine": 1028,
+        "endChar": 38
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6481ac8c_a58c1d26",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 6
@@ -198,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "e0a135b2_a0a47477",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6481ac8c_a58c1d26",
+      "range": {
+        "startLine": 1029,
+        "startChar": 2,
+        "endLine": 1029,
+        "endChar": 47
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33ea8bec_575082b7",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 6
@@ -212,6 +392,24 @@
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23ed788_c3a31e5a",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33ea8bec_575082b7",
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -238,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "ba7496b2_5c80a209",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e49b66f8_9ab4c59f",
+      "range": {
+        "startLine": 1045,
+        "startChar": 66,
+        "endLine": 1046,
+        "endChar": 17
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4dde3fa_e128ed51",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 6
@@ -258,6 +480,30 @@
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f05d4a_0e6effaf",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T12:57:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c4dde3fa_e128ed51",
+      "range": {
+        "startLine": 1048,
+        "startChar": 14,
+        "endLine": 1048,
+        "endChar": 40
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
