@@ -60,8 +60,11 @@ const char* const kPublicSessionWhitelist[] = {
     "kgimkbnclbekdkabkpjhpakhhalfanda",  // Bejeweled demo
     "joodangkbfjnajiiifokapkpmhfnpleo",  // Calculator
     "fpgfohogebplgnamlafljlcidjedbdeb",  // Calendar demo
+    "iaaileahmhaifkobgbfipllpldalkagc",  // Retail customer support chat
+    "hbadipnnoeehjdpedkelhcmpgdgpgehl",  // Retial customer support chat (test)
     "cdjikkcakjcdjemakobkmijmikhkegcj",  // Chrome Remote Desktop demo
     "jkoildpomkimndcphjpffmephmcmkfhn",  // Chromebook Demo App
+    "hchfbjkllckjfbbgpfgcignmaifbpooi",  // Chromebook Demo App (test)
     "lbhdhapagjhalobandnbdnmblnmocojh",  // Crackle demo
     "ielkookhdphmgbipcfmafkaiagademfp",  // Custom bookmarks
     "kogjlbfgggambihdjcpijgcbmenblimd",  // Custom bookmarks
@@ -102,6 +105,9 @@ const char* const kPublicSessionWhitelist[] = {
     "nnikmgjhdlphciaonjmoppfckbpoinnb",  // Pocket demo
     "khldngaiohpnnoikfmnmfnebecgeobep",  // Polarr Photo demo
     "aleodiobpjillgfjdkblghiiaegggmcm",  // Quickoffice demo
+    "bpjepiapphkajcficafcbhndfkficngh",  // Screensaver (1)
+    "inonkaddmfhkmmjjfpjopmamioollaoh",  // Screensaver (2)
+    "jnhpjmgajhmpcbnaecogefehocajeigi",  // Screensaver (3)
     "nifkmgcdokhkjghdlgflonppnefddien",  // Sheets demo
     "hdmobeajeoanbanmdlabnbnlopepchip",  // Slides demo
     "ikmidginfdcbojdbmejkeakncgdbmonc",  // Soundtrap demo
