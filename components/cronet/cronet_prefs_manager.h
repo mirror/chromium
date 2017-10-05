@@ -41,7 +41,7 @@ class CronetPrefsManager {
   CronetPrefsManager(
       const std::string& storage_path,
       scoped_refptr<base::SingleThreadTaskRunner> network_task_runner,
-      scoped_refptr<base::SequencedTaskRunner> file_task_runner,
+      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
       bool enable_network_quality_estimator,
       bool enable_host_cache_persistence,
       net::NetLog* net_log,
@@ -78,6 +78,8 @@ class CronetPrefsManager {
   // (because it owns the HostResolverImpl,
   // which owns the HostCache) and |pref_service_|.
   std::unique_ptr<HostCachePersistenceManager> host_cache_persistence_manager_;
+
+  scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
 
   // Checks that all methods are called on the network thread.
   THREAD_CHECKER(thread_checker_);

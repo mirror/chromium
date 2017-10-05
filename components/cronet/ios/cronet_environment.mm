@@ -22,7 +22,9 @@
 #include "base/path_service.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/threading/thread_restrictions.h"
 #include "components/cronet/cronet_prefs_manager.h"
+#include "components/cronet/cronet_thread_util.h"
 #include "components/cronet/histogram_manager.h"
 #include "components/cronet/ios/version.h"
 #include "components/prefs/pref_filter.h"
@@ -275,7 +277,11 @@ void CronetEnvironment::CleanUpOnNetworkThread() {
   // cronet_prefs_manager_ should be deleted on the network thread.
   cronet_prefs_manager_.reset();
 
-  file_thread_.reset();
+  //  cronet::PostTaskAndWaitForCompletion(
+  //    file_thread_->task_runner().get(), FROM_HERE,
+  //    [&]() {
+  //      file_thread_.reset();
+  //    });
 
   // TODO(lilyhoughton) this should be smarter about making sure there are no
   // pending requests, etc.
@@ -290,6 +296,7 @@ CronetEnvironment::~CronetEnvironment() {
 
 void CronetEnvironment::InitializeOnNetworkThread() {
   DCHECK(GetNetworkThreadTaskRunner()->BelongsToCurrentThread());
+  base::DisallowBlocking();
 
   static bool ssl_key_log_file_set = false;
   if (!ssl_key_log_file_set && !ssl_key_log_file_name_.empty()) {
