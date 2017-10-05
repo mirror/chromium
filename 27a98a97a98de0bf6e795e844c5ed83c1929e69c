@@ -52,6 +52,24 @@
       "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0a395d_14c9c89f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-05T22:47:39Z",
+      "side": 1,
+      "message": "Err.. #C9C9C9, but, in either case, it won\u0027t match the old values.",
+      "parentUuid": "af19a09c_9d708976",
+      "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
