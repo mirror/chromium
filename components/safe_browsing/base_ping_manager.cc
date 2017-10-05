@@ -94,6 +94,32 @@ net::NetworkTrafficAnnotationTag kTrafficAnnotation =
         }
       })");
 
+std::string GetHitReportUrl(
+    const std::string& prefix,
+    const std::string& method,
+    const std::string& client_name,
+    const std::string& version,
+    const std::string& additional_query,
+    safe_browsing::ExtendedReportingLevel reporting_level) {
+  DCHECK(!prefix.empty() && !method.empty() && !client_name.empty() &&
+         !version.empty());
+  std::string url =
+      base::StringPrintf("%s/%s?client=%s&appver=%s&pver=3.0", prefix.c_str(),
+                         method.c_str(), client_name.c_str(), version.c_str());
+  std::string api_key = google_apis::GetAPIKey();
+  if (!api_key.empty()) {
+    base::StringAppendF(&url, "&key=%s",
+                        net::EscapeQueryParamValue(api_key, true).c_str());
+  }
+  if (!additional_query.empty()) {
+    DCHECK(url.find("?") != std::string::npos);
+    url.append("&");
+    url.append(additional_query);
+  }
+  url.append(base::StringPrintf("&ext=%d", reporting_level));
+  return url;
+}
+
 }  // namespace
 
 namespace safe_browsing {
@@ -103,17 +129,17 @@ namespace safe_browsing {
 // static
 std::unique_ptr<BasePingManager> BasePingManager::Create(
     net::URLRequestContextGetter* request_context_getter,
-    const SafeBrowsingProtocolConfig& config) {
+    const V4ProtocolConfig& config) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   return base::WrapUnique(new BasePingManager(request_context_getter, config));
 }
 
 BasePingManager::BasePingManager(
     net::URLRequestContextGetter* request_context_getter,
-    const SafeBrowsingProtocolConfig& config)
+    const V4ProtocolConfig& config)
     : client_name_(config.client_name),
       request_context_getter_(request_context_getter),
-      url_prefix_(config.url_prefix) {
+      url_prefix_(config.report_url_prefix) {
   DCHECK(!url_prefix_.empty());
 
   if (request_context_getter) {
@@ -122,7 +148,7 @@ BasePingManager::BasePingManager(
         net::NetLogSourceType::SAFE_BROWSING);
   }
 
-  version_ = ProtocolManagerHelper::Version();
+  version_ = config.version;
 }
 
 BasePingManager::~BasePingManager() {}
@@ -203,9 +229,9 @@ GURL BasePingManager::SafeBrowsingHitUrl(
          hit_report.threat_type == SB_THREAT_TYPE_URL_BINARY_MALWARE ||
          hit_report.threat_type == SB_THREAT_TYPE_URL_CLIENT_SIDE_PHISHING ||
          hit_report.threat_type == SB_THREAT_TYPE_URL_CLIENT_SIDE_MALWARE);
-  std::string url = ProtocolManagerHelper::ComposeUrl(
-      url_prefix_, "report", client_name_, version_, std::string(),
-      hit_report.extended_reporting_level);
+  std::string url =
+      GetHitReportUrl(url_prefix_, "report", client_name_, version_,
+                      std::string(), hit_report.extended_reporting_level);
 
   std::string threat_list = "none";
   switch (hit_report.threat_type) {
