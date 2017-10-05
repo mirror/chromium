@@ -88,6 +88,23 @@ The `... NEW ...` line appears when libFuzzer finds new and interesting input. T
 efficient fuzzer should be able to finds lots of them rather quickly.
 The `... pulse ...` line will appear periodically to show the current status.
 
+### Symbolize Stacktrace
+
+If your fuzzer crashes when running locally and you see non-symbolized stacktrace,
+make sure that you have `llvm-symbolizer` available in `$PATH`. The symbolizer
+binary is included in Chromium's Clang package located at
+`third_party/llvm-build/Release+Asserts/bin/` directory.
+
+Alternatively, you may specify `external_symbolizer_path` option via `ASAN_OPTIONS`
+env variable:
+
+```bash
+$ ASAN_OPTIONS=external_symbolizer_path=/my/local/llvm/build/llvm-symbolizer \
+    ./fuzzer ./crash-input
+```
+
+The same approach works with other sanitizers (e.g. `MSAN_OPTIONS`, etc).
+
 ## Improving Your Fuzzer
 
 Your fuzzer may immediately discover interesting (i.e. crashing) inputs.
