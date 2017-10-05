@@ -1,0 +1,319 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e21827_41e005ae",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem to reflect the name change in the function.",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 37
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70679cad_41d14da0",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "This implementation is nearly identical to SetNetworkReadOnly, which makes sense as they mean the same thing. We could s/StopCaching/SetNetworkReadOnly(false)/ in the caller. The only change we\u0027d have to make is we\u0027d have to handle all_writers_.size() !\u003d 1 by returning instead of dchecking.",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69690beb_0e794569",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "this line should be moved down to just before it\u0027s used, e.g., just before line 180",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44ed8c67_b2e0b468",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "Why doesn\u0027t InitiateTruncate run the DoLoop if it can? It seems strange for the caller to have to do this.\n\nThen, we\u0027d just need:\n\n  if (!success) {\n    InitiateTruncateEntry();\n    return;\n  }\n\n  cache_-\u003eCurrentWritersDoneWritingToEntry(entry_, success, TransactionSet());",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4fd2d1e_650883d6",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "When the last transaction is deleted, and is_exclusive_ is true, should is_exclusive_ be reset to false? What about all of the other members, like network_read_only_? It seems like that\u0027s important otherwise a writers object will be forever exclusive or network only etc.\n\nThis makes me think that ActiveEntry should destroy writers on CurrentWritersDoneWritingToEntry and create a new one on demand. Then we don\u0027t have to reset state. I forget the reason why we aren\u0027t doing that.\n\nEdit: I found ResetStateForEmptyWriters which is called after we get to state NONE. I think we just need to add is_exclusive_ to that, and maybe others?",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a7b5a4_be933768",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "Are you sure OK is what we want here? I\u0027m pretty sure this needs to have the error code. This needs a test.",
+      "range": {
+        "startLine": 191,
+        "startChar": 47,
+        "endLine": 191,
+        "endChar": 49
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42aeab41_b2ad154d",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment here that while cleaning up writers (truncation) we should delay adding new writers. The caller can try again later.",
+      "range": {
+        "startLine": 231,
+        "startChar": 33,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6a556f6_5e10f2c7",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "these can be or\u0027d together",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8f8a32_ceefb6e7",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "Here is the call graph for HC:W:GetWriterLoadState as best as I can tell:\n\nHC:W:GetWriterLoadState\n+ - HC:GetLoadStateForPendingTransaction\n    +- HC:T:GetLoadState\n       +- HC:T:GetWriterLoadState\n       |  +- HC:T:GetLoadState \n       |    ... infinite recursion ...\n       +- HC:W:GetWriterLoadState\n          ... back to where we started ...\n\nDo any of these functions actually get used by anything? Can we remove them all?",
+      "range": {
+        "startLine": 298,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c385cf9_950c8e1f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "when the callback is run",
+      "range": {
+        "startLine": 362,
+        "startChar": 55,
+        "endLine": 362,
+        "endChar": 76
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6691a958_0f318168",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "s/This object/|this|/",
+      "range": {
+        "startLine": 372,
+        "startChar": 7,
+        "endLine": 372,
+        "endChar": 11
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c65e03_87d99c54",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "if (!InitiateTruncateEntry()) here and elsewhere",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 28
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e28a1ce_bad0ac7b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "This state seems to just set the state to CACHE_WRITE_TRUNCATED_RESPONSE, why have this state at all?",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5abccf_77ab2f94",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "this is unused, pretty sure this is supposed to be an argument to EraseTransaction below.",
+      "range": {
+        "startLine": 604,
+        "startChar": 53,
+        "endLine": 604,
+        "endChar": 59
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88bacd14_9da064fd",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:25:24Z",
+      "side": 1,
+      "message": "Writers is already in the name of the class, it\u0027s redundant to put it in the method name. Suggest: GetLoadState",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 30
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
