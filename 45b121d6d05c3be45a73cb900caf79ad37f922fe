@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3943b56_35594231",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:18:21Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have to sleep after calling #onSigninStateChange. What\u0027s failing without the sleep?",
+      "range": {
+        "startLine": 724,
+        "startChar": 8,
+        "endLine": 724,
+        "endChar": 28
+      },
+      "revId": "45b121d6d05c3be45a73cb900caf79ad37f922fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
