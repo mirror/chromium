@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440b76be_a5aa25a3",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-05T23:13:04Z",
+      "side": 1,
+      "message": "Note: another option instead of just not trying to perform a trivial replace in this case would be to try to check if we have whitespace immediately on either side of the selection, and proceed with the trival replace if we don\u0027t. However, I\u0027m not sure it\u0027s a good idea to add more complexity here.",
+      "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
