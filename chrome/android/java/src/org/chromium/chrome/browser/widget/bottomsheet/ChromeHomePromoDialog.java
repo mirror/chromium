@@ -7,16 +7,20 @@ package org.chromium.chrome.browser.widget.bottomsheet;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.IntDef;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import org.chromium.base.ApplicationStatus;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.multiwindow.MultiWindowUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.PromoDialog;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
 /**
@@ -24,6 +28,28 @@ import java.lang.ref.WeakReference;
  * activity to bring a user in or out of the feature.
  */
 public class ChromeHomePromoDialog extends PromoDialog {
+    /** Reasons that the promo was shown. */
+    @IntDef({ShowReason.NTP, ShowReason.MENU, ShowReason.STARTUP, ShowReason.BOUNDARY})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ShowReason {
+        int NTP = 0;
+        int MENU = 1;
+        int STARTUP = 2;
+        int BOUNDARY = 3;
+    }
+
+    /** States the promo was closed in. */
+    @IntDef({PromoResult.ON_REMAIN_ON, PromoResult.OFF_CHANGED_TO_ON, PromoResult.OFF_REMAIN_OFF,
+            PromoResult.ON_CHANGED_TO_OFF, PromoResult.BOUNDARY})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface PromoResult {
+        int ON_REMAIN_ON = 0;
+        int OFF_CHANGED_TO_ON = 1;
+        int OFF_REMAIN_OFF = 2;
+        int ON_CHANGED_TO_OFF = 3;
+        int BOUNDARY = 4;
+    }
+
     /** Whether or not the switch in the promo is enabled or disabled. */
     private boolean mSwitchStateShouldEnable;
 
@@ -103,6 +129,16 @@ public class ChromeHomePromoDialog extends PromoDialog {
         // If the user did not hit 'ok', do not use the switch value to store the user setting.
         boolean userSetting = mUserMadeSelection ? mSwitchStateShouldEnable
                                                  : FeatureUtilities.isChromeHomeEnabled();
+
+        @PromoResult
+        int state;
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            state = userSetting ? PromoResult.ON_REMAIN_ON : PromoResult.ON_CHANGED_TO_OFF;
+        } else {
+            state = userSetting ? PromoResult.OFF_CHANGED_TO_ON : PromoResult.OFF_REMAIN_OFF;
+        }
+        RecordHistogram.recordEnumeratedHistogram(
+                "Android.ChromeHome.Promo.Result", state, PromoResult.BOUNDARY);
 
         boolean restartRequired = userSetting != FeatureUtilities.isChromeHomeEnabled();
         FeatureUtilities.switchChromeHomeUserSetting(userSetting);

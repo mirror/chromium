@@ -688,6 +688,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The reason the bottom sheet was opened.</summary>
 </histogram>
 
+<histogram name="Android.ChromeHome.Promo.Result" enum="ChromeHomePromoResult">
+  <owner>mdjones@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>The result of showing the Chrome Home promo.</summary>
+</histogram>
+
+<histogram name="Android.ChromeHome.Promo.ShowReason"
+    enum="ChromeHomePromoShowReason">
+  <owner>mdjones@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>The reason the Chrome Home promo was shown.</summary>
+</histogram>
+
 <histogram name="Android.ChromeHome.TimeBetweenCloseAndNextOpen" units="ms">
   <owner>mdjones@chromium.org</owner>
   <owner>twellington@chromium.org</owner>
@@ -703,6 +716,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The time between app creation and the first open of the Chrome Home bottom
     sheet for this run of Chrome.
+  </summary>
+</histogram>
+
+<histogram name="Android.ChromeHome.UserPreference.Enabled"
+    enum="BooleanEnabled">
+  <owner>mdjones@chromium.org</owner>
+  <owner>twellington@chromium.org</owner>
+  <summary>
+    Records whether or not the user preference for Chrome Home is set to
+    enabled.
   </summary>
 </histogram>
 
