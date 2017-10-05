@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e011bbd6_642671ab",
+        "filename": "ash/public/cpp/shelf_model_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "optional nit: maybe assure callers that the old value is still valid?\n  // Invoked after a delegate changes, but before the old one is destroyed.\n  // |delegate| is the new value and |old_delegate| is the previous value.",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3badcd4_ffd6432d",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "aside: it is kinda of a bummer that these are pure virtual...",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f811434d_465fbe35",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "optional nit: invert this conditional and nest the call, or do:\nif (old_delegate \u0026\u0026 ControllerForShelfId(id) \u003d\u003d old_delegate)\n  OnItemControllerDiscarded(controller);\nOr nix ControllerForShelfId and always call it (for non-null values?).",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa65848_ca70457c",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "nit: add a comment, perhaps \"Notify the LauncherController that its delegate will be destroyed.\"",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c204637_d2700b1b",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "Maybe we could remove this helper and just always call OnItemControllerDiscarded  (or really OnItemDelegateDiscarded with a ShelfItemDelegate*) and let the controller subclasses update their local cache/map if the value is relevant to them?\n\nOtherwise, this might deserve a comment, since it returns the AppWindowLauncherController\u0027s locally-cached/mapped value, which differs from ShelfModel\u0027s canonical value (1) briefly, between external assignment and the ShelfModelObserver::ShelfItemDelegateChanged call and (2) when the ShelfItem isn\u0027t managed by the AppWindowLauncherController implementer.",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f638ff_e83ca310",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "This function probably deserves a simple comment, like \"Called to update local caches when the item [controller|delegate] is replaced.\"",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1d6804_52f93014",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T04:24:46Z",
+      "side": 1,
+      "message": "This is a little odd, why does the item outlive |arc_window|? I\u0027d naively expect this to match line 2205. So the creation order of the play store arc window and the optin v2 app changes the lifetime of the shelf item, even when the destruction order is the same?",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
