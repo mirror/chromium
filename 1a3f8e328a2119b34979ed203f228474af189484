@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c6ec118_d86b1026",
+        "filename": "third_party/leveldatabase/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-05T18:28:13Z",
+      "side": 1,
+      "message": "Boy I wish there was a good way around doing this. As you know this effectively renames this method to Env::DeleteFileW, and DUMPBIN reports it as such. Everything still works though, but it\u0027s ugly. I spent a few hours experimenting but am at a loss for a better solution.",
+      "revId": "1a3f8e328a2119b34979ed203f228474af189484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
