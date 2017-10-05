@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bad848bc_7f955946",
+        "filename": "chrome/browser/extensions/extension_creator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-05T20:24:17Z",
+      "side": 1,
+      "message": "I wish it could, but unfortunately we need to call a non-const method on the key (get()). We could make a copy of the key but I don\u0027t think that\u0027s worth it for a private synchronous function.\n\nI\u0027m going back and forth on making it a const ref in crx_creator.h - then callers could be sure the key is not modified (but we will have to copy). Thoughts?",
+      "parentUuid": "668d5757_79bff8b5",
+      "range": {
+        "startLine": 92,
+        "startChar": 40,
+        "endLine": 92,
+        "endChar": 51
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da964470_093adaa8",
         "filename": "components/crx_file/crx_creator.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8eb71ab9_599b1f82",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-05T20:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da964470_093adaa8",
+      "range": {
+        "startLine": 31,
+        "startChar": 18,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47293816_da4cbd0b",
         "filename": "components/crx_file/crx_creator.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e10ac5_7d29d4f1",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-05T20:24:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47293816_da4cbd0b",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 21
+      },
+      "revId": "77e74f88d3bfaaf559d2e5c9612a628df789eab3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
