@@ -13,6 +13,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_package_syncable_service_factory.h"
 #include "chrome/common/pref_names.h"
+#include "components/arc/arc_prefs.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/sync/model/sync_change_processor.h"
 #include "components/sync/model/sync_data.h"
@@ -91,6 +92,14 @@ ArcPackageSyncableService::ArcPackageSyncableService(Profile* profile,
       sync_processor_(nullptr),
       sync_error_handler_(nullptr),
       prefs_(prefs) {
+  if (!IsPaiStarted()) {
+    pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
+    pref_change_registrar_->Init(profile_->GetPrefs());
+    pref_change_registrar_->Add(
+        prefs::kArcPaiStarted,
+        base::Bind(&ArcPackageSyncableService::OnPaiStarted,
+                   base::Unretained(this)));
+  }
   if (prefs_)
     prefs_->AddObserver(this);
 }
@@ -406,6 +415,11 @@ void ArcPackageSyncableService::InstallPackage(const ArcSyncItem* sync_item) {
     return;
   }
 
+  if (!IsPaiStarted()) {
+    VLOG(2) << "Request to install package when PAI has not started yet.";
+    return;
+  }
+
   auto* instance = ARC_GET_INSTANCE_FOR_METHOD(prefs_->app_instance_holder(),
                                                InstallPackage);
   if (!instance)
@@ -442,6 +456,19 @@ bool ArcPackageSyncableService::ShouldSyncPackage(
       prefs_->GetPackage(package_name));
   DCHECK(package.get());
   return package->should_sync;
+}
+
+bool ArcPackageSyncableService::IsPaiStarted() const {
+  return profile_->GetPrefs()->GetBoolean(prefs::kArcPaiStarted);
+}
+
+void ArcPackageSyncableService::OnPaiStarted() {
+  DCHECK(IsPaiStarted());
+
+  pref_change_registrar_.reset();
+  // Now we are ready to install all pending packages
+  for (const auto& item : pending_install_items_)
+    InstallPackage(item.second.get());
 }
 
 }  // namespace arc
