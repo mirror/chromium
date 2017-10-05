@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "989db070_d6202a37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T09:28:24Z",
+      "side": 1,
+      "message": "What you\u0027re doing here seems to be consistent with how LayoutPoint and LayoutSize behave. I\u0027ve just never understood why it\u0027s done like that there, either.\n\nWhile it\u0027s true that there are cases where you want to subtract an offset from another one and treat the difference as a length, there are also cases where you just want to translate an offset.\n\nSince offset + offset \u003d\u003d offset, why not make offset - offset \u003d\u003d offset too? I would find such behavior way less surprising.",
+      "parentUuid": "766c9de2_30ec8d35",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
