@@ -16,6 +16,24 @@
       "revId": "021de6d525fd0c57cf301d8495ef6c1e82cc59e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78def93f_1b6b8d68",
+        "filename": "chrome/browser/android/warmup_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-10-05T11:11:30Z",
+      "side": 1,
+      "message": "The only current usage of EXTERNAL is PrepareForPageLoad in loading_predictor_android.cc\nSo it shouldn\u0027t appear on desktop.",
+      "parentUuid": "3a17ba41_0b960df8",
+      "revId": "021de6d525fd0c57cf301d8495ef6c1e82cc59e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
