@@ -66,10 +66,10 @@ class RefPtr {
   bool operator!() const { return !ptr_; }
   explicit operator bool() const { return ptr_ != nullptr; }
 
-  RefPtr& operator=(const RefPtr&) = default;
-  RefPtr& operator=(RefPtr&&) = default;
+  ALWAYS_INLINE RefPtr& operator=(const RefPtr&) = default;
+  ALWAYS_INLINE RefPtr& operator=(RefPtr&&) = default;
 
-  RefPtr& operator=(std::nullptr_t) {
+  ALWAYS_INLINE RefPtr& operator=(std::nullptr_t) {
     ptr_ = nullptr;
     return *this;
   }

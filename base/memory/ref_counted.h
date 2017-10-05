@@ -529,9 +529,9 @@ class scoped_refptr {
  public:
   typedef T element_type;
 
-  scoped_refptr() {}
+  ALWAYS_INLINE scoped_refptr() = default;
 
-  scoped_refptr(T* p) : ptr_(p) {
+  ALWAYS_INLINE scoped_refptr(T* p) : ptr_(p) {
     if (ptr_)
       AddRef(ptr_);
   }
@@ -563,7 +563,7 @@ class scoped_refptr {
     r.ptr_ = nullptr;
   }
 
-  ~scoped_refptr() {
+  ALWAYS_INLINE ~scoped_refptr() {
     if (ptr_)
       Release(ptr_);
   }
@@ -580,7 +580,7 @@ class scoped_refptr {
     return ptr_;
   }
 
-  scoped_refptr<T>& operator=(T* p) {
+  ALWAYS_INLINE scoped_refptr<T>& operator=(T* p) {
     // AddRef first so that self assignment should work
     if (p)
       AddRef(p);
@@ -591,23 +591,23 @@ class scoped_refptr {
     return *this;
   }
 
-  scoped_refptr<T>& operator=(const scoped_refptr<T>& r) {
+  ALWAYS_INLINE scoped_refptr<T>& operator=(const scoped_refptr<T>& r) {
     return *this = r.ptr_;
   }
 
   template <typename U>
-  scoped_refptr<T>& operator=(const scoped_refptr<U>& r) {
+  ALWAYS_INLINE scoped_refptr<T>& operator=(const scoped_refptr<U>& r) {
     return *this = r.get();
   }
 
-  scoped_refptr<T>& operator=(scoped_refptr<T>&& r) {
+  ALWAYS_INLINE scoped_refptr<T>& operator=(scoped_refptr<T>&& r) {
     scoped_refptr<T> tmp(std::move(r));
     tmp.swap(*this);
     return *this;
   }
 
   template <typename U>
-  scoped_refptr<T>& operator=(scoped_refptr<U>&& r) {
+  ALWAYS_INLINE scoped_refptr<T>& operator=(scoped_refptr<U>&& r) {
     // We swap with a temporary variable to guarantee that |ptr_| is released
     // immediately. A naive implementation which swaps |this| and |r| would
     // unintentionally extend the lifetime of |ptr_| to at least the lifetime of
