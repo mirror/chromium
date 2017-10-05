@@ -18,7 +18,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -29,15 +28,6 @@ import java.util.concurrent.atomic.AtomicReference;
 **/
 @MainDex
 public abstract class CommandLine {
-    /**
-     * Allows classes who cache command line flags to be notified when those arguments are updated
-     * at runtime. This happens in tests.
-     */
-    public interface ResetListener {
-        /** Called when the command line arguments are reset. */
-        void onCommandLineReset();
-    }
-
     // Public abstract interface, implemented in derived classes.
     // All these methods reflect their native-side counterparts.
     /**
@@ -100,7 +90,6 @@ public abstract class CommandLine {
         return false;
     }
 
-    private static final List<ResetListener> sResetListeners = new ArrayList<>();
     private static final AtomicReference<CommandLine> sCommandLine =
             new AtomicReference<CommandLine>();
 
@@ -136,34 +125,20 @@ public abstract class CommandLine {
     public static void initFromFile(String file) {
         // Just field trials can take upto 10K of command line.
         char[] buffer = readUtf8FileFullyCrashIfTooBig(file, 64 * 1024);
-        init(buffer == null ? null : tokenizeQuotedAruments(buffer));
+        init(buffer == null ? null : tokenizeQuotedArguments(buffer));
     }
 
     /**
      * Resets both the java proxy and the native command lines. This allows the entire
      * command line initialization to be re-run including the call to onJniLoaded.
+     * XXX
      */
     @VisibleForTesting
     public static void reset() {
         setInstance(null);
-        ThreadUtils.postOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                for (ResetListener listener : sResetListeners) listener.onCommandLineReset();
-            }
-        });
-    }
-
-    public static void addResetListener(ResetListener listener) {
-        sResetListeners.add(listener);
-    }
-
-    public static void removeResetListener(ResetListener listener) {
-        sResetListeners.remove(listener);
     }
 
     /**
-     * Public for testing (TODO: why are the tests in a different package?)
      * Parse command line flags from a flat buffer, supporting double-quote enclosed strings
      * containing whitespace. argv elements are derived by splitting the buffer on whitepace;
      * double quote characters may enclose tokens containing whitespace; a double-quote literal
@@ -171,7 +146,8 @@ public abstract class CommandLine {
      * @param buffer A command line in command line file format as described above.
      * @return the tokenized arguments, suitable for passing to init().
      */
-    public static String[] tokenizeQuotedAruments(char[] buffer) {
+    @VisibleForTesting
+    static String[] tokenizeQuotedArguments(char[] buffer) {
         ArrayList<String> args = new ArrayList<String>();
         StringBuilder arg = null;
         final char noQuote = '\0';
@@ -216,7 +192,7 @@ public abstract class CommandLine {
         // Make a best-effort to ensure we make a clean (atomic) switch over from the old to
         // the new command line implementation. If another thread is modifying the command line
         // when this happens, all bets are off. (As per the native CommandLine).
-        sCommandLine.set(new NativeCommandLine());
+        sCommandLine.set(new NativeCommandLine(getJavaSwitchesOrNull()));
     }
 
     public static String[] getJavaSwitchesOrNull() {
@@ -230,10 +206,15 @@ public abstract class CommandLine {
 
     private static void setInstance(CommandLine commandLine) {
         CommandLine oldCommandLine = sCommandLine.getAndSet(commandLine);
-        if (oldCommandLine != null && oldCommandLine.isNativeImplementation()) {
-            nativeReset();
+        if (oldCommandLine != null) {
+            oldCommandLine.destroy();
         }
     }
+
+    /**
+     * XXX
+     */
+    protected void destroy() {}
 
     /**
      * @param fileName the file to read in.
@@ -370,6 +351,12 @@ public abstract class CommandLine {
     }
 
     private static class NativeCommandLine extends CommandLine {
+        private final Throwable mSource = new Throwable();
+
+        public NativeCommandLine(String[] args) {
+            nativeInit(args);
+        }
+
         @Override
         public boolean hasSwitch(String switchString) {
             return nativeHasSwitch(switchString);
@@ -399,9 +386,15 @@ public abstract class CommandLine {
         public boolean isNativeImplementation() {
             return true;
         }
+
+        @Override
+        protected void destroy() {
+            throw new IllegalStateException(
+                    "Can't destroy native command line after startup", mSource);
+        }
     }
 
-    private static native void nativeReset();
+    private static native void nativeInit(String[] args);
     private static native boolean nativeHasSwitch(String switchString);
     private static native String nativeGetSwitchValue(String switchString);
     private static native void nativeAppendSwitch(String switchString);
