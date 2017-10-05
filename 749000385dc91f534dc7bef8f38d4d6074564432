@@ -71,6 +71,30 @@
       "revId": "749000385dc91f534dc7bef8f38d4d6074564432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f16b198_e6332f4b",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-05T15:08:38Z",
+      "side": 1,
+      "message": "Damn, the code is pretty simple:\n\n  struct Foo {\n    Foo() \u003d default;\n    ~Foo() \u003d default;\n    int x_ \u003d 10;\n  };\n\n  struct Bar {\n    Bar() \u003d default;\n    ~Bar() {}\n    int x_ \u003d 20;\n  };\n\n  Foo foo;\n  Bar bar;\n\nCompiled with any version of GCC (with -O3 -std\u003dc++11) on godbolt:\n\n- Both |foo| and |bar| are statically initialized.\n- Bar::~Bar() is generated as an empty function, and a static C++ destructor\n  is added to call it to destroy |bar|.\n- There is nothing similar for |foo|, which uses \"\u003d default\".\n\nClang is more clever and never generates any destructor or static destructor.\n\nSo I tend to use \"\u003d default\" instead of \"{}\" because some compilers treat them differently :(",
+      "parentUuid": "b8aff946_2e72b004",
+      "range": {
+        "startLine": 173,
+        "startChar": 30,
+        "endLine": 173,
+        "endChar": 37
+      },
+      "revId": "749000385dc91f534dc7bef8f38d4d6074564432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
