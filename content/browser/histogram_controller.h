@@ -5,15 +5,19 @@
 #ifndef CONTENT_BROWSER_HISTOGRAM_CONTROLLER_H_
 #define CONTENT_BROWSER_HISTOGRAM_CONTROLLER_H_
 
+#include <map>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "content/common/child_histogram.mojom.h"
 
 namespace content {
 
 class HistogramSubscriber;
+class ChildProcessHost;
+class RenderProcessHost;
 
 // HistogramController is used on the browser process to collect histogram data.
 // Only the browser UI thread is allowed to interact with the
@@ -55,8 +59,11 @@ class HistogramController {
       int sequence_number,
       const std::vector<std::string>& pickled_histograms);
 
+  template <class T>
+  void SetHistogramMemory(T*, mojo::ScopedSharedBufferHandle);
+
  private:
-  friend struct base::DefaultSingletonTraits<HistogramController>;
+  friend struct base::LeakySingletonTraits<HistogramController>;
 
   // Contact PLUGIN and GPU child processes and get their histogram data.
   // TODO(rtenneti): Enable getting histogram data for other processes like
@@ -64,6 +71,27 @@ class HistogramController {
   void GetHistogramDataFromChildProcesses(int sequence_number);
 
   HistogramSubscriber* subscriber_;
+
+  template <class T>
+  using ChildHistogramMap = std::map<T*, content::mojom::ChildHistogramPtr>;
+
+  template <class T>
+  void InsertChildHistogramInterface(
+      T* host,
+      content::mojom::ChildHistogramPtr child_histogram);
+
+  template <class T>
+  content::mojom::ChildHistogram& GetChildHistogramInterface(T* host);
+
+  template <class T>
+  void RemoveChildHistogramInterface(T* host);
+
+  // Specialize this template for each ChildHistogramMap defined below.
+  template <class T>
+  ChildHistogramMap<T>& GetChildHistogramMap();
+
+  ChildHistogramMap<RenderProcessHost> renderer_histogram_interfaces_;
+  ChildHistogramMap<ChildProcessHost> child_histogram_interfaces_;
 
   DISALLOW_COPY_AND_ASSIGN(HistogramController);
 };
