@@ -22,6 +22,8 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.CronetTestFramework;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 
+import java.util.concurrent.Executors;
+
 /**
  * Tests that making a large number of requests do not lead to crashes.
  */
@@ -52,16 +54,17 @@ public class CronetStressTest {
         final int kNumRequestHeaders = 100;
         final int kNumUploadBytes = 1000;
         final byte[] b = new byte[kNumUploadBytes];
+        Executor executor = Executors.newSingleThreadExecutor();
         for (int i = 0; i < kNumRequest; i++) {
             TestUrlRequestCallback callback = new TestUrlRequestCallback();
             UrlRequest.Builder builder = mTestFramework.mCronetEngine.newUrlRequestBuilder(
-                    NativeTestServer.getEchoAllHeadersURL(), callback, callback.getExecutor());
+                    NativeTestServer.getEchoAllHeadersURL(), callback, executor);
             for (int j = 0; j < kNumRequestHeaders; j++) {
                 builder.addHeader("header" + j, Integer.toString(j));
             }
             builder.addHeader("content-type", "useless/string");
             builder.setUploadDataProvider(
-                    UploadDataProviders.create(b, 0, kNumUploadBytes), callback.getExecutor());
+                    UploadDataProviders.create(b, 0, kNumUploadBytes), executor);
             UrlRequest request = builder.build();
             request.start();
             callback.blockForDone();
