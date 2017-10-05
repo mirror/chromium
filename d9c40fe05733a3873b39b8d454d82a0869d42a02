@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca338fd8_fd4f22c4",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-05T16:36:57Z",
+      "side": 1,
+      "message": "by the way, on some monitors the white point can depend on the chosen video mode. In that case, the white point gets stored in an additional descriptor. We should probably parse that one too..",
+      "revId": "d9c40fe05733a3873b39b8d454d82a0869d42a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
