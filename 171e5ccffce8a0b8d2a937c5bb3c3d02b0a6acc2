@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb8f11cf_5686ceca",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-05T11:07:56Z",
+      "side": 1,
+      "message": "I don\u0027t really get why option 1 is better. This is essentially replacing \"return\" by \"push_back\" and adding an extra loop. It also does not handle the cases where we must logout. We would need to push a specific item in the array to indicate that we have to logout, and it cannot be the empty string (because the code already uses the empty string to indicate that the item should be skipped).\n\nI tried option 2, and added/clarified comments, let me know what you think. I\u0027m not sure it\u0027s actually an improvement, but let me know what you think.",
+      "parentUuid": "0470f0ba_430b1693",
+      "revId": "171e5ccffce8a0b8d2a937c5bb3c3d02b0a6acc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa2c25f6_6969011b",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 6
