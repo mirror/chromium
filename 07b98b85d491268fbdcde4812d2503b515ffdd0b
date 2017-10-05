@@ -462,6 +462,30 @@
     },
     {
       "key": {
+        "uuid": "42169f4b_c1e90240",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T23:18:02Z",
+      "side": 1,
+      "message": "It shouldn\u0027t.  We should only be showing infobars for when the tab is present.",
+      "parentUuid": "77fae9cf_ec66856c",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5852e69c_416d7fd9",
         "filename": "chrome/browser/ui/android/infobars/survey_infobar.h",
         "patchSetId": 29
