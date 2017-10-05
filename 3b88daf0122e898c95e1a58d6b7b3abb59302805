@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94739d1b_2ebe80dc",
+        "filename": "ios/chrome/browser/net/http_server_properties_manager_factory.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T15:21:53Z",
+      "side": 0,
+      "message": "This was removed because the new code expects HttpServerProperties to be created before prefs have been loaded, and logic changes slightly once that has happened.",
+      "range": {
+        "startLine": 60,
+        "startChar": 67,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "3b88daf0122e898c95e1a58d6b7b3abb59302805",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb121fa5_d450900a",
+        "filename": "components/cronet/cronet_prefs_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T15:21:53Z",
+      "side": 1,
+      "message": "HttpServerPropertiesManager now expects to be notified when prefs are initially loaded, instead of them already being loaded on creation.  Does mean we potentially lose anything we learn before loading the pref file, but that\u0027s a short interval, and I don\u0027t want to add another serialized file load blocking chrome/ startup.",
+      "range": {
+        "startLine": 117,
+        "startChar": 27,
+        "endLine": 117,
+        "endChar": 32
+      },
+      "revId": "a1055ae319bc9d6d912f5c00e272398f25b7d75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8745dd_6a3e0aa3",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 23
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T15:21:53Z",
+      "side": 1,
+      "message": "HttpServerPropertiesManager now saves to prefs on destruction, so it has to be destroyed before the prefs file (This is also a bit more standard cleanup order - delete something before its dependencies)",
+      "range": {
+        "startLine": 277,
+        "startChar": 22,
+        "endLine": 277,
+        "endChar": 23
+      },
+      "revId": "a1055ae319bc9d6d912f5c00e272398f25b7d75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
