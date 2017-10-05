@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2317994_8bfd734e",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Take this off",
+      "range": {
+        "startLine": 163,
+        "startChar": 7,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "873971ef4dad19072544ca9db8baf8766e6ba602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "091a1b45_16e3a1e1",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Move this in InsertReferences()",
+      "revId": "873971ef4dad19072544ca9db8baf8766e6ba602",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

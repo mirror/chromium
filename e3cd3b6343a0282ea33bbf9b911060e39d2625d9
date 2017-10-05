@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11a2e188_6db1c2cc",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 0,
+      "message": "bring this back!",
+      "range": {
+        "startLine": 129,
+        "startChar": 20,
+        "endLine": 129,
+        "endChar": 32
+      },
+      "revId": "e3cd3b6343a0282ea33bbf9b911060e39d2625d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29d2ec0b_9cf8b1cf",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 0,
+      "message": "Put this back",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "e3cd3b6343a0282ea33bbf9b911060e39d2625d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4773850_7bb103ef",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 0,
+      "message": "bring this back",
+      "range": {
+        "startLine": 236,
+        "startChar": 21,
+        "endLine": 236,
+        "endChar": 25
+      },
+      "revId": "e3cd3b6343a0282ea33bbf9b911060e39d2625d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

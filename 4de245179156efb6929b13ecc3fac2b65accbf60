@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7500d580_8f4a9d81",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6eed2632_a36eee3a",
+        "filename": "chrome/installer/zucchini/encoded_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Remove",
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "840b0e06_beaa8f9d",
+        "filename": "chrome/installer/zucchini/equivalence_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 141,
+        "startChar": 4,
+        "endLine": 141,
+        "endChar": 10
+      },
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52cc5830_e88a2f50",
+        "filename": "chrome/installer/zucchini/equivalence_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Bring back comment",
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4438b40_fb70a328",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "DCHECK_NE",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90ba10fd_7395e79a",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Not necessary",
+      "range": {
+        "startLine": 259,
+        "startChar": 14,
+        "endLine": 259,
+        "endChar": 18
+      },
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "94c576e4_6178edb2",
+        "filename": "chrome/installer/zucchini/zucchini_gen.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Put back comment",
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d0e8c4d2_57e969e0",
+        "filename": "chrome/installer/zucchini/zucchini_gen.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-10-05T16:16:21Z",
+      "side": 1,
+      "message": "Duplicate",
+      "range": {
+        "startLine": 54,
+        "startChar": 15,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "4de245179156efb6929b13ecc3fac2b65accbf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
