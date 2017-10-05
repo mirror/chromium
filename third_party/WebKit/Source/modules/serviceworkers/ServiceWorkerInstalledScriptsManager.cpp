@@ -29,8 +29,7 @@ ServiceWorkerInstalledScriptsManager::GetScriptData(
   // This blocks until the script is received from the browser.
   std::unique_ptr<WebServiceWorkerInstalledScriptsManager::RawScriptData>
       raw_script_data = manager_->GetRawScriptData(script_url);
-  if (!raw_script_data)
-    return ScriptStatus::kTaken;
+  DCHECK(raw_script_data);
   if (!raw_script_data->IsValid())
     return ScriptStatus::kFailed;
 
