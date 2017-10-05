@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "956aaae4_17f5777d",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-05T18:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a59142b_c89e64df",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 25
+      },
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0db1d46_7eec8b9a",
         "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2f0bf889_9965d3d1",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-05T18:10:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0db1d46_7eec8b9a",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 29
+      },
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20672344_f47abe2e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 6
@@ -59,6 +107,24 @@
       "writtenOn": "2017-10-01T06:44:51Z",
       "side": 1,
       "message": "Judging by the WebUI documentation, we should also move the AddObserver call here.",
+      "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488c422e_5747079c",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-05T18:10:25Z",
+      "side": 1,
+      "message": "Added a call to AddObserver here. There was currently no actual explicit call to AddObserver anywhere in this file so I added a reference to a bug (761536) that may have been related to this.",
+      "parentUuid": "20672344_f47abe2e",
       "revId": "b5955eb247b137ecd19a7de65d3cca0640e7677e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
