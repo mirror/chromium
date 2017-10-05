@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af9a2727_a23253d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-05T01:50:38Z",
+      "side": 1,
+      "message": "Nit: Use TEXT\u003d and describe how to open Page Info (e.g. visit https://permission.site and click on the lock icon) so that testers will check this in the release process.",
+      "revId": "c3831c9555821a112b30b9e02c3a88fa7c40dca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
