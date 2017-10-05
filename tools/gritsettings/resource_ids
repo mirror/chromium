@@ -123,6 +123,9 @@
   "chrome/browser/resources/webapks_ui_resources.grd": {
     "includes": [12640],
   },
+  "chrome/browser/vr/test/data/vr_test_resources.grd": {
+    "messages": [12650],
+  },
   # END chrome/browser section.
 
   # START chrome/ miscellaneous section.

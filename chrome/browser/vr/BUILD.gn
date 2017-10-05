@@ -227,10 +227,21 @@ test("vr_common_unittests") {
   ]
 }
 
+grit("vr_test_resources") {
+  source = "test/data/vr_test_resources.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "grit/vr_test_resources.h",
+    "vr_test_resources_en-US.pak",
+  ]
+  output_dir = "$root_gen_dir/chrome"
+}
+
 repack("vr_test_pak") {
   sources = [
     "$root_gen_dir/chrome/generated_resources_en-US.pak",
     "$root_gen_dir/chrome/vr_shell_resources.pak",
+    "$root_gen_dir/chrome/vr_test_resources_en-US.pak",
     "$root_gen_dir/components/components_resources.pak",
     "$root_gen_dir/components/strings/components_strings_en-US.pak",
   ]
@@ -238,6 +249,7 @@ repack("vr_test_pak") {
   output = "$root_out_dir/vr_test.pak"
 
   deps = [
+    ":vr_test_resources",
     "//chrome/app:generated_resources",
     "//chrome/browser/resources:vr_shell_resources",
     "//components/resources:components_resources",

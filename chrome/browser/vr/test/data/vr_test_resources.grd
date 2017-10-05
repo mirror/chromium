@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- -*- XML -*- -->
+<grit base_dir="." current_release="1" enc_check="möl" latest_public_release="0" source_lang_id="en">
+  <outputs>
+    <output filename="grit/vr_test_resources.h" type="rc_header">
+      <emit emit_type='prepend'></emit>
+    </output>
+    <output filename="vr_test_resources_en-US.pak" type="data_package" lang="en" />
+  </outputs>
+  <release allow_pseudo="false" seq="1">
+    <messages fallback_to_english="true">
+      <message name="IDS_LOREM_IPSUM_700_CHARS" desc="">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus</message>
+      <message name="IDS_LOREM_IPSUM_100_CHARS" desc="">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis erat nisl, tempus nec neque at nullam.</message>
+    </messages>
+  </release>
+</grit>
