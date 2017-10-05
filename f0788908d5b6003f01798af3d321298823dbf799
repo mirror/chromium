@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8e5d45d_79af76f1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-05T17:40:58Z",
+      "side": 1,
+      "message": "I think this proliferation of classes is a little unfortunate. Could we not use a template instead so that we can keep the enum definitions etc. here where they belong rather than moving them to a tracing support file? A template would also make the underlying type obvious so there\u0027s no need to add comments like you\u0027ve done.",
+      "range": {
+        "startLine": 536,
+        "startChar": 4,
+        "endLine": 536,
+        "endChar": 16
+      },
+      "revId": "f0788908d5b6003f01798af3d321298823dbf799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
