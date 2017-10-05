@@ -73,6 +73,24 @@
       "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8567ec4d_ca19f23f",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T16:34:53Z",
+      "side": 1,
+      "message": "Or, alternatively you can extract the switch logic into a function, then the logic would be.\n\nswitch (result) {\n  case NO_POLICY:\n    return kAscUser;\n  case SUCCESS:\n    if (DecodeMigrationActionFromPolicy(...)) {\n      return action;\n    }\n    break;\n  case ERROR:\n    // logs.\n    break;\n  default:\n    NOTREACHED();\n    break;\n}\nreturn GetDefaultEcryptfs...();",
+      "parentUuid": "921ca1c8_b0a25edb",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
