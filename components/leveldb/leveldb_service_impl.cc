@@ -81,8 +81,8 @@ void LevelDBServiceImpl::OpenInMemory(
   options.create_if_missing = true;
   options.max_open_files = 0;  // Use minimum.
 
-  std::unique_ptr<leveldb::Env> env(
-      leveldb_chrome::NewMemEnv(leveldb::Env::Default()));
+  auto env =
+      leveldb_chrome::NewMemEnv(leveldb::Env::Default(), "leveldb-service");
   options.env = env.get();
 
   std::unique_ptr<leveldb::DB> db;

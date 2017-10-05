@@ -5,6 +5,9 @@
 #ifndef THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 #define THIRD_PARTY_LEVELDATABASE_LEVELDB_CHROME_H_
 
+#include <memory>
+#include <string>
+
 #include "leveldb/cache.h"
 #include "leveldb/env.h"
 
@@ -22,7 +25,9 @@ extern leveldb::Cache* GetSharedBrowserBlockCache();
 extern bool IsMemEnv(const leveldb::Env* env);
 
 // Creates an in-memory Env for which all files are stored in the heap.
-extern leveldb::Env* NewMemEnv(leveldb::Env* base_env);
+// This wraps leveldb::NewMemEnv to add memory-infra logging.
+extern std::unique_ptr<leveldb::Env> NewMemEnv(leveldb::Env* base_env,
+                                               const std::string& name);
 
 }  // namespace leveldb_chrome
 
