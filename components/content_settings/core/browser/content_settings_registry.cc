@@ -164,7 +164,7 @@ void ContentSettingsRegistry::Init() {
            ValidSettings(CONTENT_SETTING_ALLOW, CONTENT_SETTING_BLOCK),
            WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,
            WebsiteSettingsRegistry::ALL_PLATFORMS,
-           ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
+           ContentSettingsInfo::INHERIT_IN_INCOGNITO);
 
   Register(CONTENT_SETTINGS_TYPE_GEOLOCATION, "geolocation",
            CONTENT_SETTING_ASK, WebsiteSettingsInfo::UNSYNCABLE,
@@ -226,7 +226,7 @@ void ContentSettingsRegistry::Init() {
            WebsiteSettingsInfo::TOP_LEVEL_ORIGIN_ONLY_SCOPE,
            WebsiteSettingsRegistry::DESKTOP |
                WebsiteSettingsRegistry::PLATFORM_ANDROID,
-           ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
+           ContentSettingsInfo::INHERIT_IN_INCOGNITO);
 
   Register(CONTENT_SETTINGS_TYPE_MIDI_SYSEX, "midi-sysex", CONTENT_SETTING_ASK,
            WebsiteSettingsInfo::SYNCABLE, WhitelistedSchemes(),
@@ -289,7 +289,7 @@ void ContentSettingsRegistry::Init() {
            WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
            WebsiteSettingsRegistry::DESKTOP |
                WebsiteSettingsRegistry::PLATFORM_ANDROID,
-           ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
+           ContentSettingsInfo::INHERIT_IN_INCOGNITO);
 
   // Content settings that aren't used to store any data. TODO(raymes): use a
   // different mechanism rather than content settings to represent these.
