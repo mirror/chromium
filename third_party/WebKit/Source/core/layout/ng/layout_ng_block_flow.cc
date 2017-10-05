@@ -233,16 +233,35 @@ void LayoutNGBlockFlow::AddOverflowFromChildren() {
   LayoutBlockFlow::AddOverflowFromChildren();
 }
 
+const NGBaseline* LayoutNGBlockFlow::Baseline(
+    NGBaselineAlgorithmType type) const {
+  if (const NGPhysicalFragment* physical_fragment = CurrentFragment()) {
+    FontBaseline baseline_type =
+        IsHorizontalWritingMode() ? kAlphabeticBaseline : kIdeographicBaseline;
+    return ToNGPhysicalBoxFragment(physical_fragment)
+        ->Baseline({type, baseline_type});
+  }
+  return nullptr;
+}
+
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
-  // TODO(kojii): Implement. This will stop working once we stop creating line
-  // boxes.
+  if (ChildrenInline()) {
+    if (const NGBaseline* baseline =
+            Baseline(NGBaselineAlgorithmType::kFirstLine)) {
+      return baseline->offset;
+    }
+  }
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
 LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
-  // TODO(kojii): Implement. This will stop working once we stop creating line
-  // boxes.
+  if (ChildrenInline()) {
+    if (const NGBaseline* baseline =
+            Baseline(NGBaselineAlgorithmType::kAtomicInline)) {
+      return baseline->offset;
+    }
+  }
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
