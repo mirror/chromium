@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3ca47d8_761c3037",
+        "filename": "chrome/browser/chromeos/policy/enrollment_handler_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-05T15:25:58Z",
+      "side": 1,
+      "message": "This is fine, but I generally mention why I\u0027m posting a message instead of invoking APIs directly in a comment.",
+      "range": {
+        "startLine": 170,
+        "startChar": 31,
+        "endLine": 170,
+        "endChar": 56
+      },
+      "revId": "07768569077d105e0dd02f3c8b36f2e80904cf30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
