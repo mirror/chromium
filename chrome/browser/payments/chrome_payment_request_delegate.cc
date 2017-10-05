@@ -16,9 +16,12 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/web_data_service_factory.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/region_combobox_model.h"
 #include "components/autofill/core/browser/region_data_loader_impl.h"
+#include "components/keyed_service/core/service_access_type.h"
+#include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/payments/content/payment_request_dialog.h"
 #include "components/payments/core/payment_prefs.h"
 #include "components/signin/core/browser/signin_manager.h"
@@ -146,6 +149,14 @@ PrefService* ChromePaymentRequestDelegate::GetPrefService() {
 bool ChromePaymentRequestDelegate::IsBrowserWindowActive() const {
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
   return browser && browser->window() && browser->window()->IsActive();
+}
+
+PaymentManifestWebDataService*
+ChromePaymentRequestDelegate::GetPaymentManifestWebDataService() const {
+  return WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
+             Profile::FromBrowserContext(web_contents_->GetBrowserContext()),
+             ServiceAccessType::EXPLICIT_ACCESS)
+      .get();
 }
 
 }  // namespace payments

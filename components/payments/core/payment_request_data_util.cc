@@ -68,10 +68,15 @@ void ParseSupportedMethods(
     const std::vector<PaymentMethodData>& method_data,
     std::vector<std::string>* out_supported_networks,
     std::set<std::string>* out_basic_card_specified_networks,
-    std::vector<GURL>* out_url_payment_method_identifiers) {
-  DCHECK(out_supported_networks->empty());
-  DCHECK(out_basic_card_specified_networks->empty());
-  DCHECK(out_url_payment_method_identifiers->empty());
+    std::vector<GURL>* out_url_payment_method_identifiers,
+    std::set<std::string>* out_payment_method_identifiers) {
+  DCHECK(!out_supported_networks || out_supported_networks->empty());
+  DCHECK(!out_basic_card_specified_networks ||
+         out_basic_card_specified_networks->empty());
+  DCHECK(!out_url_payment_method_identifiers ||
+         out_url_payment_method_identifiers->empty());
+  DCHECK(!out_payment_method_identifiers ||
+         out_payment_method_identifiers->empty());
 
   const std::set<std::string> kBasicCardNetworks{
       "amex",       "diners", "discover", "jcb",
@@ -84,6 +89,12 @@ void ParseSupportedMethods(
     if (method_data_entry.supported_methods.empty())
       return;
 
+    if (out_payment_method_identifiers) {
+      out_payment_method_identifiers->insert(
+          method_data_entry.supported_methods.begin(),
+          method_data_entry.supported_methods.end());
+    }
+
     for (const std::string& method : method_data_entry.supported_methods) {
       if (method.empty())
         continue;
@@ -92,7 +103,8 @@ void ParseSupportedMethods(
       // If a card network is specified right in "supportedMethods", add it.
       auto card_it = remaining_card_networks.find(method);
       if (card_it != remaining_card_networks.end()) {
-        out_supported_networks->push_back(method);
+        if (out_supported_networks)
+          out_supported_networks->push_back(method);
         // |method| removed from |remaining_card_networks| so that it is not
         // doubly added to |out_supported_networks|.
         remaining_card_networks.erase(card_it);
@@ -100,11 +112,15 @@ void ParseSupportedMethods(
         // For the "basic-card" method, check "supportedNetworks".
         if (method_data_entry.supported_networks.empty()) {
           // Empty |supported_networks| means all networks are supported.
-          out_supported_networks->insert(out_supported_networks->end(),
-                                         remaining_card_networks.begin(),
-                                         remaining_card_networks.end());
-          out_basic_card_specified_networks->insert(kBasicCardNetworks.begin(),
-                                                    kBasicCardNetworks.end());
+          if (out_supported_networks) {
+            out_supported_networks->insert(out_supported_networks->end(),
+                                           remaining_card_networks.begin(),
+                                           remaining_card_networks.end());
+          }
+          if (out_basic_card_specified_networks) {
+            out_basic_card_specified_networks->insert(
+                kBasicCardNetworks.begin(), kBasicCardNetworks.end());
+          }
           // Clear the set so that no further networks are added to
           // |out_supported_networks|.
           remaining_card_networks.clear();
@@ -118,16 +134,18 @@ void ParseSupportedMethods(
             // |remaining_card_networks| it's fair game.
             auto it = remaining_card_networks.find(supported_network);
             if (it != remaining_card_networks.end()) {
-              out_supported_networks->push_back(supported_network);
+              if (out_supported_networks)
+                out_supported_networks->push_back(supported_network);
               remaining_card_networks.erase(it);
             }
-            if (kBasicCardNetworks.find(supported_network) !=
-                kBasicCardNetworks.end()) {
+            if (out_basic_card_specified_networks &&
+                kBasicCardNetworks.find(supported_network) !=
+                    kBasicCardNetworks.end()) {
               out_basic_card_specified_networks->insert(supported_network);
             }
           }
         }
-      } else {
+      } else if (out_url_payment_method_identifiers) {
         // Here |method| could be a repeated deprecated supported network (e.g.,
         // "visa"), some invalid string or a URL Payment Method Identifier.
         // Capture this last category if the URL is valid. A valid URL must have

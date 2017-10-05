@@ -8,7 +8,7 @@
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
-#include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "components/payments/content/manifest_verifier.h"
 #include "components/payments/content/payment_manifest_parser_host.h"
@@ -50,14 +50,15 @@ using ::payments::mojom::PaymentRequestEventDataPtr;
 class SelfDeletingManifestVerifier {
  public:
   explicit SelfDeletingManifestVerifier(content::WebContents* web_contents)
-      : verifier_(std::make_unique<payments::PaymentManifestDownloader>(
-                      content::BrowserContext::GetDefaultStoragePartition(
-                          web_contents->GetBrowserContext())
-                          ->GetURLRequestContext()),
-                  std::make_unique<payments::PaymentManifestParserHost>(),
-                  WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-                      ProfileManager::GetActiveUserProfile(),
-                      ServiceAccessType::EXPLICIT_ACCESS)) {}
+      : verifier_(
+            std::make_unique<payments::PaymentManifestDownloader>(
+                content::BrowserContext::GetDefaultStoragePartition(
+                    web_contents->GetBrowserContext())
+                    ->GetURLRequestContext()),
+            std::make_unique<payments::PaymentManifestParserHost>(),
+            WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
+                Profile::FromBrowserContext(web_contents->GetBrowserContext()),
+                ServiceAccessType::EXPLICIT_ACCESS)) {}
 
   // Verifies that |apps| have valid payment method names and invokes |callback|
   // with the validated |apps|.

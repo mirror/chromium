@@ -21,9 +21,7 @@ namespace payments {
 
 namespace {
 
-// Validates the |method_data| and fills |supported_card_networks_|,
-// |supported_card_networks_set_|, |basic_card_specified_networks_|,
-// and |url_payment_method_identifiers_|.
+// Validates the |method_data| and fills the output parameters.
 void PopulateValidatedMethodData(
     const std::vector<PaymentMethodData>& method_data_vector,
     std::vector<std::string>* supported_card_networks,
@@ -31,10 +29,11 @@ void PopulateValidatedMethodData(
     std::set<std::string>* supported_card_networks_set,
     std::set<autofill::CreditCard::CardType>* supported_card_types_set,
     std::vector<GURL>* url_payment_method_identifiers,
-    std::map<std::string, std::set<std::string>>* stringified_method_data) {
+    std::set<std::string>* payment_method_identifiers_set) {
   data_util::ParseSupportedMethods(method_data_vector, supported_card_networks,
                                    basic_card_specified_networks,
-                                   url_payment_method_identifiers);
+                                   url_payment_method_identifiers,
+                                   payment_method_identifiers_set);
   supported_card_networks_set->insert(supported_card_networks->begin(),
                                       supported_card_networks->end());
 
@@ -49,6 +48,7 @@ void PopulateValidatedMethodData(
     std::set<std::string>* supported_card_networks_set,
     std::set<autofill::CreditCard::CardType>* supported_card_types_set,
     std::vector<GURL>* url_payment_method_identifiers,
+    std::set<std::string>* payment_method_identifiers_set,
     std::map<std::string, std::set<std::string>>* stringified_method_data) {
   std::vector<PaymentMethodData> method_data_vector;
   method_data_vector.reserve(method_data_mojom.size());
@@ -66,7 +66,7 @@ void PopulateValidatedMethodData(
       method_data_vector, supported_card_networks,
       basic_card_specified_networks, supported_card_networks_set,
       supported_card_types_set, url_payment_method_identifiers,
-      stringified_method_data);
+      payment_method_identifiers_set);
 }
 
 }  // namespace
@@ -92,7 +92,8 @@ PaymentRequestSpec::PaymentRequestSpec(
   PopulateValidatedMethodData(
       method_data_, &supported_card_networks_, &basic_card_specified_networks_,
       &supported_card_networks_set_, &supported_card_types_set_,
-      &url_payment_method_identifiers_, &stringified_method_data_);
+      &url_payment_method_identifiers_, &payment_method_identifiers_set_,
+      &stringified_method_data_);
 }
 PaymentRequestSpec::~PaymentRequestSpec() {}
 
@@ -222,16 +223,12 @@ PaymentRequestSpec::GetApplicableModifier(
   for (const auto& modifier : details_->modifiers) {
     std::vector<std::string> supported_networks;
     std::set<autofill::CreditCard::CardType> supported_types;
-    // The following 4 are unused but required by PopulateValidatedMethodData.
-    std::set<std::string> basic_card_specified_networks;
-    std::set<std::string> supported_card_networks_set;
-    std::vector<GURL> url_payment_method_identifiers;
-    std::map<std::string, std::set<std::string>> stringified_method_data;
     PopulateValidatedMethodData(
         {ConvertPaymentMethodData(modifier->method_data)}, &supported_networks,
-        &basic_card_specified_networks, &supported_card_networks_set,
-        &supported_types, &url_payment_method_identifiers,
-        &stringified_method_data);
+        /*basic_card_specified_networks=*/nullptr,
+        /*supported_card_networks_set=*/nullptr, &supported_types,
+        /*url_payment_method_identifiers=*/nullptr,
+        /*payment_method_identifiers_set=*/nullptr);
 
     if (selected_instrument->IsValidForModifier(
             modifier->method_data->supported_methods, supported_networks,

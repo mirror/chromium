@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.payments;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content_public.browser.WebContents;
 import org.chromium.payments.mojom.WebAppManifestSection;
 
 /** Java wrapper of the payment manifest web data service. */
@@ -32,10 +33,18 @@ public class PaymentManifestWebDataService {
         void onPaymentWebAppManifestFetched(WebAppManifestSection[] manifest);
     }
 
+    private final WebContents mWebContents;
+
     /** Holds the native counterpart of this class object. */
     private long mManifestWebDataServiceAndroid;
 
-    public PaymentManifestWebDataService() {
+    /**
+     * Initializes a native instance of payment manifest web data service for caching manifests.
+     * @param webContents The web contents.
+     */
+    public PaymentManifestWebDataService(WebContents webContents) {
+        assert webContents != null;
+        mWebContents = webContents;
         mManifestWebDataServiceAndroid = nativeInit();
     }
 
@@ -56,7 +65,8 @@ public class PaymentManifestWebDataService {
      */
     public boolean getPaymentMethodManifest(
             String methodName, PaymentManifestWebDataServiceCallback callback) {
-        return nativeGetPaymentMethodManifest(mManifestWebDataServiceAndroid, methodName, callback);
+        return nativeGetPaymentMethodManifest(
+                mManifestWebDataServiceAndroid, mWebContents, methodName, callback);
     }
 
     /**
@@ -69,27 +79,28 @@ public class PaymentManifestWebDataService {
     public boolean getPaymentWebAppManifest(
             String appPackageName, PaymentManifestWebDataServiceCallback callback) {
         return nativeGetPaymentWebAppManifest(
-                mManifestWebDataServiceAndroid, appPackageName, callback);
+                mManifestWebDataServiceAndroid, mWebContents, appPackageName, callback);
     }
 
     /**
      * Adds the supported Android apps' package names of the method.
      *
-     * @param methodName       The method name.
-     * @param appPackageNames  The supported app package names and origins. Also possibly "*" if
-     *                         applicable.
+     * @param methodName      The method name.
+     * @param appPackageNames The supported app package names and origins. Also possibly "*" if
+     *                        applicable.
      */
     public void addPaymentMethodManifest(String methodName, String[] appIdentifiers) {
-        nativeAddPaymentMethodManifest(mManifestWebDataServiceAndroid, methodName, appIdentifiers);
+        nativeAddPaymentMethodManifest(
+                mManifestWebDataServiceAndroid, mWebContents, methodName, appIdentifiers);
     }
 
     /**
      * Adds web app's manifest.
      *
-     * @param manifest The manifest.
+     * @param manifest    The manifest.
      */
     public void addPaymentWebAppManifest(WebAppManifestSection[] manifest) {
-        nativeAddPaymentWebAppManifest(mManifestWebDataServiceAndroid, manifest);
+        nativeAddPaymentWebAppManifest(mManifestWebDataServiceAndroid, mWebContents, manifest);
     }
 
     @CalledByNative
@@ -130,14 +141,15 @@ public class PaymentManifestWebDataService {
     private native long nativeInit();
     private native void nativeDestroy(long nativePaymentManifestWebDataServiceAndroid);
     private native boolean nativeGetPaymentMethodManifest(
-            long nativePaymentManifestWebDataServiceAndroid, String methodName,
-            PaymentManifestWebDataServiceCallback callback);
+            long nativePaymentManifestWebDataServiceAndroid, WebContents webContents,
+            String methodName, PaymentManifestWebDataServiceCallback callback);
     private native boolean nativeGetPaymentWebAppManifest(
-            long nativePaymentManifestWebDataServiceAndroid, String appPackageName,
-            PaymentManifestWebDataServiceCallback callback);
+            long nativePaymentManifestWebDataServiceAndroid, WebContents webContents,
+            String appPackageName, PaymentManifestWebDataServiceCallback callback);
     private native void nativeAddPaymentMethodManifest(
-            long nativePaymentManifestWebDataServiceAndroid, String methodName,
-            String[] appPackageNames);
+            long nativePaymentManifestWebDataServiceAndroid, WebContents webContents,
+            String methodName, String[] appPackageNames);
     private native void nativeAddPaymentWebAppManifest(
-            long nativePaymentManifestWebDataServiceAndroid, WebAppManifestSection[] manifest);
+            long nativePaymentManifestWebDataServiceAndroid, WebContents webContents,
+            WebAppManifestSection[] manifest);
 }

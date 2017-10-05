@@ -8,11 +8,11 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "chrome/test/base/testing_profile.h"
 #include "components/payments/content/payment_manifest_parser_host.h"
 #include "components/payments/content/payment_manifest_web_data_service.h"
 #include "components/payments/core/payment_manifest_downloader.h"
@@ -86,12 +86,12 @@ class ManifestVerifierBrowserTest : public InProcessBrowserTest {
             ->GetURLRequestContext());
     downloader->set_test_server_url(https_server_->GetURL("/"));
 
+    TestingProfile profile;
     ManifestVerifier verifier(
         std::move(downloader),
         std::make_unique<payments::PaymentManifestParserHost>(),
         WebDataServiceFactory::GetPaymentManifestWebDataForProfile(
-            ProfileManager::GetActiveUserProfile(),
-            ServiceAccessType::EXPLICIT_ACCESS));
+            &profile, ServiceAccessType::EXPLICIT_ACCESS));
 
     base::RunLoop run_loop;
     finished_using_resources_closure_ = run_loop.QuitClosure();

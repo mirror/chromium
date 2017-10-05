@@ -96,6 +96,11 @@ bool TestPaymentRequestDelegate::IsBrowserWindowActive() const {
   return true;
 }
 
+PaymentManifestWebDataService*
+TestPaymentRequestDelegate::GetPaymentManifestWebDataService() const {
+  return nullptr;
+}
+
 TestPaymentsClientDelegate::TestPaymentsClientDelegate() {}
 
 TestPaymentsClientDelegate::~TestPaymentsClientDelegate() {}

@@ -44,6 +44,8 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   std::string GetAuthenticatedEmail() const override;
   PrefService* GetPrefService() override;
   bool IsBrowserWindowActive() const override;
+  PaymentManifestWebDataService* GetPaymentManifestWebDataService()
+      const override;
 
  protected:
   // Reference to the dialog so that we can satisfy calls to CloseDialog(). This
