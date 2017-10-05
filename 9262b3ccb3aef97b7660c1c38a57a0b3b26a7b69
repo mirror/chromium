@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b5dbf5_7cc6e3d7",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "inline_reply",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc29021_6d342d1a",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "nit: I\u0027d turn this around to reduce nesting:\n\nfor (..) {\n  if (type !\u003d TEXT)\n    continue;\n\n  code;\n  break;\n}",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e5386b_abc85c48",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "Remove c_str(). (You\u0027re doing a std::string -\u003e const char* -\u003e std::string jump unnecessarily.)",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bafd182_f5dfe961",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "What part of this CL caused this to change? Are we sure they\u0027re being ran?",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6869e4a_1779085f",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "nit: could you give this a placeholder to test that?",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29a769cf_5ce49794",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-05T14:20:44Z",
+      "side": 1,
+      "message": "Note that \"foreground\" may not always be right, but we don\u0027t have the right knowledge in the system :(. Safe to default to it for now.",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
