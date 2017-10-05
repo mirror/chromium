@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc27f883_b4db6128",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we can resolve it any other way, but I\u0027ll look into if it can be added to the main DLL, or if there\u0027s another, fairly straightforward way of redirecting the calls, ideally specifically those coming from CoreAudio.dylib.",
+      "parentUuid": "cff3a1f6_0bcf83b2",
+      "range": {
+        "startLine": 584,
+        "startChar": 2,
+        "endLine": 584,
+        "endChar": 16
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a83420be_6f457d50",
         "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e150f5d1_f4a0ac7c",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "Ah, true.",
+      "parentUuid": "a83420be_6f457d50",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 27
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9c5fc70_d757a314",
         "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
         "patchSetId": 1
@@ -59,6 +107,24 @@
       "writtenOn": "2017-10-05T11:30:01Z",
       "side": 1,
       "message": "nit: is it correct to return true if caller is 0? Perhaps we should put a DCHECK at the top if we never expect caller to be 0.",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20d663d_ebd9d07f",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "I don\u0027t think it can be, but it\u0027s better to ensure that that\u0027s the case. If it\u0027s zero, it\u0027s surely not the caller we\u0027re looking for anyways. Should return false or, possibly, checked before doing the call.",
+      "parentUuid": "d9c5fc70_d757a314",
       "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2223504d_c7d620b9",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "Alright.",
+      "parentUuid": "1e8586fc_c957abcc",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b240357_dc3a8941",
         "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
         "patchSetId": 1
@@ -162,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "58c2aee3_48a20bb3",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "Didn\u0027t want to pull in chrome stuff for this functionality. Only thing I\u0027m using is the atomics, though my test app was using plain C and C11 atomics. Is that an option?",
+      "parentUuid": "198bc931_87fb7254",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516c4fe9_92737b54",
         "filename": "chrome/app/chrome_mac_dispatch_overrider.h",
         "patchSetId": 1
@@ -173,6 +275,24 @@
       "writtenOn": "2017-10-05T11:30:01Z",
       "side": 1,
       "message": "can we put this file in a mac specific subfolder?  Also, is \u0027chrome\u0027 a necessary part of the name? If it is, then perhaps it should rather be called \u0027chromium\u0027 to make it clear that this isn\u0027t only applicable to google\u0027s chrome build.",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5464cc2_a3c24957",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "Sure. I just put it here to get started with porting the code from my separate test over into Chrome.",
+      "parentUuid": "516c4fe9_92737b54",
       "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -225,6 +345,30 @@
     },
     {
       "key": {
+        "uuid": "85353996_699e85b1",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "Yeah, I was just trying to resolve this call any old way, but failed. Getting this functionality integrated properly in Chrome is probably the biggest issue right now: finding if we can put it in the main DLL, for example, and how late we can initialize it without risking errant behavior with multiple threads. Would be sad to try and fix one such behavior by introducing another. :)",
+      "parentUuid": "d2c0bbcd_bcee6655",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 12
+      },
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf90b3dd_bb7dda39",
         "filename": "chrome/browser/chrome_browser_main_mac.mm",
         "patchSetId": 1
@@ -236,6 +380,24 @@
       "writtenOn": "2017-10-05T11:30:01Z",
       "side": 1,
       "message": "I assume we could move this call into AudioManagerMac as a one-time initialization step?",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae5ef36_6d04f9c5",
+        "filename": "chrome/browser/chrome_browser_main_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-05T12:18:03Z",
+      "side": 1,
+      "message": "My main issue is this:\n- I want to minimize overhead when the functionality isn\u0027t used, specifically in all processes that aren\u0027t the browser process, I\u0027d like it to just check a flag (or pointer) and if it\u0027s zero, just call the normal dispatch_get_global_queue.\n- I also don\u0027t want to risk that this value is changed as a call to my get_global_queue implementation is run.\n\nPerhaps a normal store followed by a memory fence is enough on x86_64 to ensure we aren\u0027t messing it up. Maybe even the fence is unnecessary: as long as I can be sure the queue pointer is either valid or null each time I check, we should be fine.\n\nThere won\u0027t be contention between initializing the pointer and the whole sequence of:\n- CoreAudio.dylib being loaded\n- Streams being created (and possibly stopped)\n- The machine going into sleep",
+      "parentUuid": "cf90b3dd_bb7dda39",
       "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
