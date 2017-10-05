@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "05c92ea8_484e3f57",
+        "filename": "ui/app_list/views/search_result_page_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-05T19:37:09Z",
+      "side": 1,
+      "message": "Can you add a comment to document this?\ne.g.\n  // Return false to let FocusManager to handle focus move by key events.",
+      "parentUuid": "161acf8a_d70452e8",
+      "revId": "e1d9005363e471b03bfae6c4da3aadb478024f16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dc8aeb9_a380241d",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.cc",
         "patchSetId": 2
