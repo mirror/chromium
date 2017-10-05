@@ -170,6 +170,24 @@
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8999c758_2ce33ca6",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-05T02:30:58Z",
+      "side": 1,
+      "message": "this is a good point; i suppose that we typically don\u0027t test the real d-bus client classes using mock d-bus classes.",
+      "parentUuid": "15b5d663_047d6a40",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
