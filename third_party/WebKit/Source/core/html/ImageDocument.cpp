@@ -51,6 +51,7 @@
 #include "core/loader/resource/ImageResource.h"
 #include "core/page/Page.h"
 #include "platform/PlatformChromeClient.h"
+#include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace {
@@ -168,7 +169,9 @@ void ImageDocumentParser::Finish() {
         GetDocument()->CachedImageResourceDeprecated();
     DocumentLoader* loader = GetDocument()->Loader();
     cached_image->SetResponse(loader->GetResponse());
-    cached_image->Finish(loader->GetTiming().ResponseEnd());
+    cached_image->Finish(
+        loader->GetTiming().ResponseEnd(),
+        TaskRunnerHelper::Get(TaskType::kNetworking, GetDocument()).get());
 
     // Report the natural image size in the page title, regardless of zoom
     // level.  At a zoom level of 1 the image is guaranteed to have an integer
