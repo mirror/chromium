@@ -13,13 +13,6 @@
 
 namespace headless {
 
-namespace {
-// Keep in sync with X_DevTools_Emulate_Network_Conditions_Client_Id defined in
-// HTTPNames.json5.
-const char kDevToolsEmulateNetworkConditionsClientId[] =
-    "X-DevTools-Emulate-Network-Conditions-Client-Id";
-}  // namespace
-
 HeadlessNetworkDelegate::HeadlessNetworkDelegate(
     HeadlessBrowserContextImpl* headless_browser_context)
     : headless_browser_context_(headless_browser_context) {
@@ -38,7 +31,6 @@ int HeadlessNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
-  request->RemoveRequestHeaderByName(kDevToolsEmulateNetworkConditionsClientId);
   return net::OK;
 }
 
