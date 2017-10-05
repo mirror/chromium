@@ -9,6 +9,7 @@ import android.view.ContextMenu;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.SelectionClientManager;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.locale.LocaleManager;
@@ -27,6 +28,9 @@ import org.chromium.net.NetworkChangeNotifier;
  */
 public class ContextualSearchTabHelper
         extends EmptyTabObserver implements NetworkChangeNotifier.ConnectionTypeObserver {
+    /** The Tab that this helper tracks. */
+    private final Tab mTab;
+
     /**
      * Notification handler for Contextual Search events.
      */
@@ -42,9 +46,13 @@ public class ContextualSearchTabHelper
      */
     private GestureStateListener mGestureStateListener;
 
-    private long mNativeHelper;
+    /**
+     * Manages incoming calls to Smart Select when available, along with the optional
+     * Contextual Search client that comes and goes periodically.
+     */
+    private SelectionClientManager mSelectionClientManager;
 
-    private final Tab mTab;
+    private long mNativeHelper;
 
     /**
      * Creates a contextual search tab helper for the given tab.
@@ -54,6 +62,10 @@ public class ContextualSearchTabHelper
         new ContextualSearchTabHelper(tab);
     }
 
+    /**
+     * Constructs a Tab helper that can enable and disable Contextual Search based on Tab activity.
+     * @param tab The {@link Tab} we're tracking.
+     */
     private ContextualSearchTabHelper(Tab tab) {
         mTab = tab;
         tab.addObserver(this);
@@ -179,6 +191,11 @@ public class ContextualSearchTabHelper
     private void updateContextualSearchHooks(ContentViewCore cvc) {
         if (cvc == null) return;
 
+        // Lazy initialize the SelectionClientManager for this Tab.
+        if (mSelectionClientManager == null) {
+            mSelectionClientManager = new SelectionClientManager(cvc);
+        }
+
         if (isContextualSearchActive(cvc)) {
             addContextualSearchHooks(cvc);
         } else {
@@ -191,11 +208,17 @@ public class ContextualSearchTabHelper
      * @param cvc The content view core to attach the gesture state listener to.
      */
     private void addContextualSearchHooks(ContentViewCore cvc) {
-        ContextualSearchManager manager = getContextualSearchManager();
-        if (mGestureStateListener == null && manager != null) {
-            mGestureStateListener = manager.getGestureStateListener();
+        if (cvc == null) return;
+
+        // Update the ContentViewCore and ContextualSearchManager.
+        ContextualSearchManager contextualSearchManager = getContextualSearchManager();
+        if (mGestureStateListener == null && contextualSearchManager != null) {
+            mGestureStateListener = contextualSearchManager.getGestureStateListener();
             cvc.addGestureStateListener(mGestureStateListener);
-            cvc.setSelectionClient(manager);
+            cvc.setSelectionClient(mSelectionClientManager.addContextualSearchSelectionClient(
+                    contextualSearchManager.getContextualSearchSelectionClient()));
+            contextualSearchManager.suppressContextualSearchForSmartSelection(
+                    mSelectionClientManager.isSmartSelectionEnabledInChrome());
         }
     }
 
@@ -209,7 +232,7 @@ public class ContextualSearchTabHelper
         if (mGestureStateListener != null) {
             cvc.removeGestureStateListener(mGestureStateListener);
             mGestureStateListener = null;
-            cvc.setSelectionClient(null);
+            cvc.setSelectionClient(mSelectionClientManager.removeContextualSearchSelectionClient());
         }
     }
 
