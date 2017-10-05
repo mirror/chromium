@@ -16436,6 +16436,26 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2160" label="AsyncXhrInPageDismissal"/>
   <int value="2161" label="V8LineOrParagraphSeparatorAsLineTerminator"/>
   <int value="2162" label="AnimationSetPlaybackRateCompensatorySeek"/>
+  <int value="2163" label="SameOriginApplicationOctetStream"/>
+  <int value="2164" label="SameOriginApplicationXml"/>
+  <int value="2165" label="SameOriginTextHtml"/>
+  <int value="2166" label="SameOriginTextPlain"/>
+  <int value="2167" label="SameOriginTextXml"/>
+  <int value="2168" label="CrossOriginApplicationOctetStream"/>
+  <int value="2169" label="CrossOriginApplicationXml"/>
+  <int value="2170" label="CrossOriginTextHtml"/>
+  <int value="2171" label="CrossOriginTextPlain"/>
+  <int value="2172" label="CrossOriginTextXml"/>
+  <int value="2173" label="SameOriginWorkerApplicationOctetStream"/>
+  <int value="2174" label="SameOriginWorkerApplicationXml"/>
+  <int value="2175" label="SameOriginWorkerTextHtml"/>
+  <int value="2176" label="SameOriginWorkerTextPlain"/>
+  <int value="2177" label="SameOriginWorkerTextXml"/>
+  <int value="2178" label="CrossOriginWorkerApplicationOctetStream"/>
+  <int value="2179" label="CrossOriginWorkerApplicationXml"/>
+  <int value="2180" label="CrossOriginWorkerTextHtml"/>
+  <int value="2181" label="CrossOriginWorkerTextPlain"/>
+  <int value="2182" label="CrossOriginWorkerTextXml"/>
 </enum>
 
 <enum name="FeedbackSource">
