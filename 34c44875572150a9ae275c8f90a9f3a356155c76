@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0da80922_acf8c2d1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3560,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "nit: The name doesn\u0027t quite reflect what the flag does. Maybe \"top-sites-from-site-engagement\" or something like that?",
+      "range": {
+        "startLine": 3560,
+        "startChar": 63,
+        "endLine": 3560,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ecbc299_48e4d124",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "optional: Could use std::partial_sort here. I don\u0027t know how large the vector will usually be, so might or might not matter.",
+      "range": {
+        "startLine": 33,
+        "startChar": 43,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7808b4_244e7bcd",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20cd5731_442a3417",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "If the last query happens to fail, the callback will never be run?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a3189e_82e929cb",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "optional: Instead of |urls| plus |index|, could directly bind the relevant element.",
+      "range": {
+        "startLine": 89,
+        "startChar": 37,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6151e9_b8b44757",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "I think this won\u0027t work if a second QueryMostVisitedURLs call is started before the previous one completes: Then this will only go to zero for the second query, and the callback for the first one will never get run.\n\nMaybe there should be a \"Request\" class that handles getting the info from HistoryService for a single QueryMostVisitedURLs call? I think that\u0027d make things easier to follow. That class could also hold some data such as |urls| and |callback|, so not everything has to be bound to callbacks.\nMight also be good to get some tests for this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af53aa6a_0f247acd",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "nit: \"\u003d nullptr\" isn\u0027t required, that the default",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 13
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476fa929_b3cb4ee2",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "nit: not required",
+      "range": {
+        "startLine": 18,
+        "startChar": 76,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb9cedf_2ae260ed",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "/*history_service\u003d*/",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2b2a4a_43b5309e",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "/*provider\u003d*/",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f6777d_8d2a513d",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 420,
+        "startChar": 54,
+        "endLine": 420,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f7109a_d171ad31",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "optional: \"\u003d default\"",
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073c2d0a_36fc881b",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "nit: remove \";\" (it messes up the auto-formatting)",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6355353_4d7b764f",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T08:47:05Z",
+      "side": 1,
+      "message": "Please put this into its own file.",
+      "range": {
+        "startLine": 28,
+        "startChar": 79,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
