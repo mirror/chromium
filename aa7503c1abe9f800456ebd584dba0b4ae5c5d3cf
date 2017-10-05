@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a56699e_5ed437c5",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "You can use base::EraseIf() here, if you make the function templated and remove the |f| function pointer.\n\ntemplate \u003ctypename Predicate\u003e\nstd::unique_ptr\u003cbase::ListValue\u003e GetFilteredList(const base::Value* list, Predicate pred) {\n  auto out_list \u003d\n      base::ListValue::From(std::make_unique\u003cbase::Value\u003e(list-\u003eClone()));\n  base::EraseIf(out_list-\u003eGetList(), pred);\n  return out_list;\n}",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2371ab5_4277caa8",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "val.is_none() is shorter.",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ad7ac4_f89e4b9b",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "Can we end up setting an empty list here?",
+      "range": {
+        "startLine": 271,
+        "startChar": 26,
+        "endLine": 271,
+        "endChar": 41
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25cb20b8_c80bfa1f",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "ValidEntriesCount will make it more obvious this is returning the number of entries and not the actual entries themselves.",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de64672_af7a3fed",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "! empty()",
+      "range": {
+        "startLine": 111,
+        "startChar": 34,
+        "endLine": 111,
+        "endChar": 44
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3283e3_020b8c62",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "ASSERT_EQ()",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85631255_a66a4237",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "If you use a range-based for-loop, you can eliminate |i| and we won\\t have the |i| vs |index| confusion here.",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5074568_c26c6d04",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "Does EXPECT_EQ() work for base::Value?",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f6605f_2b3af9c9",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "How do we know this won\u0027t be a nullptr?",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc933596_194de0f6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "Declare this below where first used.",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8562a709_04444fe3",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "Save the returned pointer from the second FindPathOfType() here, since it will be used again at line 430-433.",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -104,6 +104,24 @@
       "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257ba5e6_822312a7",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T00:52:55Z",
+      "side": 1,
+      "message": "Can you add a brief comment to mention the FindPathOfType() calls in this block are all expected to return valid pointers?",
+      "parentUuid": "e5e706d3_dc5fa5e3",
+      "revId": "53038159e77cba06ddfd4bc0813f3f72c367edcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
