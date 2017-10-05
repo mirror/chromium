@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b073314f_b15f9e65",
+        "filename": "third_party/WebKit/Source/core/input/EventHandlerTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T02:00:31Z",
+      "side": 1,
+      "message": "Optional: Since \"inner-editor\" is very implementation detail of text field\nand tree traversal like |body()-\u003efirstChild()-\u003efirstChild()|.\n\n\nI could write:\n\nSetHtmlInnerHTML(\n  \"\u003cdiv style\u003duser-select:none\u003e\"\n  \"\u003cinput id\u003dsample readonly value\u003dblabal\u003e\"\n  \"\u003c/div\u003e\");\n\nElement* const input \u003d ToHTMLInputElement(GetDocument().getElementById(\"sample\"));\nNode* const text \u003d input-\u003eInnerEditorElement()-\u003efirstChild();",
+      "revId": "2c97bf30b399a3d43ec7a1c333b1e14a5982c729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
