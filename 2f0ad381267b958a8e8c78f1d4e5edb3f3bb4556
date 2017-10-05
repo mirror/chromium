@@ -116,6 +116,29 @@
     },
     {
       "key": {
+        "uuid": "0f3fc934_ece8a528",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-05T02:26:09Z",
+      "side": 1,
+      "message": "(not urgent) D-Bus method name should match with the C++ client method name.\nThis should be renamed to GetLastSyncInfo.",
+      "range": {
+        "startLine": 170,
+        "startChar": 47,
+        "endLine": 170,
+        "endChar": 66
+      },
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34afc262_47641174",
         "filename": "chromeos/dbus/system_clock_client.cc",
         "patchSetId": 16
@@ -127,6 +150,23 @@
       "writtenOn": "2017-10-04T20:18:59Z",
       "side": 1,
       "message": "nit: just inline the function call on this line",
+      "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b5d663_047d6a40",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-10-05T02:26:09Z",
+      "side": 1,
+      "message": "Could you move this variable to DeviceOffHoursController, by making GetLastSyncInfo a public method and calling it in DeviceOffHoursController?\nYou can add a new method to the observer class to handle the ServiceInitiallyAvailable event in DeviceOffHoursController.\n\nGenerally speaking, please try to avoid adding any logic to D-Bus client classes.\nLogic in D-Bus client classes won\u0027t get tested because they will be replaced with fakes when running tests.\nBy not putting code in D-Bus client classes, you can make the code more likely to get tested on buildbots.",
       "revId": "2f0ad381267b958a8e8c78f1d4e5edb3f3bb4556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
