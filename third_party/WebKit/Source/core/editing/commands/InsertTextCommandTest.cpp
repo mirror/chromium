@@ -103,4 +103,16 @@ TEST_F(InsertTextCommandTest, InsertTabToWhiteSpacePre) {
       GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
 }
 
+// http://crbug.com/752860
+TEST_F(InsertTextCommandTest, InsertEmptyTextAfterWhitespaceThatNeedsFixup) {
+  Selection().SetSelection(
+      SetSelectionTextToBody("<div contenteditable>foo ^bar|<p>baz</p>"));
+  GetDocument().execCommand("insertText", false, "", ASSERT_NO_EXCEPTION);
+
+  // The space after "foo" should have been converted to a no-break space
+  // (U+00A0) to prevent it from being collapsed.
+  EXPECT_EQ("<div contenteditable>foo\xC2\xA0|<p>baz</p></div>",
+            GetSelectionTextFromBody(Selection().GetSelectionInDOMTree()));
+}
+
 }  // namespace blink
