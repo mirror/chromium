@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "03f1aebf_c3a91f59",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-05T02:19:24Z",
+      "side": 1,
+      "message": "How about adding DCHECKs like the following?\nDCHECK(source_code.IsNull());\nDCHECK(!cached_meta_data);",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3c697ef_f9451769",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 9
@@ -47,6 +64,23 @@
       "writtenOn": "2017-10-05T02:11:32Z",
       "side": 1,
       "message": "This comment moved from WorkerThread to ServiceWorkerGlobalScope... is it still accurate?",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b30339e_885452f3",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-10-05T02:19:24Z",
+      "side": 1,
+      "message": "For kSuccess, would it be better to move everything to outside of switch statement and put only \u0027break;\u0027 here in order to avoid deep nests?",
       "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
