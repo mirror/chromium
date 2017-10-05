@@ -3114,11 +3114,16 @@ class WaylandKeyboardDelegate
       : keyboard_resource_(keyboard_resource),
         xkb_context_(xkb_context_new(XKB_CONTEXT_NO_FLAGS)) {
 #if defined(OS_CHROMEOS)
+    chromeos::input_method::InputMethodManager* manager =
+        chromeos::input_method::InputMethodManager::Get();
     chromeos::input_method::ImeKeyboard* keyboard =
-        chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
+        manager ? manager->GetImeKeyboard() : nullptr;
     if (keyboard) {
       keyboard->AddObserver(this);
       SendNamedLayout(keyboard->GetCurrentKeyboardLayoutName());
+    } else {
+      DLOG(WARNING) << "Failed to get the current keyboard layout.";
+      SendNamedLayout("us");
     }
 #else
     SendLayout(nullptr);
@@ -3126,8 +3131,10 @@ class WaylandKeyboardDelegate
   }
 #if defined(OS_CHROMEOS)
   ~WaylandKeyboardDelegate() override {
+    chromeos::input_method::InputMethodManager* manager =
+        chromeos::input_method::InputMethodManager::Get();
     chromeos::input_method::ImeKeyboard* keyboard =
-        chromeos::input_method::InputMethodManager::Get()->GetImeKeyboard();
+        manager ? manager->GetImeKeyboard() : nullptr;
     if (keyboard)
       keyboard->RemoveObserver(this);
   }
