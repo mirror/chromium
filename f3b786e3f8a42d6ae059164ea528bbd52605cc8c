@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28305e2e_25378b09",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T03:06:56Z",
+      "side": 1,
+      "message": "Can this take the mojom value instead? (See comment about WindowOpenDisposition being deprecated at top of file). In fact this function should likely live near the mojom.",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "f3b786e3f8a42d6ae059164ea528bbd52605cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
