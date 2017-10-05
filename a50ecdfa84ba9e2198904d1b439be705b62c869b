@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e932962a_c62a5cd1",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T06:45:39Z",
+      "side": 1,
+      "message": "I wonder whether this is still needed. To be honest I don\u0027t see how race could happen given we observe RFH changes closely.",
+      "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
