@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d06c032_b82ae072",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T00:42:29Z",
+      "side": 1,
+      "message": "why exactly do you need networking API?",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "877b01fa_65315de0",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T00:42:29Z",
+      "side": 1,
+      "message": "align this",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
