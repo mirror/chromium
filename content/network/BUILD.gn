@@ -45,6 +45,8 @@ source_set("network_sources") {
     "network_service_impl.h",
     "network_service_url_loader_factory_impl.cc",
     "network_service_url_loader_factory_impl.h",
+    "restricted_cookie_manager_impl.cc",
+    "restricted_cookie_manager_impl.h",
     "url_loader_impl.cc",
     "url_loader_impl.h",
   ]
