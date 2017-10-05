@@ -93,6 +93,30 @@
       "revId": "3a3dd4811a9908c18c8fad917b88766fd7eb2bad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecdc4245_23e8ada8",
+        "filename": "ios/web_view/internal/metrics/web_view_metrics_service_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-10-05T04:14:59Z",
+      "side": 1,
+      "message": "I see. What kind of build setting requires a destructor which does nothing? And when is it necessary? For all subclasses of a class with a virtual destructor?",
+      "parentUuid": "8f0dcf3e_9c6cfb41",
+      "range": {
+        "startLine": 14,
+        "startChar": 52,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "3a3dd4811a9908c18c8fad917b88766fd7eb2bad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
