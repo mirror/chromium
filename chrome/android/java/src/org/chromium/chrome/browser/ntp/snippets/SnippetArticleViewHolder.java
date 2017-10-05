@@ -161,7 +161,7 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
     private boolean shouldShowThumbnailVideoOverlay(boolean showThumbnail) {
         if (!showThumbnail) return false;
         if (!mArticle.mIsVideoSuggestion) return false;
-        return ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_VIDEO_OVERLAY);
+        return FeatureUtilities.isChromeHomeEnabled();
     }
 
     /** Updates the visibility of the card's offline badge by checking the bound article's info. */
