@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "815241f1_9e6758cd",
+        "filename": "components/certificate_reporting/error_reporter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-05T17:16:22Z",
+      "side": 1,
+      "message": "These three includes no longer needed? (Possibly the DEPS entry too?)",
+      "revId": "ec462c554ce6cdde23a5088c97295c6db817aa28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4db38f_76d49aa5",
+        "filename": "components/certificate_reporting/error_reporter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-10-05T17:16:22Z",
+      "side": 1,
+      "message": "No longer needed? (Possibly the DEPS entry too?)",
+      "revId": "ec462c554ce6cdde23a5088c97295c6db817aa28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ec99b8a_b9737985",
         "filename": "components/encrypted_messages/DEPS",
         "patchSetId": 9
