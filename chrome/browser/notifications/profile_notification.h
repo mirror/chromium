@@ -7,14 +7,17 @@
 
 #include <string>
 
-#include "chrome/browser/notifications/notification.h"
+#include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
+#include "ui/message_center/notification.h"
 
 class ScopedKeepAlive;
 
 // This class keeps a Notification objects and its corresponding Profile, so
 // that when the Notification UI manager needs to return or cancel all
 // notifications for a given Profile we have the ability to do this.
+// TODO(estade): make the NotificationUiManager a profile keyed service so this
+// class becomes less necessary.
 class ProfileNotification {
  public:
   // Returns a string that uniquely identifies a profile + delegate_id pair.
@@ -23,17 +26,26 @@ class ProfileNotification {
   static std::string GetProfileNotificationId(const std::string& delegate_id,
                                               ProfileID profile_id);
 
-  ProfileNotification(Profile* profile, const Notification& notification);
+  ProfileNotification(Profile* profile,
+                      const message_center::Notification& notification,
+                      std::unique_ptr<NotificationCommon::Metadata> metadata);
   ~ProfileNotification();
 
   ProfileID profile_id() const { return profile_id_; }
-  const Notification& notification() const { return notification_; }
+  const message_center::Notification& notification() const {
+    return notification_;
+  }
+  const NotificationCommon::Metadata* metadata() const {
+    return metadata_.get();
+  }
 
  private:
   // Used for equality comparision in notification maps.
   ProfileID profile_id_;
 
-  Notification notification_;
+  message_center::Notification notification_;
+
+  std::unique_ptr<NotificationCommon::Metadata> metadata_;
 
   std::unique_ptr<ScopedKeepAlive> keep_alive_;
 

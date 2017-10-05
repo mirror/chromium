@@ -196,27 +196,30 @@ void HatsNotificationController::OnPortalDetectionCompleted(
   network_portal_detector::GetInstance()->RemoveObserver(this);
 
   // Create and display the notification for the user.
-  std::unique_ptr<Notification> notification(CreateNotification());
-  g_browser_process->notification_ui_manager()->Add(*notification, profile_);
+  std::unique_ptr<message_center::Notification> notification(
+      CreateNotification());
+  g_browser_process->notification_ui_manager()->Add(*notification, nullptr,
+                                                    profile_);
 }
 
-Notification* HatsNotificationController::CreateNotification() {
+message_center::Notification* HatsNotificationController::CreateNotification() {
   message_center::RichNotificationData optional;
   if (!message_center::IsNewStyleNotificationEnabled()) {
     optional.buttons.push_back(message_center::ButtonInfo(
         l10n_util::GetStringUTF16(IDS_HATS_NOTIFICATION_TAKE_SURVEY_BUTTON)));
   }
 
-  Notification* notification = new Notification(
+  auto* notification = new message_center::Notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId,
       l10n_util::GetStringUTF16(IDS_HATS_NOTIFICATION_TITLE),
       l10n_util::GetStringUTF16(IDS_HATS_NOTIFICATION_BODY),
       gfx::Image(
           gfx::CreateVectorIcon(kGoogleGLogoIcon, gfx::kPlaceholderColor)),
+      l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_NOTIFIER_HATS_NAME),
+      GURL(kNotificationOriginUrl),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kNotifierHats),
-      l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_NOTIFIER_HATS_NAME),
-      GURL(kNotificationOriginUrl), kNotificationId, optional, this);
+      optional, this);
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification->set_icon(gfx::Image());
     notification->set_accent_color(

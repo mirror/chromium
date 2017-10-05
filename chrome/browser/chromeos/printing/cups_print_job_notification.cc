@@ -73,16 +73,15 @@ CupsPrintJobNotification::CupsPrintJobNotification(
       profile_(profile) {
   // Create a notification for the print job. The title, body, icon and buttons
   // of the notification will be updated in UpdateNotification().
-  notification_ = base::MakeUnique<Notification>(
+  notification_ = std::make_unique<message_center::Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
       base::string16(),  // title
       base::string16(),  // body
       gfx::Image(),      // icon
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kCupsPrintJobNotificationId),
       l10n_util::GetStringUTF16(IDS_PRINT_JOB_NOTIFICATION_DISPLAY_SOURCE),
       GURL(kCupsPrintJobNotificationId),
-      notification_id_,  // tag
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kCupsPrintJobNotificationId),
       message_center::RichNotificationData(),
       new CupsPrintJobNotificationDelegate(this));
   UpdateNotification();
@@ -158,10 +157,10 @@ void CupsPrintJobNotification::UpdateNotification() {
       // If the notification was closed during the printing, prevent showing the
       // following printing progress.
       g_browser_process->notification_ui_manager()->Update(*notification_,
-                                                           profile_);
+                                                           profile_, nullptr);
     } else {
       // If it was not closed, update the notification message directly.
-      g_browser_process->notification_ui_manager()->Add(*notification_,
+      g_browser_process->notification_ui_manager()->Add(*notification_, nullptr,
                                                         profile_);
     }
   } else {
@@ -170,7 +169,8 @@ void CupsPrintJobNotification::UpdateNotification() {
     const ProfileID profile_id = NotificationUIManager::GetProfileID(profile_);
     g_browser_process->notification_ui_manager()->CancelById(notification_id_,
                                                              profile_id);
-    g_browser_process->notification_ui_manager()->Add(*notification_, profile_);
+    g_browser_process->notification_ui_manager()->Add(*notification_, nullptr,
+                                                      profile_);
   }
 
   // |print_job_| will be deleted by CupsPrintJobManager if the job is finished
