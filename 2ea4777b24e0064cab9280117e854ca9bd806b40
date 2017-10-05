@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59659e28_446716f9",
+        "filename": "gpu/command_buffer/tests/gl_virtual_contexts_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-05T00:49:08Z",
+      "side": 1,
+      "message": "nit: workarounds_cases",
+      "revId": "2ea4777b24e0064cab9280117e854ca9bd806b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
