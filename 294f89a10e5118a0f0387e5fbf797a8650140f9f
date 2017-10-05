@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b07ea54_ee91c830",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:33:56Z",
+      "side": 1,
+      "message": "This should be ShowReason.MENU\n\nShowReason.NTP goes here https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java?type\u003dcs\u0026q\u003dchromehomepromodialog\u0026sq\u003dpackage:chromium\u0026l\u003d423",
+      "range": {
+        "startLine": 1547,
+        "startChar": 69,
+        "endLine": 1547,
+        "endChar": 72
+      },
+      "revId": "294f89a10e5118a0f0387e5fbf797a8650140f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93cdc1ca_f83ccde8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:33:56Z",
+      "side": 1,
+      "message": "Now that users can opt-in/out, I think we need an Android.ChromeHome.Enabled histogram that records true or false so that we can easily do manual queries that only look at users in the \"enabled\" or \"disabled\" buckets.",
+      "range": {
+        "startLine": 697,
+        "startChar": 17,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "294f89a10e5118a0f0387e5fbf797a8650140f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
