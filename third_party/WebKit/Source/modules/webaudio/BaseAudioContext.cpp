@@ -1031,14 +1031,19 @@ SecurityOrigin* BaseAudioContext::GetSecurityOrigin() const {
   return nullptr;
 }
 
+bool BaseAudioContext::HasWorkletMessagingProxy() const {
+  return has_worklet_messaging_proxy_;
+};
+
 void BaseAudioContext::SetWorkletMessagingProxy(
     AudioWorkletMessagingProxy* proxy) {
   DCHECK(!worklet_messaging_proxy_);
   worklet_messaging_proxy_ = proxy;
+  has_worklet_messaging_proxy_ = true;
 }
 
 AudioWorkletMessagingProxy* BaseAudioContext::WorkletMessagingProxy() {
-  DCHECK(!worklet_messaging_proxy_);
+  DCHECK(worklet_messaging_proxy_);
   return worklet_messaging_proxy_;
 }
 
