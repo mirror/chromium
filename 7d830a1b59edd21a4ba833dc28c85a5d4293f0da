@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d52570a_3e77bc8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-05T21:03:31Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6869882a_1d82b823",
+        "filename": "components/leveldb_proto/proto_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-10-05T21:03:31Z",
+      "side": 1,
+      "message": "I think this is OK, but since LevelDB::Get can return false without ever setting found you should probably check *success first, and then *found afterwards.",
+      "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
