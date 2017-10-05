@@ -2021,6 +2021,12 @@ bool PDFiumEngine::OnMouseUp(const pp::MouseInputEvent& event) {
       return true;
     }
     if (area == PDFiumPage::DOCLINK_AREA) {
+      // Fork off a new history state before scrolling, so that later on the
+      // browser back button will take the user back to the position they were
+      // at before clicking the link. This matches the behavior of #fragment
+      // links to anchors on a webpage.
+      client_->ForkHistoryState();
+
       pp::Rect page_rect(GetPageScreenRect(target.page));
       client_->ScrollToY(
           position_.y() + page_rect.y() + target.y_in_pixels * current_zoom_,

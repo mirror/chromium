@@ -84,6 +84,10 @@ class PDFEngine {
     // Scroll to zero-based |page|.
     virtual void ScrollToPage(int page) = 0;
 
+    // Fork off a new history entry, so that later the user can go back to the
+    // current position.
+    virtual void ForkHistoryState() = 0;
+
     // Navigate to the given url.
     virtual void NavigateTo(const std::string& url,
                             WindowOpenDisposition disposition) = 0;
