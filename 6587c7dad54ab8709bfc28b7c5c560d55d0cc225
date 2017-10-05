@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ee28c7_948f3978",
+        "filename": "components/viz/service/display/shader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T17:16:48Z",
+      "side": 1,
+      "message": "StripLambda",
+      "range": {
+        "startLine": 42,
+        "startChar": 28,
+        "endLine": 42,
+        "endChar": 38
+      },
+      "revId": "6587c7dad54ab8709bfc28b7c5c560d55d0cc225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
