@@ -1013,17 +1013,18 @@ bool RenderThreadImpl::Send(IPC::Message* msg) {
     }
   }
 
+  std::unique_ptr<blink::scheduler::RendererScheduler::RendererPauseHandle>
+      renderer_paused_handle;
+
   if (pumping_events) {
-    renderer_scheduler_->PauseTimerQueue();
+    renderer_paused_handle = renderer_scheduler_->PauseRenderer();
     WebView::WillEnterModalLoop();
   }
 
   bool rv = ChildThreadImpl::Send(msg);
 
-  if (pumping_events) {
+  if (pumping_events)
     WebView::DidExitModalLoop();
-    renderer_scheduler_->ResumeTimerQueue();
-  }
 
   return rv;
 }
