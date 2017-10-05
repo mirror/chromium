@@ -283,29 +283,30 @@ void AppBannerManager::ResetCurrentPageData() {
   referrer_.erase();
 }
 
-void AppBannerManager::Stop() {
-  InstallableStatusCode code = NO_ERROR_DETECTED;
+void AppBannerManager::Terminate() {
+  if (state_ == State::PENDING_PROMPT)
+    TrackBeforeInstallEvent(
+        BEFORE_INSTALL_EVENT_PROMPT_NOT_CALLED_AFTER_PREVENT_DEFAULT);
+
+  if (state_ == State::PENDING_ENGAGEMENT && !has_sufficient_engagement_)
+    TrackDisplayEvent(DISPLAY_EVENT_NOT_VISITED_ENOUGH);
+
+  StopWithCode(TerminationCode());
+}
+
+InstallableStatusCode AppBannerManager::TerminationCode() {
   switch (state_) {
     case State::PENDING_PROMPT:
-      TrackBeforeInstallEvent(
-          BEFORE_INSTALL_EVENT_PROMPT_NOT_CALLED_AFTER_PREVENT_DEFAULT);
-      code = RENDERER_CANCELLED;
-      break;
+      return RENDERER_CANCELLED;
     case State::PENDING_ENGAGEMENT:
-      if (!has_sufficient_engagement_) {
-        TrackDisplayEvent(DISPLAY_EVENT_NOT_VISITED_ENOUGH);
-        code = INSUFFICIENT_ENGAGEMENT;
-      }
-      break;
+      return has_sufficient_engagement_ ? NO_ERROR_DETECTED
+                                        : INSUFFICIENT_ENGAGEMENT;
     case State::FETCHING_MANIFEST:
-      code = WAITING_FOR_MANIFEST;
-      break;
+      return WAITING_FOR_MANIFEST;
     case State::FETCHING_NATIVE_DATA:
-      code = WAITING_FOR_NATIVE_DATA;
-      break;
+      return WAITING_FOR_NATIVE_DATA;
     case State::PENDING_INSTALLABLE_CHECK:
-      code = WAITING_FOR_INSTALLABLE_CHECK;
-      break;
+      return WAITING_FOR_INSTALLABLE_CHECK;
     case State::ACTIVE:
     case State::SENDING_EVENT:
     case State::SENDING_EVENT_GOT_EARLY_PROMPT:
@@ -313,7 +314,7 @@ void AppBannerManager::Stop() {
     case State::COMPLETE:
       break;
   }
-  StopWithCode(code);
+  return NO_ERROR_DETECTED;
 }
 
 void AppBannerManager::StopWithCode(InstallableStatusCode code) {
@@ -357,7 +358,7 @@ void AppBannerManager::DidStartNavigation(content::NavigationHandle* handle) {
     return;
 
   if (state_ != State::COMPLETE && state_ != State::INACTIVE)
-    Stop();
+    Terminate();
   UpdateState(State::INACTIVE);
   load_finished_ = false;
   has_sufficient_engagement_ = false;
@@ -412,7 +413,7 @@ void AppBannerManager::MediaStoppedPlaying(const MediaPlayerInfo& media_info,
 }
 
 void AppBannerManager::WebContentsDestroyed() {
-  Stop();
+  Terminate();
 }
 
 void AppBannerManager::OnEngagementIncreased(content::WebContents* contents,
