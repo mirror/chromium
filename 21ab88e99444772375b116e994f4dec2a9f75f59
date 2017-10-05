@@ -46,6 +46,30 @@
       "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eaf5443_7701a03a",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-05T22:41:42Z",
+      "side": 1,
+      "message": "I don\u0027t think that will work.  This blocks the whole controller initialization path, which queues up all requests from the clients here in this class before they even hit the controller.  Maybe we need another \"blocked\" concept that just doesn\u0027t let requests start in UpdateDriverStates(...) until a certain time period.  After that it calls UpdateDriverStates(...) again?\n\nIf the offline prefetch team waits for the callback we can land this, add a todo and fix it as a follow-up.",
+      "parentUuid": "79a7d287_b39c32d7",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
