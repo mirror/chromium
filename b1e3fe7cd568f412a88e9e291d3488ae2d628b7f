@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "415b6616_05831dbc",
+        "filename": "ash/public/cpp/shelf_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T01:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2168293_b48b1755",
+      "revId": "b1e3fe7cd568f412a88e9e291d3488ae2d628b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc209ed5_977ba086",
         "filename": "ash/public/cpp/shelf_struct_traits_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T00:52:32Z",
       "side": 1,
       "message": "Just for my knowledge, why can this one use Deserialized whereas the other has to have a test service?\n\n(I didn\u0027t quite understand the comment in the BUILD.gn file.)",
+      "revId": "b1e3fe7cd568f412a88e9e291d3488ae2d628b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c457a8_92eb0b7f",
+        "filename": "ash/public/cpp/shelf_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T01:12:00Z",
+      "side": 1,
+      "message": "The gfx::mojom::ImageSkia struct traits use handles to shared buffers for sharing [non-null] images:\n  https://cs.chromium.org/chromium/src/ui/gfx/image/mojo/image.mojom?l\u003d12\nSerialize and Deserialize do not currently support persisting handles.\nYuzhu hopes Serialize and Deserialize may someday support handles.",
+      "parentUuid": "bc209ed5_977ba086",
       "revId": "b1e3fe7cd568f412a88e9e291d3488ae2d628b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
