@@ -36,6 +36,15 @@ void IdlenessDetector::DomContentLoadedEventFired() {
     frame_resource_coordinator->SetProperty(
         resource_coordinator::mojom::PropertyType::kNetworkAlmostIdle, false);
   }
+
+  // Start to observe long task idleness, set to current timestamp.
+  long_task_idle_ = MonotonicallyIncreasingTime();
+  if (auto* frame_resource_coordinator =
+          local_frame_->GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kLongTaskIdle, false);
+  }
+
   OnDidLoadResource();
 }
 
@@ -91,10 +100,10 @@ void IdlenessDetector::OnDidLoadResource() {
 }
 
 void IdlenessDetector::WillProcessTask(double start_time) {
-  // If we have idle time and we are kNetworkQuietWindowSeconds seconds past it,
+  // If we have idle time and we are kIdlenessWindowSeconds seconds past it,
   // emit idle signals.
   if (network_2_quiet_ > 0 &&
-      start_time - network_2_quiet_ > kNetworkQuietWindowSeconds) {
+      start_time - network_2_quiet_ > kIdlenessWindowSeconds) {
     probe::lifecycleEvent(local_frame_->GetDocument(), "networkAlmostIdle",
                           network_2_quiet_start_time_);
     if (auto* frame_resource_coordinator =
@@ -107,22 +116,45 @@ void IdlenessDetector::WillProcessTask(double start_time) {
   }
 
   if (network_0_quiet_ > 0 &&
-      start_time - network_0_quiet_ > kNetworkQuietWindowSeconds) {
+      start_time - network_0_quiet_ > kIdlenessWindowSeconds) {
     probe::lifecycleEvent(local_frame_->GetDocument(), "networkIdle",
                           network_0_quiet_start_time_);
     network_0_quiet_ = -1;
   }
 
-  if (network_0_quiet_ < 0 && network_2_quiet_ < 0)
-    ShutdownIfPossible();
+  // If long task idleness detection has already been started and there's no
+  // long task during kIdlenessWindowSeconds before this task is about to be
+  // processed, emit long task idleness signal.
+  if (long_task_idle_ > 0 &&
+      start_time - long_task_idle_ >= kIdlenessWindowSeconds) {
+    EmitLongTaskIdlenessSignal();
+  }
+
+  if (network_0_quiet_ < 0 && network_2_quiet_ < 0 && long_task_idle_ < 0)
+    Shutdown();
 }
 
 void IdlenessDetector::DidProcessTask(double start_time, double end_time) {
+  double task_duration = end_time - start_time;
+
   // Shift idle timestamps with the duration of the task, we were not idle.
   if (network_2_quiet_ > 0)
-    network_2_quiet_ += end_time - start_time;
+    network_2_quiet_ += task_duration;
   if (network_0_quiet_ > 0)
-    network_0_quiet_ += end_time - start_time;
+    network_0_quiet_ += task_duration;
+
+  // If long task idleness detection has already been started:
+  //   1) if the finished task is a long task, then restart to detect long task
+  //      idleness by setting the indicator to the task end time;
+  //   2) Or if the finished task is not a long task, and if there's no long
+  //      task during kIdlenessWindowSeconds, emit long task idle signal.
+  if (long_task_idle_ > 0) {
+    if (task_duration > kLongTaskThresholdSeconds) {
+      long_task_idle_ = end_time;
+    } else if (end_time - long_task_idle_ >= kIdlenessWindowSeconds) {
+      EmitLongTaskIdlenessSignal();
+    }
+  }
 }
 
 IdlenessDetector::IdlenessDetector(LocalFrame* local_frame)
@@ -137,11 +169,13 @@ IdlenessDetector::~IdlenessDetector() {
   Shutdown();
 }
 
-void IdlenessDetector::ShutdownIfPossible() {
-  if (network_0_quiet_ >= 0 || network_2_quiet_ >= 0)
-    return;
-
-  Shutdown();
+void IdlenessDetector::EmitLongTaskIdlenessSignal() {
+  if (auto* frame_resource_coordinator =
+          local_frame_->GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kLongTaskIdle, true);
+  }
+  long_task_idle_ = -1;
 }
 
 void IdlenessDetector::NetworkQuietTimerFired(TimerBase*) {
