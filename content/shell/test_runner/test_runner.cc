@@ -326,6 +326,10 @@ void TestRunnerBindings::Install(
   for (size_t i = 0; i < names.size(); ++i)
     global->Set(gin::StringToV8(isolate, names[i].c_str()), v8_bindings);
 
+  frame->ExecuteScript(blink::WebString(
+      R"(console.log("window._installed = " + window._installed);
+      window._installed = true;)"));
+
   // The web-platform-tests suite require that reference comparison is delayed
   // for any test with a 'reftest-wait' class on the root element, until that
   // class attribute is removed. To support this approach, we inject some
