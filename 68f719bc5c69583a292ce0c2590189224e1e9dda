@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd5f804_9da0d42f",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T04:58:46Z",
+      "side": 1,
+      "message": "You can also use base::ThreadLocalPointer\u003c\u003e, but we\u0027re still in blink so this is maybe fine enough for now.",
+      "revId": "68f719bc5c69583a292ce0c2590189224e1e9dda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
