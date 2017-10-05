@@ -344,7 +344,9 @@ Workspace.UISourceCode = class extends Common.Object {
     }
   }
 
-  saveAs() {
+  async saveAs() {
+    // Because workingCopy() might return an empty string if the content has not been loaded yet, we load it first.
+    await this.requestContent();
     Workspace.fileManager.save(this._url, this.workingCopy(), true).then(saveResponse => {
       if (!saveResponse)
         return;
