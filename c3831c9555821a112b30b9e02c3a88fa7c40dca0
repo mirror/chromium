@@ -16,6 +16,24 @@
       "revId": "c3831c9555821a112b30b9e02c3a88fa7c40dca0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24af3af_b011d2b8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-10-05T05:55:16Z",
+      "side": 1,
+      "message": "So I used to use Test\u003d / Test:, but at the same time as the switch to Gerrit I discovered that multi-line Test: fields would always get mangled. I filed a bug and the recommendation was to write manual tests in the patch description (see link below).\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d739412\n\nSo I don\u0027t think there\u0027s a way around this otherwise.",
+      "parentUuid": "af9a2727_a23253d2",
+      "revId": "c3831c9555821a112b30b9e02c3a88fa7c40dca0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
