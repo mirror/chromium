@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fa0b085_04b00ffc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:50:48Z",
+      "side": 1,
+      "message": "nit: Please add DCHECK_EQ(start_offset, 0) and DCHECK_EQ(end_offset, 0)\nWe may also want to have a comment about both |start_offset| and\n|end_offset| don\u0027t have meaning for non-LayoutText case.",
+      "revId": "e1f0920f62605e9b4ab59ff51670ca58ad0657fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
