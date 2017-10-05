@@ -25,6 +25,9 @@
 #include "chrome/browser/ui/views/toolbar/toolbar_button.h"
 #include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_features.h"
+#include "third_party/skia/include/core/SkColorFilter.h"
+#include "third_party/skia/include/effects/SkBlurMaskFilter.h"
+#include "third_party/skia/include/effects/SkLayerDrawLooper.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/gfx/canvas.h"
@@ -65,6 +68,15 @@ void AppMenuButton::SetSeverity(AppMenuIconController::IconType type,
   type_ = type;
   severity_ = severity;
   UpdateIcon(animate);
+}
+
+void AppMenuButton::SetIsProminent(bool is_prominent) {
+  if (!is_prominent) {
+    SetBackground(nullptr);
+    return;
+  }
+  SetBackground(views::CreateSolidBackground(GetNativeTheme()->GetSystemColor(
+      ui::NativeTheme::kColorId_ProminentButtonColor)));
 }
 
 void AppMenuButton::ShowMenu(bool for_drop) {
