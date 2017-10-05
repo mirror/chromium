@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "7e09a69a_c7aa32b4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 40368,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-05T23:31:53Z",
+      "side": 1,
+      "message": "ACK, removed the debated line, given it\u0027s a common practice for enums here to correspond to ones in code.",
+      "parentUuid": "a9a0ee81_3f8f35e4",
+      "range": {
+        "startLine": 40368,
+        "startChar": 4,
+        "endLine": 40368,
+        "endChar": 55
+      },
+      "revId": "c021cbf19060927cc60d470d20db1d64b5b5156e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "479839dd_09b6cd9a",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 1
