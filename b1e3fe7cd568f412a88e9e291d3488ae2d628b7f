@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2168293_b48b1755",
+        "filename": "ash/public/cpp/shelf_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T00:52:32Z",
+      "side": 1,
+      "message": "Does this need to be BindingSet or can it just be Binding?",
+      "revId": "b1e3fe7cd568f412a88e9e291d3488ae2d628b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc209ed5_977ba086",
+        "filename": "ash/public/cpp/shelf_struct_traits_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-05T00:52:32Z",
+      "side": 1,
+      "message": "Just for my knowledge, why can this one use Deserialized whereas the other has to have a test service?\n\n(I didn\u0027t quite understand the comment in the BUILD.gn file.)",
+      "revId": "b1e3fe7cd568f412a88e9e291d3488ae2d628b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
