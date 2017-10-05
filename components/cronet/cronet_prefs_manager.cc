@@ -8,6 +8,7 @@
 #include "base/files/file_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/time/time.h"
+#include "components/cronet/cronet_thread_util.h"
 #include "components/cronet/host_cache_persistence_manager.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -202,7 +203,7 @@ class NetworkQualitiesPrefDelegateImpl
 CronetPrefsManager::CronetPrefsManager(
     const std::string& storage_path,
     scoped_refptr<base::SingleThreadTaskRunner> network_task_runner,
-    scoped_refptr<base::SequencedTaskRunner> file_task_runner,
+    scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
     bool enable_network_quality_estimator,
     bool enable_host_cache_persistence,
     net::NetLog* net_log,
@@ -210,43 +211,63 @@ CronetPrefsManager::CronetPrefsManager(
     : http_server_properties_manager_(nullptr) {
   DCHECK(network_task_runner->BelongsToCurrentThread());
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  file_task_runner_ = file_task_runner;
 
   base::FilePath storage_file_path(storage_path);
 
   // Make sure storage directory has correct version.
-  InitializeStorageDirectory(storage_file_path);
+  cronet::PostTaskAndWaitForCompletion(
+      file_task_runner.get(), FROM_HERE, [&storage_file_path]() {
+        InitializeStorageDirectory(storage_file_path);
+      });
+
   base::FilePath filepath =
       storage_file_path.Append(FILE_PATH_LITERAL(kPrefsDirectoryName))
           .Append(FILE_PATH_LITERAL(kPrefsFileName));
 
-  json_pref_store_ = new JsonPrefStore(filepath, file_task_runner,
-                                       std::unique_ptr<PrefFilter>());
 
-  // Register prefs and set up the PrefService.
-  PrefServiceFactory factory;
-  factory.set_user_prefs(json_pref_store_);
-  scoped_refptr<PrefRegistrySimple> registry(new PrefRegistrySimple());
-  registry->RegisterDictionaryPref(kHttpServerPropertiesPref,
-                                   base::MakeUnique<base::DictionaryValue>());
 
-  if (enable_network_quality_estimator) {
-    // Use lossy prefs to limit the overhead of reading/writing the prefs.
-    registry->RegisterDictionaryPref(kNetworkQualitiesPref,
-                                     PrefRegistry::LOSSY_PREF);
-  }
 
-  if (enable_host_cache_persistence) {
-    registry->RegisterListPref(kHostCachePref);
-  }
 
   {
     SCOPED_UMA_HISTOGRAM_TIMER("Net.Cronet.PrefsInitTime");
-    pref_service_ = factory.Create(registry.get());
+    cronet::PostTaskAndWaitForCompletion(
+        file_task_runner.get(), FROM_HERE, [&]() {
+
+          // Register prefs and set up the PrefService.
+          PrefServiceFactory factory;
+
+          scoped_refptr<PrefRegistrySimple> registry(new PrefRegistrySimple());
+          registry->RegisterDictionaryPref(
+              kHttpServerPropertiesPref,
+              base::MakeUnique<base::DictionaryValue>());
+
+          if (enable_network_quality_estimator) {
+            // Use lossy prefs to limit the overhead of reading/writing the
+            // prefs.
+            registry->RegisterDictionaryPref(kNetworkQualitiesPref,
+                                             PrefRegistry::LOSSY_PREF);
+          }
+
+          if (enable_host_cache_persistence) {
+            registry->RegisterListPref(kHostCachePref);
+          }
+
+          PrefRegistry* registry_ptr = registry.get();
+
+          json_pref_store_ = new JsonPrefStore(filepath, file_task_runner,
+                                               std::unique_ptr<PrefFilter>());
+          factory.set_user_prefs(json_pref_store_);
+          pref_service_ = factory.Create(registry_ptr);
+
+          http_server_properties_manager_ =
+              new net::HttpServerPropertiesManager(
+                  new PrefServiceAdapter(pref_service_.get()), file_task_runner,
+                  network_task_runner, net_log);
+
+        });
   }
 
-  http_server_properties_manager_ = new net::HttpServerPropertiesManager(
-      new PrefServiceAdapter(pref_service_.get()), network_task_runner,
-      network_task_runner, net_log);
   http_server_properties_manager_->InitializeOnNetworkSequence();
 
   // Passes |http_server_properties_manager_| ownership to |context_builder|.
@@ -258,6 +279,15 @@ CronetPrefsManager::CronetPrefsManager(
 
 CronetPrefsManager::~CronetPrefsManager() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+
+  cronet::PostTaskAndWaitForCompletion(
+      file_task_runner_.get(), FROM_HERE, [&]() {
+        json_pref_store_ = NULL;
+        pref_service_ = NULL;
+        http_server_properties_manager_ = NULL;
+        network_qualities_prefs_manager_ = NULL;
+        host_cache_persistence_manager_ = NULL;
+      });
 }
 
 void CronetPrefsManager::SetupNqePersistence(
@@ -285,13 +315,16 @@ void CronetPrefsManager::SetupHostCachePersistence(
 
 void CronetPrefsManager::PrepareForShutdown() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  if (pref_service_)
-    pref_service_->CommitPendingWrite();
-
-  // Shutdown managers on the Pref sequence.
-  http_server_properties_manager_->ShutdownOnPrefSequence();
-  if (network_qualities_prefs_manager_)
-    network_qualities_prefs_manager_->ShutdownOnPrefSequence();
+  if (pref_service_) {
+    cronet::PostTaskAndWaitForCompletion(
+        file_task_runner_.get(), FROM_HERE, [&]() {
+          pref_service_->CommitPendingWrite();
+          // Shutdown managers on the Pref sequence.
+          http_server_properties_manager_->ShutdownOnPrefSequence();
+          if (network_qualities_prefs_manager_)
+            network_qualities_prefs_manager_->ShutdownOnPrefSequence();
+        });
+  }
 }
 
 }  // namespace cronet
