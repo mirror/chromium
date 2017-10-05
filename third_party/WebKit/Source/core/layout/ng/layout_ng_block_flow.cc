@@ -177,15 +177,20 @@ void LayoutNGBlockFlow::UpdateOutOfFlowBlockLayout() {
   RefPtr<NGPhysicalBoxFragment> fragment =
       ToNGPhysicalBoxFragment(result->PhysicalFragment().get());
   DCHECK_GT(fragment->Children().size(), (size_t)0);
-  RefPtr<NGPhysicalFragment> child_fragment = fragment->Children()[0];
-  NGPhysicalOffset child_offset = child_fragment->Offset();
-  if (container_style->IsFlippedBlocksWritingMode()) {
-    SetX(containing_block_logical_height - child_offset.left -
-         child_fragment->Size().width);
-  } else {
-    SetX(child_offset.left);
+  for (RefPtr<NGPhysicalFragment> child_fragment : fragment->Children()) {
+    LayoutObject* child_legacy_layout = child_fragment->GetLayoutObject();
+    DCHECK(child_legacy_layout->IsBox());
+    LayoutBox* child_legacy_box = ToLayoutBox(child_legacy_layout);
+    NGPhysicalOffset child_offset = child_fragment->Offset();
+    if (container_style->IsFlippedBlocksWritingMode()) {
+      child_legacy_box->SetX(containing_block_logical_height -
+                             child_offset.left - child_fragment->Size().width);
+    } else {
+      child_legacy_box->SetX(child_offset.left);
+    }
+    child_legacy_box->SetY(child_offset.top);
   }
-  SetY(child_offset.top);
+  RefPtr<NGPhysicalFragment> child_fragment = fragment->Children()[0];
   paint_fragment_ = WTF::MakeUnique<NGPaintFragment>(child_fragment.get());
 }
 

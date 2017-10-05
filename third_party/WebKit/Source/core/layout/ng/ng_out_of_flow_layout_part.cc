@@ -57,6 +57,11 @@ void NGOutOfFlowLayoutPart::Run() {
         NGLogicalOffset offset;
         RefPtr<NGLayoutResult> result = LayoutDescendant(
             candidate.node, candidate.static_position, &offset);
+        for (NGOutOfFlowPositionedDescendant unpositioned :
+             result->OutOfFlowPositionedDescendants()) {
+          container_builder_->AddOutOfFlowLegacyCandidate(
+              unpositioned.node, unpositioned.static_position);
+        }
         container_builder_->AddChild(std::move(result), offset);
       } else {
         container_builder_->AddOutOfFlowDescendant(candidate);
