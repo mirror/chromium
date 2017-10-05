@@ -302,6 +302,30 @@
     },
     {
       "key": {
+        "uuid": "32aef3e8_d4b35f06",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:50:24Z",
+      "side": 1,
+      "message": "Also, the diagram is wrong, it\u0027s more like:\n\nHC:W:GetWriterLoadState\n+ - HC:GetLoadStateForPendingTransaction\n    +- HC:T:GetLoadState\n\nwhich is totally fine\n\nresolving",
+      "parentUuid": "60c94f4e_a0dd994b",
+      "range": {
+        "startLine": 298,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c385cf9_950c8e1f",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -426,6 +450,24 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728ff63b_e863b600",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T17:50:24Z",
+      "side": 1,
+      "message": "Ah, I see, this takes an int result and ignores it. Got it.",
+      "parentUuid": "27fa558b_ec132558",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
