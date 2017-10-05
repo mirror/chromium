@@ -76,6 +76,9 @@ class PLATFORM_EXPORT BlinkGC final {
 
   enum GCReason {
     kIdleGC,
+    kIncrementalMarkingStart,
+    kIncrementalMarkingStep,
+    kIncrementalMarkingFinalize,
     kPreciseGC,
     kConservativeGC,
     kForcedGC,
