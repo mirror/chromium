@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240dfcfc_5fb67d7f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:50:11Z",
+      "side": 1,
+      "message": "the -\u003e a",
+      "range": {
+        "startLine": 103,
+        "startChar": 18,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675e2a95_903f3294",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:50:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
