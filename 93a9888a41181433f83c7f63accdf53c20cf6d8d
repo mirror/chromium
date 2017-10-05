@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6e255ced_503f7b78",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-05T06:28:56Z",
+      "side": 1,
+      "message": "Aaah right, I thought it was about the files-safe-media element. Let me remove that line!",
+      "parentUuid": "4d5fd103_68e04b09",
+      "range": {
+        "startLine": 105,
+        "startChar": 25,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be274d18_f0cddcaf",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
         "patchSetId": 5
@@ -141,6 +165,30 @@
       "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e98a53_be1581a3",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_safe_html_webview_content.css",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-10-05T06:28:56Z",
+      "side": 1,
+      "message": "Thanks for telling me about the existence of calc()! That fixed the issue :)",
+      "parentUuid": "bd98792d_4f888f19",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "93a9888a41181433f83c7f63accdf53c20cf6d8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
