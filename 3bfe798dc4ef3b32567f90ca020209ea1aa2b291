@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "167d103e_7e2fb95a",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-05T11:35:13Z",
+      "side": 1,
+      "message": "I don\u0027t really like this name and comment. I think we should not mention CHROME-CONNECTED here, because this class actually does not actually touch it.\n\nI suggest StartPreGaiaLogOut(), and mention in the comment that it calls SigninClient::PreGaiaLogout().",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 31
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f442473a_e9071a09",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 10
@@ -18,6 +41,52 @@
         "startChar": 4,
         "endLine": 105,
         "endChar": 17
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77777487_9a31ef54",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-05T11:35:13Z",
+      "side": 1,
+      "message": "Does the \"rule of five\" apply here?\nhttp://en.cppreference.com/w/cpp/language/rule_of_three",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e57d637_14d7458e",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-10-05T11:35:13Z",
+      "side": 1,
+      "message": "Are we sure that these tasks finish in the same order they are posted?",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 297,
+        "endChar": 39
       },
       "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
