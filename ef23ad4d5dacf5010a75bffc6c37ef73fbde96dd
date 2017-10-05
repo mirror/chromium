@@ -22,6 +22,30 @@
       "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded3ae47_7b54c870",
+        "filename": "chrome/android/java/res/drawable/ic_drive_document_24dp.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T23:17:28Z",
+      "side": 1,
+      "message": "Good point, we should be able to just have one and set the scaleType on the ImageViews",
+      "parentUuid": "f298b19e_89c8860a",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
