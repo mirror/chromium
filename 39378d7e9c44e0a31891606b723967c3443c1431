@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dbf17bd_3cefc77c",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-05T19:03:35Z",
+      "side": 1,
+      "message": "NOTE: hoisted from line 268 of the last file.",
+      "revId": "39378d7e9c44e0a31891606b723967c3443c1431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

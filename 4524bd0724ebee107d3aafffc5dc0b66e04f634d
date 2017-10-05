@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8979fb26_860713fb",
+        "filename": "content/common/sandbox_linux/sandbox_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-05T19:03:35Z",
+      "side": 0,
+      "message": "NOTE: this is safe, because looking below,\nShouldEnableSeccompBPF(switches::kRendererProcess) immediately did a\n  return kRendererProcess !\u003d kGPUProcess || ...\nwhich is always true ... except for the ifdef BUIDFLAG(). But that is covered by the way seccomp_bpf_supported_ is set at https://cs.chromium.org/chromium/src/content/common/sandbox_linux/sandbox_linux.cc?rcl\u003d771bc4ee1d609083dd81daa0ee78229b49dfa270\u0026l\u003d161\nby calling other calls that also are conditionalized on the same BUILDFLAG.",
+      "range": {
+        "startLine": 239,
+        "startChar": 2,
+        "endLine": 239,
+        "endChar": 3
+      },
+      "revId": "4524bd0724ebee107d3aafffc5dc0b66e04f634d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
