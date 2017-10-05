@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5ad3292_d6d79c63",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-10-05T17:39:23Z",
+      "side": 1,
+      "message": "This will bring up Assistant loading state animation if ARC isn\u0027t booted yet.  But it won\u0027t start voice interaction session when ARC is ready.  We need to \"not\" show the loading state in this case.",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 28
+      },
+      "revId": "641f5fa04a2c40ca217563f4d033538c6e3de2d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
