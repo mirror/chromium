@@ -36,6 +36,9 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // KeywordExtensionsDelegate:
   void DeleteSuggestion(const TemplateURL* template_url,
                         const base::string16& suggestion_text) override;
+  void OnKeywordEntered(const TemplateURL* template_url) override;
+
+  void SetInput(const AutocompleteInput& input) override;
 
  private:
   // KeywordExtensionsDelegate:
@@ -61,6 +64,30 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   // Notifies the KeywordProvider about asynchronous updates from the extension.
   void OnProviderUpdate(bool updated_matches);
 
+  // Checks for the occurence of an autocomplete input edge case when the user
+  // activates keyword enter mode via existing input text. Specifically, for
+  // example, if the keyword is "ssh" and the user types "sshfoo" in the
+  // omnibox, keyword mode is entered when the user presses space within
+  // "sshfoo" to form "ssh foo". "sshfoo" -> "ssh foo" is the input edge case.
+  // This method is later used to determine whether to send onKeywordEntered
+  // suggestions to the omnibox.
+  bool IsInputEdgeCaseForKeywordEnter(TemplateURLService* model);
+
+  // Checks if all event listeners with omnibox suggest results callbacks are
+  // registered. Such listeners are OnInputChanged and OnKeywordEntered. This is
+  // is a helper method to DoNotShowOnKeywordEnteredSuggestions().
+  bool AreAllEventsWithSuggestCallbacksRegistered();
+
+  // Evaluates whether or not OnKeywordEntered omnibox suggestsions should be
+  // displayed.
+  bool DoNotShowOnKeywordEnteredSuggestions(TemplateURLService* model);
+
+  // Evaluates whether or not OnInputChanged omnibox suggestsions should be
+  // displayed.
+  bool DoNotShowOnInputChangedSuggestions(const AutocompleteInput& input,
+                                          TemplateURLService* model,
+                                          base::string16* keyword);
+
   // Identifies the current input state. This is incremented each time the
   // autocomplete edit's input changes in any way. It is used to tell whether
   // suggest results from the extension are current.
@@ -84,6 +111,16 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   KeywordProvider* provider_;
 
   content::NotificationRegistrar registrar_;
+
+  // Tracks when the OnKeywordEvent is triggered.
+  bool is_keyword_entered_event_triggered_;
+
+  // The old suggest input, immediately previous to the current input. It is
+  // used to determine whether special handling must be done in an input edge
+  // case. For details, see IsInputEdgeCaseForKeywordEnter() description.
+  AutocompleteInput old_suggest_input_;
+
+  bool has_called_on_keyword_entered_suggestion_callback_;
 
   // We need our input IDs to be unique across all profiles, so we keep a global
   // UID that each provider uses.

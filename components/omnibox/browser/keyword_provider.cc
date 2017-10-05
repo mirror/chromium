@@ -208,6 +208,27 @@ AutocompleteMatch KeywordProvider::CreateVerbatimMatch(
       SplitReplacementStringFromInput(text, true), true, 0, false);
 }
 
+void KeywordProvider::OnKeywordEntered() {
+  base::string16 keyword, remaining_input;
+  if (!KeywordProvider::ExtractKeywordFromInput(keyword_input_, model_,
+                                                &keyword, &remaining_input))
+    return;
+  extensions_delegate_->SetInput(keyword_input_);
+  const TemplateURL* const template_url =
+      GetTemplateURLService()->GetTemplateURLForKeyword(keyword);
+
+  // TODO(catmullings): explain why this could be null.
+  if (!template_url)
+    return;
+
+  if ((template_url->type() == TemplateURL::OMNIBOX_API_EXTENSION) &&
+      extensions_delegate_ &&
+      extensions_delegate_->IsEnabledExtension(
+          template_url->GetExtensionId())) {
+    extensions_delegate_->OnKeywordEntered(template_url);
+  }
+}
+
 void KeywordProvider::DeleteMatch(const AutocompleteMatch& match) {
   const base::string16& suggestion_text = match.contents;
 
@@ -252,6 +273,8 @@ void KeywordProvider::Start(const AutocompleteInput& input,
 
   if (input.from_omnibox_focus())
     return;
+
+  extensions_delegate_->SetInput(input);
 
   // Split user input into a keyword and some query input.
   //

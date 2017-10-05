@@ -12,6 +12,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_source.h"
+#include "extensions/browser/event_router.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_util.h"
 #include "extensions/browser/notification_types.h"
@@ -25,7 +26,9 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
     KeywordProvider* provider)
     : KeywordExtensionsDelegate(provider),
       profile_(profile),
-      provider_(provider) {
+      provider_(provider),
+      is_keyword_entered_event_triggered_(false),
+      has_called_on_keyword_entered_suggestion_callback_(false) {
   DCHECK(provider_);
 
   current_input_id_ = 0;
@@ -42,9 +45,17 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
   registrar_.Add(this,
                  extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED,
                  content::Source<Profile>(profile_));
+  registrar_.Add(this,
+                 extensions::NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED,
+                 content::Source<Profile>(profile_));
 }
 
 KeywordExtensionsDelegateImpl::~KeywordExtensionsDelegateImpl() {
+}
+
+void KeywordExtensionsDelegateImpl::SetInput(const AutocompleteInput& input) {
+  old_suggest_input_ = extension_suggest_last_input_;
+  extension_suggest_last_input_ = input;
 }
 
 void KeywordExtensionsDelegateImpl::DeleteSuggestion(
@@ -55,7 +66,15 @@ void KeywordExtensionsDelegateImpl::DeleteSuggestion(
       base::UTF16ToUTF8(suggestion_text));
 }
 
-void  KeywordExtensionsDelegateImpl::IncrementInputId() {
+void KeywordExtensionsDelegateImpl::OnKeywordEntered(
+    const TemplateURL* template_url) {
+  extension_suggest_matches_.clear();
+  if (extensions::ExtensionOmniboxEventRouter::OnKeywordEntered(
+          profile_, template_url->GetExtensionId(), current_input_id_))
+    set_done(false);
+}
+
+void KeywordExtensionsDelegateImpl::IncrementInputId() {
   current_input_id_ = ++global_input_uid_;
 }
 
@@ -80,8 +99,26 @@ bool KeywordExtensionsDelegateImpl::Start(
     std::string extension_id = template_url->GetExtensionId();
     if (extension_id != current_keyword_extension_id_)
       MaybeEndExtensionKeywordMode();
-    if (current_keyword_extension_id_.empty())
+
+    if (current_keyword_extension_id_.empty()) {
+      // An input edge case occurs, for example, when "sshfoo" -> "ssh foo"
+      // with "ssh" being the keyword. (For details, refer to the description
+      // above the IsInputEdgeCaseForKeywordEnter() header declaration.) In this
+      // scenario, onKeywordEntered will not be triggered via its normal routes:
+      // keyword + space key or keyword + tab.
+      //
+      // Nevertheless, if the onKeywordEntered event is registered, it should be
+      // dispatched when the input becomes "ssh foo". We do so below.
+      //
+      // If the onInputChanged event is also registered, onKeywordEntered is
+      // still dispatched, but its suggestion results are not sent to the
+      // omnibox (see KEDI::DoNotShowOnKeywordEnteredSuggestions() for details).
+      TemplateURLService* model = provider_->GetTemplateURLService();
+      if (!is_keyword_entered_event_triggered_ &&
+          IsInputEdgeCaseForKeywordEnter(model))
+        OnKeywordEntered(template_url);
       EnterExtensionKeywordMode(extension_id);
+    }
   }
 
   extensions::ApplyDefaultSuggestionForExtensionKeyword(
@@ -137,14 +174,18 @@ void KeywordExtensionsDelegateImpl::Observe(
   const AutocompleteInput& input = extension_suggest_last_input_;
 
   switch (type) {
-    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED:
+    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED: {
+      is_keyword_entered_event_triggered_ = true;
+      return;
+    }
+    case extensions::NOTIFICATION_EXTENSION_OMNIBOX_INPUT_ENTERED: {
       // Input has been accepted, so we're done with this input session. Ensure
       // we don't send the OnInputCancelled event, or handle any more stray
       // suggestions_ready events.
       current_keyword_extension_id_.clear();
       IncrementInputId();
       return;
-
+    }
     case extensions::NOTIFICATION_EXTENSION_OMNIBOX_DEFAULT_SUGGESTION_CHANGED
         : {
       // It's possible to change the default suggestion while not in an editing
@@ -170,13 +211,19 @@ void KeywordExtensionsDelegateImpl::Observe(
       if (suggestions.request_id != current_input_id_)
         return;  // This is an old result. Just ignore.
 
-      // ExtractKeywordFromInput() can fail if e.g. this code is triggered by
-      // direct calls from the development console, outside the normal flow of
-      // user input.
-      base::string16 keyword, remaining_input;
-      if (!KeywordProvider::ExtractKeywordFromInput(input, model, &keyword,
-                                                    &remaining_input))
+      if (DoNotShowOnKeywordEnteredSuggestions(model)) {
+        has_called_on_keyword_entered_suggestion_callback_ = true;
         return;
+      }
+
+      base::string16 keyword;
+      if (DoNotShowOnInputChangedSuggestions(input, model, &keyword))
+        return;
+
+      // Once the suggest result callback of onKeywordEntered is completed, we
+      // must reset such that onKeywordEntered trigger/activation is completed.
+      is_keyword_entered_event_triggered_ = false;
+
       const TemplateURL* template_url =
           model->GetTemplateURLForKeyword(keyword);
 
@@ -225,4 +272,65 @@ void KeywordExtensionsDelegateImpl::Observe(
 
 void KeywordExtensionsDelegateImpl::OnProviderUpdate(bool updated_matches) {
   provider_->listener_->OnProviderUpdate(updated_matches);
+}
+
+bool KeywordExtensionsDelegateImpl::IsInputEdgeCaseForKeywordEnter(
+    TemplateURLService* model) {
+  base::string16 keyword, remaining_input;
+  if (!KeywordProvider::ExtractKeywordFromInput(
+          extension_suggest_last_input_, model, &keyword, &remaining_input)) {
+    return false;
+  }
+
+  return old_suggest_input_.text() == keyword + remaining_input;
+}
+
+bool KeywordExtensionsDelegateImpl::
+    AreAllEventsWithSuggestCallbacksRegistered() {
+  extensions::EventRouter* event_router =
+      extensions::EventRouter::Get(profile_);
+  bool is_on_input_changed_event_registered =
+      event_router->ExtensionHasEventListener(
+          current_keyword_extension_id_,
+          extensions::api::omnibox::OnInputChanged::kEventName);
+
+  bool is_on_keyword_entered_event_registered =
+      event_router->ExtensionHasEventListener(
+          current_keyword_extension_id_,
+          extensions::api::omnibox::OnKeywordEntered::kEventName);
+
+  return is_on_input_changed_event_registered &&
+         is_on_keyword_entered_event_registered;
+}
+
+bool KeywordExtensionsDelegateImpl::DoNotShowOnKeywordEnteredSuggestions(
+    TemplateURLService* model) {
+  // OnKeywordEntered omnibox suggestions are not shown when the there is an
+  // input edge case, and both OnKeywordEntered and OnInputChanged events are
+  // registered. In this case, there are suggest callbacks for both these
+  // events, but we only show suggest results for onInputChanged because those
+  // are more relevant than those of onKeywordEntered. Thus when
+  // onKeywordEntered's suggest callback is invoked, we ignore it and set
+  // |has_called_on_keyword_entered_suggestion_callback_| to false, so that
+  // onInputChanged's suggest callback can pass and display its omnibox results.
+  return IsInputEdgeCaseForKeywordEnter(model) &&
+         AreAllEventsWithSuggestCallbacksRegistered() &&
+         !has_called_on_keyword_entered_suggestion_callback_;
+}
+
+bool KeywordExtensionsDelegateImpl::DoNotShowOnInputChangedSuggestions(
+    const AutocompleteInput& input,
+    TemplateURLService* model,
+    base::string16* keyword) {
+  // OnInputChanged omnibox suggestions are not shown when the keyword cannot be
+  // successfully extracted from the autocomplete input and when the
+  // OnKeywordEntered event is being handled.
+  //
+  // ExtractKeywordFromInput() can fail if e.g. this code is triggered by
+  // direct calls from the development console, outside the normal flow of
+  // user input.
+  base::string16 remaining_input;
+  return !KeywordProvider::ExtractKeywordFromInput(input, model, keyword,
+                                                   &remaining_input) &&
+         !is_keyword_entered_event_triggered_;
 }

@@ -161,6 +161,32 @@ void ExtensionOmniboxEventRouter::OnInputEntered(
 }
 
 // static
+bool ExtensionOmniboxEventRouter::OnKeywordEntered(
+    Profile* profile,
+    const std::string& extension_id,
+    int suggest_id) {
+  EventRouter* event_router = EventRouter::Get(profile);
+  if (!event_router->ExtensionHasEventListener(
+          extension_id, omnibox::OnKeywordEntered::kEventName))
+    return false;
+
+  std::unique_ptr<base::ListValue> args(new base::ListValue());
+  args->Set(0, base::MakeUnique<base::Value>(suggest_id));
+
+  auto event = base::MakeUnique<Event>(events::OMNIBOX_ON_KEYWORD_ENTERED,
+                                       omnibox::OnKeywordEntered::kEventName,
+                                       std::move(args), profile);
+  event_router->DispatchEventToExtension(extension_id, std::move(event));
+
+  content::NotificationService::current()->Notify(
+      extensions::NOTIFICATION_EXTENSION_OMNIBOX_KEYWORD_ENTERED,
+      content::Source<Profile>(profile),
+      content::NotificationService::NoDetails());
+
+  return true;
+}
+
+// static
 void ExtensionOmniboxEventRouter::OnInputCancelled(
     Profile* profile, const std::string& extension_id) {
   auto event = std::make_unique<Event>(
