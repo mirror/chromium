@@ -52,6 +52,24 @@
       "revId": "8d7b7b3c2e677f04dc5ceea8f7e667f325845c58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331db8c9_0db595af",
+        "filename": "components/viz/service/display/display_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-05T09:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eb1a88e_7c94bd0e",
+      "revId": "8d7b7b3c2e677f04dc5ceea8f7e667f325845c58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
