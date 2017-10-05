@@ -272,28 +272,24 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, EmptyOperation) {
             // No error is set for OK. Thus this will cause the operation
             // being filled with only done flag.
             this->SendWithErrorResponse(proto::OK, ""));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
 TYPED_TEST(PrefetchRequestOperationResponseTest, ErrorValue) {
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithErrorResponse(proto::UNKNOWN, kErrorMessage));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
 TYPED_TEST(PrefetchRequestOperationResponseTest, InvalidTypeUrl) {
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithAnyResponse("foo", ""));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
 TYPED_TEST(PrefetchRequestOperationResponseTest, InvalidValue) {
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithAnyResponse(kPageBundleTypeURL, "foo"));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
@@ -301,7 +297,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, EmptyPageBundle) {
   proto::PageBundle bundle;
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
@@ -310,7 +305,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, EmptyArchive) {
   bundle.add_archives();
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
@@ -321,7 +315,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, NoPageInfo) {
   archive->set_body_length(kTestBodyLength);
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
@@ -332,7 +325,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, MissingPageInfoUrl) {
   page_info->set_redirect_url(kTestURL);
   EXPECT_EQ(PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_TRUE(this->operation_name().empty());
   EXPECT_TRUE(this->pages().empty());
 }
 
@@ -352,7 +344,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, SinglePage) {
                                               1000000);
   EXPECT_EQ(PrefetchRequestStatus::SUCCESS,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_EQ(kTestOperationName, this->operation_name());
   ASSERT_EQ(1u, this->pages().size());
   EXPECT_EQ(kTestURL, this->pages().back().url);
   EXPECT_EQ(kTestURL2, this->pages().back().redirect_url);
@@ -398,7 +389,6 @@ TYPED_TEST(PrefetchRequestOperationResponseTest, MultiplePages) {
 
   EXPECT_EQ(PrefetchRequestStatus::SUCCESS,
             this->SendWithPageBundleResponse(bundle));
-  EXPECT_EQ(kTestOperationName, this->operation_name());
   ASSERT_EQ(4u, this->pages().size());
   EXPECT_EQ(kTestURL, this->pages().at(0).url);
   EXPECT_EQ(RenderStatus::PENDING, this->pages().at(0).status);
