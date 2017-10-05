@@ -16,6 +16,24 @@
       "revId": "331d7ef11600b0fe3f571e8b77659a9eae363b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b45bf18_972fa485",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-05T19:13:27Z",
+      "side": 0,
+      "message": "Where does this function make a non-base// sync primitive blocking call?\n\nIt waits on a WaitableEvent in the below call stack, but an assert here is not required for that.\n\nWaitableEvent::TimedWait\nStatisticsProviderImpl::WaitForStatisticsLoaded\nStatisticsProviderImpl::GetMachineStatistic",
+      "parentUuid": "6cc9379f_6b95cb2a",
+      "revId": "331d7ef11600b0fe3f571e8b77659a9eae363b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
