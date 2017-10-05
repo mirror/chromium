@@ -29,6 +29,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/permission_manager.h"
 #include "content/public/browser/permission_type.h"
+#include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_event_status.mojom.h"
 
 #if defined(OS_ANDROID)
 #include "content/browser/android/background_sync_network_observer_android.h"
@@ -150,13 +151,15 @@ void OnSyncEventFinished(
     scoped_refptr<ServiceWorkerVersion> active_version,
     int request_id,
     const ServiceWorkerVersion::LegacyStatusCallback& callback,
-    ServiceWorkerStatusCode status,
+    blink::mojom::ServiceWorkerEventStatus status,
     base::Time dispatch_event_time) {
-  if (!active_version->FinishRequest(request_id, status == SERVICE_WORKER_OK,
-                                     dispatch_event_time)) {
+  if (!active_version->FinishRequest(
+          request_id,
+          status == blink::mojom::ServiceWorkerEventStatus::COMPLETED,
+          dispatch_event_time)) {
     return;
   }
-  callback.Run(status);
+  callback.Run(ServiceWorkerUtils::EventStatusToStatusCode(status));
 }
 
 }  // namespace
