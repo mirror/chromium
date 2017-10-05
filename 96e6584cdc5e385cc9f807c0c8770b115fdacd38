@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0e8ed4d_7ba2b192",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T14:39:33Z",
+      "side": 1,
+      "message": "This is not correct and I am thinking about a more rigorous less hacky solution. The issue I am observing is that sometimes when |scroll_state.isBeginning/Ending()| is true the deltas are 0.00 which makes it impossible to determine the direction.\n\nSupposedly if the isBeginning() case can be determined, we \u0027could\u0027 hold a state here, say |element_in_custom_scroll_| and return true when the element is in scroll and the scroll state isEnding() is true (regardless of the direction).",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d365ccb_7eb53ac5",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T14:39:33Z",
+      "side": 1,
+      "message": "Is there any scenario where applyScroll or distributeScroll exist without ScrollCustomizationEnabled()? If so then this seems to be necessary.",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
