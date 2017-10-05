@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc2f7397_87649a83",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 5864,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-05T20:40:57Z",
+      "side": 0,
+      "message": "Where are the remaining IDS_COOKIES_* (the ones not removed in this CL) being used? I could not find any usages (searched for IDS_COOKIES_HEADER and IDS_COOKIES_TAB_LABEL). Are those being removed on a separate CL?",
+      "revId": "14ce050090fb4d5edb996b86c0b0ac319a85fa5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
