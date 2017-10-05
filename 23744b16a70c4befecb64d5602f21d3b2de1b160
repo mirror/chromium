@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06a599e2_bc593dc0",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/HarfBuzzShaperFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T15:04:48Z",
+      "side": 1,
+      "message": "Why do we want to set up max length of 80? Does |u_strFromUTF32| work without an error if we pass a longer input?",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 37
+      },
+      "revId": "23744b16a70c4befecb64d5602f21d3b2de1b160",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
