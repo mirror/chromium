@@ -11,10 +11,12 @@
 #include "base/memory/ptr_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/devtools_network_transaction_factory.h"
 #include "headless/lib/browser/headless_browser_context_impl.h"
 #include "headless/lib/browser/headless_browser_context_options.h"
 #include "headless/lib/browser/headless_network_delegate.h"
 #include "net/dns/mapped_host_resolver.h"
+#include "net/http/http_transaction_factory.h"
 #include "net/http/http_util.h"
 #include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_context.h"
@@ -105,6 +107,8 @@ HeadlessURLRequestContextGetter::GetURLRequestContext() {
     }
     protocol_handlers_.clear();
     builder.SetInterceptors(std::move(request_interceptors_));
+    builder.SetCreateHttpTransactionFactoryCallback(
+        base::BindOnce(&content::CreateDevToolsNetworkTransactionFactory));
 
     url_request_context_ = builder.Build();
     url_request_context_->set_net_log(net_log_);
