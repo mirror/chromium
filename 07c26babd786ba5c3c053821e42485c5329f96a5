@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "48fe13c5_8e6a7e57",
+        "filename": "ios/web/navigation/resources/restore_session.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-05T15:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd11c89d_2434611e",
+      "revId": "07c26babd786ba5c3c053821e42485c5329f96a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b8844ee_954f580f",
         "filename": "ios/web/navigation/resources/restore_session.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T18:50:10Z",
       "side": 1,
       "message": "I think we probably need better error handling here.  Right now if there\u0027s an error, it\u0027ll silently fail and the user will just be looking at a blank web view with an unfamiliar URL.  We should have some way to signal in the browser UI that this failed.",
+      "revId": "07c26babd786ba5c3c053821e42485c5329f96a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ff33dd_682331a5",
+        "filename": "ios/web/navigation/resources/restore_session.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-10-05T15:45:01Z",
+      "side": 1,
+      "message": "Good point. I suppose the error is probably best handled in web controller. How about we send an error message back here, and the controller can reload chrome://newtab, increment a counter, and maybe also show an error toast?",
+      "parentUuid": "1b8844ee_954f580f",
       "revId": "07c26babd786ba5c3c053821e42485c5329f96a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
