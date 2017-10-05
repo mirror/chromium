@@ -34,6 +34,24 @@
       "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1c91ab_358ba296",
+        "filename": "third_party/WebKit/Source/core/events/MouseEvent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-05T20:52:00Z",
+      "side": 1,
+      "message": "FYI: looks like only Node::DispatchSimulatedClick() uses this method, and most of its callers are default handlers of some keyboard event.  I didn\u0027t check all though.",
+      "parentUuid": "3ee0cde0_4f982d62",
+      "revId": "4b5a1a7ebdba38a9bfefa18fefc7d6cba22cc3a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
