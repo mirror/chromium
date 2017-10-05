@@ -58,6 +58,7 @@ void QuicHeadersStream::MaybeReleaseSequencerBuffer() {
 }
 
 QuicConsumedData QuicHeadersStream::WritevDataInner(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicIOVector iov,
     QuicStreamOffset offset,
     bool fin,
@@ -65,11 +66,11 @@ QuicConsumedData QuicHeadersStream::WritevDataInner(
   if (!session()->use_stream_notifier() ||
       session()->save_data_before_consumption()) {
     // If data is saved before consumption, unacked_headers has been populated.
-    return QuicStream::WritevDataInner(iov, offset, fin,
+    return QuicStream::WritevDataInner(traffic_annotation, iov, offset, fin,
                                        std::move(ack_listener));
   }
-  QuicConsumedData consumed =
-      QuicStream::WritevDataInner(iov, offset, fin, nullptr);
+  QuicConsumedData consumed = QuicStream::WritevDataInner(
+      traffic_annotation, iov, offset, fin, nullptr);
   if (consumed.bytes_consumed == 0 || ack_listener == nullptr) {
     // No need to update unacked_headers_ if no byte is consumed or there is no
     // ack listener.

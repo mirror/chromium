@@ -10,6 +10,7 @@
 
 #include "third_party/libjingle_xmpp/xmpp/xmppclient.h"
 
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/libjingle_xmpp/xmpp/constants.h"
 #include "third_party/libjingle_xmpp/xmpp/plainsaslhandler.h"
 #include "third_party/libjingle_xmpp/xmpp/prexmppauth.h"
@@ -73,7 +74,9 @@ public:
 
   // implementations of interfaces
   void OnStateChange(int state);
-  void WriteOutput(const char* bytes, size_t len);
+  void WriteOutput(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                   const char* bytes,
+                   size_t len);
   void StartTls(const std::string& domainname);
   void CloseConnection();
 
@@ -384,12 +387,15 @@ void XmppClient::Private::OnStateChange(int state) {
   client_->Wake();
 }
 
-void XmppClient::Private::WriteOutput(const char* bytes, size_t len) {
-//#if !defined(NDEBUG)
+void XmppClient::Private::WriteOutput(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const char* bytes,
+    size_t len) {
+  //#if !defined(NDEBUG)
   client_->SignalLogOutput(bytes, static_cast<int>(len));
 //#endif
 
-  socket_->Write(bytes, len);
+  socket_->Write(traffic_annotation, bytes, len);
   // TODO: deal with error information
 }
 

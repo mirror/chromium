@@ -31,6 +31,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 #include "net/ssl/ssl_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "net/websockets/websocket_channel.h"
 #include "net/websockets/websocket_errors.h"
@@ -448,8 +449,9 @@ void WebSocketImpl::SendFrame(bool fin,
   scoped_refptr<net::IOBuffer> data_to_pass(new net::IOBuffer(data.size()));
   std::copy(data.begin(), data.end(), data_to_pass->data());
 
+  // TODO(rhalavati): Traffic annotation should be added here through mojom.
   channel_->SendFrame(fin, MessageTypeToOpCode(type), std::move(data_to_pass),
-                      data.size());
+                      data.size(), NO_TRAFFIC_ANNOTATION_YET);
 }
 
 void WebSocketImpl::SendFlowControl(int64_t quota) {

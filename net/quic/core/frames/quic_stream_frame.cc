@@ -21,52 +21,68 @@ UniqueStreamBuffer NewStreamBuffer(QuicBufferAllocator* allocator,
 }
 
 QuicStreamFrame::QuicStreamFrame()
-    : QuicStreamFrame(0, false, 0, nullptr, 0, nullptr) {}
+    : QuicStreamFrame(0, false, 0, nullptr, 0, nullptr, false) {}
 
-QuicStreamFrame::QuicStreamFrame(QuicStreamId stream_id,
-                                 bool fin,
-                                 QuicStreamOffset offset,
-                                 QuicStringPiece data)
+QuicStreamFrame::QuicStreamFrame(
+    QuicStreamId stream_id,
+    bool fin,
+    QuicStreamOffset offset,
+    QuicStringPiece data,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
     : QuicStreamFrame(stream_id,
                       fin,
                       offset,
                       data.data(),
                       data.length(),
-                      nullptr) {}
+                      nullptr,
+                      true) {}
 
-QuicStreamFrame::QuicStreamFrame(QuicStreamId stream_id,
-                                 bool fin,
-                                 QuicStreamOffset offset,
-                                 QuicPacketLength data_length,
-                                 UniqueStreamBuffer buffer)
+QuicStreamFrame::QuicStreamFrame(
+    QuicStreamId stream_id,
+    bool fin,
+    QuicStreamOffset offset,
+    QuicPacketLength data_length,
+    UniqueStreamBuffer buffer,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
     : QuicStreamFrame(stream_id,
                       fin,
                       offset,
                       nullptr,
                       data_length,
-                      std::move(buffer)) {
+                      std::move(buffer),
+                      true) {
   DCHECK(this->buffer != nullptr);
   DCHECK_EQ(data_buffer, this->buffer.get());
 }
 
-QuicStreamFrame::QuicStreamFrame(QuicStreamId stream_id,
-                                 bool fin,
-                                 QuicStreamOffset offset,
-                                 QuicPacketLength data_length)
-    : QuicStreamFrame(stream_id, fin, offset, nullptr, data_length, nullptr) {}
+QuicStreamFrame::QuicStreamFrame(
+    QuicStreamId stream_id,
+    bool fin,
+    QuicStreamOffset offset,
+    QuicPacketLength data_length,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
+    : QuicStreamFrame(stream_id,
+                      fin,
+                      offset,
+                      nullptr,
+                      data_length,
+                      nullptr,
+                      true) {}
 
 QuicStreamFrame::QuicStreamFrame(QuicStreamId stream_id,
                                  bool fin,
                                  QuicStreamOffset offset,
                                  const char* data_buffer,
                                  QuicPacketLength data_length,
-                                 UniqueStreamBuffer buffer)
+                                 UniqueStreamBuffer buffer,
+                                 bool has_traffic_annotation)
     : stream_id(stream_id),
       fin(fin),
       data_length(data_length),
       data_buffer(data_buffer),
       offset(offset),
-      buffer(std::move(buffer)) {
+      buffer(std::move(buffer)),
+      has_traffic_annotation(has_traffic_annotation) {
   if (this->buffer != nullptr) {
     DCHECK(data_buffer == nullptr);
     this->data_buffer = this->buffer.get();

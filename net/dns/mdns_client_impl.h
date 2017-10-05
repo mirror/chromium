@@ -26,6 +26,7 @@
 #include "net/socket/datagram_server_socket.h"
 #include "net/socket/udp_server_socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class Clock;
@@ -63,7 +64,9 @@ class NET_EXPORT_PRIVATE MDnsConnection {
 
   // Both methods return true if at least one of the socket handlers succeeded.
   bool Init(MDnsSocketFactory* socket_factory);
-  void Send(const scoped_refptr<IOBuffer>& buffer, unsigned size);
+  void Send(const NetworkTrafficAnnotationTag& traffic_annotation,
+            const scoped_refptr<IOBuffer>& buffer,
+            unsigned size);
 
  private:
   class SocketHandler {
@@ -73,7 +76,9 @@ class NET_EXPORT_PRIVATE MDnsConnection {
     ~SocketHandler();
 
     int Start();
-    void Send(const scoped_refptr<IOBuffer>& buffer, unsigned size);
+    void Send(const NetworkTrafficAnnotationTag& traffic_annotation,
+              const scoped_refptr<IOBuffer>& buffer,
+              unsigned size);
 
    private:
     int DoLoop(int rv);

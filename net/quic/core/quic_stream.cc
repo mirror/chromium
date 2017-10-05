@@ -10,6 +10,7 @@
 #include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
 #include "net/quic/platform/api/quic_logging.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
@@ -38,14 +39,20 @@ size_t GetReceivedFlowControlWindow(QuicSession* session) {
   return kMinimumFlowControlSendWindow;
 }
 
+// TODO(rhalavati): To Be Updated.
+NetworkTrafficAnnotationTag kTrafficAnnotationInternal =
+    NO_TRAFFIC_ANNOTATION_YET;
+
 }  // namespace
 
 QuicStream::PendingData::PendingData(
     string data_in,
-    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener)
+    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
     : data(std::move(data_in)),
       offset(0),
-      ack_listener(std::move(ack_listener)) {}
+      ack_listener(std::move(ack_listener)),
+      traffic_annotation(traffic_annotation) {}
 
 QuicStream::PendingData::~PendingData() {}
 
@@ -198,6 +205,7 @@ void QuicStream::CloseConnectionWithDetails(QuicErrorCode error,
 }
 
 void QuicStream::WriteOrBufferData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStringPiece data,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
@@ -241,7 +249,7 @@ void QuicStream::WriteOrBufferData(
 
   if (queued_data_.empty()) {
     struct iovec iov(MakeIovec(data));
-    consumed_data = WritevData(&iov, 1, fin, ack_listener);
+    consumed_data = WritevData(traffic_annotation, &iov, 1, fin, ack_listener);
     DCHECK_LE(consumed_data.bytes_consumed, data.length());
   }
 
@@ -250,7 +258,8 @@ void QuicStream::WriteOrBufferData(
       (fin && !consumed_data.fin_consumed)) {
     QuicStringPiece remainder(data.substr(consumed_data.bytes_consumed));
     queued_data_bytes_ += remainder.size();
-    queued_data_.emplace_back(remainder.as_string(), ack_listener);
+    queued_data_.emplace_back(remainder.as_string(), ack_listener,
+                              traffic_annotation);
   }
 }
 
@@ -295,7 +304,8 @@ void QuicStream::OnCanWrite() {
     struct iovec iov = {
         const_cast<char*>(pending_data->data.data()) + pending_data->offset,
         remaining_len};
-    QuicConsumedData consumed_data = WritevData(&iov, 1, fin, ack_listener);
+    QuicConsumedData consumed_data =
+        WritevData(kTrafficAnnotationInternal, &iov, 1, fin, ack_listener);
     queued_data_bytes_ -= consumed_data.bytes_consumed;
     if (consumed_data.bytes_consumed == remaining_len &&
         fin == consumed_data.fin_consumed) {
@@ -326,6 +336,7 @@ void QuicStream::MaybeSendBlocked() {
 }
 
 QuicConsumedData QuicStream::WritevData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const struct iovec* iov,
     int iov_count,
     bool fin,
@@ -407,9 +418,9 @@ QuicConsumedData QuicStream::WritevData(
                   << write_length << " due to flow control";
   }
 
-  QuicConsumedData consumed_data =
-      WritevDataInner(QuicIOVector(iov, iov_count, write_length),
-                      stream_bytes_written_, fin, std::move(ack_listener));
+  QuicConsumedData consumed_data = WritevDataInner(
+      traffic_annotation, QuicIOVector(iov, iov_count, write_length),
+      stream_bytes_written_, fin, std::move(ack_listener));
   stream_bytes_written_ += consumed_data.bytes_consumed;
   stream_bytes_outstanding_ += consumed_data.bytes_consumed;
 
@@ -485,6 +496,7 @@ QuicConsumedData QuicStream::WriteMemSlices(QuicMemSliceSpan span, bool fin) {
 }
 
 QuicConsumedData QuicStream::WritevDataInner(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicIOVector iov,
     QuicStreamOffset offset,
     bool fin,
@@ -493,8 +505,8 @@ QuicConsumedData QuicStream::WritevDataInner(
   if (fin && add_random_padding_after_fin_) {
     state = FIN_AND_PADDING;
   }
-  return session()->WritevData(this, id(), iov, offset, state,
-                               std::move(ack_listener));
+  return session()->WritevData(traffic_annotation, this, id(), iov, offset,
+                               state, std::move(ack_listener));
 }
 
 void QuicStream::CloseReadSide() {
@@ -717,6 +729,7 @@ void QuicStream::WriteBufferedData() {
   }
 
   QuicConsumedData consumed_data = WritevDataInner(
+      kTrafficAnnotationInternal,
       QuicIOVector(/*iov=*/nullptr, /*iov_count=*/0, write_length),
       stream_bytes_written_, fin, nullptr);
 

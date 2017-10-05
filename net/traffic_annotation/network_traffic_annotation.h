@@ -221,10 +221,16 @@ struct MutableNetworkTrafficAnnotationTag {
   bool operator==(const MutableNetworkTrafficAnnotationTag& other) const {
     return unique_id_hash_code == other.unique_id_hash_code;
   }
-
   explicit operator NetworkTrafficAnnotationTag() const {
     CHECK_NE(unique_id_hash_code, TRAFFIC_ANNOTATION_UNINITIALIZED);
     return NetworkTrafficAnnotationTag({unique_id_hash_code});
+  }
+  void clear() { unique_id_hash_code = TRAFFIC_ANNOTATION_UNINITIALIZED; }
+  void swap(MutableNetworkTrafficAnnotationTag& other) {
+    std::swap(unique_id_hash_code, other.unique_id_hash_code);
+  }
+  bool has_value() {
+    return unique_id_hash_code != TRAFFIC_ANNOTATION_UNINITIALIZED;
   }
 };
 

@@ -27,6 +27,7 @@
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_source_type.h"
 #include "net/spdy/chromium/spdy_http_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -220,14 +221,17 @@ size_t SpdyProxyClientSocket::PopulateUserReadBuffer(char* data, size_t len) {
   return read_buffer_queue_.Dequeue(data, len);
 }
 
-int SpdyProxyClientSocket::Write(IOBuffer* buf, int buf_len,
-                                 const CompletionCallback& callback) {
+int SpdyProxyClientSocket::Write(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   DCHECK(write_callback_.is_null());
   if (next_state_ != STATE_OPEN)
     return ERR_SOCKET_NOT_CONNECTED;
 
   DCHECK(spdy_stream_.get());
-  spdy_stream_->SendData(buf, buf_len, MORE_DATA_TO_SEND);
+  spdy_stream_->SendData(traffic_annotation, buf, buf_len, MORE_DATA_TO_SEND);
   net_log_.AddByteTransferEvent(NetLogEventType::SOCKET_BYTES_SENT, buf_len,
                                 buf->data());
   write_callback_ = callback;
@@ -364,8 +368,9 @@ int SpdyProxyClientSocket::DoSendRequest() {
   CreateSpdyHeadersFromHttpRequest(request_, request_.extra_headers, true,
                                    &headers);
 
-  return spdy_stream_->SendRequestHeaders(std::move(headers),
-                                          MORE_DATA_TO_SEND);
+  // TODO(rhalavati): Can this be a common internal net annotation?
+  return spdy_stream_->SendRequestHeaders(
+      NO_TRAFFIC_ANNOTATION_YET, std::move(headers), MORE_DATA_TO_SEND);
 }
 
 int SpdyProxyClientSocket::DoSendRequestComplete(int result) {

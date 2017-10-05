@@ -29,6 +29,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 #include "net/log/net_log_with_source.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_errors.h"
 #include "net/websockets/websocket_event_interface.h"
 #include "net/websockets/websocket_frame.h"
@@ -136,6 +137,10 @@ class DependentIOBuffer : public WrappedIOBuffer {
   ~DependentIOBuffer() override {}
   scoped_refptr<net::IOBuffer> buffer_;
 };
+
+// TODO(rhalavati): To be updated.
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotationInternal =
+    NO_TRAFFIC_ANNOTATION_YET;
 
 }  // namespace
 
@@ -405,7 +410,8 @@ WebSocketChannel::ChannelState WebSocketChannel::SendFrame(
     bool fin,
     WebSocketFrameHeader::OpCode op_code,
     scoped_refptr<IOBuffer> buffer,
-    size_t buffer_size) {
+    size_t buffer_size,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   if (buffer_size > INT_MAX) {
     NOTREACHED() << "Frame size sanity check failed";
     return CHANNEL_ALIVE;
@@ -456,7 +462,8 @@ WebSocketChannel::ChannelState WebSocketChannel::SendFrame(
   // send_quota_low_water_mark_, it might be good to increase the "low
   // water mark" and "high water mark", but only if the link to the WebSocket
   // server is not saturated.
-  return SendFrameInternal(fin, op_code, std::move(buffer), buffer_size);
+  return SendFrameInternal(fin, op_code, std::move(buffer), buffer_size,
+                           traffic_annotation);
   // |this| may have been deleted.
 }
 
@@ -807,7 +814,8 @@ ChannelState WebSocketChannel::OnReadDone(bool synchronous, int result) {
       DCHECK(!read_frames_.empty())
           << "ReadFrames() returned OK, but nothing was read.";
       for (size_t i = 0; i < read_frames_.size(); ++i) {
-        if (HandleFrame(std::move(read_frames_[i])) == CHANNEL_DELETED)
+        if (HandleFrame(std::move(read_frames_[i]),
+                        kTrafficAnnotationInternal) == CHANNEL_DELETED)
           return CHANNEL_DELETED;
       }
       read_frames_.clear();
@@ -847,7 +855,8 @@ ChannelState WebSocketChannel::OnReadDone(bool synchronous, int result) {
 }
 
 ChannelState WebSocketChannel::HandleFrame(
-    std::unique_ptr<WebSocketFrame> frame) {
+    std::unique_ptr<WebSocketFrame> frame,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   if (frame->header.masked) {
     // RFC6455 Section 5.1 "A client MUST close a connection if it detects a
     // masked frame."
@@ -874,14 +883,15 @@ ChannelState WebSocketChannel::HandleFrame(
 
   // Respond to the frame appropriately to its type.
   return HandleFrameByState(opcode, frame->header.final, std::move(frame->data),
-                            frame->header.payload_length);
+                            frame->header.payload_length, traffic_annotation);
 }
 
 ChannelState WebSocketChannel::HandleFrameByState(
     const WebSocketFrameHeader::OpCode opcode,
     bool final,
     scoped_refptr<IOBuffer> data_buffer,
-    uint64_t size) {
+    uint64_t size,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK_NE(RECV_CLOSED, state_)
       << "HandleFrame() does not support being called re-entrantly from within "
          "SendClose()";
@@ -898,13 +908,15 @@ ChannelState WebSocketChannel::HandleFrameByState(
     case WebSocketFrameHeader::kOpCodeText:  // fall-thru
     case WebSocketFrameHeader::kOpCodeBinary:
     case WebSocketFrameHeader::kOpCodeContinuation:
-      return HandleDataFrame(opcode, final, std::move(data_buffer), size);
+      return HandleDataFrame(opcode, final, std::move(data_buffer), size,
+                             traffic_annotation);
 
     case WebSocketFrameHeader::kOpCodePing:
       DVLOG(1) << "Got Ping of size " << size;
       if (state_ == CONNECTED)
         return SendFrameInternal(true, WebSocketFrameHeader::kOpCodePong,
-                                 std::move(data_buffer), size);
+                                 std::move(data_buffer), size,
+                                 traffic_annotation);
       DVLOG(3) << "Ignored ping in state " << state_;
       return CHANNEL_ALIVE;
 
@@ -923,7 +935,7 @@ ChannelState WebSocketChannel::HandleFrameByState(
       // TODO(ricea): Find a way to safely log the message from the close
       // message (escape control codes and so on).
       DVLOG(1) << "Got Close with code " << code;
-      return HandleCloseFrame(code, reason);
+      return HandleCloseFrame(code, reason, traffic_annotation);
     }
 
     default:
@@ -938,7 +950,8 @@ ChannelState WebSocketChannel::HandleDataFrame(
     WebSocketFrameHeader::OpCode opcode,
     bool final,
     scoped_refptr<IOBuffer> data_buffer,
-    uint64_t size) {
+    uint64_t size,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   if (state_ != CONNECTED) {
     DVLOG(3) << "Ignored data packet received in state " << state_;
     return CHANNEL_ALIVE;
@@ -1011,8 +1024,10 @@ ChannelState WebSocketChannel::HandleDataFrame(
                                        std::move(data_buffer), size);
 }
 
-ChannelState WebSocketChannel::HandleCloseFrame(uint16_t code,
-                                                const std::string& reason) {
+ChannelState WebSocketChannel::HandleCloseFrame(
+    uint16_t code,
+    const std::string& reason,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   DVLOG(1) << "Got Close with code " << code;
   switch (state_) {
     case CONNECTED:
@@ -1075,11 +1090,13 @@ ChannelState WebSocketChannel::SendFrameInternal(
     bool fin,
     WebSocketFrameHeader::OpCode op_code,
     scoped_refptr<IOBuffer> buffer,
-    uint64_t size) {
+    uint64_t size,
+    const NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(state_ == CONNECTED || state_ == RECV_CLOSED);
   DCHECK(stream_);
 
-  std::unique_ptr<WebSocketFrame> frame(new WebSocketFrame(op_code));
+  std::unique_ptr<WebSocketFrame> frame(
+      new WebSocketFrame(op_code, traffic_annotation));
   WebSocketFrameHeader& header = frame->header;
   header.final = fin;
   header.masked = true;
@@ -1147,7 +1164,8 @@ ChannelState WebSocketChannel::SendClose(uint16_t code,
         reason.begin(), reason.end(), body->data() + kWebSocketCloseCodeLength);
   }
   if (SendFrameInternal(true, WebSocketFrameHeader::kOpCodeClose,
-                        std::move(body), size) == CHANNEL_DELETED)
+                        std::move(body), size,
+                        kTrafficAnnotationInternal) == CHANNEL_DELETED)
     return CHANNEL_DELETED;
   return CHANNEL_ALIVE;
 }

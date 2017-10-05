@@ -1,4 +1,5 @@
 include_rules = [
+  "+net/traffic_annotation",
   "+third_party/expat",
   "+third_party/webrtc/rtc_base",
   "+third_party/webrtc/p2p",
