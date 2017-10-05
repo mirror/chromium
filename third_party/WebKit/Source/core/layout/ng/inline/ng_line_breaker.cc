@@ -24,14 +24,17 @@ NGLineBreaker::NGLineBreaker(
     const NGConstraintSpace& space,
     NGFragmentBuilder* container_builder,
     Vector<RefPtr<NGUnpositionedFloat>>* unpositioned_floats,
+    LazyLineBreakIterator* break_iterator,
+    const HarfBuzzShaper& shaper,
+    ShapeResultSpacing<String>* spacing,
     const NGInlineBreakToken* break_token)
     : node_(node),
       constraint_space_(space),
       container_builder_(container_builder),
       unpositioned_floats_(unpositioned_floats),
-      break_iterator_(node.Text()),
-      shaper_(node.Text().Characters16(), node.Text().length()),
-      spacing_(node.Text()),
+      break_iterator_(break_iterator),
+      shaper_(shaper),
+      spacing_(spacing),
       base_direction_(node_.BaseDirection()) {
   if (break_token) {
     item_index_ = break_token->ItemIndex();
@@ -80,6 +83,8 @@ void NGLineBreaker::PrepareNextLine(const NGExclusionSpace& exclusion_space,
   NGInlineItemResults* item_results = &line_info->Results();
   item_results->clear();
   line_info->SetStartOffset(offset_);
+  // TODO(ikilpatrick): is_after_forced_break should be set from the break
+  // token.
   line_info->SetLineStyle(node_, constraint_space_, IsFirstFormattedLine(),
                           line_.is_after_forced_break);
   SetCurrentStyle(line_info->LineStyle());
@@ -182,7 +187,7 @@ void NGLineBreaker::BreakLine(NGLineInfo* line_info) {
       // For other items with text (e.g., bidi controls), use their text to
       // determine the break opportunity.
       item_result->prohibit_break_after =
-          !break_iterator_.IsBreakable(item_result->end_offset);
+          !break_iterator_->IsBreakable(item_result->end_offset);
       state = item_result->prohibit_break_after ? LineBreakState::kNotBreakable
                                                 : LineBreakState::kIsBreakable;
       MoveToNextOf(item);
@@ -271,13 +276,13 @@ void NGLineBreaker::ComputeLineLocation(NGLineInfo* line_info) const {
 
 bool NGLineBreaker::IsFirstBreakOpportunity(unsigned offset,
                                             const NGLineInfo& line_info) const {
-  return break_iterator_.NextBreakOpportunity(line_info.StartOffset() + 1) >=
+  return break_iterator_->NextBreakOpportunity(line_info.StartOffset() + 1) >=
          offset;
 }
 
 NGLineBreaker::LineBreakState NGLineBreaker::ComputeIsBreakableAfter(
     NGInlineItemResult* item_result) const {
-  if (auto_wrap_ && break_iterator_.IsBreakable(item_result->end_offset)) {
+  if (auto_wrap_ && break_iterator_->IsBreakable(item_result->end_offset)) {
     DCHECK(!item_result->prohibit_break_after);
     return LineBreakState::kIsBreakable;
   }
@@ -363,8 +368,8 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
   DCHECK_EQ(item.TextShapeResult()->StartIndexForResult(), item.StartOffset());
   DCHECK_EQ(item.TextShapeResult()->EndIndexForResult(), item.EndOffset());
   ShapingLineBreaker breaker(&shaper_, &item.Style()->GetFont(),
-                             item.TextShapeResult(), &break_iterator_,
-                             &spacing_, hyphenation_);
+                             item.TextShapeResult(), break_iterator_, spacing_,
+                             hyphenation_);
   if (!enable_soft_hyphen_)
     breaker.DisableSoftHyphen();
   available_width = std::max(LayoutUnit(0), available_width);
@@ -383,11 +388,11 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
     // If overflow and no break opportunities exist, and if 'word-wrap:
     // break-word', try to break at every grapheme cluster boundary.
     if (item_result->inline_size > available_width && break_if_overflow_ &&
-        break_iterator_.BreakType() == LineBreakType::kNormal &&
+        break_iterator_->BreakType() == LineBreakType::kNormal &&
         IsFirstBreakOpportunity(result.break_offset, line_info)) {
-      break_iterator_.SetBreakType(LineBreakType::kBreakCharacter);
+      break_iterator_->SetBreakType(LineBreakType::kBreakCharacter);
       BreakText(item_result, item, available_width, line_info);
-      break_iterator_.SetBreakType(LineBreakType::kNormal);
+      break_iterator_->SetBreakType(LineBreakType::kNormal);
       return;
     }
 
@@ -415,7 +420,7 @@ void NGLineBreaker::BreakText(NGInlineItemResult* item_result,
   } else {
     DCHECK_EQ(item_result->end_offset, item.EndOffset());
     item_result->prohibit_break_after =
-        !break_iterator_.IsBreakable(item_result->end_offset);
+        !break_iterator_->IsBreakable(item_result->end_offset);
   }
 }
 
@@ -786,35 +791,35 @@ void NGLineBreaker::SetCurrentStyle(const ComputedStyle& style) {
   auto_wrap_ = style.AutoWrap();
 
   if (auto_wrap_) {
-    break_iterator_.SetLocale(style.LocaleForLineBreakIterator());
+    break_iterator_->SetLocale(style.LocaleForLineBreakIterator());
 
     switch (style.WordBreak()) {
       case EWordBreak::kNormal:
         break_if_overflow_ = style.OverflowWrap() == EOverflowWrap::kBreakWord;
-        break_iterator_.SetBreakType(LineBreakType::kNormal);
+        break_iterator_->SetBreakType(LineBreakType::kNormal);
         break;
       case EWordBreak::kBreakAll:
         break_if_overflow_ = false;
-        break_iterator_.SetBreakType(LineBreakType::kBreakAll);
+        break_iterator_->SetBreakType(LineBreakType::kBreakAll);
         break;
       case EWordBreak::kBreakWord:
         break_if_overflow_ = true;
-        break_iterator_.SetBreakType(LineBreakType::kNormal);
+        break_iterator_->SetBreakType(LineBreakType::kNormal);
         break;
       case EWordBreak::kKeepAll:
         break_if_overflow_ = false;
-        break_iterator_.SetBreakType(LineBreakType::kKeepAll);
+        break_iterator_->SetBreakType(LineBreakType::kKeepAll);
         break;
     }
-    break_iterator_.SetBreakSpace(style.BreakOnlyAfterWhiteSpace()
-                                      ? BreakSpaceType::kAfter
-                                      : BreakSpaceType::kBeforeSpace);
+    break_iterator_->SetBreakSpace(style.BreakOnlyAfterWhiteSpace()
+                                       ? BreakSpaceType::kAfter
+                                       : BreakSpaceType::kBeforeSpace);
 
     enable_soft_hyphen_ = style.GetHyphens() != Hyphens::kNone;
     hyphenation_ = style.GetHyphenation();
   }
 
-  spacing_.SetSpacing(style.GetFontDescription());
+  spacing_->SetSpacing(style.GetFontDescription());
 }
 
 void NGLineBreaker::MoveToNextOf(const NGInlineItem& item) {
@@ -851,7 +856,7 @@ void NGLineBreaker::SkipCollapsibleWhitespaces() {
 RefPtr<NGInlineBreakToken> NGLineBreaker::CreateBreakToken() const {
   const Vector<NGInlineItem>& items = node_.Items();
   if (item_index_ >= items.size())
-    return nullptr;
+    return NGInlineBreakToken::Create(node_);
   return NGInlineBreakToken::Create(node_, item_index_, offset_);
 }
 

@@ -42,9 +42,13 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
         node, &node.Style(), space->WritingMode(), space->Direction());
     container_builder.SetBfcOffset(NGBfcOffset{LayoutUnit(), LayoutUnit()});
 
+    LazyLineBreakIterator break_iterator(node.Text());
+    HarfBuzzShaper shaper(node.Text().Characters16(), node.Text().length());
+    ShapeResultSpacing<String> spacing(node.Text());
     Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats;
     NGLineBreaker line_breaker(node, *space, &container_builder,
-                               &unpositioned_floats);
+                               &unpositioned_floats, &break_iterator, shaper,
+                               &spacing);
 
     Vector<NGInlineItemResults> lines;
     NGExclusionSpace exclusion_space;

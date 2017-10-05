@@ -33,6 +33,9 @@ class CORE_EXPORT NGLineBreaker {
                 const NGConstraintSpace&,
                 NGFragmentBuilder*,
                 Vector<RefPtr<NGUnpositionedFloat>>*,
+                LazyLineBreakIterator*,
+                const HarfBuzzShaper&,
+                ShapeResultSpacing<String>*,
                 const NGInlineBreakToken* = nullptr);
   ~NGLineBreaker() {}
 
@@ -141,9 +144,9 @@ class CORE_EXPORT NGLineBreaker {
   unsigned item_index_ = 0;
   unsigned offset_ = 0;
   NGLogicalOffset content_offset_;
-  LazyLineBreakIterator break_iterator_;
-  HarfBuzzShaper shaper_;
-  ShapeResultSpacing<String> spacing_;
+  LazyLineBreakIterator* break_iterator_;
+  const HarfBuzzShaper& shaper_;
+  ShapeResultSpacing<String>* spacing_;
   const Hyphenation* hyphenation_ = nullptr;
 
   // Keep track of handled float items. See HandleFloat().
