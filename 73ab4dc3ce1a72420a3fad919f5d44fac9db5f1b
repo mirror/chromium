@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "97d81da5_92149f0a",
+        "filename": "chrome/browser/chromeos/display/display_configuration_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58d8cd50_cf73107b",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 65
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9acde96b_a619ad9b",
         "filename": "chrome/browser/chromeos/display/display_configuration_observer.cc",
         "patchSetId": 7
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "4819deb8_6bf604a4",
+        "filename": "chrome/browser/chromeos/display/display_configuration_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 1,
+      "message": "I meant to document why we would save the preferences sometimes and sometimes not.",
+      "parentUuid": "70517c3c_dca6bd84",
+      "range": {
+        "startLine": 33,
+        "startChar": 7,
+        "endLine": 33,
+        "endChar": 23
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ba15613_22db77e4",
         "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
         "patchSetId": 7
@@ -222,6 +270,30 @@
       "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5163232a_87dbf68f",
+        "filename": "chrome/browser/chromeos/display/display_preferences_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "88a3d180_e363350d",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +482,30 @@
       "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0098f023_455a7028",
+        "filename": "ui/display/manager/display_layout_store.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b4183ab_0bdfbb32",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "73ab4dc3ce1a72420a3fad919f5d44fac9db5f1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

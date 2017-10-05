@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aeca8ce_ed45e52d",
+        "filename": "ui/display/manager/display_layout_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 1,
+      "message": "Nit (optional): Reading this comment now suggests that it would be better to rename this function. Like ShouldEnterMirrorModeForDisplayList() or Something?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 74
+      },
+      "revId": "ca34d4c57937f2fdc6054a32c65d96a184b226e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b6e78c8_63fbe7cb",
+        "filename": "ash/display/window_tree_host_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-05T04:43:36Z",
+      "side": 0,
+      "message": "I think this should be kept protected.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 26
+      },
+      "revId": "17b03147f68f48e9a7b85bf12b9468ab8ad6f5f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
