@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "286af910_6b9c2855",
+        "filename": "build/android/gyp/copy_ex.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-05T14:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "032b3a4b_2226d41f",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706e3096_eaaf576e",
         "filename": "build/android/update_deps/update_third_party_deps.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09df1907_19cb5e3c",
+        "filename": "build/android/update_deps/update_third_party_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-05T14:42:48Z",
+      "side": 1,
+      "message": "Yeah, some of the cipd symlinks get dropped into subdirectories.",
+      "parentUuid": "706e3096_eaaf576e",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "10eeb865_3142ad13",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-05T14:42:48Z",
+      "side": 1,
+      "message": "copy_ex currently requires a stamp when we\u0027re using a depfile because it gets incorporated into the depfile as the first output. I suppose I could change copy_ex to take the outputs and incorporate the first of them into the depfile instead if outputs are provided and the stamp isn\u0027t. I don\u0027t think doing so is worth the effort or the increased complexity.",
+      "parentUuid": "14e33ffd_d046c228",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "058b00fe_0f7a194c",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ad1a15_f3184daa",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-05T14:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "058b00fe_0f7a194c",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
