@@ -67,6 +67,8 @@
 #if GTK_MAJOR_VERSION == 2
 #include "chrome/browser/ui/libgtkui/native_theme_gtk2.h"  // nogncheck
 #elif GTK_MAJOR_VERSION == 3
+#include "chrome/browser/ui/libgtkui/gtk3_background_painter.h"  // nogncheck
+#include "chrome/browser/ui/libgtkui/gtk3_border_painter.h"      // nogncheck
 #include "chrome/browser/ui/libgtkui/native_theme_gtk3.h"  // nogncheck
 #include "chrome/browser/ui/libgtkui/nav_button_layout_manager_gtk3.h"  // nogncheck
 #include "chrome/browser/ui/libgtkui/nav_button_provider_gtk3.h"  // nogncheck
@@ -805,6 +807,26 @@ std::unique_ptr<views::NavButtonProvider> GtkUi::CreateNavButtonProvider() {
 #if GTK_MAJOR_VERSION >= 3
   if (GtkVersionCheck(3, 14))
     return base::MakeUnique<libgtkui::NavButtonProviderGtk3>();
+#endif
+  return nullptr;
+}
+
+std::unique_ptr<views::Background> GtkUi::CreateAvatarButtonBackground() {
+#if GTK_MAJOR_VERSION >= 3
+  if (GtkVersionCheck(3, 14)) {
+    return std::make_unique<Gtk3BackgroundPainter>(GetStyleContextFromCss(
+        "#headerbar.header-bar.titlebar GtkButton#button"));
+  }
+#endif
+  return nullptr;
+}
+
+std::unique_ptr<views::Border> GtkUi::CreateAvatarButtonBorder() {
+#if GTK_MAJOR_VERSION >= 3
+  if (GtkVersionCheck(3, 14)) {
+    return std::make_unique<Gtk3BorderPainter>(GetStyleContextFromCss(
+        "#headerbar.header-bar.titlebar GtkButton#button"));
+  }
 #endif
   return nullptr;
 }

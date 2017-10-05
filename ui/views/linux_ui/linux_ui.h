@@ -173,6 +173,16 @@ class VIEWS_EXPORT LinuxUI : public ui::LinuxInputMethodContextFactory,
   // Returns a new NavButtonProvider, or nullptr if the underlying
   // toolkit does not support drawing client-side navigation buttons.
   virtual std::unique_ptr<NavButtonProvider> CreateNavButtonProvider() = 0;
+
+  // Creates a background for the profile chooser button.  May return
+  // nullptr if the toolkit is missing the needed functionality to
+  // perform the drawing.
+  virtual std::unique_ptr<Background> CreateAvatarButtonBackground() = 0;
+
+  // Creates a border for the profile chooser button.  May return
+  // nullptr if the toolkit is missing the needed functionality to
+  // perform the drawing.
+  virtual std::unique_ptr<Border> CreateAvatarButtonBorder() = 0;
 };
 
 }  // namespace views

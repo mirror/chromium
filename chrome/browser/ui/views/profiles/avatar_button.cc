@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -29,7 +30,9 @@
 #include "ui/views/animation/ink_drop_mask.h"
 #include "ui/views/controls/button/label_button_border.h"
 
-#if defined(OS_WIN)
+#if defined(OS_LINUX)
+#include "ui/views/linux_ui/linux_ui.h"
+#elif defined(OS_WIN)
 #include "base/win/windows_version.h"
 #include "chrome/browser/ui/views/frame/minimize_button_metrics_win.h"
 #endif
@@ -195,15 +198,22 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
 
   bool apply_ink_drop = IsCondensible();
 #if defined(OS_LINUX)
+  constexpr int kIconSize = 16;
   DCHECK_EQ(AvatarButtonStyle::THEMED, button_style);
-  apply_ink_drop = true;
+  views::LinuxUI* linux_ui = views::LinuxUI::instance();
+  std::unique_ptr<views::Background> linux_background;
+  std::unique_ptr<views::Border> linux_border;
+  if (linux_ui) {
+    linux_background = linux_ui->CreateAvatarButtonBackground();
+    linux_border = linux_ui->CreateAvatarButtonBorder();
+  }
+  apply_ink_drop = !linux_background || !linux_border;
 #endif
 
   if (apply_ink_drop) {
     SetInkDropMode(InkDropMode::ON);
     SetFocusPainter(nullptr);
 #if defined(OS_LINUX)
-    constexpr int kIconSize = 16;
     set_ink_drop_base_color(SK_ColorWHITE);
     SetBorder(base::MakeUnique<AvatarButtonThemedBorder>());
     generic_avatar_ = gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
@@ -213,12 +223,22 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
     SetBorder(views::CreateEmptyBorder(kBorderInsets));
 #endif  // defined(OS_WIN)
   } else if (button_style == AvatarButtonStyle::THEMED) {
+#if defined(OS_LINUX)
+    DCHECK(linux_background);
+    DCHECK(linux_border);
+    // SetFocusPainter(nullptr);
+    SetBackground(std::move(linux_background));
+    SetBorder(std::move(linux_border));
+    generic_avatar_ = gfx::CreateVectorIcon(kProfileSwitcherOutlineIcon,
+                                            kIconSize, gfx::kPlaceholderColor);
+#else
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_NORMAL);
     const int kHoverImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_HOVER);
     const int kPressedImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_PRESSED);
     SetButtonAvatar(IDR_AVATAR_THEMED_BUTTON_AVATAR);
     SetBorder(
         CreateThemedBorder(kNormalImageSet, kHoverImageSet, kPressedImageSet));
+#endif
 #if defined(OS_WIN)
   } else if (base::win::GetVersion() < base::win::VERSION_WIN8) {
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_GLASS_BUTTON_NORMAL);

@@ -106,6 +106,8 @@ class GtkUi : public views::LinuxUI {
   void RemoveDeviceScaleFactorObserver(
       views::DeviceScaleFactorObserver* observer) override;
   std::unique_ptr<views::NavButtonProvider> CreateNavButtonProvider() override;
+  std::unique_ptr<views::Background> CreateAvatarButtonBackground() override;
+  std::unique_ptr<views::Border> CreateAvatarButtonBorder() override;
 
   // ui::TextEditKeybindingDelegate:
   bool MatchEvent(const ui::Event& event,
