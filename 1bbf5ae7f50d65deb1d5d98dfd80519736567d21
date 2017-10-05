@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd5b143_5fe7d051",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T22:00:00Z",
+      "side": 1,
+      "message": "Nit: No else after return. Also, suggest switching the order so the 2-line block below is first and just has an early return - and the other block can be unindented.",
+      "range": {
+        "startLine": 297,
+        "startChar": 12,
+        "endLine": 297,
+        "endChar": 0
+      },
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ef6296_72039b1f",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T22:00:00Z",
+      "side": 1,
+      "message": "This seems a bit convoluted.\n\nCan\u0027t you just use \"for of\" loop?\n\ni.e.\n\nfor (const experiment of this.experiments_) {\n  if (this.highlightMatches(searchTerm, experiment)) {\n    matches++;\n  }\n}\n\nSame for all the other places where you\u0027re adding new loops.\n\nAlso, prefer using const and let over var.",
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
