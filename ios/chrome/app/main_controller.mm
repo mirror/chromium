@@ -1402,16 +1402,16 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   }
 }
 
-- (void)showClearBrowsingDataSettings {
+- (void)showClearBrowsingDataSettingsFromViewController:
+    (UIViewController*)presentingViewController {
   if (_settingsNavigationController)
     return;
   _settingsNavigationController = [SettingsNavigationController
       newClearBrowsingDataController:_mainBrowserState
                             delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
+  [presentingViewController presentViewController:_settingsNavigationController
+                                         animated:YES
+                                       completion:nil];
 }
 
 - (void)showAutofillSettings {

@@ -11,6 +11,7 @@
 @class OpenUrlCommand;
 @class ShowSigninCommand;
 @class StartVoiceSearchCommand;
+@class UIViewController;
 
 // This protocol groups commands that are part of ApplicationCommands, but
 // may also be forwarded directly to a settings navigation controller.
@@ -66,7 +67,8 @@
 - (void)dismissTabSwitcher;
 
 // Shows the Clear Browsing Data Settings UI (part of Settings).
-- (void)showClearBrowsingDataSettings;
+- (void)showClearBrowsingDataSettingsFromViewController:
+    (UIViewController*)presentingViewController;
 
 // Shows the Autofill Settings UI.
 - (void)showAutofillSettings;
