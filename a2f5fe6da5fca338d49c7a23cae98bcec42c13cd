@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3e6fe54_5cdb643d",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-05T09:01:31Z",
+      "side": 1,
+      "message": "I\u0027m afraid I don\u0027t really know, I just replicated the logic here:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/profiles/profile_impl_io_data.cc?type\u003dcs\u0026l\u003d497",
+      "parentUuid": "caa56941_0d1fce9b",
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8bc21ee_561e8754",
         "filename": "content/shell/browser/shell_url_request_context_getter.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T09:22:25Z",
       "side": 1,
       "message": "1 second is a long time when we\u0027re iterating through lots of tests. Can we drive this down even more? :)",
+      "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec5bd0a_3abef769",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-10-05T09:01:31Z",
+      "side": 1,
+      "message": "Yeah I\u0027ve reduced it to 100 ms. I think that\u0027s a happy middle ground.",
+      "parentUuid": "a8bc21ee_561e8754",
       "revId": "a2f5fe6da5fca338d49c7a23cae98bcec42c13cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
