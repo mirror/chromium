@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "814b26f6_d3adb22f",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-05T04:45:54Z",
+      "side": 1,
+      "message": "Could the delete matches crashing bug (bug 771603) have to do with this change?\n\nYou could try leaving this ACMatches as a vector and seeing if the crash still happens.\n\nThough it could be the other change.  I\u0027ll comment on the crash bug.",
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fc03a51_6ccd44a5",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 11
@@ -93,6 +110,30 @@
       "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b907831a_ffb36610",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-05T04:45:54Z",
+      "side": 1,
+      "message": "\u003e I can\u0027t disagree with the confusing part, but the explicit version was worse and was rejected.\n\u003e \n\u003e Focusing on the swap below should help it make sense. That is, \u0027default match\u0027 is going to get \u0027other default match\u0027 regardless; so what would you want \u0027other default match\u0027 to contain before the swap?\n\nOh, I think you\u0027re right.  I was thinking about the swap as if it were in an \"else\" clause, not always.\n\nUgh.",
+      "parentUuid": "ab4f399a_9c7bb491",
+      "range": {
+        "startLine": 286,
+        "startChar": 34,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "3aae0039fbcdaeb5e420fd0bcf0363a26c27d2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
