@@ -142,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "bf4da5d0_24b7299f",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/FeatureConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T21:01:13Z",
+      "side": 1,
+      "message": "I chatted with Tommy offline and we could use one feature but there\u0027s no developer benefit to condensing, so let\u0027s keep all 4.\n\nCan we add a comment above each one explaining what type IPH they\u0027ll show and/or how they\u0027re different?",
+      "parentUuid": "952a467a_75a44fc8",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 93
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc9e087f_79894107",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
