@@ -382,6 +382,30 @@
       "revId": "03f5545c0652b108913605349954d848f88b7e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda43dd0_f0813716",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-05T03:17:30Z",
+      "side": 1,
+      "message": "Or should we unconditionally call ReportStatus, and in the case where code \u003d\u003d NO_ERROR_DETECTED just set done_\u003dtrue, but not call TrackInstallableStatusCode ?",
+      "parentUuid": "c8ca0ffd_5e866a5a",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 24
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
