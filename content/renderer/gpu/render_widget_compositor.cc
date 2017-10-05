@@ -1226,27 +1226,21 @@ void RenderWidgetCompositor::RequestNewLayerTreeFrameSink() {
   // the CreateLayerTreeFrameSink task.
   if (delegate_->IsClosing())
     return;
-
-#ifdef OS_ANDROID
-  LOG_IF(FATAL, attempt_software_fallback_)
-      << "Android does not support fallback frame sinks.";
-#endif
-
   delegate_->RequestNewLayerTreeFrameSink(
-      attempt_software_fallback_,
       base::Bind(&RenderWidgetCompositor::SetLayerTreeFrameSink,
                  weak_factory_.GetWeakPtr()));
 }
 
 void RenderWidgetCompositor::DidInitializeLayerTreeFrameSink() {
-  attempt_software_fallback_ = false;
 }
 
 void RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink() {
-  LOG_IF(FATAL, attempt_software_fallback_)
-      << "Failed to create a fallback LayerTreeFrameSink.";
+  // Failed to create a software LayerTreeFrameSink.
+  CHECK(!disabled_gpu_);
 
-  attempt_software_fallback_ = true;
+  disabled_gpu_ = true;
+  delegate_->DisableGpuCompositing();
+
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&RenderWidgetCompositor::RequestNewLayerTreeFrameSink,

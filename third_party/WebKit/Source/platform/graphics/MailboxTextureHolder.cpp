@@ -39,22 +39,20 @@ MailboxTextureHolder::MailboxTextureHolder(
     unsigned texture_id_to_delete_after_mailbox_consumed,
     WeakPtr<WebGraphicsContext3DProviderWrapper>&& context_provider_wrapper,
     IntSize mailbox_size)
-    : TextureHolder(std::move(context_provider_wrapper)),
-      mailbox_(mailbox),
+    : mailbox_(mailbox),
       sync_token_(sync_token),
       texture_id_(texture_id_to_delete_after_mailbox_consumed),
       size_(mailbox_size),
       is_converted_from_skia_texture_(false),
       thread_id_(0) {
+  Init(context_provider_wrapper);
   InitCommon();
 }
 
 MailboxTextureHolder::MailboxTextureHolder(
     std::unique_ptr<TextureHolder> texture_holder)
-    : TextureHolder(texture_holder->ContextProviderWrapper()),
-      texture_id_(0),
-      is_converted_from_skia_texture_(true),
-      thread_id_(0) {
+    : texture_id_(0), is_converted_from_skia_texture_(true), thread_id_(0) {
+  Init(texture_holder->ContextProviderWrapper());
   DCHECK(texture_holder->IsSkiaTextureHolder());
   sk_sp<SkImage> image = texture_holder->GetSkImage();
   DCHECK(image);

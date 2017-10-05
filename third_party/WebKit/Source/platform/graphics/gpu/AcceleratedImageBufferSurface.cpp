@@ -46,8 +46,10 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
     OpacityMode opacity_mode,
     const CanvasColorParams& color_params)
     : ImageBufferSurface(size, opacity_mode, color_params) {
-  context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
-  if (!context_provider_wrapper_)
+  bool using_software_compositing;
+  context_provider_wrapper_ =
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+  if (!context_provider_wrapper_ || using_software_compositing)
     return;
   GrContext* gr_context =
       context_provider_wrapper_->ContextProvider()->GetGrContext();
