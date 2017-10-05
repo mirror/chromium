@@ -305,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "93754e9c_3f3f874d",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "When something is not found in the underlying DB, it tells us that success \u003d\u003d true and found \u003d\u003d false, but we don\u0027t look for the value of |found| and always try to parse.\n\nI\u0027ve filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d772125 about this.",
+      "parentUuid": "9d8135d5_29929d61",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7f6a93c_b49a9484",
         "filename": "media/mojo/services/media_capabilities_leveldb.cc",
         "patchSetId": 2
@@ -386,6 +410,30 @@
       "writtenOn": "2017-09-29T18:31:25Z",
       "side": 1,
       "message": "Tommy, is it recommended that we maintain our own cache outside of the db? I\u0027ve seen similar caching elsewhere in chromium, but I see from level db headers that it does its own caching - so this might be wasteful. I\u0027d like to just defer to level DB for caching if possible. \n\nhttps://cs.chromium.org/chromium/src/third_party/leveldatabase/src/include/leveldb/options.h?sq\u003dpackage:chromium\u0026l\u003d31\n\nLooks like the cache limit is 8MB - is that 8mb per db_ instance? Or are we sharing with other LevelDB users?",
+      "range": {
+        "startLine": 189,
+        "startChar": 8,
+        "endLine": 189,
+        "endChar": 9
+      },
+      "revId": "28748268fceedf6101edf3656781c0ff16af7331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20d86af_5b336004",
+        "filename": "media/mojo/services/media_capabilities_leveldb.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "It\u0027s a shared 8MB cache by default. Do you really need your own or could you make do with that?",
+      "parentUuid": "6fe9d7ca_be9be8dd",
       "range": {
         "startLine": 189,
         "startChar": 8,

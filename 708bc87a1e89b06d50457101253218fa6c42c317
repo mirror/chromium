@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "16230935_fb59d016",
+        "filename": "media/mojo/services/media_capabilities.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: Would it make sense to document this in any way? It doesn\u0027t seemed to be used for anything else than storing a constant so it looks like a \"db versioning constant\", and not something related to the two members below (i.e. something like a media protocol version, etc.). So maybe clarify that?",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff20cf16_dc71ffd8",
         "filename": "media/mojo/services/media_capabilities_database.h",
         "patchSetId": 3
@@ -19,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "6a4f3fd1_9966787d",
+        "filename": "media/mojo/services/media_capabilities_database_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: With the name |entry| it kind of sounds like it\u0027s the main record in the DB, not just the lookup key for the CapabilitiesInfo and in the cache. Could we somehow clarify that?",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30cfa98c_66e11280",
         "filename": "media/mojo/services/media_capabilities_database_impl.cc",
         "patchSetId": 3
@@ -30,6 +70,109 @@
       "writtenOn": "2017-10-03T23:48:51Z",
       "side": 1,
       "message": "Combine this with the one below?",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c494bb4_6aed8e09",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: From here and down to OnGetDecodingInfoFromDatabase we\u0027re using ` instead of | to surround types and names. Above and below we\u0027re using |. Should we try to be consistent within this file?",
+      "range": {
+        "startLine": 61,
+        "startChar": 56,
+        "endLine": 61,
+        "endChar": 63
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea798e84_fdc5f2dc",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: Any reason this couldn\u0027t just take a const Entry\u0026? You only need to make it into an std::string when you communicate with the underlying DB.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 41
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564eeb86_4572f48b",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: Same here, just const Entry\u0026?",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 70
+      },
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bce9045_99c98405",
+        "filename": "media/mojo/services/media_capabilities_database_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Nit: Could you add a short explanation as to the relationship between Info and CapabilitiesInfo?",
+      "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e23bd2_52c67cc9",
+        "filename": "media/mojo/services/media_capabilities_database_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-05T21:18:35Z",
+      "side": 1,
+      "message": "Did you look into using FakeDB for testing instead of writing to disk?\nI\u0027m thinking about //components/leveldb_proto/testing/fake_db.h\n\nIt makes it easier to make certain DB operations fail, and ensure we handle them correctly, etc.",
       "revId": "708bc87a1e89b06d50457101253218fa6c42c317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
