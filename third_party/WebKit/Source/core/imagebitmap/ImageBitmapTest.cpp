@@ -76,8 +76,6 @@ class ImageBitmapTest : public ::testing::Test {
     // rendering flags to restore them on teardown.
     experimental_canvas_features =
         RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
-    color_canvas_extensions =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
   }
   virtual void TearDown() {
     // Garbage collection is required prior to switching out the
@@ -90,8 +88,6 @@ class ImageBitmapTest : public ::testing::Test {
     ReplaceMemoryCacheForTesting(global_memory_cache_.Release());
     RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
         experimental_canvas_features);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions);
   }
 
   sk_sp<SkImage> image_, image2_;
@@ -101,7 +97,6 @@ class ImageBitmapTest : public ::testing::Test {
 };
 
 TEST_F(ImageBitmapTest, ImageResourceConsistency) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   const ImageBitmapOptions default_options;
   HTMLImageElement* image_element =
       HTMLImageElement::Create(*Document::CreateForTest());
@@ -170,7 +165,6 @@ TEST_F(ImageBitmapTest, ImageResourceConsistency) {
 // Verifies that ImageBitmaps constructed from HTMLImageElements hold a
 // reference to the original Image if the HTMLImageElement src is changed.
 TEST_F(ImageBitmapTest, ImageBitmapSourceChanged) {
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
   HTMLImageElement* image =
       HTMLImageElement::Create(*Document::CreateForTest());
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
@@ -261,7 +255,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 
   // Set the runtime flags
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   return options;
 }

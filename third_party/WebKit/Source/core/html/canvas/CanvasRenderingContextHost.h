@@ -28,8 +28,8 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
 
   virtual void DetachContext() = 0;
 
-  virtual void DidDraw(const FloatRect& rect) {}
-  virtual void DidDraw() {}
+  virtual void DidDraw(const FloatRect&) = 0;
+  virtual void DidDraw() = 0;
 
   virtual void FinalizeFrame() = 0;
 

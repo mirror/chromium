@@ -7,15 +7,12 @@
 namespace blink {
 
 SerializedColorParams::SerializedColorParams()
-    : color_space_(SerializedColorSpace::kLegacy),
+    : color_space_(SerializedColorSpace::kSRGB),
       pixel_format_(SerializedPixelFormat::kRGBA8),
       storage_format_(SerializedImageDataStorageFormat::kUint8Clamped) {}
 
 SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
-  switch (color_params.color_space()) {
-    case kLegacyCanvasColorSpace:
-      color_space_ = SerializedColorSpace::kLegacy;
-      break;
+  switch (color_params.ColorSpace()) {
     case kSRGBCanvasColorSpace:
       color_space_ = SerializedColorSpace::kSRGB;
       break;
@@ -27,7 +24,7 @@ SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
       break;
   }
 
-  switch (color_params.pixel_format()) {
+  switch (color_params.PixelFormat()) {
     case kRGBA8CanvasPixelFormat:
     case kRGB10A2CanvasPixelFormat:
     case kRGBA12CanvasPixelFormat:
@@ -67,11 +64,8 @@ SerializedColorParams::SerializedColorParams(
 }
 
 CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
-  CanvasColorSpace color_space = kLegacyCanvasColorSpace;
+  CanvasColorSpace color_space = kSRGBCanvasColorSpace;
   switch (color_space_) {
-    case SerializedColorSpace::kLegacy:
-      color_space = kLegacyCanvasColorSpace;
-      break;
     case SerializedColorSpace::kSRGB:
       color_space = kSRGBCanvasColorSpace;
       break;
@@ -86,11 +80,14 @@ CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (pixel_format_ == SerializedPixelFormat::kF16)
     pixel_format = kF16CanvasPixelFormat;
-  return CanvasColorParams(color_space, pixel_format);
+  // TODO(junov): Is there a use case that could benefit from serializing
+  // the opacity mode and the gamma mode?
+  return CanvasColorParams(color_space, pixel_format, kNonOpaque,
+                           kPixelOpsIgnoreGamma);
 }
 
 CanvasColorSpace SerializedColorParams::GetColorSpace() const {
-  return GetCanvasColorParams().color_space();
+  return GetCanvasColorParams().ColorSpace();
 }
 
 ImageDataStorageFormat SerializedColorParams::GetStorageFormat() const {

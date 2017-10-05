@@ -37,37 +37,40 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
+      color_params_(kSRGBCanvasColorSpace,
+                    kRGBA8CanvasPixelFormat,
+                    kNonOpaque,
+                    kPixelOpsIgnoreGamma),
       creation_attributes_(attrs) {
   color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-  if (RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
-    if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
-      color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
-    else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
-      color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
+  if (creation_attributes_.colorSpace() == kRec2020CanvasColorSpaceName)
+    color_params_.SetCanvasColorSpace(kRec2020CanvasColorSpace);
+  else if (creation_attributes_.colorSpace() == kP3CanvasColorSpaceName)
+    color_params_.SetCanvasColorSpace(kP3CanvasColorSpace);
 
-    // For now, we only support RGBA8 (for SRGB) and F16 (for all). Everything
-    // else falls back to SRGB + RGBA8.
-    if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
-      color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
-    } else {
-      color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
-      color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
-    }
-
-    // TODO(ccameron): linearPixelMath needs to be propagated here.
+  // For now, we only support RGBA8 (for SRGB) and F16 (for all). Everything
+  // else falls back to SRGB + RGBA8.
+  if (creation_attributes_.pixelFormat() == kF16CanvasPixelFormatName) {
+    color_params_.SetCanvasPixelFormat(kF16CanvasPixelFormat);
+  } else {
+    color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+    color_params_.SetCanvasPixelFormat(kRGBA8CanvasPixelFormat);
   }
+
+  color_params_.SetOpacityMode(creation_attributes_.alpha() ? kNonOpaque
+                                                            : kOpaque);
+  color_params_.SetGammaMode(creation_attributes_.linearPixelMath()
+                                 ? kPixelOpsIgnoreGamma
+                                 : kPixelOpsRespectGamma);
+
   // Make m_creationAttributes reflect the effective colorSpace, pixelFormat and
   // linearPixelMath rather than the requested one.
   creation_attributes_.setColorSpace(ColorSpaceAsString());
   creation_attributes_.setPixelFormat(PixelFormatAsString());
-  creation_attributes_.setLinearPixelMath(color_params_.LinearPixelMath());
 }
 
 WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
-  switch (color_params_.color_space()) {
-    case kLegacyCanvasColorSpace:
-      return kLegacyCanvasColorSpaceName;
+  switch (color_params_.ColorSpace()) {
     case kSRGBCanvasColorSpace:
       return kSRGBCanvasColorSpaceName;
     case kRec2020CanvasColorSpace:
@@ -80,7 +83,7 @@ WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
 }
 
 WTF::String CanvasRenderingContext::PixelFormatAsString() const {
-  switch (color_params_.pixel_format()) {
+  switch (color_params_.PixelFormat()) {
     case kRGBA8CanvasPixelFormat:
       return kRGBA8CanvasPixelFormatName;
     case kRGB10A2CanvasPixelFormat:
