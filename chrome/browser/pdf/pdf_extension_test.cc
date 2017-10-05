@@ -275,6 +275,44 @@ class PDFExtensionTest : public ExtensionApiTest,
     ASSERT_EQ(expect_success, success);
   }
 
+  gfx::Point ConvertVisiblePdfPageFractionalCoordToBlinkClientCoord(
+      WebContents* contents,
+      double xFraction,
+      double yFraction) {
+    CHECK(contents);
+    CHECK(content::ExecuteScript(
+        contents,
+        "var pdfPageClientRect = viewer.viewport.getPageScreenRect("
+        "                            viewer.viewport.getMostVisiblePage());"
+        // This line does nothing since currently these values always cancel
+        // out, but it would help if the PDF viewer ever gained a left sidebar.
+        "pdfPageClientRect.x +="
+        "    document.documentElement.scrollLeft - viewer.viewport.position.x;"
+        // This line converts to Blink client coordinates, which start at top of
+        // the PDF viewer toolbar instead of at its bottom.
+        "pdfPageClientRect.y +="
+        "    document.documentElement.scrollTop - "
+        "viewer.viewport.position.y;"));
+
+    int clientX;
+    CHECK(content::ExecuteScriptAndExtractInt(
+        contents,
+        "window.domAutomationController.send(Math.round("
+        "pdfPageClientRect.x + " +
+            base::DoubleToString(xFraction) + " * pdfPageClientRect.width));",
+        &clientX));
+
+    int clientY;
+    CHECK(content::ExecuteScriptAndExtractInt(
+        contents,
+        "window.domAutomationController.send(Math.round("
+        "pdfPageClientRect.y + " +
+            base::DoubleToString(yFraction) + " * pdfPageClientRect.height));",
+        &clientY));
+
+    return gfx::Point(clientX, clientY);
+  }
+
   void ConvertPageCoordToScreenCoord(WebContents* contents, gfx::Point* point) {
     ASSERT_TRUE(contents);
     ASSERT_TRUE(content::ExecuteScript(contents,
@@ -303,6 +341,30 @@ class PDFExtensionTest : public ExtensionApiTest,
         &y));
 
     point->SetPoint(x, y);
+  }
+
+  ::testing::AssertionResult WaitUntilJSEq(
+      int expected,
+      const std::string& javascript_expression,
+      WebContents* contents) WARN_UNUSED_RESULT {
+    while (true) {
+      int actual;
+      if (!content::ExecuteScriptAndExtractInt(
+              contents,
+              "domAutomationController.send(Math.round(" +
+                  javascript_expression + "));",
+              &actual)) {
+        return ::testing::AssertionFailure()
+               << "Failed to evaluate int \"" << javascript_expression + "\"";
+      }
+
+      if (actual == expected)
+        break;
+
+      DLOG(INFO) << "Waiting for \"" << javascript_expression << "\" to equal "
+                 << expected << " instead of " << actual;
+    }
+    return ::testing::AssertionSuccess();
   }
 
   WebContents* GetActiveWebContents() {
@@ -822,6 +884,243 @@ IN_PROC_BROWSER_TEST_F(PDFExtensionTest, OpenFromFTP) {
   GURL url(ftp_server.GetURL("/test.pdf"));
   ASSERT_TRUE(LoadPdf(url));
   EXPECT_EQ(base::ASCIIToUTF16("test.pdf"), GetActiveWebContents()->GetTitle());
+}
+
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, ClickAnchor) {
+  GURL test_pdf_url(embedded_test_server()->GetURL("/pdf/test-anchors.pdf"));
+  WebContents* guest_contents;
+  guest_contents = LoadPdfGetGuestContents(test_pdf_url);
+  ASSERT_TRUE(guest_contents);
+
+  int history_length;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      GetActiveWebContents(), "domAutomationController.send(history.length);",
+      &history_length));
+  ASSERT_EQ(2, history_length);
+
+  int page;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      "domAutomationController.send(viewer.viewport.getMostVisiblePage());",
+      &page));
+  ASSERT_EQ(0 /* 0-indexed */, page);
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(1)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(1 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  int scrollTopBeforeClicks;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      // Arbitrary prime number scroll offset so we can test it gets restored.
+      "document.documentElement.scrollTop -= 17;"
+      "domAutomationController.send(document.documentElement.scrollTop);",
+      &scrollTopBeforeClicks));
+
+  // Position of the links in test-anchors.pdf as a fraction of the size of the
+  // PDF page they are on (both links are at the same position relative to their
+  // page).
+  const double kLinkFractionalX = 0.175;
+  const double kLinkFractionalY = 0.093;
+
+  gfx::Point link_position =
+      ConvertVisiblePdfPageFractionalCoordToBlinkClientCoord(
+          guest_contents, kLinkFractionalX, kLinkFractionalY);
+  content::SimulateMouseClickAt(GetActiveWebContents(), kDefaultKeyModifier,
+                                blink::WebMouseEvent::Button::kLeft,
+                                link_position);
+
+  ASSERT_TRUE(WaitUntilJSEq(2 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(WaitUntilJSEq(3, "history.length", GetActiveWebContents()));
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(3)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  int scrollTopBeforeSecondClick;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      // Arbitrary prime number scroll offset so we can test it gets restored.
+      "document.documentElement.scrollTop -= 23;"
+      "domAutomationController.send(document.documentElement.scrollTop);",
+      &scrollTopBeforeSecondClick));
+
+  link_position = ConvertVisiblePdfPageFractionalCoordToBlinkClientCoord(
+      guest_contents, kLinkFractionalX, kLinkFractionalY);
+  content::SimulateMouseClickAt(GetActiveWebContents(), kDefaultKeyModifier,
+                                blink::WebMouseEvent::Button::kLeft,
+                                link_position);
+
+  ASSERT_TRUE(WaitUntilJSEq(4 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(5)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(5 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(WaitUntilJSEq(4, "history.length", GetActiveWebContents()));
+
+  EXPECT_EQ(3, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(content::ExecuteScript(GetActiveWebContents(), "history.back()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeSecondClick,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(2, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(content::ExecuteScript(GetActiveWebContents(), "history.back()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(1 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeClicks,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(1, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(
+      content::ExecuteScript(GetActiveWebContents(), "history.forward()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeSecondClick,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(2, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+}
+
+IN_PROC_BROWSER_TEST_F(PDFExtensionTest, PageHashChange) {
+  GURL test_pdf_url(embedded_test_server()->GetURL("/pdf/test-anchors.pdf"));
+  WebContents* guest_contents;
+  guest_contents = LoadPdfGetGuestContents(test_pdf_url);
+  ASSERT_TRUE(guest_contents);
+
+  int history_length;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      GetActiveWebContents(), "domAutomationController.send(history.length);",
+      &history_length));
+  ASSERT_EQ(2, history_length);
+
+  int page;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      "domAutomationController.send(viewer.viewport.getMostVisiblePage());",
+      &page));
+  ASSERT_EQ(0 /* 0-indexed */, page);
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(1)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(1 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  int scrollTopBeforeClicks;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      // Arbitrary prime number scroll offset so we can test it gets restored.
+      "document.documentElement.scrollTop -= 17;"
+      "viewer.viewport.updateViewport_();"
+      "domAutomationController.send(document.documentElement.scrollTop);",
+      &scrollTopBeforeClicks));
+
+  ui_test_utils::NavigateToURL(
+      browser(), GURL(test_pdf_url.spec() + "#page=3" /* 1-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(2 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(WaitUntilJSEq(3, "history.length", GetActiveWebContents()));
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(3)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  int scrollTopBeforeSecondClick;
+  ASSERT_TRUE(content::ExecuteScriptAndExtractInt(
+      guest_contents,
+      // Arbitrary prime number scroll offset so we can test it gets restored.
+      "document.documentElement.scrollTop -= 23;"
+      "viewer.viewport.updateViewport_();"
+      "domAutomationController.send(document.documentElement.scrollTop);",
+      &scrollTopBeforeSecondClick));
+
+  ui_test_utils::NavigateToURL(
+      browser(), GURL(test_pdf_url.spec() + "#page=5" /* 1-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(4 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(content::ExecuteScript(
+      guest_contents, "viewer.viewport.goToPage(5)" /* 0-indexed */));
+
+  ASSERT_TRUE(WaitUntilJSEq(5 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+
+  ASSERT_TRUE(WaitUntilJSEq(4, "history.length", GetActiveWebContents()));
+
+  EXPECT_EQ(3, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(content::ExecuteScript(GetActiveWebContents(), "history.back()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeSecondClick,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(2, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(content::ExecuteScript(GetActiveWebContents(), "history.back()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(1 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeClicks,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(1, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
+
+  ASSERT_TRUE(
+      content::ExecuteScript(GetActiveWebContents(), "history.forward()"));
+
+  ASSERT_TRUE(WaitUntilJSEq(3 /* 0-indexed */,
+                            "viewer.viewport.getMostVisiblePage()",
+                            guest_contents));
+  ASSERT_TRUE(WaitUntilJSEq(scrollTopBeforeSecondClick,
+                            "document.documentElement.scrollTop",
+                            guest_contents));
+
+  EXPECT_EQ(2, GetActiveWebContents()->GetController().GetCurrentEntryIndex());
 }
 
 class PDFExtensionLinkClickTest : public PDFExtensionTest {

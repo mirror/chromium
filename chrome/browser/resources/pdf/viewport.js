@@ -780,9 +780,13 @@ Viewport.prototype = {
 
   /**
    * Get the coordinates of the page contents (excluding the page shadow)
-   * relative to the screen.
+   * relative to the bottom-left corner of the PDF viewer toolbar, even if the
+   * toolbar is currently transparent. Despite the name, this is not relative
+   * to the device's display! These coordinates are almost the same as Blink
+   * client coordinates, except that those are relative to the top-left corner
+   * of the toolbar.
    * @param {number} page the index of the page to get the rect for.
-   * @return {Object} a rect representing the page in screen coordinates.
+   * @return {Object} a rect representing the page.
    */
   getPageScreenRect: function(page) {
     if (!this.documentDimensions_) {

@@ -112,6 +112,8 @@ const char kJSPositionX[] = "x";
 const char kJSPositionY[] = "y";
 // Cancel the stream URL request (Plugin -> Page)
 const char kJSCancelStreamUrlType[] = "cancelStreamUrl";
+// Fork off a new history entry (Plugin -> Page)
+const char kJSForkHistoryStateType[] = "forkHistoryState";
 // Navigate to the given URL (Plugin -> Page)
 const char kJSNavigateType[] = "navigate";
 const char kJSNavigateUrl[] = "url";
@@ -1217,6 +1219,12 @@ void OutOfProcessInstance::ScrollToPage(int page) {
   pp::VarDictionary message;
   message.Set(kType, kJSGoToPageType);
   message.Set(kJSPageNumber, pp::Var(page));
+  PostMessage(message);
+}
+
+void OutOfProcessInstance::ForkHistoryState() {
+  pp::VarDictionary message;
+  message.Set(kType, kJSForkHistoryStateType);
   PostMessage(message);
 }
 
