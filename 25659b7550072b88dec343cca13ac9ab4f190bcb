@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89ccfa1_61c1dd0a",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T00:53:16Z",
+      "side": 1,
+      "message": "Optional nit: It seems fine, and slightly more efficient, to use UMA_HISTOGRAM_COUNTS_100 here.",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 29
+      },
+      "revId": "25659b7550072b88dec343cca13ac9ab4f190bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd2169a5_f653e406",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T00:53:16Z",
+      "side": 1,
+      "message": "Please document that these values are persisted to logs, and that entries should not be renumbered and numeric values should never be reused: https://chromium.googlesource.com/chromium/src/+/HEAD/tools/metrics/histograms/README.md#Enum-Histograms",
+      "range": {
+        "startLine": 130,
+        "startChar": 26,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "25659b7550072b88dec343cca13ac9ab4f190bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79754062_320d6622",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16543,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T00:53:16Z",
+      "side": 1,
+      "message": "nit: which",
+      "range": {
+        "startLine": 16543,
+        "startChar": 33,
+        "endLine": 16543,
+        "endChar": 37
+      },
+      "revId": "25659b7550072b88dec343cca13ac9ab4f190bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e96909_3ff66916",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 16544,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-05T00:53:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this sentence means.  Perhaps rephrase somehow?",
+      "range": {
+        "startLine": 16543,
+        "startChar": 73,
+        "endLine": 16544,
+        "endChar": 73
+      },
+      "revId": "25659b7550072b88dec343cca13ac9ab4f190bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
