@@ -85,6 +85,24 @@
       "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372685f3_7cdceef2",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-05T04:44:40Z",
+      "side": 1,
+      "message": "Ah, OK. So, probably it would be better to use blink macros for both. I\u0027d dispose my change of WebCORS.cpp, and make this back to be a thread local.\n\nYep, even though the instantiation is thread-safe, this class implementation seems to contain racy operations here and there.",
+      "parentUuid": "427e0a09_51f50e96",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
