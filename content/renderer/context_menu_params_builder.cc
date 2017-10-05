@@ -8,7 +8,6 @@
 
 #include "content/public/common/context_menu_params.h"
 #include "content/public/renderer/content_renderer_client.h"
-#include "content/renderer/history_serialization.h"
 #include "content/renderer/menu_item_builder.h"
 
 namespace content {
@@ -54,11 +53,6 @@ ContextMenuParams ContextMenuParamsBuilder::Build(
   params.custom_context.is_pepper_menu = false;
   for (size_t i = 0; i < data.custom_items.size(); ++i)
     params.custom_items.push_back(MenuItemBuilder::Build(data.custom_items[i]));
-
-  if (!data.frame_history_item.IsNull()) {
-    params.frame_page_state =
-        SingleHistoryItemToPageState(data.frame_history_item);
-  }
 
   params.link_text = data.link_text.Utf16();
   params.source_type = static_cast<ui::MenuSourceType>(data.source_type);

@@ -3500,12 +3500,11 @@ void WebContentsImpl::ViewSource() {
   delegate_->ViewSourceForTab(this, entry->GetURL());
 }
 
-void WebContentsImpl::ViewFrameSource(const GURL& url,
-                                      const PageState& page_state) {
+void WebContentsImpl::ViewFrameSource(const GURL& url) {
   if (!delegate_)
     return;
 
-  delegate_->ViewSourceForFrame(this, url, page_state);
+  delegate_->ViewSourceForTab(this, url);
 }
 
 int WebContentsImpl::GetMinimumZoomPercent() const {

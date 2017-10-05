@@ -100,17 +100,6 @@ void WebContentsDelegate::ViewSourceForTab(WebContents* source,
                     ui::PAGE_TRANSITION_LINK, false));
 }
 
-void WebContentsDelegate::ViewSourceForFrame(WebContents* source,
-                                             const GURL& frame_url,
-                                             const PageState& page_state) {
-  // Same as ViewSourceForTab, but for given subframe.
-  GURL url = GURL(kViewSourceScheme + std::string(":") + frame_url.spec());
-  OpenURLFromTab(
-      source,
-      OpenURLParams(url, Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
-                    ui::PAGE_TRANSITION_LINK, false));
-}
-
 KeyboardEventProcessingResult WebContentsDelegate::PreHandleKeyboardEvent(
     WebContents* source,
     const NativeWebKeyboardEvent& event) {
@@ -247,7 +236,7 @@ void WebContentsDelegate::Detach(WebContents* web_contents) {
 }
 
 gfx::Size WebContentsDelegate::GetSizeForNewRenderView(
-   WebContents* web_contents) const {
+    WebContents* web_contents) const {
   return gfx::Size();
 }
 

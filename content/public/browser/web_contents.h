@@ -63,7 +63,6 @@ namespace content {
 class BrowserContext;
 class BrowserPluginGuestDelegate;
 class InterstitialPage;
-class PageState;
 class RenderFrameHost;
 class RenderProcessHost;
 class RenderViewHost;
@@ -657,8 +656,7 @@ class WebContents : public PageNavigator,
   // Opens view-source tab for this contents.
   virtual void ViewSource() = 0;
 
-  virtual void ViewFrameSource(const GURL& url,
-                               const PageState& page_state) = 0;
+  virtual void ViewFrameSource(const GURL& url) = 0;
 
   // Gets the minimum/maximum zoom percent.
   virtual int GetMinimumZoomPercent() const = 0;

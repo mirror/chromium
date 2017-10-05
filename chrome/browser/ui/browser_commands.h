@@ -21,7 +21,6 @@ class GURL;
 class Profile;
 
 namespace content {
-class PageState;
 class WebContents;
 }
 
@@ -149,10 +148,7 @@ bool IsDebuggerAttachedToCurrentTab(Browser* browser);
 void ViewSource(Browser* browser, content::WebContents* tab);
 
 // Opens a view-source tab for any frame within a given web contents.
-void ViewSource(Browser* browser,
-                content::WebContents* tab,
-                const GURL& url,
-                const content::PageState& page_state);
+void ViewSource(Browser* browser, content::WebContents* tab, const GURL& url);
 
 void ViewSelectedSource(Browser* browser);
 bool CanViewSource(const Browser* browser);

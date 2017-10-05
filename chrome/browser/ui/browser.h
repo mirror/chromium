@@ -84,7 +84,6 @@ class UnloadController;
 }
 
 namespace content {
-class PageState;
 class SessionStorageNamespace;
 }
 
@@ -619,11 +618,8 @@ class Browser : public TabStripModelObserver,
                          bool proceed,
                          bool* proceed_to_fire_unload) override;
   bool ShouldFocusLocationBarByDefault(content::WebContents* source) override;
-  void ViewSourceForTab(content::WebContents* source,
-                        const GURL& page_url) override;
-  void ViewSourceForFrame(content::WebContents* source,
-                          const GURL& frame_url,
-                          const content::PageState& frame_page_state) override;
+  void ViewSourceForTab(content::WebContents* source_tab,
+                        const GURL& source_url) override;
   void ShowRepostFormWarningDialog(content::WebContents* source) override;
   bool ShouldCreateWebContents(
       content::WebContents* web_contents,

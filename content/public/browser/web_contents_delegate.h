@@ -7,8 +7,10 @@
 
 #include <stdint.h>
 
+#include <memory>
 #include <set>
 #include <string>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/strings/string16.h"
@@ -41,7 +43,6 @@ class ListValue;
 namespace content {
 class ColorChooser;
 class JavaScriptDialogManager;
-class PageState;
 class RenderFrameHost;
 class RenderWidgetHost;
 class SessionStorageNamespace;
@@ -238,14 +239,10 @@ class CONTENT_EXPORT WebContentsDelegate {
   // Returns true if the context menu operation was handled by the delegate.
   virtual bool HandleContextMenu(const content::ContextMenuParams& params);
 
-  // Opens source view for given WebContents that is navigated to the given
-  // page url.
-  virtual void ViewSourceForTab(WebContents* source, const GURL& page_url);
-
-  // Opens source view for the given subframe.
-  virtual void ViewSourceForFrame(WebContents* source,
-                                  const GURL& url,
-                                  const PageState& page_state);
+  // Opens source view for given |source_tab| (e.g. open in a new tab next to
+  // |source_tab|) and show the source view of |source_url|.
+  virtual void ViewSourceForTab(WebContents* source_tab,
+                                const GURL& source_url);
 
   // Allows delegates to handle keyboard events before sending to the renderer.
   // See enum for description of return values.
