@@ -139,6 +139,46 @@
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4cf5fc6_283eb41b",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T14:31:54Z",
+      "side": 1,
+      "message": "CHECK(false) since NOTREACHED() is left out in release builds.",
+      "range": {
+        "startLine": 212,
+        "startChar": 50,
+        "endLine": 212,
+        "endChar": 60
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7700935c_494c054c",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T14:31:54Z",
+      "side": 1,
+      "message": "CHECK(false) since NOTREACHED() is left out in release builds.",
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
