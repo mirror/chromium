@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfe7fd79_97d1d238",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-05T01:35:45Z",
+      "side": 1,
+      "message": "haha, oops. This means I didn\u0027t write a test. My bad.\n\n(I did test it manually a little bit, but I had to have a lot of local hacks to make it work setting position and forcing overlays and whatnot).",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 46
+      },
+      "revId": "ecd31eff4e06eb6976ef790dcd1abd32dd0b4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44814454_e6f96281",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-10-05T01:35:45Z",
+      "side": 1,
+      "message": "Oh damn, that\u0027s a state that I didn\u0027t know existed. Personally I would try to make this a state MCVD doesn\u0027t have to handle. i.e., do we really have to handle losing an L1 surface without an error or going into kSurfaceDestroyed? I can\u0027t really imagine why we would. Because any time we would lose an L1 overlay, we would also suspend or shutdown the pipeline right? \n\nIf we have to handle this we lose the nice invariant that once we leave State::kRunning, target_surface_bundle_ is always a valid surface. E.g., what would happen if we lose our L1 overlay, then get a Reset() on a device that doesn\u0027t support flush(). Now we have to release the codec and create a new one. But we have to wait until we get a new overlay to create a new codec. Maybe it\u0027s possible to come up with some new, clean invariants. e.g., potentially we could release our codec and go back into State::kInitializing. That might work ok but I would have to think about it for a while :P",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 71
+      },
+      "revId": "ecd31eff4e06eb6976ef790dcd1abd32dd0b4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
