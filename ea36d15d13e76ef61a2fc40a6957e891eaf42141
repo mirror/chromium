@@ -132,6 +132,30 @@
     },
     {
       "key": {
+        "uuid": "fcb8646a_fab519b6",
+        "filename": "third_party/WebKit/Source/modules/filesystem/LocalFileSystem.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T15:29:25Z",
+      "side": 1,
+      "message": "To be fair, I\u0027d say that we could resolve this issue with\n\na) virtual inheritance of TraceWrapperBaseForSupplement\nclass Supplement\u003cT\u003e : public virtual TraceWrapperBaseForSupplement\n\nplus,\n\nb) template magic\n\nThen, we might be able to first match TWB and then TWBForSupplement.\n\nWithout virtual inheritance,\n  class Y : public Supplement\u003cFoo\u003e,\n            public Supplement\u003cBar\u003e {};\nhas two base TWBForSupplement, and it\u0027s ambiguous.",
+      "parentUuid": "22b6c3fd_08585ee8",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e510eb1f_a5a6ce8f",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IndexedDBClient.h",
         "patchSetId": 23
