@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d975f676_b827171e",
+        "filename": "components/exo/display.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "This should be same as what we send to client in server.cc. \nI can move the logic back to helper::GetDefaultDeviceScaleFactor() and use it instead. Please let me know.",
+      "parentUuid": "9a1b7ba5_a1ce10c4",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 41
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "866c872a_901598a0",
         "filename": "components/exo/display.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a66faa4_fd21d778",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "866c872a_901598a0",
+      "range": {
+        "startLine": 81,
+        "startChar": 35,
+        "endLine": 81,
+        "endChar": 62
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "1d0e1ae8_21359e4c",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe3952c7_4122331f",
+      "range": {
+        "startLine": 82,
+        "startChar": 21,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1715a0c9_aeb3d17d",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dff50f3_b61e6f72",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 21
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e91b4744_526e290d",
         "filename": "components/exo/display.h",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f16d621_a52a73f7",
+        "filename": "components/exo/display.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e91b4744_526e290d",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 11
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +306,78 @@
     },
     {
       "key": {
+        "uuid": "5da66fb1_13a2a742",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7645eed7_4aa7268b",
+      "range": {
+        "startLine": 155,
+        "startChar": 40,
+        "endLine": 155,
+        "endChar": 61
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7126e67e_5cb301ad",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c58d00e7_f860316a",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 36
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0b1cdebf_b61da112",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40a353b_c376762a",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 12
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0fc82ca_b8df5003",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 10
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "a4040326_0bf8106d",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0fc82ca_b8df5003",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 5
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0f37073_42eec136",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c239f63_c93a4e18",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0f37073_42eec136",
+      "range": {
+        "startLine": 158,
+        "startChar": 17,
+        "endLine": 158,
+        "endChar": 40
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -298,6 +538,30 @@
       "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4896a9_53ba42e9",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2455,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T02:12:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfbb8073_82a2743a",
+      "range": {
+        "startLine": 2455,
+        "startChar": 2,
+        "endLine": 2455,
+        "endChar": 8
+      },
+      "revId": "5a7914d3c14d5880558e565678c0751b931c91fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
