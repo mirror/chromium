@@ -221,6 +221,23 @@ class BASE_EXPORT ProcessMetrics {
   // call.
   int GetIdleWakeupsPerSecond();
 
+#if defined(OS_MACOSX)
+  // Returns the number of average "package idle exits" per second, which have
+  // a higher energy impact than a regular wakeup, since the last call.
+  //
+  // From the powermetrics man page:
+  // "With the exception of some Mac Pro systems, Mac and
+  // iOS systems are typically single package systems, wherein all CPUs are
+  // part of a single pro-cessor complex (typically a single IC die) with shared
+  // logic that can include (depending on system specifics) shared last level
+  // caches, an integrated memory controller etc. When all CPUs in the package
+  // are idle, the hardware can power-gate significant portions of the shared
+  // logic in addition to each individual processor's logic, as well as take
+  // measures such as placing DRAM in to self-refresh (also referred to as
+  // auto-refresh), place interconnects into lower-power states etc"
+  int GetPackageIdleWakeupsPerSecond();
+#endif
+
   // Retrieves accounting information for all I/O operations performed by the
   // process.
   // If IO information is retrieved successfully, the function returns true
@@ -265,8 +282,15 @@ class BASE_EXPORT ProcessMetrics {
   bool GetWorkingSetKBytesTotmaps(WorkingSetKBytes *ws_usage) const;
 #endif
 
-#if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_AIX)
+#if defined(OS_LINUX) || defined(OS_AIX)
   int CalculateIdleWakeupsPerSecond(uint64_t absolute_idle_wakeups);
+#elif defined(OS_MACOSX)
+  // The subset of wakeups that cause a "package exit" can be tracked on macOS.
+  // See |GetPackageIdleWakeupsForSecond| comment for more info. Set
+  // |package_idol| to true to get package idle exits, otherwise get total
+  // wakeups.
+  int CalculateIdleWakeupsPerSecond(uint64_t absolute_idle_wakeups,
+                                    bool package_idle);
 #endif
 
 #if defined(OS_WIN)
@@ -284,6 +308,12 @@ class BASE_EXPORT ProcessMetrics {
   // Same thing for idle wakeups.
   TimeTicks last_idle_wakeups_time_;
   uint64_t last_absolute_idle_wakeups_;
+#endif
+
+#if defined(OS_MACOSX)
+  // And same thing for package idle exit wakeups.
+  TimeTicks last_package_idle_wakeups_time_;
+  uint64_t last_absolute_package_idle_wakeups_;
 #endif
 
 #if !defined(OS_IOS)
