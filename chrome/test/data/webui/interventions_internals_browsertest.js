@@ -113,3 +113,45 @@ TEST_F('InterventionsInternalsUITest', 'DisplayCorrectStatuses', function() {
 
   mocha.run();
 });
+
+TEST_F('InterventionsInternalsUITest', 'LogNewMessage', function() {
+  test('LogMessageIsPostedCorrectly', () => {
+    let pageImpl = new InterventionsInternalPageImpl(null);
+    let logs = [
+      {
+        type: 'Type_a',
+        description: 'Some description_a',
+        url: 'Some gurl.spec()_a',
+        time: 'Some time stamp_a',
+      },
+      {
+        type: 'Type_b',
+        description: 'Some description_b',
+        url: 'Some gurl.spec()_b',
+        time: 'Some time stamp_b',
+      },
+      {
+        type: 'Type_c',
+        description: 'Some description_c',
+        url: 'Some gurl.spec()_c',
+        time: 'Some time stamp_c',
+      },
+    ];
+
+    logs.forEach((log) => {
+      pageImpl.logNewMessage(log);
+    });
+
+    let actual = document.querySelectorAll('.log-message');
+
+    expectEquals(logs.length, actual.length);
+    logs.forEach((log, index) => {
+      let expected = log.time + ': [' + log.type + '] ' + log.description +
+          ' [' + log.url + ']';
+      expectEquals(expected, actual[index].textContent);
+    });
+
+  });
+
+  mocha.run();
+});
