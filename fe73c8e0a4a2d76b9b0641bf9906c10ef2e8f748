@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b63f9b00_d8c5b10a",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "s/anythibng/anything/",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad9476f_b6cbab1f",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "It\u0027s worth noting that these have to match each other. I don\u0027t think it\u0027s worth putting in compile time checks, but adding comments seems reasonable.",
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d545f66b_abbf8f03",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "s/indixes/indices/ (English is weird)",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b19627a_608bf38f",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "s/worder/worker/",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 15
+      },
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04f036e3_12a3c4c0",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "Nit: Extra line.",
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4920d5b2_65ace0cc",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "I\u0027d suggest renaming this to something like \"MimeTypeAsScript\", as it\u0027s possible that we might someday implement `nosniff` for other resource types (I think Firefox does it for images, which is weird, but whatever). Also \"AllowedByNosniff::MimeTypeAllowedByNoSniff\" repeats itself and is repetitive.",
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d937d4f_4a4d1dfd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerScriptLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-05T14:06:11Z",
+      "side": 1,
+      "message": "I think this changes the web-facing behavior (because we\u0027re now blocking `image/*` and etc). Would you mind extending the tests at `//third_party/WebKit/LayoutTests/external/wpt/fetch/nosniff/importscripts.js` to lock that in?",
+      "revId": "fe73c8e0a4a2d76b9b0641bf9906c10ef2e8f748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
