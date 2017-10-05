@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38da01a2_7cfe5a99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/history/HistoryAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-05T00:15:08Z",
+      "side": 1,
+      "message": "oops, sorry!",
+      "parentUuid": "7147b24e_aa5872ff",
+      "range": {
+        "startLine": 357,
+        "startChar": 8,
+        "endLine": 360,
+        "endChar": 61
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3741d321_1c2855c3",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T00:47:54Z",
       "side": 1,
       "message": "What does this do?",
+      "range": {
+        "startLine": 330,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 22
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c48e4d_b26caea8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-05T00:15:08Z",
+      "side": 1,
+      "message": "This tracks and tests intents, and should be used as the standard way of intent testing.",
+      "parentUuid": "3741d321_1c2855c3",
       "range": {
         "startLine": 330,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0eea6816_f54b79ec",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-05T00:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "063439ef_1564e4fa",
+      "range": {
+        "startLine": 398,
+        "startChar": 76,
+        "endLine": 398,
+        "endChar": 83
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32050da2_3d464be2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11770f7e_ffeb4397",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/history/HistoryActivityTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-05T00:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32050da2_3d464be2",
+      "range": {
+        "startLine": 399,
+        "startChar": 8,
+        "endLine": 408,
+        "endChar": 58
+      },
+      "revId": "139aec88388cbb750aaead3519d38b9141aaf298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
