@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9e6d4a09_2fde1063",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-05T18:45:17Z",
+      "side": 1,
+      "message": "I think that we could keep the code clean with overloaded operators.\n\nSo we\u0027d have class TracedValue\u003cT\u003e with overloaded assignment, conversion and comparision operators, which means that we could simply say TracedValue\u003cbool, kTracingCategoryNameDefault\u003e audio_playing and use it like a bool in the code (audio_playing \u003d true and such).\n\nAlso I don\u0027t think that having a subclass for each new value is a good idea. Why can\u0027t we just pass all required parameters (tracing name and a function to convert the value T to const char*) to the constructor?",
+      "range": {
+        "startLine": 541,
+        "startChar": 43,
+        "endLine": 541,
+        "endChar": 61
+      },
+      "revId": "f0788908d5b6003f01798af3d321298823dbf799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8e5d45d_79af76f1",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
         "patchSetId": 1
