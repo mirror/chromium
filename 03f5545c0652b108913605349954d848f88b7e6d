@@ -406,6 +406,30 @@
       "revId": "03f5545c0652b108913605349954d848f88b7e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac7c6ed_6a694720",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:08:39Z",
+      "side": 1,
+      "message": "SGTM, that works.",
+      "parentUuid": "bda43dd0_f0813716",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 24
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
