@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "f26ab2d2_d5031699",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-10-05T18:07:14Z",
+      "side": 1,
+      "message": "Wait, wasn\u0027t the idea that we schedule unregistration when a frame is detached? Why wouldn\u0027t there then be a call to unregister? We need that call anyway to know that we are switching into drain-the-queue mode.\n\nAlso, the task queue stays alive as long as there are references to it since it\u0027s refcounted, no?\n\nI may need to see this on a whiteboard :)",
+      "parentUuid": "95bb148f_55ba6405",
+      "range": {
+        "startLine": 20,
+        "startChar": 13,
+        "endLine": 20,
+        "endChar": 32
+      },
+      "revId": "2302a5c24bb82bd9d510f69f32414aa966481c62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ec370f_0b609647",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_manager.cc",
         "patchSetId": 1
