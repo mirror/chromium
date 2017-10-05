@@ -349,6 +349,7 @@ base::TimeDelta CrossFadeAnimation(
     settings.SetTweenType(tween_type);
     // Only add reporter to |old_layer|.
     settings.SetAnimationMetricsReporter(g_reporter_cross_fade.Pointer());
+    settings.DeferPaint();
     gfx::Transform out_transform;
     float scale_x = static_cast<float>(new_bounds.width()) /
                     static_cast<float>(old_bounds.width());
@@ -390,6 +391,7 @@ base::TimeDelta CrossFadeAnimation(
     settings.CacheRenderSurface();
     settings.SetTransitionDuration(duration);
     settings.SetTweenType(tween_type);
+    settings.DeferPaint();
     new_layer->SetTransform(gfx::Transform());
     if (!old_on_top) {
       // New layer is on top, fade it in.
