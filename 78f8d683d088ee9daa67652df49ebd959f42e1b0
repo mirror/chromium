@@ -34,6 +34,24 @@
       "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b50b47b7_f9e6c2a0",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-05T16:56:52Z",
+      "side": 1,
+      "message": "Okay, noted; that\u0027s fair feedback. Let\u0027s see what thakis@ thinks.",
+      "parentUuid": "0ea4292b_d569dda1",
+      "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
