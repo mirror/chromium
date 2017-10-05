@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "cef238a4_75c37422",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-05T05:41:18Z",
+      "side": 1,
+      "message": "Sorry, I overlooked this check, but we need to drop this \"outstanding_limit_ \u0026\u0026\" condition to stop all requests when the limit is set to 0.",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 30
+      },
+      "revId": "6274e47989c02211c363ff037f2f35bb6ef93c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d30b09_58a26650",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 11
