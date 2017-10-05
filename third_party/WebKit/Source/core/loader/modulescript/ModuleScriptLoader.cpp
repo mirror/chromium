@@ -128,6 +128,9 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
 
   // Module scripts are always async.
   fetch_params.SetDefer(FetchParameters::kLazyLoad);
+  // [nospec] Unlike async classic scripts, module scripts are fetched at High
+  // priority.
+  fetch_params.MutableResourceRequest().SetPriority(kResourceLoadPriorityHigh);
 
   // Use UTF-8, according to Step 8:
   // "Let source text be the result of UTF-8 decoding response's body."
