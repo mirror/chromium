@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f442473a_e9071a09",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T10:00:04Z",
+      "side": 1,
+      "message": "I think you may add \"\u003d default\" in the header file.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e9a013_eabea4d6",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T10:00:04Z",
+      "side": 1,
+      "message": "Is is really needed to make a copy of the callback here?",
+      "range": {
+        "startLine": 412,
+        "startChar": 20,
+        "endLine": 412,
+        "endChar": 28
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef679a2b_17b9584b",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T10:00:04Z",
+      "side": 1,
+      "message": "It looks like the AccountConsistencyService is already an observer for GaiaCookieManager (see https://cs.chromium.org/chromium/src/components/signin/core/browser/gaia_cookie_manager_service.h?rcl\u003d1ca8b3be7d04a0fde6519125f212c64839a4212b\u0026l\u003d79 ), so it already has a dependency on GaiaCookieManagerService.\n\nOne option would have been to add a OnLogOutAccountsFromCookieWillStart() instead of going through the client interface - that would require use to pass a callback to all observers, and wait for all callbacks before doing the logout. So this does not really work well.\n\nI think another option would be to do the following: add a LogoutHelper observer interface in GaiaCookieManagerService with a method named CleanupBeforeLogout(calllback) and a setter method named SetLogoutHelper. The AccountConsistencyService would implement this interface and would set it as the helper when it is initialized.\n\nDavid: In terms of architecture, is it better to go through the client, or would you prefer the helper as I suggested above.",
+      "range": {
+        "startLine": 482,
+        "startChar": 2,
+        "endLine": 482,
+        "endChar": 27
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc3e4f32_c743f15c",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T10:00:04Z",
+      "side": 1,
+      "message": "Please add a comment here why it removing chrome connected cookies here is no longer needed. We may actually be able to leave the clean-up here as well: trying to remove the cookies multiple times should not be a problem, right? We would just need to make sure that we call the callbacks in this case.",
+      "range": {
+        "startLine": 499,
+        "startChar": 54,
+        "endLine": 499,
+        "endChar": 57
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
