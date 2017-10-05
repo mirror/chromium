@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "343d06c0_60751089",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:28:43Z",
+      "side": 1,
+      "message": "Why no bug?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f62fd0_322c6801",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:28:43Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d8ce37_0a0316fa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:28:43Z",
+      "side": 1,
+      "message": "I don\u0027t see where this was happening before, but it works for me on stable. Am I missing something?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34e4989_91e649cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:28:43Z",
+      "side": 1,
+      "message": "Can we merge these two? I think it\u0027s just a matter of parsedFilter.concat.",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19444719_610c36bd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T17:28:43Z",
+      "side": 1,
+      "message": "I don\u0027t like this. Now that ConsoleFilter is large, perhaps we should switch to setters?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
