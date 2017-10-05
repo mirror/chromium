@@ -6,6 +6,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#include <dlfcn.h>
+
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
@@ -18,6 +20,7 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "chrome/app/chrome_mac_dispatch_overrider.h"
 #import "chrome/browser/app_controller_mac.h"
 #include "chrome/browser/apps/app_shim/app_shim_host_manager_mac.h"
 #include "chrome/browser/browser_process.h"
@@ -76,6 +79,15 @@ ChromeBrowserMainPartsMac::~ChromeBrowserMainPartsMac() {
 
 void ChromeBrowserMainPartsMac::PreEarlyInitialization() {
   ChromeBrowserMainPartsPosix::PreEarlyInitialization();
+
+#if 0
+  typedef void (*initialize_f)();
+  initialize_f initialize = reinterpret_cast<initialize_f>(
+      dlsym(RTLD_DEFAULT, "chrome_dispatch_overrider_initialize"));
+  initialize();
+#else
+  chrome_dispatch_overrider_initialize();
+#endif
 
   if (base::mac::WasLaunchedAsLoginItemRestoreState()) {
     base::CommandLine* singleton_command_line =

@@ -581,6 +581,13 @@ if (is_win) {
     }
   }
 
+  shared_library("chrome_dispatch_overrider") {
+    sources = [
+      "app/chrome_mac_dispatch_overrider.cc",
+      "app/chrome_mac_dispatch_overrider.h",
+    ]
+  }
+
   bundle_data("chrome_framework_services") {
     sources = [
       "$root_out_dir/AlertNotificationService.xpc",
@@ -627,6 +634,7 @@ if (is_win) {
 
     deps = [
       ":chrome_app_strings_bundle_data",
+      ":chrome_dispatch_overrider",
       ":chrome_resources",
       ":chrome_versioned_bundle_data",
       "//build/config:exe_and_shlib_deps",
