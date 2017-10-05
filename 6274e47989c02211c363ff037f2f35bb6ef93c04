@@ -93,6 +93,30 @@
       "revId": "6274e47989c02211c363ff037f2f35bb6ef93c04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1e00086_bd5e975b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-05T18:31:41Z",
+      "side": 1,
+      "message": "DCHECK(throttling_state_, CalculateThrottlingState()) in the body? (We had some problems in RendererScheduler when the default state was set incorrectly and it led to some hard-to-discover bugs.",
+      "parentUuid": "a353830d_e1d0e1b6",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "6274e47989c02211c363ff037f2f35bb6ef93c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
