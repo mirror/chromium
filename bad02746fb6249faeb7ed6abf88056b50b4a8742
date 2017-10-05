@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e229dbd_0aeaf466",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 2940,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-05T18:01:37Z",
+      "side": 1,
+      "message": "Like we discussed offline, isDetached should never be a developer set state here but should always depend on the ability to link this construction to a live ChromeActivity.\n\nYou are giving a WindowAndroid here. Right now you can give a base class WindowAndroid with no Activity (nativeWindow.getActivity() returns null) and set isDetached to false which will be very confusing.\n\nThat state should only be set through the availability of an Activity. Here what happens if we set\n\n\ntab.mIsDetached \u003d nativeWindow.getActivity() \u003d\u003d null;\n\nDoes it work for all old and new use cases of this constructor?",
+      "range": {
+        "startLine": 2940,
+        "startChar": 78,
+        "endLine": 2940,
+        "endChar": 88
+      },
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
