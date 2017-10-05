@@ -75,6 +75,8 @@ class TestSessionControllerClient : public ash::mojom::SessionControllerClient {
   void CycleActiveUser(CycleUserDirection direction) override;
   void ShowMultiProfileLogin() override;
 
+  const mojom::SessionInfoPtr& session_info() const { return session_info_; }
+
  private:
   SessionController* const controller_;
 
