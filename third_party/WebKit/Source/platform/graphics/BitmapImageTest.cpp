@@ -454,6 +454,41 @@ TEST_F(BitmapImageTestWithMockDecoder, AnimationPolicyOverride) {
   EXPECT_EQ(image.repetition_count(), repetition_count_);
 }
 
+TEST_F(BitmapImageTestWithMockDecoder, LastIncompleteFrameDuringSkipping) {
+  RuntimeEnabledFeatures::SetCompositorImageAnimationsEnabled(false);
+
+  repetition_count_ = kAnimationLoopOnce;
+  frame_count_ = 3u;
+  last_frame_complete_ = false;
+  duration_ = TimeDelta::FromSeconds(10);
+  now_ = 10;
+
+  // Completely loaded image but the last frame is incomplete, which means
+  // we can still show it.
+  image_->SetData(SharedBuffer::Create("data", sizeof("data")), true);
+
+  RefPtr<scheduler::FakeWebTaskRunner> task_runner =
+      WTF::AdoptRef(new scheduler::FakeWebTaskRunner);
+  image_->SetTaskRunnerForTesting(task_runner);
+  task_runner->SetTime(10);
+
+  // Start the animation at 10s. This should schedule a timer for the next frame
+  // after 10 seconds.
+  StartAnimation();
+  EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 0u);
+
+  // Run the timer task, advance to the second frame.
+  now_ = 20;
+  task_runner->AdvanceTimeAndRun(10);
+  EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 1u);
+
+  // Go past the desired time for the next frame, calling StartAnimation should
+  // move to it and finish the animation.
+  now_ = 45;
+  StartAnimation();
+  EXPECT_EQ(image_->PaintImageForCurrentFrame().frame_index(), 2u);
+}
+
 TEST_F(BitmapImageTestWithMockDecoder, FrameSkipTracking) {
   RuntimeEnabledFeatures::SetCompositorImageAnimationsEnabled(false);
 
