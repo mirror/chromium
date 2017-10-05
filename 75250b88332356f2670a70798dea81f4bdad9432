@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5526fdc5_4d9d40ed",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "Move 328 to 319 above, i.e.: currently I find the Pop() is hidden here whereas it\u0027s a key operation to complete task-running. You can store the bool above and then use it here for this piece of the algorithm.",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f816b6f6_9d8cb769",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "How about re-using |sequence|?\n\n// Never redispatch a Sequence emptied by Pop(). The contract is such that next poster to\n// make it non-empty is responsible to dispatch it.\nif (sequence_is_empty_after_pop)\n  sequence \u003d nullptr;\n\nThat also alleviates half of the block comment here, allowing it to be specifically about the BACKGROUND case.",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41382fc_619f4b4e",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "Why subtract to test equality?",
+      "range": {
+        "startLine": 622,
+        "startChar": 11,
+        "endLine": 624,
+        "endChar": 16
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80743aba_85eed24e",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "When would a PreemptedBackgroundSequence ever have a null |sequence| member?",
+      "range": {
+        "startLine": 658,
+        "startChar": 6,
+        "endLine": 658,
+        "endChar": 46
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9000ed6_82ace8a2",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "How about:\n\n  // To be called after running a background task from |just_ran_sequence|.\n  // Performs the following actions:\n  //  - If |just_ran_sequence| is non-null: \n  //    - returns it if it should be redispatched by the caller of\n  //      RunNextTask(), i.e. its next task is set to run earlier than the\n  //      earliest currently preempted sequence.\n  //    - Otherwise |just_ran_sequence| is preempted and the next preempted\n  //      sequence is dispatched (|observer| will be notified when\n  //      |just_ran_sequence| should be dispatched again).\n  //  - If |just_ran_sequence| is null (RunNextTask() just popped the last task\n  //    from it):\n  //    - the next prempeted sequence (if any) is dispatched.\n  //  - In all cases: adjusts the number of dispatched background sequences\n  //    accordingly.\n  scoped_refptr\u003cSequence\u003e ManageBackgroundSequencesAfterRunningTask(\n      scoped_refptr\u003cSequence\u003e just_ran_sequence,\n      CanDispatchSequenceObserver* observer);",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf07918a_d5c172b7",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "// Verify that RunNextTask() doesn\u0027t redispatch the background sequence it was assigned if there is a preempted background sequence with an earlier sequence time (compared to the next task in the sequence assigned to RunNextTask()).",
+      "range": {
+        "startLine": 975,
+        "startChar": 3,
+        "endLine": 976,
+        "endChar": 49
+      },
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc244ba_9b23268e",
+        "filename": "base/task_scheduler/task_tracker_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-05T16:45:44Z",
+      "side": 1,
+      "message": "This will use TimeTicks::Now() and could theoretically be equal to sequence_b\u0027s timing. Need a Sleep(1) or some other way of guaranteeing this time is always strictly greater than b\u0027s enqueue time.",
+      "revId": "75250b88332356f2670a70798dea81f4bdad9432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
