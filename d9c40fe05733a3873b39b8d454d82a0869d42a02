@@ -16,6 +16,24 @@
       "revId": "d9c40fe05733a3873b39b8d454d82a0869d42a02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0688b3c7_96171c82",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-05T19:44:09Z",
+      "side": 1,
+      "message": "Assuming you mean the 3.10.3.5 Color Point Descriptor Definition (tag #FBh),\nI\u0027ll add a note +TODO to consider reading them if needed:\n- the current EDIDs we have don\u0027t have this Display Descriptor (ran those\nin the unit tests).\n- the same EDIDs all give a vanilla D65 white point.\n- the current SkColorSpacePrimaries don\u0027t support more than one white point.\n\nLet me know if we should consider moar black magic...",
+      "parentUuid": "ca338fd8_fd4f22c4",
+      "revId": "d9c40fe05733a3873b39b8d454d82a0869d42a02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
