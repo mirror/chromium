@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c6464b8_8b392c7d",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-05T15:52:36Z",
+      "side": 1,
+      "message": "Does this actually work (to not check it out)? I would\u0027ve expected we\u0027d need the repo regardless, but could get away with skipping the toolchains.",
+      "revId": "c794bfc14cc748e17437518db0b6d41fe2fb0a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
