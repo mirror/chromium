@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "base/message_loop/message_loop.h"
+#include "base/test/simple_test_tick_clock.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
@@ -42,6 +43,9 @@ class TestCoordinationUnitWrapper {
 
 class CoordinationUnitTestHarness : public testing::Test {
  public:
+  static void SetPageCoordinationUnitClock(CoordinationUnitBase* page_cu,
+                                           base::SimpleTestTickClock* clock);
+
   CoordinationUnitTestHarness();
   ~CoordinationUnitTestHarness() override;
 

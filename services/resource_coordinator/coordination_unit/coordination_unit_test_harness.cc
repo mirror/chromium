@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/run_loop.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
+#include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
 namespace resource_coordinator {
@@ -21,6 +22,14 @@ void OnLastServiceRefDestroyed() {
 }
 
 }  // namespace
+
+// static
+void CoordinationUnitTestHarness::SetPageCoordinationUnitClock(
+    CoordinationUnitBase* page_cu,
+    base::SimpleTestTickClock* clock) {
+  const_cast<base::TickClock*&>(
+      CoordinationUnitBase::ToPageCoordinationUnit(page_cu)->clock_) = clock;
+}
 
 CoordinationUnitTestHarness::CoordinationUnitTestHarness()
     : service_ref_factory_(base::Bind(&OnLastServiceRefDestroyed)),
