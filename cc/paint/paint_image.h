@@ -163,7 +163,6 @@ class CC_PAINT_EXPORT PaintImage {
                          sk_sp<SkColorSpace> color_space,
                          size_t frame_index) const;
   PaintImage MakeSubset(const gfx::Rect& subset) const;
-
   void CreateSkImage();
 
   sk_sp<SkImage> sk_image_;
