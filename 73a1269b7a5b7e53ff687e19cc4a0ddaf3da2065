@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5294849a_203cd170",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "I could write:\n\n|MarkStartAndSelectionInTwoNodes()| sets |SelectionState| mark into\nlayout objects and inserts layout objects into |PaintInvalidationSets|\nfor representing selected range.\n\nNote: SelectionState has kInside, kStart and kEnd.",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0778898_2954bb21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"they\" point to. Could you refine this sentence?",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6ea653_f46b7508",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 29
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \"they\" point to. Could you refine this sentence?",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba0449c_b296cf15",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "Could you add a comment about |LayoutObjectAndOffset| struct?",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23740005_51dc1e59",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "How about having two constructors?\nThis tells us we have offset \u003d\u003d 0 for non-LayoutText.\n\nexplicit LayoutObjectAndOffset(LayoutObject* passed_layout_object)\n  : layout_object(passed_layout_object), offset(0) {\n  DCHECK(!layout_object-\u003eIsText());\n}\n\nLayoutObjectAndOffset(LayoutText* layout_text, int passed_offset)\n  : layout_object(passed_layout_object), offset(passed_offset) {\n  DCHECK_GE(passed_offset, 0);\n}",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc642aa5_ccbedc41",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "nit: Please add DCHECK_EQ(start_offset, 0);",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f305e279_4f01e317",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T09:16:09Z",
+      "side": 1,
+      "message": "nit: Please add DCHECK_EQ(end_offset, 0);",
+      "revId": "73a1269b7a5b7e53ff687e19cc4a0ddaf3da2065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
