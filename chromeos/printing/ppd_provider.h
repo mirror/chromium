@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -114,6 +115,14 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
   using ResolvePpdReferenceCallback =
       base::Callback<void(CallbackResultCode, const Printer::PpdReference&)>;
 
+  // Result of a ReverseIndex call. If the result code is SUCCESS, then
+  // |manufacturer| and |model| contain the strings that could have generated
+  // the reference being looked up.
+  using ReverseIndexCallback =
+      base::Callback<void(CallbackResultCode,
+                          const std::string& manufacturer,
+                          const std::string& model)>;
+
   // Result of a ReverseLookup call.  If the result code is SUCCESS, then
   // |manufactuer| and |model| contain the strings that could have generated
   // the reference being looked up.
@@ -121,6 +130,11 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
       base::Callback<void(CallbackResultCode,
                           const std::string& manufacturer,
                           const std::string& model)>;
+
+  // Map matching effective_make_and_model names for a printer to its
+  // respective manufacturer and model
+  using ReverseIndexMap =
+      std::unordered_map<std::string, std::pair<std::string, std::string>>;
 
   // Create and return a new PpdProvider with the given cache and options.
   // A references to |url_context_getter| is taken.
@@ -159,8 +173,8 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
 
   // For a given PpdReference, retrieve the make and model strings used to
   // construct that reference.
-  virtual void ReverseLookup(const std::string& effective_make_and_model,
-                             const ReverseLookupCallback& cb) = 0;
+  virtual void ReverseIndex(const std::string& effective_make_and_model,
+                            const ReverseIndexCallback& cb) = 0;
 
  protected:
   friend class base::RefCounted<PpdProvider>;
