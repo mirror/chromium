@@ -50,27 +50,32 @@ uint32_t ranvalInternal(ranctx* x) {
 
 #undef rot
 
-uint32_t ranval(ranctx* x) {
+uint32_t ranval(ranctx* x, uint32_t initial_seed) {
   subtle::SpinLock::Guard guard(x->lock);
   if (UNLIKELY(!x->initialized)) {
     x->initialized = true;
-    char c;
-    uint32_t seed = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(&c));
-    uint32_t pid;
-    uint32_t usec;
+    uint32_t seed;
+    if (initial_seed) {
+      seed = initial_seed;
+    } else {
+      char c;
+      seed = static_cast<uint32_t>(reinterpret_cast<uintptr_t>(&c));
+      uint32_t pid;
+      uint32_t usec;
 #if defined(OS_WIN)
-    pid = GetCurrentProcessId();
-    SYSTEMTIME st;
-    GetSystemTime(&st);
-    usec = static_cast<uint32_t>(st.wMilliseconds * 1000);
+      pid = GetCurrentProcessId();
+      SYSTEMTIME st;
+      GetSystemTime(&st);
+      usec = static_cast<uint32_t>(st.wMilliseconds * 1000);
 #else
-    pid = static_cast<uint32_t>(getpid());
-    struct timeval tv;
-    gettimeofday(&tv, 0);
-    usec = static_cast<uint32_t>(tv.tv_usec);
+      pid = static_cast<uint32_t>(getpid());
+      struct timeval tv;
+      gettimeofday(&tv, 0);
+      usec = static_cast<uint32_t>(tv.tv_usec);
 #endif
-    seed ^= pid;
-    seed ^= usec;
+      seed ^= pid;
+      seed ^= usec;
+    }
     x->a = 0xf1ea5eed;
     x->b = x->c = x->d = seed;
     for (int i = 0; i < 20; ++i) {
@@ -81,18 +86,23 @@ uint32_t ranval(ranctx* x) {
   return ret;
 }
 
-static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
+static LazyInstance<ranctx>::Leaky s_rng = LAZY_INSTANCE_INITIALIZER;
+static LazyInstance<ranctx>::Leaky s_pseudo_rng = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
 // Calculates a random preferred mapping address. In calculating an address, we
 // balance good ASLR against not fragmenting the address space too badly.
-void* GetRandomPageBase() {
-  uintptr_t random = static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
+void* GetRandomPageBase(uint32_t initial_seed) {
+  ranctx* rng = s_rng.Pointer();
+  if (UNLIKELY(initial_seed))
+    rng = s_pseudo_rng.Pointer();
+
+  uintptr_t random = static_cast<uintptr_t>(ranval(rng, initial_seed));
 
 #if defined(ARCH_CPU_64_BITS)
   random <<= 32ULL;
-  random |= static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
+  random |= static_cast<uintptr_t>(ranval(rng, initial_seed));
 
 #if defined(OS_WIN)
   // Windows >= 8.1 has the full 47 bits. Use them where available.

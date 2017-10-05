@@ -20,7 +20,9 @@
 
 namespace base {
 
-TEST(AddressSpaceRandomizationTest, GetRandomPageBase) {
+namespace {
+
+uintptr_t GetMask() {
   uintptr_t mask = internal::kASLRMask;
 #if defined(ARCH_CPU_64_BITS)
 #if defined(OS_WIN)
@@ -34,12 +36,23 @@ TEST(AddressSpaceRandomizationTest, GetRandomPageBase) {
   if (!IsWow64Process(GetCurrentProcess(), &is_wow64))
     is_wow64 = FALSE;
   if (!is_wow64) {
+    mask = 0;
+  }
+#endif  // defined(OS_WIN)
+#endif  // defined(ARCH_CPU_32_BITS)
+  return mask;
+}
+
+}  // namespace
+
+TEST(AddressSpaceRandomizationTest, Random) {
+  uintptr_t mask = GetMask();
+  if (!mask) {
     // ASLR is turned off on 32-bit Windows; check that result is null.
     EXPECT_EQ(nullptr, base::GetRandomPageBase());
     return;
   }
-#endif  // defined(OS_WIN)
-#endif  // defined(ARCH_CPU_32_BITS)
+
   // Sample the first 100 addresses.
   std::set<uintptr_t> addresses;
   uintptr_t address_logical_sum = 0;
@@ -66,6 +79,41 @@ TEST(AddressSpaceRandomizationTest, GetRandomPageBase) {
   // is larger than kASLRMask, or if adding kASLROffset generated a carry.
   EXPECT_EQ(mask, address_logical_sum & mask);
   EXPECT_EQ(0ULL, address_logical_product & mask);
+}
+
+TEST(AddressSpaceRandomizationTest, Predictable) {
+  const uintptr_t kInitialSeed = 0xfeed5eedULL;
+  uintptr_t mask = GetMask();
+  if (!mask) {
+    // ASLR is turned off on 32-bit Windows; check that result is null.
+    EXPECT_EQ(nullptr, base::GetRandomPageBase(kInitialSeed));
+    return;
+  }
+// The first 4 elements of the random sequences generated from kInitialSeed.
+#if ARCH_CPU_32_BITS
+  const uint32_t random[4] = {0x651fc266, 0x42c38a3e, 0xfd162ca0, 0x233333f0};
+#elif ARCH_CPU_64_BITS
+  const uint64_t random[4] = {0x651fc26642c38a3e, 0xfd162ca0233333f0,
+                              0x1cd0fdc5ffe51bce, 0x8b43523a2564ccfb};
+#endif
+
+  // Make sure the addresses look random but are predictable.
+  std::set<uintptr_t> addresses;
+  for (int i = 0; i < 4; i++) {
+    uintptr_t address =
+        reinterpret_cast<uintptr_t>(base::GetRandomPageBase(kInitialSeed));
+    // Test that address is in range.
+    EXPECT_LE(internal::kASLROffset, address);
+    EXPECT_GE(internal::kASLROffset + mask, address);
+    // Test that address is page aligned.
+    EXPECT_EQ(0ULL, (address & kPageAllocationGranularityOffsetMask));
+    // Test that address is unique (no collisions in 100 tries)
+    CHECK_EQ(0ULL, addresses.count(address));
+    addresses.insert(address);
+    // Test that (address - offset) == (predicted & mask).
+    address -= internal::kASLROffset;
+    EXPECT_EQ(random[i] & internal::kASLRMask, address);
+  }
 }
 
 }  // namespace base

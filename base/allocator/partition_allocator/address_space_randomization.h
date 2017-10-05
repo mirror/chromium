@@ -11,6 +11,14 @@
 
 namespace base {
 
+// Calculates a random preferred mapping address. In calculating an address, we
+// balance good ASLR against not fragmenting the address space too badly. If a
+// predictable sequence of addresses is desired, e.g. for testing, pass an
+// initial non-zero seed value, which seeds the RNG on the first call and
+// signals that the predictable sequence is desired on subsequent calls. Both
+// predictable and unpredictable sequences can be generated simultaneously.
+BASE_EXPORT void* GetRandomPageBase(uint32_t initial_seed = 0);
+
 namespace internal {
 
 constexpr uintptr_t AslrAddress(uintptr_t mask) {
@@ -128,10 +136,6 @@ constexpr uintptr_t kASLROffset = AslrAddress(0x20000000ULL);
 #endif  // defined(ARCH_CPU_32_BITS)
 
 }  // namespace internal
-
-// Calculates a random preferred mapping address. In calculating an address, we
-// balance good ASLR against not fragmenting the address space too badly.
-BASE_EXPORT void* GetRandomPageBase();
 
 }  // namespace base
 
