@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c666d4f4_d7ba6add",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-10-05T06:00:55Z",
+      "side": 1,
+      "message": "Done, thanks a lot for your detailed investigation.",
+      "parentUuid": "221593ca_33b1aa67",
+      "revId": "301ad2ad3f74d51ae1f89053545b0479731fe39e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d25e0c35_665b0fb7",
         "filename": "content/browser/service_worker/service_worker_provider_host_unittest.cc",
         "patchSetId": 7
