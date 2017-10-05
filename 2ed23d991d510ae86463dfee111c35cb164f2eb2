@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e22f09_c3102d35",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T21:05:46Z",
+      "side": 1,
+      "message": "CronetPrefsManager strongly owns NetworkQualitiesPrefsManager, which has a weak reference to NetworkQualityEstimator. If we destroy |network_quality_estimator_| first then NetworkQualitiesPrefsManager will remain with a dangling reference to an invalid object. It looks like a comment error.",
+      "range": {
+        "startLine": 229,
+        "startChar": 28,
+        "endLine": 229,
+        "endChar": 33
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f393c7b3_c5ee8d1d",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T21:05:46Z",
+      "side": 1,
+      "message": "nit: uppercase",
+      "range": {
+        "startLine": 238,
+        "startChar": 9,
+        "endLine": 238,
+        "endChar": 10
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
