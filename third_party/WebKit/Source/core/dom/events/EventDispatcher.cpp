@@ -34,7 +34,9 @@
 #include "core/dom/events/EventDispatchMediator.h"
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/dom/events/WindowEventContext.h"
+#include "core/events/FocusEvent.h"
 #include "core/events/MouseEvent.h"
+#include "core/events/PointerEvent.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrameView.h"
@@ -191,6 +193,14 @@ DispatchEventResult EventDispatcher::Dispatch() {
   // outermost shadow DOM boundary.
   event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
   event_->SetCurrentTarget(nullptr);
+
+  // The relatedTarget should be set to null when the target is null.
+  if (event_->IsMouseEvent() && !event_->target())
+    ToMouseEvent(event_)->SetRelatedTarget(nullptr);
+  if (event_->IsPointerEvent() && !event_->target())
+    ToPointerEvent(event_)->SetRelatedTarget(nullptr);
+  if (event_->IsFocusEvent() && !event_->target())
+    ToFocusEvent(event_)->SetRelatedTarget(nullptr);
 
   return EventTarget::GetDispatchEventResult(*event_);
 }
