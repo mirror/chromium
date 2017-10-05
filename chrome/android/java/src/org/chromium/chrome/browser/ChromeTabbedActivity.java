@@ -486,6 +486,10 @@ public class ChromeTabbedActivity
                     if (!DataReductionPromoScreen.launchDataReductionPromo(
                                 this, currentModel.isIncognito())) {
                         if (FeatureUtilities.shouldShowChromeHomePromoForStartup()) {
+                            RecordHistogram.recordEnumeratedHistogram(
+                                    "Android.ChromeHome.Promo.ShowReason",
+                                    ChromeHomePromoDialog.ShowReason.STARTUP,
+                                    ChromeHomePromoDialog.ShowReason.BOUNDARY);
                             new ChromeHomePromoDialog(this).show();
                         } else if (getBottomSheet() != null) {
                             getBottomSheet().showHelpBubbleIfNecessary();
@@ -1538,6 +1542,10 @@ public class ChromeTabbedActivity
                                 && ChromeFeatureList.isEnabled(
                                            ChromeFeatureList.CHROME_HOME_PROMO)) {
                             new ChromeHomePromoDialog(ChromeTabbedActivity.this).show();
+                            RecordHistogram.recordEnumeratedHistogram(
+                                    "Android.ChromeHome.Promo.ShowReason",
+                                    ChromeHomePromoDialog.ShowReason.MENU,
+                                    ChromeHomePromoDialog.ShowReason.BOUNDARY);
                             return;
                         }
 
