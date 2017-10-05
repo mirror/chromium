@@ -20,10 +20,10 @@ BackgroundFetchEmbeddedWorkerTestHelper::
     ~BackgroundFetchEmbeddedWorkerTestHelper() = default;
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent(
-    const std::string& id,
+    const std::string& developer_id,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchAbortEventCallback callback) {
-  last_id_ = id;
+  last_developer_id_ = developer_id;
 
   if (fail_abort_event_) {
     std::move(callback).Run(SERVICE_WORKER_ERROR_EVENT_WAITUNTIL_REJECTED,
@@ -37,11 +37,11 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
-    const std::string& id,
+    const std::string& developer_id,
     mojom::BackgroundFetchState state,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchClickEventCallback callback) {
-  last_id_ = id;
+  last_developer_id_ = developer_id;
   last_state_ = state;
 
   if (fail_click_event_) {
@@ -56,11 +56,11 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
-    const std::string& id,
+    const std::string& developer_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchFailEventCallback callback) {
-  last_id_ = id;
+  last_developer_id_ = developer_id;
   last_fetches_ = fetches;
 
   if (fail_fetch_fail_event_) {
@@ -75,11 +75,13 @@ void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
 }
 
 void BackgroundFetchEmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
-    const std::string& id,
+    const std::string& developer_id,
+    const std::string& unique_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
-  last_id_ = id;
+  last_developer_id_ = developer_id;
+  last_unique_id_ = unique_id;
   last_fetches_ = fetches;
 
   if (fail_fetched_event_) {
