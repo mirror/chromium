@@ -94,7 +94,8 @@ class ArcAppListPrefs
                 int64_t last_backup_android_id,
                 int64_t last_backup_time,
                 bool should_sync,
-                bool system);
+                bool system,
+                bool vpn_provider);
 
     std::string package_name;
     int32_t package_version;
@@ -102,6 +103,7 @@ class ArcAppListPrefs
     int64_t last_backup_time;
     bool should_sync;
     bool system;
+    bool vpn_provider;
   };
 
   class Observer {
@@ -119,6 +121,8 @@ class ArcAppListPrefs
     // Notifies an observer that the name of an app has changed.
     virtual void OnAppNameUpdated(const std::string& id,
                                   const std::string& name) {}
+    // Notifies there is an update for last laucnh time.
+    virtual void OnLastLaunchTimeUpdated(const std::string& app_id) {}
     // Notifies that task has been created and provides information about
     // initial activity.
     virtual void OnTaskCreated(int32_t task_id,
