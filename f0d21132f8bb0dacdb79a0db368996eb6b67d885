@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4918a5cf_d33a5bf1",
+        "filename": "net/url_request/url_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T22:14:26Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 317,
+        "startChar": 32,
+        "endLine": 317,
+        "endChar": 36
+      },
+      "revId": "f0d21132f8bb0dacdb79a0db368996eb6b67d885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbd1c9bd_a627ffa7",
+        "filename": "net/url_request/url_fetcher_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-05T22:14:26Z",
+      "side": 1,
+      "message": "Should you clear this regardless of errors?",
+      "revId": "f0d21132f8bb0dacdb79a0db368996eb6b67d885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
