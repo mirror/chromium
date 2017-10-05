@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce329665_e4ea0639",
+        "filename": "ios/chrome/browser/payments/payment_request_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-05T17:36:35Z",
+      "side": 1,
+      "message": "Would it be better to put all tests into payments namespace?",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 10
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951f9b05_82ca135d",
+        "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-05T17:36:35Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 117,
+        "startChar": 36,
+        "endLine": 117,
+        "endChar": 44
+      },
+      "revId": "358d84affe19360405e65b16ad77e50cac9fa004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
