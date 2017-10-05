@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d807049e_631dec37",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/__init__.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "730750a5_d89c21ee",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f437fa4d_0fd4bc86",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0feec41e_930ccd78",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f437fa4d_0fd4bc86",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd045ecc_0d1c1d29",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-03T14:20:42Z",
       "side": 1,
       "message": "\"data\" is a plural form.  datum \u003d\u003e data.",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be29c52e_6ffbfb9b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Yes, but it is also common to use \"datas\" to figure a list of instances of \"XXData\" class.",
+      "parentUuid": "fd045ecc_0d1c1d29",
       "range": {
         "startLine": 28,
         "startChar": 13,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "fe920bd8_5435f620",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520c02e1_006bb700",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43b48a0f_6b7a3f8d",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -87,6 +165,30 @@
       "writtenOn": "2017-10-03T14:20:42Z",
       "side": 1,
       "message": "I\u0027d recommend \"find_non_partial_definition\".\nThis is not a simple getter, this only looks for a non-partial definition.\n\nAlso I\u0027m suspicious about the word \"definition\", which is unclear.  Is this \"definition\"?  I thought that these objects are a kind of intermediate representation.  I know we\u0027ve historically used that term, though.",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5eeb5c_b4327fea",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Using \"intermediate representation\" or something like it in variable/operation names makes no sense to me.  Although these members are not exact what \"definition\"s are in Web IDL spec, they represent \"definition\"s well.",
+      "parentUuid": "43b48a0f_6b7a3f8d",
       "range": {
         "startLine": 31,
         "startChar": 8,
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ae015574_6e274121",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0c0e135_8a254f58",
+      "range": {
+        "startLine": 47,
+        "startChar": 8,
+        "endLine": 47,
+        "endChar": 20
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66d9be33_ef7785b0",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "3a8f5b92_4d41a1d2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66d9be33_ef7785b0",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7749d585_4dbadd64",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
         "patchSetId": 13
@@ -153,6 +297,24 @@
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80f7a23_28084599",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7749d585_4dbadd64",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +364,54 @@
     },
     {
       "key": {
+        "uuid": "d7411e76_d191ae2a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85a4977_2b6872cb",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a79117b_8a5d664b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0b5716b_2f4640fd",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 39
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "509c2aa0_19bd303b",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
         "patchSetId": 13
@@ -222,6 +432,30 @@
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5aaae65_d81894f1",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "509c2aa0_19bd303b",
+      "range": {
+        "startLine": 44,
+        "startChar": 35,
+        "endLine": 44,
+        "endChar": 38
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +482,30 @@
     },
     {
       "key": {
+        "uuid": "7f96a242_c831ed2a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collector.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02fcc86a_4c2cbc53",
+      "range": {
+        "startLine": 57,
+        "startChar": 51,
+        "endLine": 57,
+        "endChar": 72
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6860fb2d_68bb942a",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
         "patchSetId": 13
@@ -265,6 +523,24 @@
     },
     {
       "key": {
+        "uuid": "e0ac4c6f_a89cd274",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6860fb2d_68bb942a",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dd1e7c3_7d03dc94",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
         "patchSetId": 13
@@ -276,6 +552,24 @@
       "writtenOn": "2017-10-03T14:20:42Z",
       "side": 1,
       "message": "Seems inconsistent that other classes use \"identifier\u003dNone\", etc.\n\nHaving said that, I misunderstood keyword arguments in Python.  My previous comments may be misleading.\n\nWhat I wanted to do here is\n1) Make all parameters be keyword arguments.  i.e. Call sites always need to use keyword arguments.\n2) Make required parameters mandatory.  i.e. Missing arguments cause error.  (In my previous comments, it was \"assert param\".)\n\nI\u0027ve read this article and found it interesting.  If possible, I\u0027m happy with Python 3, of course.\nhttps://stackoverflow.com/questions/44284230/forcing-keyword-arguments-in-python-2-7",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f115b8a_3f45f4b2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/constant.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Not to waste time, I tried it in Typedef().\nIs it what you want?\n\nI think it reasonable to make all parameters w/ keyword for all data-type classes constructors.\n(And it is my mistake that some mandatory parameters have default parameters. will work for it.)",
+      "parentUuid": "8dd1e7c3_7d03dc94",
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -418,6 +712,24 @@
     },
     {
       "key": {
+        "uuid": "961828cd_9163ebca",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df205b6e_08d79102",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17896e4c_302f9e53",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 13
@@ -429,6 +741,24 @@
       "writtenOn": "2017-10-03T14:20:42Z",
       "side": 1,
       "message": "Don\u0027t we want a super class like \"Type\"?",
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c97b42_16bd67e6",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Made TypeBase, which has unimplemented type_name property.",
+      "parentUuid": "17896e4c_302f9e53",
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -463,6 +793,30 @@
       "writtenOn": "2017-10-03T14:20:42Z",
       "side": 1,
       "message": "Date is not a primitive type, neither.\n\nDo we want to include them in PrimitiveType?  Why should we change the definition of PrimitiveType because of later possible optimizations?  Optimizers should take care of things, shouldn\u0027t them?",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313afa37_7375b539",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Made independent class for each type.",
+      "parentUuid": "a0591301_1ee969d0",
       "range": {
         "startLine": 63,
         "startChar": 4,
@@ -521,6 +875,30 @@
     },
     {
       "key": {
+        "uuid": "311ec71c_afd3403a",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26234cef_c25a8953",
+      "range": {
+        "startLine": 154,
+        "startChar": 8,
+        "endLine": 154,
+        "endChar": 19
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da03bf05_94791522",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 13
@@ -541,6 +919,30 @@
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae371fb_ab2bd025",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da03bf05_94791522",
+      "range": {
+        "startLine": 180,
+        "startChar": 23,
+        "endLine": 180,
+        "endChar": 33
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -567,6 +969,30 @@
     },
     {
       "key": {
+        "uuid": "80de3d95_9bf196d7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b88a7053_4aa6fd36",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 12
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35f1a2c5_1bf9a191",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
         "patchSetId": 13
@@ -587,6 +1013,30 @@
       "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed4b41_686d1247",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/idl_types.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T02:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35f1a2c5_1bf9a191",
+      "range": {
+        "startLine": 195,
+        "startChar": 23,
+        "endLine": 195,
+        "endChar": 33
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
