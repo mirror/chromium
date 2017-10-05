@@ -29,7 +29,7 @@
     };
   }
 
-  globalInterfaceListing(globalObject, propertyNamesInGlobal, debug);
+  globalInterfaceListing(globalObject, propertyNamesInGlobal, false, debug);
 
   finishJSTest();
 
