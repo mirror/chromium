@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a288351_3079a5b2",
+        "filename": "third_party/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-05T14:25:29Z",
+      "side": 0,
+      "message": "It did, but with https://chromium-review.googlesource.com/c/chromium/src/+/697586 landing we can actually change this back.",
+      "parentUuid": "074d420d_cbc8b15a",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9b3c85e_a3d645a7",
         "filename": "third_party/freetype/BUILD.gn",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3a31069c_c830cab1",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-05T14:25:29Z",
+      "side": 0,
+      "message": "Still exists in the new code on line 113.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/696241/8/third_party/freetype/BUILD.gn#113",
+      "parentUuid": "d9b3c85e_a3d645a7",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09a6f87b_cc6db117",
         "filename": "third_party/freetype/BUILD.gn",
         "patchSetId": 8
@@ -50,6 +86,24 @@
       "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93855fc6_ccdbb339",
+        "filename": "third_party/freetype/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-05T14:25:29Z",
+      "side": 0,
+      "message": "Still exists in the new code on line 127.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/696241/8/third_party/freetype/BUILD.gn#127",
+      "parentUuid": "09a6f87b_cc6db117",
+      "revId": "486117c99eecdc289f682644e296fb7a5bc03d32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
