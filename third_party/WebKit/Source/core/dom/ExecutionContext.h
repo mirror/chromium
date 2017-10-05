@@ -54,6 +54,7 @@ class EventTarget;
 class LocalDOMWindow;
 class SuspendableObject;
 class PublicURLManager;
+class ResourceFetcher;
 class SecurityOrigin;
 class ScriptState;
 enum class TaskType : unsigned;
@@ -108,6 +109,8 @@ class CORE_EXPORT ExecutionContext : public ContextLifecycleNotifier,
   // DOMTimerCoordinator is owned by the ExecutionContext and should
   // not be used after the ExecutionContext is destroyed.
   virtual DOMTimerCoordinator* Timers() = 0;
+
+  virtual ResourceFetcher* Fetcher() const = 0;
 
   virtual SecurityContext& GetSecurityContext() = 0;
   KURL ContextURL() const { return VirtualURL(); }
