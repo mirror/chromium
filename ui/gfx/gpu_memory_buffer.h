@@ -110,6 +110,9 @@ class GFX_EXPORT GpuMemoryBuffer {
 GFX_EXPORT GpuMemoryBufferHandle
 CloneHandleForIPC(const GpuMemoryBufferHandle& handle);
 
+// Closes the underlying handles in |handle| and sets it to null.
+GFX_EXPORT void CloseGpuMemoryBufferHandle(GpuMemoryBufferHandle* handle);
+
 }  // namespace gfx
 
 #endif  // UI_GFX_GPU_MEMORY_BUFFER_H_
