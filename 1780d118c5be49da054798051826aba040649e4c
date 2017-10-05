@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "10da0dcf_6db7954b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T10:07:19Z",
+      "side": 1,
+      "message": "Or, another idea. Make this as size, but provide size to offset conversion (probably explicit). WDYT?",
+      "parentUuid": "16623e67_c69c5be3",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
@@ -87,6 +105,24 @@
       "revId": "1780d118c5be49da054798051826aba040649e4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9eb4db_02b18b89",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T10:07:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c7a71c4_b4a8c0e4",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "cbf31fe6_90354012",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T10:07:19Z",
+      "side": 1,
+      "message": "Done, thanks, it\u0027s a left over.",
+      "parentUuid": "ed5a37d6_afa9feeb",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f7a4fa0_3e3e89af",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
         "patchSetId": 5
@@ -124,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "bde9cef5_bfff5b05",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T10:07:19Z",
+      "side": 1,
+      "message": "Nope, this is also a left over as I started by copying existing file, thank you for pointing this out.",
+      "parentUuid": "6f7a4fa0_3e3e89af",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9661485e_287367aa",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
         "patchSetId": 5
@@ -138,6 +210,24 @@
       "revId": "1780d118c5be49da054798051826aba040649e4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d2d167_c5073e0c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-05T10:07:19Z",
+      "side": 1,
+      "message": "Ditto ;)",
+      "parentUuid": "9661485e_287367aa",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
