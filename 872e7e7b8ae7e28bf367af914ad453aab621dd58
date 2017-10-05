@@ -22,6 +22,30 @@
       "revId": "872e7e7b8ae7e28bf367af914ad453aab621dd58",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734581e8_0f21c724",
+        "filename": "sandbox/fuzzer/sandbox_ipc_fuzzer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-05T21:53:16Z",
+      "side": 1,
+      "message": "this code is shamelessly stolen from SharedMemIPCServer::InvokeCallback so I suppose I should fix this there, then copy the fix to here. I can do in another CL.",
+      "parentUuid": "27b68cde_6794a15d",
+      "range": {
+        "startLine": 24,
+        "startChar": 27,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "872e7e7b8ae7e28bf367af914ad453aab621dd58",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
