@@ -29,6 +29,9 @@ struct URLPrefix {
   static const URLPrefix* BestURLPrefix(const base::string16& text,
                                         const base::string16& prefix_suffix);
 
+  static bool LessComponents(const URLPrefix& prefix1,
+                             const URLPrefix& prefix2);
+
   // Sees if |text| is inlineable against either |input| or |fixed_up_input|,
   // returning the appropriate inline autocomplete offset or
   // base::string16::npos if |text| is not inlineable.
