@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1a59039_20a82857",
+        "filename": "headless/lib/browser/headless_devtools.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T22:32:23Z",
+      "side": 1,
+      "message": "Should we DCHECK if the address is valid in case that host is not empty?",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "21d1e509ac707c2af23c7450d5e45a6632c83700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02323e53_decb896d",
+        "filename": "headless/lib/browser/headless_devtools.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1181605
+      },
+      "writtenOn": "2017-10-05T22:32:23Z",
+      "side": 1,
+      "message": "Does this logic mimic non headless DevTools?\nIf so, maybe we want to indicate that.",
+      "range": {
+        "startLine": 39,
+        "startChar": 3,
+        "endLine": 44,
+        "endChar": 47
+      },
+      "revId": "21d1e509ac707c2af23c7450d5e45a6632c83700",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
