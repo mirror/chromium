@@ -40,12 +40,16 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
     : renderer_scheduler_(renderer_scheduler),
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
+      throttling_state_(WebFrameScheduler::ThrottlingState::kNotThrottled),
       frame_visible_(true),
       page_visible_(true),
+      page_stopped_(false),
       frame_paused_(false),
       cross_origin_(false),
       active_connection_count_(0),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  DCHECK_EQ(throttling_state_, CalculateThrottlingState());
+}
 
 namespace {
 
@@ -107,9 +111,7 @@ void WebFrameSchedulerImpl::AddThrottlingObserver(ObserverType type,
                                                   Observer* observer) {
   DCHECK_EQ(ObserverType::kLoader, type);
   DCHECK(observer);
-  observer->OnThrottlingStateChanged(page_visible_
-                                         ? ThrottlingState::kNotThrottled
-                                         : ThrottlingState::kThrottled);
+  observer->OnThrottlingStateChanged(CalculateThrottlingState());
   loader_observers_.insert(observer);
 }
 
@@ -362,13 +364,10 @@ void WebFrameSchedulerImpl::SetPageVisible(bool page_visible) {
     return;
   bool was_throttled = ShouldThrottleTimers();
   page_visible_ = page_visible;
+  if (page_visible_)
+    page_stopped_ = false;  // visible page must not be stopped.
   UpdateThrottling(was_throttled);
-
-  for (auto observer : loader_observers_) {
-    observer->OnThrottlingStateChanged(page_visible_
-                                           ? ThrottlingState::kNotThrottled
-                                           : ThrottlingState::kThrottled);
-  }
+  UpdateThrottlingState();
 }
 
 void WebFrameSchedulerImpl::SetPaused(bool frame_paused) {
@@ -387,6 +386,35 @@ void WebFrameSchedulerImpl::SetPaused(bool frame_paused) {
     deferrable_queue_enabled_voter_->SetQueueEnabled(!frame_paused);
   if (pausable_queue_enabled_voter_)
     pausable_queue_enabled_voter_->SetQueueEnabled(!frame_paused);
+}
+
+void WebFrameSchedulerImpl::SetPageStopped(bool stopped) {
+  if (stopped == page_stopped_)
+    return;
+  DCHECK(!page_visible_);
+  page_stopped_ = stopped;
+  UpdateThrottlingState();
+}
+
+void WebFrameSchedulerImpl::UpdateThrottlingState() {
+  WebFrameScheduler::ThrottlingState throttling_state =
+      CalculateThrottlingState();
+  if (throttling_state == throttling_state_)
+    return;
+  throttling_state_ = throttling_state;
+  for (auto observer : loader_observers_)
+    observer->OnThrottlingStateChanged(throttling_state_);
+}
+
+WebFrameScheduler::ThrottlingState
+WebFrameSchedulerImpl::CalculateThrottlingState() const {
+  if (page_stopped_) {
+    DCHECK(!page_visible_);
+    return WebFrameScheduler::ThrottlingState::kStopped;
+  }
+  if (!page_visible_)
+    return WebFrameScheduler::ThrottlingState::kThrottled;
+  return WebFrameScheduler::ThrottlingState::kNotThrottled;
 }
 
 void WebFrameSchedulerImpl::OnFirstMeaningfulPaint() {
