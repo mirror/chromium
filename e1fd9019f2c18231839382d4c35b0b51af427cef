@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b3f6f9e3_dd5ac392",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:55:35Z",
+      "side": 1,
+      "message": "actually, why not get_host_info().HTTP_REMOTE_ORIGIN here? seems like most WPT tests do this.",
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "240dfcfc_5fb67d7f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
         "patchSetId": 6
