@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "cf328ad6_f5b87d8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T10:18:06Z",
+      "side": 1,
+      "message": "nit: Could you remove trailing white space?",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1998a356_cf72234f",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T10:18:06Z",
+      "side": 1,
+      "message": "So, |managed_user| arg should be removed from here, because it should be always true. (Please find my comment below).\n\n(optional) Then, IMHO, GetDefaultEcryptfsMigrationAction in policy_util has less meaning? How about just inline it here?",
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a677effd_ae37916d",
         "filename": "chrome/browser/chromeos/arc/arc_util.cc",
         "patchSetId": 6
@@ -13,6 +53,30 @@
       "writtenOn": "2017-10-05T09:54:20Z",
       "side": 1,
       "message": "You probably want to keep the !profile case or you could get a nullptr exception below (not sure if that actually happens, but my manual SCA triggered.",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 70
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8ed7e9_aac03b68",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T10:18:06Z",
+      "side": 1,
+      "message": "Also, could you add\n\nprofile-\u003eGetPrefs()-\u003eIsManagedPreference(prefs::kArcEnabled);\n\ncheck here in order not to affect non-managed users clearly.\nAlong with it, please comment that\n\"IsArcPlayStoreEnabledPreferenceManagedForProfile()\" cannot be used here due to function call chain.",
+      "parentUuid": "a677effd_ae37916d",
       "range": {
         "startLine": 240,
         "startChar": 0,
@@ -42,6 +106,23 @@
         "endLine": 595,
         "endChar": 73
       },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ced48b_18b24aee",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T10:18:06Z",
+      "side": 1,
+      "message": "Could you avoid putting the code related un-managed users to policy/ ?",
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +192,23 @@
         "endLine": 1029,
         "endChar": 47
       },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ea8bec_575082b7",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T10:18:06Z",
+      "side": 1,
+      "message": "Note: no |action| is set. Let\u0027s respect Lutz\u0027s comment above.",
       "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
