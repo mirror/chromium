@@ -595,6 +595,7 @@ bool StructTraits<
       !data.ReadPasswordValue(&out->password_value))
     return false;
 
+  out->passwords_has_autofilled_value = data.passwords_has_autofilled_value();
   out->password_value_is_default = data.password_value_is_default();
 
   if (!data.ReadNewPasswordElement(&out->new_password_element) ||
