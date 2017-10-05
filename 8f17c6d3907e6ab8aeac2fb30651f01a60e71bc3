@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa7cb0ec_3088aa8b",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T21:25:36Z",
+      "side": 1,
+      "message": "Ah, I see, you can\u0027t rely on the early return because it\u0027s conditionalized on !in_idle_state.\n\nGiven that you need the boolean, IMO it\u0027d be easier to understand code if you eliminated the early return.  Up to you, though.",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 12
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f820117_7a4d4b3c",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T21:25:36Z",
+      "side": 1,
+      "message": "Suggestion: Add a sentence in between these two \"In this case we transition from NETWORK_READ_COMPLETE or CACHE_WRITE_DATA_COMPLETE to ASYNC_OP_COMPLETE_PRE_TRUNCATE.\"",
+      "range": {
+        "startLine": 162,
+        "startChar": 18,
+        "endLine": 162,
+        "endChar": 23
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
