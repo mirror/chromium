@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8f1c94e_f4fccf8d",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1997,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-05T20:37:49Z",
+      "side": 1,
+      "message": "Is |callback| no longer called?",
+      "range": {
+        "startLine": 1997,
+        "startChar": 69,
+        "endLine": 1997,
+        "endChar": 77
+      },
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac5c427_63aad0c2",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-05T20:37:49Z",
+      "side": 1,
+      "message": "In this example, it doesn\u0027t seem like the presenter is providing much value.",
+      "range": {
+        "startLine": 233,
+        "startChar": 3,
+        "endLine": 233,
+        "endChar": 54
+      },
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

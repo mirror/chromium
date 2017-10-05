@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc41ede6_c16400e0",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2040,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-05T20:37:49Z",
+      "side": 0,
+      "message": "Does removing this code change the behavior?",
+      "range": {
+        "startLine": 2036,
+        "startChar": 2,
+        "endLine": 2040,
+        "endChar": 3
+      },
+      "revId": "0221b11aadc89bbc77b0fc68261d3287cf28e30f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
