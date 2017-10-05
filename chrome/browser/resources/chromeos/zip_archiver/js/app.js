@@ -28,6 +28,18 @@ unpacker.app = {
   MOUNTING_NOTIFICATION_DELAY: 1000,
 
   /**
+   * Time in milliseconds before the notification about packing is shown.
+   * @const {number}
+   */
+  PACKING_NOTIFICATION_DELAY: 1000,
+
+  /**
+   * Time in milliseconds before the notification is cleared.
+   * @const {number}
+   */
+  PACKING_NOTIFICATION_CLEAR_DELAY: 1000,
+
+  /**
    * The default filename for .nmf file.
    * This value must not be constant because it is overwritten in tests.
    * Since .nmf file is not available in .grd, we use .txt instead.
@@ -696,49 +708,73 @@ unpacker.app = {
           unpacker.app.DEFAULT_MODULE_NMF, unpacker.app.DEFAULT_MODULE_TYPE);
     }
 
-    unpacker.app.moduleLoadedPromise.then(function() {
-      var compressor = new unpacker.Compressor(
-          /** @type {!Object} */ (unpacker.app.naclModule), launchData.items);
+    unpacker.app.moduleLoadedPromise
+        .then(function() {
+          return unpacker.app.stringDataLoadedPromise;
+        })
+        .then(function(stringData) {
+          var compressor = new unpacker.Compressor(
+              /** @type {!Object} */ (unpacker.app.naclModule),
+              launchData.items);
 
-      var compressorId = compressor.getCompressorId();
+          var compressorId = compressor.getCompressorId();
+          unpacker.app.compressors[compressorId] = compressor;
 
-      unpacker.app.compressors[compressorId] = compressor;
+          // If packing takes significant amount of time, then show a
+          // notification about packing in progress.
+          var deferredNotificationTimer = setTimeout(function() {
+            chrome.notifications.create(
+                compressorId.toString(), {
+                  type: 'basic',
+                  iconUrl: chrome.runtime.getManifest().icons[128],
+                  title: compressor.getArchiveName(),
+                  message: stringData['ZIP_ARCHIVER_PACKING_DEFERRED_MESSAGE'],
+                },
+                function() {});
+          }, unpacker.app.PACKING_NOTIFICATION_DELAY);
 
-      // TODO(takise): Error messages have not been prepared yet for timer
-      // and error processing.
+          var onError = function(compressorId) {
+            clearTimeout(deferredNotificationTimer);
+            chrome.notifications.create(
+                compressorId.toString(), {
+                  type: 'basic',
+                  iconUrl: chrome.runtime.getManifest().icons[128],
+                  title: compressor.getArchiveName(),
+                  message: stringData['ZIP_ARCHIVER_PACKING_ERROR_MESSAGE']
+                },
+                function() {});
+            unpacker.app.cleanupCompressor(compressorId, true /* hasError */);
+          };
 
-      // If packing takes significant amount of time, then show a
-      // notification about packing in progress.
-      // var deferredNotificationTimer = setTimeout(function() {
-      //   chrome.notifications.create(compressorId.toString(), {
-      //     type: 'basic',
-      //     iconUrl: chrome.runtime.getManifest().icons[128],
-      //     title: entry.name,
-      //     message: chrome.i18n.getMessage('packingMessage'),
-      //   }, function() {});
-      // }, unpacker.app.PACKING_NOTIFICATION_DELAY);
+          var onSuccess = function(compressorId) {
+            clearTimeout(deferredNotificationTimer);
+            setTimeout(function() {
+              chrome.notifications.clear(
+                  compressorId.toString(), function() {});
+            }, unpacker.app.PACKING_NOTIFICATION_CLEAR_DELAY);
+            unpacker.app.cleanupCompressor(compressorId, false /* hasError */);
+          };
 
-      var onError = function(compressorId) {
-        // clearTimeout(deferredNotificationTimer);
-        // console.error('Packing error: ' + error.message + '.');
-        // chrome.notifications.create(compressorId.toString(), {
-        //   type: 'basic',
-        //   iconUrl: chrome.runtime.getManifest().icons[128],
-        //   title: entry.name,
-        //   message: chrome.i18n.getMessage('packingErrorMessage')
-        // }, function() {});
-        unpacker.app.cleanupCompressor(compressorId, true /* hasError */);
-      };
+          var onProgress = function(compressorId, progress) {
+            clearTimeout(deferredNotificationTimer);
 
-      var onSuccess = function(compressorId) {
-        // clearTimeout(deferredNotificationTimer);
-        // chrome.notifications.clear(compressorId.toString(),
-        //     function() {});
-        unpacker.app.cleanupCompressor(compressorId, false /* hasError */);
-      };
+            progress = Math.round(progress * 100);
+            // TODO(tetsui): Check if icon on progress notification message is
+            // visisble when bug related to the progress notification gets
+            // resolved.
+            chrome.notifications.create(
+                compressorId.toString(), {
+                  type: 'progress',
+                  iconUrl: chrome.runtime.getManifest().icons[128],
+                  title: compressor.getArchiveName(),
+                  message: stringData['ZIP_ARCHIVER_PACKING_PROGRESS_MESSAGE'],
+                  progress: progress
+                },
+                function() {});
+          };
 
-      compressor.compress(onSuccess, onError);
-    });
+          compressor.compress(onSuccess, onError, onProgress);
+        });
   },
 
   /**
