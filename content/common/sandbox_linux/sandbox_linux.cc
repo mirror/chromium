@@ -235,13 +235,11 @@ int LinuxSandbox::GetStatus() {
 
     // We report whether the sandbox will be activated when renderers, workers
     // and PPAPI plugins go through sandbox initialization.
-    if (seccomp_bpf_supported() &&
-        SandboxSeccompBPF::ShouldEnableSeccompBPF(switches::kRendererProcess)) {
+    if (seccomp_bpf_supported()) {
       sandbox_status_flags_ |= kSandboxLinuxSeccompBPF;
     }
 
-    if (seccomp_bpf_with_tsync_supported() &&
-        SandboxSeccompBPF::ShouldEnableSeccompBPF(switches::kRendererProcess)) {
+    if (seccomp_bpf_with_tsync_supported()) {
       sandbox_status_flags_ |= kSandboxLinuxSeccompTSYNC;
     }
 
