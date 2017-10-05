@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0752255b_b24292b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "You\u0027ll need to wrap it in one of these from above:\n\nDeferredStartupHandler.getInstance().addDeferredTask(() -\u003e {\n});",
+      "range": {
+        "startLine": 1632,
+        "startChar": 8,
+        "endLine": 1632,
+        "endChar": 34
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d9493c4_3e64c481",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 29
@@ -48,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "c56b716c_b530fac4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "If we want to exclude incognito, we should add !tab.isIncognito() to our conditions above as well.\n\nWe might want a isValidTabForSurvey that we could use for this and the didSelectTab call below.",
+      "parentUuid": "c3e504f5_5e48ef42",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 72
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90fd2bf9_5cdb91d2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/ChromeHomeSurveyController.java",
         "patchSetId": 29
@@ -71,6 +118,29 @@
     },
     {
       "key": {
+        "uuid": "e2bac6e6_3457d641",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "{@link showSurveyIfAvailable}",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "620d81ea_11ceaa4f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/survey/SurveyController.java",
         "patchSetId": 29
@@ -87,6 +157,69 @@
         "startChar": 77,
         "endLine": 37,
         "endChar": 84
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95218ef_c99fcbce",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "I would do DCHECK(web_contents); here instead of checking this.  we don\u0027t handle null in the java code, so I think we should likely not have this here.",
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fd3595_48a65435",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "can we just do?:\nreturn tab_android-\u003eGetJavaObject();",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 23
+      },
+      "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5852e69c_416d7fd9",
+        "filename": "chrome/browser/ui/android/infobars/survey_infobar.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T21:58:24Z",
+      "side": 1,
+      "message": "I would drop \"native-side implementation of an\" since this is a .cc file, that is a given",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 31
       },
       "revId": "07b98b85d491268fbdcde4812d2503b515ffdd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
