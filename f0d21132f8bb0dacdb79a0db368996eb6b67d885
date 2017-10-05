@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9db82e95_327acd15",
+        "filename": "net/url_request/url_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-05T22:21:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4918a5cf_d33a5bf1",
+      "range": {
+        "startLine": 317,
+        "startChar": 32,
+        "endLine": 317,
+        "endChar": 36
+      },
+      "revId": "f0d21132f8bb0dacdb79a0db368996eb6b67d885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbd1c9bd_a627ffa7",
         "filename": "net/url_request/url_fetcher_core.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-05T22:14:26Z",
       "side": 1,
       "message": "Should you clear this regardless of errors?",
+      "revId": "f0d21132f8bb0dacdb79a0db368996eb6b67d885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be52cf5_3c3225bb",
+        "filename": "net/url_request/url_fetcher_core.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-05T22:21:16Z",
+      "side": 1,
+      "message": "I want |proxy_server_| value to be in sync with |was_fetched_via_proxy_|.\nIt\u0027s an error for the caller to check value of either of them if the fetch failed.",
+      "parentUuid": "bbd1c9bd_a627ffa7",
       "revId": "f0d21132f8bb0dacdb79a0db368996eb6b67d885",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
