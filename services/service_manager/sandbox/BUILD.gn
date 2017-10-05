@@ -21,6 +21,6 @@ component("sandbox") {
     "//base",
   ]
   if (is_mac) {
-    public_deps += [ "mac:packaged_sb_files" ]
+    public_deps += [ "mac:source_files" ]
   }
 }
