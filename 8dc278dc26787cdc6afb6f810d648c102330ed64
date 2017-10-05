@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a420a3c_1fe43380",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:12:36Z",
+      "side": 1,
+      "message": "I think you want to leave this one behind.  It is handled in LaunchIntentDispatcher#dispatch and not dispatchToTabbedActivity.",
+      "range": {
+        "startLine": 406,
+        "startChar": 55,
+        "endLine": 406,
+        "endChar": 63
+      },
+      "revId": "8dc278dc26787cdc6afb6f810d648c102330ed64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cbe176_fdd36bec",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:12:36Z",
+      "side": 1,
+      "message": "I couldn\u0027t find this used anywhere.  I suspect we added it for samsung multi-window, but I couldn\u0027t find any reference there either:\nhttp://developer.samsung.com/galaxy/multiwindow/guide\n\nSince this is about the launcher, I suspect this is the correct place for this.",
+      "range": {
+        "startLine": 408,
+        "startChar": 48,
+        "endLine": 408,
+        "endChar": 54
+      },
+      "revId": "8dc278dc26787cdc6afb6f810d648c102330ed64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
