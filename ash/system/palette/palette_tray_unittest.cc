@@ -14,6 +14,7 @@
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/palette/palette_utils.h"
+#include "ash/system/palette/palette_welcome_bubble.h"
 #include "ash/system/palette/test_palette_delegate.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/status_area_widget_test_helper.h"
@@ -550,6 +551,44 @@ TEST_F(PaletteTrayTestWithInternalStylus, ToolDeactivatesWhenOpeningBubble) {
   palette_tray_->ShowBubble(false /* show_by_click */);
   EXPECT_TRUE(test_api_->GetTrayBubbleWrapper());
   EXPECT_FALSE(manager->IsToolActive(PaletteToolId::LASER_POINTER));
+}
+
+// Verify the palette welcome bubble is shown the first time the stylus is
+// removed.
+TEST_F(PaletteTrayTestWithInternalStylus, WelcomeBubbleShownOnEject) {
+  test_palette_delegate()->set_should_show_palette(true);
+  ASSERT_FALSE(pref_service()->GetBoolean(prefs::kShownPaletteWelcomeBubble));
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  // Eject the stylus.
+  test_api_->OnStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_TRUE(test_api_->GetWelcomeBubble()->BubbleShown());
+}
+
+// Verify if the pref which tracks if the welcome bubble has been shown before
+// is true, the welcome bubble is not shown when the stylus is removed.
+TEST_F(PaletteTrayTestWithInternalStylus, WelcomeBubbleNotShownIfShownBefore) {
+  test_palette_delegate()->set_should_show_palette(true);
+  pref_service()->SetBoolean(prefs::kShownPaletteWelcomeBubble, true);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  // Eject the stylus.
+  test_api_->OnStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+}
+
+// Verify that the bubble does not get shown if the auto open palette setting is
+// true.
+TEST_F(PaletteTrayTestWithInternalStylus,
+       WelcomeBubbleNotShownIfAutoOpenPaletteTrue) {
+  test_palette_delegate()->set_should_show_palette(true);
+  test_palette_delegate()->set_should_auto_open_palette(true);
+  pref_service()->SetBoolean(prefs::kShownPaletteWelcomeBubble, false);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
+
+  // Eject the stylus.
+  test_api_->OnStylusStateChanged(ui::StylusState::REMOVED);
+  EXPECT_FALSE(test_api_->GetWelcomeBubble()->BubbleShown());
 }
 
 }  // namespace ash
