@@ -1238,6 +1238,12 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
         Tab tab = mToolbarModel.getTab();
         mLocationBar.setUrlToPageUrl();
 
+        // Do not reload the page if it is already loaded (tab reparenting).
+        if (tab != null && !tab.isFrozen() && tab.isLoadingAndRenderingDone()) {
+            finishLoadProgress(false);
+            return;
+        }
+
         updateTabLoadingState(true);
 
         if (tab == null) {
