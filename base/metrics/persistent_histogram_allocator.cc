@@ -23,6 +23,7 @@
 #include "base/metrics/statistics_recorder.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/pickle.h"
+#include "base/process/process_handle.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/lock.h"
 
@@ -872,8 +873,9 @@ void GlobalHistogramAllocator::ConstructFilePathsForUploadDir(
     FilePath* out_spare_path) {
   if (out_upload_path) {
     std::string name_stamp =
-        StringPrintf("%s-%X", name.c_str(),
-                     static_cast<unsigned int>(Time::Now().ToTimeT()));
+        StringPrintf("%s-%X-%lX", name.c_str(),
+                     static_cast<unsigned int>(Time::Now().ToTimeT()),
+                     static_cast<long>(GetCurrentProcId()));
     *out_upload_path = MakeMetricsFilePath(upload_dir, name_stamp);
   }
 
