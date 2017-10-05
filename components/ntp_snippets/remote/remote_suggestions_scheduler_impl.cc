@@ -448,6 +448,7 @@ RemoteSuggestionsSchedulerImpl::RemoteSuggestionsSchedulerImpl(
     Logger* debug_logger)
     : persistent_scheduler_(persistent_scheduler),
       provider_(nullptr),
+      provider_is_active_(false),
       background_fetch_in_progress_(false),
       user_classifier_(user_classifier),
       request_throttler_rare_ntp_user_(
@@ -503,6 +504,7 @@ void RemoteSuggestionsSchedulerImpl::SetProvider(
 }
 
 void RemoteSuggestionsSchedulerImpl::OnProviderActivated() {
+  provider_is_active_ = true;
   StartScheduling();
   RunQueuedTriggersIfReady();
 }
@@ -519,6 +521,7 @@ void RemoteSuggestionsSchedulerImpl::RunQueuedTriggersIfReady() {
 }
 
 void RemoteSuggestionsSchedulerImpl::OnProviderDeactivated() {
+  provider_is_active_ = false;
   StopScheduling();
 }
 
@@ -829,9 +832,9 @@ bool RemoteSuggestionsSchedulerImpl::ShouldRefetchNow(
 }
 
 bool RemoteSuggestionsSchedulerImpl::IsReadyForBackgroundFetches() const {
-  if (!provider_) {
+  if (!provider_ || !provider_is_active_) {
     return false;  // Cannot fetch as remote suggestions provider does not
-                   // exist.
+                   // exist or is not active yet.
   }
 
   if (schedule_.is_empty()) {

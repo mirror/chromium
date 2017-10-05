@@ -147,6 +147,7 @@ class RemoteSuggestionsSchedulerImpl : public RemoteSuggestionsScheduler {
 
   // Interface for doing all the actual work (apart from scheduling). Not owned.
   RemoteSuggestionsProvider* provider_;
+  bool provider_is_active_;
 
   FetchingSchedule schedule_;
   bool background_fetch_in_progress_;
