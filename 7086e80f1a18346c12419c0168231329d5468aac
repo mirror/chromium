@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae8363b1_96e1f451",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-05T01:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6067f52_f2df5ace",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 8
+      },
+      "revId": "7086e80f1a18346c12419c0168231329d5468aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68d322bc_e0174a4c",
         "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "7086e80f1a18346c12419c0168231329d5468aac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bf9a35a_d0e85da5",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-05T01:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68d322bc_e0174a4c",
+      "range": {
+        "startLine": 57,
+        "startChar": 60,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "7086e80f1a18346c12419c0168231329d5468aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "517d7aec_fbb443a9",
+        "filename": "components/certificate_reporting/error_reporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-05T01:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d4846d4_69818d84",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "7086e80f1a18346c12419c0168231329d5468aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d4a1b12_05dc0ab8",
         "filename": "components/certificate_reporting/error_reporter_unittest.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "76eba96a_1317fed8",
+        "filename": "components/certificate_reporting/error_reporter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-05T01:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d4a1b12_05dc0ab8",
+      "range": {
+        "startLine": 168,
+        "startChar": 5,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "7086e80f1a18346c12419c0168231329d5468aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42cec5bc_840d1413",
         "filename": "components/encrypted_messages/message_encrypter.h",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-05T00:13:00Z",
       "side": 1,
       "message": "nit: Decrypts",
+      "range": {
+        "startLine": 28,
+        "startChar": 3,
+        "endLine": 28,
+        "endChar": 11
+      },
+      "revId": "7086e80f1a18346c12419c0168231329d5468aac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84993601_59435a00",
+        "filename": "components/encrypted_messages/message_encrypter.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1243399
+      },
+      "writtenOn": "2017-10-05T01:06:55Z",
+      "side": 1,
+      "message": "Done. (This one\u0027s embarrassing, I\u0027ll plead the \"y and i are close on the keyboard\")",
+      "parentUuid": "42cec5bc_840d1413",
       "range": {
         "startLine": 28,
         "startChar": 3,
