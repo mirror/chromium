@@ -97,18 +97,16 @@ class LineBreakIteratorPool final {
     pool_.push_back(Entry(vended_iterators_.Take(iterator), iterator));
   }
 
- private:
+  // Do not construct directly.
   LineBreakIteratorPool() {}
 
+ private:
   static const size_t kCapacity = 4;
 
   typedef std::pair<AtomicString, icu::BreakIterator*> Entry;
   typedef Vector<Entry, kCapacity> Pool;
   Pool pool_;
   HashMap<icu::BreakIterator*, AtomicString> vended_iterators_;
-
-  friend WTF::ThreadSpecific<LineBreakIteratorPool>::
-  operator LineBreakIteratorPool*();
 };
 
 enum TextContext { kNoContext, kPriorContext, kPrimaryContext };

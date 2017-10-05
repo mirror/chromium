@@ -30,10 +30,12 @@ class PLATFORM_EXPORT SharedGpuContext {
       ContextProviderFactory;
   static void SetContextProviderFactoryForTesting(ContextProviderFactory);
 
+  // Do not construct directly. Use accessors above.
+  SharedGpuContext();
+
  private:
   static SharedGpuContext* GetInstanceForCurrentThread();
 
-  SharedGpuContext();
   void CreateContextProviderOnMainThread(WaitableEvent*);
   void CreateContextProviderIfNeeded();
   void SetContextProvider(std::unique_ptr<WebGraphicsContext3DProvider>&&);
@@ -41,7 +43,6 @@ class PLATFORM_EXPORT SharedGpuContext {
   ContextProviderFactory context_provider_factory_ = nullptr;
   std::unique_ptr<WebGraphicsContext3DProviderWrapper>
       context_provider_wrapper_;
-  friend class WTF::ThreadSpecific<SharedGpuContext>;
   bool context_provider_creation_failed_ = false;
 };
 

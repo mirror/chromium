@@ -102,10 +102,10 @@ class PLATFORM_EXPORT FontGlobalContext {
 
   static void ClearForTesting();
 
- private:
-  friend class WTF::ThreadSpecific<FontGlobalContext>;
-
+  // Do not construct directly. Use Get().
   FontGlobalContext();
+
+ private:
   ~FontGlobalContext() {}
 
   FontCache font_cache_;

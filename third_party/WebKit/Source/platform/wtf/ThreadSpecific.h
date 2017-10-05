@@ -45,6 +45,7 @@
 #include "build/build_config.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/Optional.h"
 #include "platform/wtf/StackUtil.h"
 #include "platform/wtf/StdLibExtras.h"
 #include "platform/wtf/WTF.h"
@@ -94,16 +95,16 @@ class ThreadSpecific {
   ~ThreadSpecific();
 
   T* Get();
-  void Set(T*);
+  void Initialize();
   void static Destroy(void* ptr);
 
   struct Data {
     WTF_MAKE_NONCOPYABLE(Data);
 
    public:
-    Data(T* value, ThreadSpecific<T>* owner) : value(value), owner(owner) {}
+    explicit Data(ThreadSpecific<T>* owner) : owner(owner) {}
 
-    T* value;
+    Optional<T> value;
     ThreadSpecific<T>* owner;
 #if defined(OS_WIN)
     void (*destructor)(void*);
@@ -151,13 +152,15 @@ inline ThreadSpecific<T>::ThreadSpecific() {
 template <typename T>
 inline T* ThreadSpecific<T>::Get() {
   Data* data = static_cast<Data*>(pthread_getspecific(key_));
-  return data ? data->value : 0;
+  return data ? &*data->value : nullptr;
 }
 
 template <typename T>
-inline void ThreadSpecific<T>::Set(T* ptr) {
+inline void ThreadSpecific<T>::Initialize() {
   DCHECK(!Get());
-  pthread_setspecific(key_, new Data(ptr, this));
+  Data* data = new Data(this);
+  pthread_setspecific(key_, data);
+  data->value.emplace();
 }
 
 #elif defined(OS_WIN)
@@ -206,15 +209,16 @@ inline ThreadSpecific<T>::~ThreadSpecific() {
 template <typename T>
 inline T* ThreadSpecific<T>::Get() {
   Data* data = static_cast<Data*>(TlsGetValue(TlsKeys()[index_]));
-  return data ? data->value : 0;
+  return data ? &*data->value : nullptr;
 }
 
 template <typename T>
-inline void ThreadSpecific<T>::Set(T* ptr) {
+inline void ThreadSpecific<T>::Initialize() {
   DCHECK(!Get());
-  Data* data = new Data(ptr, this);
+  Data* data = new Data(this);
   data->destructor = &ThreadSpecific<T>::Destroy;
   TlsSetValue(TlsKeys()[index_], data);
+  data->value.emplace();
 }
 
 #else
@@ -239,8 +243,7 @@ inline void ThreadSpecific<T>::Destroy(void* ptr) {
   if (IsMainThread())
     return;
 
-  data->value->~T();
-  Partitions::FastFree(data->value);
+  data->value = nullopt;
 
 #if defined(OS_POSIX)
   pthread_setspecific(data->owner->key_, 0);
@@ -289,8 +292,7 @@ inline ThreadSpecific<T>::operator T*() {
       main_thread_storage_ = *ptr;
     }
 
-    Set(*ptr);
-    new (NotNull, *ptr) T;
+    Initialize();
   }
   return *ptr;
 }
