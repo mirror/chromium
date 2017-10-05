@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a683bc5d_13213e77",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T12:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afd2dbf1_42c19c83",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c8cda7d_d8d88dcc",
         "filename": "chrome/browser/resources/pdf/pdf.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-26T14:43:04Z",
       "side": 1,
       "message": "Did we decide if we wanted to update position on every scroll or just after a certain number?",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3ba6b9_9a9bf110",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T12:15:05Z",
+      "side": 1,
+      "message": "I haven\u0027t yet addressed this - for now it still updates on every scroll.",
+      "parentUuid": "3c8cda7d_d8d88dcc",
       "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905d7075_3045868d",
+        "filename": "chrome/browser/resources/pdf/pdf.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T12:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18d075f7_99fa5ecd",
+      "revId": "fdd0d5a77fbd43c5588768a688368550c67faa93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

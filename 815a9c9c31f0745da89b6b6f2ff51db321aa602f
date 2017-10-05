@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebf966ec_8d41ab15",
+        "filename": "chrome/browser/resources/pdf/content_script.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T12:15:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abfb61cf_df15deaf",
+      "revId": "815a9c9c31f0745da89b6b6f2ff51db321aa602f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0bfdae88_81cfd53d",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T02:25:45Z",
       "side": 1,
       "message": "Update the comment: \"Go to / navigate to page (...)\"",
+      "revId": "815a9c9c31f0745da89b6b6f2ff51db321aa602f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626be675_4b3ded5a",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-05T12:15:05Z",
+      "side": 1,
+      "message": "No longer applies - I now have a forkHistoryState message type instead, in its own section.",
+      "parentUuid": "0bfdae88_81cfd53d",
       "revId": "815a9c9c31f0745da89b6b6f2ff51db321aa602f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
