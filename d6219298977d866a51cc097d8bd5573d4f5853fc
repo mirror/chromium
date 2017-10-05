@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "663cb322_67d2d695",
+        "filename": "content/network/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-05T21:36:17Z",
+      "side": 1,
+      "message": "Let\u0027s do it as a separate CL then, so it\u0027s easier to review. Here it is: https://chromium-review.googlesource.com/c/chromium/src/+/703674",
+      "parentUuid": "81b36c68_445039d3",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ec69df_b87fc21d",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 1
@@ -108,6 +132,30 @@
       "writtenOn": "2017-10-04T16:56:28Z",
       "side": 1,
       "message": "This needs docs.",
+      "range": {
+        "startLine": 117,
+        "startChar": 42,
+        "endLine": 117,
+        "endChar": 59
+      },
+      "revId": "d6219298977d866a51cc097d8bd5573d4f5853fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bd98f3_ba81d91d",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-05T21:36:17Z",
+      "side": 1,
+      "message": "Done. Also made conditions nullable.",
+      "parentUuid": "57ec69df_b87fc21d",
       "range": {
         "startLine": 117,
         "startChar": 42,
