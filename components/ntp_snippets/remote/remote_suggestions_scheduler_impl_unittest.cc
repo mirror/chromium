@@ -354,6 +354,20 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
 }
 
 TEST_F(RemoteSuggestionsSchedulerImplTest,
+       ShouldQueueBackgroundRequestBeforeActivated) {
+  // Set the Eula bit to be sure we queue them because of not being activated.
+  SetEulaAcceptedPref();
+
+  // Provider is not active -- no fetch. But request should get queued.
+  scheduler()->OnPersistentSchedulerWakeUp();
+
+  EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
+  ExpectOneRetiringRefetchInTheBackground();
+  // Activate provider -- this should set up the schedule and trigger a fetch.
+  scheduler()->OnProviderActivated();
+}
+
+TEST_F(RemoteSuggestionsSchedulerImplTest,
        ShouldIgnoreSignalsWhenDisabledByParam) {
   // First set an empty list of allowed trigger types.
   SetVariationParameter("scheduler_trigger_types", "-");
