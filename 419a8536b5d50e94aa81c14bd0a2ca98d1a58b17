@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d89cb626_24594160",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T20:34:07Z",
+      "side": 1,
+      "message": "I am not too familiar with the SB code but why are we doing similar processing here and in ParseSubresourceFilterTypes? Is it possible to reuse ParseSubresourceFilterTypes here?",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cca886e4_d24f315b",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T20:34:07Z",
+      "side": 1,
+      "message": "Add a \"TODO(crbug.com/761385)\" here?",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51251c0_e785f169",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T20:34:07Z",
+      "side": 1,
+      "message": "nit: \"it\" can be renamed to sf_type.",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
