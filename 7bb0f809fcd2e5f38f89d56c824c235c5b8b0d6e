@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0dc7880_63da7db7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "There are a few places where both enums are checked to see if the users accepted (lines 371,379, 402), what about making a helper function",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4457a072_dbadb740",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "As discussed offline, you could probably  just use by default for state, since it doesn\u0027t do any harm if it is called multiple times (since it just queries state, it doesn\u0027t change anything)",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77fc5056_6072707b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "Why not have the deconstructor call Close if the view was opened?",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "719913c8_35aa47d0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "nit: crbug -\u003e crbug.com (there at 1300 cases with the .com and 61 without it)",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 17
+      },
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60aaeb0_98424862",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "The implementation of ChromeCleanerRebootDialogControllerImpl::DialogShown just has two dchecks, no metrics long. Should metrics logging be added or can this function be removed?",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ff1fa7_a213f22a",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-05T21:06:57Z",
+      "side": 1,
+      "message": "b/ -\u003e crbug.com/",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 18
+      },
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
