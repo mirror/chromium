@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cc9379f_6b95cb2a",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T18:41:38Z",
+      "side": 0,
+      "message": "Should this switch to AssertBlockingAllowed() instead?",
+      "revId": "331d7ef11600b0fe3f571e8b77659a9eae363b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
