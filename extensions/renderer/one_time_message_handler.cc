@@ -45,8 +45,7 @@ struct OneTimeReceiver {
   v8::Global<v8::Object> sender;
 };
 
-using OneTimeMessageCallback =
-    base::OnceCallback<void(gin::Arguments* arguments)>;
+using OneTimeMessageCallback = base::Callback<void(gin::Arguments* arguments)>;
 struct OneTimeMessageContextData : public base::SupportsUserData::Data {
   std::map<PortId, OneTimeOpener> openers;
   std::map<PortId, OneTimeReceiver> receivers;
@@ -104,7 +103,7 @@ void OneTimeMessageResponseHelper(
 
   std::unique_ptr<OneTimeMessageCallback> callback = std::move(*iter);
   data->pending_callbacks.erase(iter);
-  std::move(*callback).Run(&arguments);
+  callback->Run(&arguments);
 }
 
 }  // namespace
@@ -130,7 +129,7 @@ bool OneTimeMessageHandler::HasPort(ScriptContext* script_context,
 void OneTimeMessageHandler::SendMessage(
     ScriptContext* script_context,
     const PortId& new_port_id,
-    const std::string& target_id,
+    const MessageTarget& target,
     const std::string& method_name,
     bool include_tls_channel_id,
     const Message& message,
@@ -157,8 +156,8 @@ void OneTimeMessageHandler::SendMessage(
   }
 
   IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
-  ipc_sender->SendOpenChannelToExtension(script_context, new_port_id, target_id,
-                                         method_name, include_tls_channel_id);
+  ipc_sender->SendOpenMessageChannel(script_context, new_port_id, target,
+                                     method_name, include_tls_channel_id);
   ipc_sender->SendPostMessageToPort(routing_id, new_port_id, message);
 
   if (!wants_response) {
@@ -239,8 +238,7 @@ bool OneTimeMessageHandler::DeliverMessageToReceiver(
   // TODO(devlin): With chrome.runtime.sendMessage, we actually require that a
   // listener return `true` if they intend to respond asynchronously; otherwise
   // we close the port. With both sendMessage and sendRequest, we can monitor
-  // the lifetime of the response callback and close the port if it's garbage-
-  // collected.
+  // the lifetime of the response callback and close the port if it's collected.
   auto callback = std::make_unique<OneTimeMessageCallback>(
       base::Bind(&OneTimeMessageHandler::OnOneTimeMessageResponse,
                  weak_factory_.GetWeakPtr(), target_port_id));
@@ -285,16 +283,17 @@ bool OneTimeMessageHandler::DeliverReplyToOpener(ScriptContext* script_context,
 
   handled = true;
 
-  const OneTimeOpener& port = iter->second;
-  DCHECK_NE(-1, port.request_id);
+  OneTimeOpener& port = iter->second;
 
   // This port was the opener, so the message is the response from the
-  // receiver. Invoke the callback and close the message port.
-  v8::Local<v8::Value> v8_message =
-      messaging_util::MessageToV8(context, message);
-  std::vector<v8::Local<v8::Value>> args = {v8_message};
-  bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, args, std::string());
+  // receiver. Invoke the callback, if any, and close the message port.
+  if (port.request_id != -1) {
+    v8::Local<v8::Value> v8_message =
+        messaging_util::MessageToV8(context, message);
+    std::vector<v8::Local<v8::Value>> args = {v8_message};
+    bindings_system_->api_system()->request_handler()->CompleteRequest(
+        port.request_id, args, std::string());
+  }
 
   bool close_channel = true;
   bindings_system_->GetIPCMessageSender()->SendCloseMessagePort(
@@ -337,11 +336,11 @@ bool OneTimeMessageHandler::DisconnectOpener(ScriptContext* script_context,
     return handled;
 
   handled = true;
-  const OneTimeOpener& port = iter->second;
-  DCHECK_NE(-1, port.request_id);
-
-  bindings_system_->api_system()->request_handler()->CompleteRequest(
-      port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+  OneTimeOpener& port = iter->second;
+  if (port.request_id != -1) {
+    bindings_system_->api_system()->request_handler()->CompleteRequest(
+        port.request_id, std::vector<v8::Local<v8::Value>>(), error_message);
+  }
 
   data->openers.erase(iter);
   return handled;
