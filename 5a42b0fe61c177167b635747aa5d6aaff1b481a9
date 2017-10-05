@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7da660d3_3b28b59b",
+        "filename": "ash/public/cpp/shelf_model_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "that is nice.",
+      "parentUuid": "e011bbd6_642671ab",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3badcd4_ffd6432d",
         "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T04:24:46Z",
       "side": 1,
       "message": "aside: it is kinda of a bummer that these are pure virtual...",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6c7570_982b266d",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "I think so :)",
+      "parentUuid": "b3badcd4_ffd6432d",
       "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1be153cf_0b5971cb",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "ControllerForShelfId is gone so second option.",
+      "parentUuid": "f811434d_465fbe35",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cfa65848_ca70457c",
         "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8c9768_163cb693",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa65848_ca70457c",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "63d0e162_70595c26",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "I am ok with first one. I added this to keep logic clear, to pass below only item controller of the same owner. However it is OK to pass delegate directly",
+      "parentUuid": "2c204637_d2700b1b",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8f638ff_e83ca310",
         "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be1eb51_0227832c",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-10-05T16:22:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8f638ff_e83ca310",
+      "revId": "5a42b0fe61c177167b635747aa5d6aaff1b481a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
