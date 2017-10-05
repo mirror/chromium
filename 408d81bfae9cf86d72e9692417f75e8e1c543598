@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d4b9111_3f0ea1ee",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:43:27Z",
+      "side": 1,
+      "message": "Do we need null instead of undefined?\n\nAlso, do we need this to be the result of a function?  Normally we do if we\u0027re returning an object (e.g. {} or []) because otherwise all instances share the same default value - but that shouldn\u0027t apply to null.",
+      "revId": "408d81bfae9cf86d72e9692417f75e8e1c543598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06bc2525_486080b4",
+        "filename": "chrome/browser/resources/md_extensions/error_page.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:43:27Z",
+      "side": 1,
+      "message": "here, too, we could just do value: false, right?",
+      "revId": "408d81bfae9cf86d72e9692417f75e8e1c543598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e455b19_e3497bed",
+        "filename": "chrome/browser/ui/webui/extensions/extensions_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:43:27Z",
+      "side": 1,
+      "message": "nit: openInDevtools",
+      "revId": "408d81bfae9cf86d72e9692417f75e8e1c543598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
