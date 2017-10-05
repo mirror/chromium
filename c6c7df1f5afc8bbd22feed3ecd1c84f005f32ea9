@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5766f45b_c94589b0",
+        "filename": "media/audio/audio_output_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-05T11:29:52Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b272cf9d_78515a2a",
+        "filename": "media/audio/audio_output_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-05T11:29:52Z",
+      "side": 1,
+      "message": "Was DCHECK -\u003e CHECK intentional? If it was, add a comment.",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775b1b4c_4fbf41a2",
+        "filename": "media/audio/audio_output_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-05T11:29:52Z",
+      "side": 1,
+      "message": "Since you wrote in the superclass that in must be used on the audio manager thread, how about using DCHECK(audio_manager_-\u003eGetTaskRunner()-\u003eBelongsToCurrentThread()) instead?",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e9f7a0a_6dcb3616",
+        "filename": "media/audio/audio_output_resampler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-05T11:29:52Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
