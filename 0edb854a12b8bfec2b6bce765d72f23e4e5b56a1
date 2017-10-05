@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "aa35d20d_93dce3ab",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-05T13:21:05Z",
+      "side": 1,
+      "message": "I can\u0027t fully follow the problem you are describing. what\u0027s the prob with having the post-poning happen at that single place? [not saying I disagree, it\u0027s just not clear to me]",
+      "range": {
+        "startLine": 470,
+        "startChar": 79,
+        "endLine": 470,
+        "endChar": 0
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8eb79fa8_98c1263a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 14
@@ -36,6 +59,30 @@
       "writtenOn": "2017-10-05T09:22:21Z",
       "side": 1,
       "message": "This feels false, there would be a background fetch on startup instead, so the same time to fetch results. The issue is that the user may see old suggestions if they pull up CH after startup, but before the fetch ends.",
+      "range": {
+        "startLine": 773,
+        "startChar": 57,
+        "endLine": 774,
+        "endChar": 21
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e2f4a34_3d755e0d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-05T13:21:05Z",
+      "side": 1,
+      "message": "not sure if I follow this comment, too. But it\u0027s certainly not blocking the CL.\nIf the surface doesn\u0027t get opened, there won\u0027t be flickering\nIf the surface gets opened, triggering this on start-up would reduce the risk of flickering as we start the fetch earlier. Because when the surface-open trigger comes, the suggestions would still be state.\n\nThat said, explicitly enumerating the triggers for which we change the UI would be better.\nHypothetically, what if we introduce a background signal that just calls every 10 minutes while browsing? You don\u0027t want to change flip into the placeholder treatment while a user looks at the surface ;-)",
+      "parentUuid": "9da39e1d_b913223f",
       "range": {
         "startLine": 773,
         "startChar": 57,
