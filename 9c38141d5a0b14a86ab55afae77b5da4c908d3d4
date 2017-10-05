@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ea29bc_5d586348",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-05T17:39:26Z",
+      "side": 1,
+      "message": "naming: MaybeWarmupGpuSandboxHook ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 29
+      },
+      "revId": "9c38141d5a0b14a86ab55afae77b5da4c908d3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5843c1b3_3eb9946f",
+        "filename": "content/common/sandbox_init_mac.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-05T17:39:26Z",
+      "side": 1,
+      "message": "Since this is the post-warmup hook, this should come after the preloads.",
+      "revId": "9c38141d5a0b14a86ab55afae77b5da4c908d3d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
