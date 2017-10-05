@@ -109,6 +109,9 @@ const char kAshTouchHud[] = "ash-touch-hud";
 // instead of displaying an interactive animation.
 const char kAuraLegacyPowerButton[] = "aura-legacy-power-button";
 
+// Enable the wayland server.
+const char kAshEnableWaylandServer[] = "ash-enable-wayland-server";
+
 // Forces non-tablet-style power button behavior even if the device has a
 // convertible form factor.
 const char kForceClamshellPowerButton[] = "force-clamshell-power-button";
