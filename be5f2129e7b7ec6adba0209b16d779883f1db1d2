@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1dc5f1f7_77634770",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T19:05:41Z",
+      "side": 1,
+      "message": "This test uses system APIs to output sound which will usually play to physical devices. We can\u0027t pass fake clock to these API, nor to the device drivers.",
+      "parentUuid": "22be79e9_4590c55f",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c008415_726edce9",
         "filename": "media/audio/audio_output_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T18:50:23Z",
       "side": 1,
       "message": "Might be less flaky to pass your QuitClosure to your test callback and have it call it when needed. I thought there was a test class that did this, but I can\u0027t find it now.",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2047c411_2d0a7211",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T19:05:41Z",
+      "side": 1,
+      "message": "I added this to replace the ::Sleep() that was used in tests on Windows. The tests that call these want the stream to run for some finite amount of time, i.e. they don\u0027t wait for a specific event to happen.",
+      "parentUuid": "2c008415_726edce9",
       "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdc3a34_a8c1bbb0",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-05T19:05:41Z",
+      "side": 1,
+      "message": "Done. This was copied from the similar windows tests.",
+      "parentUuid": "10688fb2_df64abcc",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
