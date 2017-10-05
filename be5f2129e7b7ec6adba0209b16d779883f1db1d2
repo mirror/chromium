@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22be79e9_4590c55f",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:50:23Z",
+      "side": 1,
+      "message": "Possibly to use a SimpleTestTickClock instead? Generally we want to avoid any sleep statements in tests. Otherwise DCHECK that lag_ is small; \u003c 1sec.",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c008415_726edce9",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:50:23Z",
+      "side": 1,
+      "message": "Might be less flaky to pass your QuitClosure to your test callback and have it call it when needed. I thought there was a test class that did this, but I can\u0027t find it now.",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10688fb2_df64abcc",
+        "filename": "media/audio/audio_output_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:50:23Z",
+      "side": 1,
+      "message": "crbug.com/ ?",
+      "revId": "be5f2129e7b7ec6adba0209b16d779883f1db1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
