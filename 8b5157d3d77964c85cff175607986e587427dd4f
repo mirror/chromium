@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1067d5a_0dbaf8fd",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "nit:  The corresponding header file is generally put first in tests.",
+      "range": {
+        "startLine": 11,
+        "startChar": 29,
+        "endLine": 11,
+        "endChar": 63
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e52e13a_acc2ba28",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "nit:  kPacScript (ALL_CAPS_STYLE is mostly used for enums and defines, though this style is often used for enums, too).",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937fd864_b95268b8",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "An actual pac script would look like: \"function FindProxyForURL(url, host) { return \u0027PROXY proxy.example.com:1; DIRECT\u0027; }\"",
+      "range": {
+        "startLine": 20,
+        "startChar": 36,
+        "endLine": 20,
+        "endChar": 37
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b678a13f_52860fe3",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dd06a3_e984c5b5",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "include base/logging",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d10c38_77894372",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "include run_loop.h",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546b8336_38c5e8b3",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "We should avoid timeouts in tests, unless absolutely necessary.  They don\u0027t seem necessary here.  each test has a global timeout, so no need to add another one (And if a bunch of tests hit the timeout, the rest will just be aborted).",
+      "range": {
+        "startLine": 42,
+        "startChar": 52,
+        "endLine": 42,
+        "endChar": 54
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cfee4d_c7984c14",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "Again, think this is an anti-pattern",
+      "range": {
+        "startLine": 55,
+        "startChar": 4,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ccc9ee_007667c6",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "optional:  I\u0027d suggest std::numeric_limits\u003cuint32_t\u003e::max() (And include \u003climits\u003e).  This certainly works, but think it\u0027s better to be explicit, rather than rely on casting.",
+      "range": {
+        "startLine": 62,
+        "startChar": 43,
+        "endLine": 62,
+        "endChar": 54
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43bffad3_e0295053",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "Suggest a blank line after the comment, to make it clear it\u0027s not just referring to the next line.",
+      "range": {
+        "startLine": 71,
+        "startChar": 22,
+        "endLine": 71,
+        "endChar": 27
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0466f700_53f4bc72",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "nit:  Can just use \"using ChromeMojoProxyResolverFactoryBrowserTest \u003d InProcessBrowserTest;\"",
+      "range": {
+        "startLine": 178,
+        "startChar": 6,
+        "endLine": 178,
+        "endChar": 48
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6ada42_9d3deae6",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "nit:  Blank line after end of anonymous namespace (Or could just move this to the end of the file - I believe closing an anonymous namespace in test files is generally either done just above the declaration of the test fixture, or at the end of the file)",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd170ee_d7f16a10",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "I\u0027d suggest not inlining the service name here, since the string really isn\u0027t used anywhere, and this looks like a variable name.  Maybe just call it proxy resolver service or something.",
+      "range": {
+        "startLine": 187,
+        "startChar": 15,
+        "endLine": 187,
+        "endChar": 30
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd5ae017_4a7ef5d6",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "nit:  Avoid \"we\" in comments, due to ambiguity.",
+      "range": {
+        "startLine": 192,
+        "startChar": 14,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557f6416_605abf83",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "I don\u0027t think this does anything, since WaitUntilServiceStarted just returns true if a service is already running?  Can we create a new listener, and make sure it never sees a service created instead?",
+      "range": {
+        "startLine": 250,
+        "startChar": 23,
+        "endLine": 250,
+        "endChar": 46
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd1b85d_1aa9130d",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "I think this is the only place we really need a timeout.  Can we just have a single timeout here, and then check with listener if the service is still running instead?",
+      "range": {
+        "startLine": 256,
+        "startChar": 24,
+        "endLine": 256,
+        "endChar": 47
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6769d954_caa3edd3",
+        "filename": "services/proxy_resolver/proxy_resolver_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "885c31e1_74929f36",
+        "filename": "services/proxy_resolver/proxy_resolver_service.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-05T16:20:38Z",
+      "side": 1,
+      "message": "Should we have test coverage of this code?  The new browser test does cover it a bit (Note:  I\u0027m honestly not sure about this).",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 36
+      },
+      "revId": "8b5157d3d77964c85cff175607986e587427dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
