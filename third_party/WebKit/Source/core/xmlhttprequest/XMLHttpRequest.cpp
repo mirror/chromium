@@ -1786,37 +1786,50 @@ void XMLHttpRequest::ParseDocumentChunk(const char* data, unsigned len) {
 }
 
 std::unique_ptr<TextResourceDecoder> XMLHttpRequest::CreateDecoder() const {
-  if (response_type_code_ == kResponseTypeJSON) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
-  }
+  DCHECK_NE(response_type_code_, kResponseTypeBlob);
+  DCHECK_NE(response_type_code_, kResponseTypeArrayBuffer);
 
   String final_response_charset = FinalResponseCharset();
-  if (!final_response_charset.IsEmpty()) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kPlainTextContent,
-        WTF::TextEncoding(final_response_charset)));
+
+  TextResourceDecoderOptions decoder_options_for_xml(
+      TextResourceDecoderOptions::kXMLContent);
+  TextResourceDecoderOptions decoder_options_for_utf8_plain_text(
+      TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding());
+
+  // Don't stop on encoding errors, unlike it is done for other kinds
+  // of XML resources. This matches the behavior of previous WebKit
+  // versions, Firefox and Opera.
+  decoder_options_for_xml.SetUseLenientXMLDecoding();
+
+  switch (response_type_code_) {
+    case kResponseTypeDefault:
+      if (ResponseIsXML())
+        return TextResourceDecoder::Create(decoder_options_for_xml);
+    // fall through
+    case kResponseTypeText:
+      if (!final_response_charset.IsEmpty()) {
+        return TextResourceDecoder::Create(TextResourceDecoderOptions(
+            TextResourceDecoderOptions::kPlainTextContent,
+            WTF::TextEncoding(final_response_charset)));
+      }
+      return TextResourceDecoder::Create(decoder_options_for_utf8_plain_text);
+    case kResponseTypeJSON:
+      return TextResourceDecoder::Create(decoder_options_for_utf8_plain_text);
+    case kResponseTypeDocument:
+      if (ResponseIsHTML()) {
+        return TextResourceDecoder::Create(TextResourceDecoderOptions(
+            TextResourceDecoderOptions::kHTMLContent, UTF8Encoding()));
+      } else {
+        return TextResourceDecoder::Create(decoder_options_for_xml);
+      }
+      break;
+    case kResponseTypeBlob:
+    case kResponseTypeArrayBuffer:
+      NOTREACHED();
+      break;
   }
-
-  // allow TextResourceDecoder to look inside the m_response if it's XML or HTML
-  if (ResponseIsXML()) {
-    TextResourceDecoderOptions options(TextResourceDecoderOptions::kXMLContent);
-
-    // Don't stop on encoding errors, unlike it is done for other kinds
-    // of XML resources. This matches the behavior of previous WebKit
-    // versions, Firefox and Opera.
-    options.SetUseLenientXMLDecoding();
-
-    return TextResourceDecoder::Create(options);
-  }
-
-  if (ResponseIsHTML()) {
-    return TextResourceDecoder::Create(TextResourceDecoderOptions(
-        TextResourceDecoderOptions::kHTMLContent, UTF8Encoding()));
-  }
-
-  return TextResourceDecoder::Create(TextResourceDecoderOptions(
-      TextResourceDecoderOptions::kPlainTextContent, UTF8Encoding()));
+  NOTREACHED();
+  return nullptr;
 }
 
 void XMLHttpRequest::DidReceiveData(const char* data, unsigned len) {
