@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "ccbdb869_641110e9",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-05T15:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f17ac580_61d5ae03",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94275e9b_6785e757",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "94275e9b_6785e757",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc1c5706_f7d7f408",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-05T15:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10281922_dd6d3ffd",
       "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -143,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "fe05bf9a_1b9828d1",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-05T15:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b5887d8_406c73e6",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5392dd74_264fe907",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 4
@@ -172,6 +226,24 @@
       "side": 1,
       "message": "it means x and y are in pixel units.",
       "parentUuid": "5392dd74_264fe907",
+      "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37727ae5_39bca893",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-05T15:05:06Z",
+      "side": 1,
+      "message": "I removed pixel comments here as well.",
+      "parentUuid": "b1a8fbd6_6053f9dc",
       "revId": "5bf0ef8c83c5d6cb904e58e7550f2838e0202449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
