@@ -16,6 +16,24 @@
       "revId": "9034d96ffba50af1dbddf1e4402a31ff5063f5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41203c0c_29727bda",
+        "filename": "third_party/WebKit/Tools/gdb/webkit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-05T20:05:41Z",
+      "side": 1,
+      "message": "I do not think so. Looks like there are two separate calls to this routine, one to get length, another to get the string.\n\nWhat class implements Utf8(0).data()?",
+      "parentUuid": "b74f6b3d_2f1f339d",
+      "revId": "9034d96ffba50af1dbddf1e4402a31ff5063f5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
