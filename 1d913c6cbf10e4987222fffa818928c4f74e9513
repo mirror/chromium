@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9cf91c6_eaa1a98d",
+        "filename": "third_party/WebKit/Source/modules/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T05:19:02Z",
+      "side": 1,
+      "message": "Curious why we need this in public_deps now?",
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b280c442_81f9ed22",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T05:19:02Z",
+      "side": 1,
+      "message": "Hum, does that mean most these can be just removed too? (Fine with leaving them in this CL though)",
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
