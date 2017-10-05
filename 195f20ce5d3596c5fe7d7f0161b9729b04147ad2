@@ -34,6 +34,24 @@
       "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e0360b6_257bbedf",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T21:53:14Z",
+      "side": 1,
+      "message": "If there\u0027s any way a third party (not the user) could alter the contents of that list; Or if there\u0027s a way for a third party to send a \"deleteSession\" message to this code, then we should defend against improper use.\n\nIt\u0027s okay to be safe instead of sorry by defending against improper use, even if we don\u0027t think it can be used by a third party.\n\nPlease add a security reviewer to the CL. They could help decide what\u0027s necessary.",
+      "parentUuid": "fa2dbe4e_55b78882",
+      "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
