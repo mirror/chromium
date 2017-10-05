@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23e9895b_b9f3c6d9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2d89995_ff8243c9",
+      "revId": "945e118fde5ba2e895a039cb8759e84387c34ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3877e0a_9463a5b9",
         "filename": "third_party/WebKit/Source/platform/testing/FuzzedDataProvider.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "945e118fde5ba2e895a039cb8759e84387c34ee0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070bee5a_a70f8462",
+        "filename": "third_party/WebKit/Source/platform/testing/FuzzedDataProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3877e0a_9463a5b9",
+      "revId": "945e118fde5ba2e895a039cb8759e84387c34ee0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
