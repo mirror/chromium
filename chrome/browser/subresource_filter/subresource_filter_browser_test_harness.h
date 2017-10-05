@@ -54,7 +54,11 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
 
   void ConfigureAsPhishingURL(const GURL& url);
 
+  void ConfigureAsPhishingURLWithWarning(const GURL& url);
+
   void ConfigureAsSubresourceFilterOnlyURL(const GURL& url);
+
+  void ConfigureAsSubresourceFilterOnlyURLWithWarning(const GURL& url);
 
   content::WebContents* web_contents() const;
 
