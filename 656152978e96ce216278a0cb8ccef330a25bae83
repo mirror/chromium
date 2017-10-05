@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "e35bb042_458d7901",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-05T15:51:21Z",
+      "side": 1,
+      "message": "Please state the name explicitly in the CL description instead of linking to it. Not everyone developing Chromium has access to this link.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 170
+      },
+      "revId": "656152978e96ce216278a0cb8ccef330a25bae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8fd89fae_e55e2749",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 11
