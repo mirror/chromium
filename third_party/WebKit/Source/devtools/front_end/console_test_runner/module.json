@@ -1,7 +1,7 @@
 {
   "dependencies": [
     "test_runner",
-    "integration_test_runner",
+    "test_runner",
     "console",
     "console_model",
     "console_counters"
