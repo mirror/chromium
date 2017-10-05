@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a3bd7e_2add5a79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T22:49:23Z",
+      "side": 1,
+      "message": "looking at your CL, it looks like the actual intended purpose is: \n\n\"\"\"\nAdd test for Windows implementation of Shared Memory.\n\nAdd a test to make sure that SharedMemoryHandle and its Duplicate() can both be mapped in the same process.\n\"\"\"",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d2da80_1bb752bb",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T22:49:23Z",
+      "side": 1,
+      "message": "The previous check is not incorrect. It\u0027s checking to make sure that the common use case for sharing to self works correctly. Perhaps you want to make a new test that only tests the behavior you want?",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc522f3_b51557f8",
+        "filename": "base/memory/shared_memory_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T22:49:23Z",
+      "side": 1,
+      "message": "this permanently added to the Chrome binary size. Can these be DLOGs? Also, why only for windows? Do we really need these changes?",
+      "revId": "d5766521c625f3e3e22930a1e8fbd33fee492abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
