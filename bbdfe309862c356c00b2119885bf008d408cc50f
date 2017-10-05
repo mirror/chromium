@@ -16,6 +16,58 @@
       "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d255f290_4e018bbe",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:37:51Z",
+      "side": 1,
+      "message": "Yeah this should be a DCHECK? I think many streams already check or dcheck this?",
+      "parentUuid": "e88fd125_3c222435",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa897032_69d4e4cf",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:37:51Z",
+      "side": 1,
+      "message": "Don\u0027t use default, explicitly specify these and have a NOTREACHED.",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c957c4cd_fafdc0da",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-05T18:37:51Z",
+      "side": 1,
+      "message": "Given the name, should this just be recorded in the AudioOutputProxy?",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
