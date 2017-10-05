@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "79774011_b8cf2be3",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfe759ee_d9b4670d",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d41fbe4_5903ce34",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed78ade_6645571c",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d41fbe4_5903ce34",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47bbe1a4_7c0d9ce8",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44e00a6b_a55a79b5",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a913a608_ca11d57a",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b50d05_68d04b3e",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "The blink FuzzedDataProvider wrapper didn\u0027t have support for remaining_bytes but I just added it there instead which should make future fuzzers cleaner too.",
+      "parentUuid": "a913a608_ca11d57a",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "93669450_a4e81bb6",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa9b7054_d144dd2b",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a5946a8_6083db1e",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e667fab4_095b2463",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T17:00:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a5946a8_6083db1e",
+      "revId": "ebfa39365d9533e6a5271e911d2637921fc2b1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
