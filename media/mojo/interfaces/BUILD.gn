@@ -43,6 +43,10 @@ mojom("interfaces") {
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
+
+  if (is_mac) {
+    public_deps += [ "//sandbox/mac/mojom" ]
+  }
 }
 
 mojom("constants") {

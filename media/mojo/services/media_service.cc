@@ -16,7 +16,10 @@
 
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
 #include "media/cdm/cdm_module.h"
-#endif
+#if defined(OS_MACOSX)
+#include "sandbox/mac/seatbelt_extension.h"
+#endif  // defined(OS_MACOSX)
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 namespace media {
 
@@ -57,17 +60,40 @@ void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
+#if defined(OS_MACOSX)
+void MediaService::LoadCdm(const base::FilePath& cdm_path,
+                           mojom::SeatbeltExtensionTokenProviderPtr
+                               seatbelt_extension_token_provider) {
+#else
 void MediaService::LoadCdm(const base::FilePath& cdm_path) {
+#endif  // defined(OS_MACOSX)
   DVLOG(1) << __func__ << ": cdm_path = " << cdm_path.value();
+
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   if (is_cdm_loaded_) {
     DCHECK_EQ(cdm_path, CdmModule::GetInstance()->GetCdmPath());
     return;
   }
 
+#if defined(OS_MACOSX)
+  sandbox::SeatbeltExtensionToken token;
+  CHECK(seatbelt_extension_token_provider->GetSeatbeltExtensionToken(&token));
+  LOG(ERROR) << "token: " << token.token();
+
+  auto extension = sandbox::SeatbeltExtension::FromToken(std::move(token));
+  CHECK(extension->Consume());
+#endif  // defined(OS_MACOSX)
+
   CdmModule::GetInstance()->Initialize(cdm_path);
+
+#if defined(OS_MACOSX)
+  CHECK(extension->Revoke());
+#endif  // defined(OS_MACOSX)
+
   is_cdm_loaded_ = true;
-#endif
+  // This may trigger the sandbox to be sealed.
+  mojo_media_client_->OnPreSandboxStartupFinished();
+#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 }
 
 void MediaService::CreateInterfaceFactory(
