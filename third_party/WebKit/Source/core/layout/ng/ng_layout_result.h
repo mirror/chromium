@@ -7,6 +7,7 @@
 
 #include "core/CoreExport.h"
 #include "core/layout/ng/geometry/ng_bfc_offset.h"
+#include "core/layout/ng/geometry/ng_logical_rect.h"
 #include "core/layout/ng/geometry/ng_margin_strut.h"
 #include "core/layout/ng/ng_out_of_flow_positioned_descendant.h"
 #include "core/layout/ng/ng_physical_fragment.h"
@@ -72,6 +73,8 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
 
   const NGMarginStrut EndMarginStrut() const { return end_margin_strut_; }
 
+  const NGLogicalRect& LocalVisualRect() const { return visual_rect_; }
+
   RefPtr<NGLayoutResult> CloneWithoutOffset() const;
 
  private:
@@ -84,6 +87,7 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
                  std::unique_ptr<const NGExclusionSpace> exclusion_space,
                  const WTF::Optional<NGBfcOffset> bfc_offset,
                  const NGMarginStrut end_margin_strut,
+                 const NGLogicalRect& visual_rect,
                  NGLayoutResultStatus status);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
@@ -93,6 +97,7 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
   const std::unique_ptr<const NGExclusionSpace> exclusion_space_;
   const WTF::Optional<NGBfcOffset> bfc_offset_;
   const NGMarginStrut end_margin_strut_;
+  const NGLogicalRect visual_rect_;
 
   unsigned status_ : 1;
 };

@@ -279,6 +279,12 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
                    inline_size);
   }
 
+  // TODO(kojii): This is temporary, until ToLineBoxFragment() is changed to
+  // return NGLayoutResult. The visual rect should then be added to
+  // NGLayoutResult and propagated.
+  container_builder_.AddContentVisualRect(line_box.ComputeLocalVisualRect() +
+                                          line_offset);
+
   line_box.SetInlineSize(inline_size);
   container_builder_.AddChild(line_box.ToLineBoxFragment(), line_offset);
 

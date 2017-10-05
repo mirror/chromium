@@ -31,6 +31,8 @@ class NGBaseLayoutAlgorithmTest
  protected:
   void SetUp() override;
 
+  std::pair<RefPtr<NGLayoutResult>, RefPtr<NGConstraintSpace>>
+  LayoutResultForElement(Element* element);
   std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
   RunBlockLayoutAlgorithmForElement(Element* element);
 };

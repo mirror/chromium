@@ -377,14 +377,40 @@ TEST_F(NGInlineLayoutAlgorithmTest, VisualRect) {
   )HTML");
   Element* element = GetElementById("container");
   RefPtr<NGConstraintSpace> space;
-  RefPtr<NGPhysicalBoxFragment> box_fragment;
-  std::tie(box_fragment, space) = RunBlockLayoutAlgorithmForElement(element);
-
+  RefPtr<NGLayoutResult> result;
+  std::tie(result, space) = LayoutResultForElement(element);
+  const NGPhysicalBoxFragment* box_fragment =
+      ToNGPhysicalBoxFragment(result->PhysicalFragment().get());
   EXPECT_EQ(LayoutUnit(10), box_fragment->Size().height);
 
-  LayoutRect visual_rect = box_fragment->LocalVisualRect();
-  EXPECT_EQ(LayoutUnit(-5), visual_rect.Y());
-  EXPECT_EQ(LayoutUnit(20), visual_rect.Height());
+  NGLogicalRect visual_rect = result->LocalVisualRect();
+  EXPECT_EQ(LayoutUnit(-5), visual_rect.offset.block_offset);
+  EXPECT_EQ(LayoutUnit(20), visual_rect.size.block_size);
+}
+
+TEST_F(NGInlineLayoutAlgorithmTest, VisualRectInlineBlock) {
+  LoadAhem();
+  SetBodyInnerHTML(R"HTML(
+    <!DOCTYPE html>
+    <style>
+      #atomic {
+        display: inline-block;
+        font: 20px/.5 Ahem;
+      }
+    </style>
+    <div id="container"><span id="atomic">Hello</span></div>
+  )HTML");
+  Element* element = GetElementById("container");
+  RefPtr<NGConstraintSpace> space;
+  RefPtr<NGLayoutResult> result;
+  std::tie(result, space) = LayoutResultForElement(element);
+  const NGPhysicalBoxFragment* box_fragment =
+      ToNGPhysicalBoxFragment(result->PhysicalFragment().get());
+  EXPECT_EQ(LayoutUnit(10), box_fragment->Size().height);
+
+  NGLogicalRect visual_rect = result->LocalVisualRect();
+  EXPECT_EQ(LayoutUnit(-5), visual_rect.offset.block_offset);
+  EXPECT_EQ(LayoutUnit(20), visual_rect.size.block_size);
 }
 
 }  // namespace

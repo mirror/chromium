@@ -12,12 +12,17 @@
 
 namespace blink {
 
+class LayoutRect;
+
 // NGLogicalRect is the position and size of a rect (typically a fragment)
 // relative to the parent.
 struct CORE_EXPORT NGLogicalRect {
   NGLogicalRect() {}
   NGLogicalRect(const NGLogicalOffset& offset, const NGLogicalSize& size)
       : offset(offset), size(size) {}
+
+  explicit NGLogicalRect(const LayoutRect&);
+  LayoutRect ToLayoutRect() const;
 
   NGLogicalOffset Offset() const { return offset; }
   NGLogicalOffset EndOffset() const { return offset + size; }
@@ -28,6 +33,8 @@ struct CORE_EXPORT NGLogicalRect {
   NGLogicalSize size;
 
   bool operator==(const NGLogicalRect& other) const;
+
+  NGLogicalRect operator+(const NGLogicalOffset&) const;
 
   void Unite(const NGLogicalRect&);
 

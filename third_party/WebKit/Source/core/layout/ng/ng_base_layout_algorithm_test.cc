@@ -27,8 +27,8 @@ void NGBaseLayoutAlgorithmTest::SetUp() {
   EnableCompositing();
 }
 
-std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
-NGBaseLayoutAlgorithmTest::RunBlockLayoutAlgorithmForElement(Element* element) {
+std::pair<RefPtr<NGLayoutResult>, RefPtr<NGConstraintSpace>>
+NGBaseLayoutAlgorithmTest::LayoutResultForElement(Element* element) {
   LayoutNGBlockFlow* block_flow =
       ToLayoutNGBlockFlow(element->GetLayoutObject());
   NGBlockNode node(block_flow);
@@ -36,9 +36,16 @@ NGBaseLayoutAlgorithmTest::RunBlockLayoutAlgorithmForElement(Element* element) {
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);
 
   RefPtr<NGLayoutResult> result = NGBlockLayoutAlgorithm(node, *space).Layout();
-  return std::make_pair(
-      ToNGPhysicalBoxFragment(result->PhysicalFragment().get()),
-      std::move(space));
+  return {std::move(result), std::move(space)};
+}
+
+std::pair<RefPtr<NGPhysicalBoxFragment>, RefPtr<NGConstraintSpace>>
+NGBaseLayoutAlgorithmTest::RunBlockLayoutAlgorithmForElement(Element* element) {
+  RefPtr<NGConstraintSpace> space;
+  RefPtr<NGLayoutResult> result;
+  std::tie(result, space) = LayoutResultForElement(element);
+  return {ToNGPhysicalBoxFragment(result->PhysicalFragment().get()),
+          std::move(space)};
 }
 
 const NGPhysicalBoxFragment* FragmentChildIterator::NextChild() {

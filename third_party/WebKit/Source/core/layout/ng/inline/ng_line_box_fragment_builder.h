@@ -6,6 +6,7 @@
 #define NGLineBoxFragmentBuilder_h
 
 #include "core/layout/ng/geometry/ng_logical_offset.h"
+#include "core/layout/ng/geometry/ng_logical_size.h"
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_line_height_metrics.h"
 #include "core/layout/ng/ng_base_fragment_builder.h"
@@ -14,6 +15,7 @@
 namespace blink {
 
 class NGInlineNode;
+struct NGLogicalRect;
 class NGPhysicalFragment;
 class NGPhysicalLineBoxFragment;
 
@@ -46,6 +48,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   void SetMetrics(const NGLineHeightMetrics&);
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
 
+  NGLogicalRect ComputeLocalVisualRect() const;
+
   // Set the break token for the fragment to build.
   // A finished break token will be attached if not set.
   void SetBreakToken(RefPtr<NGInlineBreakToken>);
@@ -54,6 +58,12 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
   RefPtr<NGPhysicalLineBoxFragment> ToLineBoxFragment();
 
  private:
+  NGLogicalSize Size() const { return {inline_size_, Metrics().LineHeight()}; }
+
+  void ComputeLocalVisualRect(const NGPhysicalFragment&,
+                              const NGLogicalOffset&,
+                              NGLogicalRect*) const;
+
   NGInlineNode node_;
 
   LayoutUnit inline_size_;

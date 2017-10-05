@@ -54,6 +54,12 @@ NGFragmentBuilder& NGFragmentBuilder::SetBlockOverflow(LayoutUnit size) {
   return *this;
 }
 
+NGFragmentBuilder& NGFragmentBuilder::AddContentVisualRect(
+    const NGLogicalRect& rect) {
+  content_visual_rect_.Unite(rect);
+  return *this;
+}
+
 NGFragmentBuilder& NGFragmentBuilder::AddChild(
     RefPtr<NGLayoutResult> child,
     const NGLogicalOffset& child_offset) {
@@ -62,6 +68,10 @@ NGFragmentBuilder& NGFragmentBuilder::AddChild(
        child->OutOfFlowPositionedDescendants()) {
     oof_positioned_candidates_.push_back(
         NGOutOfFlowPositionedCandidate{descendant, child_offset});
+  }
+
+  if (!child->LocalVisualRect().IsEmpty()) {
+    AddContentVisualRect(child->LocalVisualRect() + child_offset);
   }
 
   return AddChild(child->PhysicalFragment(), child_offset);
@@ -229,19 +239,18 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
           layout_object_, Style(), physical_size,
           overflow_.ConvertToPhysical(WritingMode()), children_, baselines_,
           border_edges_.ToPhysical(WritingMode()), std::move(break_token)));
-  fragment->UpdateVisualRect();
 
   return WTF::AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,
       std::move(exclusion_space_), bfc_offset_, end_margin_strut_,
-      NGLayoutResult::kSuccess));
+      content_visual_rect_, NGLayoutResult::kSuccess));
 }
 
 RefPtr<NGLayoutResult> NGFragmentBuilder::Abort(
     NGLayoutResult::NGLayoutResultStatus status) {
   return WTF::AdoptRef(new NGLayoutResult(
       nullptr, Vector<NGOutOfFlowPositionedDescendant>(), unpositioned_floats_,
-      nullptr, bfc_offset_, end_margin_strut_, status));
+      nullptr, bfc_offset_, end_margin_strut_, content_visual_rect_, status));
 }
 
 }  // namespace blink

@@ -15,6 +15,7 @@
 
 namespace blink {
 
+struct NGLogicalRect;
 class ShapeResult;
 
 // In CSS Writing Modes Levle 4, line orientation for layout and line
@@ -86,8 +87,8 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
     return LineOrientation() == NGLineOrientation::kHorizontal;
   }
 
-  // Update visual rect for this fragment.
-  void UpdateVisualRect() const override;
+  // Visual rect of this fragment in the local coordinates.
+  NGLogicalRect ComputeLocalVisualRect() const;
 
   NGTextEndEffect EndEffect() const {
     return static_cast<NGTextEndEffect>(end_effect_);
