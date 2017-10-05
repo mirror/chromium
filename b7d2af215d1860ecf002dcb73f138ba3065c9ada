@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ee7deaa_87958873",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T18:11:25Z",
+      "side": 1,
+      "message": "nit: you may remove outer ()",
+      "revId": "b7d2af215d1860ecf002dcb73f138ba3065c9ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84106cd4_827560fb",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-05T18:11:25Z",
+      "side": 1,
+      "message": "nit: Do you need this change? (there are tests that are still using GetPrimaryDisplay())",
+      "revId": "b7d2af215d1860ecf002dcb73f138ba3065c9ada",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
