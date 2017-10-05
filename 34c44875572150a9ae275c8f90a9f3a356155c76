@@ -432,6 +432,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "660d2f95_f99578d7",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:22:05Z",
+      "side": 1,
+      "message": "Agreed, great! Since we need to make a call, let\u0027s do the following:\ninterface TopSitesProvider\nimpl DefaultTopSitesProvider\n\nFor the function name, stick to QueryMostVisitedURLs() or alternatively ProvideTopSites(). Since treib@ didn\u0027t speak up, you can choose dominick (but it also doesn\u0027t involve a file rename ;-)",
+      "parentUuid": "ebe31bcb_3fd859e8",
+      "range": {
+        "startLine": 28,
+        "startChar": 79,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
