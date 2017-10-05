@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef97a4ef_f6d0273e",
+        "filename": "third_party/libpng/png.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 3241,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "Interesting.",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db85194_7c8c49f4",
+        "filename": "third_party/libpng/pngget.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "New API, needs a name mangle.",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9e7adc_b580c0fb",
+        "filename": "third_party/libpng/pngget.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 788,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9902c517_05b45dd1",
+        "filename": "third_party/libpng/pngpread.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "Interesting.",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3535b70e_d2945b72",
+        "filename": "third_party/libpng/pngset.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "New API",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402e5a39_3769f18e",
+        "filename": "third_party/libpng/pngset.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "New API",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9e7495_9e8cf89c",
+        "filename": "third_party/libpng/pngtest.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-10-05T16:31:30Z",
+      "side": 1,
+      "message": "Interesting.",
+      "revId": "1767d5725d38a9ec055a0eb461b6253a952863d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
