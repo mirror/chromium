@@ -65,8 +65,13 @@ class PDFiumPage {
     // That prevents us from using union here.
     std::string url;  // Valid for WEBLINK_AREA only.
     int page;         // Valid for DOCLINK_AREA only.
+    int has_y;        // Valid for DOCLINK_AREA only.
     int y_in_pixels;  // Valid for DOCLINK_AREA only. From the top of the page.
   };
+
+  // Fills |has_y| and possibly |y_in_pixels| of a destination into |target|.
+  // Returns whether |y_in_pixels| was filled.
+  bool GetPageYTarget(FPDF_DEST destination, LinkTarget* target);
 
   // Given a point in the document that's in this page, returns its character
   // index if it's near a character, and also the type of text.
@@ -115,12 +120,14 @@ class PDFiumPage {
                             std::vector<LinkTarget>* targets);
   // Calculate the locations of any links on the page.
   void CalculateLinks();
-  // Returns link type and target associated with a link. Returns
+  // Returns link type and fills target associated with a link. Returns
   // NONSELECTABLE_AREA if link detection failed.
-  Area GetLinkTarget(FPDF_LINK link, LinkTarget* target) const;
-  // Returns target associated with a destination.
-  Area GetDestinationTarget(FPDF_DEST destination, LinkTarget* target) const;
-  // Returns target associated with a URI action.
+  Area GetLinkTarget(FPDF_LINK link, LinkTarget* target);
+  // Returns link type and fills target associated with a destination. Returns
+  // NONSELECTABLE_AREA if detection failed.
+  Area GetDestinationTarget(FPDF_DEST destination, LinkTarget* target);
+  // Returns link type and fills target associated with a URI action. Returns
+  // NONSELECTABLE_AREA if detection failed.
   Area GetURITarget(FPDF_ACTION uri_action, LinkTarget* target) const;
 
   class ScopedLoadCounter {
