@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dd747b7_10f829c7",
+        "filename": "third_party/WebKit/Source/modules/filesystem/LocalFileSystem.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T14:56:33Z",
+      "side": 1,
+      "message": "nit: This is now not needed anymore?",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e510eb1f_a5a6ce8f",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IndexedDBClient.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T14:56:33Z",
+      "side": 1,
+      "message": "This is not needed anymore?",
+      "range": {
+        "startLine": 47,
+        "startChar": 31,
+        "endLine": 47,
+        "endChar": 47
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff68dd51_d8cf076b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerContainerClient.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-05T14:56:33Z",
+      "side": 1,
+      "message": "This is not needed anymore?",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
