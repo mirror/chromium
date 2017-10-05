@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1ad0018_6ee8d139",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fd19331_edd5b59e",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efc0c60b_cbb87725",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
@@ -62,6 +80,30 @@
       "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10ab800e_99be6211",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0911ac18_7ada1ef3",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 37
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c2e9285d_30304cf5",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b290e075_e4a9db3a",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590b3622_3402739f",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
@@ -164,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "b336226a_83e721ab",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbee076c_2a3865ab",
+      "range": {
+        "startLine": 501,
+        "startChar": 38,
+        "endLine": 501,
+        "endChar": 39
+      },
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2805758c_bd9bfe45",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 3
@@ -178,6 +262,24 @@
       "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8896890a_aca766c4",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2805758c_bd9bfe45",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -198,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "0a533cf9_9dd6677e",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cba1a76_a067ac73",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3beadf8_7c59d6bc",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
         "patchSetId": 3
@@ -215,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "fe5bf445_961be347",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3beadf8_7c59d6bc",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "714a08b5_996853a6",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
         "patchSetId": 3
@@ -229,6 +367,24 @@
       "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6370f94_a744341a",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T03:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "714a08b5_996853a6",
+      "revId": "f19265e6a63818c7a8b25a93f2ac46ffd70be8af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
