@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc89fee7_a0d33178",
+        "filename": "chrome/browser/resources/policy_tool.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T01:37:38Z",
+      "side": 1,
+      "message": "? s/showing/shows/",
+      "revId": "af415239b816389264668a2b1560f978ed46a191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47883369_56a0a4cc",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T01:37:38Z",
+      "side": 1,
+      "message": "Is subtracting Booleans defined behavior in JavaScript?\n\n(It works, but is it part of the language properly or does it \u0027just happen\u0027 to work)?",
+      "revId": "af415239b816389264668a2b1560f978ed46a191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
