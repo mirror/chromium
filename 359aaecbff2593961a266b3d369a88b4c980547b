@@ -16,6 +16,24 @@
       "revId": "359aaecbff2593961a266b3d369a88b4c980547b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bc545e_daed40a3",
+        "filename": "third_party/WebKit/LayoutTests/animations/usecounters/playbackRate-usecounter.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-10-05T05:33:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc63d7fd_7306c793",
+      "revId": "359aaecbff2593961a266b3d369a88b4c980547b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
