@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc51b23_f4819553",
+        "filename": "chrome/browser/vr/elements/text.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T15:17:04Z",
+      "side": 1,
+      "message": "Only dirty if color changes?  Otherwise, with bingings, would this dirty the texture every frame?",
+      "revId": "08021ea386f57807f022c7002e5cbb3c4f317d05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
