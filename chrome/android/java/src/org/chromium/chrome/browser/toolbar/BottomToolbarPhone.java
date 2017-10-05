@@ -39,7 +39,6 @@ import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tab.TabObserver;
 import org.chromium.chrome.browser.util.AccessibilityUtil;
 import org.chromium.chrome.browser.util.ColorUtils;
-import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.ToolbarProgressBar;
@@ -907,8 +906,7 @@ public class BottomToolbarPhone extends ToolbarPhone {
      * accordingly.
      */
     private void setUseToolbarHandle() {
-        mUseToolbarHandle = !AccessibilityUtil.isAccessibilityEnabled()
-                && !FeatureUtilities.isChromeHomeExpandButtonEnabled();
+        mUseToolbarHandle = !AccessibilityUtil.isAccessibilityEnabled();
 
         // This method may be called due to an accessibility state change. Return early if the
         // needed views are null.
