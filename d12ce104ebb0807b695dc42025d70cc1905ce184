@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "57579d9a_e33ca9b3",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-05T04:17:49Z",
+      "side": 1,
+      "message": "I agree about \"value\". I was trying to follow the convention in other similar files, but let\u0027s make it more clear with \"enable\".\n\nRegarding the method name, I don\u0027t think the other two alternatives are better. I might go with \"setTranslationForLanguage\", but I don\u0027t have a preference there.",
+      "parentUuid": "b2279886_c7bf82a5",
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd647b21_3831d066",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 8
@@ -86,6 +104,30 @@
       "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "344be8a2_9f65534f",
+        "filename": "extensions/browser/extension_function_histogram_value.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1262,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-05T04:17:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "394f9615_a52566ec",
+      "range": {
+        "startLine": 1262,
+        "startChar": 67,
+        "endLine": 1262,
+        "endChar": 0
+      },
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
