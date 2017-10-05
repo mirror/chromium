@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf6ddef6_2264a550",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T01:26:55Z",
+      "side": 1,
+      "message": "! goes on the front like {!Event}",
+      "revId": "0158035446408a77a2af81612c7f00f01aedd0e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
