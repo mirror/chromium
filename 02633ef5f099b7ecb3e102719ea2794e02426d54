@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74b85a85_6bd2aa15",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T16:12:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01d06cfa_842487a7",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 27
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36c0781a_5ff6ef2c",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "99dcfa66_e1c910c7",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T16:12:34Z",
+      "side": 1,
+      "message": "Comment added. The tokenizer deals with byte streams as they come in on the wire so it has logic to process partial streams and this lets us exercise that.",
+      "parentUuid": "36c0781a_5ff6ef2c",
+      "range": {
+        "startLine": 22,
+        "startChar": 61,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb944540_f937de40",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-05T14:45:56Z",
       "side": 1,
       "message": "Why do we create all these chunks and segments? What\u0027s wrong if we simply treat all the |data| as input and start looking for tokens in it? I assume that once \"tokenizer-\u003eNextToken\" returns false, we cannot continue? Could you please add a comment :)",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "02633ef5f099b7ecb3e102719ea2794e02426d54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47ede938_ac34fc9c",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLTokenizerFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1139834
+      },
+      "writtenOn": "2017-10-05T16:12:34Z",
+      "side": 1,
+      "message": "Comment added.  The tokenizer handles streaming data over the wire (as well as full token strings) and has logic for resuming partial streams.  Splitting it into chunks exercises the resuming of partial streams.  A false return can mean it has a partial token and needs to resume it as more data comes in.",
+      "parentUuid": "fb944540_f937de40",
       "range": {
         "startLine": 28,
         "startChar": 4,
