@@ -106,7 +106,7 @@ declare_args() {
   use_cxx11_on_android = use_cxx11
 }
 
-if (is_clang && !is_nacl) {
+if (is_clang) {
   update_args = [ "--print-revision" ]
   if (llvm_force_head_revision) {
     update_args += [ "--llvm-force-head-revision" ]
@@ -259,7 +259,7 @@ config("compiler") {
     ]
   }
 
-  if (is_clang && !is_nacl) {
+  if (is_clang) {
     # This is here so that all files get recompiled after a clang roll and
     # when turning clang on or off. (defines are passed via the command line,
     # and build system rebuild things when their commandline changes). Nothing
