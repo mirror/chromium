@@ -286,6 +286,24 @@
     },
     {
       "key": {
+        "uuid": "2c177412_6f7d67b3",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T22:24:15Z",
+      "side": 1,
+      "message": "I think I agree with everything you just said, but to me that all implies that we *should* be using IsExtensionEnabled(). :)  It matches old behavior (in case anything had important side effects), and, more importantly, it means that calling EnableExtension() for an extension that isn\u0027t loaded yet *will* correctly mark the extension as enabled.  With this code as it is now, it won\u0027t.  So, if we for instance had some sync flow like:\nSetExtensionDisabled()\nSetExtensionEnabled()\nInstallExtension()\n\nwe\u0027d end up with a disabled extension, instead of an enabled one.  Admittedly, that flow is a bit crazy, but it seems like it\u0027s worth doing for completeness.",
+      "parentUuid": "e70dbe3c_fdc2c4f6",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a45fcd32_df87bf15",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17

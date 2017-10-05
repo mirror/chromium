@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "93608e37_10454038",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T22:24:15Z",
+      "side": 1,
+      "message": "ExtensionService::ReloadExtensionImpl does:\n\n    DisableExtension(extension_id, extensions::disable_reason::DISABLE_RELOAD);\n    DCHECK(registry_-\u003edisabled_extensions().Contains(extension_id));\n    reloading_extensions_.insert(extension_id);\n\nSo the extension is a) in the disabled set and b) in the reloading_extensions_ set (by design).\n\nSo, if after that, while it\u0027s reloading, we added a new disable reason, the extension would *not* be unloaded again, and we\u0027d remove that disable reason.  Right?",
+      "parentUuid": "2b54e7cc_4670d676",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6136728_cbe4ce89",
         "filename": "extensions/browser/extension_registrar_unittest.cc",
         "patchSetId": 20
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "My feeling is the ExtensionService tests should cover that.\n\nUnrelatedly, I\u0027ll test that ExtensionRegistrar behaves correctly when CanEnable/DisableExtension return false. But that makes this a stub, not a mock.",
       "parentUuid": "e6136728_cbe4ce89",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9660ed0b_f3cb88ce",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T22:24:15Z",
+      "side": 1,
+      "message": "IMO, it\u0027s nice to have unittests be small, and relying on a delegate implementation\u0027s tests to test that the delegate is called by the delegator feels wrong.  If the test fails, you don\u0027t know if it\u0027s a bug in ExtensionRegistrar (e.g., not calling or calling improperly) or a bug in ExtensionService (incorrectly reacting to the notification).  Additionally, it has the unpleasant side-effect of needing to rely on ExtensionService tests to know if ExtensionRegistrar is behaving properly.  This gets messier down the road when we have an app shell variant of ExtensionRegistrar::Delegate(), because then we consider behavior in AppShell to be tested by ExtensionService tests. :(\n\nIf we test ExtensionRegistrar for the calling behavior and ExtensionService for the reacting behavior, then it should be clear where a new bug is, and we get better local coverage for testing.\n\nWDYT?",
+      "parentUuid": "a2467f04_9ac06325",
       "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
