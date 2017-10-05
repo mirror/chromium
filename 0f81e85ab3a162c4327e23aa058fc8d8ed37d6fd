@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac04985d_7d415f0f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "006fe9a4_5557a561",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b69c516a_acf0f69f",
         "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
         "patchSetId": 10
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Ah, my previous comment was messed up by copy paste error. Correcting...\n\nThis file IS being type-checked already (see [1] and [2]) so better types would give us better type coverage.",
       "parentUuid": "b69c516a_acf0f69f",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da3b170_2c00ede1",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "I\u0027ll look into how to do that.",
+      "parentUuid": "ea805353_4ad448e2",
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -103,6 +139,24 @@
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b007289_cb07e943",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2591,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c9e0240_48a29680",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -170,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "21968eab_3884853b",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2616,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "It works at various zoom levels, so it should be correct. I\u0027m a little surprised though, since the OutOfProcessInstance::ScrollToY() was in another space and required factoring in the zoom level.",
+      "parentUuid": "80bfebfa_cbf7fe12",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18119a67_10ed8f74",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 10
@@ -187,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "c2507472_e531841a",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "Added has_y field because this needs to be handled way above in the call hierarchy.",
+      "parentUuid": "18119a67_10ed8f74",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d7f5a1_809cb8cf",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 10
@@ -198,6 +288,24 @@
       "writtenOn": "2017-10-04T21:40:06Z",
       "side": 1,
       "message": "Probably should make |target| required. Otherwise, what\u0027s the point of calling this method at all?",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6572545f_38efbb04",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "Removed the if. To be clear, this means just removing the check and letting it crash, right? Or is there a notation to specify it\u0027s a required param?",
+      "parentUuid": "40d7f5a1_809cb8cf",
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -221,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "9040a5af_e0c51ef9",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "I had to change this now to fill |has_y| as well, so leaving as LinkTarget*.",
+      "parentUuid": "a7c70f99_0d087028",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "774c1631_e18c53cb",
         "filename": "pdf/pdfium/pdfium_page.h",
         "patchSetId": 10
@@ -235,6 +361,24 @@
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcedbe18_cfd8d774",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-05T22:15:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "774c1631_e18c53cb",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
