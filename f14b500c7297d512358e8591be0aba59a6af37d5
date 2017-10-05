@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032b3a4b_2226d41f",
+        "filename": "build/android/gyp/copy_ex.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T01:49:28Z",
+      "side": 1,
+      "message": "nit: comment about the symlink trickery that makes this necessary (since shutil.copy overwrites destination)",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706e3096_eaaf576e",
+        "filename": "build/android/update_deps/update_third_party_deps.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T01:49:28Z",
+      "side": 1,
+      "message": "Does this need to be recursive?",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e33ffd_d046c228",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T01:49:28Z",
+      "side": 1,
+      "message": "nit: can you make it not define a stamp when the output is know (also remove --stamp in this case)",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058b00fe_0f7a194c",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-05T01:49:28Z",
+      "side": 1,
+      "message": "nit: add comment about why this needs to be copy_ex instead of copy",
+      "revId": "f14b500c7297d512358e8591be0aba59a6af37d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
