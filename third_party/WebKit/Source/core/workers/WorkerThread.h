@@ -176,6 +176,7 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
 
   service_manager::InterfaceProvider& GetInterfaceProvider();
 
+  // TODO(nhiroki): Move this to ServiceWorkerThread.
   // For ServiceWorkerScriptStreaming. Returns nullptr otherwise.
   virtual InstalledScriptsManager* GetInstalledScriptsManager() {
     return nullptr;
