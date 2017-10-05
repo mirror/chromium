@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "492255e0_25f6b7ca",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T14:24:18Z",
+      "side": 1,
+      "message": "That\u0027ll be a subsequent CL - I don\u0027t want to change ElideUrl()\u0027s behavior in this change, but also didn\u0027t want two measurement methods floating around.  I can apply the new approach to the new function now if you prefer.\n\nAlso, DIRECTIONALITY_AS_URL hasn\u0027t landed yet - DIRECTIONALITY_FORCE_LTR is as good as we have currently, right?",
+      "parentUuid": "29eb13a7_304befa1",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91b3938d_fecec2b5",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -115,6 +133,24 @@
       "writtenOn": "2017-10-05T00:38:37Z",
       "side": 1,
       "message": "Shouldn\u0027t this GetStringWidthF use DIRECTIONALITY_AS_URL? (the width of the string rendered with the standard bidi algorithm may be different than the width of the string rendered with forced LTR component ordering)",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9a90c6f_a1bf54de",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T14:24:18Z",
+      "side": 1,
+      "message": "(see comment above)",
+      "parentUuid": "b6dbe247_c92f0db4",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "29b6e586_3ce24f1c",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T14:24:18Z",
+      "side": 1,
+      "message": "I\u0027ll play with that.",
+      "parentUuid": "5293df5c_67509893",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2722c4e7_58bc5e30",
         "filename": "components/url_formatter/elide_url.h",
         "patchSetId": 7
@@ -200,6 +254,24 @@
       "writtenOn": "2017-10-05T00:38:37Z",
       "side": 1,
       "message": "Remind me, why not replace the existing ElideUrl above? (it seems like the prior reviewers preferred that too). Otherwise, why would anyone use ElideUrl instead of this? Comment about the reasoning for keeping the old function, mark it as deprecated if that makes sense, and file a bug to move existing users to the new \u0027secure\u0027 function.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "843e75dd_550c7034",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T14:24:18Z",
+      "side": 1,
+      "message": "As per my previous comment, I don\u0027t think we want to deprecate yet because (1) the new algo doesn\u0027t yet do special handling of the last path element, and (2) I\u0027m afraid to tie unblocking VR to churn on Chrome\u0027s existing method, and would sleep way easier if they were decoupled.",
+      "parentUuid": "2722c4e7_58bc5e30",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

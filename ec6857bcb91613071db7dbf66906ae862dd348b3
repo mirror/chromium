@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "ab7b76fc_fb6a5bf5",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T14:24:18Z",
+      "side": 1,
+      "message": "I\u0027m at a loss here with missing Hangouts history.  Sigh.  What I recall is, I pointed out that the elision algo needs to pick apart paths and elide in multiple locations.  I am certain you deemed that too application-specific to live in RenderText.  If I\u0027m wrong or misinterpreted, apologies.\n\nExposing RenderText features (like \"give me bounds of every character\") is something we can do to incrementally improve this elision.  If the elision code move *into* RenderText instead, I guess it\u0027s functionally the same, but results in different changes to the RenderText API.\n\nI\u0027m really hoping we can go with this CL as a first step (Tommy commented on this review that he\u0027s okay with this).  Converging the algorithms can be a sequence of incremental changes, and it\u0027d mean that we can get VR eliding without changing behavior all across Chrome.\n\nI see steps next steps like:\n- Introduce a local string length method that imposes LTR directionality.\n- Exposing and using character/glyph location data from RenderText to get rid of the n^2 runtime on path segment chopping.\n- Merge the algos, moving ElideUrl() to use the new \"chop from the left\" approach, adjust all the existing test cases, etc.",
+      "parentUuid": "724ab3d1_78b71ca9",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2
