@@ -46,6 +46,30 @@
       "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b1c8e8_67759e76",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-10-05T20:45:22Z",
+      "side": 1,
+      "message": "I\u0027ll check both questions and report here.",
+      "parentUuid": "38aa267c_e47ce57f",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 53
+      },
+      "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
