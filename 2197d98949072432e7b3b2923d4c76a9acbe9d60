@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "084c8b6d_e75a8432",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2678,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "9f7154ca_d77d4bf6",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7adff023_12223e28",
         "filename": "components/viz/service/display/gl_renderer.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c290d94_dc40984c",
+        "filename": "components/viz/service/display/gl_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done: Per later review comments, I removed one of these.",
+      "parentUuid": "7adff023_12223e28",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8d2c9c2b_81a0007d",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Calling request.source() when !has_source() will cause a crash because it is backed by base::Optional.\n\nref: https://cs.chromium.org/chromium/src/components/viz/common/frame_sinks/copy_output_request.h?rcl\u003da0403111d7feec88395dfaa85445d483c2425468\u0026l\u003d123\n\nI\u0027ll document with a comment. :)",
+      "parentUuid": "d865b56d_8b6065dd",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ae388c2_4af78b65",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904c8cf5_2d1efcee",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ae388c2_4af78b65",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "771b3473_0ada1d21",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done. This occurs often enough in the file that I felt it warranted its own convenience macro.",
+      "parentUuid": "9b2af412_a4aab109",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eac09cd6_a7ac10a2",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ec50b7_050988b9",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Changed to const base::UnguessableToken\u0026 so it\u0027s clear it\u0027s a copyable (not movable) type, and is later passed to a method meant to take a const-ref argument.\n\n\u003e this reoccurs\n\nDone there too. :)",
+      "parentUuid": "eac09cd6_a7ac10a2",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0e5a9a0e_581cf960",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "\u003e Doing work in a predicate looks weird and might be problematic.\n\nFixed. Given the various options in the STL library, it was simplest to just do 2 passes.\n\n\u003e Also, what if the framebuffercopy hasnt been used in this time, but the result texture has? Can we drop the former?\n\nI didn\u0027t implement the finer-granularity because copy requests with the same source should be resulting in identical GLRendererCopier execution workflows. So, we\u0027re going to have the exact same set of objects created/cached/re-used each time. For example, if a framebuffer copy is necessary, that means we are probably doing desktop capture, copying directly from the root OutputSurface, and every copy request will be doing that same thing.",
+      "parentUuid": "2f6de0d5_5dd4b3a1",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "311f9b0e_fbe902c7",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd702b_fa953173",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "That\u0027s the only kind the request API allows for: https://cs.chromium.org/chromium/src/components/viz/common/frame_sinks/copy_output_result.h?rcl\u003d309fc52058a796fbc3936c54e903648cf56c5d50\u0026l\u003d30\n\nAFAICT, there won\u0027t ever be a use case for client code to, say, need GL_LUMINANCE textures or some such. Note that I originally had plans to remove the RGBA_TEXTURE result option altogether at some point, except that there is one use case (other than tab/desktop capture) that still legitimately needs it: ash/rotator/screen_rotation_animator.cc",
+      "parentUuid": "311f9b0e_fbe902c7",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "5b337bf5_29169e1b",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "339281d8_54113b3d",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb6cb245_e657be73",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b3310a7_517fb968",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done. source_texture seems to be an appropriate name (since upstream code will either be supplying the original source_texture, or a surrogate).",
+      "parentUuid": "fb6cb245_e657be73",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "1d00d548_28b95e85",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625267ad_828ca523",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571e0f53_84af4a28",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "85bcdf26_fb339928",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "According to OpenGL docs, the binding reverts to 0, so the BindBuffer(0) is redundant.\n\nsource: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDeleteBuffers.xhtml",
+      "parentUuid": "571e0f53_84af4a28",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65e9d7f_92030659",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -217,6 +433,24 @@
       "writtenOn": "2017-10-03T21:19:34Z",
       "side": 1,
       "message": "id word this.. so the requestor can order use of the texture correctly with respect to the texture being written to.. or something",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8efc10_7a43a59d",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "This was difficult to word accurately. I took another shot at it. :)",
+      "parentUuid": "b65e9d7f_92030659",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "3fca4e66_9517754b",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "This would only be of benefit for the video use cases--tab/desktop capture--but those won\u0027t be making RGBA_TEXTURE copy requests once they move into VIZ proper. :)",
+      "parentUuid": "b6885e21_4cd005db",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "078d9b32_fb7c86a9",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -254,6 +506,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfdfd1e_919ebb55",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "078d9b32_fb7c86a9",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "21d1dde3_06d12a24",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84743176_8062bff3",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e6b6c4_ed27b96a",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -288,6 +576,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd012cd_9c522f34",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e6b6c4_ed27b96a",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "32ac1c52_c433d30c",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "7739fc49_49b8279c",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be40e2a_bcc6cbd9",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -322,6 +646,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894c6855_9bbb3d15",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Ok, moved init of POD members away from ctor code.",
+      "parentUuid": "9be40e2a_bcc6cbd9",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "cedf8190_e1fe6a65",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "768ae0b8_3995220d",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f61ce1ce_d7c93f92",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -353,6 +713,24 @@
       "writtenOn": "2017-10-03T21:19:34Z",
       "side": 1,
       "message": "produce is a loaded term in gl code, we \"produce mailbox\" to bind a new mailbox name to a texture id. Is there a synonym you can replace this with?",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e00a03_a7b41f25",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Hmm...I could call it \"create,\" but there are GL functions (mailbox related, too!) that use that verb too. How about \"render\" (changed in PS4)?",
+      "parentUuid": "f61ce1ce_d7c93f92",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "5b73c9e8_12950e54",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "189c636e_b346994c",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97ccb02c_689858ec",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -390,6 +786,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea3a9b4_82e27589",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97ccb02c_689858ec",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +824,24 @@
     },
     {
       "key": {
+        "uuid": "86c055a8_07072b01",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "I tried this. It ends up causing more problems than it solves because of the need for a GL context at creation and destruction time, and the way the C-style OpenGL API is organized.\n\nI started by creating something like a ScopedTexture, but with move semantics and such. However, a lot of code like this cropped-up all over the place:\n\n  OwnedTexture owned_foo;\n  {\n    GLuint foo \u003d 0;\n    gl-\u003eGenTextures(1, \u0026foo);\n    owned_foo.reset(foo);\n  }\n\n...and so I tried to simplify that with some syntactic sugar:\n\n  OwnedTexture owned_foo;\n  owned_foo.SetWith([gl](GLuint* name) { gl-\u003eGenTextures(1, name); });\n\n...which is still a little weird to read.\n\nThen, I ran into more problems when passing OwnedTextures into callbacks for asynchronous operations: For read-back, it\u0027s possible the GL context could be lost during the async glReadPixels(), and so the OnReadbackFinished() method would never be called: https://cs.chromium.org/chromium/src/gpu/command_buffer/client/gles2_implementation.cc?rcl\u003d6489c3bf719ff00615a7946c0a4bb72bb8e44b2e\u0026l\u003d402 In this scenario, when the never-run base::Callback is destroyed, these OwnedTextures (bound in the Callback) would not have a valid GL context when their destructors are invoked.\n\nI don\u0027t want to use GLHelper\u0027s ScopedTexture itself because: 1) it just takes a raw pointer to the GL context that can become invalid at some later point (we really should fix that); 2) it lacks a move constructor and move assignment operator; and 3) still has the same \"context lost\" issue when binding into async callbacks.\n\nWhile I agree it would be nice to have compile-time checking that this code isn\u0027t leaking any GL objects, this isn\u0027t something that\u0027s easy to create code structure around. Not impossible, of course; but my exploration shows it\u0027s definitely outside the scope of the work I\u0027m doing right now. :)",
+      "parentUuid": "17b6fd7f_f1533910",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2bd782_b073612b",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -424,6 +856,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dee1312b_91250389",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e2bd782_b073612b",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -444,6 +894,24 @@
     },
     {
       "key": {
+        "uuid": "c2e3b848_657d6f04",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "FWIW, I was originally using std::vector here, but then the compiler said I had to write a move constructor AND a move assignment operator for my CacheEntry struct. As for base::flat_map: That was an option I had also considered. However, since it is backed by std::vector, it would also require that I write the move constructor+assigner. This was when I realized: Why not use std::forward_list? It\u0027s actually more efficient and I also don\u0027t have to write extra boilerplate code.\n\nTo be clear, I\u0027m only claiming it\u0027s more efficient than std::vector for 0 or 1 items. 2 or more, and I would agree that std::vector would be better, but that scenario should be super-rare: It would mean users are capturing more than one tab/desktop at the same time. Sure, they could do that, but there is a rather small implicit upper limit; so I\u0027m not worried about this linked-list growing too large.\n\nAs for my efficiency claim, here\u0027s how I reasoned:\n\nZero-item case: std::forward_list is a singly-linked list, so it just has a single pointer to the head node. An instance with no elements costs only sizeof(void*) bytes of memory (the pointer to the head node set to null). However, a std::vector instance costs 3 * sizeof(void*) bytes of memory because it consists of: the begin pointer, the end pointer, and the \"capacity end\" pointer. So, std::forward_list wins here.\n\nOne-item case: std::forward_list allocates one node on the heap, of sizeof(CacheEntry) + sizeof(\u003cnext node pointer\u003e) bytes. Along with it\u0027s head pointer, then, the total memory cost is 2 * sizeof(void*) + sizeof(CacheEntry) + heap overhead. std::vector allocates a one-element-sized array on the heap. So, its total memory cost would be: 3 * sizeof(void*) + sizeof(CacheEntry) + heap overhead. Therefore, std::forward_list wins.\n\nIn terms of the CPU cost, both std::forward_list and std::vector are equal because there is only one pointer traversal needed to access the one element in the heap.",
+      "parentUuid": "561eb3b8_ba3947d8",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8281e38b_0fd78d90",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -458,6 +926,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065b6d5c_d2396d8d",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done.\n\nNote that there are cases where ContextSupport::SignalQuery() will NOT ever run the callback: https://cs.chromium.org/chromium/src/gpu/command_buffer/client/gles2_implementation.cc?rcl\u003d6489c3bf719ff00615a7946c0a4bb72bb8e44b2e\u0026l\u003d402 Thus, the \"static method\" approach wouldn\u0027t be able to guarantee all GL objects get cleaned up.\n\nSo, I decided to create a simple helper class to do this (ReadbackWorkflow). It has no data dependencies on GLRendererCopier, so there\u0027s no need for the WeakPtr-back-to-GLRendererCopier. Also, it has a destructor that will still do all the clean-up if the callback was never executed.",
+      "parentUuid": "8281e38b_0fd78d90",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -478,6 +964,24 @@
     },
     {
       "key": {
+        "uuid": "2537003b_74f16381",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "I think you may have it backwards here (or maybe my wording was confusing?). Tab capture-related product features typically run at a rate of 30 FPS; and we *could* do 60 FPS (why not yet: http://crbug.com/517714). So, that would mean the cache is touched at least once every other compositor frame. Cache entries are only purged after 60 consecutive compositor frames go by without copy requests.",
+      "parentUuid": "c7cf77a4_ad115cc3",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b780f326_faf636dc",
         "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
         "patchSetId": 2
@@ -492,6 +996,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e11fd10_1ea404fc",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Yep. I was tweaking things around here during development. ;-)\n\nDone.",
+      "parentUuid": "b780f326_faf636dc",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -512,6 +1034,24 @@
     },
     {
       "key": {
+        "uuid": "028a2a70_b3991289",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af494315_84413682",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805e108f_edbcbac3",
         "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
         "patchSetId": 2
@@ -526,6 +1066,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ed8740a_515cd37e",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "I don\u0027t. However, cc::GLRendererPixelTest does all the same setup of a non-fake context, output surface, etc. that I do need. I didn\u0027t want to have to copy-paste all of that code.",
+      "parentUuid": "805e108f_edbcbac3",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -546,6 +1104,24 @@
     },
     {
       "key": {
+        "uuid": "ce3d1acf_164f801d",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done. I also revisited how I pass the parameters via gtest, to avoid extra translations between enums, and hopefully make things a little simpler and more readable.",
+      "parentUuid": "f860bd22_809f7608",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ef82185_8cb9f692",
         "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
         "patchSetId": 2
@@ -563,6 +1139,24 @@
     },
     {
       "key": {
+        "uuid": "ce75445d_48a3d71a",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ef82185_8cb9f692",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cbdd269_92cfcc67",
         "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
         "patchSetId": 2
@@ -574,6 +1168,24 @@
       "writtenOn": "2017-10-03T21:19:34Z",
       "side": 1,
       "message": "There\u0027s 2 diff bitmaps right? It\u0027d be nice to write these to pngs on disk and compare to those I think, like our other pixel tests do.",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5b6b38_3849a035",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "I don\u0027t understand the value in doing this. I only see some downsides: 1) Introducing external test data dependencies, 2) adding extra files to the code base everyone has to download, 3) significant additional test runtime (to load PNGs), 4) Burdening future devs with having to rebase PNG files whenever making modifications to the test code.\n\nFWIW, if any of the tests fail, they do print out PNG data URLs that can be viewed in the browser to make comparisons when trying to debug things.",
+      "parentUuid": "6cbdd269_92cfcc67",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -597,6 +1209,24 @@
     },
     {
       "key": {
+        "uuid": "a1ce4bd8_0d0db671",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dc420f7_da137e9f",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c04b1b2f_65bd9f50",
         "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
         "patchSetId": 2
@@ -614,6 +1244,24 @@
     },
     {
       "key": {
+        "uuid": "bde186a6_9787c3b9",
+        "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Ah, I had meant to come back to this. :)\n\nDone.",
+      "parentUuid": "c04b1b2f_65bd9f50",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff97188_15a378ac",
         "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
         "patchSetId": 2
@@ -628,6 +1276,24 @@
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0121c05f_f6212a89",
+        "filename": "components/viz/service/display/gl_renderer_copier_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 1,
+      "message": "Done. And, removed the \"friend GLRendererCopierTest\" declaration in GLRenderer.",
+      "parentUuid": "5ff97188_15a378ac",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

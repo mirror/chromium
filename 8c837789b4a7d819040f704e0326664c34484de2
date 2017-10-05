@@ -16,6 +16,24 @@
       "revId": "8c837789b4a7d819040f704e0326664c34484de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f6ff12_65290168",
+        "filename": "components/viz/common/frame_sinks/copy_output_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-05T02:59:12Z",
+      "side": 0,
+      "message": "It fixes a number of webkit layout tests that failed for Patch Set 2. They are trying to mutate the SkBitmaps they get from CopyOutputResults somehow, causing an assertion failure.\n\nThis issue should have been caught in my earlier \"Part 1\" CL, but these layout tests are never running against the SoftwareRenderer.\n\nThis made me re-think why I was making the SkBitmap\u0027s pixels immutable in the first place. Since the client code owns the CopyOutputResult, it makes sense to allow the client to mutate the SkBitmap in the result however it wishes. Why the tests want to do that, I don\u0027t know...Maybe it\u0027s an innocent thing like an in-place \"crop\" operation?",
+      "parentUuid": "caa2c4a0_72a6c1ce",
+      "revId": "8c837789b4a7d819040f704e0326664c34484de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
