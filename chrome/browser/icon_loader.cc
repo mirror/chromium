@@ -32,7 +32,7 @@ void IconLoader::Start() {
 IconLoader::IconLoader(const base::FilePath& file_path,
                        IconSize size,
                        IconLoadedCallback callback)
-    : file_path_(file_path), icon_size_(size), callback_(callback) {}
+    : file_path_(file_path), callback_(callback) {}
 
 IconLoader::~IconLoader() {}
 
