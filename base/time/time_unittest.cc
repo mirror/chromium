@@ -153,12 +153,18 @@ TEST_F(TimeTest, TimeT) {
 
 // Test conversions to/from javascript time.
 TEST_F(TimeTest, JsTime) {
-  Time epoch = Time::FromJsTime(0.0);
-  EXPECT_EQ(epoch, Time::UnixEpoch());
-  Time t = Time::FromJsTime(700000.3);
-  EXPECT_EQ(700.0003, t.ToDoubleT());
-  t = Time::FromDoubleT(800.73);
-  EXPECT_EQ(800730.0, t.ToJsTime());
+  {
+    constexpr Time epoch = Time::FromJsTime(0.0);
+    EXPECT_EQ(epoch, Time::UnixEpoch());
+  }
+  {
+    constexpr Time t = Time::FromJsTime(700000.3);
+    EXPECT_EQ(700.0003, t.ToDoubleT());
+  }
+  {
+    constexpr Time t = Time::FromDoubleT(800.73);
+    EXPECT_EQ(800730.0, t.ToJsTime());
+  }
 }
 
 #if defined(OS_POSIX)
@@ -546,7 +552,7 @@ TEST_F(TimeTest, ExplodeBeforeUnixEpoch) {
 }
 
 TEST_F(TimeTest, Max) {
-  Time max = Time::Max();
+  constexpr Time max = Time::Max();
   EXPECT_TRUE(max.is_max());
   EXPECT_EQ(max, Time::Max());
   EXPECT_GT(max, Time::Now());
@@ -554,55 +560,71 @@ TEST_F(TimeTest, Max) {
 }
 
 TEST_F(TimeTest, MaxConversions) {
-  Time t = Time::Max();
-  EXPECT_EQ(std::numeric_limits<int64_t>::max(), t.ToInternalValue());
+  {
+    constexpr Time t = Time::Max();
+    EXPECT_EQ(std::numeric_limits<int64_t>::max(), t.ToInternalValue());
+  }
 
-  t = Time::FromDoubleT(std::numeric_limits<double>::infinity());
-  EXPECT_TRUE(t.is_max());
-  EXPECT_EQ(std::numeric_limits<double>::infinity(), t.ToDoubleT());
+  {
+    Time t = Time::FromDoubleT(std::numeric_limits<double>::infinity());
+    EXPECT_TRUE(t.is_max());
+    EXPECT_EQ(std::numeric_limits<double>::infinity(), t.ToDoubleT());
+  }
 
-  t = Time::FromJsTime(std::numeric_limits<double>::infinity());
-  EXPECT_TRUE(t.is_max());
-  EXPECT_EQ(std::numeric_limits<double>::infinity(), t.ToJsTime());
+  {
+    Time t = Time::FromJsTime(std::numeric_limits<double>::infinity());
+    EXPECT_TRUE(t.is_max());
+    EXPECT_EQ(std::numeric_limits<double>::infinity(), t.ToJsTime());
+  }
 
-  t = Time::FromTimeT(std::numeric_limits<time_t>::max());
-  EXPECT_TRUE(t.is_max());
-  EXPECT_EQ(std::numeric_limits<time_t>::max(), t.ToTimeT());
+  {
+    Time t = Time::FromTimeT(std::numeric_limits<time_t>::max());
+    EXPECT_TRUE(t.is_max());
+    EXPECT_EQ(std::numeric_limits<time_t>::max(), t.ToTimeT());
+  }
 
 #if defined(OS_POSIX)
-  struct timeval tval;
-  tval.tv_sec = std::numeric_limits<time_t>::max();
-  tval.tv_usec = static_cast<suseconds_t>(Time::kMicrosecondsPerSecond) - 1;
-  t = Time::FromTimeVal(tval);
-  EXPECT_TRUE(t.is_max());
-  tval = t.ToTimeVal();
-  EXPECT_EQ(std::numeric_limits<time_t>::max(), tval.tv_sec);
-  EXPECT_EQ(static_cast<suseconds_t>(Time::kMicrosecondsPerSecond) - 1,
-      tval.tv_usec);
+  {
+    struct timeval tval;
+    tval.tv_sec = std::numeric_limits<time_t>::max();
+    tval.tv_usec = static_cast<suseconds_t>(Time::kMicrosecondsPerSecond) - 1;
+    Time t = Time::FromTimeVal(tval);
+    EXPECT_TRUE(t.is_max());
+    tval = t.ToTimeVal();
+    EXPECT_EQ(std::numeric_limits<time_t>::max(), tval.tv_sec);
+    EXPECT_EQ(static_cast<suseconds_t>(Time::kMicrosecondsPerSecond) - 1,
+              tval.tv_usec);
+  }
 #endif
 
 #if defined(OS_MACOSX)
-  t = Time::FromCFAbsoluteTime(std::numeric_limits<CFAbsoluteTime>::infinity());
-  EXPECT_TRUE(t.is_max());
-  EXPECT_EQ(std::numeric_limits<CFAbsoluteTime>::infinity(),
-            t.ToCFAbsoluteTime());
+  {
+    constexpr Time t = Time::FromCFAbsoluteTime(
+        std::numeric_limits<CFAbsoluteTime>::infinity());
+    EXPECT_TRUE(t.is_max());
+    EXPECT_EQ(std::numeric_limits<CFAbsoluteTime>::infinity(),
+              t.ToCFAbsoluteTime());
+  }
 #endif
 
 #if defined(OS_WIN)
-  FILETIME ftime;
-  ftime.dwHighDateTime = std::numeric_limits<DWORD>::max();
-  ftime.dwLowDateTime = std::numeric_limits<DWORD>::max();
-  t = Time::FromFileTime(ftime);
-  EXPECT_TRUE(t.is_max());
-  ftime = t.ToFileTime();
-  EXPECT_EQ(std::numeric_limits<DWORD>::max(), ftime.dwHighDateTime);
-  EXPECT_EQ(std::numeric_limits<DWORD>::max(), ftime.dwLowDateTime);
+  {
+    FILETIME ftime;
+    ftime.dwHighDateTime = std::numeric_limits<DWORD>::max();
+    ftime.dwLowDateTime = std::numeric_limits<DWORD>::max();
+    constexpr Time t = Time::FromFileTime(ftime);
+    EXPECT_TRUE(t.is_max());
+    ftime = t.ToFileTime();
+    EXPECT_EQ(std::numeric_limits<DWORD>::max(), ftime.dwHighDateTime);
+    EXPECT_EQ(std::numeric_limits<DWORD>::max(), ftime.dwLowDateTime);
+  }
 #endif
 }
 
 #if defined(OS_MACOSX)
 TEST_F(TimeTest, TimeTOverflow) {
-  Time t = Time::FromInternalValue(std::numeric_limits<int64_t>::max() - 1);
+  constexpr Time t =
+      Time::FromInternalValue(std::numeric_limits<int64_t>::max() - 1);
   EXPECT_FALSE(t.is_max());
   EXPECT_EQ(std::numeric_limits<time_t>::max(), t.ToTimeT());
 }
