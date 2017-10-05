@@ -5815,9 +5815,6 @@ the Bookmarks menu.">
       <message name="IDS_CLEAR_BROWSING_DATA_TITLE" desc="Dialog title">
         Clear browsing data
       </message>
-      <message name="IDS_FLASH_STORAGE_SETTINGS" desc="Link for opening Adobe Flash Player storage settings">
-        Adobe Flash Player storage settings...
-      </message>
       <message name="IDS_FLASH_PERMISSION_FRAGMENT" desc="Permission asked in the permission bubble when a URL wants to use Flash Plugins on the page. Preceded by the prompt 'This site would like to:'">
         Run Flash
       </message>
@@ -5963,24 +5960,6 @@ I don't think this site should be blocked!
           {NUM_POPUPS,plural,=1{A pop-up is blocked} other{# pop-ups are blocked}}
         </message>
       </if>
-      <message name="IDS_FLASH_TAB_LABEL" desc="Label for Flash tab on Content Settings dialog">
-        Flash
-      </message>
-      <message name="IDS_FLASH_HEADER" desc="Header for plugin exception management page on Content Settings dialog">
-        Flash exceptions
-      </message>
-      <message name="IDS_FLASH_ALLOW_RADIO" desc="A radio button in the Content Settings dialog for allowing plugins use on any site.">
-        Allow sites to run Flash
-      </message>
-      <message name="IDS_FLASH_DETECT_RECOMMENDED_RADIO" desc="A radio button in the Content Settings dialog for detecting and running important plugin content only. This is the behavior Chrome recommends.">
-        Detect and run important Flash content (recommended)
-      </message>
-      <message name="IDS_FLASH_ASK_RECOMMENDED_RADIO" desc="A radio button in the Content Settings dialog for asking first before running Flash. This is the behavior Chrome recommends.">
-        Ask first before allowing sites to run Flash (recommended)
-      </message>
-      <message name="IDS_FLASH_BLOCK_RADIO" desc="A radio button in the Content Settings dialog for gating plugins on a context menu activation.">
-        Block sites from running Flash
-      </message>
       <message name="IDS_JAVASCRIPT_TAB_LABEL" desc="Label for JavaScript tab on Content Settings dialog">
         JavaScript
       </message>
@@ -6002,12 +5981,6 @@ I don't think this site should be blocked!
       <message name="IDS_HANDLERS_TAB_LABEL" desc="Label for Handlers tab on Content Settings dialog">
         Handlers
       </message>
-      <message name="IDS_HANDLERS_ALLOW_RADIO" desc="A radio button in the Content Settings dialog for allowing sites to register themselves as handlers for protocols.">
-        Allow sites to ask to become default handlers for protocols (recommended)
-      </message>
-      <message name="IDS_HANDLERS_DONOTALLOW_RADIO" desc="A radio button in the Content Settings dialog for preventing sites from registering themselves as handlers for protocols.">
-        Do not allow any site to handle protocols
-      </message>
     <message name="IDS_HANDLERS_BUBBLE_MANAGE_LINK" desc="Link on the register protocol handler bubble that opens up the Content Settings management dialog.">
       Manage handler settings...
     </message>
@@ -6020,40 +5993,10 @@ I don't think this site should be blocked!
     <message name="IDS_HANDLERS_REMOVE_HANDLER_LINK" desc="Text on the link that removes a registered protocol handler from a user's settings.">
         remove this site
     </message>
-    <message name="IDS_HANDLERS_NONE_HANDLER" desc="Text in the dropdown for handlers for a given protocol that indicates that the protocol shouldn't be handled.">
-        (none)
-    </message>
-    <message name="IDS_HANDLERS_ACTIVE_HEADING" desc="Header for the section of the handlers settings page that lists handlers that are active, that is, can be used to handle links.">
-        Active protocol handlers
-    </message>
-    <message name="IDS_HANDLERS_IGNORED_HEADING" desc="Header for the section of the handlers settings page that lists handlers that are ignored.">
-        Ignored protocol handlers
-    </message>
 
     <message name="IDS_HANDLER_OPTIONS_WINDOW_TITLE" desc="The title of the window that lets a user change what handlers they have registered for various protocols / mimetypes.">
       Protocol handlers
     </message>
-      <message name="IDS_GEOLOCATION_TAB_LABEL" desc="Label for Geolocation tab on Content Settings dialog" meaning="Geolocation">
-        Location
-      </message>
-      <message name="IDS_GEOLOCATION_HEADER" desc="Label for Geolocation exception management page on Content Settings dialog">
-        Geolocation exceptions
-      </message>
-      <message name="IDS_GEOLOCATION_ALLOW_RADIO" desc="A radio button in the Content Settings dialog for allowing all sites access to geolocation data.">
-        Allow all sites to track your physical location
-      </message>
-      <message name="IDS_GEOLOCATION_ASK_RADIO" desc="A radio button in the Content Settings dialog for asking before allowing sites access to gelocation data.">
-        Ask when a site tries to track your physical location (recommended)
-      </message>
-      <message name="IDS_GEOLOCATION_BLOCK_RADIO" desc="A radio button in the Content Settings dialog for blocking sites from accessing geolocation data.">
-        Do not allow any site to track your physical location
-      </message>
-      <message name="IDS_GEOLOCATION_GOOGLE_ACCESS_ENABLE_CHKBOX" desc="The label of the 'Allow Google services to access your location' checkbox">
-        Allow Google services to access your location
-      </message>
-      <message name="IDS_GEOLOCATION_SET_BY_HOVER" desc="Hover text for URL in a list of exceptions, preceding the name of the granting hosted app.">
-        Set by app:
-      </message>
       <message name="IDS_NOTIFICATIONS_TAB_LABEL" desc="Label for Notifications tab on Content Settings dialog">
         Notifications
       </message>
@@ -6069,41 +6012,11 @@ I don't think this site should be blocked!
       <message name="IDS_NOTIFICATIONS_ASK_RADIO" desc="A radio button in Content Settings dialog to configure notifications per-site.">
         Ask when a site wants to show notifications (recommended)
       </message>
-      <message name="IDS_EXCEPTIONS_PATTERN_HEADER" desc="A column header for the pattern column of the cookie/image/javascript/plugins exceptions dialog">
-        Hostname pattern
-      </message>
       <message name="IDS_EXCEPTIONS_ACTION_HEADER" desc="A column header for the action column of the cookie/image/javascript/plugins exceptions dialog">
         Behavior
       </message>
-      <message name="IDS_EXCEPTIONS_USB_DEVICE_HEADER" desc="A column headers for the exceptions dialog indicating the name of a device the page has access to (e.g. 'Nexus 5')">
-        Device
-      </message>
-      <message name="IDS_EXCEPTIONS_ZOOM_HEADER" desc="A column header for the exceptions dialog indicating the zoom level of pages (e.g. 110% magnification)">
-        Zoom
-      </message>
-      <message name="IDS_EXCEPTIONS_ALLOW_BUTTON" desc="A label to display in the exception page's action column when a site's content setting is allowed for a given domain">
-        Allow
-      </message>
-      <message name="IDS_EXCEPTIONS_BLOCK_BUTTON" desc="A label to display in the exception page's action column when a site's content setting is blocked for a given domain.">
-        Block
-      </message>
-      <message name="IDS_EXCEPTIONS_ASK_BUTTON" desc="A label to display in the exception page's action column when a site's content setting is set to prompt for a given domain.">
-        Ask
-      </message>
-      <message name="IDS_EXCEPTIONS_SESSION_ONLY_BUTTON" desc="A label to display in the exception page's action column when a site's content setting is allow but only for the duration of the session for a given domain.">
-        Clear on exit
-      </message>
-      <message name="IDS_EXCEPTIONS_DETECT_IMPORTANT_CONTENT_BUTTON" desc="A label to display in the exception page's action column when only important content is allowed.">
-        Detect content
-      </message>
-      <message name="IDS_EXCEPTIONS_OTR_LABEL" desc="A label informing the user that the table below the label shows incognito-only exceptions">
-        Exceptions below only apply to the current incognito session.
-      </message>
       <message name="IDS_EXCEPTIONS_ADD_NEW_INSTRUCTIONS" desc="Placeholder text before the user adds a new exception" >
         [*.]example.com
-      </message>
-      <message name="IDS_EXCEPTIONS_GEOLOCATION_EMBEDDED_ON_HOST" desc="Template text for a child row in the Geolocation Exceptions page view. Controls the permission setting for the parent page when embedded on the specified site.">
-        embedded on <ph name="URL">$1<ex>www.google.com</ex></ph>
       </message>
       <message name="IDS_PROTECTED_CONTENT_TAB_LABEL" desc="Label for the Protected Content tab on the Content Settings dialog.">
         Protected content
@@ -6138,14 +6051,8 @@ I don't think this site should be blocked!
         Ask when a site wants to use a plugin to access your computer (recommended)
       </message>
 
-      <message name="IDS_EXCEPTIONS_MANAGE" desc="The label on the button that launches the exceptions management page for a given content type">
-        Manage exceptions...
-      </message>
       <message name="IDS_COOKIES_SHOW_COOKIES_BUTTON" desc="A button in the Content Settings dialog for showing cookies and other stored site data.">
         All cookies and site data...
-      </message>
-      <message name="IDS_HANDLERS_MANAGE" desc="The label on the button that launches the exceptions management page for a given content type">
-        Manage handlers...
       </message>
 
       <message name="IDS_USB_DEVICES_HEADER_AND_TAB_LABEL" desc="Label for USB devices tab and a header on the Content Settings dialog (a page may be granted permission to connect to individual USB devices).">
