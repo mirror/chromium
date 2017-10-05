@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1eaa7791_ba359b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T18:18:12Z",
+      "side": 1,
+      "message": "Thanks! :) I added more details to the message.",
+      "parentUuid": "57def296_ebd189b2",
+      "range": {
+        "startLine": 10,
+        "startChar": 76,
+        "endLine": 10,
+        "endChar": 83
+      },
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0e8ed4d_7ba2b192",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 26
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "+sahel@ has some insight into when we don\u0027t get direction in Begin and had to make this work for latching. She might be able to shed some light on how to fix this.",
       "parentUuid": "a0e8ed4d_7ba2b192",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16acd499_82a4121c",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T18:18:12Z",
+      "side": 1,
+      "message": "This is one (or the?) case when this happens; specifically in the context of \"touch-scroll-customization.html\" test which relies on eventSender.gestureScrollBegin.\n\nhttps://cs.chromium.org/chromium/src/content/shell/test_runner/event_sender.cc?rcl\u003deef344fe33e64b9b43ce2ca53c21f5f8edf79e97\u0026l\u003d2360\n\nIf this is possibly the only reason behind (0,0) deltas, I believe we should fix the event synthesizing code to setup some gesture direction or perhaps even pass it as parameters to eventSender.gestureScrollBegin. The only issue is that I guess eventSender stuff are deprecated(?).",
+      "parentUuid": "83051029_22f2a68f",
       "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "1be39b43_b730bcd0",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T18:18:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "df02a531_04e78207",
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cba86cdd_d30dff25",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 26
@@ -106,6 +166,30 @@
       "writtenOn": "2017-10-05T15:20:33Z",
       "side": 1,
       "message": "Please add this as an overload of RootScrollerUtil::IsGlobal and use that. It\u0027ll make the code here more readable and it\u0027ll help me keep track of all the places we have exceptions for RootScroller as I move stuff around.",
+      "range": {
+        "startLine": 746,
+        "startChar": 6,
+        "endLine": 749,
+        "endChar": 20
+      },
+      "revId": "96e6584cdc5e385cc9f807c0c8770b115fdacd38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c214303_ec31c331",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-10-05T18:18:12Z",
+      "side": 1,
+      "message": "Yes good idea. Done!",
+      "parentUuid": "cba86cdd_d30dff25",
       "range": {
         "startLine": 746,
         "startChar": 6,
