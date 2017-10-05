@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96a74908_14412084",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:46:28Z",
+      "side": 1,
+      "message": "nit: Please format each line to less than 80 chars.",
+      "revId": "4effe727d7185ce1517c0daefb6fb18fae19b739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1edc5b_26dd5914",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:46:28Z",
+      "side": 1,
+      "message": "nit: s/3//",
+      "revId": "4effe727d7185ce1517c0daefb6fb18fae19b739",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
