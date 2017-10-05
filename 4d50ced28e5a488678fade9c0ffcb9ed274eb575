@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc4eba32_5afcdf17",
+        "filename": "chrome/renderer/chrome_render_frame_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure if this is the correct place to install the JS bindings. Other gin::Wrappables do it in content::RenderFrameImpl::DidClearWindowObject, which doesn\u0027t work here because this one is chrome, not content.",
+      "range": {
+        "startLine": 389,
+        "startChar": 48,
+        "endLine": 389,
+        "endChar": 0
+      },
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0ebd3f1_2d36611f",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 1,
+      "message": "Note: This whole function is just moved (from SearchBoxExtensionWrapper::GetThemeBackgroundInfo), no code changes.",
+      "range": {
+        "startLine": 203,
+        "startChar": 50,
+        "endLine": 203,
+        "endChar": 0
+      },
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c187f84_aa5440be",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 1,
+      "message": "General gin question: If I need the isolate, do I have to use gin::Arguments instead of the specific argument types I want?",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb53de74_80d1d4d0",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 630,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 1,
+      "message": "This feels like quite a roundabout way of getting window.devicePixelRatio, but I haven\u0027t found a better one. Previously, this was implemented in the JS in searchbox_api.js, and there doesn\u0027t seem to be a direct Gin equivalent to that. And the value doesn\u0027t seem to be exposed on the C++ side at all.\nAny ideas?",
+      "range": {
+        "startLine": 630,
+        "startChar": 53,
+        "endLine": 630,
+        "endChar": 0
+      },
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f823ee_94bdd0ed",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 1,
+      "message": "Re gin::Arguments: Here it\u0027d be much nicer if I could get the one int parameter directly, but that doesn\u0027t seem possible if I also need the isolate. Is that correct?",
+      "revId": "4d50ced28e5a488678fade9c0ffcb9ed274eb575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

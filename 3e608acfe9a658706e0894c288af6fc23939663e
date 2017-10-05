@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf3003b7_510ea57a",
+        "filename": "chrome/renderer/searchbox/searchbox_extension_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-05T11:59:34Z",
+      "side": 0,
+      "message": "This function was unused, so no point in keeping it and the tests around.",
+      "revId": "3e608acfe9a658706e0894c288af6fc23939663e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
