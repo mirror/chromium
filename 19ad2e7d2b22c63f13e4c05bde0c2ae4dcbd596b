@@ -16,6 +16,24 @@
       "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18250c8e_f691587e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-05T22:55:54Z",
+      "side": 1,
+      "message": "\u003e shouldn\u0027t need callback either. You can do ContentViewCore.fromWebContents(webContents).getPopupControllerResultCallback\n\nErr, oops, wrong file. This comment should have been on SelectionClient instead. Having this file never refer to ContentViewCore is probably a good thing",
+      "parentUuid": "33fa5818_97060467",
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
