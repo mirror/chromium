@@ -169,6 +169,11 @@ class AUHALStream : public AudioOutputStream {
   // This flag will be set to false while we're actively receiving callbacks.
   bool stopped_;
 
+  // Controls whether or not we use the kAudioUnitSubType_VoiceProcessingIO
+  // voice processing component that provides echo cancellation, ducking
+  // and gain control on Sierra and later.
+  const bool voice_processing_;
+
   // Container for retrieving data from AudioSourceCallback::OnMoreData().
   std::unique_ptr<AudioBus> output_bus_;
 

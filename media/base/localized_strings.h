@@ -21,7 +21,7 @@ namespace media {
 // chrome/app/generated_resources.grd.
 enum MessageId {
   DEFAULT_AUDIO_DEVICE_NAME,
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_MACOSX)
   COMMUNICATIONS_AUDIO_DEVICE_NAME,
 #endif
 #if defined(OS_CHROMEOS)

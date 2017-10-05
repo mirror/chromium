@@ -551,7 +551,7 @@ void HostContentSettingsMap::MigrateDomainScopedSettings(bool after_sync) {
 
       if (setting_entry.secondary_pattern !=
           ContentSettingsPattern::Wildcard()) {
-        NOTREACHED();
+        // NOTREACHED();
         continue;
       }
 
