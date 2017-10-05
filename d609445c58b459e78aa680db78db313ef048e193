@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b504eb9b_147388c0",
+        "filename": "net/dns/host_cache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-10-05T22:01:36Z",
+      "side": 1,
+      "message": "The addition of refreshing_ tips this over over to being a complex class which requires an explicit copy constructor according to our compiler hooks.",
+      "parentUuid": "12cecac8_189fe42d",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "427a8d78_bcf2dc23",
         "filename": "net/dns/host_resolver.h",
         "patchSetId": 6
@@ -138,6 +156,24 @@
       "writtenOn": "2017-10-04T16:11:33Z",
       "side": 1,
       "message": "What\u0027s this change for? It\u0027s going to conflict with your negative caching CL.",
+      "revId": "d609445c58b459e78aa680db78db313ef048e193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "159e507e_543a0057",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2273,
+      "author": {
+        "id": 1228924
+      },
+      "writtenOn": "2017-10-05T22:01:36Z",
+      "side": 1,
+      "message": "This avoids a crash when we try to copy an empty address list (one of the member copy constructors doesn\u0027t handle being empty).\n\nAn alternative that might be more clear would be to add this check to line 2282",
+      "parentUuid": "15537d96_7a21221c",
       "revId": "d609445c58b459e78aa680db78db313ef048e193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
