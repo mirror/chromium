@@ -1,0 +1,4 @@
+include_rules = [
+  "+cc/base",
+  "+third_party/skia/include/core/SkColorSpace.h",
+]
