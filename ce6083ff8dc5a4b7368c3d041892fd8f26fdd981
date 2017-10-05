@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eca5b52b_446475ca",
+        "filename": "third_party/WebKit/public/platform/WebURLRequest.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-05T06:23:18Z",
+      "side": 1,
+      "message": "So this seems to be out-of-spec thing, as far as I quickly checked. Could you tell me backgrounds for this?",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "ce6083ff8dc5a4b7368c3d041892fd8f26fdd981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
