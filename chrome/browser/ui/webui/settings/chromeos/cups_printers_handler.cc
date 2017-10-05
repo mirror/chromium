@@ -449,6 +449,7 @@ void CupsPrintersHandler::OnAutoconfQueriedDiscovered(
     bool ipp_everywhere) {
   RecordIppQuerySuccess(success);
 
+  LOG(WARNING) << "Autoconf query discover " << success;
   if (success) {
     // If we queried a valid make and model, use it.  The mDNS record isn't
     // guaranteed to have it.  However, don't overwrite it if the printer
@@ -471,7 +472,8 @@ void CupsPrintersHandler::OnAutoconfQueriedDiscovered(
       return;
     }
   }
-
+ 
+  LOG(WARNING) << "On manually add";
   // We don't have enough from discovery to configure the printer.  Fill in as
   // much information as we can about the printer, and ask the user to supply
   // the rest.
@@ -487,6 +489,7 @@ void CupsPrintersHandler::OnAutoconfQueried(const std::string& callback_id,
                                             bool ipp_everywhere) {
   RecordIppQuerySuccess(success);
 
+  LOG(WARNING) << "Autoconf query " << success;
   if (!success) {
     base::DictionaryValue reject;
     reject.SetString("message", "Querying printer failed");
@@ -620,9 +623,9 @@ void CupsPrintersHandler::OnAddedDiscoveredPrinter(
     FireWebUIListener("on-add-cups-printer", base::Value(result_code),
                       base::Value(printer.display_name()));
   } else {
+    LOG(WARNING) << "Setup error";
     FireWebUIListener("on-manually-add-discovered-printer",
-                      base::Value(result_code == PrinterSetupResult::kSuccess),
-                      base::Value(printer.display_name()));
+                      *GetPrinterInfo(printer));
   }
 }
 
@@ -761,8 +764,9 @@ void CupsPrintersHandler::HandleStopDiscovery(const base::ListValue* args) {
 }
 
 void CupsPrintersHandler::HandleSetUpCancel(const base::ListValue* args) {
+  LOG(WARNING) << "ARGS FOR CANCEL" << *args;
   const base::DictionaryValue* printer_dict;
-  CHECK(args->GetDictionary(0, &printer_dict));
+  CHECK(args->GetDictionary(0, &printer_dict)) << *args;
 
   const Printer printer = DictToPrinter(*printer_dict);
   printers_manager_->RecordSetupAbandoned(printer);
@@ -834,6 +838,7 @@ void CupsPrintersHandler::HandleAddDiscoveredPrinter(
         base::Bind(&CupsPrintersHandler::OnAutoconfQueriedDiscovered,
                    weak_factory_.GetWeakPtr(), base::Passed(&printer)));
   } else {
+    LOG(WARNING) << "Manually adding printer";
     // If it's not an IPP printer, the user must choose a PPD.
     FireWebUIListener("on-manually-add-discovered-printer",
                       *GetPrinterInfo(*printer));

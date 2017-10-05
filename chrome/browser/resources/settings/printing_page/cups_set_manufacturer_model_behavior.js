@@ -47,7 +47,7 @@ var SetManufacturerModelBehavior = {
     // Reset model if manufacturer is changed.
     this.set('activePrinter.ppdModel', '');
     this.modelList = [];
-    if (manufacturer.length != 0) {
+    if (!!manufacturer && manufacturer.length != 0) {
       settings.CupsPrintersBrowserProxyImpl.getInstance()
           .getCupsPrinterModelsList(manufacturer)
           .then(this.modelListChanged_.bind(this));
@@ -69,9 +69,12 @@ var SetManufacturerModelBehavior = {
     if (!manufacturersInfo.success)
       return;
     this.manufacturerList = manufacturersInfo.manufacturers;
-    if (this.activePrinter.ppdManufacturer.length != 0) {
+    if (!this.activePrinter)
+      return;
+    var ppdManufacturer = this.activePrinter.ppdManufacturer;
+    if (!!ppdManufacturer && ppdManufacturer.length != 0) {
       settings.CupsPrintersBrowserProxyImpl.getInstance()
-          .getCupsPrinterModelsList(this.activePrinter.ppdManufacturer)
+          .getCupsPrinterModelsList(ppdManufacturer)
           .then(this.modelListChanged_.bind(this));
     }
   },
