@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cdd5f54d_6e0c52ac",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T18:11:54Z",
+      "side": 1,
+      "message": "I\u0027d prefer to call policy_util::IsAccountManaged(profile) here[1].\n\nHowever, this does not accept a const Profile* currently and doing that is a pretty large change in terms of files touched (because const Profile* support has to be added to a few layers called there), so I\u0027d like to do it in a follow-up CL. I\u0027ve filed a bug so I don\u0027t forget to do it and planned to switch the IsManagedPreference check to IsAccountManaged when it\u0027s done.\nWIP CL: https://chromium-review.googlesource.com/c/chromium/src/+/702425\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/policy/arc_policy_util.h?rcl\u003d257e2b62f62497383b971b6c8ba6da5bc369de4c\u0026l\u003d40",
+      "parentUuid": "a4f63f15_86c9a3d0",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 20
+      },
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05ece65c_b44a30ca",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "24211f87_fe4df891",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T18:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ece65c_b44a30ca",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9aeac3a_1fff7017",
         "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648734e4_39af3e32",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T18:11:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9aeac3a_1fff7017",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +151,24 @@
       "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14baf843_127ca7b2",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-05T18:11:54Z",
+      "side": 1,
+      "message": "Excellent suggestion, thank you! Also changed DecodeMigrationActionFromPolicy to return base::Optional to not have to deal with the bool + *out_value pattern.",
+      "parentUuid": "8567ec4d_ca19f23f",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
