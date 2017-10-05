@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2e8fd12_2a904a41",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T19:16:57Z",
+      "side": 1,
+      "message": "Consider CHECK_EQ (suggested, not required)",
+      "revId": "9c0eec67c53a8f8c337ef9b57126a583998275cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7ce139_87f2a9d9",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T19:16:57Z",
+      "side": 1,
+      "message": "The desc\u003d doesn\u0027t seem to match \"Reset\". \nWhat about, \"Button to reset the policy file to enable editing policy values.\"?",
+      "revId": "9c0eec67c53a8f8c337ef9b57126a583998275cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
