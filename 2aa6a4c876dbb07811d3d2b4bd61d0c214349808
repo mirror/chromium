@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c834838_e4623be2",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T05:20:04Z",
+      "side": 1,
+      "message": "You could get rid of line 194 and just write:\n\ntask_id_to_tree_.erase(task_id);",
+      "revId": "2aa6a4c876dbb07811d3d2b4bd61d0c214349808",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
