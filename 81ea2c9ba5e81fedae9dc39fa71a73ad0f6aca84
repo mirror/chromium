@@ -16,6 +16,24 @@
       "revId": "81ea2c9ba5e81fedae9dc39fa71a73ad0f6aca84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab26298_02e48a2d",
+        "filename": "build/android/gyp/javac.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-10-05T13:42:05Z",
+      "side": 1,
+      "message": "android_lint runs on javac.jar rather than _jar_path, which means it runs before desugar. Do you remember a specific reason to doing so?\n\nMaybe we just suppress this lint then.",
+      "parentUuid": "51e6f8dc_57574c63",
+      "revId": "81ea2c9ba5e81fedae9dc39fa71a73ad0f6aca84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
