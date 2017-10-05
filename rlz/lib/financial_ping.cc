@@ -427,7 +427,11 @@ bool FinancialPing::PingServer(const char* request, std::string* response) {
   background_runner->PostTask(FROM_HERE,
                               base::Bind(&PingRlzServer, url, event));
 
-  bool is_signaled = event->TimedWait(base::TimeDelta::FromMinutes(5));
+  bool is_signaled;
+  {
+    base::ScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+    is_signaled = event->TimedWait(base::TimeDelta::FromMinutes(5));
+  }
   if (!is_signaled || event->GetResponseCode() != 200)
     return false;
 
