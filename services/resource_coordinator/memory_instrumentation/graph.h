@@ -131,8 +131,8 @@ class GlobalDumpGraph {
 
   std::forward_list<Node> all_nodes_;
   GuidNodeMap nodes_by_guid_;
-  std::unique_ptr<GlobalDumpGraph::Process> shared_memory_graph_;
   ProcessDumpGraphMap process_dump_graphs_;
+  std::unique_ptr<GlobalDumpGraph::Process> shared_memory_graph_;
 
   DISALLOW_COPY_AND_ASSIGN(GlobalDumpGraph);
 };
