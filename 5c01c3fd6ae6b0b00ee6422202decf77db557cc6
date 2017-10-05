@@ -19,6 +19,75 @@
     },
     {
       "key": {
+        "uuid": "2ab0c8b6_6d4af2dd",
+        "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-05T22:35:04Z",
+      "side": 1,
+      "message": "Is this file for browser process coordinator? If yes maybe we should rename it to browser_process_resource_coordinator.[h|cc] :)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 99
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3abe4572_9769d271",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-05T22:35:04Z",
+      "side": 1,
+      "message": "You shouldn\u0027t put it as a DCHECK, since it\u0027s not always true, at least not for now. :)",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c5fda7_c56aa6ff",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-05T22:35:04Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3378f4f5_601a3c80",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
         "patchSetId": 9
@@ -30,6 +99,29 @@
       "writtenOn": "2017-10-05T21:06:17Z",
       "side": 1,
       "message": "Just looking at the interface, I\u0027m not sure if this is a TimeDelta, TimeTicks, or Time. Please use one of the time types from mojo/common/time.mojom",
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3309aec1_88512471",
+        "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-05T22:35:04Z",
+      "side": 1,
+      "message": "move it up above kNetworkAlmostIdle",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 13
+      },
       "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
