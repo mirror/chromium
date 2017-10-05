@@ -3843,6 +3843,25 @@
             ]
         }
     ],
+    "WorkStealingInScriptRunner": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "WorkStealingInScriptRunner"
+                    ]
+                }
+            ]
+        }
+    ],
     "XGEOVisibleNetworks": [
         {
             "platforms": [
