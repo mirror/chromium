@@ -366,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "405d5c40_22ce8ae4",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "client-\u003eGetPrefs() is also available in the constructor though, since you\u0027re using it above.  It basically becomes a question of how deep we should go and if it\u0027s necessary.  For instance, we\u0027re not storing a pointer to driver, we\u0027re storing a pointer to driver-\u003eGetURLRequestContext() instead.",
+      "parentUuid": "e7d30e5a_fc07f427",
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "753200a6_497823c5",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 10
@@ -777,6 +795,30 @@
       "side": 1,
       "message": "Actually I am not sure how this goes, will defer to the step I figured out how to do the unittest for the registered pref.",
       "parentUuid": "ccb81211_95916c51",
+      "range": {
+        "startLine": 109,
+        "startChar": 30,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "351d6931_23ad85a2",
+        "filename": "components/browser_sync/profile_sync_service_autofill_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "Should probably check with the Sync team then; I don\u0027t know Chrome preferences at all but this seems pretty important.",
+      "parentUuid": "24a5e9ad_819bffd7",
       "range": {
         "startLine": 109,
         "startChar": 30,

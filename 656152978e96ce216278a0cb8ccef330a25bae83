@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd89fae_e55e2749",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "s/send/sends",
+      "range": {
+        "startLine": 282,
+        "startChar": 26,
+        "endLine": 282,
+        "endChar": 30
+      },
+      "revId": "656152978e96ce216278a0cb8ccef330a25bae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f414fd_ee122b4f",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "Add period",
+      "range": {
+        "startLine": 283,
+        "startChar": 5,
+        "endLine": 283,
+        "endChar": 13
+      },
+      "revId": "656152978e96ce216278a0cb8ccef330a25bae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da914c6_f930fee1",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "Also don\u0027t set if request_details_.billing_customer_number is 0.  Payments code is automatically assumes the value is valid if it\u0027s sent.",
+      "range": {
+        "startLine": 215,
+        "startChar": 4,
+        "endLine": 215,
+        "endChar": 63
+      },
+      "revId": "656152978e96ce216278a0cb8ccef330a25bae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838d93f3_031c78fb",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-05T15:49:11Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 347,
+        "startChar": 4,
+        "endLine": 347,
+        "endChar": 63
+      },
+      "revId": "656152978e96ce216278a0cb8ccef330a25bae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
