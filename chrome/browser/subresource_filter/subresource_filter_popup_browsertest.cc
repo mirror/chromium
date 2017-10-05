@@ -157,6 +157,40 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   EXPECT_EQ(kDisallowNewWindowMessage, console_observer.message());
 }
 
+IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+                       WarningAllowCreatingNewWindows_LogsToConsole) {
+  logging::SetLogMessageHandler(&LogHandler);
+  const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+  ConfigureAsPhishingURLWithWarning(a_url);
+
+  // Allow popups on |a_url|.
+  HostContentSettingsMap* settings_map =
+      HostContentSettingsMapFactory::GetForProfile(browser()->profile());
+  settings_map->SetContentSettingDefaultScope(
+      a_url, a_url, ContentSettingsType::CONTENT_SETTINGS_TYPE_POPUPS,
+      std::string(), CONTENT_SETTING_ALLOW);
+
+  // Navigate to a_url, should not trigger the popup blocker.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  bool opened_window = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(), "openWindow()", &opened_window));
+  EXPECT_TRUE(opened_window);
+  // Round trip to the renderer to ensure the message would have gotten sent.
+  EXPECT_TRUE(content::ExecuteScript(web_contents(), "var a = 1;"));
+  bool has_disallow_new_window_warning_ipc = false;
+  bool has_activation_warning_ipc = false;
+  for (const auto& message : error_messages_.Get()) {
+    has_disallow_new_window_warning_ipc |=
+        (message.find(kDisallowNewWindowWarningMessage) != std::string::npos);
+    has_activation_warning_ipc |=
+        (message.find(kActivationWarningConsoleMessage) != std::string::npos);
+  }
+  EXPECT_TRUE(has_disallow_new_window_warning_ipc);
+  EXPECT_TRUE(has_activation_warning_ipc);
+}
+
 // Whitelisted sites should not have console logging.
 IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
                        AllowCreatingNewWindows_NoLogToConsole) {
