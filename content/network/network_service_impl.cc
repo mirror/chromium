@@ -9,9 +9,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "content/common/devtools/devtools_network_conditions.h"
-#include "content/common/devtools/devtools_network_controller.h"
 #include "content/network/network_context.h"
+#include "content/network/throttling/network_conditions.h"
+#include "content/network/throttling/throttling_controller.h"
 #include "content/public/common/content_switches.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/log/file_net_log_observer.h"
@@ -139,14 +139,13 @@ void NetworkServiceImpl::SetRawHeadersAccess(uint32_t process_id, bool allow) {
 void NetworkServiceImpl::SetNetworkConditions(
     const std::string& profile_id,
     mojom::NetworkConditionsPtr conditions) {
-  std::unique_ptr<DevToolsNetworkConditions> devtools_conditions;
-  if (conditions) {
-    devtools_conditions.reset(new DevToolsNetworkConditions(
-        conditions->offline, conditions->latency.InMillisecondsF(),
-        conditions->download_throughput, conditions->upload_throughput));
+  if (!conditions) {
+    ThrottlingController::DisableThrottling(profile_id);
+    return;
   }
-  DevToolsNetworkController::SetNetworkState(profile_id,
-                                             std::move(devtools_conditions));
+  ThrottlingController::SetConditions(
+      profile_id, conditions->offline, conditions->latency,
+      conditions->download_throughput, conditions->upload_throughput);
 }
 
 bool NetworkServiceImpl::HasRawHeadersAccess(uint32_t process_id) const {
