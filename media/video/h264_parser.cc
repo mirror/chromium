@@ -326,6 +326,96 @@ bool H264Parser::FindStartCode(const uint8_t* data,
   return false;
 }
 
+// static
+bool H264Parser::FindStartCodeInClearRanges(
+    const uint8_t* data,
+    off_t data_size,
+    const Ranges<const uint8_t*>& encrypted_ranges,
+    off_t* offset,
+    off_t* start_code_size) {
+  if (encrypted_ranges.size() == 0)
+    return FindStartCode(data, data_size, offset, start_code_size);
+
+  DCHECK_GE(data_size, 0);
+  const uint8_t* start = data;
+  do {
+    off_t bytes_left = data_size - (start - data);
+
+    if (!FindStartCode(start, bytes_left, offset, start_code_size))
+      return false;
+
+    // Construct a Ranges object that represents the region occupied
+    // by the start code and the 1 byte needed to read the NAL unit type.
+    const uint8_t* start_code = start + *offset;
+    const uint8_t* start_code_end = start_code + *start_code_size;
+    Ranges<const uint8_t*> start_code_range;
+    start_code_range.Add(start_code, start_code_end + 1);
+
+    if (encrypted_ranges.IntersectionWith(start_code_range).size() > 0) {
+      // The start code is inside an encrypted section so we need to scan
+      // for another start code.
+      *start_code_size = 0;
+      start += std::min(*offset + 1, bytes_left);
+    }
+  } while (*start_code_size == 0);
+
+  // Update |*offset| to include the data we skipped over.
+  *offset += start - data;
+  return true;
+}
+
+// static
+VideoCodecProfile H264Parser::ProfileIDCToVideoCodecProfile(int profile_idc) {
+  switch (profile_idc) {
+    case H264SPS::kProfileIDCBaseline:
+      return H264PROFILE_BASELINE;
+    case H264SPS::kProfileIDCMain:
+      return H264PROFILE_MAIN;
+    case H264SPS::kProfileIDCHigh:
+      return H264PROFILE_HIGH;
+    case H264SPS::kProfileIDHigh10:
+      return H264PROFILE_HIGH10PROFILE;
+    case H264SPS::kProfileIDHigh422:
+      return H264PROFILE_HIGH422PROFILE;
+    case H264SPS::kProfileIDHigh444Predictive:
+      return H264PROFILE_HIGH444PREDICTIVEPROFILE;
+    case H264SPS::kProfileIDScalableBaseline:
+      return H264PROFILE_SCALABLEBASELINE;
+    case H264SPS::kProfileIDScalableHigh:
+      return H264PROFILE_SCALABLEHIGH;
+    case H264SPS::kProfileIDStereoHigh:
+      return H264PROFILE_STEREOHIGH;
+    case H264SPS::kProfileIDSMultiviewHigh:
+      return H264PROFILE_MULTIVIEWHIGH;
+  }
+  DVLOG(1) << "unknown video profile: " << profile_idc;
+  return VIDEO_CODEC_PROFILE_UNKNOWN;
+}
+
+// static
+bool H264Parser::ParseNALUs(const uint8_t* stream,
+                            off_t stream_size,
+                            std::vector<H264NALU>* nalus) {
+  DCHECK(nalus);
+  H264Parser parser;
+  parser.SetStream(stream, stream_size);
+
+  while (true) {
+    H264NALU nalu;
+    const H264Parser::Result result = parser.AdvanceToNextNALU(&nalu);
+    if (result == H264Parser::kOk) {
+      nalus->push_back(nalu);
+    } else if (result == media::H264Parser::kEOStream) {
+      return true;
+    } else {
+      DLOG(ERROR) << "Unexpected H264 parser result";
+      return false;
+    }
+  }
+  NOTREACHED();
+  return false;
+}
+
 bool H264Parser::LocateNALU(off_t* nalu_size, off_t* start_code_size) {
   // Find the start code of next NALU.
   off_t nalu_start_off = 0;
@@ -364,70 +454,6 @@ bool H264Parser::LocateNALU(off_t* nalu_size, off_t* start_code_size) {
   *nalu_size = nalu_size_without_start_code + annexb_start_code_size;
   *start_code_size = annexb_start_code_size;
   return true;
-}
-
-bool H264Parser::FindStartCodeInClearRanges(
-    const uint8_t* data,
-    off_t data_size,
-    const Ranges<const uint8_t*>& encrypted_ranges,
-    off_t* offset,
-    off_t* start_code_size) {
-  if (encrypted_ranges.size() == 0)
-    return FindStartCode(data, data_size, offset, start_code_size);
-
-  DCHECK_GE(data_size, 0);
-  const uint8_t* start = data;
-  do {
-    off_t bytes_left = data_size - (start - data);
-
-    if (!FindStartCode(start, bytes_left, offset, start_code_size))
-      return false;
-
-    // Construct a Ranges object that represents the region occupied
-    // by the start code and the 1 byte needed to read the NAL unit type.
-    const uint8_t* start_code = start + *offset;
-    const uint8_t* start_code_end = start_code + *start_code_size;
-    Ranges<const uint8_t*> start_code_range;
-    start_code_range.Add(start_code, start_code_end + 1);
-
-    if (encrypted_ranges.IntersectionWith(start_code_range).size() > 0) {
-      // The start code is inside an encrypted section so we need to scan
-      // for another start code.
-      *start_code_size = 0;
-      start += std::min(*offset + 1, bytes_left);
-    }
-  } while (*start_code_size == 0);
-
-  // Update |*offset| to include the data we skipped over.
-  *offset += start - data;
-  return true;
-}
-
-VideoCodecProfile H264Parser::ProfileIDCToVideoCodecProfile(int profile_idc) {
-  switch (profile_idc) {
-    case H264SPS::kProfileIDCBaseline:
-      return H264PROFILE_BASELINE;
-    case H264SPS::kProfileIDCMain:
-      return H264PROFILE_MAIN;
-    case H264SPS::kProfileIDCHigh:
-      return H264PROFILE_HIGH;
-    case H264SPS::kProfileIDHigh10:
-      return H264PROFILE_HIGH10PROFILE;
-    case H264SPS::kProfileIDHigh422:
-      return H264PROFILE_HIGH422PROFILE;
-    case H264SPS::kProfileIDHigh444Predictive:
-      return H264PROFILE_HIGH444PREDICTIVEPROFILE;
-    case H264SPS::kProfileIDScalableBaseline:
-      return H264PROFILE_SCALABLEBASELINE;
-    case H264SPS::kProfileIDScalableHigh:
-      return H264PROFILE_SCALABLEHIGH;
-    case H264SPS::kProfileIDStereoHigh:
-      return H264PROFILE_STEREOHIGH;
-    case H264SPS::kProfileIDSMultiviewHigh:
-      return H264PROFILE_MULTIVIEWHIGH;
-  }
-  DVLOG(1) << "unknown video profile: " << profile_idc;
-  return VIDEO_CODEC_PROFILE_UNKNOWN;
 }
 
 H264Parser::Result H264Parser::ReadUE(int* val) {
