@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_STORE_UTILS_H_
-#define COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_STORE_UTILS_H_
+#ifndef COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_PAGE_MODEL_UTILS_H_
+#define COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_PAGE_MODEL_UTILS_H_
 
 #include <stdint.h>
 
@@ -16,15 +16,16 @@ namespace offline_pages {
   "(\"bookmark\", \"last_n\", \"custom_tabs\", \"suggested_articles\"," \
   " \"default\")"
 
-class OfflineStoreUtils {
- public:
-  // Converts an ItemActionStatus to AddPageResult.
-  static AddPageResult ItemActionStatusToAddPageResult(ItemActionStatus status);
+namespace OfflinePageModelUtils {
 
-  // Generates a random offline id;
-  static int64_t GenerateOfflineId();
-};
+// Converts an ItemActionStatus to AddPageResult.
+AddPageResult ItemActionStatusToAddPageResult(ItemActionStatus status);
+
+// Generates a random offline id;
+int64_t GenerateOfflineId();
+
+}  // namespace OfflinePageModelUtils
 
 }  // namespace offline_pages
 
-#endif  // COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_STORE_UTILS_H_
+#endif  // COMPONENTS_OFFLINE_PAGES_CORE_MODEL_OFFLINE_PAGE_MODEL_UTILS_H_
