@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f655dc24_26868e94",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-05T19:14:00Z",
+      "side": 0,
+      "message": "I\u0027m guessing this used to do something besides setting the boolean that is already true.",
+      "revId": "b6de262a1c493935983e068ccb506008022ab79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b02ba6_c99e78fb",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-05T19:14:00Z",
+      "side": 0,
+      "message": "Doesn\u0027t this mean that if any timeline calls SetNeedsPushProperties we will update all of them?",
+      "revId": "b6de262a1c493935983e068ccb506008022ab79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
