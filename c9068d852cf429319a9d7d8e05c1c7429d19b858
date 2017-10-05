@@ -33,6 +33,23 @@
       "revId": "c9068d852cf429319a9d7d8e05c1c7429d19b858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0261f87_f2891e38",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T03:27:59Z",
+      "side": 1,
+      "message": "Nice! Way better than checking SignoutRequested.",
+      "revId": "c9068d852cf429319a9d7d8e05c1c7429d19b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
