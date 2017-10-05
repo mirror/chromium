@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "865be4e2_b1a21fcd",
+        "filename": "net/disk_cache/simple/simple_backend_impl.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-05T16:42:52Z",
+      "side": 1,
+      "message": "That\u0027s actually insufficient (but necessary): it needs to live as long as SingleBackendImpl and the last live entry, where an entry is normally deleted asynchronously off Close() [1].\nHence needing the side trip to mess around with thread flushes the moment I started injecting it in tests, and why having it be a leaked global is a reallllyyy good idea for actual production use.\n\n[1] though there are tricks tests can do around it by using backend-specific knowledge that SimpleEntryImpl is refcounted.",
+      "parentUuid": "38ee1fe5_0c6b7582",
+      "range": {
+        "startLine": 60,
+        "startChar": 52,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "0b989f0269599d71f90e284d43820bb552ed02d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb60d16b_f46f2438",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 32
