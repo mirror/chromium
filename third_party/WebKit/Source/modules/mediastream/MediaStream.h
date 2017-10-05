@@ -63,6 +63,10 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
   static MediaStream* Create(ExecutionContext*, MediaStream*);
   static MediaStream* Create(ExecutionContext*, const MediaStreamTrackVector&);
   static MediaStream* Create(ExecutionContext*, MediaStreamDescriptor*);
+  static MediaStream* Create(ExecutionContext*,
+                             MediaStreamDescriptor*,
+                             const MediaStreamTrackVector& audio_tracks,
+                             const MediaStreamTrackVector& video_tracks);
   ~MediaStream() override;
 
   String id() const { return descriptor_->Id(); }
@@ -115,10 +119,15 @@ class MODULES_EXPORT MediaStream final : public EventTargetWithInlineData,
  private:
   MediaStream(ExecutionContext*, MediaStreamDescriptor*);
   MediaStream(ExecutionContext*,
+              MediaStreamDescriptor*,
+              const MediaStreamTrackVector& audio_tracks,
+              const MediaStreamTrackVector& video_tracks);
+  MediaStream(ExecutionContext*,
               const MediaStreamTrackVector& audio_tracks,
               const MediaStreamTrackVector& video_tracks);
 
   bool EmptyOrOnlyEndedTracks();
+  bool TracksMatchesDescriptor();
 
   void ScheduleDispatchEvent(Event*);
   void ScheduledEventTimerFired(TimerBase*);
