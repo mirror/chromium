@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25d28ffa_e867827f",
+        "filename": "components/exo/pointer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T03:29:49Z",
+      "side": 1,
+      "message": "nit: split this into multiple if-statements. the comment above only refer to one of these checks",
+      "range": {
+        "startLine": 303,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 11
+      },
+      "revId": "6aa78f711ad8cd72a602e8ba59699ba94e20a9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68a953ca_67b2c3bd",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4112,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T03:29:49Z",
+      "side": 1,
+      "message": "nit: s/pointer_ !\u003d nullptr/pointer_/",
+      "range": {
+        "startLine": 4112,
+        "startChar": 8,
+        "endLine": 4112,
+        "endChar": 27
+      },
+      "revId": "6aa78f711ad8cd72a602e8ba59699ba94e20a9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194db803_74cd14fb",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4138,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T03:29:49Z",
+      "side": 1,
+      "message": "nit: wl_resource* const resource_",
+      "range": {
+        "startLine": 4138,
+        "startChar": 2,
+        "endLine": 4138,
+        "endChar": 24
+      },
+      "revId": "6aa78f711ad8cd72a602e8ba59699ba94e20a9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6902ed63_12b3611b",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4142,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-05T03:29:49Z",
+      "side": 1,
+      "message": "what is this needed for? please remove if unused",
+      "range": {
+        "startLine": 4141,
+        "startChar": 2,
+        "endLine": 4142,
+        "endChar": 73
+      },
+      "revId": "6aa78f711ad8cd72a602e8ba59699ba94e20a9e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
