@@ -22,6 +22,30 @@
       "revId": "8d2e631ba24586929cdf3ee555a17ddec37c8fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22e91ce_6d6b9dc4",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T17:45:55Z",
+      "side": 1,
+      "message": "Point taken. In this case no match results in an unpopulated version number.\n\nDo you have suggestions / examples on how to get this? I couldn\u0027t follow how the version number was obtained on about page, which is the only place I know where it\u0027s being displayed.",
+      "parentUuid": "ed23d7f3_6db739e7",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "8d2e631ba24586929cdf3ee555a17ddec37c8fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
