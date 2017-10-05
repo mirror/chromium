@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27695047_3a910bb7",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-05T19:51:03Z",
+      "side": 1,
+      "message": "Drive-by nit: \n- the namespaces should use the same capitalization/space method.\n- since this is nested namespace, it can be simply store_utils rather than offline_page_store_utils, since it\u0027s already inside of offline_pages.\n- if we use the feature-name prefix, we should be using plural (\"offline_pages\") as name of the feature, to avoid inconsistency.",
+      "revId": "0adbca723ec2e3dab2d7913d03c5cf8a2d2407b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
