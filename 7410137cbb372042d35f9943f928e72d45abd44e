@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "589bcd3b_c393a87b",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T21:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ed47222_4a66d1cc",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77a16ffc_cafdb20c",
         "filename": "testing/libfuzzer/efficient_fuzzer.md",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T21:07:57Z",
       "side": 1,
       "message": "FYI, remember to update this path when you move it to testing/coverage or tools/coverage or whatever. Lets do this sooner than later.",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406b2645_d51fead1",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T21:22:52Z",
+      "side": 1,
+      "message": "Good point. Let\u0027s keep it here while Fuzzathon is running + we are fixing things on LLVM side. After that, the script would be simplified and good to move to some better place.\n\nAlso, there is https://cs.chromium.org/chromium/src/tools/code_coverage/ directory that hasn\u0027t been updated for ~4 years. How can we check whether anyone is using it at all?",
+      "parentUuid": "77a16ffc_cafdb20c",
       "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6a18b70a_22522348",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T21:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea0cc8b2_cdc8735f",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "980e6426_f723540d",
         "filename": "testing/libfuzzer/getting_started.md",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "facdf81d_0493527a",
+        "filename": "testing/libfuzzer/getting_started.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T21:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "980e6426_f723540d",
+      "revId": "7410137cbb372042d35f9943f928e72d45abd44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
