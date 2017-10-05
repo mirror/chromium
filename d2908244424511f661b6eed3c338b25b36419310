@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64853582_58b51a19",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/typedef.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T04:30:14Z",
+      "side": 1,
+      "message": "nit: (\u0027identifier\u0027, \u0027type\u0027) is preferred.\n\n  _REQUIRED_ARGS \u003d (\u0027identifier\u0027, \u0027type\u0027)\nmay be easier to read.\n\nAlso it may be a good idea to have a helper function:\n  assert_required_args(kwargs, (\u0027identifier\u0027, \u0027type\u0027))",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "d2908244424511f661b6eed3c338b25b36419310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305283a9_0fdbc43f",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/typedef.py",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T04:30:14Z",
+      "side": 1,
+      "message": "We\u0027d better check |kwargs| is now empty.",
+      "revId": "d2908244424511f661b6eed3c338b25b36419310",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f60971cb_36dff320",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T04:30:14Z",
+      "side": 1,
+      "message": "I think that it mostly happens on proper nouns.  \"XXData\u0027s\" or \"XXDatas\" makes sense to me.\nWe can say |metadata_store| or, if it\u0027s important to be a list, |metadata_list|.",
+      "parentUuid": "be29c52e_6ffbfb9b",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "520c02e1_006bb700",
         "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
         "patchSetId": 13
@@ -189,6 +213,30 @@
       "side": 1,
       "message": "Using \"intermediate representation\" or something like it in variable/operation names makes no sense to me.  Although these members are not exact what \"definition\"s are in Web IDL spec, they represent \"definition\"s well.",
       "parentUuid": "43b48a0f_6b7a3f8d",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "28cc6198128b20f13e49bb986a9935b8096d3b4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f163198_f3c255de",
+        "filename": "third_party/WebKit/Source/bindings/scripts/web_idl/collection.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T04:30:14Z",
+      "side": 1,
+      "message": "I\u0027m not recommending IR, but also \"definition\".  Your point on IR makes sense, and I agree with it.  However, I don\u0027t understand why nodes are not definitions and these objects are definitions.  When we\u0027ll have some \"view\"-like objects, are they definitions, too?",
+      "parentUuid": "ee5eeb5c_b4327fea",
       "range": {
         "startLine": 31,
         "startChar": 8,
