@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "22b6c3fd_08585ee8",
+        "filename": "third_party/WebKit/Source/modules/filesystem/LocalFileSystem.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T15:23:40Z",
+      "side": 1,
+      "message": "Considering the following case,\n  class X : public TraceWrapperBase,\n            public TraceWrapperBaseForSupplement {};\n  X x;\n  DispatchTraceWrappers(\u0026x);\n\nThen, the overload resolution will be:\n\n  DispatchTraceWrappers(const TraceWrapperBase*);\n  DispatchTraceWrappers(const TraceWrapperBaseForSupplement*);\n  // NO match because these two candidates are ambiguous.\n\n  DispatchTraceWrappers(const void*) { CHECK(false); }\n  // MATCH \u003d\u003e CRASH\n  // This is the best single match.\n\nThis is the same with\n  class X : public TraceWrapperBase,\n            public Supplement\u003cSomething\u003e {};\nbecause Supplement\u003cSomething\u003e inherits from TraceWrapperBaseForSupplement.  It\u0027s ambiguous, and then it fallbacks to \"const void*\" version.  Then, crash.",
+      "parentUuid": "1e1629c9_ce47a3ed",
+      "range": {
+        "startLine": 55,
+        "startChar": 37,
+        "endLine": 55,
+        "endChar": 53
+      },
+      "revId": "ea36d15d13e76ef61a2fc40a6957e891eaf42141",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e510eb1f_a5a6ce8f",
         "filename": "third_party/WebKit/Source/modules/indexeddb/IndexedDBClient.h",
         "patchSetId": 23
