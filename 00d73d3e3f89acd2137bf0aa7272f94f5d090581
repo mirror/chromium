@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67849712_bfd313e1",
+        "filename": "chrome/browser/ui/ash/launcher/app_window_launcher_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T18:24:41Z",
+      "side": 1,
+      "message": "nit: vertical bar (not close square bracket) after \u0027delegate\u0027 (sorry for the way I wrote my suggestion)",
+      "revId": "00d73d3e3f89acd2137bf0aa7272f94f5d090581",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
