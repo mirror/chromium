@@ -56,6 +56,48 @@
       "revId": "efbbfd745df903477bae53bb266f55ff425c3285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdbf5cc_9a2908b2",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/unterminated-rules.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-05T00:47:32Z",
+      "side": 1,
+      "message": "oops good catch",
+      "parentUuid": "558c43cd_68f47106",
+      "revId": "efbbfd745df903477bae53bb266f55ff425c3285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4434fbc1_9dc77d60",
+        "filename": "third_party/WebKit/LayoutTests/css-parser/unterminated-rules.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-05T00:47:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad320ca8_0423809e",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "efbbfd745df903477bae53bb266f55ff425c3285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
