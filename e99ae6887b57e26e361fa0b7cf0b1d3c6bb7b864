@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ad3e5a2_7c757082",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:22:56Z",
+      "side": 1,
+      "message": "Picasso would be proud.",
+      "revId": "e99ae6887b57e26e361fa0b7cf0b1d3c6bb7b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d545a3e_6703af64",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:22:56Z",
+      "side": 1,
+      "message": "What are valid resolutions for the canvas and why?",
+      "revId": "e99ae6887b57e26e361fa0b7cf0b1d3c6bb7b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
