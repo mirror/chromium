@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "5901cefd_61e1bb25",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-05T05:37:23Z",
+      "side": 1,
+      "message": "Thank you both. I learned a lot in this discussion.\n\nAlex: For your question, this service should really be bound to the lifetime of the media element (or MediaKeys object; but let\u0027s just use media element for the sake of discussion). Usually when the media element is destroyed, the OOO media component (e.g. HW decoder in gpu process) will also be destroyed, then this FrameServiceBase will be destroyed as a result of mojo connection error. This is the \"normal\" destruction path.\n\nHowever, this process involves multiple mojo IPC (connection error), so there could be some delay there. Then if the media element is destructed because RenderFrameImpl is being destructed, it\u0027s possible that the RenderFrameHost will also be destructed, or \"navigated away\" (I don\u0027t really know about the details) around the same time.\n\nWhat I am really trying to do is to prevent the FrameServiceBase to access a destructed RenderFrameHost, or after the same RenderFrameHost has been navigated to a new origin for example, to avoid cross-origin contamination.\n\nWith that, it does seem to me checking HasCommitted and IsSameDocument is better. I\u0027ll update this CL to do that, and see how I can add a test case for \"same document navigation\".\n\nFor the current behavior of MediaDrmStorageImpl, there\u0027s another bug. We didn\u0027t actually call WebContentsObserver::Observe() :(, so we will not get notified by DidFinishNavigation() at all and we solely rely on the \"normal\" destruction path described above. But looking at the code, we actually never need to access |render_frame_host_| after it\u0027s constructed, so we are probably fine there. But I agree we should fix this properly now.",
+      "parentUuid": "a3000e24_dd1b88fb",
+      "revId": "7264897ccc50607ca7dc1f2260d067104cc4648b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82430315_0fe2bfb6",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 16
