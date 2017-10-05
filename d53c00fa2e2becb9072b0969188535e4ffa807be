@@ -25,6 +25,46 @@
     },
     {
       "key": {
+        "uuid": "e638ef62_a3187c94",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "nit/optional: \"throttle\" sounds like \"reducing cpu usage\".\nHow about MaybeUnthrottleInstance(), MaybeOpenThrottleForInstance() or more directly, MaybeDisableCpuRestriction()?",
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285e6d4f_5113ba1d",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "As the CPU restriction disabling condition gets more complicated, could you document it?\nAlso, I think you can remove TODO, now.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 42
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87f9dd28_2b142734",
         "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
         "patchSetId": 3
@@ -48,6 +88,40 @@
     },
     {
       "key": {
+        "uuid": "0388f0d9_9b953277",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "Is it possible to use:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/arc_session_manager.h?l\u003d104\n\ninstead of subscribing kArcEnabled directly?",
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad73989_f3094167",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "nit/style: Could you move to above arc_bridge_service_ to be consistent with other services?",
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e72cba2b_197e62f7",
         "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
         "patchSetId": 3
@@ -64,6 +138,53 @@
         "startChar": 7,
         "endLine": 117,
         "endChar": 25
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8a4e94_8be20f7f",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "I think \"\u003d false;\" to be consistent with Reset().",
+      "parentUuid": "e72cba2b_197e62f7",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 25
+      },
+      "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c919b7c7_50d8fc52",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T04:57:01Z",
+      "side": 1,
+      "message": "ping? :-)",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 8
       },
       "revId": "d53c00fa2e2becb9072b0969188535e4ffa807be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
