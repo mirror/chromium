@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8854b90b_454395ea",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClientFactory.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-05T17:07:00Z",
+      "side": 1,
+      "message": "final class with private constructor, or alternatively, you can just put this method in SelectionClient itself, since java 8 supports static methods in interface now\n\ncall this createSmartSelectionClient, and don\u0027t mention the actual SmartSelectionClient class in javadoc. that\u0027s supposed to be hidden\n\nalso can this just take a WebContents? You can reach ContentViewCore then WindowAndroid from WebContents already",
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
