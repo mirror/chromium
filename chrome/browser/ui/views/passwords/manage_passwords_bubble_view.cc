@@ -8,6 +8,7 @@
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/timer/timer.h"
+#include "build/build_config.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
@@ -59,7 +60,14 @@
 #include "chrome/browser/ui/views/desktop_ios_promotion/desktop_ios_promotion_bubble_view.h"
 #endif
 
+#if defined(OS_WIN)
+#include "chrome/browser/password_manager/password_manager_util_win.h"
+#elif defined(OS_MACOSX)
+#include "chrome/browser/password_manager/password_manager_util_mac.h"
+#endif
+
 int ManagePasswordsBubbleView::auto_signin_toast_timeout_ = 3;
+int ManagePasswordsBubbleView::password_view_button_timeout_ = 90;
 
 // Helpers --------------------------------------------------------------------
 
@@ -430,6 +438,10 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   void CreatePasswordField();
   void TogglePasswordVisibility();
   void UpdateUsernameAndPasswordInModel();
+  void OnLockPasswordView();
+
+  // Returns the timeout for password viewing without authentication.
+  static base::TimeDelta GetTimeoutForPasswordView();
 
   ManagePasswordsBubbleView* parent_;
 
@@ -441,6 +453,9 @@ class ManagePasswordsBubbleView::PendingView : public views::View,
   std::unique_ptr<views::View> password_field_;
 
   bool password_visible_;
+
+  // Timer for passwords viewing without authentication.
+  base::OneShotTimer password_view_button_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -481,7 +496,9 @@ ManagePasswordsBubbleView::PendingView::PendingView(
   parent_->set_initially_focused_view(save_button_);
 }
 
-ManagePasswordsBubbleView::PendingView::~PendingView() = default;
+ManagePasswordsBubbleView::PendingView::~PendingView() {  //= default;
+  LOG(ERROR) << "destroy pending view";
+}
 
 void ManagePasswordsBubbleView::PendingView::ButtonPressed(
     views::Button* sender,
@@ -545,6 +562,25 @@ void ManagePasswordsBubbleView::PendingView::CreatePasswordField() {
 }
 
 void ManagePasswordsBubbleView::PendingView::TogglePasswordVisibility() {
+  if (!password_visible_) {
+    if (parent_->model()->pending_password().passwords_has_autofilled_value &&
+        !password_view_button_timer_.IsRunning()) {
+      bool authenticated = true;
+      LOG(ERROR) << "RE-AUTH!!!!!!";
+#if defined(OS_WIN)
+      authenticated =
+          password_manager_util_win::AuthenticateUser(parent_->parent_window());
+#elif defined(OS_MACOSX)
+      authenticated = password_manager_util_mac::AuthenticateUser();
+#endif
+      if (!authenticated)
+        return;
+    }
+    // Restart the timer to provide enough time to view the passwords.
+    password_view_button_timer_.Start(
+        FROM_HERE, GetTimeoutForPasswordView(), this,
+        &ManagePasswordsBubbleView::PendingView::OnLockPasswordView);
+  }
   UpdateUsernameAndPasswordInModel();
   password_visible_ = !password_visible_;
   password_view_button_->SetToggled(password_visible_);
@@ -579,6 +615,18 @@ void ManagePasswordsBubbleView::PendingView::
                 ->selected_index());
   }
   parent_->model()->OnCredentialEdited(new_username, new_password);
+}
+
+void ManagePasswordsBubbleView::PendingView::OnLockPasswordView() {
+  LOG(ERROR) << "on lock " << password_visible_;
+  if (password_visible_)
+    TogglePasswordVisibility();
+}
+
+base::TimeDelta
+ManagePasswordsBubbleView::PendingView::GetTimeoutForPasswordView() {
+  return base::TimeDelta::FromSeconds(
+      ManagePasswordsBubbleView::password_view_button_timeout_);
 }
 
 // ManagePasswordsBubbleView::ManageView --------------------------------------
@@ -986,6 +1034,7 @@ ManagePasswordsBubbleView::ManagePasswordsBubbleView(
 }
 
 ManagePasswordsBubbleView::~ManagePasswordsBubbleView() {
+  LOG(ERROR) << "destroy parent";
   if (manage_passwords_bubble_ == this)
     manage_passwords_bubble_ = nullptr;
 }
