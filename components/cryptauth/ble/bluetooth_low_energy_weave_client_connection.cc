@@ -40,6 +40,9 @@ const int kMaxNumberOfRetryAttempts = 2;
 // Timeouts for various status types.
 const int kConnectionLatencyTimeoutSeconds = 2;
 const int kGattConnectionTimeoutSeconds = 15;
+// This is determined empirically: experiments show that most GATT service
+// discovery takes about 5-6 seconds, so setting 8 as timeout is safe enough.
+const int kGattServiceDiscoveryTimeoutSeconds = 8;
 const int kGattCharacteristicsTimeoutSeconds = 10;
 const int kNotifySessionTimeoutSeconds = 5;
 const int kConnectionResponseTimeoutSeconds = 2;
@@ -95,6 +98,8 @@ base::TimeDelta BluetoothLowEnergyWeaveClientConnection::GetTimeoutForSubStatus(
       return base::TimeDelta::FromSeconds(kConnectionLatencyTimeoutSeconds);
     case SubStatus::WAITING_GATT_CONNECTION:
       return base::TimeDelta::FromSeconds(kGattConnectionTimeoutSeconds);
+    case SubStatus::WAITING_GATT_SERVICE_DISCOVERY:
+      return base::TimeDelta::FromSeconds(kGattServiceDiscoveryTimeoutSeconds);
     case SubStatus::WAITING_CHARACTERISTICS:
       return base::TimeDelta::FromSeconds(kGattCharacteristicsTimeoutSeconds);
     case SubStatus::WAITING_NOTIFY_SESSION:
@@ -115,6 +120,8 @@ std::string BluetoothLowEnergyWeaveClientConnection::SubStatusToString(
       return "[waiting to set connection latency]";
     case SubStatus::WAITING_GATT_CONNECTION:
       return "[waiting for GATT connection to be created]";
+    case SubStatus::WAITING_GATT_SERVICE_DISCOVERY:
+      return "[waiting for GATT services to be discovered]";
     case SubStatus::WAITING_CHARACTERISTICS:
       return "[waiting for GATT characteristics to be found]";
     case SubStatus::CHARACTERISTICS_FOUND:
@@ -356,6 +363,22 @@ void BluetoothLowEnergyWeaveClientConnection::DeviceRemoved(
   DestroyConnection();
 }
 
+void BluetoothLowEnergyWeaveClientConnection::GattServicesDiscovered(
+    device::BluetoothAdapter* adapter,
+    device::BluetoothDevice* device) {
+  // Ignore updates about other devices.
+  if (device->GetAddress() != GetDeviceAddress())
+    return;
+
+  if (sub_status() != SubStatus::WAITING_GATT_SERVICE_DISCOVERY)
+    return;
+
+  PA_LOG(INFO) << "Finished GATT service discovery for "
+               << GetDeviceInfoLogString() << ".";
+  DCHECK(GetBluetoothDevice()->IsGattServicesDiscoveryComplete());
+  FindGattCharacteristics();
+}
+
 void BluetoothLowEnergyWeaveClientConnection::GattCharacteristicValueChanged(
     device::BluetoothAdapter* adapter,
     device::BluetoothRemoteGattCharacteristic* characteristic,
@@ -438,8 +461,19 @@ void BluetoothLowEnergyWeaveClientConnection::OnCreateGattConnectionError(
 void BluetoothLowEnergyWeaveClientConnection::OnGattConnectionCreated(
     std::unique_ptr<device::BluetoothGattConnection> gatt_connection) {
   DCHECK(sub_status() == SubStatus::WAITING_GATT_CONNECTION);
-
   gatt_connection_ = std::move(gatt_connection);
+
+  if (GetBluetoothDevice()->IsGattServicesDiscoveryComplete()) {
+    FindGattCharacteristics();
+    return;
+  }
+
+  // If GATT services have not yet been discovered, wait until the
+  // GattServicesDiscovered() callback is fired.
+  SetSubStatus(SubStatus::WAITING_GATT_SERVICE_DISCOVERY);
+}
+
+void BluetoothLowEnergyWeaveClientConnection::FindGattCharacteristics() {
   SetSubStatus(SubStatus::WAITING_CHARACTERISTICS);
 
   PA_LOG(INFO) << "Finding GATT characteristics for "
