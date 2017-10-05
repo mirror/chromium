@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc956a7d_6cb96197",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T20:51:19Z",
+      "side": 1,
+      "message": "Hey is there a way this could be used to delete other files, outside of the expected files.\ni.e. can ../../ or similar be used? If that is protected against, could you point me to where that happens for this code?\nIs it reasonable to have tests containing ../ or $HOME or similar for this code?",
+      "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
