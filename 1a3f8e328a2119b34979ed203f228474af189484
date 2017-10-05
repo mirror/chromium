@@ -16,6 +16,24 @@
       "revId": "1a3f8e328a2119b34979ed203f228474af189484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9fee922_01a06f37",
+        "filename": "third_party/leveldatabase/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-05T19:02:01Z",
+      "side": 1,
+      "message": "Yes :(\n\nIIUC, this is already happening in current Windows builds -- the method is always DeleteFileW, because most of leveldb #includes port.h early enough. This roll can\u0027t go through because env_test.cc now #includes port.h, and the #include happens to belong after env.h.\n\nThere are two solutions I can think of:\n\n1) Hard mode: Go through all of Chromium\u0027s code and #undef DeleteFile wherever \u003cwindows.h\u003e is pulled in. To make it stick, add an indirection header that does this, and add a presubmit forbidding direct \u003cwindows.h\u003e includes. This seems almost impossible, because our third-party deps also include \u003cwindows.h\u003e. https://cs.chromium.org/search/?q\u003d%23include+\u003cwindows.h\u003e\n\n2) Medium-hard mode: Change leveldb so each of its public headers pulls in a customizable header. Here\u0027s how Google Test does it.\nhttps://github.com/google/googletest/blob/master/googletest/include/gtest/internal/custom/gtest-port.h\nhttps://github.com/google/googletest/blob/master/googletest/include/gtest/internal/gtest-port.h#L284\n\nEmbedders create a gtest/internal/custom/gtest-port.h in their code and put it on the include path before Google Test\u0027s own files. We use this for gmock.\nhttps://cs.chromium.org/chromium/src/third_party/googletest/custom/gmock/internal/custom/gmock-port.h\nhttps://cs.chromium.org/chromium/src/third_party/googletest/BUILD.gn?l\u003d31",
+      "parentUuid": "4c6ec118_d86b1026",
+      "revId": "1a3f8e328a2119b34979ed203f228474af189484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
