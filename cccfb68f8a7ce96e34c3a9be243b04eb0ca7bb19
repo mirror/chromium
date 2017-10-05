@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0846d184_141cf2e6",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T12:25:12Z",
+      "side": 1,
+      "message": "No longer applicable having switched to just using substring.",
+      "parentUuid": "cdf6a278_e4fe10d5",
+      "range": {
+        "startLine": 255,
+        "startChar": 5,
+        "endLine": 255,
+        "endChar": 61
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51024d9d_514774f2",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-04T09:34:39Z",
       "side": 1,
       "message": "Hm... if at this point we\u0027re just looking for a string literal, we could lowercase |flag| (if it isn\u0027t already anyway, but I\u0027m not sure that\u0027s guaranteed), and then use plain old indexOf() and substrings to split |flag| up? Sorry if I\u0027m flipflopping a bit here.",
+      "range": {
+        "startLine": 279,
+        "startChar": 21,
+        "endLine": 279,
+        "endChar": 31
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65cae137_d89e6f2a",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T12:25:12Z",
+      "side": 1,
+      "message": "No worries. Refactoring to substring makes sense.",
+      "parentUuid": "51024d9d_514774f2",
       "range": {
         "startLine": 279,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "be8693c4_6278d86d",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9be6736_a28fe0e0",
+      "range": {
+        "startLine": 326,
+        "startChar": 8,
+        "endLine": 327,
+        "endChar": 28
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4113e4cb_c40ffaaa",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36f2c97_fc29d329",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-05T12:25:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4113e4cb_c40ffaaa",
+      "range": {
+        "startLine": 348,
+        "startChar": 47,
+        "endLine": 348,
+        "endChar": 54
+      },
+      "revId": "cccfb68f8a7ce96e34c3a9be243b04eb0ca7bb19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
