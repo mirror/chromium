@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ec4be60_795fbdb3",
+        "filename": "net/http2/hpack/decoder/hpack_decoder_fuzzer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-05T16:47:08Z",
+      "side": 1,
+      "message": "1. |size| might not be enough: encoded input of size |size| can have a key or value longer than |size| due to Huffman compression.\n2. Would it gain us anything to intentionally set |size| argument to too small?  If so, fuzz it, if not, set it to something like |2*size|.",
+      "range": {
+        "startLine": 15,
+        "startChar": 28,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "7a7ebc291e347eff6999d09a6a6ee8ca9d836f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
