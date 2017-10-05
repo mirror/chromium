@@ -52,6 +52,24 @@
       "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "182722b5_023dbd31",
+        "filename": "ash/message_center/message_center_style.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T18:48:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4097abd_56ac2a04",
+      "revId": "e3772fb9afaac1e8024121cf145a22dc2cba53cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
