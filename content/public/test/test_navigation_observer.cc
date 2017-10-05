@@ -139,10 +139,19 @@ void TestNavigationObserver::OnDidAttachInterstitialPage(
 }
 
 void TestNavigationObserver::OnDidStartLoading(WebContents* web_contents) {
-  navigation_started_ = true;
 }
 
 void TestNavigationObserver::OnDidStopLoading(WebContents* web_contents) {
+}
+
+void TestNavigationObserver::OnDidStartNavigation() {
+  navigation_started_ = true;
+  last_navigation_succeeded_ = false;
+}
+
+void TestNavigationObserver::OnDidFinishNavigation(bool is_error_page,
+                                                   const GURL& url,
+                                                   net::Error error_code) {
   if (!navigation_started_)
     return;
 
@@ -151,15 +160,7 @@ void TestNavigationObserver::OnDidStopLoading(WebContents* web_contents) {
     navigation_started_ = false;
     message_loop_runner_->Quit();
   }
-}
 
-void TestNavigationObserver::OnDidStartNavigation() {
-  last_navigation_succeeded_ = false;
-}
-
-void TestNavigationObserver::OnDidFinishNavigation(bool is_error_page,
-                                                   const GURL& url,
-                                                   net::Error error_code) {
   last_navigation_url_ = url;
   last_navigation_succeeded_ = !is_error_page;
   last_net_error_code_ = error_code;
