@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "113777d4_5973dbdf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-05T23:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6c42c5_b13b433a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f3c974d_9469e7e6",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f959b193_2fc45536",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-05T23:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f3c974d_9469e7e6",
+      "range": {
+        "startLine": 688,
+        "startChar": 40,
+        "endLine": 688,
+        "endChar": 53
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ec9c9265_a79cbbc3",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-05T23:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21efab19_1e67b4e0",
+      "range": {
+        "startLine": 689,
+        "startChar": 5,
+        "endLine": 689,
+        "endChar": 18
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7518fc1b_08bdc6be",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-05T23:25:14Z",
       "side": 1,
       "message": "behavior or assumptions?",
+      "range": {
+        "startLine": 693,
+        "startChar": 32,
+        "endLine": 693,
+        "endChar": 38
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41b01ff_5264c546",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-05T23:41:14Z",
+      "side": 1,
+      "message": "I\u0027ve rephrased the entire comment, does this look better?",
+      "parentUuid": "7518fc1b_08bdc6be",
       "range": {
         "startLine": 693,
         "startChar": 32,
@@ -114,6 +210,30 @@
       "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b044d8_8b9172d4",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-05T23:41:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0eafb88_77bba0fc",
+      "range": {
+        "startLine": 698,
+        "startChar": 5,
+        "endLine": 698,
+        "endChar": 46
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
