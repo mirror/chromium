@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "daef27ee_841259fe",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-05T20:27:28Z",
+      "side": 1,
+      "message": "good catch, I changed in the incognito tracker to check the severity of the app menu button. I only want to show it when it shows the three dot menu which is when the severity is NONE I believe.",
+      "parentUuid": "3dea506d_d2b0777e",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75f54651_07a0ca46",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9794fb68_ae32dc1b",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-05T20:27:28Z",
+      "side": 1,
+      "message": "thanks! this looks much better!",
+      "parentUuid": "75f54651_07a0ca46",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "643bd118_ff4cb493",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-05T20:27:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f228445b_3ba5b79a",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc97c694_7a84e22f",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7aaeb311_cea02d33",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-05T20:27:28Z",
+      "side": 1,
+      "message": "I put this comment in the SetIsProminent documentation",
+      "parentUuid": "fc97c694_7a84e22f",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbbea6ff_a650e6b2",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce26b341_31da227b",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-05T20:27:28Z",
+      "side": 1,
+      "message": "Since we\u0027re now changing it to SetIsProminent, it doesn\u0027t seem that we need the is_prominent_ private variable now. Should I still keep it?",
+      "parentUuid": "fbbea6ff_a650e6b2",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
