@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "a5fee9cc_1f26f49e",
+        "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1143554
+      },
+      "writtenOn": "2017-10-05T21:28:46Z",
+      "side": 1,
+      "message": "Regarding |context_| before |cronet_prefs_manager_|. If we destroy the context first, it will destroy UrlRequestContextStorage, which holds a strong reference to HostResolver, which strongly holds HostCache. HostCache is weakly (by pointer) referenced by HostCachePersistenceManager that is owned by CronetPrefsManager. Thus, destroying |context_| before |cronet_prefs_manager_| leaves HostCachePersistenceManager with an invalid reference.",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 14
+      },
+      "revId": "2ed23d991d510ae86463dfee111c35cb164f2eb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f393c7b3_c5ee8d1d",
         "filename": "components/cronet/android/cronet_url_request_context_adapter.h",
         "patchSetId": 25
