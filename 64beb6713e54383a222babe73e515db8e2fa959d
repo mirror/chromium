@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20315e9_080796b4",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T16:41:20Z",
+      "side": 1,
+      "message": "Now we detect raster under-invalidations of filter/reflection caused by over-painting.\n\nSee the change in CompositedLayerRasterInvalidator::SetTracksRasterInvalidations() for the reason of changed SPv2 behavior.",
+      "revId": "64beb6713e54383a222babe73e515db8e2fa959d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f9b900_ef928c62",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/CompositedLayerRasterInvalidator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T16:41:20Z",
+      "side": 1,
+      "message": "This change is to keep the original SPv1 behavior, and changes SPv2 behavior. Previously, when SetTracksRasterInvalidation() is called, we always recreated tracking_info_ causing loss of previous recorded raster under-invalidations. Now raster under-invalidations are accumulative. SetTracksRasterInvalidations(true) only clears tracked invalidations but not under-invalidation checking information.",
+      "revId": "64beb6713e54383a222babe73e515db8e2fa959d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

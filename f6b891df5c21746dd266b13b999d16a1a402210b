@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cb1353b_404050ab",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/resize-iframe-text-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T16:41:20Z",
+      "side": 0,
+      "message": "This is because we no longer record empty raster invalidation rects for SPv2, to keep consistent with SPv1.",
+      "revId": "f6b891df5c21746dd266b13b999d16a1a402210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc8a8fe_621b53ae",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/selection-after-delete-expected.png",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T16:41:20Z",
+      "side": 0,
+      "message": "We created this rebaseline when we didn\u0027t detect the raster under-invalidation for SPv2. Now we produce the same result on SPv1 and SPv2, both containing raster under-invalidations (which is along a one-pixel edge of the selection).\n\nSee the change in CompositedLayerRasterInvalidator::SetTracksRasterInvalidation() for the reason of changed SPv2 behavior.",
+      "revId": "f6b891df5c21746dd266b13b999d16a1a402210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1afbf7_3b4177a7",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/PaintLayerCompositor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T16:41:20Z",
+      "side": 0,
+      "message": "Now we always get this information from layout_view_.GetFrameView()-\u003eIsTrackingPaintInvalidations(). Previously it had chance of inconsistency of the initial value and the value set from SetTracksRasterInvalidation().",
+      "revId": "f6b891df5c21746dd266b13b999d16a1a402210b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
