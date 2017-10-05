@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "01dfcd1d_4c699654",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T22:12:45Z",
+      "side": 1,
+      "message": "setTranslateForLanguage() doesn\u0027t make it clear what is actually being set.  Whether we translate (setTranslateForLanguage(\u0027en\u0027, true))?  What language we translate to (setTranslateForLanguage(\u0027en\u0027, \u0027fr\u0027))?  Which translation engine we use (setTranslateForLanguage(\u0027en\u0027, \u0027uberTranslator2.0\u0027))?  Etc.  Either of the options above (setShouldTranslateLanguage() or setTranslateForLanguageEnabled()) make this much more clear, IMO.\n\nNow, all that said, this is a private API, so we don\u0027t have as strict of requirements for naming as with open APIs, so I won\u0027t block on this.",
+      "parentUuid": "57579d9a_e33ca9b3",
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd647b21_3831d066",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 8
