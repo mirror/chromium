@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "23480d5f_5ca5ac0a",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "722f1e0a_8c1d0004",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "634c4edf_c29b7308",
         "filename": "chrome/browser/extensions/extension_browsertest.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "10ef508f_d4961634",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "634c4edf_c29b7308",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "653a3b8c_6fa835da",
         "filename": "chrome/browser/extensions/extension_browsertest.cc",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-04T13:26:24Z",
       "side": 1,
       "message": "Is this line strictly necessary?  The main browser shouldn\u0027t have the app name matching.",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cfc0393_a3f9a17e",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "653a3b8c_6fa835da",
       "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "cd817e47_94ae345c",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25ecbb36_5abb8878",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c47b35f3_827e2ba7",
         "filename": "chrome/browser/extensions/extension_browsertest.h",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a94082e_a3bef302",
+        "filename": "chrome/browser/extensions/extension_browsertest.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47b35f3_827e2ba7",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a770a05d_b2a4349c",
+        "filename": "chrome/browser/extensions/extension_sync_data.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05d375e3_5f61b7c1",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d93382a5_660ec203",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 11
@@ -121,6 +229,42 @@
     },
     {
       "key": {
+        "uuid": "a453d0ba_4af74004",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Added an error.",
+      "parentUuid": "d93382a5_660ec203",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f129ef1c_8f3777fe",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93382a5_660ec203",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c7304fc_0f534784",
         "filename": "extensions/common/manifest_constants.cc",
         "patchSetId": 11
@@ -132,6 +276,42 @@
       "writtenOn": "2017-10-04T13:26:24Z",
       "side": 1,
       "message": "Do we need to add a new manifest feature for this?\n\n(Sorry, I could have sworn I mentioned this earlier, but it looks like not :/)",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad2ebbb_4c7e4509",
+        "filename": "extensions/common/manifest_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4c7304fc_0f534784",
+      "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59b0302_f65b6346",
+        "filename": "extensions/common/manifest_constants.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-05T05:47:47Z",
+      "side": 1,
+      "message": "I guess..? It\u0027s a private internal thing for PWAs only, really. I\u0027m not entirely sure what manifest_features.json does. We don\u0027t want this to be available to hosted apps really.\n\nIf we leave it out of manifest_features, does that simply prevent external parties from including it in their manifest? If so, that\u0027s what we want.",
+      "parentUuid": "4c7304fc_0f534784",
       "revId": "60c996a84ff649f701f6284c40aedd6e74447959",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
