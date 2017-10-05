@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96c334ab_69fd009a",
+        "filename": "chrome/browser/component_updater/supervised_user_whitelist_installer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-05T18:48:05Z",
+      "side": 1,
+      "message": "TestServiceManagerContext creates a ServiceManagerContext which itself requires access to BrowserThread, so ScopedTaskEnvironment does not seem sufficient.\nIt\u0027s unfortunate to have to pull these dependencies. I had at some point created a FakeServiceManagerContext class that would return a null connector (that we don\u0027t use in tests since we are using the TestingJsonParser::ScopedFactoryOverride) that would let callers retrieve the connector. If you think that\u0027s better, let me know.\nI also considered having a connector retriever object that would be set globally, so the public API would not require a connector. rockot@ doesn\u0027t think it\u0027s a good idea and it makes assumption on the lifetime of the connector.",
+      "parentUuid": "abf161dc_7f13d63b",
+      "revId": "9b6aca7c2676e2e044de9eff2c87557d9a965c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f76a7b64_e5cf4a71",
         "filename": "services/data_decoder/public/cpp/json_sanitizer.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T22:36:40Z",
       "side": 1,
       "message": "Is it possible to document Connector without inducing a layering violation? I don\u0027t think I\u0027d know where to get a Connector if I had to use this API for the first time.",
+      "revId": "9b6aca7c2676e2e044de9eff2c87557d9a965c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894dcd9e_3fa77ef5",
+        "filename": "services/data_decoder/public/cpp/json_sanitizer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-05T18:48:05Z",
+      "side": 1,
+      "message": "Added an explanation for it (here and in SafeJsonParser). Hopefully as the servicification effort progresses, and since the connector is a central aspect of the service manager people will be more familiar with it.",
+      "parentUuid": "f76a7b64_e5cf4a71",
       "revId": "9b6aca7c2676e2e044de9eff2c87557d9a965c98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
