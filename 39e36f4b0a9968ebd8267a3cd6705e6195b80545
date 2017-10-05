@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a677effd_ae37916d",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "You probably want to keep the !profile case or you could get a nullptr exception below (not sure if that actually happens, but my manual SCA triggered.",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 70
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6ced5b_9b31778f",
+        "filename": "chrome/browser/chromeos/arc/arc_util_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "Not your fault, but could you replace the ints with the enum values?\n0 -\u003e DeviceEcryptfsMigrationStrategyProto::UNSET\n1 -\u003e DeviceEcryptfsMigrationStrategyProto::DISALLOW_ARC\n2 -\u003e DeviceEcryptfsMigrationStrategyProto::ALLOW_MIGRATION\n(not sure why it goes up to 3 and 4 below?!?)",
+      "range": {
+        "startLine": 595,
+        "startChar": 70,
+        "endLine": 595,
+        "endChar": 73
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125b88ce_a02df9a6",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "user_manager::USER_TYPE_ACTIVE_DIRECTORY",
+      "range": {
+        "startLine": 1026,
+        "startChar": 6,
+        "endLine": 1027,
+        "endChar": 57
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b454ba1f_237734a0",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "Unless the compiler warns, I\u0027d suggest to always initialize, even if the value is overwritten. This prevents debugging headaches when some code paths forget to set the value.",
+      "range": {
+        "startLine": 1028,
+        "startChar": 2,
+        "endLine": 1028,
+        "endChar": 38
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6481ac8c_a58c1d26",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1029,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "Use switch, so it\u0027s clearer what the \u0027else\u0027 is (namely ERROR).",
+      "range": {
+        "startLine": 1029,
+        "startChar": 2,
+        "endLine": 1029,
+        "endChar": 47
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49b66f8_9ab4c59f",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "What does that mean? Do not migrate?",
+      "range": {
+        "startLine": 1045,
+        "startChar": 66,
+        "endLine": 1046,
+        "endChar": 17
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4dde3fa_e128ed51",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-10-05T09:54:20Z",
+      "side": 1,
+      "message": "This is always ERROR.",
+      "range": {
+        "startLine": 1048,
+        "startChar": 14,
+        "endLine": 1048,
+        "endChar": 40
+      },
+      "revId": "39e36f4b0a9968ebd8267a3cd6705e6195b80545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
