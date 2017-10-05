@@ -16,6 +16,24 @@
       "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c65055_b756ed2f",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-05T21:55:35Z",
+      "side": 1,
+      "message": "Why is that a requirement? Do you have a use case in mind?",
+      "parentUuid": "adf7b487_f3d6cef7",
+      "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
