@@ -482,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "6dae8384_fd199300",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "1. OK, Let\u0027s do that, but let\u0027s have it clearly documented in the code (as you heard from Dmitry this could have been properly designed for in the first place.)\n2. This is the extra task and that is OK.\n3. This should probably be limited to the files that are temporary, in case the first attempt at moving files fails... \nThink about that.",
+      "parentUuid": "7017d50a_fce4e4d5",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3d89c26_64d7ee89",
         "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
         "patchSetId": 2
@@ -511,6 +529,24 @@
       "side": 1,
       "message": "- there will be another task to move files as i mentioned above.\n- The idea is better explained in the reply above.\n- I don\u0027t think i understand the suggestion... Are you suggesting towards temporary pages or persistent ones? For temporary pages I believe there is no longer a way to \u0027let the pages expire\u0027. For persistent pages, they\u0027ll be processed in another task wrt the plan. Am I misunderstanding?",
       "parentUuid": "d3d89c26_64d7ee89",
+      "revId": "95956925545f639472f31872345816e66ec940d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745eadab_0233476b",
+        "filename": "components/offline_pages/core/model/temporary_consistency_check_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "Please document that.",
+      "parentUuid": "f3bb9dea_2f07d05e",
       "revId": "95956925545f639472f31872345816e66ec940d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

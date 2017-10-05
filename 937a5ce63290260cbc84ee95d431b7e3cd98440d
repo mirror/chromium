@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f01bfb98_b837eb98",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "result \u003d statement.Run() \u0026\u0026 result;  // was perfectly fine too.\n\nAlso a hint: check what delete returns when there was nothing to delete. Eye opening.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fb4085_e6bdf80a",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "content of this for loop has more than a single line, therefore {}",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 21
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05b921a9_e4c03fff",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "check for this being nullptr.",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d03e4c56_f70bc75e",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "If this is false, it means that something on the SQL side failed.\nWould you want to go on with deleting pages? (Or create that impression in the code?)\n\nPerhaps:\nif (!DeletePages...)\n  return false;",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfba59d_74f8a7c8",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "Are you sure you should be getting here if result \u003d\u003d false?\nIf no:\n\nreturn DeleteFiles();",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a9ce60d_72d224d7",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-10-05T20:11:50Z",
+      "side": 1,
+      "message": "Still a little uncomfortable with ignoring result.\nA) If you want to ignore it, at least DVLOG it for now\nb) If you want to get better picture of where things failed, perhaps a local enum would be better.",
+      "range": {
+        "startLine": 177,
+        "startChar": 64,
+        "endLine": 177,
+        "endChar": 75
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
