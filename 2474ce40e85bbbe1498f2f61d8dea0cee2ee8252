@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "383e0a09_b5c71ce9",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4fd0ce8_75d14f7c",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03402a52_a2cf4ccb",
         "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cb66c78c_950b0deb",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03402a52_a2cf4ccb",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77f01270_9f201b65",
         "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
         "patchSetId": 15
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T07:21:02Z",
       "side": 1,
       "message": "Not needed?",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5326e72b_323363f9",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "It is needed.\n\n\n./../buildtools/third_party/libc++/trunk/include/memory:2268:19: error: invalid application of \u0027sizeof\u0027 to an incomplete type \u0027content::NavigationUIData\u0027\n    static_assert(sizeof(_Tp) \u003e 0,\n                  ^~~~~~~~~~~\n../../buildtools/third_party/libc++/trunk/include/memory:2585:7: note: in instantiation of member function \u0027std::__1::default_delete\u003ccontent::NavigationUIData\u003e::operator()\u0027 requested here\n      __ptr_.second()(__tmp);\n      ^\n../../buildtools/third_party/libc++/trunk/include/memory:2539:19: note: in instantiation of member function \u0027std::__1::unique_ptr\u003ccontent::NavigationUIData, std::__1::default_delete\u003ccontent::NavigationUIData\u003e \u003e::reset\u0027 requested here\n  ~unique_ptr() { reset(); }\n                  ^\n../../buildtools/third_party/libc++/trunk/include/memory:3065:36: note: in instantiation of member function \u0027std::__1::unique_ptr\u003ccontent::NavigationUIData, std::__1::default_delete\u003ccontent::NavigationUIData\u003e \u003e::~unique_ptr\u0027 requested here\n    return unique_ptr\u003c_Tp\u003e(new _Tp(_VSTD::forward\u003c_Args\u003e(__args)...));\n                                   ^\n../../buildtools/third_party/libc++/trunk/include/__config:435:15: note: expanded from macro \u0027_VSTD\u0027\n#define _VSTD std::_LIBCPP_NAMESPACE\n              ^\n../../base/memory/ptr_util.h:25:15: note: in instantiation of function template specialization \u0027std::__1::make_unique\u003ccontent::NavigationURLLoaderNetworkService, content::ResourceContext *, content::StoragePartition *, std::__1::unique_ptr\u003ccontent::NavigationRequestInfo, std::__1::default_delete\u003ccontent::NavigationRequestInfo\u003e \u003e, nullptr_t, nullptr_t, nullptr_t, content::NavigationURLLoaderDelegate *\u0026, std::__1::vector\u003cstd::__1::unique_ptr\u003ccontent::URLLoaderRequestHandler, std::__1::default_delete\u003ccontent::URLLoaderRequestHandler\u003e \u003e, std::__1::allocator\u003cstd::__1::unique_ptr\u003ccontent::URLLoaderRequestHandler, std::__1::default_delete\u003ccontent::URLLoaderRequestHandler\u003e \u003e \u003e \u003e \u003e\u0027 requested here\n  return std::make_unique\u003cT\u003e(std::forward\u003cArgs\u003e(args)...);\n              ^\n../../content/browser/loader/navigation_url_loader_network_service_unittest.cc:136:18: note: in instantiation of function template specialization \u0027base::MakeUnique\u003ccontent::NavigationURLLoaderNetworkService, content::ResourceContext *, content::StoragePartition *, std::__1::unique_ptr\u003ccontent::NavigationRequestInfo, std::__1::default_delete\u003ccontent::NavigationRequestInfo\u003e \u003e, nullptr_t, nullptr_t, nullptr_t, content::NavigationURLLoaderDelegate *\u0026, std::__1::vector\u003cstd::__1::unique_ptr\u003ccontent::URLLoaderRequestHandler, std::__1::default_delete\u003ccontent::URLLoaderRequestHandler\u003e \u003e, std::__1::allocator\u003cstd::__1::unique_ptr\u003ccontent::URLLoaderRequestHandler, std::__1::default_delete\u003ccontent::URLLoaderRequestHandler\u003e \u003e \u003e \u003e \u003e\u0027 requested here\n    return base::MakeUnique\u003cNavigationURLLoaderNetworkService\u003e(\n                 ^\n../../content/browser/loader/navigation_url_loader.h:19:7: note: forward declaration of \u0027content::NavigationUIData\u0027\nclass NavigationUIData;",
+      "parentUuid": "77f01270_9f201b65",
       "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f5b221f8_5b505872",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19af1cca_7cba443d",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8c2362_fa6a93b7",
         "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
         "patchSetId": 15
@@ -84,6 +156,24 @@
       "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f914d688_e58d2873",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8c2362_fa6a93b7",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a1ed0d16_f0df6915",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ec050f_75b80437",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6444ec56_fb22c77a",
         "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
         "patchSetId": 15
@@ -118,6 +226,24 @@
       "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126b3a4e_ce0a6c80",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6444ec56_fb22c77a",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "bf5778a0_bb6c9b31",
+        "filename": "content/browser/loader/navigation_url_loader_network_service_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1f1ec33_aa53af1e",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a47b6c65_db87e3ce",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 15
@@ -152,6 +296,24 @@
       "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c3fcc4_872a753f",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 3586,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T07:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a47b6c65_db87e3ce",
+      "revId": "2474ce40e85bbbe1498f2f61d8dea0cee2ee8252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
