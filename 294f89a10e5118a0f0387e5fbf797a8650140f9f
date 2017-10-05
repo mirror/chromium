@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "070aac7c_8f9febb4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-05T17:59:24Z",
+      "side": 1,
+      "message": "For whatever reason I got in my head that this had not landed yet and was obviously the ntp. Fixed.",
+      "parentUuid": "0b07ea54_ee91c830",
+      "range": {
+        "startLine": 1547,
+        "startChar": 69,
+        "endLine": 1547,
+        "endChar": 72
+      },
+      "revId": "294f89a10e5118a0f0387e5fbf797a8650140f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93cdc1ca_f83ccde8",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "294f89a10e5118a0f0387e5fbf797a8650140f9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b370af_02166158",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-05T17:59:24Z",
+      "side": 1,
+      "message": "Done. Histogram is only recorded if the preference is set.",
+      "parentUuid": "93cdc1ca_f83ccde8",
+      "range": {
+        "startLine": 697,
+        "startChar": 17,
+        "endLine": 697,
+        "endChar": 53
+      },
+      "revId": "294f89a10e5118a0f0387e5fbf797a8650140f9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
