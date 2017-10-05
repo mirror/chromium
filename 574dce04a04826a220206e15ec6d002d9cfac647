@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "99262f30_8d711a0a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:02:20Z",
+      "side": 1,
+      "message": "go back to returning void?",
+      "range": {
+        "startLine": 61,
+        "startChar": 11,
+        "endLine": 61,
+        "endChar": 17
+      },
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84329ab8_b3070423",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:02:20Z",
+      "side": 1,
+      "message": "should we just call updateHooksForNewContentViewCore(tab); here?",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a9fdf7_bad40fce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 1651,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T18:02:20Z",
+      "side": 1,
+      "message": "I think you still want to do this once at the tab level.  With this, you\u0027ll create an additional helper for each time the CVC changes (since we don\u0027t actually destroy the previous one).  Since you\u0027re already listening for onContentChanged in the observer, it might just work as it previously was placed.",
+      "range": {
+        "startLine": 1651,
+        "startChar": 46,
+        "endLine": 1651,
+        "endChar": 47
+      },
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8854b90b_454395ea",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/SelectionClientFactory.java",
         "patchSetId": 26
