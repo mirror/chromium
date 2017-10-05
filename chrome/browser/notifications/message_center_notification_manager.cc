@@ -10,7 +10,6 @@
 #include "base/logging.h"
 #include "build/build_config.h"
 #include "chrome/browser/notifications/message_center_settings_controller.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/profile_notification.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
@@ -22,6 +21,7 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/message_center/message_center_tray.h"
 #include "ui/message_center/message_center_types.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notifier_settings.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 
@@ -31,6 +31,40 @@
 #endif
 
 using message_center::NotifierId;
+
+namespace {
+
+bool NotificationsMatchForUpdate(
+    const ProfileNotification& existing_notification,
+    const message_center::Notification& new_notification,
+    Profile* profile,
+    NotificationCommon::Metadata* metadata) {
+  // For non persistent web notifications, check the tag, origin and profile.
+  if (metadata && existing_notification.metadata() &&
+      metadata->type == existing_notification.metadata()->type &&
+      metadata->type == NotificationCommon::NON_PERSISTENT) {
+    std::string new_tag =
+        NonPersistentNotificationMetadata::From(metadata)->tag;
+    // The old notification will be updated if the profile matches,
+    // the tag matches,
+    return !new_tag.empty() &&
+           PersistentNotificationMetadata::From(
+               existing_notification.metadata())
+                   ->tag == new_tag &&
+           existing_notification.notification().origin_url() ==
+               new_notification.origin_url() &&
+           existing_notification.profile_id() ==
+               NotificationUIManager::GetProfileID(profile);
+  }
+
+  // Otherwise, just match IDs.
+  return existing_notification.notification().id() ==
+         ProfileNotification::GetProfileNotificationId(
+             new_notification.id(),
+             NotificationUIManager::GetProfileID(profile));
+}
+
+}  // namespace
 
 MessageCenterNotificationManager::MessageCenterNotificationManager(
     message_center::MessageCenter* message_center,
@@ -67,17 +101,19 @@ MessageCenterNotificationManager::~MessageCenterNotificationManager() {
 ////////////////////////////////////////////////////////////////////////////////
 // NotificationUIManager
 
-void MessageCenterNotificationManager::Add(const Notification& notification,
-                                           Profile* profile) {
+void MessageCenterNotificationManager::Add(
+    const message_center::Notification& notification,
+    std::unique_ptr<NotificationCommon::Metadata> metadata,
+    Profile* profile) {
   // We won't have time to process and act on this notification.
   if (is_shutdown_started_)
     return;
 
-  if (Update(notification, profile))
+  if (Update(notification, profile, &metadata))
     return;
 
-  std::unique_ptr<ProfileNotification> profile_notification_ptr =
-      std::make_unique<ProfileNotification>(profile, notification);
+  auto profile_notification_ptr = std::make_unique<ProfileNotification>(
+      profile, notification, std::move(metadata));
   ProfileNotification* profile_notification = profile_notification_ptr.get();
 
   // WARNING: You MUST use AddProfileNotification or update the message center
@@ -91,81 +127,76 @@ void MessageCenterNotificationManager::Add(const Notification& notification,
           profile_notification->notification()));
 }
 
-bool MessageCenterNotificationManager::Update(const Notification& notification,
-                                              Profile* profile) {
-  const std::string& tag = notification.tag();
-  if (tag.empty())
-    return false;
-
-  const GURL origin_url = notification.origin_url();
-  DCHECK(origin_url.is_valid());
-
-  // Since tag is provided by arbitrary JS, we need to use origin_url
-  // (which is an app url in case of app/extension) to scope the tags
-  // in the given profile.
+bool MessageCenterNotificationManager::Update(
+    const message_center::Notification& notification,
+    Profile* profile,
+    std::unique_ptr<NotificationCommon::Metadata>* metadata) {
   for (auto iter = profile_notifications_.begin();
        iter != profile_notifications_.end(); ++iter) {
     ProfileNotification* old_notification = (*iter).second.get();
-    if (old_notification->notification().tag() == tag &&
-        old_notification->notification().origin_url() == origin_url &&
-        old_notification->profile_id() ==
-            NotificationUIManager::GetProfileID(profile)) {
-      // Changing the type from non-progress to progress does not count towards
-      // the immediate update allowed in the message center.
-      std::string old_id = old_notification->notification().id();
-
-      // Add/remove notification in the local list but just update the same
-      // one in MessageCenter.
-      std::unique_ptr<ProfileNotification> new_notification =
-          std::make_unique<ProfileNotification>(profile, notification);
-      const Notification& notification = new_notification->notification();
-      // Delete the old one after the new one is created to ensure we don't run
-      // out of KeepAlives.
-      profile_notifications_.erase(old_id);
-      profile_notifications_[notification.id()] = std::move(new_notification);
-
-      // TODO(liyanhou): Add routing updated notifications to alternative
-      // providers.
-
-      // Non-persistent Web Notifications rely on receiving the Display() event
-      // to inform the developer, even when replacing a previous notification.
-      if (notification.notifier_id().type == NotifierId::WEB_PAGE)
-        notification.delegate()->Display();
-
-      // WARNING: You MUST use AddProfileNotification or update the message
-      // center via the notification within a ProfileNotification object or the
-      // profile ID will not be correctly set for ChromeOS.
-      message_center_->UpdateNotification(
-          old_id, std::make_unique<message_center::Notification>(notification));
-
-      return true;
+    if (!NotificationsMatchForUpdate(*old_notification, notification, profile,
+                                     metadata ? metadata->get() : nullptr)) {
+      continue;
     }
+
+    // The ID should uniquely identify the notification, but as a sanity check
+    // make sure we got the right origin URL and profile.
+    // FIXME: the id also has an identifier for the renderer which isn't
+    // relevant to this check
+    DCHECK_EQ(old_notification->notification().origin_url(),
+              notification.origin_url());
+    DCHECK_EQ(old_notification->profile_id(),
+              NotificationUIManager::GetProfileID(profile));
+
+    // Changing the type from non-progress to progress does not count towards
+    // the immediate update allowed in the message center.
+    std::string old_id = old_notification->notification().id();
+
+    // Add/remove notification in the local list but just update the same
+    // one in MessageCenter.
+    auto new_notification = std::make_unique<ProfileNotification>(
+        profile, notification, metadata ? std::move(*metadata) : nullptr);
+    const message_center::Notification& notification =
+        new_notification->notification();
+    // Delete the old one after the new one is created to ensure we don't run
+    // out of KeepAlives.
+    profile_notifications_.erase(old_id);
+    profile_notifications_[notification.id()] = std::move(new_notification);
+
+    // TODO(liyanhou): Add routing updated notifications to alternative
+    // providers.
+
+    // Non-persistent Web Notifications rely on receiving the Display() event
+    // to inform the developer, even when replacing a previous notification.
+    if (notification.notifier_id().type == NotifierId::WEB_PAGE)
+      notification.delegate()->Display();
+
+    // WARNING: You MUST use AddProfileNotification or update the message
+    // center via the notification within a ProfileNotification object or the
+    // profile ID will not be correctly set for ChromeOS.
+    message_center_->UpdateNotification(
+        old_id, std::make_unique<message_center::Notification>(notification));
+    return true;
   }
+
   return false;
 }
 
-const Notification* MessageCenterNotificationManager::FindById(
-    const std::string& delegate_id,
+const message_center::Notification* MessageCenterNotificationManager::FindById(
+    const std::string& id,
     ProfileID profile_id) const {
-  // The profile pointer can be weak, the instance may have been destroyed, so
-  // no profile method should be called inside this function.
-
   std::string profile_notification_id =
-      ProfileNotification::GetProfileNotificationId(delegate_id, profile_id);
+      ProfileNotification::GetProfileNotificationId(id, profile_id);
   auto iter = profile_notifications_.find(profile_notification_id);
   if (iter == profile_notifications_.end())
     return nullptr;
   return &(iter->second->notification());
 }
 
-bool MessageCenterNotificationManager::CancelById(
-    const std::string& delegate_id,
-    ProfileID profile_id) {
-  // The profile pointer can be weak, the instance may have been destroyed, so
-  // no profile method should be called inside this function.
-
+bool MessageCenterNotificationManager::CancelById(const std::string& id,
+                                                  ProfileID profile_id) {
   std::string profile_notification_id =
-      ProfileNotification::GetProfileNotificationId(delegate_id, profile_id);
+      ProfileNotification::GetProfileNotificationId(id, profile_id);
   // See if this ID hasn't been shown yet.
   // If it has been shown, remove it.
   auto iter = profile_notifications_.find(profile_notification_id);
@@ -178,31 +209,15 @@ bool MessageCenterNotificationManager::CancelById(
   return true;
 }
 
-std::set<std::string>
-MessageCenterNotificationManager::GetAllIdsByProfileAndSourceOrigin(
-    ProfileID profile_id,
-    const GURL& source) {
-  std::set<std::string> delegate_ids;
-  for (const auto& pair : profile_notifications_) {
-    const Notification& notification = pair.second->notification();
-    if (pair.second->profile_id() == profile_id &&
-        notification.origin_url() == source) {
-      delegate_ids.insert(notification.id());
-    }
-  }
-
-  return delegate_ids;
-}
-
 std::set<std::string> MessageCenterNotificationManager::GetAllIdsByProfile(
     ProfileID profile_id) {
-  std::set<std::string> delegate_ids;
+  std::set<std::string> ids;
   for (const auto& pair : profile_notifications_) {
     if (pair.second->profile_id() == profile_id)
-      delegate_ids.insert(pair.second->notification().id());
+      ids.insert(pair.second->notification().id());
   }
 
-  return delegate_ids;
+  return ids;
 }
 
 bool MessageCenterNotificationManager::CancelAllBySourceOrigin(
@@ -267,9 +282,9 @@ void MessageCenterNotificationManager::SetMessageCenterTrayDelegateForTest(
 
 std::string
 MessageCenterNotificationManager::GetMessageCenterNotificationIdForTest(
-    const std::string& delegate_id,
+    const std::string& id,
     Profile* profile) {
-  return ProfileNotification::GetProfileNotificationId(delegate_id,
+  return ProfileNotification::GetProfileNotificationId(id,
                                                        GetProfileID(profile));
 }
 
@@ -278,7 +293,8 @@ MessageCenterNotificationManager::GetMessageCenterNotificationIdForTest(
 
 void MessageCenterNotificationManager::AddProfileNotification(
     std::unique_ptr<ProfileNotification> profile_notification) {
-  const Notification& notification = profile_notification->notification();
+  const message_center::Notification& notification =
+      profile_notification->notification();
   std::string id = notification.id();
   // Notification ids should be unique.
   DCHECK(profile_notifications_.find(id) == profile_notifications_.end());

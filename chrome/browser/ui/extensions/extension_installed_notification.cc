@@ -8,7 +8,6 @@
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_util.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
 #include "chrome/browser/ui/extensions/application_launch.h"
@@ -46,17 +45,17 @@ ExtensionInstalledNotification::ExtensionInstalledNotification(
     : extension_id_(extension->id()), profile_(profile) {
 
   message_center::RichNotificationData optional_field;
-  std::unique_ptr<Notification> notification(new Notification(
+  auto notification = std::make_unique<message_center::Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE, extension_id_,
       base::UTF8ToUTF16(extension->name()),
       l10n_util::GetStringUTF16(IDS_EXTENSION_NOTIFICATION_INSTALLED),
       gfx::Image(gfx::CreateVectorIcon(vector_icons::kCheckCircleIcon, 40,
                                        gfx::kGoogleGreen700)),
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kNotifierId),
       l10n_util::GetStringUTF16(IDS_EXTENSION_NOTIFICATION_DISPLAY_SOURCE),
       GURL(extension_urls::kChromeWebstoreBaseURL) /* origin_url */,
-      extension_id_, optional_field, this));
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kNotifierId),
+      optional_field, this);
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification->set_icon(gfx::Image());
     notification->set_accent_color(
@@ -66,7 +65,8 @@ ExtensionInstalledNotification::ExtensionInstalledNotification(
                               message_center::kSystemNotificationColorNormal)));
     notification->set_vector_small_image(kNotificationInstalledIcon);
   }
-  g_browser_process->notification_ui_manager()->Add(*notification, profile_);
+  g_browser_process->notification_ui_manager()->Add(*notification, nullptr,
+                                                    profile_);
 }
 
 ExtensionInstalledNotification::~ExtensionInstalledNotification() {}
