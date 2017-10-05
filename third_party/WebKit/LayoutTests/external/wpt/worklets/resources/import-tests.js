@@ -89,4 +89,28 @@ function runImportTests(worklet) {
         return promise_rejects(t, new DOMException('', 'AbortError'),
                                worklet.addModule(kScriptURL));
     }, 'Importing about:blank should reject the given promise.');
+
+    promise_test(() => {
+        const kRemoteOrigin = 'http://{{host}}:{{ports[http][1]}}';
+        // Specify the Access-Control-Allow-Origin header to enable cross origin
+        // access.
+        const kScriptURL =
+            kRemoteOrigin + '/worklets/resources/empty-worklet-script.js' +
+            '?pipe=header(Access-Control-Allow-Origin, *)';
+        return worklet.addModule(kScriptURL).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined);
+        });
+    }, 'Importing a cross origin resource with the ' +
+       'Access-Control-Allow-Origin header should resolve the given promise');
+
+    promise_test(t => {
+        const kRemoteOrigin = 'http://{{host}}:{{ports[http][1]}}';
+        // Don't specify the Access-Control-Allow-Origin header. addModule()
+        // should be rejected because of disallowed cross origin access.
+        const kScriptURL =
+            kRemoteOrigin + '/worklets/resources/empty-worklet-script.js';
+        return promise_rejects(t, new DOMException('', 'AbortError'),
+                               worklet.addModule(kScriptURL));
+    }, 'Importing a cross origin resource without the ' +
+       'Access-Control-Allow-Origin header should reject the given promise');
 }
