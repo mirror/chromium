@@ -22,6 +22,7 @@
 #define CSSProperty_h
 
 #include "core/CSSPropertyNames.h"
+#include "core/StylePropertyShorthand.h"
 #include "core/css/CSSValue.h"
 #include "core/css/properties/CSSPropertyAPI.h"
 #include "platform/text/TextDirection.h"
@@ -90,10 +91,6 @@ class CSSProperty {
   bool IsImportant() const { return metadata_.important_; }
 
   const CSSValue* Value() const { return value_.Get(); }
-
-  static CSSPropertyID ResolveDirectionAwareProperty(CSSPropertyID,
-                                                     TextDirection,
-                                                     WritingMode);
 
   static void FilterEnabledCSSPropertiesIntoVector(const CSSPropertyID*,
                                                    size_t length,
