@@ -22,6 +22,30 @@
       "revId": "f3b786e3f8a42d6ae059164ea528bbd52605cc8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c27b7fd6_87c0618e",
+        "filename": "ui/base/window_open_disposition.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-10-05T05:05:57Z",
+      "side": 1,
+      "message": "1. I see that is deprecated but the non-mojo type is still used in chrome/browser. Changing it to the mojo type would make it unusable for chrome/browser classes that still use the non-mojo type.\n\n2. The mojo enum already has a \"\u003c\u003c\" operator.",
+      "parentUuid": "28305e2e_25378b09",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "f3b786e3f8a42d6ae059164ea528bbd52605cc8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
