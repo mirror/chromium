@@ -1,0 +1,41 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef NGLogicalRect_h
+#define NGLogicalRect_h
+
+#include "core/CoreExport.h"
+#include "core/layout/ng/geometry/ng_logical_offset.h"
+#include "core/layout/ng/geometry/ng_logical_size.h"
+#include "platform/LayoutUnit.h"
+
+namespace blink {
+
+// NGLogicalRect is the position and size of a rect (typically a fragment)
+// relative to the parent.
+struct CORE_EXPORT NGLogicalRect {
+  NGLogicalRect() {}
+  NGLogicalRect(const NGLogicalOffset& offset, const NGLogicalSize& size)
+      : offset(offset), size(size) {}
+
+  NGLogicalOffset Offset() const { return offset; }
+  NGLogicalOffset EndOffset() const { return offset + size; }
+  NGLogicalSize Size() const { return size; }
+  bool IsEmpty() const { return size.IsEmpty(); }
+
+  NGLogicalOffset offset;
+  NGLogicalSize size;
+
+  bool operator==(const NGLogicalRect& other) const;
+
+  void Unite(const NGLogicalRect&);
+
+  String ToString() const;
+};
+
+CORE_EXPORT std::ostream& operator<<(std::ostream&, const NGLogicalRect&);
+
+}  // namespace blink
+
+#endif  // NGLogicalRect_h
