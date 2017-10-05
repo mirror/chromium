@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "397e067a_de5d60a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T10:20:07Z",
+      "side": 1,
+      "message": "You may want to check other people\u0027s opinions, but I think that operators should behave in the least surprising way. That\u0027s why I prefer to return the same type as the operands. So, how about an explicit offset to size conversion instead? :)",
+      "parentUuid": "10da0dcf_6db7954b",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c7a71c4_b4a8c0e4",
         "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
         "patchSetId": 5
