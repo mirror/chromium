@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "afbf5b88_40bf5a50",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T23:33:17Z",
+      "side": 1,
+      "message": "Is it SK_ColorTRANSPARENT or an unset base::Optional ?",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 63
+      },
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53f48faf_87159205",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 13
@@ -87,6 +110,57 @@
       "writtenOn": "2017-10-05T13:34:09Z",
       "side": 1,
       "message": "Needed?  (Same for below)",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4733c9_160bfecd",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T23:33:17Z",
+      "side": 1,
+      "message": "Is this opaqueness a cross-platform thing? Seems like it should be... Can we then encode that logic somewhere like AppThemeColorHandler::Parse()? Or just say `*error \u003d \"frame colors can\u0027t have an alpha component`",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54903bb4_e2050ef3",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T23:33:17Z",
+      "side": 1,
+      "message": "comment why DestructorAtExit is needed? I think it isn\u0027t -- neither ~ManifestData() nor ~AppThemeColorInfo() do anything interesting, so this is just queuing up a virtual destructor call during process exit for no reason.",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4067d91_7bf06bfc",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-05T23:33:17Z",
+      "side": 1,
+      "message": "I\u0027d actually recommend something like\n\n  CR_DEFINE_STATIC_LOCAL(const AppThemeColorInfo, fallback, ());\n  ..\n  return info ? *info : fallback;\n\n\nthen you don\u0027t need base::LazyInstance and the global var",
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
