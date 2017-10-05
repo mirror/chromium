@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb030ff5_3402e9ef",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-10-05T17:14:10Z",
+      "side": 1,
+      "message": "Thanks for the catch, fixed and also added a test for this.",
+      "parentUuid": "cef238a4_75c37422",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 30
+      },
+      "revId": "6274e47989c02211c363ff037f2f35bb6ef93c04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2d30b09_58a26650",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc",
         "patchSetId": 11
