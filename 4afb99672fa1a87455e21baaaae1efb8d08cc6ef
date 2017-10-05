@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f5d7850_d10337f8",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-05T13:13:33Z",
+      "side": 1,
+      "message": "What does \"MakeRequest\" have to do with \"SetHistogramMemory\"?  What happens if this method is never called?  It\u0027s optional, and not even enabled 100% on all builds.",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0ff8597_8dc52ad1",
         "filename": "content/browser/histogram_controller.cc",
         "patchSetId": 19
@@ -120,6 +143,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "959f54cb_c9257ec7",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "4afb99672fa1a87455e21baaaae1efb8d08cc6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2393aacc_d3c9b496",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1117419
+      },
+      "writtenOn": "2017-10-05T13:13:33Z",
+      "side": 1,
+      "message": "I think what\u0027s confusing is that these aren\u0027t child histograms but child histogram *messages*.  Perhaps the style for Mojo things is to not mention this explicitly -- I don\u0027t know -- but if not, could you make it more clear?\n\nBut yes, please change the name.  I suggest:  SetChildHistogramSharedMemory()",
+      "parentUuid": "b8184522_85828fc2",
       "range": {
         "startLine": 33,
         "startChar": 5,
