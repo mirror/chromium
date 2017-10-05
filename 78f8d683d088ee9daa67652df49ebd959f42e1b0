@@ -16,6 +16,24 @@
       "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea4292b_d569dda1",
+        "filename": "DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-10-05T16:51:01Z",
+      "side": 1,
+      "message": "I\u0027d like to push back a bit on having a vague variable that won\u0027t be a bool. I\u0027d prefer not to be speculative about it. If later on a pattern and real need appears, it should be more obvious to everyone. Now it\u0027s not.\n\nFor now I\u0027d be totally fine with this being a bool.\n\nThat said, it\u0027s just my opinion if you\u0027re asking. I won\u0027t go out of my way to block things.",
+      "parentUuid": "3d58a598_052712d7",
+      "revId": "78f8d683d088ee9daa67652df49ebd959f42e1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
