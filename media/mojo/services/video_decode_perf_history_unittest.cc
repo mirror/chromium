@@ -19,7 +19,9 @@ class FakeCapabilitiesDatabase : public MediaCapabilitiesDatabase {
   FakeCapabilitiesDatabase() = default;
   ~FakeCapabilitiesDatabase() override {}
 
-  void AppendInfoToEntry(const Entry& entry, const Info& info) override {
+  void AppendInfoToEntry(const Entry& entry,
+                         const Info& info,
+                         AppendInfoToEntryCB cb) override {
     std::string key = MakeEntryKey(entry);
     if (entries_.find(key) == entries_.end()) {
       entries_.emplace(std::make_pair(key, info));
@@ -29,9 +31,14 @@ class FakeCapabilitiesDatabase : public MediaCapabilitiesDatabase {
       uint32_t frames_dropped = known_info.frames_dropped + info.frames_dropped;
       entries_.at(key) = Info(frames_decoded, frames_dropped);
     }
+
+    // Fake database always succeeds.
+    if (cb)
+      std::move(cb).Run(true);
   }
 
-  void GetInfo(const Entry& entry, GetInfoCallback callback) override {
+  void GetDecodingInfo(const Entry& entry,
+                       GetDecodingInfoCB callback) override {
     auto entry_it = entries_.find(MakeEntryKey(entry));
     if (entry_it == entries_.end()) {
       std::move(callback).Run(true, nullptr);
@@ -106,10 +113,12 @@ TEST_F(VideoDecodePerfHistoryTest, GetPerfInfo_Smooth) {
   // Add the entries.
   database_->AppendInfoToEntry(
       Entry(kKnownProfile, kKownSize, kSmoothFrameRate),
-      Info(kFramesDecoded, kSmoothFramesDropped));
+      Info(kFramesDecoded, kSmoothFramesDropped),
+      MediaCapabilitiesDatabase::AppendInfoToEntryCB());
   database_->AppendInfoToEntry(
       Entry(kKnownProfile, kKownSize, kNotSmoothFrameRate),
-      Info(kFramesDecoded, kNotSmoothFramesDropped));
+      Info(kFramesDecoded, kNotSmoothFramesDropped),
+      MediaCapabilitiesDatabase::AppendInfoToEntryCB());
 
   // Verify perf history returns is_smooth = true for the smooth entry.
   bool is_smooth = true;

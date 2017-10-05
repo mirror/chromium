@@ -37,11 +37,11 @@ class MEDIA_MOJO_EXPORT MediaCapabilitiesDatabase {
     int frame_rate_;
   };
 
-  // Information saves to identify the capabilities related to a given |Entry|.
+  // Information saved to identify the capabilities related to a given |Entry|.
   struct MEDIA_MOJO_EXPORT Info {
-    Info(uint32_t frames_decoded, uint32_t frames_dropped);
-    uint32_t frames_decoded;
-    uint32_t frames_dropped;
+    Info(uint64_t frames_decoded, uint64_t frames_dropped);
+    uint64_t frames_decoded;
+    uint64_t frames_dropped;
   };
 
   virtual ~MediaCapabilitiesDatabase() {}
@@ -49,14 +49,20 @@ class MEDIA_MOJO_EXPORT MediaCapabilitiesDatabase {
   // Adds `info` data into the database records associated with `entry`. The
   // operation is asynchronous. The caller should be aware of potential race
   // conditions when calling this method for the same `entry` very close to
-  // each others.
-  virtual void AppendInfoToEntry(const Entry& entry, const Info& info) = 0;
+  // each others. When the append completes, the |callback| will be called
+  // with a boolean to indicate whether it succeeded.
+  using AppendInfoToEntryCB = base::OnceCallback<void(bool)>;
+  virtual void AppendInfoToEntry(const Entry& entry,
+                                 const Info& info,
+                                 AppendInfoToEntryCB callback) = 0;
 
   // Returns the `info` associated with `entry`. The `callback` will received
   // the `info` in addition to a boolean signaling if the call was successful.
   // `info` can be nullptr if there was no data associated with `entry`.
-  using GetInfoCallback = base::OnceCallback<void(bool, std::unique_ptr<Info>)>;
-  virtual void GetInfo(const Entry& entry, GetInfoCallback callback) = 0;
+  using GetDecodingInfoCB =
+      base::OnceCallback<void(bool, std::unique_ptr<Info>)>;
+  virtual void GetDecodingInfo(const Entry& entry,
+                               GetDecodingInfoCB callback) = 0;
 };
 
 }  // namespace media

@@ -11,8 +11,8 @@ MediaCapabilitiesDatabase::Entry::Entry(VideoCodecProfile codec_profile,
                                         int frame_rate)
     : codec_profile_(codec_profile), size_(size), frame_rate_(frame_rate) {}
 
-MediaCapabilitiesDatabase::Info::Info(uint32_t frames_decoded,
-                                      uint32_t frames_dropped)
+MediaCapabilitiesDatabase::Info::Info(uint64_t frames_decoded,
+                                      uint64_t frames_dropped)
     : frames_decoded(frames_decoded), frames_dropped(frames_dropped) {}
 
 }  // namespace media
