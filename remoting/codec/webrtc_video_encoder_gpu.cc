@@ -98,6 +98,7 @@ void WebrtcVideoEncoderGpu::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
   video_frame->set_timestamp(new_timestamp);
   previous_timestamp_ = new_timestamp;
 
+  // H264 encoder on Windows supports only I420.
   ArgbToI420(*frame, video_frame);
 
   callbacks_[video_frame->timestamp()] = std::move(done);
@@ -126,8 +127,9 @@ void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
   for (unsigned int i = 0; i < kWebrtcVideoEncoderGpuOutputBufferCount; ++i) {
     auto shm = base::MakeUnique<base::SharedMemory>();
     // TODO(gusss): Do we need to handle mapping failure more gracefully?
-    // LOG_ASSERT will simply cause a crash.
-    LOG_ASSERT(shm->CreateAndMapAnonymous(output_buffer_size_));
+    // We do not map now, the SharedMemoryHandle will be used by encoder first.
+    const bool result = shm->CreateAndMapAnonymous(output_buffer_size_);
+    DCHECK(result);
     output_buffers_.push_back(std::move(shm));
   }
 
@@ -155,11 +157,13 @@ void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
       base::MakeUnique<EncodedFrame>();
   base::SharedMemory* output_buffer =
       output_buffers_[bitstream_buffer_id].get();
+  DCHECK(output_buffer->memory());
   encoded_frame->data.assign(reinterpret_cast<char*>(output_buffer->memory()),
                              payload_size);
   encoded_frame->key_frame = key_frame;
   encoded_frame->size = webrtc::DesktopSize(input_coded_size_.width(),
                                             input_coded_size_.height());
+  encoded_frame->quantizer = 0;
 
   UseOutputBitstreamBufferId(bitstream_buffer_id);
 
@@ -202,7 +206,8 @@ void WebrtcVideoEncoderGpu::UseOutputBitstreamBufferId(
     int32_t bitstream_buffer_id) {
   DVLOG(3) << __func__ << " id=" << bitstream_buffer_id;
   video_encode_accelerator_->UseOutputBitstreamBuffer(media::BitstreamBuffer(
-      bitstream_buffer_id, output_buffers_[bitstream_buffer_id]->handle(),
+      bitstream_buffer_id,
+      output_buffers_[bitstream_buffer_id]->handle().Duplicate(),
       output_buffer_size_));
 }
 
@@ -210,8 +215,7 @@ void WebrtcVideoEncoderGpu::UseOutputBitstreamBufferId(
 std::unique_ptr<WebrtcVideoEncoderGpu> WebrtcVideoEncoderGpu::CreateForH264() {
   DVLOG(3) << __func__;
 
-  // TODO(gusss): what profile should be picked here? Currently, baseline was
-  // chosen arbitrarily.
+  // H264 encoder on Windows supports only baseline profile.
   return base::WrapUnique(new WebrtcVideoEncoderGpu(
       media::VideoCodecProfile::H264PROFILE_BASELINE));
 }
