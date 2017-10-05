@@ -16,6 +16,24 @@
       "revId": "c794bfc14cc748e17437518db0b6d41fe2fb0a04",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac28f0f3_24ccb615",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-10-05T16:37:14Z",
+      "side": 1,
+      "message": "I can at least run gn gen, and compile some binaries like base_unittests.",
+      "parentUuid": "9c6464b8_8b392c7d",
+      "revId": "c794bfc14cc748e17437518db0b6d41fe2fb0a04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
