@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5da3a9da_6702cc5a",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7b5dbf5_7cc6e3d7",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bc29021_6d342d1a",
         "filename": "chrome/browser/notifications/notification_template_builder.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea4186bc_b367df04",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc29021_6d342d1a",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6dd974d9_35cac1da",
+        "filename": "chrome/browser/notifications/notification_template_builder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6e5386b_abc85c48",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3bafd182_f5dfe961",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-05T14:20:44Z",
       "side": 1,
       "message": "What part of this CL caused this to change? Are we sure they\u0027re being ran?",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd05c91_48b44304",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Ah, I forgot to comment on this before sending my replies.\n\nThe id is from the old toasts, it is not required in the new spec and the Notifications Visualizer app from MS even flags it as an error. Since I was adding more tests, I felt it would be easier to remove the ID from the code and XML expectation than doing a separate cleanup pass later.",
+      "parentUuid": "3bafd182_f5dfe961",
       "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c02b90b9_cd92b400",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Bah... Yes, of course!",
+      "parentUuid": "d6869e4a_1779085f",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29a769cf_5ce49794",
         "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
         "patchSetId": 5
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-05T14:20:44Z",
       "side": 1,
       "message": "Note that \"foreground\" may not always be right, but we don\u0027t have the right knowledge in the system :(. Safe to default to it for now.",
+      "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b80b52f_f4ce6c13",
+        "filename": "chrome/browser/notifications/notification_template_builder_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-05T14:36:17Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure what to do there.",
+      "parentUuid": "29a769cf_5ce49794",
       "revId": "9262b3ccb3aef97b7660c1c38a57a0b3b26a7b69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
