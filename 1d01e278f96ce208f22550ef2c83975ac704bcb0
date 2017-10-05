@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1304d57_8b4857f6",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T22:26:02Z",
+      "side": 1,
+      "message": "This makes #scroll-container the offsetParent of #highlight, making it possible to correctly set scroll grammatically.",
+      "revId": "1d01e278f96ce208f22550ef2c83975ac704bcb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
