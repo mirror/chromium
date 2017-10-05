@@ -16,6 +16,24 @@
       "revId": "fbe06ae264852782ecf186c035ec9c582ac37dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340ccd8d_7363df92",
+        "filename": "base/tuple.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-10-05T17:37:12Z",
+      "side": 1,
+      "message": "Yes, as OutTuple itself is not a reference and std::tuple_size can handle qualifiers, decay is not needed here.",
+      "parentUuid": "8c846497_fdfffaf6",
+      "revId": "fbe06ae264852782ecf186c035ec9c582ac37dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
