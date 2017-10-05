@@ -16,6 +16,24 @@
       "revId": "efce159a5f4c4fbee65b6f4d4205940035ecf72b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e262317_74386745",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-10-05T21:03:41Z",
+      "side": 1,
+      "message": "\"cancel\" is never disabled. I can add an assert and a comment to document that.",
+      "parentUuid": "af915b2e_64ae1520",
+      "revId": "efce159a5f4c4fbee65b6f4d4205940035ecf72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
