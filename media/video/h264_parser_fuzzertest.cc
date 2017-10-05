@@ -17,6 +17,9 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   if (!size)
     return 0;
 
+  std::vector<media::H264NALU> nalus;
+  media::H264Parser::ParseNALUs(data, base::checked_cast<off_t>(size), &nalus);
+
   media::H264Parser parser;
   parser.SetStream(data, base::checked_cast<off_t>(size));
 
