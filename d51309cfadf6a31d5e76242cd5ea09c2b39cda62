@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcbf6e24_5f5fc92e",
+        "filename": "chrome/browser/printing/print_view_manager_base.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T21:55:14Z",
+      "side": 1,
+      "message": "std::make_unique now.",
+      "range": {
+        "startLine": 190,
+        "startChar": 19,
+        "endLine": 190,
+        "endChar": 35
+      },
+      "revId": "d51309cfadf6a31d5e76242cd5ea09c2b39cda62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
