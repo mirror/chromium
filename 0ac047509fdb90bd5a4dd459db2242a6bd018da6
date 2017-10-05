@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b6bc748_59b3565c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-05T13:31:17Z",
+      "side": 1,
+      "message": "So the contract changes and all callers are required to check for readiness first. I don\u0027t see that in this CL?\nInstead, should we just return in case of not ready?\n\nI\u0027m afraid we\u0027re missing some cornercase and introduce a crasher. I know fear of change is not a good thing but test coverage for our error cases isn\u0027t the best.",
+      "range": {
+        "startLine": 526,
+        "startChar": 18,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "0ac047509fdb90bd5a4dd459db2242a6bd018da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
