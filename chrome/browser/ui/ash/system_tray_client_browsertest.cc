@@ -4,12 +4,13 @@
 
 #include "chrome/browser/ui/ash/system_tray_client.h"
 
+#include "ash/ash_view_ids.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/system/date/date_view.h"
 #include "ash/system/date/system_info_default_view.h"
 #include "ash/system/date/tray_system_info.h"
-#include "ash/system/enterprise/tray_enterprise.h"
 #include "ash/system/tray/label_tray_view.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_test_api.h"
@@ -32,8 +33,12 @@
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_manager.h"
+#include "content/public/common/service_manager_connection.h"
 #include "content/public/test/test_utils.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/views/controls/label.h"
+
+#include "mojo/public/cpp/test_support/waiter.h"
 
 using chromeos::ProfileHelper;
 using user_manager::UserManager;
@@ -142,18 +147,23 @@ IN_PROC_BROWSER_TEST_F(SystemTrayClientEnterpriseTest, TrayEnterprise) {
   policy::DevicePolicyCrosTestHelper::MarkAsEnterpriseOwnedBy("example.com");
   content::RunAllPendingInMessageLoop();
 
+  // Connect to ash.
+  ash::mojom::SystemTrayTestApiPtr test_api;
+  content::ServiceManagerConnection::GetForProcess()
+      ->GetConnector()
+      ->BindInterface(ash::mojom::kServiceName, &test_api);
+
   // Open the system tray menu.
-  ash::SystemTray* system_tray = GetSystemTray();
-  system_tray->ShowDefaultView(ash::BUBBLE_CREATE_NEW,
-                               false /* show_by_click */);
+  mojo::test::Waiter waiter;
+  test_api->ShowBubble(waiter.Capture());
+  waiter.Wait();
 
   // Managed devices show an item in the menu.
-  ash::TrayEnterprise* tray_enterprise =
-      ash::SystemTrayTestApi(system_tray).tray_enterprise();
-  ASSERT_TRUE(tray_enterprise->tray_view());
-  EXPECT_TRUE(tray_enterprise->tray_view()->visible());
-
-  system_tray->CloseBubble();
+  bool view_visible = false;
+  test_api->IsBubbleViewVisible(ash::VIEW_ID_TRAY_ENTERPRISE,
+                                waiter.Capture(&view_visible));
+  waiter.Wait();
+  EXPECT_TRUE(view_visible);
 }
 
 class SystemTrayClientClockTest : public chromeos::LoginManagerTest {
