@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "a68e2302_7ca1e0f9",
+        "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T20:40:58Z",
+      "side": 1,
+      "message": "OK so this seems to be leading me down a rabbit hole of finding and fixing software-gpu compositing synchronization issues in offscreen canvas, which is good. They were kinda hidden before.\n\nBut then there\u0027s the problem that contexts can return null one call, then non-null the next, and its racey with compositor state if you assume null means software compositing.\n\nSo maybe if a context is returned null, we go to software compositing too (and lose the compositor\u0027s).\n\n2 possible adjustments are:\n- if main thread context (or any synchronized context) fails to bind still return non-null, thats probably bad but maybe not\n- retry the context creation if it fails to bind, up to some # of tries",
+      "parentUuid": "def9d7d4_bc2eb3c3",
+      "revId": "04a10bf71c0c980110b9458772a58a6596ab469e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad6368ab_cad80f9d",
         "filename": "content/renderer/pepper/pepper_graphics_2d_host.cc",
         "patchSetId": 3
