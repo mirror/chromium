@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1996a81_1b2ccddc",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-05T22:47:54Z",
+      "side": 1,
+      "message": "typo? should be deps",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98c097c_5c5aedd0",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1177,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-05T22:47:54Z",
+      "side": 1,
+      "message": "Not sure if we need to make such a broad change here?\n\nOn my local Git branch, I just had to move the media router browsertests into an \"enable_extensions\" conditional.",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06f1875_f25b4b3e",
+        "filename": "chromecast/net/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-10-05T22:47:54Z",
+      "side": 1,
+      "message": "Isn\u0027t Android also Linux? Not sure..",
+      "revId": "c0fcdfda75e39cbd9f75f6349f18978af7eed087",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
