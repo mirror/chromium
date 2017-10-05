@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aa22e9d_ba8c0755",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-05T14:38:40Z",
+      "side": 1,
+      "message": "Instead of modifying the algorithm, wouldn\u0027t it be possible to modify the input to the algorithm?\n\nfor each extra constraint\n  add extra.basic() to main.basic()\nfor each i\n  add extra.advanced()[i] to main.advanced()[i]\n\nexecuteAlgorithm(main);",
+      "revId": "6d90fb5712985cf0c3220b1c727dfbb8e66fa86f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
