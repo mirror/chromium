@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "c54d9e98_c935e852",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T22:56:13Z",
+      "side": 1,
+      "message": "let\u0027s put this in contextualsearch for lack of a better place right now",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35189f98_80bc967d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T22:56:13Z",
+      "side": 1,
+      "message": "since the CVC/webcontents can change for the lifetime of the tab, does this have problems with that?  goes along with comments in ContextualSearchTabHelper.java",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9317b73_aeb4ec4d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T22:56:13Z",
+      "side": 1,
+      "message": "what happens when the cvc changes?  Will this one be holding onto the wrong thing?  If we don\u0027t need to recreate this, I would suggest having a separate method on it called setContentViewCore that you could do regardless of this being newly created or updating the CVC.",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33fa5818_97060467",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
         "patchSetId": 28

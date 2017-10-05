@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "701e2b00_dc9fdcff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T22:56:13Z",
+      "side": 1,
+      "message": "Tabs can take a WebContents in the constructor, but I guess it always creates a CVC for them inside of the Tab, so this sounds good to me.",
+      "parentUuid": "32ef79a9_a72e0278",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a9fdf7_bad40fce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 26
