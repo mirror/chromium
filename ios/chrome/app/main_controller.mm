@@ -2006,11 +2006,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
     return;
   }
 
-  BOOL areSettingsPresented = _settingsNavigationController != NULL;
   _signinInteractionController = [[SigninInteractionController alloc]
           initWithBrowserState:_mainBrowserState
       presentingViewController:[self topPresentedViewController]
-         isPresentedOnSettings:areSettingsPresented
                    accessPoint:accessPoint
                    promoAction:promoAction
                     dispatcher:self.mainBVC.dispatcher];
@@ -2043,11 +2041,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
     return;
   }
 
-  BOOL areSettingsPresented = _settingsNavigationController != NULL;
   _signinInteractionController = [[SigninInteractionController alloc]
           initWithBrowserState:_mainBrowserState
       presentingViewController:[self topPresentedViewController]
-         isPresentedOnSettings:areSettingsPresented
                    accessPoint:signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN
                    promoAction:signin_metrics::PromoAction::
                                    PROMO_ACTION_NO_SIGNIN_PROMO
