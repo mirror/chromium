@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "becea823_36d780c4",
+        "filename": "ash/public/cpp/ash_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-05T22:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fba8457_3980e0cc",
+      "range": {
+        "startLine": 113,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 60
+      },
+      "revId": "a7163204a33b2f0de9e85f50a2ff8e347163d23f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce5b90d0_708535ea",
         "filename": "ash/wayland/BUILD.gn",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "a7163204a33b2f0de9e85f50a2ff8e347163d23f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f332b46_315d8fdb",
+        "filename": "ash/wayland/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-10-05T22:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce5b90d0_708535ea",
+      "range": {
+        "startLine": 14,
+        "startChar": 4,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "a7163204a33b2f0de9e85f50a2ff8e347163d23f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
