@@ -16,12 +16,14 @@
 #include "base/threading/thread_checker.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/video_detector.h"
 #include "components/viz/service/surfaces/surface_manager.h"
 #include "components/viz/service/surfaces/surface_observer.h"
 #include "components/viz/service/viz_service_export.h"
 #include "gpu/ipc/common/surface_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/privileged/interfaces/compositing/frame_sink_manager.mojom.h"
+#include "services/viz/public/interfaces/compositing/video_detector_client.mojom.h"
 
 namespace cc {
 
@@ -37,6 +39,7 @@ namespace viz {
 
 class DisplayProvider;
 class FrameSinkManagerClient;
+class FrameSinkObserver;
 
 // FrameSinkManagerImpl manages BeginFrame hierarchy. This is the implementation
 // detail for FrameSinkManagerImpl.
@@ -83,6 +86,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   void AssignTemporaryReference(const SurfaceId& surface_id,
                                 const FrameSinkId& owner) override;
   void DropTemporaryReference(const SurfaceId& surface_id) override;
+  void AddVideoDetectorClient(mojom::VideoDetectorClientPtr client) override;
 
   // CompositorFrameSinkSupport, hierarchy, and BeginFrameSource can be
   // registered and unregistered in any order with respect to each other.
@@ -146,6 +150,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
       uint64_t frame_index,
       mojom::HitTestRegionListPtr hit_test_region_list);
 
+  void AddObserver(FrameSinkObserver* observer);
+  void RemoveObserver(FrameSinkObserver* observer);
+  void OnCompositorFrameReceived(const FrameSinkId& frame_sink_id,
+                                 const CompositorFrame& frame);
+
  private:
   friend class cc::test::SurfaceSynchronizationTest;
 
@@ -201,6 +210,10 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl : public SurfaceObserver,
   // This will point to |client_ptr_| if using Mojo or a provided client if
   // directly connected. Use this to make function calls.
   mojom::FrameSinkManagerClient* client_ = nullptr;
+
+  base::ObserverList<FrameSinkObserver> frame_sink_observers_;
+
+  VideoDetector video_detector_;
 
   mojom::FrameSinkManagerClientPtr client_ptr_;
   mojo::Binding<mojom::FrameSinkManager> binding_;

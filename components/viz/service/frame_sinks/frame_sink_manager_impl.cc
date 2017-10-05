@@ -12,6 +12,7 @@
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
+#include "components/viz/service/frame_sinks/frame_sink_observer.h"
 #include "components/viz/service/frame_sinks/primary_begin_frame_source.h"
 #include "components/viz/service/frame_sinks/root_compositor_frame_sink_impl.h"
 
@@ -35,6 +36,7 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
     DisplayProvider* display_provider)
     : display_provider_(display_provider),
       surface_manager_(lifetime_type),
+      video_detector_(this),
       binding_(this) {
   surface_manager_.AddObserver(this);
 }
@@ -394,6 +396,26 @@ void FrameSinkManagerImpl::SwitchActiveAggregatedHitTestRegionList(
     client_->SwitchActiveAggregatedHitTestRegionList(frame_sink_id,
                                                      active_handle_index);
   }
+}
+
+void FrameSinkManagerImpl::AddObserver(FrameSinkObserver* observer) {
+  frame_sink_observers_.AddObserver(observer);
+}
+
+void FrameSinkManagerImpl::RemoveObserver(FrameSinkObserver* observer) {
+  frame_sink_observers_.RemoveObserver(observer);
+}
+
+void FrameSinkManagerImpl::OnCompositorFrameReceived(
+    const FrameSinkId& frame_sink_id,
+    const CompositorFrame& frame) {
+  for (auto& observer : frame_sink_observers_)
+    observer.OnCompositorFrameReceived(frame_sink_id, frame);
+}
+
+void FrameSinkManagerImpl::AddVideoDetectorClient(
+    mojom::VideoDetectorClientPtr client) {
+  video_detector_.AddClient(std::move(client));
 }
 
 }  // namespace viz

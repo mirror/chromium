@@ -153,6 +153,8 @@ bool CompositorFrameSinkSupport::SubmitCompositorFrame(
   DCHECK(local_surface_id.is_valid());
   DCHECK(!frame.render_pass_list.empty());
 
+  frame_sink_manager_->OnCompositorFrameReceived(frame_sink_id_, frame);
+
   uint64_t frame_index = ++last_frame_index_;
   ++ack_pending_count_;
 
