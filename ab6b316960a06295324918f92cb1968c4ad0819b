@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "4a9524a9_3be5e465",
+        "filename": "chrome/common/profiling/memlog_stream.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ce10fa0_d94bfafb",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87e6b2b0_c7a0150b",
         "filename": "chrome/profiling/backtrace_storage.cc",
         "patchSetId": 16
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "b0c44235_4c34e42b",
+        "filename": "chrome/profiling/backtrace_storage.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87e6b2b0_c7a0150b",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffbcafbf_1fd65841",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 16
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-05T04:52:03Z",
       "side": 1,
       "message": "Just default the move ctors as well? Or does this encounter the MSVC bug?",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4693357_6b3fdfb2",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "msvc bug",
+      "parentUuid": "ffbcafbf_1fd65841",
       "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +147,30 @@
     },
     {
       "key": {
+        "uuid": "fe94f86a_233fe485",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0768f316_a29592ed",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 29
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af6a8c89_a32f1c03",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 16
@@ -113,6 +191,30 @@
       "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a11df88_f5d2e75a",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af6a8c89_a32f1c03",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 43
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +241,30 @@
     },
     {
       "key": {
+        "uuid": "e580be61_35a5d2b9",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c36707d_75e2d666",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1dca6c3_88f1975c",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 16
@@ -159,6 +285,30 @@
       "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf49ac4_1585ab03",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1dca6c3_88f1975c",
+      "range": {
+        "startLine": 191,
+        "startChar": 20,
+        "endLine": 191,
+        "endChar": 31
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +335,30 @@
     },
     {
       "key": {
+        "uuid": "9397a9d2_57373152",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93087e5c_9726723c",
+      "range": {
+        "startLine": 220,
+        "startChar": 52,
+        "endLine": 220,
+        "endChar": 63
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29953915_e2d66bca",
         "filename": "chrome/profiling/memlog_receiver_pipe.cc",
         "patchSetId": 16
@@ -196,6 +370,24 @@
       "writtenOn": "2017-10-05T04:52:03Z",
       "side": 1,
       "message": "Nit: std::move() these please",
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3499644c_97287efd",
+        "filename": "chrome/profiling/memlog_receiver_pipe.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-05T16:35:41Z",
+      "side": 1,
+      "message": "done. I searched for TaskRunner in the CL...but it looks like you got them all \u003dP",
+      "parentUuid": "29953915_e2d66bca",
       "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
