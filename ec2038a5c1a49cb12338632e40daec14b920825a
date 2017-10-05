@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21a12cbf_68c03b45",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 3143,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-05T23:07:37Z",
+      "side": 0,
+      "message": "Would we still want this if accessibility is enabled?",
+      "range": {
+        "startLine": 3143,
+        "startChar": 21,
+        "endLine": 3143,
+        "endChar": 80
+      },
+      "revId": "ec2038a5c1a49cb12338632e40daec14b920825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
