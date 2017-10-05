@@ -16,6 +16,24 @@
       "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2dbe4e_55b78882",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-10-05T21:28:07Z",
+      "side": 1,
+      "message": "The name is passed from javascript, which takes it from the \u003cselect\u003e element, and the sessions list is passed from backend, which generates this list as the list of filenames in the sessions directory that have specific extension (see GetSessionsList, line 62 in this file).\n\nThe only way I can see to delete files elsewhere is to add an \u003coption\u003e element to the list manually (e.g. in javascript from console), choose this new option and click delete. Do you think we need to do an additional check for this kind of scenario?",
+      "parentUuid": "fc956a7d_6cb96197",
+      "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
