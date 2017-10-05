@@ -42,7 +42,8 @@ class ShaderTranslatorInterface
                     ShShaderSpec shader_spec,
                     const ShBuiltInResources* resources,
                     ShShaderOutput shader_output_language,
-                    ShCompileOptions driver_bug_workarounds,
+                    ShCompileOptions workarounds_to_add,
+                    ShCompileOptions workarounds_to_remove,
                     bool gl_shader_interm_output) = 0;
 
   // Translates the given shader source.
@@ -98,7 +99,8 @@ class GPU_EXPORT ShaderTranslator : public ShaderTranslatorInterface {
             ShShaderSpec shader_spec,
             const ShBuiltInResources* resources,
             ShShaderOutput shader_output_language,
-            ShCompileOptions driver_bug_workarounds,
+            ShCompileOptions workarounds_to_add,
+            ShCompileOptions workarounds_to_remove,
             bool gl_shader_interm_output) override;
 
   // Overridden from ShaderTranslatorInterface.
