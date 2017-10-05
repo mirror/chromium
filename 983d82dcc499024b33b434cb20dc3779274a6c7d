@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "aaad8cb9_44a05f84",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3099,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T06:00:17Z",
+      "side": 1,
+      "message": "Nit: use WrapRefCounted please.",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32041fe1_95dd200c",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 33
@@ -25,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "9f7830b5_a80770b2",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T06:00:17Z",
+      "side": 1,
+      "message": "Why is this needed in addition to being exposed via navigation:frame? Can workers use this?",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37b2faf9_d4262534",
         "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
         "patchSetId": 33
@@ -41,6 +75,63 @@
         "startChar": 11,
         "endLine": 18,
         "endChar": 12
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57583c2a_caa1c4da",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T06:00:17Z",
+      "side": 1,
+      "message": "Remove?",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "198d9ddc_845b4782",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T06:00:17Z",
+      "side": 1,
+      "message": "Nit: please use g_empty_string.\n\nAlso, for simple functions like this that convert between non-mojo and mojo types, let\u0027s use the TypeConverter template (yes it\u0027s deprecated, but it\u0027s also a useful way to track where we\u0027re doing mojo\u003c-\u003enon-Mojo conversions in-process)",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee923f26_e8729453",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T06:00:17Z",
+      "side": 1,
+      "message": "It\u0027s generally considered acceptable to style to just write \u0027auto\u0027 here.",
+      "range": {
+        "startLine": 169,
+        "startChar": 13,
+        "endLine": 169,
+        "endChar": 54
       },
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
