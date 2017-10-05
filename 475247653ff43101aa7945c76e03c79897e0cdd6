@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0911f1c8_e2fabfe7",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "Sean says no for the same reason.",
+      "parentUuid": "e30ab862_89950345",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adfa143_e6d18cae",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T22:58:20Z",
       "side": 1,
       "message": "If you\u0027re venturing into tuple\u003cstring, string, string\u003e, better to define a struct\nwithin the anonymous namespace that lets you name the fields.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fd32ad_862de086",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "good point.",
+      "parentUuid": "9adfa143_e6d18cae",
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "157969b1_dcf43243",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "We can get rid of this, and the issue @1152 by making the map local.",
+      "parentUuid": "59a55842_971caa27",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1698478e_885d7522",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-04T22:58:20Z",
       "side": 1,
       "message": "Since you\u0027re using this type name a few places, recommend you define a name for it with \u0027using\u0027",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7844fc_96708d99",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "good point.",
+      "parentUuid": "1698478e_885d7522",
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "eb6199b6_d656a796",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "Yes, I did. Did not catch that this would unnecesarily take up memory",
+      "parentUuid": "1cb53128_015aa5cf",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2a55fe8_fb9206c7",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-04T22:58:20Z",
       "side": 1,
       "message": "Ah, debugging by (virtual) printf.  You probably meant to remove these.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9df800_0e242832",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-05T21:34:05Z",
+      "side": 1,
+      "message": "ahhh this escaped the final check. good catch.",
+      "parentUuid": "f2a55fe8_fb9206c7",
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
