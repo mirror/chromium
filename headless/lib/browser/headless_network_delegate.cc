@@ -38,7 +38,6 @@ int HeadlessNetworkDelegate::OnBeforeURLRequest(
     net::URLRequest* request,
     const net::CompletionCallback& callback,
     GURL* new_url) {
-  request->RemoveRequestHeaderByName(kDevToolsEmulateNetworkConditionsClientId);
   return net::OK;
 }
 
