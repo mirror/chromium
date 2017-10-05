@@ -76,12 +76,18 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
       offscreen_canvas_resource_provider_;
 
   bool VerifyImageSize(const IntSize);
-  void PostImageToPlaceholder(RefPtr<StaticBitmapImage>);
+  void PostImageToPlaceholder(RefPtr<StaticBitmapImage>, unsigned resource_id);
 
   viz::mojom::blink::CompositorFrameSinkPtr sink_;
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;
 
   int placeholder_canvas_id_;
+
+  // The latest_unposted_resource_id_ always refers to the Id of the frame
+  // resource used by the latest_unposted_image_.
+  RefPtr<StaticBitmapImage> latest_unposted_image_;
+  unsigned latest_unposted_resource_id_;
+  int num_post_images_unresponded_;
 
   viz::BeginFrameAck current_begin_frame_ack_;
 };

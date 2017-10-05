@@ -26,9 +26,9 @@ OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
 
 std::unique_ptr<OffscreenCanvasResourceProvider::FrameResource>
 OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
-  if (recycleable_resource_) {
-    recycleable_resource_->spare_lock_ = true;
-    return std::move(recycleable_resource_);
+  if (recyclable_resource_) {
+    recyclable_resource_->spare_lock_ = true;
+    return std::move(recyclable_resource_);
   }
   return std::unique_ptr<FrameResource>(new FrameResource());
 }
@@ -212,9 +212,9 @@ void OffscreenCanvasResourceProvider::ReclaimResourceInternal(
     it->value->spare_lock_ = false;
   } else {
     // Really reclaim the resources
-    recycleable_resource_ = std::move(it->value);
-    // release SkImage immediately since it is not recycleable
-    recycleable_resource_->image_ = nullptr;
+    recyclable_resource_ = std::move(it->value);
+    // release SkImage immediately since it is not recyclable
+    recyclable_resource_->image_ = nullptr;
     resources_.erase(it);
   }
 }

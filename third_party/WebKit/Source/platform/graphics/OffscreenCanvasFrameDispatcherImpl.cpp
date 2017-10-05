@@ -22,6 +22,7 @@ namespace blink {
 
 enum {
   kMaxPendingCompositorFrames = 2,
+  kMaxPostImageUnresponded = 3,
 };
 
 OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
@@ -38,7 +39,8 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
       change_size_for_next_commit_(false),
       needs_begin_frame_(false),
       binding_(this),
-      placeholder_canvas_id_(canvas_id) {
+      placeholder_canvas_id_(canvas_id),
+      num_post_images_unresponded_(0) {
   if (frame_sink_id_.is_valid()) {
     // Only frameless canvas pass an invalid frame sink id; we don't create
     // mojo channel for this special case.
@@ -88,23 +90,37 @@ void UpdatePlaceholderImage(WeakPtr<OffscreenCanvasFrameDispatcher> dispatcher,
 }  // namespace
 
 void OffscreenCanvasFrameDispatcherImpl::PostImageToPlaceholder(
-    RefPtr<StaticBitmapImage> image) {
-  // After this point, |image| can only be used on the main thread, until
-  // it is returned.
-  image->Transfer();
-  RefPtr<WebTaskRunner> dispatcher_task_runner =
-      Platform::Current()->CurrentThread()->GetWebTaskRunner();
+    RefPtr<StaticBitmapImage> image,
+    unsigned resource_id) {
+  // Determines whether the main thread may be blocked. If so, save the image
+  // and do not post it. Otherwise, post it.
+  if (num_post_images_unresponded_ == kMaxPostImageUnresponded) {
+    if (latest_unposted_image_) {
+      // The previous unposted image becomes obsolete now.
+      offscreen_canvas_resource_provider_->ReclaimResource(
+          latest_unposted_resource_id_);
+    }
 
-  Platform::Current()
-      ->MainThread()
-      ->Scheduler()
-      ->CompositorTaskRunner()
-      ->PostTask(BLINK_FROM_HERE,
-                 CrossThreadBind(
-                     UpdatePlaceholderImage, this->CreateWeakPtr(),
-                     WTF::Passed(std::move(dispatcher_task_runner)),
-                     placeholder_canvas_id_, std::move(image),
-                     offscreen_canvas_resource_provider_->GetNextResourceId()));
+    latest_unposted_image_ = std::move(image);
+    latest_unposted_resource_id_ = resource_id;
+  } else {
+    DCHECK(num_post_images_unresponded_ < kMaxPostImageUnresponded &&
+           num_post_images_unresponded_ >= 0);
+    image->Transfer();
+    RefPtr<WebTaskRunner> dispatcher_task_runner =
+        Platform::Current()->CurrentThread()->GetWebTaskRunner();
+
+    Platform::Current()
+        ->MainThread()
+        ->Scheduler()
+        ->CompositorTaskRunner()
+        ->PostTask(BLINK_FROM_HERE,
+                   CrossThreadBind(
+                       UpdatePlaceholderImage, this->CreateWeakPtr(),
+                       WTF::Passed(std::move(dispatcher_task_runner)),
+                       placeholder_canvas_id_, std::move(image), resource_id));
+    num_post_images_unresponded_++;
+  }
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
@@ -117,7 +133,9 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   if (!image || !VerifyImageSize(image->Size()))
     return;
   if (!frame_sink_id_.is_valid()) {
-    PostImageToPlaceholder(std::move(image));
+    PostImageToPlaceholder(
+        std::move(image),
+        offscreen_canvas_resource_provider_->GetNextResourceId());
     return;
   }
   viz::CompositorFrame frame;
@@ -188,10 +206,13 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
     }
   }
 
-  PostImageToPlaceholder(std::move(image));
   commit_type_histogram.Count(commit_type);
 
+  PostImageToPlaceholder(
+      std::move(image),
+      offscreen_canvas_resource_provider_->GetNextResourceId());
   offscreen_canvas_resource_provider_->IncNextResourceId();
+
   frame.resource_list.push_back(std::move(resource));
 
   viz::TextureDrawQuad* quad =
@@ -372,6 +393,15 @@ void OffscreenCanvasFrameDispatcherImpl::ReclaimResources(
 
 void OffscreenCanvasFrameDispatcherImpl::ReclaimResource(unsigned resource_id) {
   offscreen_canvas_resource_provider_->ReclaimResource(resource_id);
+  num_post_images_unresponded_--;
+
+  // The main thread has become unblocked recently and we have an image that
+  // have not been posted yet.
+  if (latest_unposted_image_ &&
+      num_post_images_unresponded_ == kMaxPostImageUnresponded - 1) {
+    PostImageToPlaceholder(std::move(latest_unposted_image_),
+                           latest_unposted_resource_id_);
+  }
 }
 
 bool OffscreenCanvasFrameDispatcherImpl::VerifyImageSize(
