@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3495768_579be4a1",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Nit: no braces for a conditional with a single line body (for consistency in this file)",
+      "range": {
+        "startLine": 66,
+        "startChar": 76,
+        "endLine": 66,
+        "endChar": 77
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18487e0_2f509e70",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Very minor nit: \"an\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 39,
+        "endLine": 86,
+        "endChar": 40
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4897095a_08eccf03",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Does std::make_unique from \u003cmemory\u003e work here? Raw new is dispreferred if possible. Something like:\n\nstatus_reporter_ \u003d IsDebugMode() ?\n    std::make_unique\u003cConsoleStatusReporter\u003e() :\n    std::make_unique\u003cTrackingStatusReporter\u003e();",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 68
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68f0cdb_5c60ba5c",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Let\u0027s make this comment less unwieldy :)\n\n\"Every call to RequestAppBanner() should call ReportStatus() once, unless the pipeline was terminated while we were waiting for the beforeinstallpromptevent to resolve.\"",
+      "range": {
+        "startLine": 359,
+        "startChar": 0,
+        "endLine": 365,
+        "endChar": 13
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3eb2b9_39e86436",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "(Possibly silly) question: does this full definition need to be in the header? Can the class be forward declared and then the definition provided in the anonymous namespace in the cc file?",
+      "range": {
+        "startLine": 305,
+        "startChar": 8,
+        "endLine": 305,
+        "endChar": 22
+      },
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ff20ff_4736b16a",
         "filename": "chrome/browser/banners/app_banner_manager.h",
         "patchSetId": 1
@@ -13,6 +128,47 @@
       "writtenOn": "2017-10-04T22:57:18Z",
       "side": 1,
       "message": "Note: I added this in the reland CL, because it was missing; I guess the linter warning was added since I last submitted this.",
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620ac483_9e23af3e",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Minor nit: let\u0027s put a newline here?",
+      "parentUuid": "e6ff20ff_4736b16a",
+      "revId": "03f5545c0652b108913605349954d848f88b7e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf8744c_6b44a81d",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T00:17:00Z",
+      "side": 1,
+      "message": "Nit: \"Waiting()\" is a bit of a weird name, since this is more of a correctness guard. What about making the comment: \"Returns true if ReportStatus() is not permitted to be called.\", and making the method name \"CanReportStatus()\"?",
+      "range": {
+        "startLine": 310,
+        "startChar": 17,
+        "endLine": 310,
+        "endChar": 24
+      },
       "revId": "03f5545c0652b108913605349954d848f88b7e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
