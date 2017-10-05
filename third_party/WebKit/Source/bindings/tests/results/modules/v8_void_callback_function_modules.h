@@ -14,14 +14,13 @@
 
 #include "bindings/core/v8/NativeValueTraits.h"
 #include "modules/ModulesExport.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/text/WTFString.h"
 
 namespace blink {
-
-class ScriptState;
 
 class MODULES_EXPORT V8VoidCallbackFunctionModules final : public GarbageCollectedFinalized<V8VoidCallbackFunctionModules>, public TraceWrapperBase {
  public:
@@ -37,6 +36,8 @@ class MODULES_EXPORT V8VoidCallbackFunctionModules final : public GarbageCollect
   v8::Local<v8::Function> v8Value(v8::Isolate* isolate) {
     return callback_.NewLocal(isolate);
   }
+
+  v8::Isolate* GetIsolate() const { return script_state_->GetIsolate(); }
 
  private:
   V8VoidCallbackFunctionModules(ScriptState*, v8::Local<v8::Function>);
