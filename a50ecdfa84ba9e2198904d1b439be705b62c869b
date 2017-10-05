@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10c1ddd3_8b1afab9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-05T21:00:11Z",
+      "side": 1,
+      "message": "nit: s/life time/lifetime/",
+      "range": {
+        "startLine": 10,
+        "startChar": 36,
+        "endLine": 10,
+        "endChar": 45
+      },
+      "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e932962a_c62a5cd1",
         "filename": "content/public/browser/frame_service_base.h",
         "patchSetId": 18
@@ -13,6 +36,24 @@
       "writtenOn": "2017-10-05T06:45:39Z",
       "side": 1,
       "message": "I wonder whether this is still needed. To be honest I don\u0027t see how race could happen given we observe RFH changes closely.",
+      "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24efada_bd174a3f",
+        "filename": "content/public/browser/frame_service_base.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-05T21:00:11Z",
+      "side": 1,
+      "message": "Looks like it\u0027s still needed based on the context the dcheng@ gave over chat (see https://crbug.com/769189 for an example of a race we want to prevent)",
+      "parentUuid": "e932962a_c62a5cd1",
       "revId": "a50ecdfa84ba9e2198904d1b439be705b62c869b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
