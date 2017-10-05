@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be5a3372_4dfa38b8",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5987,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-05T20:31:22Z",
+      "side": 1,
+      "message": "Maybe we should just expose NavEntryImpl::FindFrameEntry within content/ instead of having it be a private helper.  I think that\u0027s basically what you need.  Let\u0027s rename it to GetTreeNode and move it next to root_node(), perhaps?",
+      "revId": "289e4f8142b75fc6d870cd1dc50125c8f1294231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
