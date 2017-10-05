@@ -282,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "7db1099c_ff491430",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 1,
+      "message": "Can you comment this",
+      "parentUuid": "89fd702b_fa953173",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339281d8_54113b3d",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -486,6 +504,24 @@
       "side": 1,
       "message": "This would only be of benefit for the video use cases--tab/desktop capture--but those won\u0027t be making RGBA_TEXTURE copy requests once they move into VIZ proper. :)",
       "parentUuid": "b6885e21_4cd005db",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "62ccffe3_94c3d770",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 1,
+      "message": "But the code will still be here right? I\u0027d still like a TODO to say this is something that could be done if needed, but not needed atm.",
+      "parentUuid": "3fca4e66_9517754b",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -912,6 +948,24 @@
     },
     {
       "key": {
+        "uuid": "4c893107_2c00c749",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 1,
+      "message": "You have to write a move contructor/assignment because when you define a destructor, the implicit ones are removed. But it\u0027s not that onerous:\n\nCacheEntry(CacheEntry\u0026\u0026) \u003d default;\nCacheEntry\u0026 operator\u003d(CacheEntry\u0026\u0026) \u003d default;\n\nI\u0027d prefer over a list still.",
+      "parentUuid": "c2e3b848_657d6f04",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8281e38b_0fd78d90",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -941,6 +995,24 @@
       "side": 1,
       "message": "Done.\n\nNote that there are cases where ContextSupport::SignalQuery() will NOT ever run the callback: https://cs.chromium.org/chromium/src/gpu/command_buffer/client/gles2_implementation.cc?rcl\u003d6489c3bf719ff00615a7946c0a4bb72bb8e44b2e\u0026l\u003d402 Thus, the \"static method\" approach wouldn\u0027t be able to guarantee all GL objects get cleaned up.\n\nSo, I decided to create a simple helper class to do this (ReadbackWorkflow). It has no data dependencies on GLRendererCopier, so there\u0027s no need for the WeakPtr-back-to-GLRendererCopier. Also, it has a destructor that will still do all the clean-up if the callback was never executed.",
       "parentUuid": "8281e38b_0fd78d90",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3401d8f4_ef3cf8bb",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 1,
+      "message": "If the context is lost it\u0027s okay to not delete it, so it\u0027s okay to leak if the callback is never called fwiw.",
+      "parentUuid": "065b6d5c_d2396d8d",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1186,6 +1258,24 @@
       "side": 1,
       "message": "I don\u0027t understand the value in doing this. I only see some downsides: 1) Introducing external test data dependencies, 2) adding extra files to the code base everyone has to download, 3) significant additional test runtime (to load PNGs), 4) Burdening future devs with having to rebase PNG files whenever making modifications to the test code.\n\nFWIW, if any of the tests fail, they do print out PNG data URLs that can be viewed in the browser to make comparisons when trying to debug things.",
       "parentUuid": "6cbdd269_92cfcc67",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a5f6be_a7f06411",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 1,
+      "message": "The advantage is that a code change can\u0027t change both the expected and actual results, it would have to include a change to the .png file. Rebasing is not hard, running the test with --cc-rebaseline-pixeltests does it.",
+      "parentUuid": "2f5b6b38_3849a035",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -34,6 +34,24 @@
       "revId": "8c837789b4a7d819040f704e0326664c34484de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58413fb_99eb88b1",
+        "filename": "components/viz/common/frame_sinks/copy_output_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-05T15:45:25Z",
+      "side": 0,
+      "message": "I am still curious why this became tests failing in this CL. You\u0027re changing implementation in GLRenderer. This was already there. Why would your changes in GLRenderer make this line become problematic?",
+      "parentUuid": "58f6ff12_65290168",
+      "revId": "8c837789b4a7d819040f704e0326664c34484de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
