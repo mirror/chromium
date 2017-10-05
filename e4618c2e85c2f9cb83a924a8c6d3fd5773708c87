@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6925fc_5de6a054",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-05T07:06:04Z",
+      "side": 1,
+      "message": "Please describe what are the changes, and add Bug: 771580 line.\n\nIt would be something like:\n\"\"\"\nThis corresponds to the DOM spec change\nhttps://github.com/whatwg/dom/pull/513\nnot to leak elements inside shadow tree after event dispatch is complete.\n\"\"\"",
+      "revId": "e4618c2e85c2f9cb83a924a8c6d3fd5773708c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
