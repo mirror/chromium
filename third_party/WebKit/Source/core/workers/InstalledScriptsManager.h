@@ -53,14 +53,11 @@ class InstalledScriptsManager {
   // installed.
   virtual bool IsScriptInstalled(const KURL& script_url) const = 0;
 
-  enum class ScriptStatus { kSuccess, kTaken, kFailed };
+  enum class ScriptStatus { kSuccess, kFailed };
   // Used on the worker thread. GetScriptData() can provide a script for the
   // |script_url| only once. When GetScriptData returns
   // - ScriptStatus::kSuccess: the script has been received correctly. Sets the
   //                           script to |out_script_data|.
-  // - ScriptStatus::kTaken: the script has been served from this manager
-  //                         (i.e. the same script is read more than once).
-  //                         |out_script_data| is left as is.
   // - ScriptStatus::kFailed: an error happened while receiving the script from
   //                          the browser process.
   //                         |out_script_data| is left as is.
