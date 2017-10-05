@@ -16,6 +16,24 @@
       "revId": "a15fc88fd3ebd4d6b184a52aaf91dcbdf03af334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6caf944b_9354ba09",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewImpl.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 3196,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-10-05T20:31:59Z",
+      "side": 1,
+      "message": "Hmm, this method is only ever called from tests and the method above (which is also only called from tests). Any idea why we have both since they do the same thing?\n\nI would say LayoutPoint since it\u0027s really a helper method for tests. I\u0027d move this implementation into HitTestResultAt and remove CoreHitTestResultAt, but that\u0027s part of the WebView interface (and so it must be WebPoint/WebFloatPoint). But it seems neither is ever called from outside of Blink so there\u0027s no reason it should be in WebView.h. So, remove that from the external interface and use LayoutPoint.\n\nIdeally, we\u0027d remove both and change tests to just call the hit test on the FrameView directly but that\u0027s probably a bunch of work and not sure it\u0027s worth anyone\u0027s time. It\u0027s probably worth it to remove",
+      "parentUuid": "aaa4ecf0_a04a2209",
+      "revId": "a15fc88fd3ebd4d6b184a52aaf91dcbdf03af334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
