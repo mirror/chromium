@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed23d7f3_6db739e7",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T17:34:16Z",
+      "side": 1,
+      "message": "What happens if the user overrides their user agent with an extension? I think we should get the user agent through a binding from the browser.",
+      "range": {
+        "startLine": 73,
+        "startChar": 37,
+        "endLine": 73,
+        "endChar": 38
+      },
+      "revId": "8d2e631ba24586929cdf3ee555a17ddec37c8fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
