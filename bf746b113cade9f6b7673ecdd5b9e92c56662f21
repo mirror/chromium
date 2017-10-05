@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4c86f338_b9c74a30",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-05T04:01:46Z",
+      "side": 1,
+      "message": "nit: not from your patch but maybe we should rename context -\u003e global_scope.",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d97d4a12_1b3bfa3c",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 9
