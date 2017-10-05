@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4f63f15_86c9a3d0",
+        "filename": "chrome/browser/chromeos/arc/arc_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T16:24:36Z",
+      "side": 1,
+      "message": "Could you clarify what does this mean? |profile| is already \"const Profile*\"?",
+      "range": {
+        "startLine": 238,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 20
+      },
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ece65c_b44a30ca",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T16:24:36Z",
+      "side": 1,
+      "message": "Could you explicitly comment this is for managed user?",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9aeac3a_1fff7017",
+        "filename": "chrome/browser/chromeos/arc/policy/arc_policy_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T16:24:36Z",
+      "side": 1,
+      "message": "optional: How about GetDefaultEcryptfsMigrationActionForManagedUser() ?",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921ca1c8_b0a25edb",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1027,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-10-05T16:24:36Z",
+      "side": 1,
+      "message": "Considering the code, should this be\naction \u003d GetDefaultEcryptfs...() ?\nSo that, you can skip assigning |action| on edge error cases?",
+      "revId": "00c64d89e154f7d506dcabad87625940e77b51a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
