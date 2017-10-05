@@ -309,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "b457f0c4_2fc09f90",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-10-05T07:45:21Z",
+      "side": 1,
+      "message": "1) The service manager is now responsible for killing the process when there are no more interface bound to it. (We don\u0027t need to test this, this is tested in service manager tests).\n\n2) we\u0027ll shut down using the logic in this class: when no resolvers are left (because their closures have been invoked), we\u0027ll unbind the factory ptr, which will cause the service manager to terminate the process. \n\nI added a browser test that validates the service does go away.",
+      "parentUuid": "eaba3ee5_0ed7be89",
+      "range": {
+        "startLine": 99,
+        "startChar": 28,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1906f78b_f2ab8fb7",
         "filename": "net/proxy/mojo_proxy_resolver_factory_impl.h",
         "patchSetId": 8
