@@ -59,6 +59,29 @@
     },
     {
       "key": {
+        "uuid": "1b9edb57_e440ac25",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "nit: Parens around the equality, just for clarity?",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44ed8c67_b2e0b468",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -70,6 +93,29 @@
       "writtenOn": "2017-10-05T17:25:24Z",
       "side": 1,
       "message": "Why doesn\u0027t InitiateTruncate run the DoLoop if it can? It seems strange for the caller to have to do this.\n\nThen, we\u0027d just need:\n\n  if (!success) {\n    InitiateTruncateEntry();\n    return;\n  }\n\n  cache_-\u003eCurrentWritersDoneWritingToEntry(entry_, success, TransactionSet());",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e84134_d1326763",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "Why not just hoist this inside the above conditional, wrap InitiateTruncateEntry and skip the extra variable?  I.e.\n\nif (!success) {\n  if (in_idles_state \u0026\u0026 InitiateTruncateEntry()) {\n    DoLoop(OK);\n    return;\n  }\n}\n\ncache_-\u003eCurrentWritersDoneWritingToEntry(...);",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 13
+      },
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -137,6 +183,29 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a12f908_ee0a6730",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "Comment?  I imagine something like \"Hold off additions of writers if the entry is truncating after an aborted transaction.\"",
+      "range": {
+        "startLine": 229,
+        "startChar": 28,
+        "endLine": 229,
+        "endChar": 58
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -302,6 +371,29 @@
     },
     {
       "key": {
+        "uuid": "f3bb1a1b_16babd7c",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "Again, the extra variable strikes me as adding noise, not signal; I\u0027d just conditionalize on the call.  But up to you.",
+      "range": {
+        "startLine": 408,
+        "startChar": 7,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e28a1ce_bad0ac7b",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -313,6 +405,47 @@
       "writtenOn": "2017-10-05T17:25:24Z",
       "side": 1,
       "message": "This state seems to just set the state to CACHE_WRITE_TRUNCATED_RESPONSE, why have this state at all?",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fa558b_ec132558",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "So that we actually wait until the async op completes before moving on to that state instead of racing with the async op.",
+      "parentUuid": "7e28a1ce_bad0ac7b",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a67a99_1fc80e6e",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "Same suggestion :-}.",
+      "range": {
+        "startLine": 504,
+        "startChar": 9,
+        "endLine": 504,
+        "endChar": 27
+      },
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -382,6 +515,75 @@
         "startChar": 12,
         "endLine": 122,
         "endChar": 30
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e005a70_a9e8b1c0",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "The state diagram\u0027s getting complicate enough that I think it\u0027s worth a comment about transitions and uses for each state.  I\u0027m specifically interested in ASYNC_OP_COMPLETE_PRE_TRUNCATE getting some commentary as to when it\u0027s transitioned to (external input racing with C_W_D_C \u0026 N_R_C) and what it\u0027s used for.",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498bf707_c90d4cc1",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "Maybe add \"Will not truncate the entry (e.g. if the entry is being discarded or other writers are still using it).\"?",
+      "range": {
+        "startLine": 226,
+        "startChar": 13,
+        "endLine": 226,
+        "endChar": 30
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9df9e05_09465274",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:45:36Z",
+      "side": 1,
+      "message": "I think the key issue here is whether or not InitateTruncateEntry() changed the state; I think that\u0027s what all the callers care about in their testing of this value.  Willing to add \"by changing the next state to transition to\" to the end of this?",
+      "range": {
+        "startLine": 230,
+        "startChar": 25,
+        "endLine": 230,
+        "endChar": 33
       },
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
