@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a0f981b_dc02ce12",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T19:30:48Z",
+      "side": 1,
+      "message": "To all calls of asdf in this CL, please add a /*force_blocked\u003d*/ note for the boolean parameter like\n\ntranslate_prefs-\u003eAddToLanguageList(language_code, /*force_blocked\u003d*/false);",
+      "revId": "29244ece3a84cff17fdd87b407211184db0bf591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa40f458_825b1d30",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-05T19:30:48Z",
+      "side": 1,
+      "message": "Maybe add a \u0027d\u0027\n// True if enable translation, false if disabled.\n\nor change to \n// Whether to allow translation.",
+      "revId": "29244ece3a84cff17fdd87b407211184db0bf591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
