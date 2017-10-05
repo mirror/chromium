@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50153789_7682989f",
+        "filename": "content/network/throttling/throttling_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-05T22:18:49Z",
+      "side": 1,
+      "message": "EnableThrottling for symmetry with disable?",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 27
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
