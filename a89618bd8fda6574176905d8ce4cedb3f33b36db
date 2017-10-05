@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0fd7ae04_a5b5f419",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1459,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T21:07:12Z",
+      "side": 1,
+      "message": "What sort of delay might we expect here?",
+      "range": {
+        "startLine": 1456,
+        "startChar": 8,
+        "endLine": 1459,
+        "endChar": 57
+      },
+      "revId": "a89618bd8fda6574176905d8ce4cedb3f33b36db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ad5630_621bcd18",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkBridge.java",
         "patchSetId": 9
