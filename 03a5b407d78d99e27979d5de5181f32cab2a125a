@@ -16,6 +16,24 @@
       "revId": "03a5b407d78d99e27979d5de5181f32cab2a125a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2b8cb2c_089ba922",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-05T02:24:59Z",
+      "side": 1,
+      "message": "Spaces removed.\nOverloading causes compile error, both of the AddBinding() take 1 parameter, I found the base::Bind() cannot find which function to use:\n\n     test_api.OverrideBinderForTesting(                                                                              \n          device::mojom::kServiceName, device::mojom::HidManager::Name_,\n          base::Bind(\u0026FakeHidManager::AddBinding,\n                     base::Unretained(fake_hid_manager_.get())));",
+      "parentUuid": "04ce084c_9097046c",
+      "revId": "03a5b407d78d99e27979d5de5181f32cab2a125a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
