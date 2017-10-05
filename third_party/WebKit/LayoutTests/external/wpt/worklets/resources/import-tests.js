@@ -111,4 +111,48 @@ function runImportTests(worklet) {
                                worklet.addModule(kScriptURL));
     }, 'Importing a cross origin resource without the ' +
        'Access-Control-Allow-Origin header should reject the given promise');
+
+    promise_test(() => {
+        document.cookie = "cookieName=default";
+        const kScriptURL = 'resources/credentials.py';
+        return worklet.addModule(kScriptURL).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined);
+        });
+    }, 'Importing a script with the default WorkletOptions should omit the ' +
+       'credentials');
+
+    promise_test(() => {
+        document.cookie = "cookieName=omit";
+        const kScriptURL = 'resources/credentials.py?mode=omit';
+        const kOptions = { credentials: 'omit' };
+        return worklet.addModule(kScriptURL, kOptions).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined);
+        });
+    }, 'Importing a script with credentials=omit should omit the credentials');
+
+    promise_test(() => {
+        document.cookie = "cookieName=include";
+        const kScriptURL = 'resources/credentials.py?mode=include';
+        const kOptions = { credentials: 'include' };
+        return worklet.addModule(kScriptURL, kOptions).then(undefined_arg => {
+            assert_equals(undefined_arg, undefined);
+        });
+    }, 'Importing a script with credentials=include should include the ' +
+       ' credentials');
+
+    promise_test(() => {
+        const kSetCookieURL =
+            get_host_info().HTTP_REMOTE_ORIGIN +
+            "/worklets/resources/set-cookie.py?name=cookieName";
+        const kScriptURL = get_host_info().HTTP_REMOTE_ORIGIN +
+                           '/worklets/resources/credentials.py?mode=include';
+
+        // Set a cookie in the remote origin and then start a worklet.
+        return fetch(kSetCookieURL, { mode: 'no-cors', credentials: 'include'})
+          .then(() => worklet.addModule(kScriptURL, { credentials: 'include' }))
+          .then(undefined_arg => assert_equals(undefined_arg, undefined));
+    }, 'Importing a cross origin script with credentials=include should ' +
+       'include the credentials');
+
+    // TODO(nhiroki): Add tests for "credentials=same-origin"
 }
