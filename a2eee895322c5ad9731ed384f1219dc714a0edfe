@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e088f608_95d55d64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-05T01:06:00Z",
+      "side": 1,
+      "message": "For this event we are only looking for entities and not quick actions.",
+      "parentUuid": "05b7cfe8_aeffec7a",
+      "range": {
+        "startLine": 716,
+        "startChar": 9,
+        "endLine": 716,
+        "endChar": 0
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c650d6_52fca453",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 3
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "0188d52f_1a8bcdcb",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/EventConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-05T01:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2a876fe_88a317b2",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 61
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "952a467a_75a44fc8",
         "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/FeatureConstants.java",
         "patchSetId": 3
@@ -114,6 +162,30 @@
       "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d06e8a8_48a0ded9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 97437,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-05T01:06:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc9e087f_79894107",
+      "range": {
+        "startLine": 97437,
+        "startChar": 33,
+        "endLine": 97437,
+        "endChar": 41
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
