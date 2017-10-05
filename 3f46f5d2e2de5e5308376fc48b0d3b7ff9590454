@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4758772b_a48dddda",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContentsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-05T03:05:19Z",
+      "side": 1,
+      "message": "I would either do blink::FuzzedDataProvider and remove \u0027using namespace blink\u0027, or remove all the \u0027blink::\u0027 prefixes and keep \u0027using namespace blink\u0027.",
+      "revId": "3f46f5d2e2de5e5308376fc48b0d3b7ff9590454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5ac9f4_39a8007a",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContentsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-05T03:05:19Z",
+      "side": 1,
+      "message": "nit: \u0027const bool\u0027 :P",
+      "revId": "3f46f5d2e2de5e5308376fc48b0d3b7ff9590454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4599fb4_13b84dfc",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetContentsFuzzer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-10-05T03:05:19Z",
+      "side": 1,
+      "message": "Hmm, because of the ConsumeBool, the size of the data is no longer \u0027size\u0027. Maybe something like:\n\n    const auto str \u003d provider.ConsumeRemainingBytes();\n    styleSheet-\u003eParseString(String::FromUTF8WithLatin1Fallback(\n           str.data(), str.length()));",
+      "revId": "3f46f5d2e2de5e5308376fc48b0d3b7ff9590454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
