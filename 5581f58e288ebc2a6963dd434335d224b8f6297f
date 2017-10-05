@@ -16,6 +16,24 @@
       "revId": "5581f58e288ebc2a6963dd434335d224b8f6297f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb93f5ec_6e13c11c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-10-05T20:49:55Z",
+      "side": 1,
+      "message": "I think it works on Linux because the implicit use_lld\u003dtrue setting gets turned off when targeting NaCl as a result of the change that I made in version 2 of this patch.\n\nIt seems like we probably want an !is_nacl at the point where we use use_debug_fission so that we don\u0027t get -gsplit-dwarf with nacl if the user explicitly sets use_debug_fission to true. I\u0027ll prepare a CL that does that.",
+      "parentUuid": "9434ae8f_c8d53baf",
+      "revId": "5581f58e288ebc2a6963dd434335d224b8f6297f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
