@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bda2f41_a194e235",
+        "filename": "ash/system/power/power_button_display_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-05T18:32:58Z",
+      "side": 0,
+      "message": "Because of early return, backlights_forced_off_ here is not needed.",
+      "revId": "f8a0c12d86a0c33342a669dc93406204e01a99bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
