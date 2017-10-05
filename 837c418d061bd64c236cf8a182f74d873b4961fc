@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96b692ed_5cd432db",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-05T22:31:57Z",
+      "side": 1,
+      "message": "Done. \nAlso rewrote Attach/Detach to go through mojom::HighlighterController instead of directly calling ash::HighlighterController (which makes tests more honest).",
+      "parentUuid": "c2201b25_a565a627",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4e29711_1c02c5a1",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T01:19:00Z",
       "side": 1,
       "message": "optional: Does this have to happen after the observers are added, or could it happen in the initializer list?",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f090c6bf_3c2ddeb1",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-05T22:31:57Z",
+      "side": 1,
+      "message": "Moved.",
+      "parentUuid": "e4e29711_1c02c5a1",
       "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e724157c_0126fae2",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-05T22:31:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d3bd6d36_27ee3403",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d27279eb_95dc6229",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6432b7cd_31c0bae9",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-05T22:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d27279eb_95dc6229",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b28970_358fae24",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4f926b_969924a0",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-10-05T22:31:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b28970_358fae24",
+      "revId": "837c418d061bd64c236cf8a182f74d873b4961fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
