@@ -20,6 +20,7 @@
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+#include "google_apis/gaia/oauth_multilogin_result.h"
 #include "net/base/escape.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
@@ -189,6 +190,7 @@ GaiaAuthFetcher::GaiaAuthFetcher(GaiaAuthConsumer* consumer,
       uberauth_token_gurl_(GaiaUrls::GetInstance()->oauth1_login_url().Resolve(
           base::StringPrintf(kUberAuthTokenURLFormat, source.c_str()))),
       oauth_login_gurl_(GaiaUrls::GetInstance()->oauth1_login_url()),
+      oauth_multilogin_gurl_(GaiaUrls::GetInstance()->oauth_multilogin_url()),
       list_accounts_gurl_(
           GaiaUrls::GetInstance()->ListAccountsURLWithSource(source)),
       logout_gurl_(GaiaUrls::GetInstance()->LogOutURLWithSource(source)),
@@ -196,8 +198,7 @@ GaiaAuthFetcher::GaiaAuthFetcher(GaiaAuthConsumer* consumer,
           GaiaUrls::GetInstance()->GetCheckConnectionInfoURLWithSource(source)),
       oauth2_iframe_url_(GaiaUrls::GetInstance()->oauth2_iframe_url()),
       client_login_to_oauth2_gurl_(
-          GaiaUrls::GetInstance()->client_login_to_oauth2_url()) {
-}
+          GaiaUrls::GetInstance()->client_login_to_oauth2_url()) {}
 
 GaiaAuthFetcher::~GaiaAuthFetcher() {}
 
@@ -833,6 +834,59 @@ void GaiaAuthFetcher::StartOAuthLogin(const std::string& access_token,
                             traffic_annotation);
 }
 
+void GaiaAuthFetcher::StartOAuthMultilogin(
+    const std::vector<MultiloginTokenIDPair>& accounts,
+    const std::string& external_cc_result) {
+  DCHECK(!fetch_pending_) << "Tried to fetch two things at once!";
+  DCHECK(!accounts.empty());
+
+  std::vector<std::string> authorization_header_parts;
+  for (const MultiloginTokenIDPair& account : accounts) {
+    authorization_header_parts.push_back(base::StringPrintf(
+        "%s:%s", account.uber_token.c_str(), account.gaia_id.c_str()));
+  }
+  std::string authorization_header =
+      std::string("MultiBearer ") +
+      base::JoinString(authorization_header_parts, ",");
+
+  std::string parameters = base::StringPrintf(
+      "?source=%s", net::EscapeUrlEncodedData(source_, true).c_str());
+  if (!external_cc_result.empty()) {
+    base::StringAppendF(
+        &parameters, "&externalCcResult=%s",
+        net::EscapeUrlEncodedData(external_cc_result, true).c_str());
+  }
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("gaia_auth_multilogin", R"(
+        semantics {
+          sender: "Chrome - Google authentication API"
+          description:
+            "TODO"
+          trigger:
+            "TODO"
+          data:
+            "TODO"
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: YES
+          cookies_store: "user"
+          setting:
+            "This feature cannot be disabled in settings, but if the user "
+            "signs out of Chrome, this request would not be made."
+          chrome_policy {
+            SigninAllowed {
+              policy_options {mode: MANDATORY}
+              SigninAllowed: false
+            }
+          }
+        })");
+  CreateAndStartGaiaFetcher(" ",  // Non-empty to force a POST
+                            authorization_header,
+                            oauth_multilogin_gurl_.Resolve(parameters),
+                            net::LOAD_NORMAL, traffic_annotation);
+}
+
 void GaiaAuthFetcher::StartListAccounts() {
   DCHECK(!fetch_pending_) << "Tried to fetch two things at once!";
 
@@ -1128,6 +1182,14 @@ void GaiaAuthFetcher::OnOAuthLoginFetched(const std::string& data,
   }
 }
 
+void GaiaAuthFetcher::OnOAuthMultiloginFetched(
+    const std::string& data,
+    const net::URLRequestStatus& status,
+    int response_code) {
+  OAuthMultiloginResult result(data, status, response_code);
+  consumer_->OnOAuthMultiloginResult(result);
+}
+
 void GaiaAuthFetcher::OnGetCheckConnectionInfoFetched(
     const std::string& data,
     const net::URLRequestStatus& status,
@@ -1232,6 +1294,9 @@ void GaiaAuthFetcher::DispatchFetchedRequest(
     OnUberAuthTokenFetch(data, status, response_code);
   } else if (url == oauth_login_gurl_) {
     OnOAuthLoginFetched(data, status, response_code);
+  } else if (base::StartsWith(url.spec(), oauth_multilogin_gurl_.spec(),
+                              base::CompareCase::SENSITIVE)) {
+    OnOAuthMultiloginFetched(data, status, response_code);
   } else if (url == oauth2_revoke_gurl_) {
     OnOAuth2RevokeTokenFetched(data, status, response_code);
   } else if (url == list_accounts_gurl_) {

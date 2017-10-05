@@ -179,6 +179,13 @@ class GaiaAuthFetcher : public net::URLFetcherDelegate {
   void StartOAuthLogin(const std::string& access_token,
                        const std::string& service);
 
+  struct MultiloginTokenIDPair {
+    std::string uber_token;
+    std::string gaia_id;
+  };
+  void StartOAuthMultilogin(const std::vector<MultiloginTokenIDPair>& accounts,
+                            const std::string& external_cc_result);
+
   // Starts a request to list the accounts in the GAIA cookie.
   void StartListAccounts();
 
@@ -332,6 +339,10 @@ class GaiaAuthFetcher : public net::URLFetcherDelegate {
                            const net::URLRequestStatus& status,
                            int response_code);
 
+  void OnOAuthMultiloginFetched(const std::string& data,
+                                const net::URLRequestStatus& status,
+                                int response_code);
+
   void OnGetCheckConnectionInfoFetched(const std::string& data,
                                        const net::URLRequestStatus& status,
                                        int response_code);
@@ -425,6 +436,7 @@ class GaiaAuthFetcher : public net::URLFetcherDelegate {
   const GURL merge_session_gurl_;
   const GURL uberauth_token_gurl_;
   const GURL oauth_login_gurl_;
+  const GURL oauth_multilogin_gurl_;
   const GURL list_accounts_gurl_;
   const GURL logout_gurl_;
   const GURL get_check_connection_info_url_;
