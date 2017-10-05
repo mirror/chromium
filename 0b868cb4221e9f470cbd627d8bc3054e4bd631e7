@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d1a5694_293eedf0",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1361,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-05T16:34:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a19436f_17301aaa",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "767ecbb4_a4c09ca7",
         "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c77d399_5c926892",
+        "filename": "content/renderer/media/user_media_client_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-05T16:34:46Z",
+      "side": 1,
+      "message": "Already covered by the last part of ApplyConstraintsVideoDeviceTwoTracks.",
+      "parentUuid": "767ecbb4_a4c09ca7",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2196dd21_898524ac",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-05T16:34:46Z",
+      "side": 1,
+      "message": "Nice catch!\nIt\u0027s not a syntax error, so the page loads fine.\nconsole.l is a valid sentence that returns an unused undefined value.",
+      "parentUuid": "4abef23b_5cf54e53",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5ebe428_127b31e0",
         "filename": "content/test/data/media/getusermedia.html",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61554d59_e9af140e",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-05T16:34:46Z",
+      "side": 1,
+      "message": "Done. Not strictly necessary since a temporary mute and unmute would not be against the spec. It\u0027s a valid test for our implementation, though.",
+      "parentUuid": "b5ebe428_127b31e0",
+      "revId": "0b868cb4221e9f470cbd627d8bc3054e4bd631e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
