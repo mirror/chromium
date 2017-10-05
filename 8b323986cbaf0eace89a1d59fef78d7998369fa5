@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e330d20_488862c9",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:57:09Z",
+      "side": 1,
+      "message": "Hmm... looks like this code was just copied, but why is this \u003e0 instead of \u003e\u003d0?  It seems like we shouldn\u0027t allow upgrading to the same version.",
+      "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
