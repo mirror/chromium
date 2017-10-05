@@ -17,6 +17,17 @@ AccessibilityTreeFormatterBrowser::BuildAccessibilityTree(
   return dict;
 }
 
+std::unique_ptr<base::DictionaryValue>
+AccessibilityTreeFormatterBrowser::BuildAccessibilityTree(base::ProcessId pid) {
+  return nullptr;
+}
+
+std::unique_ptr<base::DictionaryValue>
+AccessibilityTreeFormatterBrowser::BuildAccessibilityTree(
+    gfx::AcceleratedWidget widget) {
+  return nullptr;
+}
+
 void AccessibilityTreeFormatterBrowser::RecursiveBuildAccessibilityTree(
     const BrowserAccessibility& node,
     base::DictionaryValue* dict) {
