@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90953783_5a96bbf8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T15:00:15Z",
+      "side": 0,
+      "message": "Did you mean to remove this UMA?  If so don\u0027t you need to change some other files too?",
+      "range": {
+        "startLine": 603,
+        "startChar": 24,
+        "endLine": 603,
+        "endChar": 39
+      },
+      "revId": "7af36895aed21beb249c10ea8dfd8f2c62e02539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
