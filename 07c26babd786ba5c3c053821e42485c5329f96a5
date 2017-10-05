@@ -69,6 +69,24 @@
       "revId": "07c26babd786ba5c3c053821e42485c5329f96a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb80b984_bf0a80d8",
+        "filename": "ios/web/navigation/resources/restore_session.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-10-05T18:47:39Z",
+      "side": 1,
+      "message": "Yep, that seems like the appropriate place to handle these errors.  Then probably a WebStateDelegate callback for restoration errors so that it can display an infobar or something.",
+      "parentUuid": "a6ff33dd_682331a5",
+      "revId": "07c26babd786ba5c3c053821e42485c5329f96a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
