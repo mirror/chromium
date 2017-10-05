@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e38188_920c65fc",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionOptions.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:38:09Z",
+      "side": 1,
+      "message": "To make new feature patch small, could you separate reorder and \n|ShouldShrinkNextTap()|?\n\nA description for CL adding |ShouldShrikNextTap()| should have\nreference to all-in-one patch[1].\n\n[1] http://crrev.com/c/653432: [Smart Selection] Shrinking selection after Smart Selection expansion",
+      "revId": "23622448a04beae703cfdfde03f8ad3389da1cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026f7ba5_6414e3d9",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionOptionsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:38:09Z",
+      "side": 1,
+      "message": "nit: s/BuilderTest/Setter/ or another name\nWe don\u0027t need to have suffix |Test| in test case name since\nall of TEST_F() are test. ;-)",
+      "revId": "23622448a04beae703cfdfde03f8ad3389da1cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cc17b6_b07fa932",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionOptionsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:38:09Z",
+      "side": 1,
+      "message": "%s/EXPECT_EQ(true, ...)/EXPECT_TRUE(...)/",
+      "revId": "23622448a04beae703cfdfde03f8ad3389da1cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05a737a_5e24b13f",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionOptionsTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T01:38:09Z",
+      "side": 1,
+      "message": "Could you add a test case for default value of |ShouldShirnkNextTap()|?\nMaybe |TEST_F(SetSelectionOptionsTest, DefaultValues)|?",
+      "revId": "23622448a04beae703cfdfde03f8ad3389da1cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
