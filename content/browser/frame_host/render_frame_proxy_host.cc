@@ -222,6 +222,12 @@ void RenderFrameProxyHost::SetFocusedFrame() {
   Send(new FrameMsg_SetFocusedFrame(routing_id_));
 }
 
+void RenderFrameProxyHost::ScrollRectToVisible(
+    const gfx::Rect& rect_to_scroll,
+    const blink::WebRemoteScrollProperties properties) {
+  Send(new FrameMsg_ScrollRectToVisible(routing_id_, rect_to_scroll,
+                                        properties));
+}
 void RenderFrameProxyHost::OnDetach() {
   if (frame_tree_node_->render_manager()->ForInnerDelegate()) {
     // Only main frame proxy can detach for inner WebContents.
