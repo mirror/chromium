@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display_embedder/display_provider.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_impl.h"
@@ -36,6 +37,8 @@ FrameSinkManagerImpl::FrameSinkManagerImpl(
     : display_provider_(display_provider),
       surface_manager_(lifetime_type),
       binding_(this) {
+  LOG(ERROR) << "Create FrameSinkManagerImpl on "
+             << base::MessageLoop::current()->GetThreadName();
   surface_manager_.AddObserver(this);
 }
 

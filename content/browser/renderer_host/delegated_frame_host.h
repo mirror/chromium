@@ -263,6 +263,7 @@ class CONTENT_EXPORT DelegatedFrameHost
   viz::LocalSurfaceId local_surface_id_;
   DelegatedFrameHostClient* const client_;
   const bool enable_surface_synchronization_;
+  const bool enable_viz_;
   ui::Compositor* compositor_;
 
   // The vsync manager we are observing for changes, if any.

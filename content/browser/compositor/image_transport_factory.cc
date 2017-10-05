@@ -6,7 +6,9 @@
 
 #include "base/command_line.h"
 #include "base/single_thread_task_runner.h"
+#include "components/viz/common/switches.h"
 #include "content/browser/compositor/gpu_process_transport_factory.h"
+#include "content/browser/compositor/viz_process_transport_factory.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"
 #include "ui/gl/gl_implementation.h"
@@ -30,7 +32,13 @@ void ImageTransportFactory::Initialize(
   DCHECK(!g_factory || g_initialized_for_unit_tests);
   if (g_initialized_for_unit_tests)
     return;
-  SetFactory(new GpuProcessTransportFactory(std::move(resize_task_runner)));
+
+  auto* command_line = base::CommandLine::ForCurrentProcess();
+  if (command_line->HasSwitch(switches::kEnableViz)) {
+    SetFactory(new VizProcessTransportFactory());
+  } else {
+    SetFactory(new GpuProcessTransportFactory(std::move(resize_task_runner)));
+  }
 }
 
 void ImageTransportFactory::InitializeForUnitTests(

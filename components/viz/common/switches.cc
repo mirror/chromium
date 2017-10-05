@@ -15,4 +15,8 @@ const char kDisableSurfaceReferences[] = "disable-surface-references";
 // by the parent compositor.
 const char kEnableSurfaceSynchronization[] = "enable-surface-synchronization";
 
+// Enables running the display compositor in the viz process. This flag is only
+// valid for the Linux desktop platform.
+const char kEnableViz[] = "enable-viz";
+
 }  // namespace switches
