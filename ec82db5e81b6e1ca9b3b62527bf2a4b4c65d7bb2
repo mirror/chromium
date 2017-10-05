@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299117af_9401df55",
+        "filename": "build/config/freetype/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-05T14:10:00Z",
+      "side": 1,
+      "message": "We have so many things that are named \"font\" already. Can we call this more explicitly \"harfbuzz_freetype\" or so?",
+      "revId": "ec82db5e81b6e1ca9b3b62527bf2a4b4c65d7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb3f718_33cdab09",
+        "filename": "remoting/host/it2me/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-05T14:10:00Z",
+      "side": 1,
+      "message": "This comment needs to be updated with the new target name or phrased more generically.",
+      "revId": "ec82db5e81b6e1ca9b3b62527bf2a4b4c65d7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
