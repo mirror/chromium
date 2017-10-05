@@ -347,7 +347,7 @@ class QUIC_EXPORT_PRIVATE QuicFramer {
 
   Perspective perspective() const { return perspective_; }
 
-  QuicVersionLabel last_version_label() { return last_version_label_; }
+  QuicVersionLabel last_version_label() const { return last_version_label_; }
 
   void set_data_producer(QuicStreamFrameDataProducer* data_producer) {
     data_producer_ = data_producer;

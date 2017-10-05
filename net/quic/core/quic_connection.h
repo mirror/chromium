@@ -427,6 +427,11 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // The version of the protocol this connection is using.
   QuicVersion version() const { return framer_.version(); }
 
+  // The QuicVersionLabel for the version this connection is using.
+  QuicVersionLabel version_label() const {
+    return framer_.last_version_label();
+  }
+
   // The versions of the protocol that this connection supports.
   const QuicVersionVector& supported_versions() const {
     return framer_.supported_versions();
