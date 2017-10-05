@@ -360,5 +360,19 @@ void LogFilePathRenamed(bool renamed) {
   UMA_HISTOGRAM_BOOLEAN("Download.Service.Files.PathRenamed", renamed);
 }
 
+void LogControllerDownloadEvent(DownloadEvent event) {
+  UMA_HISTOGRAM_ENUMERATION("Download.Service.Entry.Event", event,
+                            DownloadEvent::COUNT);
+}
+
+void LogResumeCount(uint32_t resume_count) {
+  base::UmaHistogramCounts100("Download.Service.Entry.ResumeCount",
+                              resume_count);
+}
+
+void LogRetryCount(uint32_t retry_count) {
+  base::UmaHistogramCounts100("Download.Service.Entry.RetryCount", retry_count);
+}
+
 }  // namespace stats
 }  // namespace download

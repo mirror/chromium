@@ -16531,6 +16531,28 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Download.Service.Entry.Event"
+    enum="Download.Service.EntryEvent">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>An action the service took on an Active download.</summary>
+</histogram>
+
+<histogram name="Download.Service.Entry.ResumptionCount" units="attempts">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>
+    At the time of a resumption, wich resumption attempt count this is.  These
+    actions are assumed to not constitute a hard restart of the download.
+  </summary>
+</histogram>
+
+<histogram name="Download.Service.Entry.RetryCount" units="attempts">
+  <owner>dtrainor@chromium.org</owner>
+  <summary>
+    At the time of a retry, wich retry attempt count this is.  These are assumed
+    to constitute a hard restart of the download.
+  </summary>
+</histogram>
+
 <histogram name="Download.Service.Files.Cleanup.Attempts" units="attempts">
   <owner>shaktisahu@chromium.org</owner>
   <summary>
