@@ -2987,7 +2987,7 @@ split_static_library("browser") {
     ]
   }
 
-  if (is_posix && !is_mac) {
+  if (is_posix && !is_mac && !is_fuchsia) {
     sources += [
       "//chrome/app/chrome_crash_reporter_client.cc",
       "//chrome/app/chrome_crash_reporter_client.h",

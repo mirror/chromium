@@ -871,7 +871,9 @@ if (!is_android) {
       ]
     }
   }
+}
 
+if (!is_android && !is_fuchsia) {
   static_library("sync_integration_test_support") {
     testonly = true
     sources = [
@@ -1172,7 +1174,7 @@ test("browser_tests") {
     ]
 
     enable_multidex = true
-  } else {  # Not Android.
+  } else if (!is_fuchsia) {  # Not Android or Fuchsia.
     sources += [
       # The list of sources which is only used by chrome browser tests on
       # desktop platforms.
@@ -2420,9 +2422,6 @@ test("browser_tests") {
       deps += [ "//content/public/common:feature_h264_with_openh264_ffmpeg" ]
     } else {
       sources -= [
-        "../browser/extensions/api/webrtc_audio_private/webrtc_audio_private_browsertest.cc",
-        "../browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
-        "../browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
         "../browser/media/webrtc/webrtc_apprtc_browsertest.cc",
         "../browser/media/webrtc/webrtc_audio_quality_browsertest.cc",
         "../browser/media/webrtc/webrtc_browsertest.cc",
@@ -2435,6 +2434,13 @@ test("browser_tests") {
         "../browser/media/webrtc/webrtc_video_quality_browsertest.cc",
         "../browser/media/webrtc/webrtc_webcam_browsertest.cc",
       ]
+      if (enable_extensions) {
+        sources -= [
+          "../browser/extensions/api/webrtc_audio_private/webrtc_audio_private_browsertest.cc",
+          "../browser/extensions/api/webrtc_logging_private/webrtc_event_log_apitest.cc",
+          "../browser/extensions/api/webrtc_logging_private/webrtc_logging_private_apitest.cc",
+        ]
+      }
     }
     if (is_win) {
       deps += [
@@ -2701,7 +2707,7 @@ test("browser_tests") {
   }
 }
 
-if (!is_android) {
+if (!is_android && !is_fuchsia) {
   test("sync_integration_tests") {
     sources = [
       "../app/chrome_version.rc.version",
@@ -5126,8 +5132,10 @@ if (!is_android) {
       "//components/crash/core/common",
       "//components/flags_ui:switches",
       "//gpu/config:crash_keys",
-      "//third_party/breakpad:client",
     ]
+    if (!is_fuchsia) {
+      deps += [ "//third_party/breakpad:client" ]
+    }
   }
 }
 
