@@ -198,7 +198,10 @@ void GetEntryFromTaskRunner(LevelDB* database,
   std::string serialized_entry;
   *success = database->Get(key, found, &serialized_entry);
 
-  if (success && !entry->ParseFromString(serialized_entry)) {
+  if (!*found)
+    return;
+
+  if (*success && !entry->ParseFromString(serialized_entry)) {
     *found = false;
     DLOG(WARNING) << "Unable to parse leveldb_proto entry";
     // TODO(cjhopman): Decide what to do about un-parseable entries.
