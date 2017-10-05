@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b722fbb2_1d15058d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-10-05T21:44:48Z",
+      "side": 1,
+      "message": "This is better than what we are currently doing. The whole saveAs function is wrong though. It should be changing the url, and maybe creating a persistence binding between the new uisourcecode and the old one.",
+      "revId": "3e827fbfaea0b0ff5cc9ea8d78258fc83e6538da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
