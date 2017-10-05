@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0d07fa69_c1195053",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:14:15Z",
+      "side": 1,
+      "message": "I have this memory I ran into trouble with this when I first did the cookies, that there was some reason this should be in the regular BUILD.gn source (as it was in content/public/common) rather than here.  But maybe it\u0027s ok for it to be in either place.  Yuzhu, does this matter?",
+      "parentUuid": "7c7e5f1e_45e5c497",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
@@ -93,6 +117,29 @@
       "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1713b48c_9a13baa6",
+        "filename": "services/network/public/interfaces/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-10-05T17:14:15Z",
+      "side": 1,
+      "message": "Just calling out that I don\u0027t have the expertise to review these.",
+      "range": {
+        "startLine": 26,
+        "startChar": 27,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
