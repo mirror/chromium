@@ -22,10 +22,9 @@
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
-#include "content/common/devtools/devtools_network_conditions.h"
-#include "content/common/devtools/devtools_network_controller.h"
-#include "content/common/devtools/devtools_network_transaction.h"
 #include "content/common/navigation_params.h"
+#include "content/network/throttling/throttling_controller.h"
+#include "content/network/throttling/throttling_network_transaction.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browsing_data_remover.h"
@@ -589,7 +588,7 @@ class NetworkNavigationThrottle : public content::NavigationThrottle {
 void ConfigureServiceWorkerContextOnIO() {
   std::set<std::string> headers;
   headers.insert(
-      DevToolsNetworkTransaction::kDevToolsEmulateNetworkConditionsClientId);
+      ThrottlingNetworkTransaction::kDevToolsEmulateNetworkConditionsClientId);
   content::ServiceWorkerContext::AddExcludedHeadersForFetchEvent(headers);
 }
 
@@ -639,7 +638,7 @@ Response NetworkHandler::Disable() {
   enabled_ = false;
   user_agent_ = std::string();
   SetRequestInterceptionEnabled(false, Maybe<protocol::Array<String>>());
-  SetNetworkConditions(nullptr);
+  DisableThrottling();
   return Response::FallThrough();
 }
 
@@ -809,11 +808,15 @@ Response NetworkHandler::EmulateNetworkConditions(
     double download_throughput,
     double upload_throughput,
     Maybe<protocol::Network::ConnectionType>) {
-  std::unique_ptr<DevToolsNetworkConditions> conditions(
-      new DevToolsNetworkConditions(offline, std::max(latency, 0.0),
-                                    std::max(download_throughput, 0.0),
-                                    std::max(upload_throughput, 0.0)));
-  SetNetworkConditions(std::move(conditions));
+  bool throttling_enabled = offline || latency > 0 || download_throughput > 0 ||
+                            upload_throughput > 0;
+  if (throttling_enabled) {
+    SetNetworkConditions(
+        offline, base::TimeDelta::FromMilliseconds(std::max(latency, 0.0)),
+        std::max(download_throughput, 0.0), std::max(upload_throughput, 0.0));
+  } else {
+    DisableThrottling();
+  }
   return Response::FallThrough();
 }
 
@@ -1148,28 +1151,36 @@ bool NetworkHandler::ShouldCancelNavigation(
   return true;
 }
 
-void NetworkHandler::SetNetworkConditions(
-    std::unique_ptr<DevToolsNetworkConditions> conditions) {
-  if (base::FeatureList::IsEnabled(features::kNetworkService)) {
-    mojom::NetworkConditionsPtr network_conditions;
-    if (conditions) {
-      network_conditions = mojom::NetworkConditions::New();
-      network_conditions->offline = conditions->offline();
-      network_conditions->latency =
-          base::TimeDelta::FromMilliseconds(conditions->latency());
-      network_conditions->download_throughput =
-          conditions->download_throughput();
-      network_conditions->upload_throughput = conditions->upload_throughput();
-    }
-    GetNetworkService()->SetNetworkConditions(host_id_,
-                                              std::move(network_conditions));
+void NetworkHandler::SetNetworkConditions(bool offline,
+                                          base::TimeDelta latency,
+                                          double download_throughput,
+                                          double upload_throughput) {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ThrottlingController::SetConditions, host_id_, offline,
+                       latency, download_throughput, upload_throughput));
     return;
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
-                     std::move(conditions)));
+  mojom::NetworkConditionsPtr network_conditions =
+      mojom::NetworkConditions::New();
+  network_conditions->offline = offline;
+  network_conditions->latency = latency;
+  network_conditions->download_throughput = download_throughput;
+  network_conditions->upload_throughput = upload_throughput;
+  GetNetworkService()->SetNetworkConditions(host_id_,
+                                            std::move(network_conditions));
+}
+
+void NetworkHandler::DisableThrottling() {
+  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ThrottlingController::DisableThrottling, host_id_));
+    return;
+  }
+  GetNetworkService()->SetNetworkConditions(host_id_, nullptr);
 }
 
 }  // namespace protocol
