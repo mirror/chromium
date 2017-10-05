@@ -368,6 +368,30 @@
     },
     {
       "key": {
+        "uuid": "64d9d499_aa38b8b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-05T17:12:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ebda7afa_a45fb714",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "349da6b6_125522e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
         "patchSetId": 19
@@ -427,6 +451,30 @@
       "side": 1,
       "message": "For the case of ScrollViews, we are essentially making the nav-bar not transparent though.  We\u0027re applying padding to the scrollview which means the scrollable content is never behind the nav bar right?\n\nI guess in the case of ScrollView, I\u0027m wondering if we should be passing in the child view to allow it to scroll behind the toolbar (ScrollView\u0027s have 1 and only one child so that is an ok assumption).",
       "parentUuid": "c913d6a3_fae74ca1",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 111,
+        "endChar": 43
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fb4b1bb_3880011b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-10-05T17:12:46Z",
+      "side": 1,
+      "message": "You\u0027re correct, example being IncognitoBottomSheetContent. I could\u0027ve sworn this was working before.\n\nI modified it to send in the child of the ScrollView, and now it behaves as intended.",
+      "parentUuid": "4f88c370_e39f10bb",
       "range": {
         "startLine": 111,
         "startChar": 29,
