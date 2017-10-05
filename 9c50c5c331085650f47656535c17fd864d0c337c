@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaed2bfd_5aec7e88",
+        "filename": "components/history/core/browser/history_database.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1142151
+      },
+      "writtenOn": "2017-10-05T19:20:54Z",
+      "side": 1,
+      "message": "Should we remove this comment?",
+      "revId": "9c50c5c331085650f47656535c17fd864d0c337c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
