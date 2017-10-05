@@ -188,4 +188,8 @@ GbmSurfaceFactory::CreateNativePixmapFromHandle(
   return base::MakeRefCounted<GbmPixmap>(this, buffer);
 }
 
+uint32_t GbmSurfaceFactory::GetHandleFromPrimeFd(int prime_fd) {
+  return drm_thread_proxy_->GetHandleFromPrimeFd(prime_fd);
+}
+
 }  // namespace ui

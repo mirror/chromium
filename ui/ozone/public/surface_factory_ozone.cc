@@ -52,4 +52,8 @@ SurfaceFactoryOzone::CreateNativePixmapFromHandle(
   return nullptr;
 }
 
+uint32_t SurfaceFactoryOzone::GetHandleFromPrimeFd(int prime_fd) {
+  return 0;
+}
+
 }  // namespace ui

@@ -81,6 +81,7 @@ class DrmThread : public base::Thread,
                          std::vector<gfx::BufferFormat>* scanout_formats);
   void AddBindingCursorDevice(ozone::mojom::DeviceCursorRequest request);
   void AddBindingDrmDevice(ozone::mojom::DrmDeviceRequest request);
+  void GetHandleFromPrimeFd(int prime_fd, uint32_t* handle);
 
   // DrmWindowProxy (on GPU thread) is the client for these methods.
   void SchedulePageFlip(gfx::AcceleratedWidget widget,

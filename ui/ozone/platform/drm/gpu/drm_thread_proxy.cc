@@ -83,4 +83,13 @@ void DrmThreadProxy::AddBindingDrmDevice(
                  base::Unretained(&drm_thread_), base::Passed(&request)));
 }
 
+uint32_t DrmThreadProxy::GetHandleFromPrimeFd(int prime_fd) {
+  uint32_t handle = 0;
+  PostSyncTask(drm_thread_.task_runner(),
+               base::Bind(&DrmThread::GetHandleFromPrimeFd,
+                          base::Unretained(&drm_thread_), prime_fd,
+                          base::Unretained(&handle)));
+  return handle;
+}
+
 }  // namespace ui

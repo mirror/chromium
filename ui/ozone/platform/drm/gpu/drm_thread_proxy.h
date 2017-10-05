@@ -50,6 +50,9 @@ class DrmThreadProxy {
   void AddBindingCursorDevice(ozone::mojom::DeviceCursorRequest request);
   void AddBindingDrmDevice(ozone::mojom::DrmDeviceRequest request);
 
+  // DO NOT USE. See SurfaceFactoryOzone::GetHandleFromPrimeFd.
+  uint32_t GetHandleFromPrimeFd(int prime_fd);
+
  private:
   DrmThread drm_thread_;
 
