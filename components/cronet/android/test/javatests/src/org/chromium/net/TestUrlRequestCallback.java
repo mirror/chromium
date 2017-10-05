@@ -64,8 +64,7 @@ public class TestUrlRequestCallback extends UrlRequest.Callback {
     private final ConditionVariable mStepBlock = new ConditionVariable();
 
     // Executor Service for Cronet callbacks.
-    private final ExecutorService mExecutorService =
-            Executors.newSingleThreadExecutor(new ExecutorThreadFactory());
+    private ExecutorService mExecutorService;
     private Thread mExecutorThread;
 
     // position() of ByteBuffer prior to read() call.
@@ -136,6 +135,7 @@ public class TestUrlRequestCallback extends UrlRequest.Callback {
     }
 
     public ExecutorService getExecutor() {
+        mExecutorService = Executors.newSingleThreadExecutor(new ExecutorThreadFactory());
         return mExecutorService;
     }
 
