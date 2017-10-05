@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "d3d686c9_f82a3d27",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T23:53:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a76d45a9_2f5a53d1",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6df486a_183fd8ae",
         "filename": "extensions/renderer/native_renderer_messaging_service.h",
         "patchSetId": 8
