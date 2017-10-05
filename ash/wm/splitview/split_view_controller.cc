@@ -85,6 +85,7 @@ void SplitViewController::SnapWindow(aura::Window* window,
     // Add observers when the split view mode starts.
     Shell::Get()->AddShellObserver(this);
     Shell::Get()->activation_client()->AddObserver(this);
+    Shell::Get()->tablet_mode_controller()->AddObserver(this);
     Shell::Get()->NotifySplitViewModeStarting();
 
     divider_position_ = GetDefaultDividerPosition(window);
@@ -289,6 +290,7 @@ void SplitViewController::EndSplitView() {
   // Remove observers when the split view mode ends.
   Shell::Get()->RemoveShellObserver(this);
   Shell::Get()->activation_client()->RemoveObserver(this);
+  Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
 
   StopObserving(left_window_);
   StopObserving(right_window_);
@@ -404,6 +406,10 @@ void SplitViewController::OnOverviewModeEnded() {
       }
     }
   }
+}
+
+void SplitViewController::OnTabletModeEnding() {
+  EndSplitView();
 }
 
 void SplitViewController::StartObserving(aura::Window* window) {
