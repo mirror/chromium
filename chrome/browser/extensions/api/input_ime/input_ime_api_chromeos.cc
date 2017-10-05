@@ -194,6 +194,15 @@ class ImeObserverChromeOS : public ui::ImeObserver {
       extensions::events::HistogramValue histogram_value,
       const std::string& event_name,
       std::unique_ptr<base::ListValue> args) override {
+    if (event_name == input_ime::OnActivate::kEventName) {
+      // Send onActivate event regardless of it's listned by the IME.
+      auto event = base::MakeUnique<extensions::Event>(
+          histogram_value, event_name, std::move(args), profile_);
+      extensions::EventRouter::Get(profile_)->DispatchEventWithLazyListener(
+          extension_id_, std::move(event));
+      return;
+    }
+
     if (event_name != input_ime::OnActivate::kEventName) {
       // For suspended IME extension (e.g. XKB extension), don't awake it by IME
       // events except onActivate. The IME extension should be awake by other
