@@ -34,6 +34,24 @@
       "revId": "0b989f0269599d71f90e284d43820bb552ed02d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea12075_ace7d5b9",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-05T13:43:23Z",
+      "side": 1,
+      "message": "One way is to diff your branch to master, make a new branch and patch in the diff. Then upload that to this CL.\n\ne.g.,:\n\ngit diff master \u003e /tmp/patch\ngit checkout master\ngit cl new-branch foo\npatch -p1 \u003c /tmp/patch\ngit cl issue 655124\ngit cl upload",
+      "parentUuid": "07f56cae_59e07341",
+      "revId": "0b989f0269599d71f90e284d43820bb552ed02d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
