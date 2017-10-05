@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/views/frame/browser_frame.h"
 #include "chrome/browser/ui/views/frame/browser_header_painter_ash.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/frame/hosted_app_button_container.h"
 #include "chrome/browser/ui/views/frame/immersive_mode_controller.h"
 #include "chrome/browser/ui/views/profiles/profile_indicator_icon.h"
 #include "chrome/browser/ui/views/tab_icon_view.h"
@@ -66,7 +67,8 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
     BrowserView* browser_view)
     : BrowserNonClientFrameView(frame, browser_view),
       caption_button_container_(nullptr),
-      window_icon_(nullptr) {
+      window_icon_(nullptr),
+      hosted_app_button_container_(nullptr) {
   ash::wm::InstallResizeHandleWindowTargeterForWindow(frame->GetNativeWindow(),
                                                       nullptr);
   ash::Shell::Get()->AddShellObserver(this);
@@ -95,6 +97,12 @@ void BrowserNonClientFrameViewAsh::Init() {
     window_icon_->Update();
   }
 
+  if (extensions::HostedAppBrowserController::IsForExperimentalHostedAppBrowser(
+          browser)) {
+    hosted_app_button_container_ = new HostedAppButtonContainer(browser_view());
+    caption_button_container_->AddChildViewAt(hosted_app_button_container_, 0);
+  }
+
   if (UsePackagedAppHeaderStyle()) {
     ash::DefaultHeaderPainter* header_painter = new ash::DefaultHeaderPainter;
     header_painter_.reset(header_painter);
@@ -111,6 +119,10 @@ void BrowserNonClientFrameViewAsh::Init() {
         SkColor opaque_theme_color =
             SkColorSetA(theme_color.value(), SK_AlphaOPAQUE);
         header_painter->SetFrameColors(opaque_theme_color, opaque_theme_color);
+      }
+      if (hosted_app_button_container_) {
+        hosted_app_button_container_->SetUseLightImages(
+            header_painter->ShouldUseLightImages());
       }
     } else if (!browser->is_app()) {
       // For non app (i.e. WebUI) windows (e.g. Settings) use MD frame color.
@@ -213,6 +225,14 @@ gfx::Rect BrowserNonClientFrameViewAsh::GetWindowBoundsForClientBounds(
 int BrowserNonClientFrameViewAsh::NonClientHitTest(const gfx::Point& point) {
   const int hit_test =
       ash::FrameBorderNonClientHitTest(this, caption_button_container_, point);
+
+  if (hosted_app_button_container_) {
+    gfx::Point client_point(point);
+    View::ConvertPointToTarget(this, hosted_app_button_container_,
+                               &client_point);
+    if (hosted_app_button_container_->HitTestPoint(client_point))
+      return HTCLIENT;
+  }
 
   // When the window is restored we want a large click target above the tabs
   // to drag the window, so redirect clicks in the tab's shadow to caption.

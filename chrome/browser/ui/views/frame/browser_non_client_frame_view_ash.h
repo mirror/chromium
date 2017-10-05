@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/views/frame/browser_non_client_frame_view.h"
 #include "chrome/browser/ui/views/tab_icon_view_model.h"
 
+class HostedAppButtonContainer;
 class TabIconView;
 
 namespace ash {
@@ -86,6 +87,7 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
                            ToggleTabletModeRelayout);
   FRIEND_TEST_ALL_PREFIXES(BrowserNonClientFrameViewAshTest,
                            AvatarDisplayOnTeleportedWindow);
+  FRIEND_TEST_ALL_PREFIXES(HostedAppNonClientFrameViewAshTest, Basic);
   FRIEND_TEST_ALL_PREFIXES(ImmersiveModeControllerAshTestHostedApp,
                            FrameLayout);
 
@@ -117,6 +119,8 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
 
   // Helper class for painting the header.
   std::unique_ptr<ash::HeaderPainter> header_painter_;
+
+  HostedAppButtonContainer* hosted_app_button_container_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserNonClientFrameViewAsh);
 };
