@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "905c8aac_35b6a3d5",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:29:51Z",
+      "side": 1,
+      "message": "Thanks for the pointer! I went ahead and update sync code to handle deletions, which was more intrusive than I was hoping for, PTAL. Please help me a) asses the risk; b) review the code high-level (for now); and c) decide how this patch could be split (it seems to me that sync changes cannot precede FaviconService changes, and sync changes should be squashed into or immediately follow FaviconService changes).",
+      "parentUuid": "6abd0c61_e3baa82e",
+      "revId": "8a6bd8459ea397886ccd86517f8732fc21cdd2d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c98e69f_9e3893fc",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 15
