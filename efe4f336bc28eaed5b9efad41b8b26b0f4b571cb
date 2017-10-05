@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a4b017ae_00a4f8d9",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T12:08:36Z",
+      "side": 1,
+      "message": "It doesn\u0027t work in the following case.\n  class Foo : public TraceWrapperBase,\n              public Supplement\u003cBar\u003e {};\nwhere Supplement\u003cBar\u003e inherits from SupplementBase.\n\nIn this case, we cannot resolve the following two overloads because of the ambiguity.\n  void func(const TraceWrapperBase*);\n  void func(const SupplementBase*);\n\nWe can resolve the following overloads, though.\n  void func(const TraceWrapperBase*);\n  template \u003ctypename T\u003e\n  void func(const Supplement\u003cT\u003e*);",
+      "parentUuid": "4cffe9de_4c683835",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be4f314b_5eced25f",
         "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
         "patchSetId": 22
