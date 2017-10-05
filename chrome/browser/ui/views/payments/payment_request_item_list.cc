@@ -177,7 +177,7 @@ void PaymentRequestItemList::Item::UpdateAccessibleName() {
 }
 
 PaymentRequestItemList::PaymentRequestItemList(PaymentRequestDialogView* dialog)
-    : selected_item_(nullptr), dialog_(dialog) {}
+    : dialog_(dialog) {}
 
 PaymentRequestItemList::~PaymentRequestItemList() {}
 
@@ -188,15 +188,15 @@ void PaymentRequestItemList::AddItem(
     item->set_previous_row(items_.back().get());
   items_.push_back(std::move(item));
   if (items_.back()->selected()) {
-    if (selected_item_)
-      selected_item_->SetSelected(/*selected=*/false, /*notify=*/false);
-    selected_item_ = items_.back().get();
+    if (!selected_item_.expired())
+      selected_item_.lock()->SetSelected(/*selected=*/false, /*notify=*/false);
+    selected_item_ = items_.back();
   }
 }
 
 void PaymentRequestItemList::Clear() {
   items_.clear();
-  selected_item_ = nullptr;
+  selected_item_.reset();
 }
 
 std::unique_ptr<views::View> PaymentRequestItemList::CreateListView() {
@@ -208,19 +208,28 @@ std::unique_ptr<views::View> PaymentRequestItemList::CreateListView() {
   content_view->SetLayoutManager(layout);
 
   for (auto& item : items_)
-    content_view->AddChildView(item.release());
+    content_view->AddChildView(item.get());
 
   return content_view;
 }
 
 void PaymentRequestItemList::SelectItem(PaymentRequestItemList::Item* item) {
   DCHECK_EQ(this, item->list());
-  if (selected_item_ == item)
+  if (selected_item_.lock().get() == item)
     return;
 
   UnselectSelectedItem();
 
-  selected_item_ = item;
+  // Find the shared pointer matching this raw pointer.
+  for (auto& i : items_) {
+    if (i.get() == item) {
+      selected_item_ = i;
+      break;
+    }
+  }
+
+  DCHECK(!selected_item_.expired());
+
   item->SetSelected(/*selected=*/true, /*notify=*/true);
 }
 
@@ -228,10 +237,10 @@ void PaymentRequestItemList::UnselectSelectedItem() {
   // It's possible that no item is currently selected, either during list
   // creation or in the middle of the selection operation when the previously
   // selected item has been deselected but the new one isn't selected yet.
-  if (selected_item_)
-    selected_item_->SetSelected(/*selected=*/false, /*notify=*/true);
+  if (!selected_item_.expired())
+    selected_item_.lock()->SetSelected(/*selected=*/false, /*notify=*/true);
 
-  selected_item_ = nullptr;
+  selected_item_.reset();
 }
 
 }  // namespace payments
