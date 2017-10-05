@@ -26,10 +26,7 @@ MainThreadSchedulerHelper::MainThreadSchedulerHelper(
   InitDefaultQueues(default_task_queue_, control_task_queue_);
 }
 
-MainThreadSchedulerHelper::~MainThreadSchedulerHelper() {
-  control_task_queue_->UnregisterTaskQueue();
-  default_task_queue_->UnregisterTaskQueue();
-}
+MainThreadSchedulerHelper::~MainThreadSchedulerHelper() {}
 
 scoped_refptr<MainThreadTaskQueue>
 MainThreadSchedulerHelper::DefaultMainThreadTaskQueue() {

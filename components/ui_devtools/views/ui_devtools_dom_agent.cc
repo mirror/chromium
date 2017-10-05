@@ -318,64 +318,6 @@ void DrawR1TopPartialLeftR2(const gfx::RectF& pinned_rect_f,
                         render_text);
 }
 
-void DrawR1BottomPartialLeftR2(const gfx::RectF& pinned_rect_f,
-                               const gfx::RectF& hovered_rect_f,
-                               const cc::PaintFlags& flags,
-                               gfx::Canvas* canvas,
-                               gfx::RenderText* render_text) {
-  float x1 = hovered_rect_f.x() + hovered_rect_f.width() / 2;
-  float y1 = pinned_rect_f.bottom();
-  float x2 = x1;
-  float y2 = hovered_rect_f.y();
-
-  // Vertical left dotted line.
-  canvas->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
-  DrawTextWithAnyBounds(x1, y1, x2, y2, RectSide::LEFT_SIDE, canvas,
-                        render_text);
-}
-
-void DrawR1IntersectsR2(const gfx::RectF& pinned_rect_f,
-                        const gfx::RectF& hovered_rect_f,
-                        const cc::PaintFlags& flags,
-                        gfx::Canvas* canvas,
-                        gfx::RenderText* render_text) {
-  // Vertical dotted line for the top side of the pinned rectangle
-  float x1 = pinned_rect_f.x() + pinned_rect_f.width() / 2;
-  float y1 = pinned_rect_f.y();
-  float x2 = x1;
-  float y2 = hovered_rect_f.y();
-  canvas->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
-  DrawTextWithAnyBounds(x1, y1, x2, y2, RectSide::LEFT_SIDE, canvas,
-                        render_text);
-
-  // Vertical dotted line for the bottom side of the pinned rectangle
-  x1 = pinned_rect_f.x() + pinned_rect_f.width() / 2;
-  y1 = pinned_rect_f.bottom();
-  x2 = x1;
-  y2 = hovered_rect_f.bottom();
-  canvas->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
-  DrawTextWithAnyBounds(x1, y1, x2, y2, RectSide::LEFT_SIDE, canvas,
-                        render_text);
-
-  // Horizontal dotted line for the left side of the pinned rectangle
-  x1 = pinned_rect_f.x();
-  y1 = pinned_rect_f.y() + pinned_rect_f.height() / 2;
-  x2 = hovered_rect_f.x();
-  y2 = y1;
-  canvas->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
-  DrawTextWithAnyBounds(x1, y1, x2, y2, RectSide::BOTTOM_SIDE, canvas,
-                        render_text);
-
-  // Horizontal dotted line for the right side of the pinned rectangle
-  x1 = pinned_rect_f.right();
-  y1 = pinned_rect_f.y() + pinned_rect_f.height() / 2;
-  x2 = hovered_rect_f.right();
-  y2 = y1;
-  canvas->DrawLine(gfx::PointF(x1, y1), gfx::PointF(x2, y2), flags);
-  DrawTextWithAnyBounds(x1, y1, x2, y2, RectSide::BOTTOM_SIDE, canvas,
-                        render_text);
-}
-
 }  // namespace
 
 UIDevToolsDOMAgent::UIDevToolsDOMAgent()
@@ -704,16 +646,10 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
                        flags);
       return;
     case HighlightRectsConfiguration::R1_BOTTOM_PARTIAL_LEFT_R2:
-      DrawR1BottomPartialLeftR2(pinned_rect_f, hovered_rect_f, flags, canvas,
-                                render_text_.get());
+      NOTIMPLEMENTED();
       return;
     case HighlightRectsConfiguration::R1_INTERSECTS_R2:
-      DrawR1IntersectsR2(pinned_rect_f, hovered_rect_f, flags, canvas,
-                         render_text_.get());
-      // Draw 4 guide line along distance lines.
-      flags.setPathEffect(SkDashPathEffect::Make(intervals, 2, 0));
-
-      DrawRectGuideLinesOnCanvas(screen_bounds, hovered_rect_f, flags, canvas);
+      NOTIMPLEMENTED();
       return;
     default:
       NOTREACHED();

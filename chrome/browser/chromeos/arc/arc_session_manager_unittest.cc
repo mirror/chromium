@@ -179,7 +179,9 @@ class ArcSessionManagerTestBase : public testing::Test {
     arc_session_manager_ = std::make_unique<ArcSessionManager>(
         std::make_unique<ArcSessionRunner>(base::Bind(FakeArcSession::Create)));
 
-    ASSERT_FALSE(arc_session_manager_->enable_requested());
+    // Check initial conditions.
+    EXPECT_TRUE(arc_session_manager_->IsSessionStopped());
+
     chromeos::WallpaperManager::Initialize();
   }
 
@@ -248,6 +250,7 @@ class ArcSessionManagerTest : public ArcSessionManagerTestBase {
 
     ASSERT_EQ(ArcSessionManager::State::NOT_INITIALIZED,
               arc_session_manager()->state());
+    ASSERT_TRUE(arc_session_manager()->IsSessionStopped());
   }
 
  private:

@@ -5,9 +5,11 @@
 #include "core/animation/CompositorMutatorImpl.h"
 
 #include "core/animation/CompositorAnimator.h"
+#include "core/animation/CustomCompositorAnimationManager.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WaitableEvent.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/graphics/CompositorMutationsTarget.h"
 #include "platform/graphics/CompositorMutatorClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
@@ -22,14 +24,16 @@ void CreateCompositorMutatorClient(
     std::unique_ptr<CompositorMutatorClient>* ptr,
     WaitableEvent* done_event) {
   CompositorMutatorImpl* mutator = CompositorMutatorImpl::Create();
-  ptr->reset(new CompositorMutatorClient(mutator));
+  ptr->reset(new CompositorMutatorClient(mutator, mutator->AnimationManager()));
   mutator->SetClient(ptr->get());
   done_event->Signal();
 }
 
 }  // namespace
 
-CompositorMutatorImpl::CompositorMutatorImpl() : client_(nullptr) {}
+CompositorMutatorImpl::CompositorMutatorImpl()
+    : animation_manager_(WTF::WrapUnique(new CustomCompositorAnimationManager)),
+      client_(nullptr) {}
 
 std::unique_ptr<CompositorMutatorClient> CompositorMutatorImpl::CreateClient() {
   std::unique_ptr<CompositorMutatorClient> mutator_client;

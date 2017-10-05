@@ -20,7 +20,7 @@
 
 #include "core/svg/SVGDescElement.h"
 
-#include "core/svg_names.h"
+#include "core/SVGNames.h"
 
 namespace blink {
 

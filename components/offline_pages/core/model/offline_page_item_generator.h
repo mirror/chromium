@@ -20,9 +20,7 @@ class OfflinePageItemGenerator {
   ~OfflinePageItemGenerator();
 
   OfflinePageItem CreateItem();
-  // Creating item along with a file in |temp_dir_|.
-  // Make sure to set |temp_dir_| before calling this method.
-  OfflinePageItem CreateItemWithTempFile();
+  OfflinePageItem CreateItemWithTempFileInDir(const base::FilePath& temp_dir);
 
   void SetNamespace(const std::string& name_space);
   void SetRequestOrigin(const std::string& request_origin);
@@ -30,7 +28,6 @@ class OfflinePageItemGenerator {
   void SetOriginalUrl(const GURL& url);
   void SetFileSize(int64_t);
   void SetLastAccessTime(const base::Time& time);
-  void SetArchiveDirectory(const base::FilePath& archive_dir);
 
  private:
   std::string namespace_;
@@ -39,7 +36,6 @@ class OfflinePageItemGenerator {
   GURL original_url_;
   int64_t file_size_ = 0;
   base::Time last_access_time_;
-  base::FilePath archive_dir_;
 };
 }  // namespace offline_pages
 

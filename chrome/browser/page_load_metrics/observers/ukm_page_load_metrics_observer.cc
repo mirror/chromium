@@ -58,7 +58,7 @@ UINetworkQualityEstimatorService* GetNQEService(
 // static
 std::unique_ptr<page_load_metrics::PageLoadMetricsObserver>
 UkmPageLoadMetricsObserver::CreateIfNeeded(content::WebContents* web_contents) {
-  if (!ukm::UkmRecorder::Get()) {
+  if (!g_browser_process->ukm_recorder()) {
     return nullptr;
   }
   return base::MakeUnique<UkmPageLoadMetricsObserver>(
@@ -139,7 +139,7 @@ void UkmPageLoadMetricsObserver::OnFailedProvisionalLoad(
       .SetNet_ErrorCode_OnFailedProvisionalLoad(net_error_code)
       .SetPageTiming_NavigationToFailedProvisionalLoad(
           failed_load_info.time_to_failed_provisional_load.InMilliseconds())
-      .Record(ukm::UkmRecorder::Get());
+      .Record(g_browser_process->ukm_recorder());
 }
 
 void UkmPageLoadMetricsObserver::OnComplete(
@@ -179,13 +179,13 @@ void UkmPageLoadMetricsObserver::RecordTimingMetrics(
     builder.SetExperimental_PaintTiming_NavigationToFirstMeaningfulPaint(
         timing.paint_timing->first_meaningful_paint.value().InMilliseconds());
   }
-  builder.Record(ukm::UkmRecorder::Get());
+  builder.Record(g_browser_process->ukm_recorder());
 }
 
 void UkmPageLoadMetricsObserver::RecordPageLoadExtraInfoMetrics(
     const page_load_metrics::PageLoadExtraInfo& info,
     base::TimeTicks app_background_time) {
-  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
   std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
       info.source_id, internal::kUkmPageLoadEventName);
   base::Optional<base::TimeDelta> foreground_duration =

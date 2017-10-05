@@ -288,9 +288,8 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
         base::Bind(&V4LocalDatabaseManagerTest::GetExtendedReportingLevel,
                    base::Unretained(this));
 
-    v4_local_database_manager_ =
-        base::WrapRefCounted(new V4LocalDatabaseManager(
-            base_dir_.GetPath(), erl_callback_, task_runner_));
+    v4_local_database_manager_ = make_scoped_refptr(new V4LocalDatabaseManager(
+        base_dir_.GetPath(), erl_callback_, task_runner_));
 
     StartLocalDatabaseManager();
   }
@@ -341,9 +340,8 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
 
   void ResetLocalDatabaseManager() {
     StopLocalDatabaseManager();
-    v4_local_database_manager_ =
-        base::WrapRefCounted(new V4LocalDatabaseManager(
-            base_dir_.GetPath(), erl_callback_, task_runner_));
+    v4_local_database_manager_ = make_scoped_refptr(new V4LocalDatabaseManager(
+        base_dir_.GetPath(), erl_callback_, task_runner_));
     StartLocalDatabaseManager();
   }
 
@@ -378,7 +376,7 @@ class V4LocalDatabaseManagerTest : public PlatformTest {
     // ~V4LocalDatabaseManager expects.
     StopLocalDatabaseManager();
     v4_local_database_manager_ =
-        base::WrapRefCounted(new FakeV4LocalDatabaseManager(
+        make_scoped_refptr(new FakeV4LocalDatabaseManager(
             base_dir_.GetPath(), erl_callback_, task_runner_));
     StartLocalDatabaseManager();
     WaitForTasksOnTaskRunner();

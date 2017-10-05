@@ -3735,7 +3735,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
   NSString* host = base::SysUTF8ToNSString(_documentURL.host());
   BOOL hasOnlySecureContent = [_webView hasOnlySecureContent];
   base::ScopedCFTypeRef<SecTrustRef> trust;
-  if (@available(iOS 10, *)) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
     trust.reset([_webView serverTrust], base::scoped_policy::RETAIN);
   } else {
     trust = web::CreateServerTrustFromChain([_webView certificateChain], host);
@@ -4184,8 +4184,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (BOOL)webView:(WKWebView*)webView
-    shouldPreviewElement:(WKPreviewElementInfo*)elementInfo
-    API_AVAILABLE(ios(10.0)) {
+    shouldPreviewElement:(WKPreviewElementInfo*)elementInfo {
   return self.webStateImpl->ShouldPreviewLink(
       net::GURLWithNSURL(elementInfo.linkURL));
 }
@@ -4193,13 +4192,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (UIViewController*)webView:(WKWebView*)webView
     previewingViewControllerForElement:(WKPreviewElementInfo*)elementInfo
                         defaultActions:
-                            (NSArray<id<WKPreviewActionItem>>*)previewActions
-    API_AVAILABLE(ios(10.0)) {
-  // Prevent |_contextMenuController| from intercepting the default behavior for
-  // the current on-going touch. Otherwise it would cancel the on-going Peek&Pop
-  // action and show its own context menu instead (crbug.com/770619).
-  [_contextMenuController allowSystemUIForCurrentGesture];
-
+                            (NSArray<id<WKPreviewActionItem>>*)previewActions {
   return self.webStateImpl->GetPreviewingViewController(
       net::GURLWithNSURL(elementInfo.linkURL));
 }

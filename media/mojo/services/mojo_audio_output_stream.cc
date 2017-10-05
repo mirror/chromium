@@ -23,7 +23,7 @@ MojoAudioOutputStream::MojoAudioOutputStream(
       deleter_callback_(std::move(deleter_callback)),
       binding_(this, std::move(request)),
       weak_factory_(this) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(deleter_callback_);
   // |this| owns |binding_|, so unretained is safe.
   binding_.set_connection_error_handler(
@@ -40,21 +40,21 @@ MojoAudioOutputStream::MojoAudioOutputStream(
 }
 
 MojoAudioOutputStream::~MojoAudioOutputStream() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 }
 
 void MojoAudioOutputStream::Play() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   delegate_->OnPlayStream();
 }
 
 void MojoAudioOutputStream::Pause() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   delegate_->OnPauseStream();
 }
 
 void MojoAudioOutputStream::SetVolume(double volume) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   if (volume < 0 || volume > 1) {
     LOG(ERROR) << "MojoAudioOutputStream::SetVolume(" << volume
                << ") out of range.";
@@ -68,7 +68,7 @@ void MojoAudioOutputStream::OnStreamCreated(
     int stream_id,
     const base::SharedMemory* shared_memory,
     std::unique_ptr<base::CancelableSyncSocket> foreign_socket) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(stream_created_callback_);
   DCHECK(shared_memory);
   DCHECK(foreign_socket);
@@ -90,12 +90,12 @@ void MojoAudioOutputStream::OnStreamCreated(
 }
 
 void MojoAudioOutputStream::OnStreamError(int stream_id) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   OnError();
 }
 
 void MojoAudioOutputStream::OnError() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(deleter_callback_);
   std::move(deleter_callback_).Run();  // Deletes |this|.
 }

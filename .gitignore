@@ -195,7 +195,7 @@ vs-chromium-project.txt
 /media/media_mojo_bindings.xml
 /media/test/data/internal
 /metro_driver
-/mojo/internal
+/mojo/public/tools/bindings/internal/
 /native_client
 /net/Debug
 /net/net_derived_sources.xml

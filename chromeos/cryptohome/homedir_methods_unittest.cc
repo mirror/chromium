@@ -77,9 +77,8 @@ TEST_F(HomedirMethodsTest, GetKeyDataEx) {
   chromeos::DBusThreadManager::Get()->GetCryptohomeClient()->AddKeyEx(
       cryptohome::Identification(AccountId::FromUserEmail(kUserID)),
       AuthorizationRequest(), request,
-      base::Bind([](base::Optional<BaseReply> result) {
-        ASSERT_TRUE(result.has_value());
-      }));
+      base::Bind([](chromeos::DBusMethodCallStatus call_status, bool result,
+                    const BaseReply& reply) { ASSERT_TRUE(result); }));
   ASSERT_NO_FATAL_FAILURE(base::RunLoop().RunUntilIdle());
 
   // Call GetKeyDataEx().

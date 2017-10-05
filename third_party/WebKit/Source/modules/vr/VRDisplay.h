@@ -105,8 +105,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   friend class VRController;
 
   VRDisplay(NavigatorVR*,
-            device::mojom::blink::VRMagicWindowProviderPtr,
-            device::mojom::blink::VRDisplayHostPtr,
+            device::mojom::blink::VRDisplayPtr,
             device::mojom::blink::VRDisplayClientRequest);
 
   void Update(const device::mojom::blink::VRDisplayInfoPtr&);
@@ -212,8 +211,7 @@ class VRDisplay final : public EventTargetWithInlineData,
   bool pending_submit_frame_ = false;
   bool pending_present_request_ = false;
 
-  device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider_;
-  device::mojom::blink::VRDisplayHostPtr display_;
+  device::mojom::blink::VRDisplayPtr display_;
 
   mojo::Binding<device::mojom::blink::VRSubmitFrameClient>
       submit_frame_client_binding_;

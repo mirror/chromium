@@ -22,6 +22,7 @@
 #include "core/layout/LayoutTheme.h"
 
 #include "core/CSSValueKeywords.h"
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/ElementShadow.h"
@@ -30,16 +31,15 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLCollection.h"
+#include "core/html/HTMLDataListElement.h"
+#include "core/html/HTMLDataListOptionsCollection.h"
 #include "core/html/HTMLFormControlElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLOptionElement.h"
-#include "core/html/forms/HTMLDataListElement.h"
-#include "core/html/forms/HTMLDataListOptionsCollection.h"
 #include "core/html/forms/SpinButtonElement.h"
 #include "core/html/forms/TextControlInnerElements.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutThemeMobile.h"
 #include "core/page/FocusController.h"
@@ -271,6 +271,10 @@ String LayoutTheme::ExtraQuirksStyleSheet() {
   return String();
 }
 
+String LayoutTheme::ExtraMediaControlsStyleSheet() {
+  return String();
+}
+
 String LayoutTheme::ExtraFullscreenStyleSheet() {
   return String();
 }
@@ -356,14 +360,19 @@ Color LayoutTheme::PlatformInactiveListBoxSelectionForegroundColor() const {
   return PlatformInactiveSelectionForegroundColor();
 }
 
-LayoutUnit LayoutTheme::BaselinePositionAdjustment(
-    const ComputedStyle& style) const {
+LayoutUnit LayoutTheme::BaselinePosition(const LayoutObject* o) const {
+  if (!o->IsBox())
+    return LayoutUnit();
+
+  const LayoutBox* box = ToLayoutBox(o);
+
   if (platform_theme_) {
-    return LayoutUnit(
-        platform_theme_->BaselinePositionAdjustment(style.Appearance()) *
-        style.EffectiveZoom());
+    return box->Size().Height() + box->MarginTop() +
+           LayoutUnit(platform_theme_->BaselinePositionAdjustment(
+                          o->Style()->Appearance()) *
+                      o->Style()->EffectiveZoom());
   }
-  return LayoutUnit();
+  return box->Size().Height() + box->MarginTop();
 }
 
 bool LayoutTheme::IsControlContainer(ControlPart appearance) const {
@@ -392,23 +401,22 @@ bool LayoutTheme::IsControlStyled(const ComputedStyle& style) const {
   }
 }
 
-void LayoutTheme::AddVisualOverflow(const Node* node,
-                                    const ComputedStyle& style,
+void LayoutTheme::AddVisualOverflow(const LayoutObject& object,
                                     IntRect& border_box) {
-  if (platform_theme_) {
-    platform_theme_->AddVisualOverflow(style.Appearance(),
-                                       ControlStatesForNode(node, style),
-                                       style.EffectiveZoom(), border_box);
-  }
+  if (platform_theme_)
+    platform_theme_->AddVisualOverflow(
+        object.Style()->Appearance(), ControlStatesForLayoutObject(object),
+        object.Style()->EffectiveZoom(), border_box);
 }
 
-bool LayoutTheme::ShouldDrawDefaultFocusRing(const Node* node,
-                                             const ComputedStyle& style) const {
-  if (ThemeDrawsFocusRing(style))
+bool LayoutTheme::ShouldDrawDefaultFocusRing(
+    const LayoutObject& layout_object) const {
+  if (ThemeDrawsFocusRing(layout_object.StyleRef()))
     return false;
+  Node* node = layout_object.GetNode();
   if (!node)
     return true;
-  if (!style.HasAppearance() && !node->IsLink())
+  if (!layout_object.StyleRef().HasAppearance() && !node->IsLink())
     return true;
   // We can't use LayoutTheme::isFocused because outline:auto might be
   // specified to non-:focus rulesets.
@@ -417,53 +425,53 @@ bool LayoutTheme::ShouldDrawDefaultFocusRing(const Node* node,
   return true;
 }
 
-bool LayoutTheme::ControlStateChanged(const Node* node,
-                                      const ComputedStyle& style,
+bool LayoutTheme::ControlStateChanged(LayoutObject& o,
                                       ControlState state) const {
-  if (!style.HasAppearance())
+  if (!o.StyleRef().HasAppearance())
     return false;
 
   // Default implementation assumes the controls don't respond to changes in
   // :hover state
-  if (state == kHoverControlState && !SupportsHover(style))
+  if (state == kHoverControlState && !SupportsHover(o.StyleRef()))
     return false;
 
   // Assume pressed state is only responded to if the control is enabled.
-  if (state == kPressedControlState && !IsEnabled(node))
+  if (state == kPressedControlState && !IsEnabled(o))
     return false;
 
+  o.SetShouldDoFullPaintInvalidationIncludingNonCompositingDescendants();
   return true;
 }
 
-ControlStates LayoutTheme::ControlStatesForNode(const Node* node,
-                                                const ComputedStyle& style) {
+ControlStates LayoutTheme::ControlStatesForLayoutObject(const LayoutObject& o) {
   ControlStates result = 0;
-  if (IsHovered(node)) {
+  if (IsHovered(o)) {
     result |= kHoverControlState;
-    if (IsSpinUpButtonPartHovered(node))
+    if (IsSpinUpButtonPartHovered(o))
       result |= kSpinUpControlState;
   }
-  if (IsPressed(node)) {
+  if (IsPressed(o)) {
     result |= kPressedControlState;
-    if (IsSpinUpButtonPartPressed(node))
+    if (IsSpinUpButtonPartPressed(o))
       result |= kSpinUpControlState;
   }
-  if (IsFocused(node) && style.OutlineStyleIsAuto())
+  if (IsFocused(o) && o.Style()->OutlineStyleIsAuto())
     result |= kFocusControlState;
-  if (IsEnabled(node))
+  if (IsEnabled(o))
     result |= kEnabledControlState;
-  if (IsChecked(node))
+  if (IsChecked(o))
     result |= kCheckedControlState;
-  if (IsReadOnlyControl(node))
+  if (IsReadOnlyControl(o))
     result |= kReadOnlyControlState;
-  if (!IsActive(node))
+  if (!IsActive(o))
     result |= kWindowInactiveControlState;
-  if (IsIndeterminate(node))
+  if (IsIndeterminate(o))
     result |= kIndeterminateControlState;
   return result;
 }
 
-bool LayoutTheme::IsActive(const Node* node) {
+bool LayoutTheme::IsActive(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node)
     return false;
 
@@ -474,25 +482,27 @@ bool LayoutTheme::IsActive(const Node* node) {
   return page->GetFocusController().IsActive();
 }
 
-bool LayoutTheme::IsChecked(const Node* node) {
-  if (auto* input = ToHTMLInputElementOrNull(node))
+bool LayoutTheme::IsChecked(const LayoutObject& o) {
+  if (auto* input = ToHTMLInputElementOrNull(o.GetNode()))
     return input->ShouldAppearChecked();
   return false;
 }
 
-bool LayoutTheme::IsIndeterminate(const Node* node) {
-  if (auto* input = ToHTMLInputElementOrNull(node))
+bool LayoutTheme::IsIndeterminate(const LayoutObject& o) {
+  if (auto* input = ToHTMLInputElementOrNull(o.GetNode()))
     return input->ShouldAppearIndeterminate();
   return false;
 }
 
-bool LayoutTheme::IsEnabled(const Node* node) {
+bool LayoutTheme::IsEnabled(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node || !node->IsElementNode())
     return true;
   return !ToElement(node)->IsDisabledFormControl();
 }
 
-bool LayoutTheme::IsFocused(const Node* node) {
+bool LayoutTheme::IsFocused(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node)
     return false;
 
@@ -504,43 +514,47 @@ bool LayoutTheme::IsFocused(const Node* node) {
          frame->Selection().FrameIsFocusedAndActive();
 }
 
-bool LayoutTheme::IsPressed(const Node* node) {
-  if (!node)
+bool LayoutTheme::IsPressed(const LayoutObject& o) {
+  if (!o.GetNode())
     return false;
-  return node->IsActive();
+  return o.GetNode()->IsActive();
 }
 
-bool LayoutTheme::IsSpinUpButtonPartPressed(const Node* node) {
+bool LayoutTheme::IsSpinUpButtonPartPressed(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node || !node->IsActive() || !node->IsElementNode() ||
       !ToElement(node)->IsSpinButtonElement())
     return false;
-  const SpinButtonElement* element = ToSpinButtonElement(node);
+  SpinButtonElement* element = ToSpinButtonElement(node);
   return element->GetUpDownState() == SpinButtonElement::kUp;
 }
 
-bool LayoutTheme::IsReadOnlyControl(const Node* node) {
+bool LayoutTheme::IsReadOnlyControl(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node || !node->IsElementNode() ||
       !ToElement(node)->IsFormControlElement())
     return false;
-  const HTMLFormControlElement* element = ToHTMLFormControlElement(node);
+  HTMLFormControlElement* element = ToHTMLFormControlElement(node);
   return element->IsReadOnly();
 }
 
-bool LayoutTheme::IsHovered(const Node* node) {
+bool LayoutTheme::IsHovered(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node)
     return false;
   if (!node->IsElementNode() || !ToElement(node)->IsSpinButtonElement())
     return node->IsHovered();
-  const SpinButtonElement* element = ToSpinButtonElement(node);
+  SpinButtonElement* element = ToSpinButtonElement(node);
   return element->IsHovered() &&
          element->GetUpDownState() != SpinButtonElement::kIndeterminate;
 }
 
-bool LayoutTheme::IsSpinUpButtonPartHovered(const Node* node) {
+bool LayoutTheme::IsSpinUpButtonPartHovered(const LayoutObject& o) {
+  Node* node = o.GetNode();
   if (!node || !node->IsElementNode() ||
       !ToElement(node)->IsSpinButtonElement())
     return false;
-  const SpinButtonElement* element = ToSpinButtonElement(node);
+  SpinButtonElement* element = ToSpinButtonElement(node);
   return element->GetUpDownState() == SpinButtonElement::kUp;
 }
 

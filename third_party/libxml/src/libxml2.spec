@@ -2,7 +2,7 @@
 
 Summary: Library providing XML and HTML support
 Name: libxml2
-Version: 2.9.5
+Version: 2.9.4
 Release: 1%{?dist}%{?extra_release}
 License: MIT
 Group: Development/Libraries
@@ -57,15 +57,12 @@ Requires: libxml2 = %{version}-%{release}
 Static library for libxml2 provided for specific uses or shaving a few
 microseconds when parsing, do not link to them for generic purpose packages.
 
-%package -n python-%{name}
-%{?python_provide:%python_provide python-%{name}}
+%package python
 Summary: Python bindings for the libxml2 library
 Group: Development/Libraries
 Requires: libxml2 = %{version}-%{release}
-Obsoletes: %{name}-python < %{version}-%{release}
-Provides: %{name}-python = %{version}-%{release}
 
-%description -n python-%{name}
+%description python
 The libxml2-python package contains a Python 2 module that permits applications
 written in the Python programming language, version 2, to use the interface
 supplied by the libxml2 library to manipulate XML files.
@@ -76,14 +73,12 @@ this includes parsing and validation even with complex DTDs, either
 at parse time or later once the document has been modified.
 
 %if 0%{?with_python3}
-%package -n python3-%{name}
+%package python3
 Summary: Python 3 bindings for the libxml2 library
 Group: Development/Libraries
 Requires: libxml2 = %{version}-%{release}
-Obsoletes: %{name}-python3 < %{version}-%{release}
-Provides: %{name}-python3 = %{version}-%{release}
 
-%description -n python3-%{name}
+%description python3
 The libxml2-python3 package contains a Python 3 module that permits
 applications written in the Python programming language, version 3, to use the
 interface supplied by the libxml2 library to manipulate XML files.
@@ -97,15 +92,9 @@ at parse time or later once the document has been modified.
 %prep
 %setup -q
 
-mkdir py3doc
-cp doc/*.py py3doc
-sed -i 's|#!/usr/bin/python |#!%{__python3} |' py3doc/*.py
-
 %build
 %configure
 make %{_smp_mflags}
-
-find doc -type f -exec chmod 0644 \{\} \;
 
 %install
 rm -fr %{buildroot}
@@ -176,7 +165,7 @@ rm -fr %{buildroot}
 
 %{_libdir}/*a
 
-%files -n python-%{name}
+%files python
 %defattr(-, root, root)
 
 %{_libdir}/python2*/site-packages/libxml2.py*
@@ -189,20 +178,22 @@ rm -fr %{buildroot}
 %doc doc/python.html
 
 %if 0%{?with_python3}
-%files -n python3-%{name}
+%files python3
 %defattr(-, root, root)
 
 %{_libdir}/python3*/site-packages/libxml2.py*
 %{_libdir}/python3*/site-packages/drv_libxml2.py*
-%{_libdir}/python3*/site-packages/__pycache__/*py*
+%{_libdir}/python3*/site-packages/__pycache__/libxml2.cpython-34.py*
+%{_libdir}/python3*/site-packages/__pycache__/drv_libxml2.cpython-34.py*
 %{_libdir}/python3*/site-packages/libxml2mod*
 %doc python/TODO
 %doc python/libxml2class.txt
-%doc py3doc/*.py
+%doc python/tests/*.py
+%doc doc/*.py
 %doc doc/python.html
 %endif # with_python3
 
 %changelog
-* Tue Oct  3 2017 Daniel Veillard <veillard@redhat.com>
-- upstream release 2.9.5 see http://xmlsoft.org/news.html
+* Thu Aug 10 2017 Daniel Veillard <veillard@redhat.com>
+- upstream release 2.9.4 see http://xmlsoft.org/news.html
 

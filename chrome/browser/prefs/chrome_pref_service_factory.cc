@@ -355,9 +355,8 @@ std::unique_ptr<ProfilePrefStoreManager> CreateProfilePrefStoreManager(
 #endif
   std::string seed;
 #if defined(GOOGLE_CHROME_BUILD)
-  seed = ui::ResourceBundle::GetSharedInstance()
-             .GetRawDataResource(IDR_PREF_HASH_SEED_BIN)
-             .as_string();
+  seed = ResourceBundle::GetSharedInstance().GetRawDataResource(
+      IDR_PREF_HASH_SEED_BIN).as_string();
 #endif
   return base::MakeUnique<ProfilePrefStoreManager>(profile_path, seed,
                                                    legacy_device_id);
@@ -377,8 +376,8 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   if (supervised_user_settings) {
-    scoped_refptr<PrefStore> supervised_user_prefs =
-        base::MakeRefCounted<SupervisedUserPrefStore>(supervised_user_settings);
+    scoped_refptr<PrefStore> supervised_user_prefs = make_scoped_refptr(
+        new SupervisedUserPrefStore(supervised_user_settings));
     DCHECK(async || supervised_user_prefs->IsInitializationComplete());
     factory->set_supervised_user_prefs(supervised_user_prefs);
   }
@@ -386,9 +385,8 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
 
   factory->set_async(async);
   factory->set_extension_prefs(extension_prefs);
-  factory->set_command_line_prefs(
-      base::MakeRefCounted<ChromeCommandLinePrefStore>(
-          base::CommandLine::ForCurrentProcess()));
+  factory->set_command_line_prefs(make_scoped_refptr(
+      new ChromeCommandLinePrefStore(base::CommandLine::ForCurrentProcess())));
   factory->set_read_error_callback(base::Bind(&HandleReadError, pref_filename));
   factory->set_user_prefs(user_pref_store);
   factory->SetPrefModelAssociatorClient(

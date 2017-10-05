@@ -59,7 +59,6 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_constants.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_importance_signals.h"
 #include "content/public/common/page_state.h"
@@ -778,9 +777,7 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
   WebRuntimeFeatures::EnableXSLT(prefs.xslt_enabled);
   settings->SetXSSAuditorEnabled(prefs.xss_auditor_enabled);
   settings->SetDNSPrefetchingEnabled(prefs.dns_prefetching_enabled);
-  settings->SetDataSaverEnabled(
-      prefs.data_saver_enabled &&
-      !base::FeatureList::IsEnabled(features::kDataSaverHoldback));
+  settings->SetDataSaverEnabled(prefs.data_saver_enabled);
   settings->SetLocalStorageEnabled(prefs.local_storage_enabled);
   settings->SetSyncXHRInDocumentsEnabled(prefs.sync_xhr_in_documents_enabled);
   WebRuntimeFeatures::EnableDatabase(prefs.databases_enabled);
@@ -1359,16 +1356,14 @@ WebView* RenderViewImpl::CreateView(WebLocalFrame* creator,
   if (err || reply->route_id == MSG_ROUTING_NONE)
     return nullptr;
 
+  WebUserGestureIndicator::ConsumeUserGesture();
+
   // For Android WebView, we support a pop-up like behavior for window.open()
   // even if the embedding app doesn't support multiple windows. In this case,
   // window.open() will return "window" and navigate it to whatever URL was
-  // passed. We also don't need to consume user gestures to protect against
-  // multiple windows being opened, because, well, the app doesn't support
-  // multiple windows.
+  // passed.
   if (reply->route_id == GetRoutingID())
     return webview();
-
-  WebUserGestureIndicator::ConsumeUserGesture();
 
   // While this view may be a background extension page, it can spawn a visible
   // render view. So we just assume that the new one is not another background

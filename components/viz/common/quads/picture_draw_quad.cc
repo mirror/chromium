@@ -32,8 +32,7 @@ void PictureDrawQuad::SetNew(
   ContentDrawQuadBase::SetNew(
       shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, visible_rect,
       needs_blending, tex_coord_rect, texture_size,
-      !PlatformColor::SameComponentOrder(texture_format), nearest_neighbor,
-      false);
+      !PlatformColor::SameComponentOrder(texture_format), nearest_neighbor);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
   this->display_item_list = std::move(display_item_list);
@@ -55,8 +54,7 @@ void PictureDrawQuad::SetAll(
   ContentDrawQuadBase::SetAll(
       shared_quad_state, DrawQuad::PICTURE_CONTENT, rect, visible_rect,
       needs_blending, tex_coord_rect, texture_size,
-      !PlatformColor::SameComponentOrder(texture_format), nearest_neighbor,
-      false);
+      !PlatformColor::SameComponentOrder(texture_format), nearest_neighbor);
   this->content_rect = content_rect;
   this->contents_scale = contents_scale;
   this->display_item_list = std::move(display_item_list);

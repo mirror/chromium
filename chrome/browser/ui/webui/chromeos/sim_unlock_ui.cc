@@ -337,7 +337,7 @@ void SimUnlockUIHTMLSource::StartDataRequest(
   webui::SetLoadTimeDataDefaults(app_locale, &strings);
 
   static const base::StringPiece html(
-      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
+      ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_SIM_UNLOCK_HTML));
 
   std::string full_html = webui::GetI18nTemplateHtml(html, &strings);

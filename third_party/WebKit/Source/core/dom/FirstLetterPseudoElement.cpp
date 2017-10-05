@@ -354,7 +354,7 @@ void FirstLetterPseudoElement::AttachFirstLetterTextLayoutObjects() {
 }
 
 void FirstLetterPseudoElement::DidRecalcStyle() {
-  LayoutObject* layout_object = GetLayoutObject();
+  LayoutObject* layout_object = this->GetLayoutObject();
   if (!layout_object)
     return;
 

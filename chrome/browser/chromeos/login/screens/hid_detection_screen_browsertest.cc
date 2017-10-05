@@ -9,7 +9,6 @@
 #include "chrome/browser/chromeos/login/test/oobe_screen_waiter.h"
 #include "chrome/browser/chromeos/login/test/wizard_in_process_browser_test.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
-#include "device/hid/public/interfaces/input_service.mojom.h"
 
 namespace chromeos {
 
@@ -72,13 +71,11 @@ IN_PROC_BROWSER_TEST_F(HIDDetectionScreenTest, MouseKeyboardStates) {
 
   // Generic connection types. Unlike the pointing device, which may be a tablet
   // or touchscreen, the keyboard only reports usb and bluetooth states.
-  helper()->AddDeviceToService(true,
-                               device::mojom::InputDeviceType::TYPE_SERIO);
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_SERIO);
   EXPECT_TRUE(context()->GetBoolean(
       HIDDetectionScreen::kContextKeyContinueButtonEnabled));
 
-  helper()->AddDeviceToService(false,
-                               device::mojom::InputDeviceType::TYPE_SERIO);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_SERIO);
   EXPECT_EQ("connected",
             context()->GetString(HIDDetectionScreen::kContextKeyMouseState));
   EXPECT_EQ("usb",
@@ -92,8 +89,8 @@ IN_PROC_BROWSER_TEST_F(HIDDetectionScreenTest, MouseKeyboardStates) {
   EXPECT_FALSE(context()->GetBoolean(
       HIDDetectionScreen::kContextKeyContinueButtonEnabled));
 
-  helper()->AddDeviceToService(true, device::mojom::InputDeviceType::TYPE_USB);
-  helper()->AddDeviceToService(false, device::mojom::InputDeviceType::TYPE_USB);
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_USB);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_USB);
   EXPECT_EQ("usb",
             context()->GetString(HIDDetectionScreen::kContextKeyMouseState));
   EXPECT_EQ("usb",
@@ -107,10 +104,8 @@ IN_PROC_BROWSER_TEST_F(HIDDetectionScreenTest, MouseKeyboardStates) {
   EXPECT_FALSE(context()->GetBoolean(
       HIDDetectionScreen::kContextKeyContinueButtonEnabled));
 
-  helper()->AddDeviceToService(true,
-                               device::mojom::InputDeviceType::TYPE_BLUETOOTH);
-  helper()->AddDeviceToService(false,
-                               device::mojom::InputDeviceType::TYPE_BLUETOOTH);
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_BLUETOOTH);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_BLUETOOTH);
   EXPECT_EQ("paired",
             context()->GetString(HIDDetectionScreen::kContextKeyMouseState));
   EXPECT_EQ("paired",
@@ -126,16 +121,13 @@ IN_PROC_BROWSER_TEST_F(HIDDetectionScreenTest, BluetoothDeviceConnected) {
   EXPECT_TRUE(adapter()->IsPowered());
 
   // Add a pair of USB mouse/keyboard so that |pointing_device_connect_type_|
-  // and |keyboard_device_connect_type_| are
-  // device::mojom::InputDeviceType::TYPE_USB.
-  helper()->AddDeviceToService(true, device::mojom::InputDeviceType::TYPE_USB);
-  helper()->AddDeviceToService(false, device::mojom::InputDeviceType::TYPE_USB);
+  // and |keyboard_device_connect_type_| are InputDeviceInfo::TYPE_USB.
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_USB);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_USB);
 
   // Add another pair of Bluetooth mouse/keyboard.
-  helper()->AddDeviceToService(true,
-                               device::mojom::InputDeviceType::TYPE_BLUETOOTH);
-  helper()->AddDeviceToService(false,
-                               device::mojom::InputDeviceType::TYPE_BLUETOOTH);
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_BLUETOOTH);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_BLUETOOTH);
 
   // Simulate the user's click on "Continue" button.
   hid_detection_screen()->OnContinueButtonClicked();
@@ -151,8 +143,8 @@ IN_PROC_BROWSER_TEST_F(HIDDetectionScreenTest, NoBluetoothDeviceConnected) {
   OobeScreenWaiter(OobeScreen::SCREEN_OOBE_HID_DETECTION).Wait();
   EXPECT_TRUE(adapter()->IsPowered());
 
-  helper()->AddDeviceToService(true, device::mojom::InputDeviceType::TYPE_USB);
-  helper()->AddDeviceToService(false, device::mojom::InputDeviceType::TYPE_USB);
+  helper()->AddDeviceToService(true, InputDeviceInfo::TYPE_USB);
+  helper()->AddDeviceToService(false, InputDeviceInfo::TYPE_USB);
 
   // Simulate the user's click on "Continue" button.
   hid_detection_screen()->OnContinueButtonClicked();

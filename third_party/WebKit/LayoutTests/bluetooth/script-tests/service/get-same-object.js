@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(() => {
+promise_test(() => {
   return getHealthThermometerService()
     .then(({service}) => Promise.all([
       service.CALLS([

@@ -1872,10 +1872,10 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapStrictness strictness)
     : CSSValue(kIdentifierClass) {
   switch (strictness) {
-    case SnapStrictness::kProximity:
+    case kSnapStrictnessProximity:
       value_id_ = CSSValueProximity;
       break;
-    case SnapStrictness::kMandatory:
+    case kSnapStrictnessMandatory:
       value_id_ = CSSValueMandatory;
       break;
   }
@@ -1885,14 +1885,14 @@ template <>
 inline SnapStrictness CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueProximity:
-      return SnapStrictness::kProximity;
+      return kSnapStrictnessProximity;
     case CSSValueMandatory:
-      return SnapStrictness::kMandatory;
+      return kSnapStrictnessMandatory;
     default:
       break;
   }
   NOTREACHED();
-  return SnapStrictness::kProximity;
+  return kSnapStrictnessProximity;
 }
 
 template <>

@@ -27,17 +27,17 @@
 #include "core/html/HTMLOptionElement.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/HTMLNames.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/Document.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/Text.h"
+#include "core/html/HTMLDataListElement.h"
 #include "core/html/HTMLOptGroupElement.h"
 #include "core/html/HTMLSelectElement.h"
-#include "core/html/forms/HTMLDataListElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/wtf/Vector.h"
@@ -198,8 +198,9 @@ void HTMLOptionElement::ParseAttribute(
     if (params.old_value.IsNull() != params.new_value.IsNull()) {
       PseudoStateChanged(CSSSelector::kPseudoDisabled);
       PseudoStateChanged(CSSSelector::kPseudoEnabled);
-      if (LayoutObject* o = GetLayoutObject())
-        o->InvalidateIfControlStateChanged(kEnabledControlState);
+      if (GetLayoutObject())
+        LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                    kEnabledControlState);
     }
   } else if (name == selectedAttr) {
     if (params.old_value.IsNull() != params.new_value.IsNull() && !is_dirty_)

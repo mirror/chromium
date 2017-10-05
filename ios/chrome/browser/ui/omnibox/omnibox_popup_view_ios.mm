@@ -113,22 +113,12 @@ gfx::Rect OmniboxPopupViewIOS::GetTargetBounds() {
   return gfx::Rect();
 }
 
-bool OmniboxPopupViewIOS::IsOpen() const {
-  return is_open_;
-}
-
-OmniboxPopupModel* OmniboxPopupViewIOS::model() const {
-  return model_.get();
-}
-
-#pragma mark - OmniboxPopupProvider
-
-bool OmniboxPopupViewIOS::IsPopupOpen() {
-  return is_open_;
-}
-
 void OmniboxPopupViewIOS::SetTextAlignment(NSTextAlignment alignment) {
   [popup_controller_ setTextAlignment:alignment];
+}
+
+bool OmniboxPopupViewIOS::IsOpen() const {
+  return is_open_;
 }
 
 #pragma mark - OmniboxPopupViewControllerDelegate

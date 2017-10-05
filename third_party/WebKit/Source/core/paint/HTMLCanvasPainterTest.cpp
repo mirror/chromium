@@ -5,11 +5,13 @@
 #include "core/paint/HTMLCanvasPainter.h"
 
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/Settings.h"
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
-#include "core/paint/PaintControllerPaintTest.h"
+#include "core/loader/EmptyClients.h"
 #include "core/paint/StubChromeClientForSPv2.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/graphics/Canvas2DLayerBridge.h"
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
@@ -18,17 +20,20 @@
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebSize.h"
-
-#include "platform/scroll/ScrollbarTheme.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 // Integration tests of canvas painting code (in SPv2 mode).
 
 namespace blink {
 
-class HTMLCanvasPainterTestForSPv2 : public PaintControllerPaintTest {
+class HTMLCanvasPainterTestForSPv2 : public ::testing::Test,
+                                     public ::testing::WithParamInterface<bool>,
+                                     private ScopedSlimmingPaintV2ForTest,
+                                     private ScopedRootLayerScrollingForTest {
  public:
   HTMLCanvasPainterTestForSPv2()
-      : chrome_client_(new StubChromeClientForSPv2) {}
+      : ScopedSlimmingPaintV2ForTest(true),
+        ScopedRootLayerScrollingForTest(GetParam()) {}
 
  protected:
   void SetUp() override {
@@ -37,24 +42,25 @@ class HTMLCanvasPainterTestForSPv2 : public PaintControllerPaintTest {
       return std::unique_ptr<WebGraphicsContext3DProvider>(
           new FakeWebGraphicsContext3DProvider(&gl_));
     });
-    PaintControllerPaintTest::SetUp();
+    chrome_client_ = new StubChromeClientForSPv2();
+    Page::PageClients clients;
+    FillWithEmptyClients(clients);
+    clients.chrome_client = chrome_client_.Get();
+    page_holder_ = DummyPageHolder::Create(
+        IntSize(800, 600), &clients, nullptr, [](Settings& settings) {
+          settings.SetAcceleratedCompositingEnabled(true);
+          // LayoutHTMLCanvas doesn't exist if script is disabled.
+          settings.SetScriptEnabled(true);
+        });
+    GetDocument().View()->SetParentVisible(true);
+    GetDocument().View()->SetSelfVisible(true);
   }
 
   void TearDown() override {
     SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
-    PaintControllerPaintTest::TearDown();
   }
 
-  FrameSettingOverrideFunction SettingOverrider() const override {
-    return [](Settings& settings) {
-      settings.SetAcceleratedCompositingEnabled(true);
-      // LayoutHTMLCanvas doesn't exist if script is disabled.
-      settings.SetScriptEnabled(true);
-    };
-  }
-
-  ChromeClient& GetChromeClient() const override { return *chrome_client_; }
-
+  Document& GetDocument() { return page_holder_->GetDocument(); }
   bool HasLayerAttached(const WebLayer& layer) {
     return chrome_client_->HasLayer(layer);
   }
@@ -69,17 +75,13 @@ class HTMLCanvasPainterTestForSPv2 : public PaintControllerPaintTest {
  private:
   Persistent<StubChromeClientForSPv2> chrome_client_;
   FakeGLES2Interface gl_;
+  std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
-INSTANTIATE_TEST_CASE_P(
-    All,
-    HTMLCanvasPainterTestForSPv2,
-    ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
+INSTANTIATE_TEST_CASE_P(All, HTMLCanvasPainterTestForSPv2, ::testing::Bool());
 
 TEST_P(HTMLCanvasPainterTestForSPv2, Canvas2DLayerAppearsInLayerTree) {
   // Insert a <canvas> and force it into accelerated mode.
-  // Not using SetBodyInnerHTML() because we need to test before document
-  // lifecyle update.
   GetDocument().body()->SetInnerHTMLFromString("<canvas width=300 height=200>");
   HTMLCanvasElement* element =
       ToHTMLCanvasElement(GetDocument().body()->firstChild());

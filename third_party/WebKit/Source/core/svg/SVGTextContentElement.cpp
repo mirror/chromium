@@ -24,6 +24,8 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
 #include "core/CSSValueKeywords.h"
+#include "core/SVGNames.h"
+#include "core/XMLNames.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
@@ -34,8 +36,6 @@
 #include "core/layout/svg/SVGTextQuery.h"
 #include "core/svg/SVGPointTearOff.h"
 #include "core/svg/SVGRectTearOff.h"
-#include "core/svg_names.h"
-#include "core/xml_names.h"
 
 namespace blink {
 

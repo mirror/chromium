@@ -39,7 +39,6 @@
 #include "platform/graphics/ImageOrientation.h"
 #include "platform/image-decoders/ImageAnimation.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/Time.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
@@ -104,7 +103,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
     task_runner_ = task_runner;
   }
 
-  Optional<size_t> last_num_frames_skipped_for_testing() const {
+  size_t last_num_frames_skipped_for_testing() const {
     return last_num_frames_skipped_;
   }
 
@@ -163,10 +162,7 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   bool ShouldAnimate();
   void StartAnimation() override;
-  // Starts the animation by scheduling a task to advance to the next desired
-  // frame, if possible, and catching up any frames if the time to display them
-  // is in the past.
-  Optional<size_t> StartAnimationInternal(const double time);
+  void StartAnimationInternal(const double time);
   void StopAnimation();
   void AdvanceAnimation(TimerBase*);
 
@@ -218,15 +214,13 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
   double desired_frame_start_time_;  // The system time at which we hope to see
                                      // the next call to startAnimation().
 
+  size_t last_num_frames_skipped_ = 0u;
+
   size_t frame_count_;
 
   PaintImage::AnimationSequenceId reset_animation_sequence_id_ = 0;
 
   RefPtr<WebTaskRunner> task_runner_;
-
-  // Value used in UMA tracking for the number of animation frames skipped
-  // during catch-up.
-  Optional<size_t> last_num_frames_skipped_ = 0u;
 
   WTF::WeakPtrFactory<BitmapImage> weak_factory_;
 };

@@ -71,8 +71,7 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   void AboutToRequestFocusFromTabTraversal(bool reverse) override;
 
   // LoginDataDispatcher::Observer:
-  void OnUsersChanged(
-      const std::vector<mojom::LoginUserInfoPtr>& users) override;
+  void OnUsersChanged(const std::vector<mojom::UserInfoPtr>& users) override;
   void OnPinEnabledForUserChanged(const AccountId& user, bool enabled) override;
 
   // SystemTrayFocusObserver:
@@ -96,14 +95,11 @@ class ASH_EXPORT LockContentsView : public NonAccessibleView,
   void FocusNextWidget(bool reverse);
 
   // 1-2 users.
-  void CreateLowDensityLayout(
-      const std::vector<mojom::LoginUserInfoPtr>& users);
+  void CreateLowDensityLayout(const std::vector<mojom::UserInfoPtr>& users);
   // 3-6 users.
-  void CreateMediumDensityLayout(
-      const std::vector<mojom::LoginUserInfoPtr>& users);
+  void CreateMediumDensityLayout(const std::vector<mojom::UserInfoPtr>& users);
   // 7+ users.
-  void CreateHighDensityLayout(
-      const std::vector<mojom::LoginUserInfoPtr>& users);
+  void CreateHighDensityLayout(const std::vector<mojom::UserInfoPtr>& users);
 
   // Lay out the entire view. This is called when the view is attached to a
   // widget and when the screen is rotated.

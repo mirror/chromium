@@ -20,7 +20,7 @@
 
 namespace blink {
 
-using NGTextFragmentPainterTest = PaintControllerPaintTestBase;
+using NGTextFragmentPainterTest = PaintControllerPaintTest;
 
 class EnableLayoutNGForScope {
  public:

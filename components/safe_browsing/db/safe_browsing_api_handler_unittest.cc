@@ -172,9 +172,9 @@ TEST_F(SafeBrowsingApiHandlerUtilTest, NoSubresourceFilterSubTypes) {
 TEST_F(SafeBrowsingApiHandlerUtilTest, SubresourceFilterSubTypes) {
   const struct {
     const char* pattern_type;
-    const char* warning;
+    const char* experimental;
     ThreatPatternType expected_pattern_type;
-    bool expected_warning;
+    bool expected_experimental;
   } test_cases[] = {
       {"BETTER_ADS", "true", ThreatPatternType::SUBRESOURCE_FILTER_BETTER_ADS,
        true},
@@ -186,14 +186,14 @@ TEST_F(SafeBrowsingApiHandlerUtilTest, SubresourceFilterSubTypes) {
   for (const auto& test_case : test_cases) {
     std::string json = base::StringPrintf(
         "{\"matches\":[{\"threat_type\":\"13\", "
-        "\"sf_pattern_type\":\"%s\", \"warning\":\"%s\"}]}",
-        test_case.pattern_type, test_case.warning);
+        "\"sf_pattern_type\":\"%s\", \"experimental\":\"%s\"}]}",
+        test_case.pattern_type, test_case.experimental);
     ASSERT_EQ(UMA_STATUS_MATCH, ResetAndParseJson(json));
     EXPECT_EQ(SB_THREAT_TYPE_SUBRESOURCE_FILTER, threat_);
 
     ThreatMetadata expected;
     expected.threat_pattern_type = test_case.expected_pattern_type;
-    expected.warning = test_case.expected_warning;
+    expected.experimental = test_case.expected_experimental;
     EXPECT_EQ(expected, meta_);
   }
 }

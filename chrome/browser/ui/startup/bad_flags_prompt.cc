@@ -157,7 +157,7 @@ void MaybeShowInvalidUserDataDirWarningDialog() {
 
   // Ensure the ResourceBundle is initialized for string resource access.
   bool cleanup_resource_bundle = false;
-  if (!ui::ResourceBundle::HasSharedInstance()) {
+  if (!ResourceBundle::HasSharedInstance()) {
     cleanup_resource_bundle = true;
     std::string locale = l10n_util::GetApplicationLocale(std::string());
     const char kUserDataDirDialogFallbackLocale[] = "en-US";
@@ -174,7 +174,7 @@ void MaybeShowInvalidUserDataDirWarningDialog() {
                                  user_data_dir.LossyDisplayName());
 
   if (cleanup_resource_bundle)
-    ui::ResourceBundle::CleanupSharedInstance();
+    ResourceBundle::CleanupSharedInstance();
 
   // More complex dialogs cannot be shown before the earliest calls here.
   ShowWarningMessageBox(NULL, title, message);

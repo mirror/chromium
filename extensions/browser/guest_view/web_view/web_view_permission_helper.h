@@ -5,9 +5,6 @@
 #ifndef EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_PERMISSION_HELPER_H_
 #define EXTENSIONS_BROWSER_GUEST_VIEW_WEB_VIEW_WEB_VIEW_PERMISSION_HELPER_H_
 
-#include <map>
-#include <memory>
-
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "components/guest_view/common/guest_view_constants.h"
@@ -31,9 +28,9 @@ class WebViewPermissionHelper
  public:
   explicit WebViewPermissionHelper(WebViewGuest* guest);
   ~WebViewPermissionHelper() override;
-  using PermissionResponseCallback =
-      base::OnceCallback<void(bool /* allow */,
-                              const std::string& /* user_input */)>;
+  typedef base::Callback<
+      void(bool /* allow */, const std::string& /* user_input */)>
+      PermissionResponseCallback;
 
   // A map to store the callback for a request keyed by the request's id.
   struct PermissionResponseInfo {
@@ -41,18 +38,18 @@ class WebViewPermissionHelper
     WebViewPermissionType permission_type;
     bool allowed_by_default;
     PermissionResponseInfo();
-    PermissionResponseInfo(PermissionResponseCallback callback,
+    PermissionResponseInfo(const PermissionResponseCallback& callback,
                            WebViewPermissionType permission_type,
                            bool allowed_by_default);
-    PermissionResponseInfo& operator=(PermissionResponseInfo&& other);
+    PermissionResponseInfo(const PermissionResponseInfo& other);
     ~PermissionResponseInfo();
   };
 
-  using RequestMap = std::map<int, PermissionResponseInfo>;
+  typedef std::map<int, PermissionResponseInfo> RequestMap;
 
   int RequestPermission(WebViewPermissionType permission_type,
                         const base::DictionaryValue& request_info,
-                        PermissionResponseCallback callback,
+                        const PermissionResponseCallback& callback,
                         bool allowed_by_default);
 
   static WebViewPermissionHelper* FromWebContents(
@@ -135,7 +132,7 @@ class WebViewPermissionHelper
   // We only need the ids to be unique for a given WebViewGuest.
   int next_permission_request_id_;
 
-  RequestMap pending_permission_requests_;
+  WebViewPermissionHelper::RequestMap pending_permission_requests_;
 
   std::unique_ptr<WebViewPermissionHelperDelegate>
       web_view_permission_helper_delegate_;

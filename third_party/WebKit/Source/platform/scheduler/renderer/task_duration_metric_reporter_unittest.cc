@@ -54,8 +54,7 @@ class FakeHistogram : public base::HistogramBase {
 TEST(TaskDurationMetricReporterTest, Test) {
   FakeHistogram histogram;
 
-  TaskDurationMetricReporter<MainThreadTaskQueue::QueueType> metric_reporter(
-      &histogram);
+  TaskDurationMetricReporter metric_reporter(&histogram);
 
   EXPECT_CALL(histogram, AddCount(2, 3));
   metric_reporter.RecordTask(static_cast<MainThreadTaskQueue::QueueType>(2),

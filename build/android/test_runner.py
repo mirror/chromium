@@ -334,10 +334,6 @@ def AddGTestOptions(parser):
       '--test-apk-incremental-install-json',
       type=os.path.realpath,
       help='Path to install json for the test apk.')
-  parser.add_argument(
-      '-w', '--wait-for-java-debugger', action='store_true',
-      help='Wait for java debugger to attach before running any application '
-           'code. Also disables test timeouts and sets retries=0.')
 
   filter_group = parser.add_mutually_exclusive_group()
   filter_group.add_argument(
@@ -485,10 +481,6 @@ def AddInstrumentationTestOptions(parser):
       '--ui-screenshot-directory',
       dest='ui_screenshot_dir', type=os.path.realpath,
       help='Destination for screenshots captured by the tests')
-  parser.add_argument(
-      '-w', '--wait-for-java-debugger', action='store_true',
-      help='Wait for java debugger to attach before running any application '
-           'code. Also disables test timeouts and sets retries=0.')
 
   # These arguments are suppressed from the help text because they should
   # only ever be specified by an intermediate script.
@@ -621,6 +613,10 @@ def AddPerfTestOptions(parser):
       action='store_true',
       help='Cache the telemetry chartjson output from each step for later use.')
   parser.add_argument(
+      '--collect-json-data',
+      action='store_true',
+      help='Cache the telemetry JSON output from each step for later use.')
+  parser.add_argument(
       '--dry-run',
       action='store_true',
       help='Just print the steps without executing.')
@@ -664,6 +660,10 @@ def AddPerfTestOptions(parser):
       metavar='FILENAME', type=os.path.realpath,
       help='Write the cached output directory archived by a step into the'
       ' given ZIP file.')
+  parser.add_argument(
+      '--output-json-data',
+      type=os.path.realpath,
+      help='Writes telemetry JSON formatted output into the given file.')
   parser.add_argument(
       '--output-json-list',
       type=os.path.realpath,
@@ -988,9 +988,6 @@ def main():
       args.enable_concurrent_adb):
     parser.error('--replace-system-package and --enable-concurrent-adb cannot '
                  'be used together')
-
-  if hasattr(args, 'wait_for_java_debugger') and args.wait_for_java_debugger:
-    args.num_retries = 0
 
   try:
     return RunTestsCommand(args)

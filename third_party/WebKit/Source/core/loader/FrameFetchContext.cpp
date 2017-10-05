@@ -34,6 +34,7 @@
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/V8DOMActivityLogger.h"
 #include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/Deprecation.h"
@@ -67,7 +68,6 @@
 #include "core/timing/Performance.h"
 #include "core/timing/PerformanceBase.h"
 #include "platform/WebFrameScheduler.h"
-#include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/exported/WrappedResourceRequest.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
@@ -227,15 +227,15 @@ struct FrameFetchContext::FrozenState final
 ResourceFetcher* FrameFetchContext::CreateFetcher(DocumentLoader* loader,
                                                   Document* document) {
   FrameFetchContext* context = new FrameFetchContext(loader, document);
-  ResourceFetcher* fetcher = ResourceFetcher::Create(context);
+  ResourceFetcher* fetcher =
+      ResourceFetcher::Create(context, context->GetTaskRunner());
 
-  if (loader && context->GetSettings()->GetSavePreviousDocumentResources() !=
-                    SavePreviousDocumentResources::kNever) {
-    if (Document* previous_document = context->GetFrame()->GetDocument()) {
-      if (previous_document->IsSecureTransitionTo(loader->Url())) {
-        fetcher->HoldResourcesFromPreviousFetcher(
-            previous_document->Loader()->Fetcher());
-      }
+  if (context->GetSettings()->GetSavePreviousDocumentResources() !=
+      SavePreviousDocumentResources::kNever) {
+    if (DocumentLoader* previous_document_loader =
+            context->GetFrame()->Loader().GetDocumentLoader()) {
+      fetcher->HoldResourcesFromPreviousFetcher(
+          previous_document_loader->Fetcher());
     }
   }
 
@@ -285,10 +285,8 @@ LocalFrame* FrameFetchContext::FrameOfImportsController() const {
   return frame;
 }
 
-RefPtr<WebTaskRunner> FrameFetchContext::GetLoadingTaskRunner() {
-  if (IsDetached())
-    return FetchContext::GetLoadingTaskRunner();
-  return TaskRunnerHelper::Get(TaskType::kNetworking, GetFrame());
+RefPtr<WebTaskRunner> FrameFetchContext::GetTaskRunner() const {
+  return GetFrame()->FrameScheduler()->LoadingTaskRunner();
 }
 
 WebFrameScheduler* FrameFetchContext::GetFrameScheduler() {
@@ -335,10 +333,10 @@ void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
 
   // Reload should reflect the current data saver setting.
   if (IsReloadLoadType(MasterDocumentLoader()->LoadType()))
-    request.ClearHTTPHeaderField(HTTPNames::Save_Data);
+    request.ClearHTTPHeaderField("Save-Data");
 
   if (GetSettings() && GetSettings()->GetDataSaverEnabled())
-    request.SetHTTPHeaderField(HTTPNames::Save_Data, "on");
+    request.SetHTTPHeaderField("Save-Data", "on");
 
   if (GetLocalFrameClient()->IsClientLoFiActiveForFrame()) {
     request.AddHTTPHeaderField(
@@ -1140,9 +1138,19 @@ void FrameFetchContext::ParseAndPersistClientHints(
 }
 
 std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
-    const ResourceRequest& request,
-    WebTaskRunner* task_runner) {
+    const ResourceRequest& request) {
   DCHECK(!IsDetached());
+
+  RefPtr<WebTaskRunner> task_runner;
+  if (request.GetKeepalive()) {
+    // The loader should be able to work after the frame destruction, so we
+    // cannot use the task runner associated with the frame.
+    task_runner =
+        Platform::Current()->CurrentThread()->Scheduler()->LoadingTaskRunner();
+  } else {
+    task_runner = GetTaskRunner();
+  }
+
   if (MasterDocumentLoader()->GetServiceWorkerNetworkProvider()) {
     WrappedResourceRequest webreq(request);
     auto loader =
@@ -1153,7 +1161,7 @@ std::unique_ptr<WebURLLoader> FrameFetchContext::CreateURLLoader(
       return loader;
   }
 
-  return GetFrame()->CreateURLLoader(request, task_runner);
+  return GetFrame()->CreateURLLoader(request, task_runner.get());
 }
 
 FetchContext* FrameFetchContext::Detach() {

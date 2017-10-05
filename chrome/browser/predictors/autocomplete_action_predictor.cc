@@ -324,15 +324,14 @@ void AutocompleteActionPredictor::CreateLocalCachesFromDatabase() {
   // Create local caches using the database as loaded. We will garbage collect
   // rows from the caches and the database once the history service is
   // available.
-  auto rows =
-      std::make_unique<std::vector<AutocompleteActionPredictorTable::Row>>();
-  auto* rows_ptr = rows.get();
+  std::vector<AutocompleteActionPredictorTable::Row>* rows =
+      new std::vector<AutocompleteActionPredictorTable::Row>();
   table_->GetTaskRunner()->PostTaskAndReply(
       FROM_HERE,
       base::BindOnce(&AutocompleteActionPredictorTable::GetAllRows, table_,
-                     rows_ptr),
+                     rows),
       base::BindOnce(&AutocompleteActionPredictor::CreateCaches, AsWeakPtr(),
-                     std::move(rows)));
+                     base::Owned(rows)));
 }
 
 void AutocompleteActionPredictor::DeleteAllRows() {
@@ -423,7 +422,7 @@ void AutocompleteActionPredictor::AddAndUpdateRows(
 }
 
 void AutocompleteActionPredictor::CreateCaches(
-    std::unique_ptr<std::vector<AutocompleteActionPredictorTable::Row>> rows) {
+    std::vector<AutocompleteActionPredictorTable::Row>* rows) {
   CHECK(content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
   DCHECK(!profile_->IsOffTheRecord());
   DCHECK(!initialized_);

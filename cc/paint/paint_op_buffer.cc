@@ -752,8 +752,9 @@ PaintOp* ConcatOp::Deserialize(const volatile void* input,
   DCHECK_GE(output_size, sizeof(ConcatOp));
   auto* op =
       SimpleDeserialize<ConcatOp>(input, input_size, output, output_size);
+  // Can't trust malicious clients to provide the correct derived matrix type.
   if (op)
-    PaintOpReader::FixupMatrixPostSerialization(&op->matrix);
+    op->matrix.dirtyMatrixTypeCache();
   return op;
 }
 
@@ -1040,8 +1041,9 @@ PaintOp* SetMatrixOp::Deserialize(const volatile void* input,
   DCHECK_GE(output_size, sizeof(SetMatrixOp));
   auto* op =
       SimpleDeserialize<SetMatrixOp>(input, input_size, output, output_size);
+  // Can't trust malicious clients to provide the correct derived matrix type.
   if (op)
-    PaintOpReader::FixupMatrixPostSerialization(&op->matrix);
+    op->matrix.dirtyMatrixTypeCache();
   return op;
 }
 

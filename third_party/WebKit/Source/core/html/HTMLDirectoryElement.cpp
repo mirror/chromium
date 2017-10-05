@@ -22,7 +22,7 @@
 
 #include "core/html/HTMLDirectoryElement.h"
 
-#include "core/html_names.h"
+#include "core/HTMLNames.h"
 
 namespace blink {
 

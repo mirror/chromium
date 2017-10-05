@@ -92,6 +92,8 @@ class CC_EXPORT LayerTreeSettings {
   int max_preraster_distance_in_screen_pixels = 1000;
   viz::ResourceFormat preferred_tile_format;
 
+  bool enable_color_correct_rasterization = true;
+
   bool enable_mask_tiling = false;
 
   // If set to true, the compositor may selectively defer image decodes to the
@@ -146,9 +148,6 @@ class CC_EXPORT LayerTreeSettings {
 
   // Whether images should be animated in the compositor.
   bool enable_image_animations = false;
-
-  // Whether to use edge anti-aliasing for all layer types that supports it.
-  bool enable_edge_anti_aliasing = true;
 };
 
 }  // namespace cc

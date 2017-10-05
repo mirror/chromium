@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(() => {
+promise_test(() => {
   return getMeasurementIntervalCharacteristic()
     .then(({characteristic}) => Promise.all([
       characteristic.CALLS([

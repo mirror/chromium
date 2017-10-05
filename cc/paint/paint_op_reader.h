@@ -26,8 +26,6 @@ class CC_PAINT_EXPORT PaintOpReader {
       valid_ = false;
   }
 
-  static void FixupMatrixPostSerialization(SkMatrix* matrix);
-
   bool valid() const { return valid_; }
 
   void ReadData(size_t bytes, void* data);
@@ -46,7 +44,6 @@ class CC_PAINT_EXPORT PaintOpReader {
   void Read(sk_sp<SkData>* data);
   void Read(sk_sp<SkTextBlob>* blob);
   void Read(sk_sp<PaintShader>* shader);
-  void Read(SkMatrix* matrix);
 
   void Read(SkClipOp* op) {
     uint8_t value = 0u;

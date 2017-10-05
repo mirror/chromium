@@ -182,21 +182,17 @@ void ShowDisplayErrorNotification(const base::string16& message,
     data.buttons.push_back(send_button);
   }
 
-  std::unique_ptr<message_center::Notification> notification =
-      system_notifier::CreateSystemNotification(
+  std::unique_ptr<message_center::Notification> notification(
+      new message_center::Notification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kDisplayErrorNotificationId,
           base::string16(),  // title
-          message,
-          gfx::Image(CreateVectorIcon(kNotificationDisplayErrorIcon,
-                                      kDisplayIconColor)),
+          message, gfx::Image(CreateVectorIcon(kNotificationDisplayErrorIcon,
+                                               kDisplayIconColor)),
           base::string16(),  // display_source
-          GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDisplayError),
-          data, new DisplayErrorNotificationDelegate,
-          kNotificationMonitorWarningIcon,
-          message_center::SystemNotificationWarningLevel::WARNING);
+          GURL(), message_center::NotifierId(
+                      message_center::NotifierId::SYSTEM_COMPONENT,
+                      system_notifier::kNotifierDisplayError),
+          data, new DisplayErrorNotificationDelegate));
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));
 }

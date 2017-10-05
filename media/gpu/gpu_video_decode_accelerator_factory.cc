@@ -5,7 +5,6 @@
 #include "media/gpu/gpu_video_decode_accelerator_factory.h"
 
 #include "base/memory/ptr_util.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "media/base/media_switches.h"
@@ -256,7 +255,7 @@ GpuVideoDecodeAcceleratorFactory::CreateAndroidVDA(
     const gpu::GpuPreferences& gpu_preferences) const {
   std::unique_ptr<VideoDecodeAccelerator> decoder;
   decoder.reset(new AndroidVideoDecodeAccelerator(
-      AVDACodecAllocator::GetInstance(base::ThreadTaskRunnerHandle::Get()),
+      AVDACodecAllocator::GetInstance(),
       base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
           DeviceInfo::GetInstance()->IsSetOutputSurfaceSupported()),
       make_context_current_cb_, get_gles2_decoder_cb_, overlay_factory_cb_,

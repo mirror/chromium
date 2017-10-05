@@ -51,11 +51,9 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 #pragma mark - properties
 
 - (BOOL)isCompact {
-  if (@available(iOS 10, *)) {
-    return [self.extensionContext widgetActiveDisplayMode] ==
-           NCWidgetDisplayModeCompact;
-  }
-  return NO;
+  return base::ios::IsRunningOnIOS10OrLater() &&
+         [self.extensionContext widgetActiveDisplayMode] ==
+             NCWidgetDisplayModeCompact;
 }
 
 #pragma mark - UIViewController
@@ -63,24 +61,20 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGFloat height = widgetCompactHeightIOS9;
-  if (@available(iOS 10, *)) {
-    if (self.extensionContext) {
-      height = [self.extensionContext
-                   widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
-                   .height;
-    }
-  }
+  CGFloat height =
+      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
+          ? [self.extensionContext
+                widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
+                .height
+          : widgetCompactHeightIOS9;
 
-  // On the today view <iOS10, the full screen size is useable.
-  CGFloat width = [UIScreen mainScreen].bounds.size.width;
-  if (@available(iOS 10, *)) {
-    if (self.extensionContext) {
-      width = [self.extensionContext
-                  widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
-                  .width;
-    }
-  }
+  CGFloat width =
+      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
+          ? [self.extensionContext
+                widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
+                .width
+          // On the today view <iOS10, the full screen size is useable.
+          : [UIScreen mainScreen].bounds.size.width;
 
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
@@ -92,7 +86,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
 
-  if (@available(iOS 10, *)) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
     self.extensionContext.widgetLargestAvailableDisplayMode =
         NCWidgetDisplayModeExpanded;
   } else {
@@ -131,8 +125,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 #pragma mark - NCWidgetProviding
 
 - (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode
-                         withMaximumSize:(CGSize)maxSize
-    API_AVAILABLE(ios(10.0)) {
+                         withMaximumSize:(CGSize)maxSize {
   switch (activeDisplayMode) {
     case NCWidgetDisplayModeCompact:
       self.preferredContentSize = maxSize;

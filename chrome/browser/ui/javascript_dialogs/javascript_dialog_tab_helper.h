@@ -73,9 +73,17 @@ class JavaScriptDialogTabHelper
 
   void LogDialogDismissalCause(DismissalCause cause);
 
-  void CloseDialog(DismissalCause cause,
-                   bool success,
-                   const base::string16& user_input);
+  // Wrapper around a DialogClosedCallback so that we can intercept it before
+  // passing it onto the original callback.
+  void OnDialogClosed(DialogClosedCallback callback,
+                      bool success,
+                      const base::string16& user_input);
+
+  void CloseDialog(bool success,
+                   const base::string16& user_input,
+                   DismissalCause cause);
+
+  void ClearDialogInfo();
 
   // The dialog being displayed on the observed WebContents.
   base::WeakPtr<JavaScriptDialog> dialog_;

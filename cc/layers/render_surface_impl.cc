@@ -450,8 +450,7 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
   auto* quad = render_pass->CreateAndAppendDrawQuad<viz::RenderPassDrawQuad>();
   quad->SetNew(shared_quad_state, content_rect(), visible_layer_rect, id(),
                mask_resource_id, mask_uv_rect, mask_texture_size,
-               surface_contents_scale, FiltersOrigin(), tex_coord_rect,
-               !layer_tree_impl_->settings().enable_edge_anti_aliasing);
+               surface_contents_scale, FiltersOrigin(), tex_coord_rect);
 }
 
 void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
@@ -539,8 +538,8 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
                      quad_visible_rect_in_coverage_space, id(),
                      temp_quad->resources.ids[0], mask_uv_rect,
                      mask_texture_size, owning_layer_to_surface_contents_scale,
-                     FiltersOrigin(), quad_rect_in_non_normalized_texture_space,
-                     !layer_tree_impl_->settings().enable_edge_anti_aliasing);
+                     FiltersOrigin(),
+                     quad_rect_in_non_normalized_texture_space);
       } break;
       case viz::DrawQuad::SOLID_COLOR: {
         if (!static_cast<viz::SolidColorDrawQuad*>(temp_quad)->color)
@@ -555,8 +554,8 @@ void RenderSurfaceImpl::TileMaskLayer(viz::RenderPass* render_pass,
         quad->SetNew(shared_quad_state, render_quad_rect,
                      quad_visible_rect_in_coverage_space, id(), 0, gfx::RectF(),
                      gfx::Size(), owning_layer_to_surface_contents_scale,
-                     FiltersOrigin(), quad_rect_in_non_normalized_texture_space,
-                     !layer_tree_impl_->settings().enable_edge_anti_aliasing);
+                     FiltersOrigin(),
+                     quad_rect_in_non_normalized_texture_space);
       } break;
       case viz::DrawQuad::DEBUG_BORDER:
         NOTIMPLEMENTED();

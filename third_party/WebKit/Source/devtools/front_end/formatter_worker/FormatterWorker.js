@@ -343,8 +343,3 @@ FormatterWorker.FormatterWorkerContentParser.parse = function(content, mimeType)
     return extension.descriptor()['mimeType'] === mimeType;
   }
 };
-
-(function disableLoggingForTest() {
-  if (Runtime.queryParam('test'))
-    console.error = () => undefined;
-})();

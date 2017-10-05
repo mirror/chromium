@@ -28,8 +28,7 @@ class VIZ_COMMON_EXPORT ContentDrawQuadBase : public DrawQuad {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor,
-              bool force_anti_aliasing_off);
+              bool nearest_neighbor);
 
   void SetAll(const SharedQuadState* shared_quad_state,
               DrawQuad::Material material,
@@ -39,14 +38,12 @@ class VIZ_COMMON_EXPORT ContentDrawQuadBase : public DrawQuad {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor,
-              bool force_anti_aliasing_off);
+              bool nearest_neighbor);
 
   gfx::RectF tex_coord_rect;
   gfx::Size texture_size;
   bool swizzle_contents = false;
   bool nearest_neighbor = false;
-  bool force_anti_aliasing_off = false;
 
  protected:
   ContentDrawQuadBase();

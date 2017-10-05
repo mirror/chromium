@@ -5,9 +5,9 @@
 
 #include "{{namespace}}ElementFactory.h"
 
-#include "core/{{namespace|lower}}_names.h"
+#include "{{namespace}}Names.h"
 {% for header in tags|groupby('interface_header') %}
-#include "{{header[0]}}"
+#include "core/{{namespace|lower}}/{{header[0]}}"
 {% endfor %}
 {% if fallback_interface %}
 #include "core/{{namespace|lower}}/{{fallback_interface_header}}"

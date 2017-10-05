@@ -1140,10 +1140,10 @@ public class AwSettingsTest {
         private static final String POPUP_ENABLED = "Popup enabled";
         private static final String POPUP_BLOCKED = "Popup blocked";
 
-        AwSettingsJavaScriptPopupsTestHelper(AwTestContainerView containerView,
-                TestAwContentsClient contentViewClient, boolean openTwice) throws Throwable {
+        AwSettingsJavaScriptPopupsTestHelper(
+                AwTestContainerView containerView,
+                TestAwContentsClient contentViewClient) throws Throwable {
             super(containerView, contentViewClient, true);
-            mOpenTwice = openTwice;
         }
 
         @Override
@@ -1183,7 +1183,6 @@ public class AwSettingsTest {
                     + "<script>"
                     + "    function tryOpenWindow() {"
                     + "        var newWindow = window.open('about:blank');"
-                    + (mOpenTwice ? "newWindow = window.open('about:blank');" : "")
                     + "        if (newWindow) {"
                     + "            if (newWindow === window) {"
                     + "                newWindow.document.write("
@@ -1199,8 +1198,6 @@ public class AwSettingsTest {
                     + "</script></head>"
                     + "<body onload='tryOpenWindow()'></body></html>";
         }
-
-        private boolean mOpenTwice;
     }
 
     class AwSettingsCacheModeTestHelper extends AwSettingsTestHelper<Integer> {
@@ -2266,10 +2263,10 @@ public class AwSettingsTest {
     @Feature({"AndroidWebView", "Preferences"})
     public void testJavaScriptPopupsWithTwoViews() throws Throwable {
         ViewPair views = createViews();
-        runPerViewSettingsTest(new AwSettingsJavaScriptPopupsTestHelper(
-                                       views.getContainer0(), views.getClient0(), false),
+        runPerViewSettingsTest(
+                new AwSettingsJavaScriptPopupsTestHelper(views.getContainer0(), views.getClient0()),
                 new AwSettingsJavaScriptPopupsTestHelper(
-                        views.getContainer1(), views.getClient1(), false));
+                        views.getContainer1(), views.getClient1()));
     }
 
     @Test
@@ -2285,21 +2282,10 @@ public class AwSettingsTest {
         });
         views.getClient0().getOnCreateWindowHelper().setReturnValue(true);
         views.getClient1().getOnCreateWindowHelper().setReturnValue(true);
-        runPerViewSettingsTest(new AwSettingsJavaScriptPopupsTestHelper(
-                                       views.getContainer0(), views.getClient0(), false),
+        runPerViewSettingsTest(
+                new AwSettingsJavaScriptPopupsTestHelper(views.getContainer0(), views.getClient0()),
                 new AwSettingsJavaScriptPopupsTestHelper(
-                        views.getContainer1(), views.getClient1(), false));
-    }
-
-    @Test
-    @SmallTest
-    @Feature({"AndroidWebView", "Preferences"})
-    public void testJavaScriptPopupsOpenTwice() throws Throwable {
-        final ViewPair views = createViews();
-        runPerViewSettingsTest(new AwSettingsJavaScriptPopupsTestHelper(
-                                       views.getContainer0(), views.getClient0(), true),
-                new AwSettingsJavaScriptPopupsTestHelper(
-                        views.getContainer1(), views.getClient1(), true));
+                        views.getContainer1(), views.getClient1()));
     }
 
     @Test

@@ -231,10 +231,8 @@ void ObjectPainter::PaintOutline(const PaintInfo& paint_info,
   // Only paint the focus ring by hand if the theme isn't able to draw the focus
   // ring.
   if (style_to_use.OutlineStyleIsAuto() &&
-      !LayoutTheme::GetTheme().ShouldDrawDefaultFocusRing(
-          layout_object_.GetNode(), style_to_use)) {
+      !LayoutTheme::GetTheme().ShouldDrawDefaultFocusRing(layout_object_))
     return;
-  }
 
   Vector<LayoutRect> outline_rects;
   layout_object_.AddOutlineRects(

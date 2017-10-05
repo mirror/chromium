@@ -267,14 +267,14 @@ typedef struct {
 } xmlUnicodeRange;
 
 typedef struct {
-    const xmlUnicodeRange *table;
+    xmlUnicodeRange *table;
     int		    numentries;
 } xmlUnicodeNameTable;
 
 
 static xmlIntFunc *xmlUnicodeLookup(xmlUnicodeNameTable *tptr, const char *tname);
 
-static const xmlUnicodeRange xmlUnicodeBlocks[] = {
+static xmlUnicodeRange xmlUnicodeBlocks[] = {
 """ % (webpage, date, sources));
 
 flag = 0

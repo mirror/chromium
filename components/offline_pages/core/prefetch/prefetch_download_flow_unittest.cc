@@ -10,7 +10,6 @@
 #include "base/test/scoped_feature_list.h"
 #include "components/download/public/test/test_download_service.h"
 #include "components/offline_pages/core/offline_page_feature.h"
-#include "components/offline_pages/core/prefetch/prefetch_background_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
@@ -23,6 +22,15 @@ namespace {
 const version_info::Channel kTestChannel = version_info::Channel::UNKNOWN;
 const base::FilePath kTestFilePath(FILE_PATH_LITERAL("foo"));
 const int64_t kTestFileSize = 88888;
+
+class TestScopedBackgroundTask
+    : public offline_pages::PrefetchDispatcher::ScopedBackgroundTask {
+ public:
+  TestScopedBackgroundTask() = default;
+  ~TestScopedBackgroundTask() override = default;
+
+  void SetNeedsReschedule(bool reschedule, bool backoff) override {}
+};
 }  // namespace
 
 namespace offline_pages {
@@ -73,13 +81,6 @@ class PrefetchDownloadFlowTest : public TaskTestBase {
     RunUntilIdle();
   }
 
-  void BeginBackgroundTask() {
-    prefetch_dispatcher()->BeginBackgroundTask(
-        base::MakeUnique<PrefetchBackgroundTask>(
-            prefetch_service_taco_->prefetch_service()));
-    RunUntilIdle();
-  }
-
   PrefetchDispatcher* prefetch_dispatcher() const {
     return prefetch_service_taco_->prefetch_service()->GetPrefetchDispatcher();
   }
@@ -104,7 +105,9 @@ TEST_F(PrefetchDownloadFlowTest, DownloadServiceReadyAfterPrefetchSystemReady) {
   RunUntilIdle();
 
   // Start the prefetch processing pipeline.
-  BeginBackgroundTask();
+  prefetch_dispatcher()->BeginBackgroundTask(
+      base::MakeUnique<TestScopedBackgroundTask>());
+  RunUntilIdle();
 
   // The item can still been scheduled for download though the download service
   // is not ready.
@@ -135,7 +138,9 @@ TEST_F(PrefetchDownloadFlowTest,
   RunUntilIdle();
 
   // Start the prefetch processing pipeline.
-  BeginBackgroundTask();
+  prefetch_dispatcher()->BeginBackgroundTask(
+      base::MakeUnique<TestScopedBackgroundTask>());
+  RunUntilIdle();
 
   // The item should finally transit to IMPORTING state.
   std::unique_ptr<PrefetchItem> found_item =
@@ -157,7 +162,9 @@ TEST_F(PrefetchDownloadFlowTest, DownloadServiceUnavailable) {
   RunUntilIdle();
 
   // Start the prefetch processing pipeline.
-  BeginBackgroundTask();
+  prefetch_dispatcher()->BeginBackgroundTask(
+      base::MakeUnique<TestScopedBackgroundTask>());
+  RunUntilIdle();
 
   // The item should not be changed since download service can't be used.
   std::unique_ptr<PrefetchItem> found_item =
@@ -187,7 +194,9 @@ TEST_F(PrefetchDownloadFlowTest, DelayRunningDownloadCleanupTask) {
   EXPECT_EQ(item, *found_item);
 
   // Start the prefetch processing pipeline.
-  BeginBackgroundTask();
+  prefetch_dispatcher()->BeginBackgroundTask(
+      base::MakeUnique<TestScopedBackgroundTask>());
+  RunUntilIdle();
 
   // The download cleanup task should be created and run. The item should
   // finally transit to IMPORTING state.

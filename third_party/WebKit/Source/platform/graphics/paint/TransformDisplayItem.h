@@ -26,7 +26,7 @@ class PLATFORM_EXPORT BeginTransformDisplayItem final
 
  private:
 #ifndef NDEBUG
-  void PropertiesAsJSON(JSONObject&) const final;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const final;
 #endif
   bool Equals(const DisplayItem& other) const final {
     return DisplayItem::Equals(other) &&

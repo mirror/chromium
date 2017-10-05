@@ -1812,8 +1812,8 @@ class ExtensionServiceTestSupervised
   }
 
   bool IsPendingCustodianApproval(const std::string& extension_id) {
-    auto function = base::MakeRefCounted<
-        WebstorePrivateIsPendingCustodianApprovalFunction>();
+    auto function = make_scoped_refptr(
+        new WebstorePrivateIsPendingCustodianApprovalFunction());
 
     std::unique_ptr<base::Value> result(RunFunctionAndReturnSingleResult(
         function.get(), "[\"" + extension_id + "\"]", browser_context()));

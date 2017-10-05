@@ -149,6 +149,7 @@ ArcAccessibilityHelperBridge::ArcAccessibilityHelperBridge(
     ArcBridgeService* arc_bridge_service)
     : profile_(Profile::FromBrowserContext(browser_context)),
       arc_bridge_service_(arc_bridge_service),
+      arc_notification_surface_manager_(nullptr),
       binding_(this),
       current_task_id_(kNoTaskId),
       fallback_tree_(new AXTreeSourceArc(this)) {
@@ -208,9 +209,8 @@ void ArcAccessibilityHelperBridge::Shutdown() {
 
   arc_bridge_service_->accessibility_helper()->RemoveObserver(this);
 
-  auto* surface_manager = ArcNotificationSurfaceManager::Get();
-  if (surface_manager)
-    surface_manager->RemoveObserver(this);
+  if (arc_notification_surface_manager_)
+    arc_notification_surface_manager_->RemoveObserver(this);
 }
 
 void ArcAccessibilityHelperBridge::OnInstanceReady() {
@@ -226,9 +226,9 @@ void ArcAccessibilityHelperBridge::OnInstanceReady() {
       GetFilterTypeForProfile(profile_);
   instance->SetFilter(filter_type);
 
-  auto* surface_manager = ArcNotificationSurfaceManager::Get();
-  if (surface_manager)
-    surface_manager->AddObserver(this);
+  arc_notification_surface_manager_ = ArcNotificationSurfaceManager::Get();
+  if (arc_notification_surface_manager_)
+    arc_notification_surface_manager_->AddObserver(this);
 
   if (filter_type == arc::mojom::AccessibilityFilterType::ALL ||
       filter_type ==
@@ -289,13 +289,12 @@ void ArcAccessibilityHelperBridge::OnAccessibilityEvent(
 
     tree_source->NotifyAccessibilityEvent(event_data.get());
 
-    auto* surface_manager = ArcNotificationSurfaceManager::Get();
-    if (surface_manager && is_notification_event &&
+    if (arc_notification_surface_manager_ && is_notification_event &&
         event_data->event_type ==
             arc::mojom::AccessibilityEventType::WINDOW_STATE_CHANGED) {
       std::string notification_key = event_data->notification_key.value();
       ArcNotificationSurface* surface =
-          surface_manager->GetArcSurface(notification_key);
+          arc_notification_surface_manager_->GetArcSurface(notification_key);
 
       ui::AXTreeData tree_data;
       if (surface && tree_source->GetTreeData(&tree_data)) {

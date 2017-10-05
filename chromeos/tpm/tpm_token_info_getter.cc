@@ -6,8 +6,6 @@
 
 #include <stdint.h>
 
-#include <utility>
-
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/task_runner.h"
@@ -38,6 +36,13 @@ base::TimeDelta GetNextRequestDelayMs(base::TimeDelta last_delay) {
 
 namespace chromeos {
 
+TPMTokenInfo::TPMTokenInfo()
+    : tpm_is_enabled(false),
+      token_slot_id(-1) {
+}
+
+TPMTokenInfo::~TPMTokenInfo() {}
+
 // static
 std::unique_ptr<TPMTokenInfoGetter> TPMTokenInfoGetter::CreateForUserToken(
     const AccountId& account_id,
@@ -58,11 +63,11 @@ std::unique_ptr<TPMTokenInfoGetter> TPMTokenInfoGetter::CreateForSystemToken(
 
 TPMTokenInfoGetter::~TPMTokenInfoGetter() {}
 
-void TPMTokenInfoGetter::Start(TpmTokenInfoCallback callback) {
+void TPMTokenInfoGetter::Start(const TPMTokenInfoCallback& callback) {
   CHECK(state_ == STATE_INITIAL);
   CHECK(!callback.is_null());
 
-  callback_ = std::move(callback);
+  callback_ = callback;
 
   state_ = STATE_STARTED;
   Continue();
@@ -125,7 +130,7 @@ void TPMTokenInfoGetter::OnTpmIsEnabled(base::Optional<bool> tpm_is_enabled) {
 
   if (!tpm_is_enabled.value()) {
     state_ = STATE_DONE;
-    std::move(callback_).Run(base::nullopt);
+    callback_.Run(TPMTokenInfo());
     return;
   }
 
@@ -134,14 +139,24 @@ void TPMTokenInfoGetter::OnTpmIsEnabled(base::Optional<bool> tpm_is_enabled) {
 }
 
 void TPMTokenInfoGetter::OnPkcs11GetTpmTokenInfo(
-    base::Optional<CryptohomeClient::TpmTokenInfo> token_info) {
-  if (!token_info.has_value() || token_info->slot == -1) {
+    DBusMethodCallStatus call_status,
+    const std::string& token_name,
+    const std::string& user_pin,
+    int token_slot_id) {
+  if (call_status == DBUS_METHOD_CALL_FAILURE || token_slot_id == -1) {
     RetryLater();
     return;
   }
 
   state_ = STATE_DONE;
-  std::move(callback_).Run(std::move(token_info));
+
+  TPMTokenInfo token_info;
+  token_info.tpm_is_enabled = true;
+  token_info.token_name = token_name;
+  token_info.user_pin = user_pin;
+  token_info.token_slot_id = token_slot_id;
+
+  callback_.Run(token_info);
 }
 
 }  // namespace chromeos

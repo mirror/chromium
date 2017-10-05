@@ -74,7 +74,6 @@
 #endif
 
 #if defined(OS_CHROMEOS)
-#include "ash/shell.h"
 #include "chromeos/chromeos_switches.h"
 #endif
 
@@ -83,6 +82,10 @@
 #include "base/win/windows_version.h"
 #include "chrome/browser/win/enumerate_modules_model.h"
 #include "content/public/browser/gpu_data_manager.h"
+#endif
+
+#if defined(USE_ASH)
+#include "ash/shell.h"  // nogncheck
 #endif
 
 using base::UserMetricsAction;
@@ -154,7 +157,7 @@ class AppMenuModel::HelpMenuModel : public ui::SimpleMenuModel {
     if (base::FeatureList::IsEnabled(kIncludeBetaForumMenuItem))
       AddItem(IDC_SHOW_BETA_FORUM, l10n_util::GetStringUTF16(IDS_BETA_FORUM));
     if (browser_defaults::kShowHelpMenuItemIcon) {
-      ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+      ui::ResourceBundle& rb = ResourceBundle::GetSharedInstance();
       SetIcon(GetIndexOfCommandId(IDC_HELP_PAGE_VIA_MENU),
               rb.GetNativeImageNamed(IDR_HELP_MENU));
     }

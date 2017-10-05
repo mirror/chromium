@@ -195,7 +195,7 @@ GURL DownloadCommands::GetLearnMoreURLForInterruptedDownload() const {
 }
 
 gfx::Image DownloadCommands::GetCommandIcon(Command command) {
-  ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& bundle = ResourceBundle::GetSharedInstance();
   return bundle.GetImageNamed(GetCommandIconId(command));
 }
 

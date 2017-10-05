@@ -6,7 +6,24 @@
 
 namespace content {
 
-WebRtcAudioDeviceNotImpl::WebRtcAudioDeviceNotImpl() = default;
+WebRtcAudioDeviceNotImpl::WebRtcAudioDeviceNotImpl()
+    : last_process_time_(base::TimeTicks::Now()) {
+}
+
+int64_t WebRtcAudioDeviceNotImpl::TimeUntilNextProcess() {
+  const int64_t kMillisecondsBetweenProcessCalls = 5000;
+  base::TimeDelta delta_time = (base::TimeTicks::Now() - last_process_time_);
+  return kMillisecondsBetweenProcessCalls - delta_time.InMilliseconds();
+}
+
+void WebRtcAudioDeviceNotImpl::Process() {
+  last_process_time_ = base::TimeTicks::Now();
+}
+
+int32_t WebRtcAudioDeviceNotImpl::RegisterEventObserver(
+    webrtc::AudioDeviceObserver* event_callback) {
+  return 0;
+}
 
 int32_t WebRtcAudioDeviceNotImpl::ActiveAudioLayer(
     AudioLayer* audio_layer) const {

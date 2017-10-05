@@ -218,13 +218,12 @@ size_t ChunkDemuxerStream::GetBufferedSize() const {
   return SBSTREAM_OP(GetBufferedSize());
 }
 
-void ChunkDemuxerStream::OnStartOfCodedFrameGroup(DecodeTimestamp start_dts,
-                                                  base::TimeDelta start_pts) {
-  DVLOG(2) << "ChunkDemuxerStream::OnStartOfCodedFrameGroup(dts "
-           << start_dts.InSecondsF() << ", pts " << start_pts.InSecondsF()
-           << ")";
+void ChunkDemuxerStream::OnStartOfCodedFrameGroup(
+    DecodeTimestamp start_timestamp) {
+  DVLOG(2) << "ChunkDemuxerStream::OnStartOfCodedFrameGroup("
+           << start_timestamp.InSecondsF() << ")";
   base::AutoLock auto_lock(lock_);
-  SBSTREAM_OP(OnStartOfCodedFrameGroup(start_dts, start_pts));
+  SBSTREAM_OP(OnStartOfCodedFrameGroup(start_timestamp));
 }
 
 bool ChunkDemuxerStream::UpdateAudioConfig(const AudioDecoderConfig& config,
@@ -665,12 +664,10 @@ ChunkDemuxer::Status ChunkDemuxer::AddId(const std::string& id,
     return ChunkDemuxer::kNotSupported;
   }
 
-  std::unique_ptr<FrameProcessor> frame_processor(new FrameProcessor(
-      base::Bind(&ChunkDemuxer::IncreaseDurationIfNecessary,
-                 base::Unretained(this)),
-      media_log_,
-      buffering_by_pts_ ? ChunkDemuxerStream::RangeApi::kNewByPts
-                        : ChunkDemuxerStream::RangeApi::kLegacyByDts));
+  std::unique_ptr<FrameProcessor> frame_processor(
+      new FrameProcessor(base::Bind(&ChunkDemuxer::IncreaseDurationIfNecessary,
+                                    base::Unretained(this)),
+                         media_log_));
 
   std::unique_ptr<SourceBufferState> source_state(new SourceBufferState(
       std::move(stream_parser), std::move(frame_processor),

@@ -39,7 +39,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
     private final VersionSafeCallbacks.UploadDataProviderWrapper mDataProvider;
     private long mLength;
     private long mRemainingLength;
-    private long mByteBufferLimit;
     private CronetUrlRequest mRequest;
 
     // Reusable read task, to reduce redundant memory allocation.
@@ -58,7 +57,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
             }
             try {
                 checkCallingThread();
-                assert mByteBuffer.position() == 0;
                 mDataProvider.read(CronetUploadDataStream.this, mByteBuffer);
             } catch (Exception exception) {
                 onError(exception);
@@ -111,7 +109,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
     @CalledByNative
     void readData(ByteBuffer byteBuffer) {
         mByteBuffer = byteBuffer;
-        mByteBufferLimit = byteBuffer.limit();
         postTaskToExecutor(mReadTask);
     }
 
@@ -209,9 +206,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
     public void onReadSucceeded(boolean lastChunk) {
         synchronized (mLock) {
             checkState(UserCallback.READ);
-            if (mByteBufferLimit != mByteBuffer.limit()) {
-                throw new IllegalStateException("ByteBuffer limit changed");
-            }
             if (lastChunk && mLength >= 0) {
                 throw new IllegalArgumentException("Non-chunked upload can't have last chunk");
             }
@@ -222,7 +216,6 @@ public final class CronetUploadDataStream extends UploadDataSink {
                         String.format("Read upload data length %d exceeds expected length %d",
                                 mLength - mRemainingLength, mLength));
             }
-            mByteBuffer.position(0);
             mByteBuffer = null;
             mInWhichUserCallback = UserCallback.NOT_IN_CALLBACK;
 

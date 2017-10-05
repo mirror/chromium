@@ -39,6 +39,7 @@
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -58,7 +59,6 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/loader/DocumentLoadTiming.h"
@@ -962,7 +962,8 @@ void FrameLoader::StopAllLoaders() {
   // It's possible that the above actions won't have stopped loading if load
   // completion had been blocked on parsing or if we were in the middle of
   // committing an empty document. In that case, emulate a failed navigation.
-  if (document_loader_ && !document_loader_->SentDidFinishLoad()) {
+  if (!provisional_document_loader_ && document_loader_ &&
+      frame_->IsLoading()) {
     document_loader_->LoadFailed(
         ResourceError::CancelledError(document_loader_->Url()));
   }

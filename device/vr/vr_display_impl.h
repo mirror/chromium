@@ -16,20 +16,20 @@
 
 namespace device {
 
+class VRServiceImpl;
+
 // Browser process representation of a VRDevice within a WebVR site session
 // (see VRServiceImpl). VRDisplayImpl receives/sends VR device events
 // from/to mojom::VRDisplayClient (the render process representation of a VR
 // device).
 // VRDisplayImpl objects are owned by their respective VRServiceImpl instances.
-// TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
-class DEVICE_VR_EXPORT VRDisplayImpl : public mojom::VRMagicWindowProvider {
+class DEVICE_VR_EXPORT VRDisplayImpl : public mojom::VRDisplay {
  public:
   VRDisplayImpl(device::VRDevice* device,
                 int render_frame_process_id,
                 int render_frame_routing_id,
                 mojom::VRServiceClient* service_client,
-                mojom::VRDisplayInfoPtr display_info,
-                mojom::VRDisplayHostPtr display_host);
+                mojom::VRDisplayInfoPtr display_info);
   ~VRDisplayImpl() override;
 
   virtual void OnChanged(mojom::VRDisplayInfoPtr vr_device_info);
@@ -45,22 +45,26 @@ class DEVICE_VR_EXPORT VRDisplayImpl : public mojom::VRMagicWindowProvider {
   int ProcessId() { return render_frame_process_id_; }
   int RoutingId() { return render_frame_routing_id_; }
 
-  void RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
-                      mojom::VRPresentationProviderRequest request,
-                      mojom::VRDisplayHost::RequestPresentCallback callback);
-  void ExitPresent();
-
  private:
   friend class VRDisplayImplTest;
 
-  void GetPose(GetPoseCallback callback) override;
+  void RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                      mojom::VRPresentationProviderRequest request,
+                      RequestPresentCallback callback) override;
+  void ExitPresent() override;
+  void GetNextMagicWindowPose(GetNextMagicWindowPoseCallback callback) override;
 
-  mojo::Binding<mojom::VRMagicWindowProvider> binding_;
+  void RequestPresentResult(RequestPresentCallback callback,
+                            bool success);
+
+  mojo::Binding<mojom::VRDisplay> binding_;
   mojom::VRDisplayClientPtr client_;
   device::VRDevice* device_;
   const int render_frame_process_id_;
   const int render_frame_routing_id_;
   bool listening_for_activate_ = false;
+
+  base::WeakPtrFactory<VRDisplayImpl> weak_ptr_factory_;
 };
 
 }  // namespace device

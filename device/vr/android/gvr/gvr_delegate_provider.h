@@ -18,16 +18,15 @@ namespace device {
 
 class VRDisplayImpl;
 
-// TODO(mthiesse, crbug.com/769373): Remove this interface and replace with a
-// mojo interface.
 class DEVICE_VR_EXPORT GvrDelegateProvider {
  public:
   GvrDelegateProvider() = default;
   virtual void SetDeviceId(unsigned int device_id) = 0;
-  virtual void RequestWebVRPresent(mojom::VRSubmitFrameClientPtr submit_client,
-                                   mojom::VRPresentationProviderRequest request,
-                                   mojom::VRDisplayInfoPtr display_info,
-                                   base::Callback<void(bool)> callback) = 0;
+  virtual void RequestWebVRPresent(
+      mojom::VRSubmitFrameClientPtr submit_client,
+      mojom::VRPresentationProviderRequest request,
+      mojom::VRDisplayInfoPtr display_info,
+      const base::Callback<void(bool)>& callback) = 0;
   virtual void ExitWebVRPresent() = 0;
   virtual void OnDisplayAdded(VRDisplayImpl* display) = 0;
   virtual void OnDisplayRemoved(VRDisplayImpl* display) = 0;
@@ -36,7 +35,7 @@ class DEVICE_VR_EXPORT GvrDelegateProvider {
   virtual void GetNextMagicWindowPose(
       gvr::GvrApi* gvr_api,
       VRDisplayImpl* display,
-      mojom::VRMagicWindowProvider::GetPoseCallback callback) = 0;
+      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) = 0;
 
  protected:
   virtual ~GvrDelegateProvider() {}

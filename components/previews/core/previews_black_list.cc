@@ -70,9 +70,9 @@ PreviewsBlackList::PreviewsBlackList(
 
 PreviewsBlackList::~PreviewsBlackList() {}
 
-base::Time PreviewsBlackList::AddPreviewNavigation(const GURL& url,
-                                                   bool opt_out,
-                                                   PreviewsType type) {
+void PreviewsBlackList::AddPreviewNavigation(const GURL& url,
+                                             bool opt_out,
+                                             PreviewsType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(url.has_host());
 
@@ -81,44 +81,39 @@ base::Time PreviewsBlackList::AddPreviewNavigation(const GURL& url,
                          GetStringNameForType(type).c_str()),
       base::HistogramBase::kUmaTargetedHistogramFlag)
       ->Add(opt_out);
-
-  base::Time now = clock_->Now();
   if (opt_out) {
-    last_opt_out_time_ = now;
+    last_opt_out_time_ = clock_->Now();
   }
   // If the |black_list_item_map_| has been loaded from |opt_out_store_|,
   // synchronous operations will be accurate. Otherwise, queue the task to run
   // asynchronously.
   if (loaded_) {
-    AddPreviewNavigationSync(url, opt_out, type, now);
+    AddPreviewNavigationSync(url, opt_out, type);
   } else {
     QueuePendingTask(base::Bind(&PreviewsBlackList::AddPreviewNavigationSync,
-                                base::Unretained(this), url, opt_out, type,
-                                now));
+                                base::Unretained(this), url, opt_out, type));
   }
-
-  return now;
 }
 
 void PreviewsBlackList::AddPreviewNavigationSync(const GURL& url,
                                                  bool opt_out,
-                                                 PreviewsType type,
-                                                 base::Time time) {
+                                                 PreviewsType type) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(url.has_host());
   DCHECK(loaded_);
   DCHECK(host_indifferent_black_list_item_);
   DCHECK(black_list_item_map_);
   std::string host_name = url.host();
+  base::Time now = clock_->Now();
   PreviewsBlackListItem* item =
       GetOrCreateBlackListItemForMap(black_list_item_map_.get(), host_name);
-  item->AddPreviewNavigation(opt_out, time);
+  item->AddPreviewNavigation(opt_out, now);
   DCHECK_LE(black_list_item_map_->size(),
             params::MaxInMemoryHostsInBlackList());
-  host_indifferent_black_list_item_->AddPreviewNavigation(opt_out, time);
+  host_indifferent_black_list_item_->AddPreviewNavigation(opt_out, now);
   if (!opt_out_store_)
     return;
-  opt_out_store_->AddPreviewNavigation(opt_out, host_name, type, time);
+  opt_out_store_->AddPreviewNavigation(opt_out, host_name, type, now);
 }
 
 PreviewsEligibilityReason PreviewsBlackList::IsLoadedAndAllowed(

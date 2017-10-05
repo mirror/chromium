@@ -1083,7 +1083,8 @@ NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(
               FromPlatformWritingMode(child_style.GetWritingMode()));
 
   NGBoxStrut margins =
-      ComputeMarginsFor(*space, child_style, ConstraintSpace());
+      ComputeMargins(*space, child_style, ConstraintSpace().WritingMode(),
+                     ConstraintSpace().Direction());
 
   // The block-start margin should only be used in the first fragment.
   if (child_break_token)

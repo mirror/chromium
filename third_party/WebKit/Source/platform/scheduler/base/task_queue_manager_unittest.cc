@@ -60,8 +60,7 @@ class MessageLoopTaskRunner : public TaskQueueManagerDelegateForTest {
  public:
   static scoped_refptr<MessageLoopTaskRunner> Create(
       std::unique_ptr<base::TickClock> tick_clock) {
-    return base::WrapRefCounted(
-        new MessageLoopTaskRunner(std::move(tick_clock)));
+    return make_scoped_refptr(new MessageLoopTaskRunner(std::move(tick_clock)));
   }
 
   // TaskQueueManagerDelegateForTest:
@@ -92,8 +91,6 @@ class TaskQueueManagerTest : public ::testing::Test {
   void DeleteTaskQueueManager() { manager_.reset(); }
 
  protected:
-  void TearDown() { manager_.reset(); }
-
   scoped_refptr<TestTaskQueue> CreateTaskQueueWithSpec(TaskQueue::Spec spec) {
     return manager_->CreateTaskQueue<TestTaskQueue>(spec);
   }
@@ -109,7 +106,7 @@ class TaskQueueManagerTest : public ::testing::Test {
 
   void InitializeWithClock(size_t num_queues,
                            std::unique_ptr<base::TickClock> test_time_source) {
-    test_task_runner_ = base::WrapRefCounted(
+    test_task_runner_ = make_scoped_refptr(
         new cc::OrderedSimpleTaskRunner(now_src_.get(), false));
     main_task_runner_ = TaskQueueManagerDelegateForTest::Create(
         test_task_runner_.get(),

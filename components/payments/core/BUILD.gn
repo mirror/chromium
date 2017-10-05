@@ -51,6 +51,8 @@ static_library("core") {
     "payments_validators.h",
     "strings_util.cc",
     "strings_util.h",
+    "subkey_requester.cc",
+    "subkey_requester.h",
   ]
 
   deps = [
@@ -64,6 +66,7 @@ static_library("core") {
     "//net",
     "//services/metrics/public/cpp:metrics_cpp",
     "//services/metrics/public/cpp:ukm_builders",
+    "//third_party/libphonenumber",
     "//third_party/re2",
     "//ui/base",
     "//url",
@@ -117,6 +120,7 @@ source_set("unit_tests") {
     "payments_profile_comparator_unittest.cc",
     "payments_validators_unittest.cc",
     "strings_util_unittest.cc",
+    "subkey_requester_unittest.cc",
   ]
 
   deps = [

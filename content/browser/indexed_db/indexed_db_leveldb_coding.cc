@@ -998,14 +998,6 @@ int Compare(const StringPiece& a,
   return result;
 }
 
-int CompareKeys(const StringPiece& a, const StringPiece& b) {
-  return Compare(a, b, false /*index_keys*/);
-}
-
-int CompareIndexKeys(const StringPiece& a, const StringPiece& b) {
-  return Compare(a, b, true /*index_keys*/);
-}
-
 KeyPrefix::KeyPrefix()
     : database_id_(INVALID_TYPE),
       object_store_id_(INVALID_TYPE),

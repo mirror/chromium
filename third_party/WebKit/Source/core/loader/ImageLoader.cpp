@@ -162,7 +162,6 @@ void ImageLoader::Dispose() {
   if (image_) {
     image_->RemoveObserver(this);
     image_ = nullptr;
-    image_resource_for_image_document_ = nullptr;
     delay_until_image_notify_finished_ = nullptr;
   }
 }
@@ -349,12 +348,7 @@ inline void ImageLoader::EnqueueImageLoadingMicroTask(
 
 void ImageLoader::UpdateImageState(ImageResourceContent* new_image) {
   image_ = new_image;
-  if (!new_image) {
-    image_resource_for_image_document_ = nullptr;
-    image_complete_ = true;
-  } else {
-    image_complete_ = false;
-  }
+  image_complete_ = !new_image;
   delay_until_image_notify_finished_ = nullptr;
 }
 
@@ -519,7 +513,6 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
       image->RemoveObserver(this);
     }
     image_ = nullptr;
-    image_resource_for_image_document_ = nullptr;
     delay_until_image_notify_finished_ = nullptr;
   }
 

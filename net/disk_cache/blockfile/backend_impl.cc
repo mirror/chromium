@@ -1561,7 +1561,7 @@ int BackendImpl::NewEntry(Addr address, scoped_refptr<EntryImpl>* entry) {
   EntriesMap::iterator it = open_entries_.find(address.value());
   if (it != open_entries_.end()) {
     // Easy job. This entry is already in memory.
-    *entry = base::WrapRefCounted(it->second);
+    *entry = make_scoped_refptr(it->second);
     return 0;
   }
 

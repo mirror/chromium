@@ -962,8 +962,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
       render_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();
   render_pass_quad->SetNew(sqs, rect4, rect4, render_pass_id, resource_id4,
                            mask_uv_rect, mask_texture_size, filters_scale,
-                           filters_origin, tex_coord_rect,
-                           force_anti_aliasing_off);
+                           filters_origin, tex_coord_rect);
 
   const gfx::Rect rect5(123, 567, 91011, 131415);
   const ResourceId resource_id5(1337);
@@ -1052,8 +1051,6 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   EXPECT_EQ(resource_id4, out_render_pass_draw_quad->mask_resource_id());
   EXPECT_EQ(mask_texture_size, out_render_pass_draw_quad->mask_texture_size);
   EXPECT_EQ(filters_scale, out_render_pass_draw_quad->filters_scale);
-  EXPECT_EQ(force_anti_aliasing_off,
-            out_render_pass_draw_quad->force_anti_aliasing_off);
 
   const TextureDrawQuad* out_texture_draw_quad =
       TextureDrawQuad::MaterialCast(output->quad_list.ElementAt(5));
@@ -1317,6 +1314,7 @@ TEST_F(StructTraitsTest, TextureMailbox) {
   const uint32_t texture_target = 1337;
   const gfx::Size size_in_pixels(93, 24);
   const bool is_overlay_candidate = true;
+  const bool secure_output_only = true;
   const bool nearest_neighbor = true;
   const gfx::ColorSpace color_space = gfx::ColorSpace(
       gfx::ColorSpace::PrimaryID::BT470M, gfx::ColorSpace::TransferID::GAMMA28,
@@ -1329,7 +1327,7 @@ TEST_F(StructTraitsTest, TextureMailbox) {
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
   TextureMailbox input(mailbox, sync_token, texture_target, size_in_pixels,
-                       is_overlay_candidate);
+                       is_overlay_candidate, secure_output_only);
   input.set_nearest_neighbor(nearest_neighbor);
   input.set_color_space(color_space);
 #if defined(OS_ANDROID)
@@ -1345,6 +1343,7 @@ TEST_F(StructTraitsTest, TextureMailbox) {
   EXPECT_EQ(texture_target, output.target());
   EXPECT_EQ(size_in_pixels, output.size_in_pixels());
   EXPECT_EQ(is_overlay_candidate, output.is_overlay_candidate());
+  EXPECT_EQ(secure_output_only, output.secure_output_only());
   EXPECT_EQ(nearest_neighbor, output.nearest_neighbor());
   EXPECT_EQ(color_space, output.color_space());
 #if defined(OS_ANDROID)

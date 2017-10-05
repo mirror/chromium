@@ -35,6 +35,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptEventListener.h"
 #include "bindings/core/v8/SourceLocation.h"
+#include "bindings/core/v8/V8DOMActivityLogger.h"
 #include "bindings/core/v8/add_event_listener_options_or_boolean.h"
 #include "bindings/core/v8/event_listener_options_or_boolean.h"
 #include "core/dom/ExceptionCode.h"
@@ -51,7 +52,6 @@
 #include "core/probe/CoreProbes.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/Histogram.h"
-#include "platform/bindings/V8DOMActivityLogger.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -205,7 +205,7 @@ void EventTarget::SetDefaultAddEventListenerOptions(
     return;
   }
 
-  LocalDOMWindow* executing_window = ExecutingWindow();
+  LocalDOMWindow* executing_window = this->ExecutingWindow();
   if (executing_window) {
     if (options.hasPassive()) {
       UseCounter::Count(executing_window->document(),
@@ -286,7 +286,7 @@ void EventTarget::SetDefaultAddEventListenerOptions(
       options.setPassive(false);
   }
 
-  if (!options.passive() && !options.PassiveSpecified()) {
+  if (!options.passive()) {
     String message_text = String::Format(
         "Added non-passive event listener to a scroll-blocking '%s' event. "
         "Consider marking event handler as 'passive' to make the page more "
@@ -359,7 +359,7 @@ bool EventTarget::AddEventListenerInternal(
 void EventTarget::AddedEventListener(
     const AtomicString& event_type,
     RegisteredEventListener& registered_listener) {
-  if (const LocalDOMWindow* executing_window = ExecutingWindow()) {
+  if (const LocalDOMWindow* executing_window = this->ExecutingWindow()) {
     if (const Document* document = executing_window->document()) {
       if (event_type == EventTypeNames::auxclick)
         UseCounter::Count(*document, WebFeature::kAuxclickAddListenerCount);
@@ -594,7 +594,7 @@ void EventTarget::CountLegacyEvents(
     return;
   }
 
-  if (const LocalDOMWindow* executing_window = ExecutingWindow()) {
+  if (const LocalDOMWindow* executing_window = this->ExecutingWindow()) {
     if (const Document* document = executing_window->document()) {
       if (legacy_listeners_vector) {
         if (listeners_vector)
@@ -658,7 +658,7 @@ bool EventTarget::FireEventListeners(Event* event,
   // dispatch. Conveniently, all new event listeners will be added after or at
   // index |size|, so iterating up to (but not including) |size| naturally
   // excludes new event listeners.
-  if (const LocalDOMWindow* executing_window = ExecutingWindow()) {
+  if (const LocalDOMWindow* executing_window = this->ExecutingWindow()) {
     if (const Document* document = executing_window->document()) {
       if (CheckTypeThenUseCount(event, EventTypeNames::beforeunload,
                                 WebFeature::kDocumentBeforeUnloadFired,

@@ -702,10 +702,6 @@
       name: "OrientationEvent",
     },
     {
-      name: "OriginManifest",
-      status: "test",
-    },
-    {
       name: "OriginTrials",
       status: "stable",
     },

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
 import org.chromium.base.MemoryPressureListener;
 import org.chromium.base.annotations.SuppressFBWarnings;
@@ -56,6 +57,7 @@ public class ContentShellActivity extends Activity {
                 CommandLine.getInstance().appendSwitchesAndArguments(commandLineParams);
             }
         }
+        waitForDebuggerIfNeeded();
 
         DeviceUtils.addDeviceSpecificUserAgentSwitch(this);
 
@@ -149,6 +151,14 @@ public class ContentShellActivity extends Activity {
         }
 
         mWindowAndroid.saveInstanceState(outState);
+    }
+
+    private void waitForDebuggerIfNeeded() {
+        if (CommandLine.getInstance().hasSwitch(BaseSwitches.WAIT_FOR_JAVA_DEBUGGER)) {
+            Log.e(TAG, "Waiting for Java debugger to connect...");
+            android.os.Debug.waitForDebugger();
+            Log.e(TAG, "Java debugger connected. Resuming execution.");
+        }
     }
 
     @Override

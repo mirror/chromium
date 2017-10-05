@@ -50,18 +50,20 @@ MockAppCacheStorage::~MockAppCacheStorage() {
 }
 
 void MockAppCacheStorage::GetAllInfo(Delegate* delegate) {
-  ScheduleTask(base::Bind(
-      &MockAppCacheStorage::ProcessGetAllInfo, weak_factory_.GetWeakPtr(),
-      base::WrapRefCounted(GetOrCreateDelegateReference(delegate))));
+  ScheduleTask(
+      base::Bind(&MockAppCacheStorage::ProcessGetAllInfo,
+                 weak_factory_.GetWeakPtr(),
+                 make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
 }
 
 void MockAppCacheStorage::LoadCache(int64_t id, Delegate* delegate) {
   DCHECK(delegate);
   AppCache* cache = working_set_.GetCache(id);
   if (ShouldCacheLoadAppearAsync(cache)) {
-    ScheduleTask(base::Bind(
-        &MockAppCacheStorage::ProcessLoadCache, weak_factory_.GetWeakPtr(), id,
-        base::WrapRefCounted(GetOrCreateDelegateReference(delegate))));
+    ScheduleTask(
+        base::Bind(&MockAppCacheStorage::ProcessLoadCache,
+                   weak_factory_.GetWeakPtr(), id,
+                   make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
     return;
   }
   ProcessLoadCache(id, GetOrCreateDelegateReference(delegate));
@@ -72,10 +74,10 @@ void MockAppCacheStorage::LoadOrCreateGroup(
   DCHECK(delegate);
   AppCacheGroup* group = working_set_.GetGroup(manifest_url);
   if (ShouldGroupLoadAppearAsync(group)) {
-    ScheduleTask(base::Bind(
-        &MockAppCacheStorage::ProcessLoadOrCreateGroup,
-        weak_factory_.GetWeakPtr(), manifest_url,
-        base::WrapRefCounted(GetOrCreateDelegateReference(delegate))));
+    ScheduleTask(
+        base::Bind(&MockAppCacheStorage::ProcessLoadOrCreateGroup,
+                   weak_factory_.GetWeakPtr(), manifest_url,
+                   make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
     return;
   }
   ProcessLoadOrCreateGroup(
@@ -89,9 +91,9 @@ void MockAppCacheStorage::StoreGroupAndNewestCache(
   // Always make this operation look async.
   ScheduleTask(
       base::Bind(&MockAppCacheStorage::ProcessStoreGroupAndNewestCache,
-                 weak_factory_.GetWeakPtr(), base::WrapRefCounted(group),
-                 base::WrapRefCounted(newest_cache),
-                 base::WrapRefCounted(GetOrCreateDelegateReference(delegate))));
+                 weak_factory_.GetWeakPtr(), make_scoped_refptr(group),
+                 make_scoped_refptr(newest_cache),
+                 make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
 }
 
 void MockAppCacheStorage::FindResponseForMainRequest(
@@ -104,7 +106,7 @@ void MockAppCacheStorage::FindResponseForMainRequest(
   ScheduleTask(
       base::Bind(&MockAppCacheStorage::ProcessFindResponseForMainRequest,
                  weak_factory_.GetWeakPtr(), url,
-                 base::WrapRefCounted(GetOrCreateDelegateReference(delegate))));
+                 make_scoped_refptr(GetOrCreateDelegateReference(delegate))));
 }
 
 void MockAppCacheStorage::FindResponseForSubRequest(
@@ -149,8 +151,9 @@ void MockAppCacheStorage::MakeGroupObsolete(AppCacheGroup* group,
   // Always make this method look async.
   ScheduleTask(
       base::Bind(&MockAppCacheStorage::ProcessMakeGroupObsolete,
-                 weak_factory_.GetWeakPtr(), base::WrapRefCounted(group),
-                 base::WrapRefCounted(GetOrCreateDelegateReference(delegate)),
+                 weak_factory_.GetWeakPtr(),
+                 make_scoped_refptr(group),
+                 make_scoped_refptr(GetOrCreateDelegateReference(delegate)),
                  response_code));
 }
 
@@ -489,7 +492,7 @@ void MockAppCacheStorage::AddStoredCache(AppCache* cache) {
   int64_t cache_id = cache->cache_id();
   if (stored_caches_.find(cache_id) == stored_caches_.end()) {
     stored_caches_.insert(
-        StoredCacheMap::value_type(cache_id, base::WrapRefCounted(cache)));
+        StoredCacheMap::value_type(cache_id, make_scoped_refptr(cache)));
   }
 }
 
@@ -512,7 +515,7 @@ void MockAppCacheStorage::AddStoredGroup(AppCacheGroup* group) {
   const GURL& url = group->manifest_url();
   if (stored_groups_.find(url) == stored_groups_.end()) {
     stored_groups_.insert(
-        StoredGroupMap::value_type(url, base::WrapRefCounted(group)));
+        StoredGroupMap::value_type(url, make_scoped_refptr(group)));
   }
 }
 

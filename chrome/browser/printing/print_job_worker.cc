@@ -163,14 +163,14 @@ void PrintJobWorker::GetSettings(bool ask_user_for_settings,
   if (ask_user_for_settings) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&HoldRefCallback, base::WrapRefCounted(owner_),
+        base::BindOnce(&HoldRefCallback, make_scoped_refptr(owner_),
                        base::Bind(&PrintJobWorker::GetSettingsWithUI,
                                   base::Unretained(this), document_page_count,
                                   has_selection, is_scripted)));
   } else {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::BindOnce(&HoldRefCallback, base::WrapRefCounted(owner_),
+        base::BindOnce(&HoldRefCallback, make_scoped_refptr(owner_),
                        base::Bind(&PrintJobWorker::UseDefaultSettings,
                                   base::Unretained(this))));
   }
@@ -183,7 +183,7 @@ void PrintJobWorker::SetSettings(
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(
-          &HoldRefCallback, base::WrapRefCounted(owner_),
+          &HoldRefCallback, make_scoped_refptr(owner_),
           base::Bind(&PrintJobWorker::UpdatePrintSettings,
                      base::Unretained(this), base::Passed(&new_settings))));
 }
@@ -209,8 +209,9 @@ void PrintJobWorker::GetSettingsDone(PrintingContext::Result result) {
   // PrintJob will create the new PrintedDocument.
   owner_->PostTask(FROM_HERE,
                    base::Bind(&PrintJobWorkerOwner::GetSettingsDone,
-                              base::WrapRefCounted(owner_),
-                              printing_context_->settings(), result));
+                              make_scoped_refptr(owner_),
+                              printing_context_->settings(),
+                              result));
 }
 
 void PrintJobWorker::GetSettingsWithUI(
@@ -245,7 +246,7 @@ void PrintJobWorker::GetSettingsWithUI(
   // weak_factory_ creates pointers valid only on owner_ thread.
   printing_context_->AskUserForSettings(
       document_page_count, has_selection, is_scripted,
-      base::Bind(&PostOnOwnerThread, base::WrapRefCounted(owner_),
+      base::Bind(&PostOnOwnerThread, make_scoped_refptr(owner_),
                  base::Bind(&PrintJobWorker::GetSettingsDone,
                             weak_factory_.GetWeakPtr())));
 }

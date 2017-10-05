@@ -4,39 +4,31 @@
 
 package org.chromium.base;
 
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
-import android.support.test.runner.AndroidJUnit4;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import android.test.InstrumentationTestCase;
 
 import org.chromium.base.test.util.Feature;
 
 /**
  * Test class for {@link CommandLineInitUtil}.
  */
-@RunWith(AndroidJUnit4.class)
-public class CommandLineInitUtilTest {
-    @Before
+public class CommandLineInitUtilTest extends InstrumentationTestCase {
+
+    @Override
     public void setUp() throws Exception {
-        CommandLineInitUtil.initCommandLine(
-                InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                "content-shell-command-line");
+        CommandLineInitUtil.initCommandLine(getInstrumentation().getTargetContext(),
+                "chrome-command-line");
     }
 
     /**
      * Verifies that the default command line flags get set for Chrome Public tests.
      */
-    @Test
     @SmallTest
     @Feature({"CommandLine"})
     public void testDefaultCommandLineFlagsSet() {
-        Assert.assertTrue("CommandLine not initialized after startup", CommandLine.isInitialized());
+        assertTrue("CommandLine not initialized after startup", CommandLine.isInitialized());
 
         final CommandLine commandLine = CommandLine.getInstance();
-        Assert.assertTrue(commandLine.hasSwitch("enable-test-intents"));
+        assertTrue(commandLine.hasSwitch("enable-test-intents"));
     }
 }

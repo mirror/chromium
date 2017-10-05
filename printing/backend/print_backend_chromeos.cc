@@ -107,7 +107,7 @@ bool PrintBackendChromeOS::IsValidPrinter(const std::string& printer_name) {
 scoped_refptr<PrintBackend> PrintBackend::CreateInstanceImpl(
     const base::DictionaryValue* print_backend_settings) {
 #if defined(USE_CUPS)
-  return base::WrapRefCounted(
+  return make_scoped_refptr(
       new PrintBackendCupsIpp(CreateConnection(print_backend_settings)));
 #else
   return base::MakeRefCounted<PrintBackendChromeOS>();

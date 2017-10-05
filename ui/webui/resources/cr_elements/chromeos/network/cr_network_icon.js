@@ -53,7 +53,9 @@ Polymer({
     if (!this.isListItem &&
         (!connectionState ||
          connectionState == CrOnc.ConnectionState.NOT_CONNECTED)) {
-      return prefix + 'off';
+      if (type != CrOnc.Type.CELLULAR && type != CrOnc.Type.TETHER)
+        return prefix + 'off';
+      strength = 0;
     } else {
       strength = CrOnc.getSignalStrength(this.networkState);
     }

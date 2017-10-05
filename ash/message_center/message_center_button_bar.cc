@@ -123,7 +123,7 @@ MessageCenterButtonBar::MessageCenterButtonBar(
       views::Button::STATE_PRESSED,
       resource_bundle.GetImageSkiaNamed(
           IDR_NOTIFICATION_DO_NOT_DISTURB_PRESSED));
-  SetQuietModeState(message_center->IsQuietMode());
+  quiet_mode_button_->SetToggled(message_center->IsQuietMode());
   button_container_->AddChildView(quiet_mode_button_);
 
   close_all_button_ = CreateNotificationCenterButton(
@@ -238,10 +238,6 @@ void MessageCenterButtonBar::SetButtonsVisible(bool visible) {
   Layout();
 }
 
-void MessageCenterButtonBar::SetQuietModeState(bool is_quiet_mode) {
-  quiet_mode_button_->SetToggled(is_quiet_mode);
-}
-
 void MessageCenterButtonBar::ChildVisibilityChanged(views::View* child) {
   InvalidateLayout();
 }
@@ -258,6 +254,7 @@ void MessageCenterButtonBar::ButtonPressed(views::Button* sender,
       message_center()->SetQuietMode(false);
     else
       message_center()->EnterQuietModeWithExpire(base::TimeDelta::FromDays(1));
+    quiet_mode_button_->SetToggled(message_center()->IsQuietMode());
   } else {
     NOTREACHED();
   }

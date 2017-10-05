@@ -26,12 +26,12 @@
 #define Element_h
 
 #include "core/CoreExport.h"
+#include "core/HTMLNames.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSSelector.h"
 #include "core/dom/ContainerNode.h"
 #include "core/dom/ElementData.h"
 #include "core/dom/WhitespaceAttacher.h"
-#include "core/html_names.h"
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
 #include "platform/heap/Handle.h"
@@ -44,6 +44,7 @@ class AccessibleNode;
 class Attr;
 class Attribute;
 class CSSStyleDeclaration;
+class CompositorMutation;
 class CustomElementDefinition;
 class DOMRect;
 class DOMRectList;
@@ -785,6 +786,8 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void setTabIndex(int);
   int tabIndex() const override;
+
+  void UpdateFromCompositorMutation(const CompositorMutation&);
 
   // Helpers for V8DOMActivityLogger::logEvent.  They call logEvent only if
   // the element is isConnected() and the context is an isolated world.

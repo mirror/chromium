@@ -31,7 +31,6 @@ class Profile;
 @class ProfileMenuController;
 class QuitWithAppsController;
 class ScopedKeepAlive;
-@class ShareMenuController;
 
 namespace ui {
 class WorkAreaWatcherObserver;
@@ -73,9 +72,6 @@ class WorkAreaWatcherObserver;
   // The profile menu, which appears right before the Help menu. It is only
   // available when multiple profiles is enabled.
   base::scoped_nsobject<ProfileMenuController> profileMenuController_;
-
-  // Controller for the macOS system share menu.
-  base::scoped_nsobject<ShareMenuController> shareMenuController_;
 
   // If we're told to open URLs (in particular, via |-application:openFiles:| by
   // Launch Services) before we've launched the browser, we queue them up in

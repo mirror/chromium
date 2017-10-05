@@ -22,6 +22,8 @@
 
 #include "core/svg/SVGAElement.h"
 
+#include "core/SVGNames.h"
+#include "core/XLinkNames.h"
 #include "core/dom/Attr.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/Document.h"
@@ -41,8 +43,6 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/svg/animation/SVGSMILElement.h"
-#include "core/svg_names.h"
-#include "core/xlink_names.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 
 namespace blink {

@@ -456,7 +456,7 @@ void UserSelectionScreen::FillUserMojoStruct(
   user_info->basic_user_info->avatar = user->GetImage();
   if (user_info->basic_user_info->avatar.isNull()) {
     user_info->basic_user_info->avatar =
-        *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+        *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
             IDR_LOGIN_DEFAULT_USER);
   }
   user_info->auth_type = auth_type;

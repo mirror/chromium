@@ -73,6 +73,7 @@ component("printing") {
     "printed_document_win.cc",
     "printed_page.cc",
     "printed_page.h",
+    "printed_pages_source.h",
     "printing_context.cc",
     "printing_context.h",
     "printing_export.h",
@@ -87,7 +88,6 @@ component("printing") {
   defines = [ "PRINTING_IMPLEMENTATION" ]
 
   public_deps = [
-    "//build/config/linux/pangocairo:features",
     "//printing/features",
   ]
   deps = [

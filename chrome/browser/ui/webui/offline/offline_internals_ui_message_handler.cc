@@ -292,8 +292,7 @@ void OfflineInternalsUIMessageHandler::HandleShowPrefetchNotification(
   const base::Value* callback_id;
   CHECK(args->Get(0, &callback_id));
 
-  offline_pages::ShowPrefetchedContentNotification(
-      GURL("https://www.example.com"));
+  offline_pages::ShowPrefetchedContentNotification(GURL("www.example.com"));
   ResolveJavascriptCallback(*callback_id, base::Value("Scheduled."));
 }
 
@@ -454,74 +453,74 @@ void OfflineInternalsUIMessageHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "deleteSelectedPages",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleDeleteSelectedPages,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "deleteSelectedRequests",
       base::Bind(
           &OfflineInternalsUIMessageHandler::HandleDeleteSelectedRequests,
-          base::Unretained(this)));
+          weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getRequestQueue",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetRequestQueue,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getStoredPages",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetStoredPages,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getEventLogs",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetEventLogs,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "setRecordRequestQueue",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleSetRecordRequestQueue,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "setRecordPageModel",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleSetRecordPageModel,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "setRecordPrefetchService",
       base::Bind(
           &OfflineInternalsUIMessageHandler::HandleSetRecordPrefetchService,
-          base::Unretained(this)));
+          weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getLoggingState",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetLoggingState,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "addToRequestQueue",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleAddToRequestQueue,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getNetworkStatus",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetNetworkStatus,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "scheduleNwake",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleScheduleNwake,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "cancelNwake",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleCancelNwake,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "showPrefetchNotification",
       base::Bind(
           &OfflineInternalsUIMessageHandler::HandleShowPrefetchNotification,
-          base::Unretained(this)));
+          weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "generatePageBundle",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGeneratePageBundle,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "getOperation",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleGetOperation,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
   web_ui()->RegisterMessageCallback(
       "downloadArchive",
       base::Bind(&OfflineInternalsUIMessageHandler::HandleDownloadArchive,
-                 base::Unretained(this)));
+                 weak_ptr_factory_.GetWeakPtr()));
 
   // Get the offline page model associated with this web ui.
   Profile* profile = Profile::FromWebUI(web_ui());

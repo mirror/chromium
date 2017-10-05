@@ -101,9 +101,8 @@ void FaviconSource::StartDataRequest(
           ui::ScaleFactor resource_scale_factor =
               ui::GetSupportedScaleFactor(parsed.device_scale_factor);
           callback.Run(
-              ui::ResourceBundle::GetSharedInstance()
-                  .LoadDataResourceBytesForScale(prepopulated_page.favicon_id,
-                                                 resource_scale_factor));
+              ResourceBundle::GetSharedInstance().LoadDataResourceBytesForScale(
+                  prepopulated_page.favicon_id, resource_scale_factor));
           return;
         }
       }
@@ -195,7 +194,7 @@ void FaviconSource::SendDefaultResponse(const IconRequest& icon_request) {
   }
 
   base::RefCountedMemory* default_favicon =
-      ui::ResourceBundle::GetSharedInstance().LoadDataResourceBytesForScale(
+      ResourceBundle::GetSharedInstance().LoadDataResourceBytesForScale(
           resource_id,
           ui::GetSupportedScaleFactor(icon_request.device_scale_factor));
 

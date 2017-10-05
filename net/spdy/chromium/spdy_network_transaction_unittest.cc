@@ -432,12 +432,14 @@ class SpdyNetworkTransactionTest : public ::testing::Test {
     // This lengthy block is reaching into the pool to dig out the active
     // session.  Once we have the session, we verify that the streams are
     // all closed and not leaked at this point.
-    SpdySessionKey key(HostPortPair::FromURL(helper.request().url),
-                       ProxyServer::Direct(), PRIVACY_MODE_DISABLED);
+    const GURL& url = helper.request().url;
+    SpdySessionKey key(HostPortPair::FromURL(url), ProxyServer::Direct(),
+                       PRIVACY_MODE_DISABLED);
     HttpNetworkSession* session = helper.session();
     base::WeakPtr<SpdySession> spdy_session =
         session->spdy_session_pool()->FindAvailableSession(
-            key, /* enable_ip_based_pooling = */ true, log_);
+            key, url,
+            /* enable_ip_based_pooling = */ true, log_);
     ASSERT_TRUE(spdy_session);
     EXPECT_EQ(0u, spdy_session->num_active_streams());
     EXPECT_EQ(0u, spdy_session->num_unclaimed_pushed_streams());
@@ -4109,7 +4111,8 @@ TEST_F(SpdyNetworkTransactionTest, GracefulGoaway) {
                      PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool->FindAvailableSession(
-          key, /* enable_ip_based_pooling = */ true, log_);
+          key, GURL(),
+          /* enable_ip_based_pooling = */ true, log_);
   EXPECT_TRUE(spdy_session);
 
   // Start second transaction.
@@ -4140,7 +4143,8 @@ TEST_F(SpdyNetworkTransactionTest, GracefulGoaway) {
 
   // Graceful GOAWAY was received, SpdySession should be unavailable.
   spdy_session = spdy_session_pool->FindAvailableSession(
-      key, /* enable_ip_based_pooling = */ true, log_);
+      key, GURL(),
+      /* enable_ip_based_pooling = */ true, log_);
   EXPECT_FALSE(spdy_session);
 
   helper.VerifyDataConsumed();
@@ -5074,7 +5078,8 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOrigin) {
                      PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session =
       spdy_session_pool->FindAvailableSession(
-          key, /* enable_ip_based_pooling = */ true, log_);
+          key, GURL(),
+          /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_FALSE(spdy_session->unclaimed_pushed_streams_.empty());
   EXPECT_EQ(1u, spdy_session->unclaimed_pushed_streams_.size());
@@ -5219,7 +5224,8 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
                       PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session0 =
       spdy_session_pool->FindAvailableSession(
-          key0, /* enable_ip_based_pooling = */ true, log_);
+          key0, GURL(),
+          /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_TRUE(spdy_session0->unclaimed_pushed_streams_.empty());
   EXPECT_EQ(0u, spdy_session0->unclaimed_pushed_streams_.size());
@@ -5229,7 +5235,8 @@ TEST_F(SpdyNetworkTransactionTest, ServerPushValidCrossOriginWithOpenSession) {
                       PRIVACY_MODE_DISABLED);
   base::WeakPtr<SpdySession> spdy_session1 =
       spdy_session_pool->FindAvailableSession(
-          key1, /* enable_ip_based_pooling = */ true, log_);
+          key1, GURL(),
+          /* enable_ip_based_pooling = */ true, log_);
 
   EXPECT_FALSE(spdy_session1->unclaimed_pushed_streams_.empty());
   EXPECT_EQ(1u, spdy_session1->unclaimed_pushed_streams_.size());

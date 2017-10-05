@@ -5,6 +5,7 @@
 #include "modules/accessibility/InspectorAccessibilityAgent.h"
 
 #include <memory>
+#include "core/HTMLNames.h"
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/Element.h"
@@ -12,7 +13,6 @@
 #include "core/dom/FlatTreeTraversal.h"
 #include "core/dom/Node.h"
 #include "core/dom/NodeList.h"
-#include "core/html_names.h"
 #include "core/inspector/IdentifiersFactory.h"
 #include "core/inspector/InspectorDOMAgent.h"
 #include "core/inspector/InspectorStyleSheet.h"

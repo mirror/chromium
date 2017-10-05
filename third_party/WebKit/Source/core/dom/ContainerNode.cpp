@@ -50,6 +50,7 @@
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutInline.h"
 #include "core/layout/LayoutText.h"
+#include "core/layout/LayoutTheme.h"
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/RootInlineBox.h"
 #include "core/probe/CoreProbes.h"
@@ -967,7 +968,7 @@ void ContainerNode::DetachLayoutTree(const AttachContext& context) {
 void ContainerNode::ChildrenChanged(const ChildrenChange& change) {
   GetDocument().IncDOMTreeVersion();
   GetDocument().NotifyChangeChildren(*this);
-  InvalidateNodeListCachesInAncestors(nullptr, nullptr, &change);
+  InvalidateNodeListCachesInAncestors();
   if (change.IsChildInsertion()) {
     if (!ChildNeedsStyleRecalc()) {
       SetChildNeedsStyleRecalc();
@@ -1183,7 +1184,8 @@ void ContainerNode::FocusStateChanged() {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByFocus())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoFocus);
 
-  GetLayoutObject()->InvalidateIfControlStateChanged(kFocusControlState);
+  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                              kFocusControlState);
   FocusWithinStateChanged();
 }
 
@@ -1291,7 +1293,8 @@ void ContainerNode::SetActive(bool down) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByActive())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoActive);
 
-  GetLayoutObject()->InvalidateIfControlStateChanged(kPressedControlState);
+  LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                              kPressedControlState);
 }
 
 void ContainerNode::SetDragged(bool new_value) {
@@ -1348,8 +1351,10 @@ void ContainerNode::SetHovered(bool over) {
   if (IsElementNode() && ToElement(this)->ChildrenOrSiblingsAffectedByHover())
     ToElement(this)->PseudoStateChanged(CSSSelector::kPseudoHover);
 
-  if (LayoutObject* o = GetLayoutObject())
-    o->InvalidateIfControlStateChanged(kHoverControlState);
+  if (GetLayoutObject()) {
+    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                kHoverControlState);
+  }
 }
 
 HTMLCollection* ContainerNode::Children() {
@@ -1618,17 +1623,11 @@ void ContainerNode::CheckForSiblingStyleChanges(SiblingCheckType change_type,
 
 void ContainerNode::InvalidateNodeListCachesInAncestors(
     const QualifiedName* attr_name,
-    Element* attribute_owner_element,
-    const ChildrenChange* change) {
+    Element* attribute_owner_element) {
   if (HasRareData() && (!attr_name || IsAttributeNode())) {
     if (NodeListsNodeData* lists = RareData()->NodeLists()) {
-      if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this)) {
-        if (change) {
-          child_node_list->ChildrenChanged(*change);
-        } else {
-          child_node_list->InvalidateCache();
-        }
-      }
+      if (ChildNodeList* child_node_list = lists->GetChildNodeList(*this))
+        child_node_list->InvalidateCache();
     }
   }
 

@@ -6,15 +6,12 @@
 #define DEVICE_VR_TEST_FAKE_VR_DEVICE_PROVIDER_H_
 
 #include <vector>
-
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_provider.h"
-#include "device/vr/vr_export.h"
 
 namespace device {
 
-// TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
-class DEVICE_VR_EXPORT FakeVRDeviceProvider : public VRDeviceProvider {
+class FakeVRDeviceProvider : public VRDeviceProvider {
  public:
   FakeVRDeviceProvider();
   ~FakeVRDeviceProvider() override;

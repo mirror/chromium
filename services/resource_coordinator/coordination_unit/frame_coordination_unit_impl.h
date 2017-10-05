@@ -8,22 +8,22 @@
 #include <set>
 
 #include "base/macros.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
 // Frame Coordination Units form a tree structure, each FrameCoordinationUnit at
 // most has one parent that is a FrameCoordinationUnit.
 // A Frame Coordination Unit will have parents only if navigation committed.
-class FrameCoordinationUnitImpl : public CoordinationUnitBase {
+class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   FrameCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~FrameCoordinationUnitImpl() override;
 
-  // CoordinationUnitBase implementation.
-  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
+  // CoordinationUnitImpl implementation.
+  std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
 
   PageCoordinationUnitImpl* GetPageCoordinationUnit() const;
@@ -31,7 +31,7 @@ class FrameCoordinationUnitImpl : public CoordinationUnitBase {
   bool IsMainFrame() const;
 
  private:
-  // CoordinationUnitBase implementation.
+  // CoordinationUnitImpl implementation.
   void OnEventReceived(const mojom::Event event) override;
   void OnPropertyChanged(const mojom::PropertyType property_type,
                          int64_t value) override;

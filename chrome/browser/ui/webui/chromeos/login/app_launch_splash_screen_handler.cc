@@ -217,7 +217,7 @@ void AppLaunchSplashScreenHandler::PopulateAppInfo(
     app.name = l10n_util::GetStringUTF8(IDS_SHORT_PRODUCT_NAME);
 
   if (app.icon.isNull()) {
-    app.icon = *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+    app.icon = *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
         IDR_PRODUCT_LOGO_128);
   }
 

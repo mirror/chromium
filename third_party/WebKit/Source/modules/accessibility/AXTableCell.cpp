@@ -182,7 +182,6 @@ AccessibilityRole AXTableCell::DetermineAccessibilityRole() {
   if (!IsTableCell())
     return AXLayoutObject::DetermineAccessibilityRole();
 
-  aria_role_ = DetermineAriaRoleAttribute();
   return ScanToDecideHeaderRole();
 }
 

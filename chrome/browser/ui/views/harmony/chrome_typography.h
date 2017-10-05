@@ -10,13 +10,12 @@
 #include "ui/views/style/typography.h"
 #include "ui/views/style/typography_provider.h"
 
-#if defined(OS_CHROMEOS)
-// gn check complains on Linux Ozone.
+#if defined(USE_ASH)
 #include "ash/public/cpp/ash_typography.h"  // nogncheck
 #endif
 
 enum ChromeTextContext {
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   CHROME_TEXT_CONTEXT_START = ash::ASH_TEXT_CONTEXT_END,
 #else
   CHROME_TEXT_CONTEXT_START = views::style::VIEWS_TEXT_CONTEXT_END,
@@ -35,9 +34,9 @@ enum ChromeTextContext {
   // mimic the native Windows 10 look and feel.
   CONTEXT_WINDOWS10_NATIVE,
 
-  // ui::ResourceBundle::SmallFont (11 pt). There is no equivalent in the
-  // Harmony spec, so new code should not be using this. It is only provided to
-  // avoid changing existing UI and it will eventually be removed.
+  // ResourceBundle::SmallFont (11 pt). There is no equivalent in the Harmony
+  // spec, so new code should not be using this. It is only provided to avoid
+  // changing existing UI and it will eventually be removed.
   CONTEXT_DEPRECATED_SMALL,
 };
 

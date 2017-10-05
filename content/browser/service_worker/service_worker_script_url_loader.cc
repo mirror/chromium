@@ -21,8 +21,13 @@
 
 namespace content {
 
-// We chose this size because the AppCache uses this.
-const uint32_t ServiceWorkerScriptURLLoader::kReadBufferSize = 32768;
+namespace {
+
+// Buffer size for reading script data from network. We chose this size because
+// the AppCache uses this.
+const uint32_t kReadBufferSize = 32768;
+
+}  // namespace
 
 // TODO(nhiroki): We're doing multiple things in the ctor. Consider factors out
 // some of them into a separate function.
@@ -103,9 +108,7 @@ ServiceWorkerScriptURLLoader::ServiceWorkerScriptURLLoader(
 ServiceWorkerScriptURLLoader::~ServiceWorkerScriptURLLoader() = default;
 
 void ServiceWorkerScriptURLLoader::FollowRedirect() {
-  // Resource requests for service worker scripts should not follow redirects.
-  // See comments in OnReceiveRedirect().
-  NOTREACHED();
+  network_loader_->FollowRedirect();
 }
 
 void ServiceWorkerScriptURLLoader::SetPriority(net::RequestPriority priority,
@@ -205,15 +208,8 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
 
 void ServiceWorkerScriptURLLoader::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& respoinse_head) {
-  // Resource requests for service worker scripts should not follow redirects.
-  //
-  // Step 7.5: "Set request's redirect mode to "error"."
-  // https://w3c.github.io/ServiceWorker/#update-algorithm
-  //
-  // TODO(nhiroki): Show an error message equivalent to kRedirectError in
-  // service_worker_write_to_cache_job.cc.
-  CommitCompleted(ResourceRequestCompletionStatus(net::ERR_UNSAFE_REDIRECT));
+    const ResourceResponseHead& response_head) {
+  client_->OnReceiveRedirect(redirect_info, response_head);
 }
 
 void ServiceWorkerScriptURLLoader::OnDataDownloaded(int64_t data_len,
@@ -410,7 +406,7 @@ void ServiceWorkerScriptURLLoader::WriteData(
       buffer.get(), base::strict_cast<size_t>(bytes_written),
       base::Bind(&ServiceWorkerScriptURLLoader::OnWriteDataComplete,
                  weak_factory_.GetWeakPtr(),
-                 base::WrapRefCounted(pending_buffer.get()), bytes_written));
+                 make_scoped_refptr(pending_buffer.get()), bytes_written));
   if (error == net::ERR_IO_PENDING) {
     // OnWriteDataComplete() will be called asynchronously.
     return;

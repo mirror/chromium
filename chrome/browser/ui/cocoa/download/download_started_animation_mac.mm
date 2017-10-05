@@ -48,7 +48,7 @@ class DownloadAnimationWebObserver;
 - (id)initWithWebContents:(content::WebContents*)webContents {
   if ((self = [super init])) {
     // Load the image of the download arrow.
-    ui::ResourceBundle& bundle = ui::ResourceBundle::GetSharedInstance();
+    ResourceBundle& bundle = ResourceBundle::GetSharedInstance();
     NSImage* image =
         base::FeatureList::IsEnabled(features::kMacMaterialDesignDownloadShelf)
             ? NSImageFromImageSkia(gfx::CreateVectorIcon(

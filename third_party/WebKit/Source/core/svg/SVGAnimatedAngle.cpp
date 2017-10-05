@@ -30,7 +30,7 @@
 
 #include "core/svg/SVGAnimatedAngle.h"
 
-#include "core/svg_names.h"
+#include "core/SVGNames.h"
 
 namespace blink {
 

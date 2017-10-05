@@ -69,7 +69,7 @@
 class SkBitmap;
 struct FrameHostMsg_HittestData_Params;
 struct ViewHostMsg_SelectionBounds_Params;
-struct ViewHostMsg_ResizeOrRepaint_ACK_Params;
+struct ViewHostMsg_UpdateRect_Params;
 
 namespace blink {
 class WebInputEvent;
@@ -676,8 +676,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnRequestMove(const gfx::Rect& pos);
   void OnSetTooltipText(const base::string16& tooltip_text,
                         blink::WebTextDirection text_direction_hint);
-  void OnResizeOrRepaintACK(
-      const ViewHostMsg_ResizeOrRepaint_ACK_Params& params);
+  void OnUpdateRect(const ViewHostMsg_UpdateRect_Params& params);
   void OnSetCursor(const WebCursor& cursor);
   void OnAutoscrollStart(const gfx::PointF& position);
   void OnAutoscrollFling(const gfx::Vector2dF& velocity);
@@ -704,10 +703,11 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void OnFrameSwapMessagesReceived(uint32_t frame_token,
                                    std::vector<IPC::Message> messages);
 
-  // Called after resize or repaint has completed in the renderer.
-  void DidCompleteResizeOrRepaint(
-      const ViewHostMsg_ResizeOrRepaint_ACK_Params& params,
-      const base::TimeTicks& paint_start);
+  // Called (either immediately or asynchronously) after we're done with our
+  // BackingStore and can send an ACK to the renderer so it can paint onto it
+  // again.
+  void DidUpdateBackingStore(const ViewHostMsg_UpdateRect_Params& params,
+                             const base::TimeTicks& paint_start);
 
   // Give key press listeners a chance to handle this key press. This allow
   // widgets that don't have focus to still handle key presses.

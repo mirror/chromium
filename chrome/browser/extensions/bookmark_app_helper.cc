@@ -80,10 +80,9 @@
 #include "base/win/shortcut.h"
 #endif  // defined(OS_WIN)
 
-#if defined(OS_CHROMEOS)
-// gn check complains on Linux Ozone.
+#if defined(USE_ASH)
 #include "ash/public/cpp/shelf_model.h"  // nogncheck
-#include "ash/shell.h"
+#include "ash/shell.h"                   // nogncheck
 #endif
 
 namespace {
@@ -636,11 +635,6 @@ void BookmarkAppHelper::OnDidGetManifest(const GURL& manifest_url,
       new FaviconDownloader(contents_, web_app_info_icon_urls,
                             base::Bind(&BookmarkAppHelper::OnIconsDownloaded,
                                        weak_factory_.GetWeakPtr())));
-
-  // If the manifest specified icons, don't use the page icons.
-  if (!manifest.icons.empty())
-    favicon_downloader_->SkipPageFavicons();
-
   favicon_downloader_->Start();
 }
 
@@ -751,15 +745,15 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
     return;
   }
 
-#if !defined(OS_CHROMEOS)
+#if !defined(USE_ASH)
   // Pin the app to the relevant launcher depending on the OS.
   Profile* current_profile = profile_->GetOriginalProfile();
-#endif  // !defined(OS_CHROMEOS)
+#endif  // !defined(USE_ASH)
 
 // On Mac, shortcuts are automatically created for hosted apps when they are
 // installed, so there is no need to create them again.
 #if !defined(OS_MACOSX)
-#if !defined(OS_CHROMEOS)
+#if !defined(USE_ASH)
   web_app::ShortcutLocations creation_locations;
 #if defined(OS_LINUX) || defined(OS_WIN)
   creation_locations.on_desktop = true;
@@ -773,7 +767,7 @@ void BookmarkAppHelper::FinishInstallation(const Extension* extension) {
                            creation_locations, current_profile, extension);
 #else
   ash::Shell::Get()->shelf_model()->PinAppWithID(extension->id());
-#endif  // !defined(OS_CHROMEOS)
+#endif  // !defined(USE_ASH)
 #endif  // !defined(OS_MACOSX)
 
 #if defined(OS_MACOSX)

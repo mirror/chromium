@@ -36,8 +36,7 @@ class VIZ_COMMON_EXPORT RenderPassDrawQuad : public DrawQuad {
               const gfx::Size& mask_texture_size,
               const gfx::Vector2dF& filters_scale,
               const gfx::PointF& filters_origin,
-              const gfx::RectF& tex_coord_rect,
-              bool force_anti_aliasing_off);
+              const gfx::RectF& tex_coord_rect);
 
   void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
@@ -49,8 +48,7 @@ class VIZ_COMMON_EXPORT RenderPassDrawQuad : public DrawQuad {
               const gfx::Size& mask_texture_size,
               const gfx::Vector2dF& filters_scale,
               const gfx::PointF& filters_origin,
-              const gfx::RectF& tex_coord_rect,
-              bool force_anti_aliasing_off);
+              const gfx::RectF& tex_coord_rect);
 
   RenderPassId render_pass_id;
   gfx::RectF mask_uv_rect;
@@ -67,8 +65,6 @@ class VIZ_COMMON_EXPORT RenderPassDrawQuad : public DrawQuad {
   gfx::PointF filters_origin;
 
   gfx::RectF tex_coord_rect;
-
-  bool force_anti_aliasing_off;
 
   ResourceId mask_resource_id() const {
     return resources.ids[kMaskResourceIdIndex];

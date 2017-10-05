@@ -214,8 +214,7 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   auto pass_quad = std::make_unique<RenderPassDrawQuad>();
   pass_quad->SetNew(pass->shared_quad_state_list.back(), contrib_output_rect,
                     contrib_output_rect, contrib_id, 0, gfx::RectF(),
-                    gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF(),
-                    false);
+                    gfx::Size(), gfx::Vector2dF(), gfx::PointF(), gfx::RectF());
 
   pass_list.push_back(std::move(pass));
   pass_list.push_back(std::move(contrib));

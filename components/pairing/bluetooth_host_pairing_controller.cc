@@ -79,8 +79,8 @@ pairing_api::HostStatusParameters::EnrollmentStatus PairingApiEnrollmentStatus(
   }
 }
 
-std::vector<BluetoothHostPairingController::InputDeviceInfoPtr> GetDevices() {
-  std::vector<BluetoothHostPairingController::InputDeviceInfoPtr> devices;
+std::vector<BluetoothHostPairingController::InputDeviceInfo> GetDevices() {
+  std::vector<BluetoothHostPairingController::InputDeviceInfo> devices;
   if (device::InputServiceLinux::HasInstance())
     device::InputServiceLinux::GetInstance()->GetDevices(&devices);
   return devices;
@@ -326,10 +326,10 @@ void BluetoothHostPairingController::OnSendError(
 }
 
 void BluetoothHostPairingController::PowerOffAdapterIfApplicable(
-    std::vector<InputDeviceInfoPtr> devices) {
+    const std::vector<InputDeviceInfo>& devices) {
   bool use_bluetooth = false;
-  for (auto& device : devices) {
-    if (device->type == device::mojom::InputDeviceType::TYPE_BLUETOOTH) {
+  for (const auto& device : devices) {
+    if (device.type == InputDeviceInfo::TYPE_BLUETOOTH) {
       use_bluetooth = true;
       break;
     }

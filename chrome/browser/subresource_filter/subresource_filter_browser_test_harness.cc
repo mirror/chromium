@@ -101,16 +101,16 @@ GURL SubresourceFilterBrowserTest::GetTestUrl(
 }
 
 void SubresourceFilterBrowserTest::ConfigureAsPhishingURL(const GURL& url) {
-  safe_browsing::ThreatMetadata metadata;
-  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
-      url, safe_browsing::GetUrlSocEngId(), metadata);
+  database_helper_->MarkUrlAsMatchingListWithId(
+      url, safe_browsing::GetUrlSocEngId(),
+      safe_browsing::ThreatPatternType::NONE);
 }
 
 void SubresourceFilterBrowserTest::ConfigureAsSubresourceFilterOnlyURL(
     const GURL& url) {
-  safe_browsing::ThreatMetadata metadata;
-  database_helper_->MarkUrlAsMatchingListIdWithMetadata(
-      url, safe_browsing::GetUrlSubresourceFilterId(), metadata);
+  database_helper_->MarkUrlAsMatchingListWithId(
+      url, safe_browsing::GetUrlSubresourceFilterId(),
+      safe_browsing::ThreatPatternType::NONE);
 }
 
 content::WebContents* SubresourceFilterBrowserTest::web_contents() const {

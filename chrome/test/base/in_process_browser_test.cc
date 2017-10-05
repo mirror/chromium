@@ -62,6 +62,7 @@
 #include "content/public/test/test_navigation_observer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "ui/display/display_switches.h"
+#include "ui/gfx/color_space_switches.h"
 
 #if defined(OS_MACOSX)
 #include "base/mac/scoped_nsautorelease_pool.h"
@@ -84,8 +85,11 @@
 
 #if defined(OS_CHROMEOS)
 #include "chrome/browser/chromeos/input_method/input_method_configuration.h"
-#include "chrome/test/base/default_ash_event_generator_delegate.h"
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(USE_ASH)
+#include "chrome/test/base/default_ash_event_generator_delegate.h"
+#endif
 
 #if !defined(OS_CHROMEOS) && defined(OS_LINUX)
 #include "ui/views/test/test_desktop_screen_x11.h"
@@ -176,7 +180,7 @@ InProcessBrowserTest::InProcessBrowserTest()
   bundle_swizzler_.reset(new ScopedBundleSwizzlerMac);
 #endif
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   DefaultAshEventGeneratorDelegate::GetInstance();
 #endif
 }
@@ -530,7 +534,7 @@ void InProcessBrowserTest::PreRunTestOnMainThread() {
   const BrowserList* active_browser_list = BrowserList::GetInstance();
   if (!active_browser_list->empty()) {
     browser_ = active_browser_list->get(0);
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
     // There are cases where windows get created maximized by default.
     if (browser_->window()->IsMaximized())
       browser_->window()->Restore();

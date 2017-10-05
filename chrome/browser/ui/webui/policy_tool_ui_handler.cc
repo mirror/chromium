@@ -107,6 +107,7 @@ std::string PolicyToolUIHandler::ReadOrCreateFileCallback() {
   // Initialize session name if it is not initialized yet.
   if (session_name_.empty())
     SetDefaultSessionName();
+
   const base::FilePath session_path = GetSessionPath(session_name_);
 
   // Check if the file for the current session already exists. If not, create it
@@ -165,16 +166,6 @@ void PolicyToolUIHandler::OnFileRead(const std::string& contents) {
   // TODO(urusant): convert the policy values so that the types are consistent
   // with actual policy types.
   CallJavascriptFunction("policy.Page.setPolicyValues", *value);
-  base::PostTaskWithTraitsAndReplyWithResult(
-      FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-      base::BindOnce(&PolicyToolUIHandler::GetSessionsList,
-                     base::Unretained(this)),
-      base::BindOnce(&PolicyToolUIHandler::OnSessionsListReceived,
-                     callback_weak_ptr_factory_.GetWeakPtr()));
-}
-
-void PolicyToolUIHandler::OnSessionsListReceived(base::ListValue list) {
-  CallJavascriptFunction("policy.Page.setSessionsList", list);
 }
 
 void PolicyToolUIHandler::ImportFile() {
@@ -206,7 +197,7 @@ void PolicyToolUIHandler::HandleLoadSession(const base::ListValue* args) {
   base::FilePath::StringType new_session_name =
       base::FilePath::FromUTF8Unsafe(args->GetList()[0].GetString()).value();
   if (!IsValidSessionName(new_session_name)) {
-    CallJavascriptFunction("policy.Page.showInvalidSessionNameError");
+    ShowErrorMessageToUser("errorInvalidSessionName");
     return;
   }
   session_name_ = new_session_name;

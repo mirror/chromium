@@ -25,7 +25,7 @@ namespace chromeos {
 
 namespace tether {
 
-class BleSynchronizerBase;
+class BleSynchronizer;
 
 // Performs BLE scans for devices which are advertising to this device.
 class BleScanner : public device::BluetoothAdapter::Observer {
@@ -41,7 +41,7 @@ class BleScanner : public device::BluetoothAdapter::Observer {
 
   BleScanner(scoped_refptr<device::BluetoothAdapter> adapter,
              cryptauth::LocalDeviceDataProvider* local_device_data_provider,
-             BleSynchronizerBase* ble_synchronizer);
+             BleSynchronizer* ble_synchronizer);
   ~BleScanner() override;
 
   virtual bool RegisterScanFilterForDevice(
@@ -120,7 +120,7 @@ class BleScanner : public device::BluetoothAdapter::Observer {
 
   scoped_refptr<device::BluetoothAdapter> adapter_;
   cryptauth::LocalDeviceDataProvider* local_device_data_provider_;
-  BleSynchronizerBase* ble_synchronizer_;
+  BleSynchronizer* ble_synchronizer_;
 
   std::unique_ptr<ServiceDataProvider> service_data_provider_;
   std::unique_ptr<cryptauth::ForegroundEidGenerator> eid_generator_;

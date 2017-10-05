@@ -80,7 +80,7 @@ BluetoothSocketWin::CreateBluetoothSocket(
     scoped_refptr<device::BluetoothSocketThread> socket_thread) {
   DCHECK(ui_task_runner->RunsTasksInCurrentSequence());
 
-  return base::WrapRefCounted(
+  return make_scoped_refptr(
       new BluetoothSocketWin(ui_task_runner, socket_thread));
 }
 

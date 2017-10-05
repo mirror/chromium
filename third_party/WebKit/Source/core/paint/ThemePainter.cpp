@@ -24,10 +24,10 @@
 #include "core/InputTypeNames.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLDataListElement.h"
+#include "core/html/HTMLDataListOptionsCollection.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLOptionElement.h"
-#include "core/html/forms/HTMLDataListElement.h"
-#include "core/html/forms/HTMLDataListOptionsCollection.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutTheme.h"
@@ -45,45 +45,42 @@
 
 namespace blink {
 
-namespace {
-
-WebFallbackThemeEngine::State GetWebFallbackThemeState(const Node* node) {
-  if (!LayoutTheme::IsEnabled(node))
+static WebFallbackThemeEngine::State GetWebFallbackThemeState(
+    const LayoutObject& o) {
+  if (!LayoutTheme::IsEnabled(o))
     return WebFallbackThemeEngine::kStateDisabled;
-  if (LayoutTheme::IsPressed(node))
+  if (LayoutTheme::IsPressed(o))
     return WebFallbackThemeEngine::kStatePressed;
-  if (LayoutTheme::IsHovered(node))
+  if (LayoutTheme::IsHovered(o))
     return WebFallbackThemeEngine::kStateHover;
 
   return WebFallbackThemeEngine::kStateNormal;
 }
-
-}  // anonymous namespace
 
 ThemePainter::ThemePainter() {}
 
 bool ThemePainter::Paint(const LayoutObject& o,
                          const PaintInfo& paint_info,
                          const IntRect& r) {
-  const Node* node = o.GetNode();
-  const ComputedStyle& style = o.StyleRef();
   ControlPart part = o.StyleRef().Appearance();
 
-  if (LayoutTheme::GetTheme().ShouldUseFallbackTheme(style))
-    return PaintUsingFallbackTheme(node, style, paint_info, r);
+  if (LayoutTheme::GetTheme().ShouldUseFallbackTheme(o.StyleRef()))
+    return PaintUsingFallbackTheme(o, paint_info, r);
 
-  if (part == kButtonPart && node) {
-    const Document& doc = node->GetDocument();
-    UseCounter::Count(doc, WebFeature::kCSSValueAppearanceButtonRendered);
-    if (IsHTMLAnchorElement(node)) {
-      UseCounter::Count(doc, WebFeature::kCSSValueAppearanceButtonForAnchor);
-    } else if (IsHTMLButtonElement(node)) {
-      UseCounter::Count(doc, WebFeature::kCSSValueAppearanceButtonForButton);
-    } else if (IsHTMLInputElement(node) &&
-               ToHTMLInputElement(node)->IsTextButton()) {
+  if (part == kButtonPart && o.GetNode()) {
+    UseCounter::Count(o.GetDocument(),
+                      WebFeature::kCSSValueAppearanceButtonRendered);
+    if (IsHTMLAnchorElement(o.GetNode())) {
+      UseCounter::Count(o.GetDocument(),
+                        WebFeature::kCSSValueAppearanceButtonForAnchor);
+    } else if (IsHTMLButtonElement(o.GetNode())) {
+      UseCounter::Count(o.GetDocument(),
+                        WebFeature::kCSSValueAppearanceButtonForButton);
+    } else if (IsHTMLInputElement(o.GetNode()) &&
+               ToHTMLInputElement(o.GetNode())->IsTextButton()) {
       // Text buttons (type=button, reset, submit) has
       // -webkit-appearance:push-button by default.
-      UseCounter::Count(doc,
+      UseCounter::Count(o.GetNode()->GetDocument(),
                         WebFeature::kCSSValueAppearanceButtonForOtherButtons);
     }
   }
@@ -91,17 +88,17 @@ bool ThemePainter::Paint(const LayoutObject& o,
   // Call the appropriate paint method based off the appearance value.
   switch (part) {
     case kCheckboxPart:
-      return PaintCheckbox(node, style, paint_info, r);
+      return PaintCheckbox(o, paint_info, r);
     case kRadioPart:
-      return PaintRadio(node, style, paint_info, r);
+      return PaintRadio(o, paint_info, r);
     case kPushButtonPart:
     case kSquareButtonPart:
     case kButtonPart:
-      return PaintButton(node, style, paint_info, r);
+      return PaintButton(o, paint_info, r);
     case kInnerSpinButtonPart:
-      return PaintInnerSpinButton(node, style, paint_info, r);
+      return PaintInnerSpinButton(o, paint_info, r);
     case kMenulistPart:
-      return PaintMenuList(node, style, paint_info, r);
+      return PaintMenuList(o, paint_info, r);
     case kMeterPart:
       return true;
     case kProgressBarPart:
@@ -111,7 +108,7 @@ bool ThemePainter::Paint(const LayoutObject& o,
       return PaintSliderTrack(o, paint_info, r);
     case kSliderThumbHorizontalPart:
     case kSliderThumbVerticalPart:
-      return PaintSliderThumb(node, style, paint_info, r);
+      return PaintSliderThumb(o, paint_info, r);
     case kMediaEnterFullscreenButtonPart:
     case kMediaExitFullscreenButtonPart:
     case kMediaPlayButtonPart:
@@ -140,39 +137,38 @@ bool ThemePainter::Paint(const LayoutObject& o,
     case kTextAreaPart:
       return true;
     case kSearchFieldPart:
-      return PaintSearchField(node, style, paint_info, r);
+      return PaintSearchField(o, paint_info, r);
     case kSearchFieldCancelButtonPart:
       return PaintSearchFieldCancelButton(o, paint_info, r);
     default:
       break;
   }
 
-  // We don't support the appearance, so let the normal background/border paint.
-  return true;
+  return true;  // We don't support the appearance, so let the normal
+                // background/border paint.
 }
 
-bool ThemePainter::PaintBorderOnly(const Node* node,
-                                   const ComputedStyle& style,
+bool ThemePainter::PaintBorderOnly(const LayoutObject& o,
                                    const PaintInfo& paint_info,
                                    const IntRect& r) {
   // Call the appropriate paint method based off the appearance value.
-  switch (style.Appearance()) {
+  switch (o.StyleRef().Appearance()) {
     case kTextFieldPart:
-      UseCounter::Count(node->GetDocument(),
+      UseCounter::Count(o.GetDocument(),
                         WebFeature::kCSSValueAppearanceTextFieldRendered);
-      if (auto* input = ToHTMLInputElementOrNull(node)) {
+      if (auto* input = ToHTMLInputElementOrNull(o.GetNode())) {
         if (input->type() == InputTypeNames::search) {
-          UseCounter::Count(node->GetDocument(),
+          UseCounter::Count(o.GetDocument(),
                             WebFeature::kCSSValueAppearanceTextFieldForSearch);
         } else if (input->IsTextField()) {
           UseCounter::Count(
-              node->GetDocument(),
+              o.GetDocument(),
               WebFeature::kCSSValueAppearanceTextFieldForTextField);
         }
       }
-      return PaintTextField(node, style, paint_info, r);
+      return PaintTextField(o, paint_info, r);
     case kTextAreaPart:
-      return PaintTextArea(node, style, paint_info, r);
+      return PaintTextArea(o, paint_info, r);
     case kMenulistButtonPart:
     case kSearchFieldPart:
     case kListboxPart:
@@ -197,14 +193,13 @@ bool ThemePainter::PaintBorderOnly(const Node* node,
   return false;
 }
 
-bool ThemePainter::PaintDecorations(const Node* node,
-                                    const ComputedStyle& style,
+bool ThemePainter::PaintDecorations(const LayoutObject& o,
                                     const PaintInfo& paint_info,
                                     const IntRect& r) {
   // Call the appropriate paint method based off the appearance value.
-  switch (style.Appearance()) {
+  switch (o.StyleRef().Appearance()) {
     case kMenulistButtonPart:
-      return PaintMenuListButton(node, style, paint_info, r);
+      return PaintMenuListButton(o, paint_info, r);
     case kTextFieldPart:
     case kTextAreaPart:
     case kCheckboxPart:
@@ -333,72 +328,68 @@ void ThemePainter::PaintSliderTicks(const LayoutObject& o,
   }
 }
 
-bool ThemePainter::PaintUsingFallbackTheme(const Node* node,
-                                           const ComputedStyle& style,
-                                           const PaintInfo& paint_info,
-                                           const IntRect& paint_rect) {
-  ControlPart part = style.Appearance();
+bool ThemePainter::PaintUsingFallbackTheme(const LayoutObject& o,
+                                           const PaintInfo& i,
+                                           const IntRect& r) {
+  ControlPart part = o.StyleRef().Appearance();
   switch (part) {
     case kCheckboxPart:
-      return PaintCheckboxUsingFallbackTheme(node, style, paint_info,
-                                             paint_rect);
+      return PaintCheckboxUsingFallbackTheme(o, i, r);
     case kRadioPart:
-      return PaintRadioUsingFallbackTheme(node, style, paint_info, paint_rect);
+      return PaintRadioUsingFallbackTheme(o, i, r);
     default:
       break;
   }
   return true;
 }
 
-bool ThemePainter::PaintCheckboxUsingFallbackTheme(const Node* node,
-                                                   const ComputedStyle& style,
-                                                   const PaintInfo& paint_info,
-                                                   const IntRect& paint_rect) {
+bool ThemePainter::PaintCheckboxUsingFallbackTheme(const LayoutObject& o,
+                                                   const PaintInfo& i,
+                                                   const IntRect& r) {
   WebFallbackThemeEngine::ExtraParams extra_params;
-  PaintCanvas* canvas = paint_info.context.Canvas();
-  extra_params.button.checked = LayoutTheme::IsChecked(node);
-  extra_params.button.indeterminate = LayoutTheme::IsIndeterminate(node);
+  PaintCanvas* canvas = i.context.Canvas();
+  extra_params.button.checked = LayoutTheme::IsChecked(o);
+  extra_params.button.indeterminate = LayoutTheme::IsIndeterminate(o);
 
-  float zoom_level = style.EffectiveZoom();
-  GraphicsContextStateSaver state_saver(paint_info.context);
-  IntRect unzoomed_rect = paint_rect;
+  float zoom_level = o.StyleRef().EffectiveZoom();
+  GraphicsContextStateSaver state_saver(i.context);
+  IntRect unzoomed_rect = r;
   if (zoom_level != 1) {
     unzoomed_rect.SetWidth(unzoomed_rect.Width() / zoom_level);
     unzoomed_rect.SetHeight(unzoomed_rect.Height() / zoom_level);
-    paint_info.context.Translate(unzoomed_rect.X(), unzoomed_rect.Y());
-    paint_info.context.Scale(zoom_level, zoom_level);
-    paint_info.context.Translate(-unzoomed_rect.X(), -unzoomed_rect.Y());
+    i.context.Translate(unzoomed_rect.X(), unzoomed_rect.Y());
+    i.context.Scale(zoom_level, zoom_level);
+    i.context.Translate(-unzoomed_rect.X(), -unzoomed_rect.Y());
   }
 
   Platform::Current()->FallbackThemeEngine()->Paint(
       canvas, WebFallbackThemeEngine::kPartCheckbox,
-      GetWebFallbackThemeState(node), WebRect(unzoomed_rect), &extra_params);
+      GetWebFallbackThemeState(o), WebRect(unzoomed_rect), &extra_params);
   return false;
 }
 
-bool ThemePainter::PaintRadioUsingFallbackTheme(const Node* node,
-                                                const ComputedStyle& style,
-                                                const PaintInfo& paint_info,
-                                                const IntRect& paint_rect) {
+bool ThemePainter::PaintRadioUsingFallbackTheme(const LayoutObject& o,
+                                                const PaintInfo& i,
+                                                const IntRect& r) {
   WebFallbackThemeEngine::ExtraParams extra_params;
-  WebCanvas* canvas = paint_info.context.Canvas();
-  extra_params.button.checked = LayoutTheme::IsChecked(node);
-  extra_params.button.indeterminate = LayoutTheme::IsIndeterminate(node);
+  WebCanvas* canvas = i.context.Canvas();
+  extra_params.button.checked = LayoutTheme::IsChecked(o);
+  extra_params.button.indeterminate = LayoutTheme::IsIndeterminate(o);
 
-  float zoom_level = style.EffectiveZoom();
-  GraphicsContextStateSaver state_saver(paint_info.context);
-  IntRect unzoomed_rect = paint_rect;
+  float zoom_level = o.StyleRef().EffectiveZoom();
+  GraphicsContextStateSaver state_saver(i.context);
+  IntRect unzoomed_rect = r;
   if (zoom_level != 1) {
     unzoomed_rect.SetWidth(unzoomed_rect.Width() / zoom_level);
     unzoomed_rect.SetHeight(unzoomed_rect.Height() / zoom_level);
-    paint_info.context.Translate(unzoomed_rect.X(), unzoomed_rect.Y());
-    paint_info.context.Scale(zoom_level, zoom_level);
-    paint_info.context.Translate(-unzoomed_rect.X(), -unzoomed_rect.Y());
+    i.context.Translate(unzoomed_rect.X(), unzoomed_rect.Y());
+    i.context.Scale(zoom_level, zoom_level);
+    i.context.Translate(-unzoomed_rect.X(), -unzoomed_rect.Y());
   }
 
   Platform::Current()->FallbackThemeEngine()->Paint(
-      canvas, WebFallbackThemeEngine::kPartRadio,
-      GetWebFallbackThemeState(node), WebRect(unzoomed_rect), &extra_params);
+      canvas, WebFallbackThemeEngine::kPartRadio, GetWebFallbackThemeState(o),
+      WebRect(unzoomed_rect), &extra_params);
   return false;
 }
 

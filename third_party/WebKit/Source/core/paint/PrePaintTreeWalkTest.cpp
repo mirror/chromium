@@ -6,7 +6,6 @@
 #include "core/layout/LayoutTreeAsText.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/paint/ObjectPaintProperties.h"
-#include "core/paint/PaintControllerPaintTest.h"
 #include "core/paint/PaintLayer.h"
 #include "core/paint/PaintPropertyTreePrinter.h"
 #include "core/paint/PrePaintTreeWalk.h"
@@ -22,8 +21,18 @@
 
 namespace blink {
 
-class PrePaintTreeWalkTest : public PaintControllerPaintTest {
+typedef std::pair<bool, bool> SlimmingPaintAndRootLayerScrolling;
+class PrePaintTreeWalkTest
+    : public ::testing::WithParamInterface<SlimmingPaintAndRootLayerScrolling>,
+      private ScopedSlimmingPaintV2ForTest,
+      private ScopedRootLayerScrollingForTest,
+      public RenderingTest {
  public:
+  PrePaintTreeWalkTest()
+      : ScopedSlimmingPaintV2ForTest(GetParam().second),
+        ScopedRootLayerScrollingForTest(GetParam().first),
+        RenderingTest(EmptyLocalFrameClient::Create()) {}
+
   const TransformPaintPropertyNode* FramePreTranslation() {
     LocalFrameView* frame_view = GetDocument().View();
     if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
@@ -66,9 +75,15 @@ class PrePaintTreeWalkTest : public PaintControllerPaintTest {
   }
 };
 
+SlimmingPaintAndRootLayerScrolling g_prepaint_foo[] = {
+    SlimmingPaintAndRootLayerScrolling(false, false),
+    SlimmingPaintAndRootLayerScrolling(true, false),
+    SlimmingPaintAndRootLayerScrolling(false, true),
+    SlimmingPaintAndRootLayerScrolling(true, true)};
+
 INSTANTIATE_TEST_CASE_P(All,
                         PrePaintTreeWalkTest,
-                        ::testing::ValuesIn(kDefaultPaintTestConfigurations));
+                        ::testing::ValuesIn(g_prepaint_foo));
 
 TEST_P(PrePaintTreeWalkTest, PropertyTreesRebuiltWithBorderInvalidation) {
   SetBodyInnerHTML(

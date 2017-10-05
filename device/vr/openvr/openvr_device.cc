@@ -191,12 +191,10 @@ mojom::VRDisplayInfoPtr OpenVRDevice::GetVRDisplayInfo() {
   return display_info_.Clone();
 }
 
-void OpenVRDevice::RequestPresent(
-    VRDisplayImpl* display,
-    mojom::VRSubmitFrameClientPtr submit_client,
-    mojom::VRPresentationProviderRequest request,
-    mojom::VRDisplayHost::RequestPresentCallback callback) {
-  std::move(callback).Run(false);
+void OpenVRDevice::RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                                  mojom::VRPresentationProviderRequest request,
+                                  const base::Callback<void(bool)>& callback) {
+  callback.Run(false);
   // We don't support presentation currently.
 }
 
@@ -204,9 +202,8 @@ void OpenVRDevice::ExitPresent() {
   // We don't support presentation currently, so don't do anything.
 }
 
-void OpenVRDevice::GetPose(
-    VRDisplayImpl* display,
-    mojom::VRMagicWindowProvider::GetPoseCallback callback) {
+void OpenVRDevice::GetNextMagicWindowPose(
+    mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) {
   std::move(callback).Run(nullptr);
 }
 

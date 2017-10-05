@@ -77,11 +77,10 @@ interface EmbeddedSearch {
                        mojo.common.mojom.String16 text_to_be_pasted);
 
   // The Instant page asks whether the user syncs its history.
-  HistorySyncCheck(int32 page_seq_no) => (bool sync_history);
+  HistorySyncCheck(int32 page_seq_no);
 
   // The Instant page asks for Chrome identity check against |identity|.
-  ChromeIdentityCheck(int32 page_seq_no, mojo.common.mojom.String16 identity)
-      => (bool identity_match);
+  ChromeIdentityCheck(int32 page_seq_no, mojo.common.mojom.String16 identity);
 };
 
 [Native]
@@ -106,11 +105,20 @@ interface EmbeddedSearchClient {
   SetInputInProgress(bool input_in_progress);
 
   ThemeChanged(ThemeBackgroundInfo value);
+
+  // TODO(treib): Remove the *Result methods and instead add return values to
+  // the correspnding methods in the Instant interface above.
+  HistorySyncCheckResult(bool sync_history);
+
+  ChromeIdentityCheckResult(mojo.common.mojom.String16 identity,
+                            bool identity_match);
 };
 
-// SearchBouncer tracks the NTP URL specified by the default search provider,
-// which should be transferred back to the browser process for potential
-// reassignment to an Instant renderer process.
+// SearchBouncer tracks a set of URLs that should be transferred back to the
+// browser process for potential reassignment to an Instant renderer process.
 interface SearchBouncer {
-  SetNewTabPageURL(url.mojom.Url new_tab_page_url);
+  // Sets the URLs that the renderer should send back to the browser process for
+  // reassignment to an Instant renderer.
+  SetSearchURLs(array<url.mojom.Url> search_urls,
+                url.mojom.Url new_tab_page_url);
 };

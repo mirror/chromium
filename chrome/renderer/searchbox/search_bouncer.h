@@ -5,6 +5,9 @@
 #ifndef CHROME_RENDERER_SEARCHBOX_SEARCH_BOUNCER_H_
 #define CHROME_RENDERER_SEARCHBOX_SEARCH_BOUNCER_H_
 
+#include <vector>
+
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "chrome/common/search.mojom.h"
 #include "content/public/common/associated_interface_registry.h"
@@ -34,12 +37,17 @@ class SearchBouncer : public content::RenderThreadObserver,
   bool IsNewTabPage(const GURL& url) const;
 
   // chrome::mojom::SearchBouncer:
-  void SetNewTabPageURL(const GURL& new_tab_page_url) override;
+  void SetSearchURLs(const std::vector<GURL>& search_urls,
+                     const GURL& new_tab_page_url) override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(SearchBouncerTest, SetSearchURLs);
+
   void OnSearchBouncerRequest(
       chrome::mojom::SearchBouncerAssociatedRequest request);
 
+  // URLs to bounce back to the browser.
+  std::vector<GURL> search_urls_;
   GURL new_tab_page_url_;
 
   mojo::AssociatedBinding<chrome::mojom::SearchBouncer> search_bouncer_binding_;

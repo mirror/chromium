@@ -15754,14 +15754,6 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Signin_Android_GmsUserRecoverableDialogAccepted">
-  <owner>bsazonov@chromium.org</owner>
-  <description>
-    Recorded when user accepts an option presented by Google Play services error
-    dialog (e.g., clicks &quot;Update&quot; button).
-  </description>
-</action>
-
 <action name="Signin_Android_GmsUserRecoverableDialogShown"
     not_user_triggered="true">
   <owner>bsazonov@chromium.org</owner>
@@ -17128,15 +17120,6 @@ should be able to be added at any place in this file.
 <action name="Strikethrough">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <description>Please enter the description of this user action.</description>
-</action>
-
-<action name="Suggestions.AllDismissed.Shown">
-  <owner>peconn@chromium.org</owner>
-  <description>
-    User dismissed all cards and was not able to get any more suggestions
-    resulting in the All Dismissed State. Only records for users with Chrome
-    Home enabled.
-  </description>
 </action>
 
 <action name="Suggestions.Card.ActionTapped">

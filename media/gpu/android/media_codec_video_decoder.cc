@@ -94,7 +94,8 @@ PendingDecode::PendingDecode(PendingDecode&& other) = default;
 PendingDecode::~PendingDecode() = default;
 
 MediaCodecVideoDecoder::MediaCodecVideoDecoder(
-    const gpu::GpuPreferences& gpu_preferences,
+    scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
+    base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
     VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
     DeviceInfo* device_info,
     AVDACodecAllocator* codec_allocator,
@@ -103,15 +104,16 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
     RequestOverlayInfoCB request_overlay_info_cb,
     std::unique_ptr<VideoFrameFactory> video_frame_factory,
     std::unique_ptr<service_manager::ServiceContextRef> context_ref)
-    : output_cb_(output_cb),
+    : state_(State::kInitializing),
+      output_cb_(output_cb),
+      gpu_task_runner_(gpu_task_runner),
+      get_stub_cb_(get_stub_cb),
       codec_allocator_(codec_allocator),
       request_overlay_info_cb_(std::move(request_overlay_info_cb)),
       surface_chooser_(std::move(surface_chooser)),
       video_frame_factory_(std::move(video_frame_factory)),
       overlay_factory_cb_(std::move(overlay_factory_cb)),
       device_info_(device_info),
-      enable_threaded_texture_mailboxes_(
-          gpu_preferences.enable_threaded_texture_mailboxes),
       context_ref_(std::move(context_ref)),
       weak_factory_(this),
       codec_allocator_weak_factory_(this) {
@@ -133,10 +135,10 @@ void MediaCodecVideoDecoder::Destroy() {
   DVLOG(2) << __func__;
   // Mojo callbacks require that they're run before destruction.
   if (reset_cb_)
-    std::move(reset_cb_).Run();
-  // Cancel callbacks we no longer want.
+    reset_cb_.Run();
+  // Cancel pending codec creation.
   codec_allocator_weak_factory_.InvalidateWeakPtrs();
-  CancelPendingDecodes(DecodeStatus::ABORTED);
+  ClearPendingDecodes(DecodeStatus::ABORTED);
   StartDrainingCodec(DrainType::kForDestroy);
 }
 
@@ -161,16 +163,27 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
     bound_init_cb.Run(false);
     return;
   }
+
   decoder_config_ = config;
+
+  if (first_init) {
+    if (!codec_allocator_->StartThread(this)) {
+      LOG(ERROR) << "Unable to start thread";
+      bound_init_cb.Run(false);
+      return;
+    }
+  }
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   if (config.codec() == kCodecH264)
     ExtractSpsAndPps(config.extra_data(), &csd0_, &csd1_);
 #endif
 
-  // Do the rest of the initialization lazily on the first decode.
-  // TODO(watk): Add CDM Support.
-  DCHECK(!cdm_context);
+  // We defer initialization of the Surface and MediaCodec until we
+  // receive a Decode() call to avoid consuming those resources in cases where
+  // we'll be destructed before getting a Decode(). Failure to initialize those
+  // resources will be reported as a decode error on the first decode.
+  // TODO(watk): Initialize the CDM before calling init_cb.
   init_cb.Run(true);
 }
 
@@ -182,9 +195,8 @@ void MediaCodecVideoDecoder::OnKeyAdded() {
 
 void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
-  lazy_init_pending_ = false;
-  codec_allocator_->StartThread(this);
   video_frame_factory_->Initialize(
+      gpu_task_runner_, get_stub_cb_,
       base::Bind(&MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized,
                  weak_factory_.GetWeakPtr()));
 }
@@ -197,43 +209,25 @@ void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
     return;
   }
   surface_texture_bundle_ = new AVDASurfaceBundle(std::move(surface_texture));
-
-  // Overlays are disabled when |enable_threaded_texture_mailboxes| is true
-  // (http://crbug.com/582170).
-  if (enable_threaded_texture_mailboxes_ ||
-      !device_info_->SupportsOverlaySurfaces()) {
-    OnSurfaceChosen(nullptr);
-    return;
-  }
-
-  // Request OverlayInfo updates. Initialization continues on the first one.
-  bool restart_for_transitions = device_info_->IsSetOutputSurfaceSupported();
-  std::move(request_overlay_info_cb_)
-      .Run(restart_for_transitions,
-           base::Bind(&MediaCodecVideoDecoder::OnOverlayInfoChanged,
-                      weak_factory_.GetWeakPtr()));
+  InitializeSurfaceChooser();
 }
 
 void MediaCodecVideoDecoder::OnOverlayInfoChanged(
     const OverlayInfo& overlay_info) {
   DVLOG(2) << __func__;
-  DCHECK(device_info_->SupportsOverlaySurfaces());
-  DCHECK(!enable_threaded_texture_mailboxes_);
-  if (InTerminalState())
-    return;
-
-  // TODO(watk): Handle frame_hidden like AVDA. Maybe even if in a terminal
-  // state.
-  // TODO(watk): Incorporate the other chooser_state_ signals.
-
   bool overlay_changed = !overlay_info_.RefersToSameOverlayAs(overlay_info);
   overlay_info_ = overlay_info;
-  chooser_state_.is_fullscreen = overlay_info_.is_fullscreen;
-  chooser_state_.is_frame_hidden = overlay_info_.is_frame_hidden;
-  surface_chooser_->UpdateState(
-      overlay_changed ? base::make_optional(CreateOverlayFactoryCb())
-                      : base::nullopt,
-      chooser_state_);
+  // Only update surface chooser if it's initialized and the overlay changed.
+  if (state_ != State::kInitializing && overlay_changed)
+    surface_chooser_->UpdateState(CreateOverlayFactoryCb(), chooser_state_);
+}
+
+void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
+  DVLOG(2) << __func__;
+  DCHECK_EQ(state_, State::kInitializing);
+  // Initialize |surface_chooser_| and wait for its decision. Note: the
+  // callback may be reentrant.
+  surface_chooser_->UpdateState(CreateOverlayFactoryCb(), chooser_state_);
 }
 
 void MediaCodecVideoDecoder::OnSurfaceChosen(
@@ -344,11 +338,12 @@ void MediaCodecVideoDecoder::Decode(const scoped_refptr<DecoderBuffer>& buffer,
   }
   pending_decodes_.emplace_back(buffer, std::move(decode_cb));
 
-  if (state_ == State::kInitializing) {
-    if (lazy_init_pending_)
-      StartLazyInit();
+  if (lazy_init_pending_) {
+    lazy_init_pending_ = false;
+    StartLazyInit();
     return;
   }
+
   PumpCodec(true);
 }
 
@@ -479,7 +474,7 @@ bool MediaCodecVideoDecoder::QueueInput() {
 
 bool MediaCodecVideoDecoder::DequeueOutput() {
   DVLOG(4) << __func__;
-  if (!codec_ || codec_->IsDrained() || waiting_for_key_)
+  if (!codec_ || waiting_for_key_)
     return false;
 
   // If a surface transition is pending, wait for all outstanding buffers to be
@@ -510,16 +505,15 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
       EnterTerminalState(State::kError);
       return false;
   }
-  DVLOG(2) << "DequeueOutputBuffer(): pts="
-           << (eos ? "EOS"
-                   : std::to_string(presentation_time.InMilliseconds()));
 
   if (eos) {
+    DVLOG(2) << "DequeueOutputBuffer(): EOS";
     if (eos_decode_cb_) {
-      // Schedule the EOS DecodeCB to run after all previous frames.
-      video_frame_factory_->RunAfterPendingVideoFrames(
-          base::Bind(&MediaCodecVideoDecoder::RunEosDecodeCb,
-                     weak_factory_.GetWeakPtr(), reset_generation_));
+      // Note: It's important to post |eos_decode_cb_| through the gpu task
+      // runner to ensure it follows all previous outputs.
+      gpu_task_runner_->PostTaskAndReply(
+          FROM_HERE, base::Bind(&base::DoNothing),
+          base::Bind(base::ResetAndReturn(&eos_decode_cb_), DecodeStatus::OK));
     }
     if (drain_type_)
       OnCodecDrained();
@@ -527,6 +521,9 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
     // backing unrendered frames near EOS. It's flushed lazily in QueueInput().
     return false;
   }
+
+  DVLOG(2) << "DequeueOutputBuffer(): pts="
+           << presentation_time.InMilliseconds();
 
   // If we're draining for reset or destroy we can discard |output_buffer|
   // without rendering it.
@@ -541,34 +538,23 @@ bool MediaCodecVideoDecoder::DequeueOutput() {
   return true;
 }
 
-void MediaCodecVideoDecoder::RunEosDecodeCb(int reset_generation) {
-  // Both of the following conditions are necessary because:
-  //  * In an error state, the reset generations will match but |eos_decode_cb_|
-  //    will be aborted.
-  //  * After a Reset(), the reset generations won't match, but we might already
-  //    have a new |eos_decode_cb_| for the new generation.
-  if (reset_generation == reset_generation_ && eos_decode_cb_)
-    std::move(eos_decode_cb_).Run(DecodeStatus::OK);
-}
-
 void MediaCodecVideoDecoder::ForwardVideoFrame(
     int reset_generation,
     VideoFrameFactory::ReleaseMailboxCB release_cb,
     const scoped_refptr<VideoFrame>& frame) {
-  if (reset_generation == reset_generation_)
+  if (reset_generation_ == reset_generation)
     output_cb_.Run(std::move(release_cb), frame);
 }
 
-// Our Reset() provides a slightly stronger guarantee than VideoDecoder does.
-// After |closure| runs:
-// 1) no VideoFrames from before the Reset() will be output, and
-// 2) no DecodeCBs (including EOS) from before the Reset() will be run.
 void MediaCodecVideoDecoder::Reset(const base::Closure& closure) {
   DVLOG(2) << __func__;
-  DCHECK(!reset_cb_);
   reset_generation_++;
+  ClearPendingDecodes(DecodeStatus::ABORTED);
+  if (!codec_) {
+    closure.Run();
+    return;
+  }
   reset_cb_ = std::move(closure);
-  CancelPendingDecodes(DecodeStatus::ABORTED);
   StartDrainingCodec(DrainType::kForReset);
 }
 
@@ -611,15 +597,14 @@ void MediaCodecVideoDecoder::OnCodecDrained() {
     return;
   }
 
-  std::move(reset_cb_).Run();
+  base::ResetAndReturn(&reset_cb_).Run();
   FlushCodec();
 }
 
 void MediaCodecVideoDecoder::EnterTerminalState(State state) {
   DVLOG(2) << __func__ << " " << static_cast<int>(state);
-
+  DCHECK(state == State::kError || state == State::kSurfaceDestroyed);
   state_ = state;
-  DCHECK(InTerminalState());
 
   // Cancel pending codec creation.
   codec_allocator_weak_factory_.InvalidateWeakPtrs();
@@ -628,21 +613,17 @@ void MediaCodecVideoDecoder::EnterTerminalState(State state) {
   target_surface_bundle_ = nullptr;
   surface_texture_bundle_ = nullptr;
   if (state == State::kError)
-    CancelPendingDecodes(DecodeStatus::DECODE_ERROR);
+    ClearPendingDecodes(DecodeStatus::DECODE_ERROR);
   if (drain_type_)
     OnCodecDrained();
 }
 
-bool MediaCodecVideoDecoder::InTerminalState() {
-  return state_ == State::kSurfaceDestroyed || state_ == State::kError;
-}
-
-void MediaCodecVideoDecoder::CancelPendingDecodes(DecodeStatus status) {
+void MediaCodecVideoDecoder::ClearPendingDecodes(DecodeStatus status) {
   for (auto& pending_decode : pending_decodes_)
     pending_decode.decode_cb.Run(status);
   pending_decodes_.clear();
   if (eos_decode_cb_)
-    std::move(eos_decode_cb_).Run(status);
+    base::ResetAndReturn(&eos_decode_cb_).Run(status);
 }
 
 void MediaCodecVideoDecoder::ReleaseCodec() {

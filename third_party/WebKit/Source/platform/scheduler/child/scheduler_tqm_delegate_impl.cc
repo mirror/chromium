@@ -15,7 +15,7 @@ namespace scheduler {
 scoped_refptr<SchedulerTqmDelegateImpl> SchedulerTqmDelegateImpl::Create(
     base::MessageLoop* message_loop,
     std::unique_ptr<base::TickClock> time_source) {
-  return base::WrapRefCounted(
+  return make_scoped_refptr(
       new SchedulerTqmDelegateImpl(message_loop, std::move(time_source)));
 }
 

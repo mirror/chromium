@@ -73,26 +73,13 @@ def extract_certificates_from_pem(pem_bytes):
   certificates_der = []
 
   regex = re.compile(
-      r'-----BEGIN (CERTIFICATE|PKCS7)-----(.*?)-----END \1-----', re.DOTALL)
+      r'-----BEGIN CERTIFICATE-----(.*?)-----END CERTIFICATE-----', re.DOTALL)
 
   for match in regex.finditer(pem_bytes):
-    der = base64.b64decode(strip_all_whitespace(match.group(2)))
-    if match.group(1) == 'CERTIFICATE':
-      certificates_der.append(der)
-    else:
-      certificates_der.extend(extract_certificates_from_der_pkcs7(der))
+    cert_der = base64.b64decode(strip_all_whitespace(match.group(1)))
+    certificates_der.append(cert_der)
 
   return certificates_der
-
-
-def extract_certificates_from_der_pkcs7(der_bytes):
-  pkcs7_certs_pem = process_data_with_command(
-      ['openssl','pkcs7','-print_certs', '-inform', 'DER'], der_bytes)
-  # The output will be one or more PEM encoded certificates.
-  # (Or CRLS, but those will be ignored.)
-  if pkcs7_certs_pem:
-    return extract_certificates_from_pem(pkcs7_certs_pem)
-  return []
 
 
 def extract_certificates_from_der_ascii(input_text):
@@ -205,7 +192,7 @@ def extract_tls_certificate_message(netlog_text):
 
 
 def extract_certificates(source_bytes):
-  if "BEGIN CERTIFICATE" in source_bytes or "BEGIN PKCS7" in source_bytes:
+  if "BEGIN CERTIFICATE" in source_bytes:
     return extract_certificates_from_pem(source_bytes)
 
   if "SEQUENCE {" in source_bytes:
@@ -213,10 +200,6 @@ def extract_certificates(source_bytes):
 
   if "SSL_HANDSHAKE_MESSAGE_RECEIVED" in source_bytes:
     return extract_tls_certificate_message(source_bytes)
-
-  # DER encoding of PKCS #7 signedData OID (1.2.840.113549.1.7.2)
-  if "\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x07\x02" in source_bytes:
-    return extract_certificates_from_der_pkcs7(source_bytes)
 
   # Otherwise assume it is the DER for a single certificate
   return [source_bytes]
@@ -317,12 +300,11 @@ def main():
   parser.add_argument('sources', metavar='SOURCE', nargs='*',
                       help='''Each SOURCE can be one of:
   (1) A server name such as www.google.com.
-  (2) A PEM [*] file containing one or more CERTIFICATE or PKCS7 blocks
+  (2) A PEM [*] file containing one or more CERTIFICATE blocks
   (3) A file containing one or more DER ASCII certificates
   (4) A text NetLog dump of a TLS certificate message
       (must include the SSL_HANDSHAKE_MESSAGE_RECEIVED line)
-  (5) A binary file containing DER-encoded PKCS #7 signedData
-  (6) A binary file containing DER-encoded certificate
+  (5) A binary file containing DER-encoded certificate
 
 When multiple SOURCEs are listed, all certificates in them
 are concatenated. If no SOURCE is given then data will be

@@ -141,10 +141,9 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
-  void RenameCryptohome(
-      const cryptohome::Identification& cryptohome_id_from,
-      const cryptohome::Identification& cryptohome_id_to,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void RenameCryptohome(const cryptohome::Identification& cryptohome_id_from,
+                        const cryptohome::Identification& cryptohome_id_to,
+                        const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeRenameCryptohome;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
 
@@ -159,13 +158,12 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   // CryptohomeClient override.
-  void GetAccountDiskUsage(
-      const cryptohome::Identification& account_id,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void GetAccountDiskUsage(const cryptohome::Identification& account_id,
+                           const ProtobufMethodCallback& callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeGetAccountDiskUsage);
     cryptohome::AccountIdentifier id;
@@ -176,7 +174,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   // CryptohomeClient override.
@@ -381,19 +379,19 @@ class CryptohomeClientImpl : public CryptohomeClient {
 
   // CryptohomeClient override.
   void Pkcs11GetTpmTokenInfo(
-      DBusMethodCallback<TpmTokenInfo> callback) override {
+      const Pkcs11GetTpmTokenInfoCallback& callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomePkcs11GetTpmTokenInfo);
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnPkcs11GetTpmTokenInfo,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   // CryptohomeClient override.
   void Pkcs11GetTpmTokenInfoForUser(
       const cryptohome::Identification& cryptohome_id,
-      DBusMethodCallback<TpmTokenInfo> callback) override {
+      const Pkcs11GetTpmTokenInfoCallback& callback) override {
     dbus::MethodCall method_call(
         cryptohome::kCryptohomeInterface,
         cryptohome::kCryptohomePkcs11GetTpmTokenInfoForUser);
@@ -402,7 +400,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnPkcs11GetTpmTokenInfo,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   // CryptohomeClient override.
@@ -764,11 +762,10 @@ class CryptohomeClientImpl : public CryptohomeClient {
                        weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
   }
 
-  void GetKeyDataEx(
-      const cryptohome::Identification& id,
-      const cryptohome::AuthorizationRequest& auth,
-      const cryptohome::GetKeyDataRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void GetKeyDataEx(const cryptohome::Identification& id,
+                    const cryptohome::AuthorizationRequest& auth,
+                    const cryptohome::GetKeyDataRequest& request,
+                    const ProtobufMethodCallback& callback) override {
     cryptohome::AccountIdentifier id_proto;
     FillIdentificationProtobuf(id, &id_proto);
 
@@ -782,13 +779,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   void CheckKeyEx(const cryptohome::Identification& id,
                   const cryptohome::AuthorizationRequest& auth,
                   const cryptohome::CheckKeyRequest& request,
-                  DBusMethodCallback<cryptohome::BaseReply> callback) override {
+                  const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeCheckKeyEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  method_name);
@@ -804,13 +801,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   void MountEx(const cryptohome::Identification& id,
                const cryptohome::AuthorizationRequest& auth,
                const cryptohome::MountRequest& request,
-               DBusMethodCallback<cryptohome::BaseReply> callback) override {
+               const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeMountEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  method_name);
@@ -826,13 +823,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   void AddKeyEx(const cryptohome::Identification& id,
                 const cryptohome::AuthorizationRequest& auth,
                 const cryptohome::AddKeyRequest& request,
-                DBusMethodCallback<cryptohome::BaseReply> callback) override {
+                const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeAddKeyEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  method_name);
@@ -848,14 +845,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void UpdateKeyEx(
-      const cryptohome::Identification& id,
-      const cryptohome::AuthorizationRequest& auth,
-      const cryptohome::UpdateKeyRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void UpdateKeyEx(const cryptohome::Identification& id,
+                   const cryptohome::AuthorizationRequest& auth,
+                   const cryptohome::UpdateKeyRequest& request,
+                   const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeUpdateKeyEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  method_name);
@@ -871,14 +867,13 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void RemoveKeyEx(
-      const cryptohome::Identification& id,
-      const cryptohome::AuthorizationRequest& auth,
-      const cryptohome::RemoveKeyRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void RemoveKeyEx(const cryptohome::Identification& id,
+                   const cryptohome::AuthorizationRequest& auth,
+                   const cryptohome::RemoveKeyRequest& request,
+                   const ProtobufMethodCallback& callback) override {
     const char* method_name = cryptohome::kCryptohomeRemoveKeyEx;
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
 
@@ -893,43 +888,41 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void GetBootAttribute(
-      const cryptohome::GetBootAttributeRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void GetBootAttribute(const cryptohome::GetBootAttributeRequest& request,
+                        const ProtobufMethodCallback& callback) override {
     CallCryptohomeMethod(cryptohome::kCryptohomeGetBootAttribute, request,
-                         std::move(callback));
+                         callback);
   }
 
-  void SetBootAttribute(
-      const cryptohome::SetBootAttributeRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+  void SetBootAttribute(const cryptohome::SetBootAttributeRequest& request,
+                        const ProtobufMethodCallback& callback) override {
     CallCryptohomeMethod(cryptohome::kCryptohomeSetBootAttribute, request,
-                         std::move(callback));
+                         callback);
   }
 
   void FlushAndSignBootAttributes(
       const cryptohome::FlushAndSignBootAttributesRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+      const ProtobufMethodCallback& callback) override {
     CallCryptohomeMethod(cryptohome::kCryptohomeFlushAndSignBootAttributes,
-                         request, std::move(callback));
+                         request, callback);
   }
 
   void RemoveFirmwareManagementParametersFromTpm(
       const cryptohome::RemoveFirmwareManagementParametersRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+      const ProtobufMethodCallback& callback) override {
     CallCryptohomeMethod(
         cryptohome::kCryptohomeRemoveFirmwareManagementParameters, request,
-        std::move(callback));
+        callback);
   }
 
   void SetFirmwareManagementParametersInTpm(
       const cryptohome::SetFirmwareManagementParametersRequest& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) override {
+      const ProtobufMethodCallback& callback) override {
     CallCryptohomeMethod(cryptohome::kCryptohomeSetFirmwareManagementParameters,
-                         request, std::move(callback));
+                         request, callback);
   }
 
   void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
@@ -1132,39 +1125,40 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // Handles responses for methods with a BaseReply protobuf method.
-  void OnBaseReplyMethod(DBusMethodCallback<cryptohome::BaseReply> callback,
+  void OnBaseReplyMethod(const ProtobufMethodCallback& callback,
                          dbus::Response* response) {
+    cryptohome::BaseReply reply;
     if (!response) {
-      std::move(callback).Run(base::nullopt);
+      callback.Run(DBUS_METHOD_CALL_FAILURE, false, reply);
       return;
     }
-    cryptohome::BaseReply result;
     dbus::MessageReader reader(response);
-    if (!reader.PopArrayOfBytesAsProto(&result)) {
-      std::move(callback).Run(base::nullopt);
+    if (!reader.PopArrayOfBytesAsProto(&reply)) {
+      callback.Run(DBUS_METHOD_CALL_FAILURE, false, reply);
       return;
     }
-    std::move(callback).Run(std::move(result));
+    callback.Run(DBUS_METHOD_CALL_SUCCESS, true, reply);
   }
 
   // Handles responses for Pkcs11GetTpmTokenInfo and
   // Pkcs11GetTpmTokenInfoForUser.
-  void OnPkcs11GetTpmTokenInfo(DBusMethodCallback<TpmTokenInfo> callback,
+  void OnPkcs11GetTpmTokenInfo(const Pkcs11GetTpmTokenInfoCallback& callback,
                                dbus::Response* response) {
     if (!response) {
-      std::move(callback).Run(base::nullopt);
+      callback.Run(DBUS_METHOD_CALL_FAILURE, std::string(), std::string(), -1);
       return;
     }
     dbus::MessageReader reader(response);
-    TpmTokenInfo token_info;
-    if (!reader.PopString(&token_info.label) ||
-        !reader.PopString(&token_info.user_pin) ||
-        !reader.PopInt32(&token_info.slot)) {
-      std::move(callback).Run(base::nullopt);
+    std::string label;
+    std::string user_pin;
+    int slot = 0;
+    if (!reader.PopString(&label) || !reader.PopString(&user_pin) ||
+        !reader.PopInt32(&slot)) {
+      callback.Run(DBUS_METHOD_CALL_FAILURE, std::string(), std::string(), -1);
       LOG(ERROR) << "Invalid response: " << response->ToString();
       return;
     }
-    std::move(callback).Run(std::move(token_info));
+    callback.Run(DBUS_METHOD_CALL_SUCCESS, label, user_pin, slot);
   }
 
   // Handles responses for TpmGetVersion.
@@ -1267,10 +1261,9 @@ class CryptohomeClientImpl : public CryptohomeClient {
   // is the name of the method to be called. |request| is the specific request
   // for the method, including the data required to be sent. |callback| is
   // invoked when the response is received.
-  void CallCryptohomeMethod(
-      const std::string& method_name,
-      const google::protobuf::MessageLite& request,
-      DBusMethodCallback<cryptohome::BaseReply> callback) {
+  void CallCryptohomeMethod(const std::string& method_name,
+                            const google::protobuf::MessageLite& request,
+                            const ProtobufMethodCallback& callback) {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface, method_name);
 
     dbus::MessageWriter writer(&method_call);
@@ -1279,7 +1272,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnBaseReplyMethod,
-                       weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
+                       weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
   dbus::ObjectProxy* proxy_;

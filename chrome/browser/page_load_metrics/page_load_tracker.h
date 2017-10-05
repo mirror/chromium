@@ -300,6 +300,8 @@ class PageLoadTracker : public PageLoadMetricsUpdateDispatcher::Client {
   // committed load.
   void LogAbortChainHistograms(content::NavigationHandle* final_navigation);
 
+  void RecordUkmSourceInfo();
+
   UserInputTracker input_tracker_;
 
   // Whether we stopped tracking this navigation after it was initiated. We may

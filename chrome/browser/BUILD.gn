@@ -602,6 +602,8 @@ split_static_library("browser") {
     "mac/nsprocessinfo_additions.mm",
     "mac/relauncher.h",
     "mac/relauncher.mm",
+    "mac/security_wrappers.cc",
+    "mac/security_wrappers.h",
     "media/cast_remoting_connector.cc",
     "media/cast_remoting_connector.h",
     "media/cast_remoting_sender.cc",
@@ -1461,8 +1463,6 @@ split_static_library("browser") {
     "usb/usb_chooser_context_factory.h",
     "usb/usb_tab_helper.cc",
     "usb/usb_tab_helper.h",
-    "usb/usb_util.cc",
-    "usb/usb_util.h",
     "usb/web_usb_histograms.cc",
     "usb/web_usb_histograms.h",
     "usb/web_usb_permission_provider.cc",
@@ -1727,7 +1727,6 @@ split_static_library("browser") {
     "//services/preferences/public/cpp/tracked",
     "//services/preferences/public/interfaces",
     "//services/preferences/tracked",
-    "//services/proxy_resolver/public/interfaces",
     "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
     "//services/service_manager/public/cpp",
     "//services/shape_detection/public/interfaces",
@@ -3549,9 +3548,9 @@ split_static_library("browser") {
       "offline_pages/prefetch/offline_metrics_collector_impl.h",
       "offline_pages/prefetch/offline_prefetch_download_client.cc",
       "offline_pages/prefetch/offline_prefetch_download_client.h",
+      "offline_pages/prefetch/prefetch_background_task.h",
       "offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
       "offline_pages/prefetch/prefetch_background_task_handler_impl.h",
-      "offline_pages/prefetch/prefetch_background_task_scheduler.h",
       "offline_pages/prefetch/prefetch_configuration_impl.cc",
       "offline_pages/prefetch/prefetch_configuration_impl.h",
       "offline_pages/prefetch/prefetch_importer_impl.cc",
@@ -3590,7 +3589,6 @@ split_static_library("browser") {
         "offline_pages/android/offline_page_utils_android.cc",
         "offline_pages/android/prefetch_background_task_android.cc",
         "offline_pages/android/prefetch_background_task_android.h",
-        "offline_pages/android/prefetch_background_task_scheduler_android.cc",
         "offline_pages/android/prefetched_pages_notifier_android.cc",
         "offline_pages/android/request_coordinator_factory.cc",
       ]
@@ -4166,7 +4164,6 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageNotificationBridge.java",
       "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
       "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
-      "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTaskScheduler.java",
       "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
       "../android/java/src/org/chromium/chrome/browser/omnibox/AnswersImage.java",
       "../android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteController.java",
@@ -4263,6 +4260,14 @@ if (is_android) {
       "android/proto/delta_file.proto",
     ]
   }
+
+  if (is_win) {
+    proto_library("conflicts_module_list_proto") {
+      sources = [
+        "conflicts/proto/module_list.proto",
+      ]
+    }
+  }
 }
 
 if (is_win) {
@@ -4275,12 +4280,6 @@ if (is_win) {
       "//base",
       "//chrome/browser/policy:path_parser",
       "//chrome/common:constants",
-    ]
-  }
-
-  proto_library("conflicts_module_list_proto") {
-    sources = [
-      "conflicts/proto/module_list.proto",
     ]
   }
 }
@@ -4344,7 +4343,6 @@ grit("resources") {
     "//chrome/app:chrome_content_manifest_overlays",
     "//chrome/browser/engagement:mojo_bindings_js",
     "//chrome/browser/media:mojo_bindings_js",
-    "//chrome/browser/resources/ssl/ssl_error_assistant:make_ssl_error_assistant_protobuf",
     "//chrome/browser/ui/webui/interventions_internals:mojo_bindings_js",
     "//chrome/browser/ui/webui/omnibox:mojo_bindings_js",
     "//chrome/browser/ui/webui/usb_internals:mojo_bindings_js",
@@ -4366,6 +4364,7 @@ grit("resources") {
     deps +=
         [ "//chrome/browser/resources/safe_browsing:make_file_types_protobuf" ]
   }
+  deps += [ "//chrome/browser/resources/ssl/ssl_error_assistant:make_ssl_error_assistant_protobuf" ]
 }
 
 if (is_chrome_branded) {
@@ -4455,6 +4454,17 @@ static_library("test_support") {
     "sync/profile_sync_test_util.h",
   ]
 
+  if (safe_browsing_mode != 0) {
+    # "Safe Browsing Basic" files used for safe browsing in full mode
+    # (safe_browsing=1) and mobile (=2)
+    sources += [
+      "safe_browsing/certificate_reporting_service_test_utils.cc",
+      "safe_browsing/certificate_reporting_service_test_utils.h",
+      "safe_browsing/mock_permission_report_sender.cc",
+      "safe_browsing/mock_permission_report_sender.h",
+    ]
+  }
+
   configs += [ "//build/config:precompiled_headers" ]
 
   public_deps = [
@@ -4489,7 +4499,7 @@ static_library("test_support") {
     "//ui/gfx",
   ]
 
-  if (!is_android && !is_fuchsia) {
+  if (!is_android && !is_ios && !is_fuchsia) {
     sources += [
       "policy/test/local_policy_test_server.cc",
       "policy/test/local_policy_test_server.h",
@@ -4514,6 +4524,18 @@ static_library("test_support") {
       "sessions/session_service_test_helper.cc",
       "sessions/session_service_test_helper.h",
     ]
+  }
+
+  if (enable_extensions) {
+    sources += [
+      "extensions/chrome_extension_test_notification_observer.cc",
+      "extensions/chrome_extension_test_notification_observer.h",
+      "extensions/chrome_test_extension_loader.cc",
+      "extensions/chrome_test_extension_loader.h",
+      "extensions/extension_action_test_util.cc",
+      "extensions/extension_action_test_util.h",
+    ]
+    deps += [ "//extensions:test_support" ]
   }
 
   if (is_chromeos) {
@@ -4569,12 +4591,10 @@ static_library("test_support") {
     deps += [ "//chromeos:test_support" ]
   }
 
-  if (enable_app_list) {
+  if (safe_browsing_mode == 1) {
     sources += [
-      "ui/app_list/test/chrome_app_list_test_support.cc",
-      "ui/app_list/test/chrome_app_list_test_support.h",
-      "ui/app_list/test/test_app_list_controller_delegate.cc",
-      "ui/app_list/test/test_app_list_controller_delegate.h",
+      "extensions/fake_safe_browsing_database_manager.cc",
+      "extensions/fake_safe_browsing_database_manager.h",
     ]
   }
 
@@ -4582,12 +4602,6 @@ static_library("test_support") {
     sources += [
       "extensions/api/messaging/native_messaging_test_util.cc",
       "extensions/api/messaging/native_messaging_test_util.h",
-      "extensions/chrome_extension_test_notification_observer.cc",
-      "extensions/chrome_extension_test_notification_observer.h",
-      "extensions/chrome_test_extension_loader.cc",
-      "extensions/chrome_test_extension_loader.h",
-      "extensions/extension_action_test_util.cc",
-      "extensions/extension_action_test_util.h",
       "extensions/mock_extension_special_storage_policy.cc",
       "extensions/mock_extension_special_storage_policy.h",
       "extensions/test_blacklist.cc",
@@ -4610,16 +4624,7 @@ static_library("test_support") {
     deps += [
       "//components/drive:test_support",
       "//components/storage_monitor:test_support",
-      "//extensions:test_support",
     ]
-  }
-
-  if (enable_library_cdms) {
-    sources += [
-      "media/library_cdm_test_helper.cc",
-      "media/library_cdm_test_helper.h",
-    ]
-    deps += [ "//media/cdm:cdm_paths" ]
   }
 
   if (enable_mdns) {
@@ -4629,22 +4634,21 @@ static_library("test_support") {
     ]
   }
 
-  if (safe_browsing_mode != 0) {
-    # "Safe Browsing Basic" files used for safe browsing in full mode
-    # (safe_browsing=1) and mobile (=2)
+  if (enable_app_list) {
     sources += [
-      "safe_browsing/certificate_reporting_service_test_utils.cc",
-      "safe_browsing/certificate_reporting_service_test_utils.h",
-      "safe_browsing/mock_permission_report_sender.cc",
-      "safe_browsing/mock_permission_report_sender.h",
+      "ui/app_list/test/chrome_app_list_test_support.cc",
+      "ui/app_list/test/chrome_app_list_test_support.h",
+      "ui/app_list/test/test_app_list_controller_delegate.cc",
+      "ui/app_list/test/test_app_list_controller_delegate.h",
     ]
   }
 
-  if (safe_browsing_mode == 1) {
+  if (enable_library_cdms) {
     sources += [
-      "extensions/fake_safe_browsing_database_manager.cc",
-      "extensions/fake_safe_browsing_database_manager.h",
+      "media/library_cdm_test_helper.cc",
+      "media/library_cdm_test_helper.h",
     ]
+    deps += [ "//media/cdm:cdm_paths" ]
   }
 }
 
@@ -4660,21 +4664,7 @@ static_library("test_support_ui") {
     "ui/webui/signin/login_ui_test_utils.cc",
     "ui/webui/signin/login_ui_test_utils.h",
   ]
-
-  deps = [
-    "//components/metrics:test_support",
-    "//components/password_manager/core/browser:test_support",
-    "//components/translate/content/common",
-    "//skia",
-    "//testing/gtest",
-    "//third_party/WebKit/public:blink_headers",
-  ]
-
-  public_deps = [
-    "//net:test_support",
-  ]
-
-  configs += [ "//build/config:precompiled_headers" ]
+  deps = []
 
   if (!is_android) {
     sources += [
@@ -4686,6 +4676,21 @@ static_library("test_support_ui") {
 
     deps += [ "//chrome/common:mojo_bindings" ]
   }
+
+  configs += [ "//build/config:precompiled_headers" ]
+
+  public_deps = [
+    "//net:test_support",
+  ]
+
+  deps += [
+    "//components/metrics:test_support",
+    "//components/password_manager/core/browser:test_support",
+    "//components/translate/content/common",
+    "//skia",
+    "//testing/gtest",
+    "//third_party/WebKit/public:blink_headers",
+  ]
 }
 
 if (enable_rlz_support) {

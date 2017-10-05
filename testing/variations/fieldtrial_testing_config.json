@@ -1216,7 +1216,7 @@
             ],
             "experiments": [
                 {
-                    "name": "EnforceStrict"
+                    "name": "Enforce"
                 }
             ]
         }
@@ -2163,6 +2163,23 @@
             ]
         }
     ],
+    "OneGoogleBarOnLocalNtp": [
+        {
+            "platforms": [
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "OneGoogleBarOnLocalNtp"
+                    ]
+                }
+            ]
+        }
+    ],
     "OutOfProcessPac": [
         {
             "platforms": [
@@ -2469,25 +2486,6 @@
             ]
         }
     ],
-    "PreviewsClientLoFi": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled_2G_Replace_Server_Placeholders",
-                    "params": {
-                        "max_allowed_effective_connection_type": "2G",
-                        "replace_server_placeholders": "true"
-                    },
-                    "enable_features": [
-                        "ClientLoFi"
-                    ]
-                }
-            ]
-        }
-    ],
     "PrintPdfAsImage": [
         {
             "platforms": [
@@ -2753,8 +2751,7 @@
                 {
                     "name": "Enabled_bg_limit_16",
                     "params": {
-                        "bg_limit": "16",
-                        "bg_sub_limit": "16"
+                        "bg_limit": "16"
                     },
                     "enable_features": [
                         "ReportRendererPeakMemoryStats",
@@ -2771,8 +2768,7 @@
                 {
                     "name": "Enabled_bg_limit_16",
                     "params": {
-                        "bg_limit": "16",
-                        "bg_sub_limit": "16"
+                        "bg_limit": "16"
                     },
                     "enable_features": [
                         "ResourceLoadScheduler"

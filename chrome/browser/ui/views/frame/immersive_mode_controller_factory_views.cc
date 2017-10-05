@@ -4,18 +4,18 @@
 
 #include "chrome/browser/ui/views/frame/immersive_mode_controller_stub.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
 #include "chrome/browser/ui/views/frame/immersive_mode_controller_ash.h"
 #endif
 
 namespace chrome {
 
 ImmersiveModeController* CreateImmersiveModeController() {
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   return new ImmersiveModeControllerAsh();
 #else
   return new ImmersiveModeControllerStub();
-#endif  // OS_CHROMEOS
+#endif  // USE_ASH
 }
 
 }  // namespace chrome

@@ -123,7 +123,6 @@ extern const base::Feature kLsdPermissionPrompt;
 #if defined(OS_MACOSX)
 extern const base::Feature kMacRTL;
 extern const base::Feature kMacFullSizeContentView;
-extern const base::Feature kMacSystemShareMenu;
 #endif
 
 extern const base::Feature kMaterialDesignBookmarks;
@@ -156,6 +155,10 @@ extern const base::Feature kMultidevice;
 
 #if BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 extern const base::Feature kNativeNotifications;
+#endif
+
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+extern const base::Feature kNativeWindowNavButtons;
 #endif
 
 extern const base::Feature kNetworkPrediction;

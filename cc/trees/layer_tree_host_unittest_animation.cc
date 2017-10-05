@@ -12,7 +12,6 @@
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/animation_player.h"
-#include "cc/animation/animation_ticker.h"
 #include "cc/animation/animation_timeline.h"
 #include "cc/animation/element_animations.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
@@ -890,17 +889,17 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationAdjusted
     AttachPlayersToTimeline();
   }
 
-  AnimationTicker& ScrollOffsetTicker(
+  AnimationPlayer& ScrollOffsetPlayer(
       const LayerTreeHostImpl& host_impl,
       scoped_refptr<FakePictureLayer> layer) const {
     scoped_refptr<ElementAnimations> element_animations =
         GetImplAnimationHost(&host_impl)
             ->GetElementAnimationsForElementId(layer->element_id());
     DCHECK(element_animations);
-    DCHECK(element_animations->tickers_list().might_have_observers());
-    AnimationTicker* ticker = &*element_animations->tickers_list().begin();
-    DCHECK(ticker);
-    return *ticker;
+    DCHECK(element_animations->players_list().might_have_observers());
+    AnimationPlayer* player = &*element_animations->players_list().begin();
+    DCHECK(player);
+    return *player;
   }
 
   void BeginTest() override { PostSetNeedsCommitToMainThread(); }
@@ -927,7 +926,7 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationAdjusted
       GetImplTimelineAndPlayerByID(*host_impl);
       // This happens after the impl-only animation is added in
       // WillCommitCompleteOnThread.
-      Animation* animation = ScrollOffsetTicker(*host_impl, scroll_layer_)
+      Animation* animation = ScrollOffsetPlayer(*host_impl, scroll_layer_)
                                  .GetAnimation(TargetProperty::SCROLL_OFFSET);
       DCHECK(animation);
       ScrollOffsetAnimationCurve* curve =
@@ -951,7 +950,7 @@ class LayerTreeHostAnimationTestScrollOffsetAnimationAdjusted
 
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
     if (host_impl->sync_tree()->source_frame_number() == 1) {
-      Animation* animation = ScrollOffsetTicker(*host_impl, scroll_layer_)
+      Animation* animation = ScrollOffsetPlayer(*host_impl, scroll_layer_)
                                  .GetAnimation(TargetProperty::SCROLL_OFFSET);
       DCHECK(animation);
       ScrollOffsetAnimationCurve* curve =
@@ -1510,7 +1509,7 @@ class LayerTreeHostAnimationTestRemoveAnimation
   void CommitCompleteOnThread(LayerTreeHostImpl* host_impl) override {
     if (host_impl->sync_tree()->source_frame_number() >= last_frame_number_) {
       // Check that eventually the animation is removed.
-      EXPECT_FALSE(player_child_impl_->animation_ticker()->has_any_animation());
+      EXPECT_FALSE(player_child_impl_->has_any_animation());
       EndTest();
     }
   }

@@ -39,9 +39,7 @@ class LayoutThemeMac final : public LayoutTheme {
  public:
   static RefPtr<LayoutTheme> Create();
 
-  void AddVisualOverflow(const Node*,
-                         const ComputedStyle&,
-                         IntRect& border_box) override;
+  void AddVisualOverflow(const LayoutObject&, IntRect& border_box) override;
 
   bool IsControlStyled(const ComputedStyle&) const override;
 
@@ -124,16 +122,14 @@ class LayoutThemeMac final : public LayoutTheme {
   IntSize SizeForSystemFont(const ComputedStyle&, const IntSize* sizes) const;
   void SetFontFromControlSize(ComputedStyle&, NSControlSize) const;
 
-  void UpdateCheckedState(NSCell*, const Node*);
-  void UpdateEnabledState(NSCell*, const Node*);
-  void UpdateFocusedState(NSCell*, const Node*, const ComputedStyle&);
-  void UpdatePressedState(NSCell*, const Node*);
+  void UpdateCheckedState(NSCell*, const LayoutObject&);
+  void UpdateEnabledState(NSCell*, const LayoutObject&);
+  void UpdateFocusedState(NSCell*, const LayoutObject&);
+  void UpdatePressedState(NSCell*, const LayoutObject&);
 
   // Helpers for adjusting appearance and for painting
 
-  void SetPopupButtonCellState(const Node*,
-                               const ComputedStyle&,
-                               const IntRect&);
+  void SetPopupButtonCellState(const LayoutObject&, const IntRect&);
   const IntSize* PopupButtonSizes() const;
   const int* PopupButtonMargins() const;
   const int* PopupButtonPadding(NSControlSize) const;
@@ -141,7 +137,7 @@ class LayoutThemeMac final : public LayoutTheme {
 
   const IntSize* SearchFieldSizes() const;
   const IntSize* CancelButtonSizes() const;
-  void SetSearchCellState(const Node*, const ComputedStyle&, const IntRect&);
+  void SetSearchCellState(const LayoutObject&, const IntRect&);
   void SetSearchFieldSize(ComputedStyle&) const;
 
   NSPopUpButtonCell* PopupButton() const;
@@ -150,9 +146,9 @@ class LayoutThemeMac final : public LayoutTheme {
 
   // A view associated to the contained document. Subclasses may not have such a
   // view and return a fake.
-  NSView* DocumentView() const;
+  NSView* DocumentViewFor(const LayoutObject&) const;
 
-  void UpdateActiveState(NSCell*, const Node*);
+  void UpdateActiveState(NSCell*, const LayoutObject&);
 
   // We estimate the animation rate of a Mac OS X progress bar is 33 fps.
   // Hard code the value here because we haven't found API for it.

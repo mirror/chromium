@@ -76,6 +76,8 @@ Polymer({
 
     // Used to display notices for profile sign-in status.
     showSidebarFooter: Boolean,
+
+    hasSyncedResults: Boolean,
   },
 
   listeners: {
@@ -274,6 +276,16 @@ Polymer({
    */
   shouldShowSpinner_: function(querying, incremental, searchTerm) {
     return querying && !incremental && searchTerm != '';
+  },
+
+  /**
+   * @param {boolean} hasSyncedResults
+   * @param {string} selectedPage
+   * @return {boolean} Whether the (i) synced results notice should be shown.
+   * @private
+   */
+  showSyncNotice_: function(hasSyncedResults, selectedPage) {
+    return hasSyncedResults && selectedPage != 'syncedTabs';
   },
 
   /** @private */

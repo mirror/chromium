@@ -34,6 +34,7 @@
 
 namespace blink {
 
+class LayoutBox;
 class LayoutThemeDefault;
 
 class ThemePainterDefault final : public ThemePainter {
@@ -41,58 +42,47 @@ class ThemePainterDefault final : public ThemePainter {
   explicit ThemePainterDefault(LayoutThemeDefault&);
 
  private:
-  bool PaintCheckbox(const Node*,
-                     const ComputedStyle&,
+  bool PaintCheckbox(const LayoutObject&,
                      const PaintInfo&,
                      const IntRect&) override;
-  bool PaintRadio(const Node*,
-                  const ComputedStyle&,
+  bool PaintRadio(const LayoutObject&,
                   const PaintInfo&,
                   const IntRect&) override;
-  bool PaintButton(const Node*,
-                   const ComputedStyle&,
+  bool PaintButton(const LayoutObject&,
                    const PaintInfo&,
                    const IntRect&) override;
-  bool PaintTextField(const Node*,
-                      const ComputedStyle&,
+  bool PaintTextField(const LayoutObject&,
                       const PaintInfo&,
                       const IntRect&) override;
-  bool PaintMenuList(const Node*,
-                     const ComputedStyle&,
+  bool PaintMenuList(const LayoutObject&,
                      const PaintInfo&,
                      const IntRect&) override;
-  bool PaintMenuListButton(const Node*,
-                           const ComputedStyle&,
+  bool PaintMenuListButton(const LayoutObject&,
                            const PaintInfo&,
                            const IntRect&) override;
   bool PaintSliderTrack(const LayoutObject&,
                         const PaintInfo&,
                         const IntRect&) override;
-  bool PaintSliderThumb(const Node*,
-                        const ComputedStyle&,
+  bool PaintSliderThumb(const LayoutObject&,
                         const PaintInfo&,
                         const IntRect&) override;
-  bool PaintInnerSpinButton(const Node*,
-                            const ComputedStyle&,
+  bool PaintInnerSpinButton(const LayoutObject&,
                             const PaintInfo&,
                             const IntRect&) override;
   bool PaintProgressBar(const LayoutObject&,
                         const PaintInfo&,
                         const IntRect&) override;
-  bool PaintTextArea(const Node*,
-                     const ComputedStyle&,
+  bool PaintTextArea(const LayoutObject&,
                      const PaintInfo&,
                      const IntRect&) override;
-  bool PaintSearchField(const Node*,
-                        const ComputedStyle&,
+  bool PaintSearchField(const LayoutObject&,
                         const PaintInfo&,
                         const IntRect&) override;
   bool PaintSearchFieldCancelButton(const LayoutObject&,
                                     const PaintInfo&,
                                     const IntRect&) override;
 
-  void SetupMenuListArrow(const Node*,
-                          const ComputedStyle&,
+  void SetupMenuListArrow(const LayoutBox&,
                           const IntRect&,
                           WebThemeEngine::ExtraParams&);
 

@@ -47,7 +47,7 @@ DataUrlNavigationThrottle::WillProcessResponse() {
 #endif
   NavigationHandleImpl* handle =
       static_cast<NavigationHandleImpl*>(navigation_handle());
-  if (handle->IsDownload())
+  if (handle->is_download())
     return PROCEED;
 
   RenderFrameHost* top_frame =

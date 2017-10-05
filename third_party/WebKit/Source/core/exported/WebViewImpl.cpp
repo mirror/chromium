@@ -35,6 +35,7 @@
 #include "build/build_config.h"
 #include "core/CSSValueKeywords.h"
 #include "core/CoreInitializer.h"
+#include "core/HTMLNames.h"
 #include "core/animation/CompositorMutatorImpl.h"
 #include "core/clipboard/DataObject.h"
 #include "core/dom/ContextFeaturesClientImpl.h"
@@ -78,7 +79,6 @@
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLTextAreaElement.h"
 #include "core/html/PluginDocument.h"
-#include "core/html_names.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/input/TouchActionUtil.h"
@@ -301,9 +301,7 @@ WebView* WebView::Create(WebViewClient* client,
 WebViewImpl* WebViewImpl::Create(WebViewClient* client,
                                  WebPageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
-  auto web_view = WTF::AdoptRef(new WebViewImpl(client, visibility_state));
-  web_view->AddRef();
-  return web_view.get();
+  return WTF::AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
 }
 
 void WebView::UpdateVisitedLinkState(unsigned long long link_hash) {

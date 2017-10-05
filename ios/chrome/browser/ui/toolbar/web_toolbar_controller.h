@@ -126,6 +126,13 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 // Called when the current tab changes or is closed.
 - (void)selectedTabChanged;
 
+// Returns the bound of the bookmark button. Used to position the bookmark
+// editor.
+- (CGRect)bookmarkButtonAnchorRect;
+
+// Returns the bookmark button's view. Used to position the bookmark editor.
+- (UIView*)bookmarkButtonView;
+
 // Returns visible omnibox frame in WebToolbarController's view coordinate
 // system.
 - (CGRect)visibleOmniboxFrame;
@@ -140,6 +147,8 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 
 // Returns whether the omnibox popup is currently displayed.
 - (BOOL)showingOmniboxPopup;
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection;
 
 @end
 

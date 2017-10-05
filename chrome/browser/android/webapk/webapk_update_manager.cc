@@ -11,7 +11,6 @@
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/bind.h"
-#include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -32,10 +31,10 @@ using base::android::ScopedJavaGlobalRef;
 
 namespace {
 
-// Called after saving the update request proto either succeeds or fails.
-void OnStoredUpdateRequest(const JavaRef<jobject>& java_callback,
-                           bool success) {
-  base::android::RunCallbackAndroid(java_callback, success);
+// Called with the serialized proto to send to the WebAPK server.
+void OnBuiltProto(const JavaRef<jobject>& java_callback,
+                  std::unique_ptr<std::vector<uint8_t>> proto) {
+  base::android::RunCallbackAndroid(java_callback, *proto);
 }
 
 // Called after the update either succeeds or fails.
@@ -51,10 +50,9 @@ void OnUpdated(const JavaRef<jobject>& java_callback,
 }  // anonymous namespace
 
 // static JNI method.
-static void StoreWebApkUpdateRequestToFile(
+static void BuildUpdateWebApkProto(
     JNIEnv* env,
     const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& java_update_request_path,
     const JavaParamRef<jstring>& java_start_url,
     const JavaParamRef<jstring>& java_scope,
     const JavaParamRef<jstring>& java_name,
@@ -75,9 +73,6 @@ static void StoreWebApkUpdateRequestToFile(
     jboolean java_is_manifest_stale,
     const JavaParamRef<jobject>& java_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  std::string update_request_path =
-      ConvertJavaStringToUTF8(env, java_update_request_path);
 
   ShortcutInfo info(GURL(ConvertJavaStringToUTF8(env, java_start_url)));
   info.scope = GURL(ConvertJavaStringToUTF8(env, java_scope));
@@ -121,20 +116,20 @@ static void StoreWebApkUpdateRequestToFile(
   std::string webapk_package;
   ConvertJavaStringToUTF8(env, java_webapk_package, &webapk_package);
 
-  WebApkInstaller::StoreUpdateRequestToFile(
-      base::FilePath(update_request_path), info, primary_icon, badge_icon,
-      webapk_package, std::to_string(java_webapk_version),
-      icon_url_to_murmur2_hash, java_is_manifest_stale,
-      base::Bind(&OnStoredUpdateRequest,
-                 ScopedJavaGlobalRef<jobject>(java_callback)));
+  WebApkInstaller::BuildProto(
+      info, primary_icon, badge_icon, webapk_package,
+      std::to_string(java_webapk_version), icon_url_to_murmur2_hash,
+      java_is_manifest_stale,
+      base::Bind(&OnBuiltProto, ScopedJavaGlobalRef<jobject>(java_callback)));
 }
 
 // static JNI method.
-static void UpdateWebApkFromFile(
-    JNIEnv* env,
-    const JavaParamRef<jclass>& clazz,
-    const JavaParamRef<jstring>& java_update_request_path,
-    const JavaParamRef<jobject>& java_callback) {
+static void UpdateWebApk(JNIEnv* env,
+                         const JavaParamRef<jclass>& clazz,
+                         const JavaParamRef<jstring>& java_webapk_package,
+                         const JavaParamRef<jstring>& java_short_name,
+                         const JavaParamRef<jbyteArray>& java_serialized_proto,
+                         const JavaParamRef<jobject>& java_callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   ScopedJavaGlobalRef<jobject> callback_ref(java_callback);
@@ -148,9 +143,14 @@ static void UpdateWebApkFromFile(
     return;
   }
 
-  std::string update_request_path =
-      ConvertJavaStringToUTF8(env, java_update_request_path);
+  std::string webapk_package =
+      ConvertJavaStringToUTF8(env, java_webapk_package);
+  base::string16 short_name = ConvertJavaStringToUTF16(env, java_short_name);
+  std::unique_ptr<std::vector<uint8_t>> serialized_proto =
+      base::MakeUnique<std::vector<uint8_t>>();
+  JavaByteArrayToByteVector(env, java_serialized_proto, serialized_proto.get());
+
   WebApkInstallService::Get(profile)->UpdateAsync(
-      base::FilePath(update_request_path),
+      webapk_package, short_name, std::move(serialized_proto),
       base::Bind(&OnUpdated, callback_ref));
 }

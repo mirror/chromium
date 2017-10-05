@@ -30,9 +30,10 @@
 
 #include "public/web/WebLabelElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/html/HTMLLabelElement.h"
 #include "core/html/LabelableElement.h"
-#include "core/html_names.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 
 namespace blink {

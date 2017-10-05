@@ -95,9 +95,6 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
     stream_handle_->stream = std::move(consumer_handle);
   }
 
-  // Tells this controller to respond to fetch events with a error response.
-  void RespondWithError() { response_mode_ = ResponseMode::kErrorResponse; }
-
   // mojom::ControllerServiceWorker:
   void DispatchFetchEvent(
       const ServiceWorkerFetchRequest& request,
@@ -128,22 +125,6 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
         response_callback->OnFallback(base::Time::Now());
         std::move(callback).Run(SERVICE_WORKER_OK, base::Time::Now());
         return;
-      case ResponseMode::kErrorResponse:
-        response_callback->OnResponse(
-            ServiceWorkerResponse(
-                base::MakeUnique<std::vector<GURL>>(), 0 /* status_code */,
-                "" /* status_text */,
-                network::mojom::FetchResponseType::kDefault,
-                base::MakeUnique<ServiceWorkerHeaderMap>(), "" /* blob_uuid */,
-                0 /* blob_size */, nullptr /* blob */,
-                blink::kWebServiceWorkerResponseErrorPromiseRejected,
-                base::Time(), false /* response_is_in_cache_storage */,
-                std::string() /* response_cache_storage_cache_name */,
-                base::MakeUnique<
-                    ServiceWorkerHeaderList>() /* cors_exposed_header_names */),
-            base::Time::Now());
-        std::move(callback).Run(SERVICE_WORKER_OK, base::Time::Now());
-        return;
     }
     NOTREACHED();
   }
@@ -154,12 +135,7 @@ class FakeControllerServiceWorker : public mojom::ControllerServiceWorker {
   }
 
  private:
-  enum class ResponseMode {
-    kDefault,
-    kStream,
-    kFallbackResponse,
-    kErrorResponse
-  };
+  enum class ResponseMode { kDefault, kStream, kFallbackResponse };
 
   ResponseMode response_mode_ = ResponseMode::kDefault;
 
@@ -383,15 +359,6 @@ TEST_F(ServiceWorkerSubresourceLoaderTest, FallbackResponse) {
   TestRequest(GURL("https://www.example.com/foo.html"), "GET");
   // TODO(emim): It should add some expression to check whether this actually
   // performed the fallback.
-}
-
-TEST_F(ServiceWorkerSubresourceLoaderTest, ErrorResponse) {
-  fake_controller_.RespondWithError();
-
-  // Perform the request.
-  TestRequest(GURL("https://www.example.com/foo.html"), "GET");
-
-  EXPECT_EQ(net::ERR_FAILED, url_loader_client_.completion_status().error_code);
 }
 
 // TODO(kinuko): Add more tests.

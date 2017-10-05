@@ -25,6 +25,7 @@
 #include "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_learn_more_item.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_constant.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_provider_test_singleton.h"
 #import "ios/chrome/browser/ui/content_suggestions/ntp_home_test_utils.h"
@@ -64,7 +65,9 @@ void ScrollUp() {
       selectElementWithMatcher:grey_allOf(chrome_test_util::ToolsMenuButton(),
                                           grey_sufficientlyVisible(), nil)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionUp, 150)
-      onElementWithMatcher:chrome_test_util::ContentSuggestionCollectionView()]
+      onElementWithMatcher:grey_accessibilityID(
+                               [ContentSuggestionsViewController
+                                   collectionAccessibilityIdentifier])]
       assertWithMatcher:grey_notNil()];
 }
 
@@ -102,7 +105,9 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       selectElementWithMatcher:grey_allOf(matcher, grey_sufficientlyVisible(),
                                           nil)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionDown, 150)
-      onElementWithMatcher:chrome_test_util::ContentSuggestionCollectionView()];
+      onElementWithMatcher:grey_accessibilityID(
+                               [ContentSuggestionsViewController
+                                   collectionAccessibilityIdentifier])];
 }
 
 }  // namespace
@@ -315,7 +320,8 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
       selectElementWithMatcher:
           grey_allOf(chrome_test_util::StaticTextWithAccessibilityLabel(title2),
                      grey_not(grey_ancestor(
-                         chrome_test_util::ContentSuggestionCollectionView())),
+                         grey_accessibilityID([ContentSuggestionsViewController
+                             collectionAccessibilityIdentifier]))),
                      nil)] assertWithMatcher:grey_sufficientlyVisible()];
 
   // Close Reading List.
@@ -501,8 +507,10 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
 // Tests that the "Learn More" cell is present only if there is a suggestion in
 // the section.
 - (void)testLearnMore {
-  [[EarlGrey selectElementWithMatcher:chrome_test_util::
-                                          ContentSuggestionCollectionView()]
+  [[EarlGrey
+      selectElementWithMatcher:grey_accessibilityID(
+                                   [ContentSuggestionsViewController
+                                       collectionAccessibilityIdentifier])]
       performAction:grey_scrollToContentEdge(kGREYContentEdgeBottom)];
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(
                                           [ContentSuggestionsLearnMoreItem
@@ -562,8 +570,10 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
   // Check that the tab has been opened in background.
   ConditionBlock condition = ^{
     NSError* error = nil;
-    [[EarlGrey selectElementWithMatcher:chrome_test_util::
-                                            ContentSuggestionCollectionView()]
+    [[EarlGrey
+        selectElementWithMatcher:grey_accessibilityID(
+                                     [ContentSuggestionsViewController
+                                         collectionAccessibilityIdentifier])]
         assertWithMatcher:grey_sufficientlyVisible()
                     error:&error];
     return error == nil;
@@ -651,8 +661,10 @@ GREYElementInteraction* CellWithMatcher(id<GREYMatcher> matcher) {
   // Check that the tab has been opened in background.
   ConditionBlock condition = ^{
     NSError* error = nil;
-    [[EarlGrey selectElementWithMatcher:chrome_test_util::
-                                            ContentSuggestionCollectionView()]
+    [[EarlGrey
+        selectElementWithMatcher:grey_accessibilityID(
+                                     [ContentSuggestionsViewController
+                                         collectionAccessibilityIdentifier])]
         assertWithMatcher:grey_notNil()
                     error:&error];
     return error == nil;

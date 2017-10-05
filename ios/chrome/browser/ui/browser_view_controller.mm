@@ -1413,6 +1413,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   // view controller).
   [self.presentedViewController
       traitCollectionDidChange:previousTraitCollection];
+  [_toolbarCoordinator updateButtonVisibility];
   // Update voice search bar visibility.
   [self updateVoiceSearchBarVisibilityAnimated:NO];
 }
@@ -1975,7 +1976,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   // Account for the toolbar's drop shadow.  The toolbar overlaps with the web
   // content slightly.
-  minY -= 0.0;
+  minY -= [ToolbarController toolbarDropShadowHeight];
 
   // Adjust the content area to be under the toolbar, for fullscreen or below
   // the toolbar is not fullscreen.
@@ -2981,7 +2982,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
       [results addObject:[HeaderDefinition
                              definitionWithView:[_toolbarCoordinator view]
                                 headerBehaviour:Hideable
-                               heightAdjustment:0.0
+                               heightAdjustment:[ToolbarController
+                                                    toolbarDropShadowHeight]
                                           inset:0.0]];
     }
   } else {
@@ -2995,7 +2997,8 @@ bubblePresenterForFeature:(const base::Feature&)feature
       [results addObject:[HeaderDefinition
                              definitionWithView:[_toolbarCoordinator view]
                                 headerBehaviour:Hideable
-                               heightAdjustment:0.0
+                               heightAdjustment:[ToolbarController
+                                                    toolbarDropShadowHeight]
                                           inset:0.0]];
     }
     if ([_findBarController view]) {
@@ -4100,7 +4103,9 @@ bubblePresenterForFeature:(const base::Feature&)feature
   [self initializeBookmarkInteractionController];
   [_bookmarkInteractionController
       presentBookmarkForTab:[_model currentTab]
-        currentlyBookmarked:_toolbarModelIOS->IsCurrentTabBookmarkedByUser()];
+        currentlyBookmarked:_toolbarModelIOS->IsCurrentTabBookmarkedByUser()
+                     inView:nil
+                 originRect:CGRectZero];
 }
 
 - (void)showToolsMenu {

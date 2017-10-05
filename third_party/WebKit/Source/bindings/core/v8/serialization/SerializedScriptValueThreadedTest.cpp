@@ -8,7 +8,6 @@
 #include "bindings/core/v8/V8BindingForTesting.h"
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "bindings/core/v8/serialization/UnpackedSerializedScriptValue.h"
-#include "build/build_config.h"
 #include "core/dom/Document.h"
 #include "core/typed_arrays/DOMArrayBuffer.h"
 #include "core/workers/WorkerThreadTestHelper.h"
@@ -18,16 +17,8 @@ namespace blink {
 
 // On debug builds, Oilpan contains checks that will fail if a persistent handle
 // is destroyed on the wrong thread.
-// Flaky test on 'WebKit Win x64 Builder (dbg)'. See crbug.com/771169.
-#if defined(OS_WIN)
-#define MAYBE_SafeDestructionIfSendingThreadKeepsAlive \
-  DISABLED_SafeDestructionIfSendingThreadKeepsAlive
-#else
-#define MAYBE_SafeDestructionIfSendingThreadKeepsAlive \
-  SafeDestructionIfSendingThreadKeepsAlive
-#endif
 TEST(SerializedScriptValueThreadedTest,
-     MAYBE_SafeDestructionIfSendingThreadKeepsAlive) {
+     SafeDestructionIfSendingThreadKeepsAlive) {
   V8TestingScope scope;
 
   // Start a worker.

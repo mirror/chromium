@@ -342,6 +342,7 @@ cr.define('cr.ui', function() {
 
       waitForOobeScreen('oauth-enrollment', function() {
         chrome.send('oauthEnrollCompleteLogin', [username, 'authcode']);
+        chrome.send('completeLogin', [gaia_id, username, password, false]);
       });
     }
   };

@@ -34,6 +34,7 @@ static_library("content") {
     "//content/public/browser",
     "//mojo/public/cpp/bindings",
     "//third_party/WebKit/public:blink_headers",
+    "//third_party/libphonenumber",
     "//url",
   ]
 }

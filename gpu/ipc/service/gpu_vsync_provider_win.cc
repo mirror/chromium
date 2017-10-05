@@ -13,7 +13,6 @@
 #include "base/debug/alias.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/stringprintf.h"
-#include "base/synchronization/lock.h"
 #include "base/threading/thread.h"
 #include "base/trace_event/trace_event.h"
 #include "gpu/ipc/common/gpu_messages.h"
@@ -84,10 +83,6 @@ class GpuVSyncWorker : public base::Thread,
   friend class base::RefCountedThreadSafe<GpuVSyncWorker>;
   ~GpuVSyncWorker() override;
 
-  // base::Thread overrides
-  void Init() override;
-  void CleanUp() override;
-
   // These error codes are specified for diagnostic purposes when falling back
   // to delay based v-sync.
   enum class WaitForVBlankErrorCode {
@@ -119,21 +114,13 @@ class GpuVSyncWorker : public base::Thread,
   void UseDelayBasedVSyncOnError(WaitForVBlankErrorCode error_code);
   void ReportErrorCode(WaitForVBlankErrorCode error_code);
 
-  // Specifies whether worker tasks are running.
-  // This can be set on the worker thread only.
+  // Specifies whether background tasks are running.
+  // This can be set on background thread only.
   bool running_ = false;
 
-  // Specified whether the worker is enabled.  This is accessed from I/O
-  // and v-sync threads and can be changed on main and I/O threads.
+  // Specified whether the worker is enabled.  This is accessed from both
+  // threads but can be changed on the main thread only.
   base::subtle::AtomicWord enabled_ = false;
-
-  // This is used to prevent a race condition when SetNeedsVsync
-  // is called at or after v-sync thread shutdown.
-  base::Lock shutdown_lock_;
-
-  // Task runner for the worker thread, initialized in Init() and cleared in
-  // CleanUp(). Can be used from any thread.
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   const gfx::VSyncProvider::UpdateVSyncCallback callback_;
   const SurfaceHandle surface_handle_;
@@ -252,23 +239,12 @@ GpuVSyncWorker::GpuVSyncWorker(
 
 GpuVSyncWorker::~GpuVSyncWorker() = default;
 
-void GpuVSyncWorker::Init() {
-  task_runner_ = task_runner();
-}
-
-void GpuVSyncWorker::CleanUp() {
-  task_runner_ = nullptr;
-}
-
 void GpuVSyncWorker::CleanupAndStop() {
-  base::AutoLock lock(shutdown_lock_);
-
-  base::subtle::NoBarrier_Store(&enabled_, false);
-
+  Enable(false);
   // Thread::Close() call below will block until this task has finished running
   // so it is safe to post it here and pass unretained pointer.
-  task_runner_->PostTask(FROM_HERE, base::Bind(&GpuVSyncWorker::CloseAdapter,
-                                               base::Unretained(this)));
+  task_runner()->PostTask(FROM_HERE, base::Bind(&GpuVSyncWorker::CloseAdapter,
+                                                base::Unretained(this)));
   Stop();
 
   DCHECK_EQ(0u, current_adapter_handle_);
@@ -276,14 +252,10 @@ void GpuVSyncWorker::CleanupAndStop() {
 }
 
 void GpuVSyncWorker::Enable(bool enabled) {
-  base::AutoLock lock(shutdown_lock_);
-  if (!task_runner_)
-    return;
-
   auto was_enabled = base::subtle::NoBarrier_AtomicExchange(&enabled_, enabled);
 
   if (enabled && !was_enabled)
-    task_runner_->PostTask(
+    task_runner()->PostTask(
         FROM_HERE, base::Bind(&GpuVSyncWorker::StartRunningVSyncOnThread,
                               base::Unretained(this)));
 }
@@ -475,9 +447,9 @@ void GpuVSyncWorker::InvokeCallbackAndReschedule(base::TimeTicks timestamp,
   // Send update and restart the task if still enabled.
   if (base::subtle::NoBarrier_Load(&enabled_)) {
     callback_.Run(timestamp, interval);
-    task_runner_->PostTask(FROM_HERE,
-                           base::Bind(&GpuVSyncWorker::WaitForVSyncOnThread,
-                                      base::Unretained(this)));
+    task_runner()->PostTask(FROM_HERE,
+                            base::Bind(&GpuVSyncWorker::WaitForVSyncOnThread,
+                                       base::Unretained(this)));
   } else {
     running_ = false;
     // Clear last_timestamp_ to avoid a long interval when the worker restarts.
@@ -498,7 +470,7 @@ void GpuVSyncWorker::UseDelayBasedVSyncOnError(
   base::TimeTicks now = base::TimeTicks::Now();
   base::TimeTicks next_vsync = now.SnappedToNextTick(timebase, interval);
 
-  task_runner_->PostDelayedTask(
+  task_runner()->PostDelayedTask(
       FROM_HERE,
       base::Bind(&GpuVSyncWorker::InvokeCallbackAndReschedule,
                  base::Unretained(this), next_vsync, interval),
@@ -634,6 +606,9 @@ GpuVSyncProviderWin::GpuVSyncProviderWin(
   vsync_worker_ = new GpuVSyncWorker(
       base::Bind(&GpuVSyncProviderWin::OnVSync, base::Unretained(this)),
       surface_handle);
+  message_filter_ =
+      new GpuVSyncMessageFilter(vsync_worker_, delegate->GetRouteID());
+  delegate->AddFilter(message_filter_.get());
 
   // Start the thread.
   base::Thread::Options options;
@@ -644,11 +619,6 @@ GpuVSyncProviderWin::GpuVSyncProviderWin(
   // possible latency.
   options.priority = base::ThreadPriority::REALTIME_AUDIO;
   vsync_worker_->StartWithOptions(options);
-
-  // Add IPC message filter.
-  message_filter_ =
-      new GpuVSyncMessageFilter(vsync_worker_, delegate->GetRouteID());
-  delegate->AddFilter(message_filter_.get());
 }
 
 GpuVSyncProviderWin::~GpuVSyncProviderWin() {

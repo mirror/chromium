@@ -38,7 +38,8 @@ WebDisplayItemListImpl::~WebDisplayItemListImpl() = default;
 
 void WebDisplayItemListImpl::AppendDrawingItem(
     const blink::WebRect& visual_rect,
-    sk_sp<const cc::PaintOpBuffer> record) {
+    sk_sp<const cc::PaintOpBuffer> record,
+    const blink::WebRect& record_bounds) {
   display_item_list_->StartPaint();
   display_item_list_->push<cc::DrawRecordOp>(std::move(record));
   display_item_list_->EndPaintOfUnpaired(visual_rect);

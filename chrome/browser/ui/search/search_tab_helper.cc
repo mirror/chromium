@@ -67,8 +67,8 @@ bool InInstantProcess(Profile* profile,
   InstantService* instant_service =
       InstantServiceFactory::GetForProfile(profile);
   return instant_service &&
-         instant_service->IsInstantProcess(
-             contents->GetMainFrame()->GetProcess()->GetID());
+      instant_service->IsInstantProcess(
+          contents->GetRenderProcessHost()->GetID());
 }
 
 // Called when an NTP finishes loading. If the load start time was noted,
@@ -403,15 +403,20 @@ void SearchTabHelper::PasteIntoOmnibox(const base::string16& text) {
 #endif
 }
 
-bool SearchTabHelper::ChromeIdentityCheck(const base::string16& identity) {
+void SearchTabHelper::OnChromeIdentityCheck(const base::string16& identity) {
   SigninManagerBase* manager = SigninManagerFactory::GetForProfile(profile());
-  return manager &&
-         gaia::AreEmailsSame(base::UTF16ToUTF8(identity),
-                             manager->GetAuthenticatedAccountInfo().email);
+  if (manager) {
+    ipc_router_.SendChromeIdentityCheckResult(
+        identity,
+        gaia::AreEmailsSame(base::UTF16ToUTF8(identity),
+                            manager->GetAuthenticatedAccountInfo().email));
+  } else {
+    ipc_router_.SendChromeIdentityCheckResult(identity, false);
+  }
 }
 
-bool SearchTabHelper::HistorySyncCheck() {
-  return IsHistorySyncEnabled(profile());
+void SearchTabHelper::OnHistorySyncCheck() {
+  ipc_router_.SendHistorySyncCheckResult(IsHistorySyncEnabled(profile()));
 }
 
 const OmniboxView* SearchTabHelper::GetOmniboxView() const {

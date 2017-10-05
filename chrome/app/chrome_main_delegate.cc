@@ -869,17 +869,17 @@ void ChromeMainDelegate::PreSandboxStartup() {
     int pak_fd = global_descriptors->Get(kAndroidLocalePakDescriptor);
     base::MemoryMappedFile::Region pak_region =
         global_descriptors->GetRegion(kAndroidLocalePakDescriptor);
-    ui::ResourceBundle::InitSharedInstanceWithPakFileRegion(base::File(pak_fd),
-                                                            pak_region);
+    ResourceBundle::InitSharedInstanceWithPakFileRegion(base::File(pak_fd),
+                                                        pak_region);
 
     // Load secondary locale .pak file if it exists.
     pak_fd = global_descriptors->MaybeGet(kAndroidSecondaryLocalePakDescriptor);
     if (pak_fd != -1) {
       pak_region = global_descriptors->GetRegion(
           kAndroidSecondaryLocalePakDescriptor);
-      ui::ResourceBundle::GetSharedInstance()
-          .LoadSecondaryLocaleDataWithPakFileRegion(base::File(pak_fd),
-                                                    pak_region);
+      ResourceBundle::GetSharedInstance().
+          LoadSecondaryLocaleDataWithPakFileRegion(
+              base::File(pak_fd), pak_region);
     }
 
     int extra_pak_keys[] = {
@@ -889,7 +889,7 @@ void ChromeMainDelegate::PreSandboxStartup() {
     for (size_t i = 0; i < arraysize(extra_pak_keys); ++i) {
       pak_fd = global_descriptors->Get(extra_pak_keys[i]);
       pak_region = global_descriptors->GetRegion(extra_pak_keys[i]);
-      ui::ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
+      ResourceBundle::GetSharedInstance().AddDataPackFromFileRegion(
           base::File(pak_fd), pak_region, ui::SCALE_FACTOR_100P);
     }
 
@@ -903,7 +903,7 @@ void ChromeMainDelegate::PreSandboxStartup() {
 
     base::FilePath resources_pack_path;
     PathService::Get(chrome::FILE_RESOURCES_PACK, &resources_pack_path);
-    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+    ResourceBundle::GetSharedInstance().AddDataPackFromPath(
         resources_pack_path, ui::SCALE_FACTOR_NONE);
 #endif
     CHECK(!loaded_locale.empty()) << "Locale could not be found for " <<
@@ -1006,7 +1006,7 @@ int ChromeMainDelegate::RunProcess(
 
 void ChromeMainDelegate::ProcessExiting(const std::string& process_type) {
   if (SubprocessNeedsResourceBundle(process_type))
-    ui::ResourceBundle::CleanupSharedInstance();
+    ResourceBundle::CleanupSharedInstance();
 #if !defined(OS_ANDROID)
   logging::CleanupChromeLogging();
 #else

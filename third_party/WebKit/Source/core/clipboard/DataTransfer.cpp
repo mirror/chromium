@@ -28,6 +28,7 @@
 #include <memory>
 
 #include "build/build_config.h"
+#include "core/HTMLNames.h"
 #include "core/clipboard/DataObject.h"
 #include "core/clipboard/DataTransferItem.h"
 #include "core/clipboard/DataTransferItemList.h"
@@ -355,9 +356,7 @@ FloatRect DataTransfer::ClipByVisualViewport(const FloatRect& rect_in_frame,
   IntRect viewport_in_root_frame =
       IntRect(frame.GetPage()->GetVisualViewport().VisibleRect());
   FloatRect viewport_in_frame =
-      frame.View()->ConvertFromRootFrame(viewport_in_root_frame);
-  auto* view_scrollable_area = frame.View()->LayoutViewportScrollableArea();
-  viewport_in_frame.Move(view_scrollable_area->GetScrollOffset());
+      frame.View()->RootFrameToContents(viewport_in_root_frame);
   return Intersection(viewport_in_frame, rect_in_frame);
 }
 

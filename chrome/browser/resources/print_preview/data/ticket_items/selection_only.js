@@ -5,40 +5,44 @@
 cr.define('print_preview.ticket_items', function() {
   'use strict';
 
-  class SelectionOnly extends print_preview.ticket_items.TicketItem {
-    /**
-     * Ticket item whose value is a {@code boolean} that represents whether to
-     * print selection only.
-     * @param {!print_preview.DocumentInfo} documentInfo Information about the
-     *     document to print.
-     */
-    constructor(documentInfo) {
-      super(
-          null /*appState*/, null /*field*/, null /*destinationStore*/,
-          documentInfo);
-    }
+  /**
+   * Ticket item whose value is a {@code boolean} that represents whether to
+   * print selection only.
+   * @param {!print_preview.DocumentInfo} documentInfo Information about the
+   *     document to print.
+   * @constructor
+   * @extends {print_preview.ticket_items.TicketItem}
+   */
+  function SelectionOnly(documentInfo) {
+    print_preview.ticket_items.TicketItem.call(
+        this, null /*appState*/, null /*field*/, null /*destinationStore*/,
+        documentInfo);
+  }
+
+  SelectionOnly.prototype = {
+    __proto__: print_preview.ticket_items.TicketItem.prototype,
 
     /** @override */
-    wouldValueBeValid(value) {
+    wouldValueBeValid: function(value) {
       return true;
-    }
+    },
 
     /** @override */
-    isCapabilityAvailable() {
+    isCapabilityAvailable: function() {
       return this.getDocumentInfoInternal().isModifiable &&
           this.getDocumentInfoInternal().hasSelection;
-    }
+    },
 
     /** @override */
-    getDefaultValueInternal() {
+    getDefaultValueInternal: function() {
       return false;
-    }
+    },
 
     /** @override */
-    getCapabilityNotAvailableValueInternal() {
+    getCapabilityNotAvailableValueInternal: function() {
       return false;
     }
-  }
+  };
 
   // Export
   return {SelectionOnly: SelectionOnly};

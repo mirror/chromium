@@ -89,6 +89,9 @@ function createSearchEntry(timestamp, urlStr) {
 function createHistoryInfo(searchTerm) {
   return {
     finished: true,
+    hasSyncedResults: false,
+    queryInterval: 'Monday - Tuesday',
+    queryMonth: 'June',
     term: searchTerm || ''
   };
 }

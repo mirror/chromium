@@ -186,10 +186,10 @@ void ClearStorageTaskTest::OnClearStorageDone(const base::Time& start_time,
 void ClearStorageTaskTest::AddPages(const PageSettings& setting,
                                     base::SimpleTestClock* clock_ptr) {
   generator()->SetNamespace(setting.name_space);
-  generator()->SetArchiveDirectory(temp_dir_path());
   for (int i = 0; i < setting.fresh_page_count; ++i) {
     generator()->SetLastAccessTime(clock_ptr->Now());
-    OfflinePageItem page = generator()->CreateItemWithTempFile();
+    OfflinePageItem page =
+        generator()->CreateItemWithTempFileInDir(temp_dir_path());
     store_test_util()->InsertItem(page);
   }
   for (int i = 0; i < setting.expired_page_count; ++i) {
@@ -197,7 +197,8 @@ void ClearStorageTaskTest::AddPages(const PageSettings& setting,
     generator()->SetLastAccessTime(
         clock_ptr->Now() - policy_controller_->GetPolicy(setting.name_space)
                                .lifetime_policy.expiration_period);
-    OfflinePageItem page = generator()->CreateItemWithTempFile();
+    OfflinePageItem page =
+        generator()->CreateItemWithTempFileInDir(temp_dir_path());
     store_test_util()->InsertItem(page);
   }
 }

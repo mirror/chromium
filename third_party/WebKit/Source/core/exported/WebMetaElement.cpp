@@ -4,8 +4,9 @@
 
 #include "public/web/WebMetaElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/html/HTMLMetaElement.h"
-#include "core/html_names.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 
 namespace blink {

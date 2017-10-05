@@ -34,6 +34,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptEventListener.h"
 #include "core/CSSPropertyNames.h"
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/css/StyleChangeReason.h"
 #include "core/dom/AXObjectCache.h"
@@ -54,6 +55,8 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLCollection.h"
+#include "core/html/HTMLDataListElement.h"
+#include "core/html/HTMLDataListOptionsCollection.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLImageLoader.h"
 #include "core/html/HTMLOptionElement.h"
@@ -61,13 +64,11 @@
 #include "core/html/forms/DateTimeChooser.h"
 #include "core/html/forms/FileInputType.h"
 #include "core/html/forms/FormController.h"
-#include "core/html/forms/HTMLDataListElement.h"
-#include "core/html/forms/HTMLDataListOptionsCollection.h"
 #include "core/html/forms/InputType.h"
 #include "core/html/forms/SearchInputType.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutTheme.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "platform/Language.h"
@@ -953,8 +954,10 @@ void HTMLInputElement::setChecked(bool now_checked,
 
   if (RadioButtonGroupScope* scope = GetRadioButtonGroupScope())
     scope->UpdateCheckedState(this);
-  if (LayoutObject* o = GetLayoutObject())
-    o->InvalidateIfControlStateChanged(kCheckedControlState);
+  if (GetLayoutObject())
+    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                kCheckedControlState);
+
   SetNeedsValidityCheck();
 
   // Ideally we'd do this from the layout tree (matching
@@ -988,8 +991,9 @@ void HTMLInputElement::setIndeterminate(bool new_value) {
 
   PseudoStateChanged(CSSSelector::kPseudoIndeterminate);
 
-  if (LayoutObject* o = GetLayoutObject())
-    o->InvalidateIfControlStateChanged(kCheckedControlState);
+  if (GetLayoutObject())
+    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                kCheckedControlState);
 }
 
 int HTMLInputElement::size() const {
@@ -1048,15 +1052,12 @@ void HTMLInputElement::SetValueForUser(const String& value) {
   setValue(value, kDispatchChangeEvent);
 }
 
-const String& HTMLInputElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
 void HTMLInputElement::SetSuggestedValue(const String& value) {
   if (!input_type_->CanSetSuggestedValue())
     return;
+
+  TextControlElement::SetSuggestedValue(SanitizeValue(value));
   needs_to_update_view_value_ = true;
-  suggested_value_ = SanitizeValue(value);
   SetNeedsStyleRecalc(
       kSubtreeStyleChange,
       StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
@@ -1100,14 +1101,16 @@ void HTMLInputElement::setValue(const String& value,
   if (!input_type_->CanSetValue(value))
     return;
 
+  // Clear the suggested value. Use the base class version to not trigger a view
+  // update.
+  TextControlElement::SetSuggestedValue(String());
+
   EventQueueScope scope;
   String sanitized_value = SanitizeValue(value);
   bool value_changed = sanitized_value != this->value();
 
   SetLastChangeWasNotUserEdit();
   needs_to_update_view_value_ = true;
-  // Prevent TextFieldInputType::setValue from using the suggested value.
-  suggested_value_ = String();
 
   input_type_->SetValue(sanitized_value, value_changed, event_behavior,
                         selection);
@@ -1179,7 +1182,9 @@ void HTMLInputElement::SetValueFromRenderer(const String& value) {
   // File upload controls will never use this.
   DCHECK_NE(type(), InputTypeNames::file);
 
-  suggested_value_ = String();
+  // Clear the suggested value. Use the base class version to not trigger a view
+  // update.
+  TextControlElement::SetSuggestedValue(String());
 
   // Renderer and our event handler are responsible for sanitizing values.
   DCHECK(value == input_type_->SanitizeUserInputValue(value) ||
@@ -1683,6 +1688,10 @@ bool HTMLInputElement::SupportsPlaceholder() const {
 
 void HTMLInputElement::UpdatePlaceholderText() {
   return input_type_view_->UpdatePlaceholderText();
+}
+
+String HTMLInputElement::GetPlaceholderValue() const {
+  return !SuggestedValue().IsEmpty() ? SuggestedValue() : StrippedPlaceholder();
 }
 
 bool HTMLInputElement::SupportsAutocapitalize() const {

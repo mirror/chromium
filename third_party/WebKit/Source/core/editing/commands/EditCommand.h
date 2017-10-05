@@ -62,6 +62,9 @@ class CORE_EXPORT EditCommand : public GarbageCollectedFinalized<EditCommand> {
   Document& GetDocument() const { return *document_.Get(); }
   CompositeEditCommand* Parent() const { return parent_; }
 
+  // TODO(yosin) |isRenderedCharacter()| should be removed, and we should use
+  // |VisiblePosition::characterAfter()| and
+  // |VisiblePosition::characterBefore()|.
   static bool IsRenderedCharacter(const Position&);
 
  private:

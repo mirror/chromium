@@ -189,7 +189,7 @@ void InstallAttributes::ReadAttributesIfReady(const base::Closure& callback,
 
 void InstallAttributes::SetBlockDevmodeInTpm(
     bool block_devmode,
-    DBusMethodCallback<cryptohome::BaseReply> callback) {
+    const CryptohomeClient::ProtobufMethodCallback& callback) {
   DCHECK(!callback.is_null());
   DCHECK(!device_locked_);
 
@@ -202,8 +202,7 @@ void InstallAttributes::SetBlockDevmodeInTpm(
         cryptohome::DEVELOPER_DISABLE_CASE_CLOSED_DEBUGGING_UNLOCK);
   }
 
-  cryptohome_client_->SetFirmwareManagementParametersInTpm(request,
-                                                           std::move(callback));
+  cryptohome_client_->SetFirmwareManagementParametersInTpm(request, callback);
 }
 
 void InstallAttributes::LockDevice(policy::DeviceMode device_mode,

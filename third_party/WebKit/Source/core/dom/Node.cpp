@@ -28,6 +28,8 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/node_or_string.h"
+#include "core/HTMLNames.h"
+#include "core/MathMLNames.h"
 #include "core/css/CSSSelector.h"
 #include "core/css/StyleEngine.h"
 #include "core/css/resolver/StyleResolver.h"
@@ -86,11 +88,9 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLSlotElement.h"
 #include "core/html/custom/CustomElement.h"
-#include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/mathml_names.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
@@ -629,7 +629,7 @@ void Node::normalize() {
 }
 
 LayoutBox* Node::GetLayoutBox() const {
-  LayoutObject* layout_object = GetLayoutObject();
+  LayoutObject* layout_object = this->GetLayoutObject();
   return layout_object && layout_object->IsBox() ? ToLayoutBox(layout_object)
                                                  : nullptr;
 }
@@ -685,7 +685,7 @@ void Node::SetNonAttachedStyle(RefPtr<ComputedStyle> non_attached_style) {
 }
 
 LayoutBoxModelObject* Node::GetLayoutBoxModelObject() const {
-  LayoutObject* layout_object = GetLayoutObject();
+  LayoutObject* layout_object = this->GetLayoutObject();
   return layout_object && layout_object->IsBoxModelObject()
              ? ToLayoutBoxModelObject(layout_object)
              : nullptr;
@@ -882,7 +882,7 @@ bool Node::InActiveDocument() const {
   return isConnected() && GetDocument().IsActive();
 }
 
-const Node* Node::FocusDelegate() const {
+Node* Node::FocusDelegate() {
   return this;
 }
 
@@ -904,7 +904,7 @@ bool Node::IsInert() const {
   }
 
   if (RuntimeEnabledFeatures::InertAttributeEnabled()) {
-    const Element* element = IsElementNode()
+    const Element* element = this->IsElementNode()
                                  ? ToElement(this)
                                  : FlatTreeTraversal::ParentElement(*this);
     while (element) {
@@ -1231,7 +1231,7 @@ bool Node::isEqualNode(Node* other) const {
   if (!other)
     return false;
 
-  NodeType node_type = getNodeType();
+  NodeType node_type = this->getNodeType();
   if (node_type != other->getNodeType())
     return false;
 
@@ -1953,7 +1953,7 @@ void Node::WillMoveToNewDocument(Document& old_document,
 void Node::DidMoveToNewDocument(Document& old_document) {
   TreeScopeAdopter::EnsureDidMoveToNewDocumentWasCalled(old_document);
 
-  if (const EventTargetData* event_target_data = GetEventTargetData()) {
+  if (const EventTargetData* event_target_data = this->GetEventTargetData()) {
     const EventListenerMap& listener_map =
         event_target_data->event_listener_map;
     if (!listener_map.IsEmpty()) {
@@ -2370,7 +2370,7 @@ void Node::DefaultEventHandler(Event* event) {
       // remove this synchronous layout if we avoid synchronous layout in
       // LayoutTextControlSingleLine::scrollHeight
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-      LayoutObject* layout_object = GetLayoutObject();
+      LayoutObject* layout_object = this->GetLayoutObject();
       while (
           layout_object &&
           (!layout_object->IsBox() ||

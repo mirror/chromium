@@ -132,8 +132,7 @@ void SessionRestoreStatsCollector::TrackTabs(
   // If this is the first call to TrackTabs then start observing events.
   if (tab_loader_stats_.tab_count == 0) {
     registrar_.Add(
-        this,
-        content::NOTIFICATION_RENDER_WIDGET_HOST_DID_COMPLETE_RESIZE_OR_REPAINT,
+        this, content::NOTIFICATION_RENDER_WIDGET_HOST_DID_UPDATE_BACKING_STORE,
         content::NotificationService::AllSources());
   }
 
@@ -243,8 +242,7 @@ void SessionRestoreStatsCollector::Observe(
 
       break;
     }
-    case content::
-        NOTIFICATION_RENDER_WIDGET_HOST_DID_COMPLETE_RESIZE_OR_REPAINT: {
+    case content::NOTIFICATION_RENDER_WIDGET_HOST_DID_UPDATE_BACKING_STORE: {
       // This notification is across all tabs in the browser so notifications
       // will arrive for tabs that the collector is not explicitly tracking.
 
@@ -274,8 +272,7 @@ void SessionRestoreStatsCollector::Observe(
         // mechanism is no longer needed.
         registrar_.Remove(
             this,
-            content::
-                NOTIFICATION_RENDER_WIDGET_HOST_DID_COMPLETE_RESIZE_OR_REPAINT,
+            content::NOTIFICATION_RENDER_WIDGET_HOST_DID_UPDATE_BACKING_STORE,
             content::NotificationService::AllSources());
 
         // Remove any tabs that have loaded. These were only being kept around
@@ -341,8 +338,7 @@ void SessionRestoreStatsCollector::RemoveTab(NavigationController* tab) {
   if (tabs_tracked_.size() == deferred_tab_count_ && !got_first_paint_) {
     got_first_paint_ = true;
     registrar_.Remove(
-        this,
-        content::NOTIFICATION_RENDER_WIDGET_HOST_DID_COMPLETE_RESIZE_OR_REPAINT,
+        this, content::NOTIFICATION_RENDER_WIDGET_HOST_DID_UPDATE_BACKING_STORE,
         content::NotificationService::AllSources());
   }
 }

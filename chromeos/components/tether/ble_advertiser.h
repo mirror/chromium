@@ -27,7 +27,7 @@ namespace chromeos {
 
 namespace tether {
 
-class BleSynchronizerBase;
+class BleSynchronizer;
 class ErrorTolerantBleAdvertisement;
 
 // Advertises to a given device. When StartAdvertisingToDevice() is called, a
@@ -47,7 +47,7 @@ class BleAdvertiser {
 
   BleAdvertiser(cryptauth::LocalDeviceDataProvider* local_device_data_provider,
                 cryptauth::RemoteBeaconSeedFetcher* remote_beacon_seed_fetcher,
-                BleSynchronizerBase* ble_synchronizer);
+                BleSynchronizer* ble_synchronizer);
   virtual ~BleAdvertiser();
 
   virtual bool StartAdvertisingToDevice(
@@ -84,7 +84,7 @@ class BleAdvertiser {
 
   cryptauth::RemoteBeaconSeedFetcher* remote_beacon_seed_fetcher_;
   cryptauth::LocalDeviceDataProvider* local_device_data_provider_;
-  BleSynchronizerBase* ble_synchronizer_;
+  BleSynchronizer* ble_synchronizer_;
 
   std::unique_ptr<cryptauth::ForegroundEidGenerator> eid_generator_;
 

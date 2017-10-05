@@ -16,7 +16,7 @@
 
 namespace blink {
 
-using LayoutObjectDrawingRecorderTest = PaintControllerPaintTestBase;
+using LayoutObjectDrawingRecorderTest = PaintControllerPaintTest;
 
 namespace {
 

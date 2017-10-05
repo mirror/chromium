@@ -101,8 +101,9 @@ const CGFloat kSeparatorInset = 10;
 @property(nonatomic, copy) NSString* currentQuery;
 // Coordinator for displaying context menus for history entries.
 @property(nonatomic, strong) ContextMenuCoordinator* contextMenuCoordinator;
-// YES if there are no results to show.
-@property(nonatomic, assign) BOOL empty;
+// Type of displayed history entries. Entries can be synced or local, or there
+// may be no history entries.
+@property(nonatomic, assign) HistoryEntriesStatus entriesType;
 // YES if the history panel should show a notice about additional forms of
 // browsing history.
 @property(nonatomic, assign)
@@ -147,7 +148,7 @@ const CGFloat kSeparatorInset = 10;
 @synthesize entryInserter = _entryInserter;
 @synthesize currentQuery = _currentQuery;
 @synthesize contextMenuCoordinator = _contextMenuCoordinator;
-@synthesize empty = _empty;
+@synthesize entriesType = _entriesType;
 @synthesize shouldShowNoticeAboutOtherFormsOfBrowsingHistory =
     _shouldShowNoticeAboutOtherFormsOfBrowsingHistory;
 @synthesize loading = _loading;
@@ -182,7 +183,7 @@ const CGFloat kSeparatorInset = 10;
     _entryInserter =
         [[HistoryEntryInserter alloc] initWithModel:self.collectionViewModel];
     _entryInserter.delegate = self;
-    _empty = YES;
+    _entriesType = NO_ENTRIES;
     [self showHistoryMatchingQuery:nil];
   }
   return self;
@@ -217,6 +218,10 @@ const CGFloat kSeparatorInset = 10;
 - (void)setSearching:(BOOL)searching {
   _searching = searching;
   [self updateEntriesStatusMessage];
+}
+
+- (BOOL)hasHistoryEntries {
+  return self.entriesType != NO_ENTRIES;
 }
 
 - (BOOL)hasSelectedEntries {
@@ -357,14 +362,16 @@ const CGFloat kSeparatorInset = 10;
 
   // If there are no results and no URLs have been loaded, report that no
   // history entries were found.
-  if (results.empty() && self.isEmpty) {
+  if (results.empty() && !self.hasHistoryEntries) {
+    DCHECK(self.entriesType == NO_ENTRIES);
     [self updateEntriesStatusMessage];
     [self.delegate historyCollectionViewControllerDidChangeEntries:self];
     return;
   }
 
   self.finishedLoading = queryResultsInfo.reached_beginning;
-  self.empty = NO;
+  self.entriesType =
+      queryResultsInfo.has_synced_results ? SYNCED_ENTRIES : LOCAL_ENTRIES;
 
   // Header section should be updated outside of batch updates, otherwise
   // loading indicator removal will not be observed.
@@ -556,7 +563,7 @@ const CGFloat kSeparatorInset = 10;
 - (void)fetchHistoryForQuery:(NSString*)query continuation:(BOOL)continuation {
   self.loading = YES;
   // Add loading indicator if no items are shown.
-  if (self.isEmpty && !self.isSearching) {
+  if (!self.hasHistoryEntries && !self.isSearching) {
     [self addLoadingIndicator];
   }
 
@@ -582,7 +589,7 @@ const CGFloat kSeparatorInset = 10;
 
 - (void)updateEntriesStatusMessage {
   CollectionViewItem* entriesStatusItem = nil;
-  if (self.isEmpty) {
+  if (!self.hasHistoryEntries) {
     CollectionViewTextItem* noResultsItem =
         [[CollectionViewTextItem alloc] initWithType:ItemTypeEntriesStatus];
     noResultsItem.text =
@@ -593,7 +600,13 @@ const CGFloat kSeparatorInset = 10;
     HistoryEntriesStatusItem* historyEntriesStatusItem =
         [[HistoryEntriesStatusItem alloc] initWithType:ItemTypeEntriesStatus];
     historyEntriesStatusItem.delegate = self;
-    historyEntriesStatusItem.hidden = self.isSearching;
+    AuthenticationService* authService =
+        AuthenticationServiceFactory::GetForBrowserState(_browserState);
+    BOOL signedIn = authService->IsAuthenticated();
+
+    historyEntriesStatusItem.hidden =
+        self.isSearching || (!signedIn && self.hasHistoryEntries);
+    historyEntriesStatusItem.entriesStatus = self.entriesType;
     historyEntriesStatusItem.showsOtherBrowsingDataNotice =
         _shouldShowNoticeAboutOtherFormsOfBrowsingHistory;
     entriesStatusItem = historyEntriesStatusItem;
@@ -643,7 +656,7 @@ const CGFloat kSeparatorInset = 10;
       completion:^(BOOL) {
         // If only the header section remains, there are no history entries.
         if ([self.collectionViewModel numberOfSections] == 1) {
-          self.empty = YES;
+          self.entriesType = NO_ENTRIES;
         }
         [self updateEntriesStatusMessage];
         [self.delegate historyCollectionViewControllerDidChangeEntries:self];

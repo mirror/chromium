@@ -56,6 +56,7 @@
 #include "core/editing/EphemeralRange.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/TextFinder.h"
+#include "core/editing/VisiblePosition.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/spellcheck/IdleSpellCheckCallback.h"
 #include "core/editing/spellcheck/SpellChecker.h"
@@ -112,7 +113,6 @@
 #include "platform/scroll/Scrollbar.h"
 #include "platform/scroll/ScrollbarTestSuite.h"
 #include "platform/testing/HistogramTester.h"
-#include "platform/testing/PaintTestConfigurations.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -5765,8 +5765,9 @@ TEST_P(ParameterizedWebFrameTest, MoveRangeSelectionExtentScollsInputField) {
 }
 
 static int ComputeOffset(LayoutObject* layout_object, int x, int y) {
-  return layout_object->PositionForPoint(LayoutPoint(x, y))
-      .GetPosition()
+  return CreateVisiblePosition(
+             layout_object->PositionForPoint(LayoutPoint(x, y)))
+      .DeepEquivalent()
       .ComputeOffsetInContainerNode();
 }
 
@@ -11889,9 +11890,16 @@ TEST_P(ParameterizedWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
       gfx::ScrollOffset(0, 3));
 }
 
-class SlimmingPaintWebFrameTest : public PaintTestConfigurations,
-                                  public WebFrameTest {
+class SlimmingPaintWebFrameTest
+    : public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
+      private ScopedRootLayerScrollingForTest,
+      private ScopedSlimmingPaintV2ForTest,
+      public WebFrameTest {
  public:
+  SlimmingPaintWebFrameTest()
+      : ScopedRootLayerScrollingForTest(GetParam()),
+        ScopedSlimmingPaintV2ForTest(true) {}
+
   void SetUp() override {
     web_view_helper_ = WTF::MakeUnique<FrameTestHelpers::WebViewHelper>();
     web_view_helper_->Initialize(nullptr, &web_view_client_, nullptr,
@@ -11944,10 +11952,7 @@ class SlimmingPaintWebFrameTest : public PaintTestConfigurations,
   std::unique_ptr<FrameTestHelpers::WebViewHelper> web_view_helper_;
 };
 
-INSTANTIATE_TEST_CASE_P(
-    All,
-    SlimmingPaintWebFrameTest,
-    ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
+INSTANTIATE_TEST_CASE_P(All, SlimmingPaintWebFrameTest, ::testing::Bool());
 
 TEST_P(SlimmingPaintWebFrameTest, DidScrollCallbackAfterScrollableAreaChanges) {
   DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());

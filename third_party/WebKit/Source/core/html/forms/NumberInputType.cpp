@@ -33,6 +33,7 @@
 
 #include <limits>
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/events/BeforeTextInsertedEvent.h"
@@ -40,7 +41,6 @@
 #include "core/frame/WebFeature.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/html_names.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutObject.h"
 #include "platform/text/PlatformLocale.h"

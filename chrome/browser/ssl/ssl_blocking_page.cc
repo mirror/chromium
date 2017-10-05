@@ -21,6 +21,8 @@
 #include "chrome/browser/ssl/cert_report_helper.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/security_interstitials/core/controller_client.h"
 #include "components/security_interstitials/core/metrics_helper.h"
@@ -129,7 +131,23 @@ SSLBlockingPage* SSLBlockingPage::Create(
     bool is_superfish,
     const base::Callback<void(content::CertificateRequestResultType)>&
         callback) {
-  bool overridable = IsOverridable(options_mask);
+  // Override prefs for the SSLErrorUI.
+  Profile* profile =
+      Profile::FromBrowserContext(web_contents->GetBrowserContext());
+  if (profile &&
+      !profile->GetPrefs()->GetBoolean(prefs::kSSLErrorOverrideAllowed)) {
+    options_mask |= SSLErrorUI::HARD_OVERRIDE_DISABLED;
+  }
+  const bool overridable =
+      is_superfish
+          ? false
+          : IsOverridable(options_mask, Profile::FromBrowserContext(
+                                            web_contents->GetBrowserContext()));
+  if (overridable)
+    options_mask |= SSLErrorUI::SOFT_OVERRIDE_ENABLED;
+  else
+    options_mask &= ~SSLErrorUI::SOFT_OVERRIDE_ENABLED;
+
   std::unique_ptr<ChromeMetricsHelper> metrics_helper(CreateMetricsHelper(
       web_contents, cert_error, request_url, overridable, is_superfish));
   metrics_helper.get()->StartRecordingCaptivePortalMetrics(overridable);
@@ -307,10 +325,11 @@ void SSLBlockingPage::NotifyDenyCertificate() {
 }
 
 // static
-bool SSLBlockingPage::IsOverridable(int options_mask) {
+bool SSLBlockingPage::IsOverridable(int options_mask,
+                                    const Profile* const profile) {
   const bool is_overridable =
       (options_mask & SSLErrorUI::SOFT_OVERRIDE_ENABLED) &&
       !(options_mask & SSLErrorUI::STRICT_ENFORCEMENT) &&
-      !(options_mask & SSLErrorUI::HARD_OVERRIDE_DISABLED);
+      profile->GetPrefs()->GetBoolean(prefs::kSSLErrorOverrideAllowed);
   return is_overridable;
 }

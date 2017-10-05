@@ -8,26 +8,26 @@
 #include <set>
 
 #include "base/macros.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
-class PageCoordinationUnitImpl : public CoordinationUnitBase {
+class PageCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   PageCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~PageCoordinationUnitImpl() override;
 
-  // CoordinationUnitBase implementation.
-  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
+  // CoordinationUnitImpl implementation.
+  std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
   void RecalculateProperty(const mojom::PropertyType property_type) override;
 
   bool IsVisible() const;
 
  private:
-  // CoordinationUnitBase implementation.
+  // CoordinationUnitImpl implementation.
   void OnEventReceived(const mojom::Event event) override;
   void OnPropertyChanged(const mojom::PropertyType property_type,
                          int64_t value) override;
@@ -37,7 +37,7 @@ class PageCoordinationUnitImpl : public CoordinationUnitBase {
   bool CalculateExpectedTaskQueueingDuration(int64_t* output);
 
   // Returns the main frame CU or nullptr if this page has no main frame.
-  CoordinationUnitBase* GetMainFrameCoordinationUnit();
+  CoordinationUnitImpl* GetMainFrameCoordinationUnit();
 
   DISALLOW_COPY_AND_ASSIGN(PageCoordinationUnitImpl);
 };

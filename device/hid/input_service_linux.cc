@@ -51,7 +51,7 @@ bool GetBoolProperty(udev_device* device, const char* key) {
   return (value != 0);
 }
 
-device::mojom::InputDeviceType GetDeviceType(udev_device* device) {
+InputServiceLinux::InputDeviceInfo::Type GetDeviceType(udev_device* device) {
   // Bluetooth classic hid devices are registered under bluetooth subsystem.
   // Bluetooth LE hid devices are registered under virtual misc/hid subsystems.
   if (udev_device_get_parent_with_subsystem_devtype(device, kTypeBluetooth,
@@ -60,13 +60,13 @@ device::mojom::InputDeviceType GetDeviceType(udev_device* device) {
                                                      NULL) &&
        udev_device_get_parent_with_subsystem_devtype(device, kSubsystemMisc,
                                                      NULL))) {
-    return device::mojom::InputDeviceType::TYPE_BLUETOOTH;
+    return InputServiceLinux::InputDeviceInfo::TYPE_BLUETOOTH;
   }
   if (udev_device_get_parent_with_subsystem_devtype(device, kTypeUsb, NULL))
-    return device::mojom::InputDeviceType::TYPE_USB;
+    return InputServiceLinux::InputDeviceInfo::TYPE_USB;
   if (udev_device_get_parent_with_subsystem_devtype(device, kTypeSerio, NULL))
-    return device::mojom::InputDeviceType::TYPE_SERIO;
-  return device::mojom::InputDeviceType::TYPE_UNKNOWN;
+    return InputServiceLinux::InputDeviceInfo::TYPE_SERIO;
+  return InputServiceLinux::InputDeviceInfo::TYPE_UNKNOWN;
 }
 
 std::string GetParentDeviceName(udev_device* device, const char* subsystem) {
@@ -122,34 +122,34 @@ void InputServiceLinuxImpl::OnDeviceAdded(udev_device* device) {
   if (!devnode)
     return;
 
-  auto info = device::mojom::InputDeviceInfo::New();
-  info->id = devnode;
+  InputDeviceInfo info;
+  info.id = devnode;
 
   const char* subsystem = udev_device_get_subsystem(device);
   if (!subsystem)
     return;
   if (strcmp(subsystem, kSubsystemHid) == 0) {
-    info->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_HID;
-    info->name = GetParentDeviceName(device, kSubsystemHid);
+    info.subsystem = InputServiceLinux::InputDeviceInfo::SUBSYSTEM_HID;
+    info.name = GetParentDeviceName(device, kSubsystemHid);
   } else if (strcmp(subsystem, kSubsystemInput) == 0) {
-    info->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    info->name = GetParentDeviceName(device, kSubsystemInput);
+    info.subsystem = InputServiceLinux::InputDeviceInfo::SUBSYSTEM_INPUT;
+    info.name = GetParentDeviceName(device, kSubsystemInput);
   } else {
     return;
   }
 
-  info->type = GetDeviceType(device);
+  info.type = GetDeviceType(device);
 
-  info->is_accelerometer = GetBoolProperty(device, kIdInputAccelerometer);
-  info->is_joystick = GetBoolProperty(device, kIdInputJoystick);
-  info->is_key = GetBoolProperty(device, kIdInputKey);
-  info->is_keyboard = GetBoolProperty(device, kIdInputKeyboard);
-  info->is_mouse = GetBoolProperty(device, kIdInputMouse);
-  info->is_tablet = GetBoolProperty(device, kIdInputTablet);
-  info->is_touchpad = GetBoolProperty(device, kIdInputTouchpad);
-  info->is_touchscreen = GetBoolProperty(device, kIdInputTouchscreen);
+  info.is_accelerometer = GetBoolProperty(device, kIdInputAccelerometer);
+  info.is_joystick = GetBoolProperty(device, kIdInputJoystick);
+  info.is_key = GetBoolProperty(device, kIdInputKey);
+  info.is_keyboard = GetBoolProperty(device, kIdInputKeyboard);
+  info.is_mouse = GetBoolProperty(device, kIdInputMouse);
+  info.is_tablet = GetBoolProperty(device, kIdInputTablet);
+  info.is_touchpad = GetBoolProperty(device, kIdInputTouchpad);
+  info.is_touchscreen = GetBoolProperty(device, kIdInputTouchscreen);
 
-  AddDevice(std::move(info));
+  AddDevice(info);
 }
 
 void InputServiceLinuxImpl::OnDeviceRemoved(udev_device* device) {
@@ -162,6 +162,21 @@ void InputServiceLinuxImpl::OnDeviceRemoved(udev_device* device) {
 }
 
 }  // namespace
+
+InputServiceLinux::InputDeviceInfo::InputDeviceInfo()
+    : subsystem(SUBSYSTEM_UNKNOWN),
+      type(TYPE_UNKNOWN),
+      is_accelerometer(false),
+      is_joystick(false),
+      is_key(false),
+      is_keyboard(false),
+      is_mouse(false),
+      is_tablet(false),
+      is_touchpad(false),
+      is_touchscreen(false) {}
+
+InputServiceLinux::InputDeviceInfo::InputDeviceInfo(
+    const InputDeviceInfo& other) = default;
 
 InputServiceLinux::InputServiceLinux() {
 }
@@ -203,18 +218,28 @@ void InputServiceLinux::RemoveObserver(Observer* observer) {
     observers_.RemoveObserver(observer);
 }
 
-void InputServiceLinux::GetDevices(
-    std::vector<device::mojom::InputDeviceInfoPtr>* devices) {
+void InputServiceLinux::GetDevices(std::vector<InputDeviceInfo>* devices) {
   DCHECK(CalledOnValidThread());
-  for (auto& device : devices_)
-    devices->push_back(device.second->Clone());
+  for (DeviceMap::iterator it = devices_.begin(), ie = devices_.end(); it != ie;
+       ++it) {
+    devices->push_back(it->second);
+  }
 }
 
-void InputServiceLinux::AddDevice(device::mojom::InputDeviceInfoPtr info) {
-  for (auto& observer : observers_)
-    observer.OnInputDeviceAdded(info->Clone());
+bool InputServiceLinux::GetDeviceInfo(const std::string& id,
+                                      InputDeviceInfo* info) const {
+  DCHECK(CalledOnValidThread());
+  DeviceMap::const_iterator it = devices_.find(id);
+  if (it == devices_.end())
+    return false;
+  *info = it->second;
+  return true;
+}
 
-  devices_[info->id] = std::move(info);
+void InputServiceLinux::AddDevice(const InputDeviceInfo& info) {
+  devices_[info.id] = info;
+  for (auto& observer : observers_)
+    observer.OnInputDeviceAdded(info);
 }
 
 void InputServiceLinux::RemoveDevice(const std::string& id) {

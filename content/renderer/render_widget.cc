@@ -978,7 +978,7 @@ void RenderWidget::DidCompletePageScaleAnimation() {}
 
 void RenderWidget::DidReceiveCompositorFrameAck() {
   TRACE_EVENT0("renderer", "RenderWidget::DidReceiveCompositorFrameAck");
-  DidResizeOrRepaintAck();
+  DidResizeAck();
 }
 
 bool RenderWidget::IsClosing() const {
@@ -1319,9 +1319,8 @@ void RenderWidget::Resize(const ResizeParams& params) {
   // send an ACK if we are resized to a non-empty rect.
   if (params.new_size.IsEmpty() || params.physical_backing_size.IsEmpty()) {
     // In this case there is no paint/composite and therefore no
-    // ViewHostMsg_ResizeOrRepaint_ACK to send the resize ack with. We'd need to
-    // send the ack through a fake ViewHostMsg_ResizeOrRepaint_ACK or a
-    // different message.
+    // ViewHostMsg_UpdateRect to send the resize ack with. We'd need to send the
+    // ack through a fake ViewHostMsg_UpdateRect or a different message.
     DCHECK(!params.needs_resize_ack);
   }
 
@@ -2056,16 +2055,15 @@ void RenderWidget::DidToggleFullscreen() {
 }
 
 bool RenderWidget::next_paint_is_resize_ack() const {
-  return ViewHostMsg_ResizeOrRepaint_ACK_Flags::is_resize_ack(
-      next_paint_flags_);
+  return ViewHostMsg_UpdateRect_Flags::is_resize_ack(next_paint_flags_);
 }
 
 void RenderWidget::set_next_paint_is_resize_ack() {
-  next_paint_flags_ |= ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_RESIZE_ACK;
+  next_paint_flags_ |= ViewHostMsg_UpdateRect_Flags::IS_RESIZE_ACK;
 }
 
 void RenderWidget::set_next_paint_is_repaint_ack() {
-  next_paint_flags_ |= ViewHostMsg_ResizeOrRepaint_ACK_Flags::IS_REPAINT_ACK;
+  next_paint_flags_ |= ViewHostMsg_UpdateRect_Flags::IS_REPAINT_ACK;
 }
 
 void RenderWidget::OnImeEventGuardStart(ImeEventGuard* guard) {
@@ -2176,7 +2174,7 @@ void RenderWidget::DidAutoResize(const gfx::Size& new_size) {
       // deferring commits and thus submission of CompositorFrames.
       if (!size_.IsEmpty() && compositor_ &&
           compositor_->IsSurfaceSynchronizationEnabled()) {
-        DidResizeOrRepaintAck();
+        DidResizeAck();
       }
     }
   }
@@ -2482,16 +2480,16 @@ void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {
   widget_binding_.Bind(std::move(request));
 }
 
-void RenderWidget::DidResizeOrRepaintAck() {
+void RenderWidget::DidResizeAck() {
   if (!next_paint_flags_ && !need_update_rect_for_auto_resize_)
     return;
 
-  ViewHostMsg_ResizeOrRepaint_ACK_Params params;
+  ViewHostMsg_UpdateRect_Params params;
   params.view_size = size_;
   params.flags = next_paint_flags_;
   params.sequence_number = ++resize_or_repaint_ack_num_;
 
-  Send(new ViewHostMsg_ResizeOrRepaint_ACK(routing_id_, params));
+  Send(new ViewHostMsg_UpdateRect(routing_id_, params));
   next_paint_flags_ = 0;
   need_update_rect_for_auto_resize_ = false;
 }

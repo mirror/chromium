@@ -190,18 +190,14 @@ SelectionState InlineTextBox::GetSelectionState() const {
             : 0;
     const FrameSelection& selection =
         GetLineLayoutItem().GetDocument().GetFrame()->Selection();
-    // TODO(yoichio): |value_or()| is used to prevent use uininitialized
-    // value on release build. It should be value() because calling
-    // LayoutSelectionStart() if SelectionState is neigher kStart nor
-    // kStartAndEnd is invalid operation.
     bool start =
         (state != SelectionState::kEnd &&
-         selection.LayoutSelectionStart().value_or(0) >= start_ &&
-         selection.LayoutSelectionStart().value_or(0) <=
+         selection.LayoutSelectionStart().value() >= start_ &&
+         selection.LayoutSelectionStart().value() <=
              start_ + len_ + end_of_line_adjustment_for_css_line_break);
     bool end = (state != SelectionState::kStart &&
-                selection.LayoutSelectionEnd().value_or(0) > start_ &&
-                selection.LayoutSelectionEnd().value_or(0) <= last_selectable);
+                selection.LayoutSelectionEnd().value() > start_ &&
+                selection.LayoutSelectionEnd().value() <= last_selectable);
     if (start && end)
       state = SelectionState::kStartAndEnd;
     else if (start)
@@ -209,9 +205,9 @@ SelectionState InlineTextBox::GetSelectionState() const {
     else if (end)
       state = SelectionState::kEnd;
     else if ((state == SelectionState::kEnd ||
-              selection.LayoutSelectionStart().value_or(0) < start_) &&
+              selection.LayoutSelectionStart().value() < start_) &&
              (state == SelectionState::kStart ||
-              selection.LayoutSelectionEnd().value_or(0) > last_selectable))
+              selection.LayoutSelectionEnd().value() > last_selectable))
       state = SelectionState::kInside;
     else if (state == SelectionState::kStartAndEnd)
       state = SelectionState::kNone;

@@ -29,6 +29,7 @@
 
 #include "core/editing/SelectionController.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/events/Event.h"
 #include "core/editing/EditingBoundary.h"
@@ -47,7 +48,6 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
-#include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -291,7 +291,8 @@ bool SelectionController::HandleSingleClick(
   const PositionInFlatTreeWithAffinity& position_to_use =
       visible_hit_position.IsNull()
           ? CreateVisiblePosition(
-                PositionInFlatTree::FirstPositionInOrBeforeNode(*inner_node))
+                PositionInFlatTree::FirstPositionInOrBeforeNodeDeprecated(
+                    inner_node))
                 .ToPositionWithAffinity()
           : visible_hit_position.ToPositionWithAffinity();
   const VisibleSelectionInFlatTree& selection =
@@ -851,13 +852,13 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
 void SelectionController::SetCaretAtHitTestResult(
     const HitTestResult& hit_test_result) {
   Node* inner_node = hit_test_result.InnerNode();
-  DCHECK(inner_node);
   const VisiblePositionInFlatTree& visible_hit_pos =
       VisiblePositionOfHitTestResult(hit_test_result);
   const VisiblePositionInFlatTree& visible_pos =
       visible_hit_pos.IsNull()
           ? CreateVisiblePosition(
-                PositionInFlatTree::FirstPositionInOrBeforeNode(*inner_node))
+                PositionInFlatTree::FirstPositionInOrBeforeNodeDeprecated(
+                    inner_node))
           : visible_hit_pos;
 
   if (visible_pos.IsNull()) {

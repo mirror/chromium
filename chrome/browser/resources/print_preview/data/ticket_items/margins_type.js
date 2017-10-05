@@ -20,53 +20,57 @@ print_preview.ticket_items.MarginsTypeValue = {
 cr.define('print_preview.ticket_items', function() {
   'use strict';
 
-  class MarginsType extends print_preview.ticket_items.TicketItem {
+  /**
+   * Margins type ticket item whose value is a
+   * print_preview.ticket_items.MarginsTypeValue} that indicates what
+   * predefined margins type to use.
+   * @param {!print_preview.AppState} appState App state persistence object to
+   *     save the state of the margins type selection.
+   * @param {!print_preview.DocumentInfo} documentInfo Information about the
+   *     document to print.
+   * @param {!print_preview.ticket_items.CustomMargins} customMargins Custom
+   *     margins ticket item, used to write when margins type changes.
+   * @constructor
+   * @extends {print_preview.ticket_items.TicketItem}
+   */
+  function MarginsType(appState, documentInfo, customMargins) {
+    print_preview.ticket_items.TicketItem.call(
+        this, appState, print_preview.AppStateField.MARGINS_TYPE,
+        null /*destinationStore*/, documentInfo);
+
     /**
-     * Margins type ticket item whose value is a
-     * print_preview.ticket_items.MarginsTypeValue} that indicates what
-     * predefined margins type to use.
-     * @param {!print_preview.AppState} appState App state persistence object to
-     *     save the state of the margins type selection.
-     * @param {!print_preview.DocumentInfo} documentInfo Information about the
-     *     document to print.
-     * @param {!print_preview.ticket_items.CustomMargins} customMargins Custom
-     *     margins ticket item, used to write when margins type changes.
+     * Custom margins ticket item, used to write when margins type changes.
+     * @type {!print_preview.ticket_items.CustomMargins}
+     * @private
      */
-    constructor(appState, documentInfo, customMargins) {
-      super(
-          appState, print_preview.AppStateField.MARGINS_TYPE,
-          null /*destinationStore*/, documentInfo);
+    this.customMargins_ = customMargins;
+  }
 
-      /**
-       * Custom margins ticket item, used to write when margins type changes.
-       * @type {!print_preview.ticket_items.CustomMargins}
-       * @private
-       */
-      this.customMargins_ = customMargins;
-    }
+  MarginsType.prototype = {
+    __proto__: print_preview.ticket_items.TicketItem.prototype,
 
     /** @override */
-    wouldValueBeValid(value) {
+    wouldValueBeValid: function(value) {
       return true;
-    }
+    },
 
     /** @override */
-    isCapabilityAvailable() {
+    isCapabilityAvailable: function() {
       return this.getDocumentInfoInternal().isModifiable;
-    }
+    },
 
     /** @override */
-    getDefaultValueInternal() {
+    getDefaultValueInternal: function() {
       return print_preview.ticket_items.MarginsTypeValue.DEFAULT;
-    }
+    },
 
     /** @override */
-    getCapabilityNotAvailableValueInternal() {
+    getCapabilityNotAvailableValueInternal: function() {
       return print_preview.ticket_items.MarginsTypeValue.DEFAULT;
-    }
+    },
 
     /** @override */
-    updateValueInternal(value) {
+    updateValueInternal: function(value) {
       print_preview.ticket_items.TicketItem.prototype.updateValueInternal.call(
           this, value);
       if (this.isValueEqual(
@@ -76,7 +80,7 @@ cr.define('print_preview.ticket_items', function() {
         this.customMargins_.updateValue(this.customMargins_.getValue());
       }
     }
-  }
+  };
 
   // Export
   return {MarginsType: MarginsType};

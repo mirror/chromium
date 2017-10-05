@@ -34,17 +34,17 @@
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_client_view.h"
 
-#if defined(OS_CHROMEOS)
-// gn check complains on Linux Ozone.
-#include "ash/public/cpp/shelf_item.h"         // nogncheck
-#include "ash/public/cpp/window_properties.h"  // nogncheck
-#include "ash/resources/grit/ash_resources.h"
-#include "ash/wm/window_util.h"
-#include "chrome/browser/ui/ash/ash_util.h"
+#if defined(USE_ASH)
+// Note: gn check complains here, despite the correct conditional //ash dep.
+#include "ash/public/cpp/shelf_item.h"            // nogncheck
+#include "ash/public/cpp/window_properties.h"     // nogncheck
+#include "ash/resources/grit/ash_resources.h"     // nogncheck
+#include "ash/wm/window_util.h"                   // nogncheck
+#include "chrome/browser/ui/ash/ash_util.h"       // nogncheck
 #include "ui/aura/client/aura_constants.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_skia.h"
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(USE_ASH)
 
 #if defined(OS_WIN)
 #include "chrome/browser/shell_integration_win.h"
@@ -78,7 +78,7 @@ task_manager::TaskManagerTableModel* TaskManagerView::Show(Browser* browser) {
 
   gfx::NativeWindow context =
       browser ? browser->window()->GetNativeWindow() : nullptr;
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   if (!ash_util::IsRunningInMash() && !context)
     context = ash::wm::GetActiveWindow();
 #endif
@@ -101,7 +101,7 @@ task_manager::TaskManagerTableModel* TaskManagerView::Show(Browser* browser) {
   g_task_manager_view->SelectTaskOfActiveTab(browser);
   g_task_manager_view->GetWidget()->Show();
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   aura::Window* window = g_task_manager_view->GetWidget()->GetNativeWindow();
   // An app id for task manager windows, also used to identify the shelf item.
   // Generated as crx_file::id_util::GenerateId("org.chromium.taskmanager")

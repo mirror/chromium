@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(() => {
+promise_test(() => {
   return getHIDDevice({filters: [{services: ['device_information']}]})
     .then(({device}) => device.gatt.getPrimaryService('device_information'))
     .then(service => {

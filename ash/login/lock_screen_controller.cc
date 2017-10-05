@@ -91,7 +91,10 @@ void LockScreenController::LoadUsers(std::vector<mojom::LoginUserInfoPtr> users,
                                      bool show_guest) {
   DCHECK(DataDispatcher());
 
-  DataDispatcher()->NotifyUsers(users);
+  std::vector<mojom::UserInfoPtr> basic_users;
+  for (auto& user : users)
+    basic_users.push_back(user->basic_user_info->Clone());
+  DataDispatcher()->NotifyUsers(basic_users);
 }
 
 void LockScreenController::SetPinEnabledForUser(const AccountId& account_id,

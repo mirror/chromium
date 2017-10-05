@@ -17,7 +17,7 @@ namespace cc {
 namespace {
 
 void CheckDrawLayer(HeadsUpDisplayLayerImpl* layer,
-                    LayerTreeResourceProvider* resource_provider,
+                    ResourceProvider* resource_provider,
                     viz::ContextProvider* context_provider,
                     DrawMode draw_mode) {
   std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();

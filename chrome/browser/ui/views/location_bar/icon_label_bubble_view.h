@@ -42,7 +42,6 @@ class IconLabelBubbleView : public views::InkDropObserver,
 
   // views::InkDropObserver:
   void InkDropAnimationStarted() override;
-  void InkDropRippleAnimationEnded(views::InkDropState state) override;
 
   void SetLabel(const base::string16& label);
   void SetImage(const gfx::ImageSkia& image);

@@ -330,12 +330,12 @@ PersonalDataManagerAndroid::PersonalDataManagerAndroid(JNIEnv* env, jobject obj)
           ProfileManager::GetActiveUserProfile())),
       address_normalizer_(
           std::unique_ptr<::i18n::addressinput::Source>(
-              new ChromeMetadataSource(
+              new autofill::ChromeMetadataSource(
                   I18N_ADDRESS_VALIDATION_DATA_URL,
                   personal_data_manager_->GetURLRequestContextGetter())),
           ValidationRulesStorageFactory::CreateStorage()),
       subkey_requester_(
-          base::MakeUnique<ChromeMetadataSource>(
+          base::MakeUnique<autofill::ChromeMetadataSource>(
               I18N_ADDRESS_VALIDATION_DATA_URL,
               personal_data_manager_->GetURLRequestContextGetter()),
           ValidationRulesStorageFactory::CreateStorage()) {
@@ -774,7 +774,7 @@ void PersonalDataManagerAndroid::StartRegionSubKeysRequest(
   ScopedJavaGlobalRef<jobject> my_jdelegate;
   my_jdelegate.Reset(env, jdelegate);
 
-  SubKeyReceiverCallback cb = base::BindOnce(
+  ::payments::SubKeyReceiverCallback cb = base::BindOnce(
       &OnSubKeysReceived, ScopedJavaGlobalRef<jobject>(my_jdelegate));
 
   std::string language =

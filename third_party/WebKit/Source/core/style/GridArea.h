@@ -31,6 +31,7 @@
 #ifndef GridArea_h
 #define GridArea_h
 
+#include <algorithm>
 #include "core/style/GridPositionsResolver.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"

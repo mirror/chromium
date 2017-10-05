@@ -26,7 +26,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleBindAttribLocationBucket(
   if (!bucket->GetAsString(&name_str)) {
     return error::kInvalidArguments;
   }
-  return DoBindAttribLocation(program, index, name_str.c_str());
+  error::Error error = DoBindAttribLocation(program, index, name_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleBufferData(
@@ -47,7 +51,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleBufferData(
       return error::kOutOfBounds;
     }
   }
-  return DoBufferData(target, size, data, usage);
+  error::Error error = DoBufferData(target, size, data, usage);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleClientWaitSync(
@@ -67,7 +75,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleClientWaitSync(
   if (!result_dst) {
     return error::kOutOfBounds;
   }
-  return DoClientWaitSync(sync, flags, timeout, result_dst);
+  error::Error error = DoClientWaitSync(sync, flags, timeout, result_dst);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCreateProgram(
@@ -77,7 +89,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleCreateProgram(
       *static_cast<const volatile gles2::cmds::CreateProgram*>(cmd_data);
   GLuint client_id = static_cast<GLuint>(c.client_id);
 
-  return DoCreateProgram(client_id);
+  error::Error error = DoCreateProgram(client_id);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCreateShader(
@@ -88,7 +104,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleCreateShader(
   GLenum type = static_cast<GLenum>(c.type);
   GLuint client_id = static_cast<GLuint>(c.client_id);
 
-  return DoCreateShader(type, client_id);
+  error::Error error = DoCreateShader(type, client_id);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleFenceSync(
@@ -100,7 +120,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleFenceSync(
   GLbitfield flags = static_cast<GLbitfield>(c.flags);
   GLuint client_id = static_cast<GLuint>(c.client_id);
 
-  return DoFenceSync(condition, flags, client_id);
+  error::Error error = DoFenceSync(condition, flags, client_id);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDrawArrays(
@@ -112,7 +136,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleDrawArrays(
   GLint first = static_cast<GLint>(c.first);
   GLsizei count = static_cast<GLsizei>(c.count);
 
-  return DoDrawArrays(mode, first, count);
+  error::Error error = DoDrawArrays(mode, first, count);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDrawElements(
@@ -126,7 +154,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleDrawElements(
   const GLvoid* indices =
       reinterpret_cast<const GLvoid*>(static_cast<uintptr_t>(c.index_offset));
 
-  return DoDrawElements(mode, count, type, indices);
+  error::Error error = DoDrawElements(mode, count, type, indices);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetActiveAttrib(
@@ -366,7 +398,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetAttribLocation(
   if (*location != -1) {
     return error::kInvalidArguments;
   }
-  return DoGetAttribLocation(program, name_str.c_str(), location);
+  error::Error error = DoGetAttribLocation(program, name_str.c_str(), location);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetBufferSubDataAsyncCHROMIUM(
@@ -387,7 +423,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetBufferSubDataAsyncCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoGetBufferSubDataAsyncCHROMIUM(target, offset, size, mem);
+  error::Error error =
+      DoGetBufferSubDataAsyncCHROMIUM(target, offset, size, mem);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 
@@ -417,7 +459,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetFragDataLocation(
   if (*location != -1) {
     return error::kInvalidArguments;
   }
-  return DoGetFragDataLocation(program, name_str.c_str(), location);
+  error::Error error =
+      DoGetFragDataLocation(program, name_str.c_str(), location);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetInternalformativ(
@@ -637,7 +684,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetUniformBlockIndex(
   if (*index != -1) {
     return error::kInvalidArguments;
   }
-  return DoGetUniformBlockIndex(program, name_str.c_str(), index);
+  error::Error error = DoGetUniformBlockIndex(program, name_str.c_str(), index);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetUniformfv(
@@ -803,7 +854,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetUniformLocation(
   if (*location != -1) {
     return error::kInvalidArguments;
   }
-  return DoGetUniformLocation(program, name_str.c_str(), location);
+  error::Error error =
+      DoGetUniformLocation(program, name_str.c_str(), location);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetVertexAttribPointerv(
@@ -847,7 +903,11 @@ error::Error GLES2DecoderPassthroughImpl::HandlePixelStorei(
   GLenum pname = static_cast<GLuint>(c.pname);
   GLint param = static_cast<GLint>(c.param);
 
-  return DoPixelStorei(pname, param);
+  error::Error error = DoPixelStorei(pname, param);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleReadPixels(
@@ -945,7 +1005,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleShaderBinary(
     return error::kOutOfBounds;
   }
 
-  return DoShaderBinary(n, shaders, binaryformat, binary, length);
+  error::Error error = DoShaderBinary(n, shaders, binaryformat, binary, length);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleTexImage2D(
@@ -1096,7 +1161,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleUniformBlockBinding(
   GLuint index = static_cast<GLuint>(c.index);
   GLuint binding = static_cast<GLuint>(c.binding);
 
-  return DoUniformBlockBinding(program, index, binding);
+  error::Error error = DoUniformBlockBinding(program, index, binding);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribIPointer(
@@ -1111,7 +1181,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribIPointer(
   GLsizei offset = static_cast<GLsizei>(c.offset);
   const void* ptr = reinterpret_cast<const void*>(offset);
 
-  return DoVertexAttribIPointer(index, size, type, stride, ptr);
+  error::Error error = DoVertexAttribIPointer(index, size, type, stride, ptr);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribPointer(
@@ -1127,7 +1202,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribPointer(
   GLsizei offset = static_cast<GLsizei>(c.offset);
   const void* ptr = reinterpret_cast<const void*>(offset);
 
-  return DoVertexAttribPointer(index, size, type, normalized, stride, ptr);
+  error::Error error =
+      DoVertexAttribPointer(index, size, type, normalized, stride, ptr);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleWaitSync(
@@ -1139,7 +1220,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleWaitSync(
   const GLbitfield flags = static_cast<GLbitfield>(c.flags);
   const GLuint64 timeout = c.timeout();
 
-  return DoWaitSync(sync, flags, timeout);
+  error::Error error = DoWaitSync(sync, flags, timeout);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleQueryCounterEXT(
@@ -1153,8 +1239,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleQueryCounterEXT(
   uint32_t sync_shm_offset = c.sync_data_shm_offset;
   uint32_t submit_count = static_cast<GLuint>(c.submit_count);
 
-  return DoQueryCounterEXT(id, target, sync_shm_id, sync_shm_offset,
-                           submit_count);
+  error::Error error =
+      DoQueryCounterEXT(id, target, sync_shm_id, sync_shm_offset, submit_count);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleBeginQueryEXT(
@@ -1167,7 +1258,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleBeginQueryEXT(
   uint32_t sync_shm_id = c.sync_data_shm_id;
   uint32_t sync_shm_offset = c.sync_data_shm_offset;
 
-  return DoBeginQueryEXT(target, id, sync_shm_id, sync_shm_offset);
+  error::Error error =
+      DoBeginQueryEXT(target, id, sync_shm_id, sync_shm_offset);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleEndQueryEXT(
@@ -1178,7 +1275,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleEndQueryEXT(
   GLenum target = static_cast<GLenum>(c.target);
   uint32_t submit_count = static_cast<GLuint>(c.submit_count);
 
-  return DoEndQueryEXT(target, submit_count);
+  error::Error error = DoEndQueryEXT(target, submit_count);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleSetDisjointValueSyncCHROMIUM(
@@ -1195,7 +1297,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleSetDisjointValueSyncCHROMIUM(
   if (!sync) {
     return error::kOutOfBounds;
   }
-  return DoSetDisjointValueSyncCHROMIUM(sync);
+  error::Error error = DoSetDisjointValueSyncCHROMIUM(sync);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleInsertEventMarkerEXT(
@@ -1213,7 +1319,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleInsertEventMarkerEXT(
   if (!bucket->GetAsString(&str)) {
     return error::kInvalidArguments;
   }
-  return DoInsertEventMarkerEXT(0, str.c_str());
+  error::Error error = DoInsertEventMarkerEXT(0, str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandlePushGroupMarkerEXT(
@@ -1231,7 +1341,11 @@ error::Error GLES2DecoderPassthroughImpl::HandlePushGroupMarkerEXT(
   if (!bucket->GetAsString(&str)) {
     return error::kInvalidArguments;
   }
-  return DoPushGroupMarkerEXT(0, str.c_str());
+  error::Error error = DoPushGroupMarkerEXT(0, str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleEnableFeatureCHROMIUM(
@@ -1303,8 +1417,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleMapBufferRange(
 
   error::Error error = DoMapBufferRange(target, offset, size, access, mem,
                                         data_shm_id, data_shm_offset, result);
-  DCHECK(error == error::kNoError || *result == 0);
-  return error;
+  if (error != error::kNoError) {
+    DCHECK(*result == 0);
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleUnmapBuffer(
@@ -1314,7 +1432,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleUnmapBuffer(
       *static_cast<const volatile gles2::cmds::UnmapBuffer*>(cmd_data);
   GLenum target = static_cast<GLenum>(c.target);
 
-  return DoUnmapBuffer(target);
+  error::Error error = DoUnmapBuffer(target);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleResizeCHROMIUM(
@@ -1328,7 +1450,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleResizeCHROMIUM(
   GLenum color_space = static_cast<GLenum>(c.color_space);
   GLboolean has_alpha = static_cast<GLboolean>(c.alpha);
 
-  return DoResizeCHROMIUM(width, height, scale_factor, color_space, has_alpha);
+  error::Error error =
+      DoResizeCHROMIUM(width, height, scale_factor, color_space, has_alpha);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1371,7 +1498,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleRequestExtensionCHROMIUM(
   if (!bucket->GetAsString(&feature_str)) {
     return error::kInvalidArguments;
   }
-  return DoRequestExtensionCHROMIUM(feature_str.c_str());
+  error::Error error = DoRequestExtensionCHROMIUM(feature_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetProgramInfoCHROMIUM(
@@ -1504,7 +1635,11 @@ error::Error GLES2DecoderPassthroughImpl::HandlePostSubBufferCHROMIUM(
   GLint width = static_cast<GLint>(c.width);
   GLint height = static_cast<GLint>(c.height);
 
-  return DoPostSubBufferCHROMIUM(x, y, width, height);
+  error::Error error = DoPostSubBufferCHROMIUM(x, y, width, height);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDrawArraysInstancedANGLE(
@@ -1518,7 +1653,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleDrawArraysInstancedANGLE(
   GLsizei count = static_cast<GLsizei>(c.count);
   GLsizei primcount = static_cast<GLsizei>(c.primcount);
 
-  return DoDrawArraysInstancedANGLE(mode, first, count, primcount);
+  error::Error error =
+      DoDrawArraysInstancedANGLE(mode, first, count, primcount);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDrawElementsInstancedANGLE(
@@ -1534,7 +1674,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleDrawElementsInstancedANGLE(
       reinterpret_cast<const GLvoid*>(static_cast<uintptr_t>(c.index_offset));
   GLsizei primcount = static_cast<GLsizei>(c.primcount);
 
-  return DoDrawElementsInstancedANGLE(mode, count, type, indices, primcount);
+  error::Error error =
+      DoDrawElementsInstancedANGLE(mode, count, type, indices, primcount);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribDivisorANGLE(
@@ -1546,7 +1691,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleVertexAttribDivisorANGLE(
   GLuint index = static_cast<GLuint>(c.index);
   GLuint divisor = static_cast<GLuint>(c.divisor);
 
-  return DoVertexAttribDivisorANGLE(index, divisor);
+  error::Error error = DoVertexAttribDivisorANGLE(index, divisor);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1569,7 +1718,12 @@ GLES2DecoderPassthroughImpl::HandleBindUniformLocationCHROMIUMBucket(
   if (!bucket->GetAsString(&name_str)) {
     return error::kInvalidArguments;
   }
-  return DoBindUniformLocationCHROMIUM(program, location, name_str.c_str());
+  error::Error error =
+      DoBindUniformLocationCHROMIUM(program, location, name_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleTraceBeginCHROMIUM(
@@ -1594,13 +1748,22 @@ error::Error GLES2DecoderPassthroughImpl::HandleTraceBeginCHROMIUM(
     return error::kInvalidArguments;
   }
 
-  return DoTraceBeginCHROMIUM(category_name.c_str(), trace_name.c_str());
+  error::Error error =
+      DoTraceBeginCHROMIUM(category_name.c_str(), trace_name.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDescheduleUntilFinishedCHROMIUM(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
-  return DoDescheduleUntilFinishedCHROMIUM();
+  error::Error error = DoDescheduleUntilFinishedCHROMIUM();
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleInsertFenceSyncCHROMIUM(
@@ -1611,7 +1774,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleInsertFenceSyncCHROMIUM(
           cmd_data);
   GLuint64 release_count = c.release_count();
 
-  return DoInsertFenceSyncCHROMIUM(release_count);
+  error::Error error = DoInsertFenceSyncCHROMIUM(release_count);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleWaitSyncTokenCHROMIUM(
@@ -1635,14 +1802,22 @@ error::Error GLES2DecoderPassthroughImpl::HandleWaitSyncTokenCHROMIUM(
     namespace_id = gpu::CommandBufferNamespace::INVALID;
   }
 
-  return DoWaitSyncTokenCHROMIUM(namespace_id, command_buffer_id,
-                                 release_count);
+  error::Error error =
+      DoWaitSyncTokenCHROMIUM(namespace_id, command_buffer_id, release_count);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDiscardBackbufferCHROMIUM(
     uint32_t immediate_data_size,
     const volatile void* cmd_data) {
-  return DoDiscardBackbufferCHROMIUM();
+  error::Error error = DoDiscardBackbufferCHROMIUM();
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleScheduleOverlayPlaneCHROMIUM(
@@ -1663,9 +1838,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleScheduleOverlayPlaneCHROMIUM(
   GLfloat uv_width = static_cast<GLfloat>(c.uv_x);
   GLfloat uv_height = static_cast<GLfloat>(c.uv_x);
 
-  return DoScheduleOverlayPlaneCHROMIUM(
+  error::Error error = DoScheduleOverlayPlaneCHROMIUM(
       plane_z_order, plane_transform, overlay_texture_id, bounds_x, bounds_y,
       bounds_width, bounds_height, uv_x, uv_y, uv_width, uv_height);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1689,8 +1868,12 @@ GLES2DecoderPassthroughImpl::HandleScheduleCALayerSharedStateCHROMIUM(
   }
   const GLfloat* clip_rect = mem + 0;
   const GLfloat* transform = mem + 4;
-  return DoScheduleCALayerSharedStateCHROMIUM(opacity, is_clipped, clip_rect,
-                                              sorting_context_id, transform);
+  error::Error error = DoScheduleCALayerSharedStateCHROMIUM(
+      opacity, is_clipped, clip_rect, sorting_context_id, transform);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleScheduleCALayerCHROMIUM(
@@ -1712,8 +1895,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleScheduleCALayerCHROMIUM(
   }
   const GLfloat* contents_rect = mem;
   const GLfloat* bounds_rect = mem + 4;
-  return DoScheduleCALayerCHROMIUM(contents_texture_id, contents_rect,
-                                   background_color, edge_aa_mask, bounds_rect);
+  error::Error error =
+      DoScheduleCALayerCHROMIUM(contents_texture_id, contents_rect,
+                                background_color, edge_aa_mask, bounds_rect);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1737,8 +1925,12 @@ GLES2DecoderPassthroughImpl::HandleScheduleDCLayerSharedStateCHROMIUM(
   }
   const GLfloat* clip_rect = mem + 0;
   const GLfloat* transform = mem + 4;
-  return DoScheduleDCLayerSharedStateCHROMIUM(opacity, is_clipped, clip_rect,
-                                              z_order, transform);
+  error::Error error = DoScheduleDCLayerSharedStateCHROMIUM(
+      opacity, is_clipped, clip_rect, z_order, transform);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleScheduleDCLayerCHROMIUM(
@@ -1768,9 +1960,13 @@ error::Error GLES2DecoderPassthroughImpl::HandleScheduleDCLayerCHROMIUM(
       reinterpret_cast<const volatile GLuint*>(mem + 8);
   const GLfloat* contents_rect = mem;
   const GLfloat* bounds_rect = mem + 4;
-  return DoScheduleDCLayerCHROMIUM(num_textures, contents_texture_ids,
-                                   contents_rect, background_color,
-                                   edge_aa_mask, filter, bounds_rect);
+  error::Error error = DoScheduleDCLayerCHROMIUM(
+      num_textures, contents_texture_ids, contents_rect, background_color,
+      edge_aa_mask, filter, bounds_rect);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleSetColorSpaceForScanoutCHROMIUM(
@@ -1788,7 +1984,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleGenPathsCHROMIUM(
   GLuint path = static_cast<GLuint>(c.first_client_id);
   GLsizei range = static_cast<GLsizei>(c.range);
 
-  return DoGenPathsCHROMIUM(path, range);
+  error::Error error = DoGenPathsCHROMIUM(path, range);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleDeletePathsCHROMIUM(
@@ -1799,7 +1999,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleDeletePathsCHROMIUM(
   GLuint path = static_cast<GLuint>(c.first_client_id);
   GLsizei range = static_cast<GLsizei>(c.range);
 
-  return DoDeletePathsCHROMIUM(path, range);
+  error::Error error = DoDeletePathsCHROMIUM(path, range);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandlePathCommandsCHROMIUM(
@@ -1841,8 +2045,14 @@ error::Error GLES2DecoderPassthroughImpl::HandlePathCommandsCHROMIUM(
     }
   }
 
-  return DoPathCommandsCHROMIUM(path, num_commands, commands, num_coords,
-                                coord_type, coords, coords_bufsize);
+  error::Error error =
+      DoPathCommandsCHROMIUM(path, num_commands, commands, num_coords,
+                             coord_type, coords, coords_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandlePathParameterfCHROMIUM(
@@ -1855,7 +2065,11 @@ error::Error GLES2DecoderPassthroughImpl::HandlePathParameterfCHROMIUM(
   GLenum pname = static_cast<GLenum>(c.pname);
   GLfloat value = static_cast<GLfloat>(c.value);
 
-  return DoPathParameterfCHROMIUM(path, pname, value);
+  error::Error error = DoPathParameterfCHROMIUM(path, pname, value);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandlePathParameteriCHROMIUM(
@@ -1868,7 +2082,11 @@ error::Error GLES2DecoderPassthroughImpl::HandlePathParameteriCHROMIUM(
   GLenum pname = static_cast<GLenum>(c.pname);
   GLint value = static_cast<GLint>(c.value);
 
-  return DoPathParameteriCHROMIUM(path, pname, value);
+  error::Error error = DoPathParameteriCHROMIUM(path, pname, value);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleStencilFillPathCHROMIUM(
@@ -1881,7 +2099,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleStencilFillPathCHROMIUM(
   GLenum fill_mode = static_cast<GLenum>(c.fillMode);
   GLuint mask = static_cast<GLuint>(c.mask);
 
-  return DoStencilFillPathCHROMIUM(path, fill_mode, mask);
+  error::Error error = DoStencilFillPathCHROMIUM(path, fill_mode, mask);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleStencilStrokePathCHROMIUM(
@@ -1894,7 +2116,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleStencilStrokePathCHROMIUM(
   GLint reference = static_cast<GLint>(c.reference);
   GLuint mask = static_cast<GLuint>(c.mask);
 
-  return DoStencilStrokePathCHROMIUM(path, reference, mask);
+  error::Error error = DoStencilStrokePathCHROMIUM(path, reference, mask);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCoverFillPathCHROMIUM(
@@ -1906,7 +2132,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleCoverFillPathCHROMIUM(
   GLuint path = static_cast<GLuint>(c.path);
   GLenum cover_mode = static_cast<GLenum>(c.coverMode);
 
-  return DoCoverFillPathCHROMIUM(path, cover_mode);
+  error::Error error = DoCoverFillPathCHROMIUM(path, cover_mode);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCoverStrokePathCHROMIUM(
@@ -1918,7 +2148,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleCoverStrokePathCHROMIUM(
   GLuint path = static_cast<GLuint>(c.path);
   GLenum cover_mode = static_cast<GLenum>(c.coverMode);
 
-  return DoCoverStrokePathCHROMIUM(path, cover_mode);
+  error::Error error = DoCoverStrokePathCHROMIUM(path, cover_mode);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1934,7 +2168,12 @@ GLES2DecoderPassthroughImpl::HandleStencilThenCoverFillPathCHROMIUM(
   GLuint mask = static_cast<GLuint>(c.mask);
   GLenum cover_mode = static_cast<GLenum>(c.coverMode);
 
-  return DoStencilThenCoverFillPathCHROMIUM(path, fill_mode, mask, cover_mode);
+  error::Error error =
+      DoStencilThenCoverFillPathCHROMIUM(path, fill_mode, mask, cover_mode);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1950,8 +2189,12 @@ GLES2DecoderPassthroughImpl::HandleStencilThenCoverStrokePathCHROMIUM(
   GLuint mask = static_cast<GLuint>(c.mask);
   GLenum cover_mode = static_cast<GLenum>(c.coverMode);
 
-  return DoStencilThenCoverStrokePathCHROMIUM(path, reference, mask,
-                                              cover_mode);
+  error::Error error =
+      DoStencilThenCoverStrokePathCHROMIUM(path, reference, mask, cover_mode);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -1999,9 +2242,14 @@ GLES2DecoderPassthroughImpl::HandleStencilFillPathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoStencilFillPathInstancedCHROMIUM(
+  error::Error error = DoStencilFillPathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, fill_mode,
       mask, transform_type, transform_values, transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error
@@ -2049,9 +2297,14 @@ GLES2DecoderPassthroughImpl::HandleStencilStrokePathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoStencilStrokePathInstancedCHROMIUM(
+  error::Error error = DoStencilStrokePathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, reference,
       mask, transform_type, transform_values, transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCoverFillPathInstancedCHROMIUM(
@@ -2096,9 +2349,14 @@ error::Error GLES2DecoderPassthroughImpl::HandleCoverFillPathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoCoverFillPathInstancedCHROMIUM(
+  error::Error error = DoCoverFillPathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, cover_mode,
       transform_type, transform_values, transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error
@@ -2145,9 +2403,14 @@ GLES2DecoderPassthroughImpl::HandleCoverStrokePathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoCoverStrokePathInstancedCHROMIUM(
+  error::Error error = DoCoverStrokePathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, cover_mode,
       transform_type, transform_values, transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error
@@ -2195,10 +2458,15 @@ GLES2DecoderPassthroughImpl::HandleStencilThenCoverFillPathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoStencilThenCoverFillPathInstancedCHROMIUM(
+  error::Error error = DoStencilThenCoverFillPathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, cover_mode,
       fill_mode, mask, transform_type, transform_values,
       transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error
@@ -2246,10 +2514,15 @@ GLES2DecoderPassthroughImpl::HandleStencilThenCoverStrokePathInstancedCHROMIUM(
     return error::kOutOfBounds;
   }
 
-  return DoStencilThenCoverStrokePathInstancedCHROMIUM(
+  error::Error error = DoStencilThenCoverStrokePathInstancedCHROMIUM(
       num_paths, path_name_type, paths, paths_bufsize, path_base, cover_mode,
       reference, mask, transform_type, transform_values,
       transform_values_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+
+  return error::kNoError;
 }
 
 error::Error
@@ -2272,8 +2545,12 @@ GLES2DecoderPassthroughImpl::HandleBindFragmentInputLocationCHROMIUMBucket(
   if (!bucket->GetAsString(&name_str)) {
     return error::kInvalidArguments;
   }
-  return DoBindFragmentInputLocationCHROMIUM(program, location,
-                                             name_str.c_str());
+  error::Error error =
+      DoBindFragmentInputLocationCHROMIUM(program, location, name_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -2302,8 +2579,12 @@ GLES2DecoderPassthroughImpl::HandleProgramPathFragmentInputGenCHROMIUM(
   if (!coeffs) {
     return error::kOutOfBounds;
   }
-  return DoProgramPathFragmentInputGenCHROMIUM(
+  error::Error error = DoProgramPathFragmentInputGenCHROMIUM(
       program, location, gen_mode, components, coeffs, coeffs_bufsize);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error
@@ -2327,8 +2608,12 @@ GLES2DecoderPassthroughImpl::HandleBindFragDataLocationIndexedEXTBucket(
   if (!bucket->GetAsString(&name_str)) {
     return error::kInvalidArguments;
   }
-  return DoBindFragDataLocationIndexedEXT(program, colorNumber, index,
-                                          name_str.c_str());
+  error::Error error = DoBindFragDataLocationIndexedEXT(
+      program, colorNumber, index, name_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleBindFragDataLocationEXTBucket(
@@ -2349,7 +2634,12 @@ error::Error GLES2DecoderPassthroughImpl::HandleBindFragDataLocationEXTBucket(
   if (!bucket->GetAsString(&name_str)) {
     return error::kInvalidArguments;
   }
-  return DoBindFragDataLocationEXT(program, colorNumber, name_str.c_str());
+  error::Error error =
+      DoBindFragDataLocationEXT(program, colorNumber, name_str.c_str());
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleGetFragDataIndexEXT(
@@ -2379,7 +2669,11 @@ error::Error GLES2DecoderPassthroughImpl::HandleGetFragDataIndexEXT(
   if (*index != -1) {
     return error::kInvalidArguments;
   }
-  return DoGetFragDataIndexEXT(program, name_str.c_str(), index);
+  error::Error error = DoGetFragDataIndexEXT(program, name_str.c_str(), index);
+  if (error != error::kNoError) {
+    return error;
+  }
+  return error::kNoError;
 }
 
 error::Error GLES2DecoderPassthroughImpl::HandleCompressedTexImage2DBucket(

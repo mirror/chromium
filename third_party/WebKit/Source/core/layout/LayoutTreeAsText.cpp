@@ -25,6 +25,7 @@
 
 #include "core/layout/LayoutTreeAsText.h"
 
+#include "core/HTMLNames.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Document.h"
 #include "core/dom/PseudoElement.h"
@@ -34,7 +35,6 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/LayoutDetailsMarker.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -46,7 +46,6 @@
 #include "core/layout/LayoutView.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/line/InlineTextBox.h"
-#include "core/layout/ng/layout_ng_list_item.h"
 #include "core/layout/svg/LayoutSVGGradientStop.h"
 #include "core/layout/svg/LayoutSVGImage.h"
 #include "core/layout/svg/LayoutSVGInline.h"
@@ -889,13 +888,10 @@ String MarkerTextForListItem(Element* element) {
   element->GetDocument().UpdateStyleAndLayout();
 
   LayoutObject* layout_object = element->GetLayoutObject();
-  if (layout_object) {
-    if (layout_object->IsListItem())
-      return ToLayoutListItem(layout_object)->MarkerText();
-    if (layout_object->IsLayoutNGListItem())
-      return ToLayoutNGListItem(layout_object)->MarkerTextWithoutSuffix();
-  }
-  return String();
+  if (!layout_object || !layout_object->IsListItem())
+    return String();
+
+  return ToLayoutListItem(layout_object)->MarkerText();
 }
 
 }  // namespace blink

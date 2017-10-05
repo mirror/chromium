@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkPath.h"
@@ -35,16 +34,6 @@ bool IsValidPaintShaderScalingBehavior(PaintShader::ScalingBehavior behavior) {
 }
 
 }  // namespace
-
-// static
-void PaintOpReader::FixupMatrixPostSerialization(SkMatrix* matrix) {
-  // Can't trust malicious clients to provide the correct derived matrix type.
-  // However, if a matrix thinks that it's identity, then make it so.
-  if (matrix->isIdentity())
-    matrix->setIdentity();
-  else
-    matrix->dirtyMatrixTypeCache();
-}
 
 template <typename T>
 void PaintOpReader::ReadSimple(T* val) {
@@ -248,7 +237,7 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
   ReadSimple(&has_local_matrix);
   if (has_local_matrix) {
     ref.local_matrix_.emplace();
-    Read(&*ref.local_matrix_);
+    ReadSimple(&*ref.local_matrix_);
   }
   ReadSimple(&ref.center_);
   ReadSimple(&ref.tile_);
@@ -304,11 +293,6 @@ void PaintOpReader::Read(sk_sp<PaintShader>* shader) {
   if (!(*shader)->IsValid()) {
     valid_ = false;
   }
-}
-
-void PaintOpReader::Read(SkMatrix* matrix) {
-  ReadSimple(matrix);
-  FixupMatrixPostSerialization(matrix);
 }
 
 bool PaintOpReader::AlignMemory(size_t alignment) {

@@ -23,6 +23,7 @@
 #include "core/dom/Text.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/SVGNames.h"
 #include "core/css/resolver/StyleResolver.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/FirstLetterPseudoElement.h"
@@ -39,7 +40,6 @@
 #include "core/layout/api/LayoutTextItem.h"
 #include "core/layout/svg/LayoutSVGInlineText.h"
 #include "core/svg/SVGForeignObjectElement.h"
-#include "core/svg_names.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/wtf/text/CString.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -64,7 +64,7 @@ Node* Text::MergeNextSiblingNodesIfPossible() {
   }
 
   // Merge text nodes.
-  while (Node* next_sibling = nextSibling()) {
+  while (Node* next_sibling = this->nextSibling()) {
     if (next_sibling->getNodeType() != kTextNode)
       break;
 
@@ -383,7 +383,7 @@ void Text::ReattachLayoutTreeIfNeeded(const AttachContext& context) {
 }
 
 void Text::RecalcTextStyle(StyleRecalcChange change) {
-  if (LayoutTextItem layout_item = LayoutTextItem(GetLayoutObject())) {
+  if (LayoutTextItem layout_item = LayoutTextItem(this->GetLayoutObject())) {
     if (change != kNoChange || NeedsStyleRecalc())
       layout_item.SetStyle(
           GetDocument().EnsureStyleResolver().StyleForText(this));

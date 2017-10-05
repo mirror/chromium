@@ -22,12 +22,10 @@ void TileDrawQuad::SetNew(const SharedQuadState* shared_quad_state,
                           const gfx::RectF& tex_coord_rect,
                           const gfx::Size& texture_size,
                           bool swizzle_contents,
-                          bool nearest_neighbor,
-                          bool force_anti_aliasing_off) {
+                          bool nearest_neighbor) {
   ContentDrawQuadBase::SetNew(shared_quad_state, DrawQuad::TILED_CONTENT, rect,
                               visible_rect, needs_blending, tex_coord_rect,
-                              texture_size, swizzle_contents, nearest_neighbor,
-                              force_anti_aliasing_off);
+                              texture_size, swizzle_contents, nearest_neighbor);
   resources.ids[kResourceIdIndex] = resource_id;
   resources.count = 1;
 }
@@ -40,12 +38,10 @@ void TileDrawQuad::SetAll(const SharedQuadState* shared_quad_state,
                           const gfx::RectF& tex_coord_rect,
                           const gfx::Size& texture_size,
                           bool swizzle_contents,
-                          bool nearest_neighbor,
-                          bool force_anti_aliasing_off) {
+                          bool nearest_neighbor) {
   ContentDrawQuadBase::SetAll(shared_quad_state, DrawQuad::TILED_CONTENT, rect,
                               visible_rect, needs_blending, tex_coord_rect,
-                              texture_size, swizzle_contents, nearest_neighbor,
-                              force_anti_aliasing_off);
+                              texture_size, swizzle_contents, nearest_neighbor);
   resources.ids[kResourceIdIndex] = resource_id;
   resources.count = 1;
 }

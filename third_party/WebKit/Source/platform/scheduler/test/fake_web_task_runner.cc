@@ -4,7 +4,6 @@
 
 #include "platform/scheduler/test/fake_web_task_runner.h"
 
-#include <algorithm>
 #include <deque>
 #include <utility>
 

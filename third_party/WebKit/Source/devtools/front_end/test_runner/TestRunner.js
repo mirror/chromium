@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/**
- * @fileoverview using private properties isn't a Closure violation in tests.
- * @suppress {accessControls}
- */
-
 /* eslint-disable no-console */
 
 /** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
@@ -159,8 +154,22 @@ TestRunner.addSnifferPromise = function(receiver, methodName) {
   });
 };
 
+/** @type {number} */
+TestRunner._pendingInits = 0;
+
 /** @type {function():void} */
 TestRunner._resolveOnFinishInits;
+
+/**
+ * @param {function():!Promise} asyncFunction
+ */
+TestRunner.initAsync = async function(asyncFunction) {
+  TestRunner._pendingInits++;
+  await asyncFunction();
+  TestRunner._pendingInits--;
+  if (!TestRunner._pendingInits)
+    TestRunner._resolveOnFinishInits();
+};
 
 /**
  * @param {string} module

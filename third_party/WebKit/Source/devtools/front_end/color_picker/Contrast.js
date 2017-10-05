@@ -216,22 +216,20 @@ ColorPicker.ContrastOverlay = class {
     var contrastRatioSVG = colorElement.createSVGChild('svg', 'spectrum-contrast-container fill');
     this._contrastRatioLine = contrastRatioSVG.createSVGChild('path', 'spectrum-contrast-line');
 
-    this._contrastValueBubble = colorElement.createChild('button', 'spectrum-contrast-info');
+    this._contrastValueBubble = colorElement.createChild('div', 'spectrum-contrast-info');
     this._contrastValueBubble.classList.add('force-white-icons');
-    UI.ARIAUtils.setExpanded(this._contrastValueBubble, false);
     this._contrastValueBubble.createChild('span', 'low-contrast').textContent = Common.UIString('Low contrast');
     this._contrastValue = this._contrastValueBubble.createChild('span', 'value');
     this._contrastValueBubble.appendChild(UI.Icon.create('smallicon-contrast-ratio'));
     this._contrastValueBubble.title = Common.UIString('Click to toggle contrast ratio details');
     this._contrastValueBubble.addEventListener('mousedown', this._toggleContrastDetails.bind(this), true);
-    this._contrastValueBubble.addEventListener('click', this._onToggleClick.bind(this), true);
 
     /** @type {!AnchorBox} */
     this._contrastValueBubbleBoxInWindow = new AnchorBox(0, 0, 0, 0);
 
     this._contrastDetails = new ColorPicker.ContrastDetails(
         this._contrastInfo, contentElement, toggleMainColorPickerCallback, this._update.bind(this));
-    UI.ARIAUtils.setControls(this._contrastValueBubble, this._contrastDetails.element());
+
     this._width = 0;
     this._height = 0;
 
@@ -280,7 +278,6 @@ ColorPicker.ContrastOverlay = class {
   }
 
   _update() {
-    UI.ARIAUtils.setExpanded(this._contrastValueBubble, this._contrastDetails.visible());
     var AA = this._contrastInfo.contrastRatioThreshold('AA');
     if (!AA)
       return;
@@ -333,18 +330,6 @@ ColorPicker.ContrastOverlay = class {
       return;
     event.consume();
     this._contrastDetails.toggleVisible();
-    UI.ARIAUtils.setExpanded(this._contrastValueBubble, this._contrastDetails.visible());
-  }
-
-  /**
-   * @param {!Event} event
-   */
-  _onToggleClick(event) {
-    // Handle a synthetic click via keyboard, which doesn't trigger a mousedown.
-    if (event.screenX || event.screenY)
-      return;
-    event.consume();
-    this._toggleContrastDetails(event);
   }
 
   /**
@@ -490,9 +475,9 @@ ColorPicker.ContrastDetails = class {
    * @param {!ColorPicker.ContrastInfo} contrastInfo
    * @param {!Element} contentElement
    * @param {function(boolean=, !Common.Event=)} toggleMainColorPickerCallback
-   * @param {function()} updateContrastOverlayCallback
+   * @param {function()} backgroundColorPickedCallback
    */
-  constructor(contrastInfo, contentElement, toggleMainColorPickerCallback, updateContrastOverlayCallback) {
+  constructor(contrastInfo, contentElement, toggleMainColorPickerCallback, backgroundColorPickedCallback) {
     /** @type {!ColorPicker.ContrastInfo} */
     this._contrastInfo = contrastInfo;
 
@@ -500,24 +485,16 @@ ColorPicker.ContrastDetails = class {
     this._toggleMainColorPicker = toggleMainColorPickerCallback;
 
     /** @type {function()} */
-    this._updateContrastOverlayCallback = updateContrastOverlayCallback;
-
-    this._visible = false;
+    this._backgroundColorPickedCallback = backgroundColorPickedCallback;
 
     this._contrastDetails = contentElement.createChild('div', 'spectrum-contrast-details');
-    this._contrastDetails.id = 'contrast-ratio-details';
     var contrastValueRow = this._contrastDetails.createChild('div');
     contrastValueRow.createTextChild(Common.UIString('Contrast Ratio'));
-    contrastValueRow.createTextChild(' ');
 
-    var linkName = Common.UIString('Color and contrast on Web Fundamentals');
-
-    var contrastLink = UI.createExternalLink(
-        'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast', linkName,
-        'contrast-link');
+    var contrastLink = contrastValueRow.appendChild(UI.createExternalLink(
+        'https://developers.google.com/web/fundamentals/accessibility/accessible-styles#color_and_contrast',
+        'Color and contrast on Web Fundamentals', 'contrast-link'));
     contrastLink.textContent = '';
-    contrastValueRow.appendChild(contrastLink);
-    UI.ARIAUtils.setAccessibleName(contrastLink, linkName);
     contrastLink.appendChild(UI.Icon.create('mediumicon-info'));
 
     this._contrastValueBubble = contrastValueRow.createChild('span', 'contrast-details-value force-white-icons');
@@ -634,9 +611,8 @@ ColorPicker.ContrastDetails = class {
   }
 
   toggleVisible() {
-    this._visible = !this._visible;
-    this._contrastDetails.classList.toggle('visible', this._visible);
-    if (this._visible)
+    this._contrastDetails.classList.toggle('visible');
+    if (this._contrastDetails.classList.contains('visible'))
       this._toggleMainColorPicker(false);
     else
       this._toggleBackgroundColorPicker(false);
@@ -644,22 +620,7 @@ ColorPicker.ContrastDetails = class {
 
   hide() {
     this._contrastDetails.classList.remove('visible');
-    this._toggleBackgroundColorPicker(false);
-    this._updateContrastOverlayCallback();
-  }
-
-  /**
-   * @return {!Element}
-   */
-  element() {
-    return this._contrastDetails;
-  }
-
-  /**
-   * @return {boolean}
-   */
-  visible() {
-    return this._visible;
+    this._toggleMainColorPicker(false);
   }
 
   /**
@@ -693,7 +654,7 @@ ColorPicker.ContrastDetails = class {
     var color = Common.Color.fromRGBA(rgba);
     this._contrastInfo.setBgColor(color);
     this.update();
-    this._updateContrastOverlayCallback();
+    this._backgroundColorPickedCallback();
     InspectorFrontendHost.bringToFront();
   }
 
@@ -733,11 +694,12 @@ ColorPicker.ContrastDetails.Swatch = class {
    * @param {string=} colorString
    */
   setColor(color, colorString) {
-    if (!colorString)
-      colorString = /** @type {string} */ (color.asString(Common.Color.Format.RGBA));
-    this._swatchInnerElement.style.background = colorString;
-    UI.ARIAUtils.setAccessibleName(this._swatchElement, colorString);
-
+    if (colorString) {
+      this._swatchInnerElement.style.background = colorString;
+    } else {
+      this._swatchInnerElement.style.background =
+          /** @type {string} */ (color.asString(Common.Color.Format.RGBA));
+    }
     // Show border if the swatch is white.
     this._swatchElement.classList.toggle('swatch-inner-white', color.hsla()[2] > 0.9);
   }

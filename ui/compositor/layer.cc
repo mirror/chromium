@@ -92,8 +92,8 @@ class Layer::LayerMirror : public LayerDelegate, LayerObserver {
 
 Layer::Layer()
     : type_(LAYER_TEXTURED),
-      compositor_(nullptr),
-      parent_(nullptr),
+      compositor_(NULL),
+      parent_(NULL),
       visible_(true),
       fills_bounds_opaquely_(true),
       fills_bounds_completely_(false),
@@ -106,13 +106,13 @@ Layer::Layer()
       layer_temperature_(0.0f),
       layer_blue_scale_(1.0f),
       layer_green_scale_(1.0f),
-      layer_mask_(nullptr),
-      layer_mask_back_link_(nullptr),
+      layer_mask_(NULL),
+      layer_mask_back_link_(NULL),
       zoom_(1),
       zoom_inset_(0),
-      delegate_(nullptr),
-      owner_(nullptr),
-      cc_layer_(nullptr),
+      delegate_(NULL),
+      owner_(NULL),
+      cc_layer_(NULL),
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
       deferred_paint_requests_(0) {
@@ -121,8 +121,8 @@ Layer::Layer()
 
 Layer::Layer(LayerType type)
     : type_(type),
-      compositor_(nullptr),
-      parent_(nullptr),
+      compositor_(NULL),
+      parent_(NULL),
       visible_(true),
       fills_bounds_opaquely_(true),
       fills_bounds_completely_(false),
@@ -135,13 +135,13 @@ Layer::Layer(LayerType type)
       layer_temperature_(0.0f),
       layer_blue_scale_(1.0f),
       layer_green_scale_(1.0f),
-      layer_mask_(nullptr),
-      layer_mask_back_link_(nullptr),
+      layer_mask_(NULL),
+      layer_mask_back_link_(NULL),
       zoom_(1),
       zoom_inset_(0),
-      delegate_(nullptr),
-      owner_(nullptr),
-      cc_layer_(nullptr),
+      delegate_(NULL),
+      owner_(NULL),
+      cc_layer_(NULL),
       device_scale_factor_(1.0f),
       cache_render_surface_requests_(0),
       deferred_paint_requests_(0) {
@@ -157,15 +157,15 @@ Layer::~Layer() {
   // is still around.
   SetAnimator(nullptr);
   if (compositor_)
-    compositor_->SetRootLayer(nullptr);
+    compositor_->SetRootLayer(NULL);
   if (parent_)
     parent_->Remove(this);
   if (layer_mask_)
-    SetMaskLayer(nullptr);
+    SetMaskLayer(NULL);
   if (layer_mask_back_link_)
-    layer_mask_back_link_->SetMaskLayer(nullptr);
-  for (auto* child : children_)
-    child->parent_ = nullptr;
+    layer_mask_back_link_->SetMaskLayer(NULL);
+  for (size_t i = 0; i < children_.size(); ++i)
+    children_[i]->parent_ = NULL;
 
   cc_layer_->RemoveFromParent();
   if (mailbox_release_callback_)
@@ -288,7 +288,7 @@ void Layer::Remove(Layer* child) {
       std::find(children_.begin(), children_.end(), child);
   DCHECK(i != children_.end());
   children_.erase(i);
-  child->parent_ = nullptr;
+  child->parent_ = NULL;
   child->cc_layer_->RemoveFromParent();
 }
 
@@ -464,9 +464,9 @@ void Layer::SetMaskLayer(Layer* layer_mask) {
   // We need to de-reference the currently linked object so that no problem
   // arises if the mask layer gets deleted before this object.
   if (layer_mask_)
-    layer_mask_->layer_mask_back_link_ = nullptr;
+    layer_mask_->layer_mask_back_link_ = NULL;
   layer_mask_ = layer_mask;
-  cc_layer_->SetMaskLayer(layer_mask ? layer_mask->cc_layer_ : nullptr);
+  cc_layer_->SetMaskLayer(layer_mask ? layer_mask->cc_layer_ : NULL);
   // We need to reference the linked object so that it can properly break the
   // link to us when it gets deleted.
   if (layer_mask) {
@@ -563,7 +563,7 @@ bool Layer::IsDrawn() const {
   const Layer* layer = this;
   while (layer && layer->visible_)
     layer = layer->parent_;
-  return layer == nullptr;
+  return layer == NULL;
 }
 
 bool Layer::ShouldDraw() const {
@@ -630,7 +630,7 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   if (cc_layer_->parent()) {
     cc_layer_->parent()->ReplaceChild(cc_layer_, new_layer);
   }
-  cc_layer_->SetLayerClient(nullptr);
+  cc_layer_->SetLayerClient(NULL);
   new_layer->SetOpacity(cc_layer_->opacity());
   new_layer->SetTransform(cc_layer_->transform());
   new_layer->SetPosition(cc_layer_->position());
@@ -638,14 +638,14 @@ void Layer::SwitchToLayer(scoped_refptr<cc::Layer> new_layer) {
   new_layer->SetCacheRenderSurface(cc_layer_->cache_render_surface());
 
   cc_layer_ = new_layer.get();
-  content_layer_ = nullptr;
-  solid_color_layer_ = nullptr;
-  texture_layer_ = nullptr;
-  surface_layer_ = nullptr;
+  content_layer_ = NULL;
+  solid_color_layer_ = NULL;
+  texture_layer_ = NULL;
+  surface_layer_ = NULL;
 
-  for (auto* child : children_) {
-    DCHECK(child->cc_layer_);
-    cc_layer_->AddChild(child->cc_layer_);
+  for (size_t i = 0; i < children_.size(); ++i) {
+    DCHECK(children_[i]->cc_layer_);
+    cc_layer_->AddChild(children_[i]->cc_layer_);
   }
   cc_layer_->SetLayerClient(this);
   cc_layer_->SetTransformOrigin(gfx::Point3F());
@@ -699,8 +699,11 @@ void Layer::RemoveDeferredPaintRequest() {
   --deferred_paint_requests_;
   TRACE_COUNTER_ID1("ui", "DeferredPaintRequests", this,
                     deferred_paint_requests_);
-  if (!deferred_paint_requests_ && !damaged_region_.IsEmpty())
+  if (!deferred_paint_requests_ && !damaged_region_.IsEmpty()) {
     ScheduleDraw();
+    if (layer_mask_)
+      layer_mask_->ScheduleDraw();
+  }
 }
 
 void Layer::SetTrilinearFiltering(bool trilinear_filtering) {
@@ -912,9 +915,9 @@ void Layer::CompleteAllAnimations() {
 void Layer::SuppressPaint() {
   if (!delegate_)
     return;
-  delegate_ = nullptr;
-  for (auto* child : children_)
-    child->SuppressPaint();
+  delegate_ = NULL;
+  for (size_t i = 0; i < children_.size(); ++i)
+    children_[i]->SuppressPaint();
 }
 
 void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
@@ -936,8 +939,8 @@ void Layer::OnDeviceScaleFactorChanged(float device_scale_factor) {
     delegate_->OnDeviceScaleFactorChanged(old_device_scale_factor,
                                           device_scale_factor);
   }
-  for (auto* child : children_)
-    child->OnDeviceScaleFactorChanged(device_scale_factor);
+  for (size_t i = 0; i < children_.size(); ++i)
+    children_[i]->OnDeviceScaleFactorChanged(device_scale_factor);
   if (layer_mask_)
     layer_mask_->OnDeviceScaleFactorChanged(device_scale_factor);
 }
@@ -1229,7 +1232,7 @@ float Layer::GetDeviceScaleFactor() const {
 
 LayerAnimatorCollection* Layer::GetLayerAnimatorCollection() {
   Compositor* compositor = GetCompositor();
-  return compositor ? compositor->layer_animator_collection() : nullptr;
+  return compositor ? compositor->layer_animator_collection() : NULL;
 }
 
 int Layer::GetFrameNumber() const {

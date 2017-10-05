@@ -54,7 +54,7 @@ void RenderWidgetHelper::Init(
 
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(&AddWidgetHelper, render_process_id_,
-                                         base::WrapRefCounted(this)));
+                                         make_scoped_refptr(this)));
 }
 
 int RenderWidgetHelper::GetNextRoutingID() {

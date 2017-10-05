@@ -126,9 +126,6 @@ var LOG_TYPE = {
   NTP_CTA_LOGO_CLICKED: 35,
   // An animated Doodle was clicked.
   NTP_ANIMATED_LOGO_CLICKED: 36,
-
-  // The One Google Bar was shown.
-  NTP_ONE_GOOGLE_BAR_SHOWN: 37,
 };
 
 
@@ -754,8 +751,6 @@ function injectOneGoogleBar(ogb) {
   endOfBodyScript.type = 'text/javascript';
   endOfBodyScript.appendChild(document.createTextNode(ogb.endOfBodyScript));
   document.body.appendChild(endOfBodyScript);
-
-  ntpApiHandle.logEvent(LOG_TYPE.NTP_ONE_GOOGLE_BAR_SHOWN);
 }
 
 
@@ -851,11 +846,6 @@ var targetDoodle = {
  * @param {HTMLElement} element
  */
 var startFadeOut = function(element) {
-  // Compute style now, to ensure that the transition from 1 -> 0 is properly
-  // recognized. Otherwise, if a 0 -> 1 -> 0 transition is too fast, the
-  // element might stay invisible instead of appearing then fading out.
-  window.getComputedStyle(element).opacity;
-
   element.classList.add(CLASSES.FADE);
   element.addEventListener('transitionend', onDoodleTransitionEnd);
   element.style.opacity = 0;

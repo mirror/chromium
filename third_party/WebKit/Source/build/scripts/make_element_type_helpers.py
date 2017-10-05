@@ -22,7 +22,6 @@ class MakeElementTypeHelpersWriter(json5_generator.Writer):
         'ImplementedAs': {},
         'JSInterfaceName': {},
         'constructorNeedsCreatedByParser': {},
-        'interfaceHeaderDir': {},
         'interfaceName': {},
         'noConstructor': {},
         'noTypeHelpers': {},

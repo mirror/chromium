@@ -751,7 +751,7 @@ class GetRTCStatsCallback : public webrtc::RTCStatsCollectorCallback {
     DCHECK(report);
     DCHECK(callback_);
     callback_->OnStatsDelivered(std::unique_ptr<blink::WebRTCStatsReport>(
-        new RTCStatsReport(base::WrapRefCounted(report.get()))));
+        new RTCStatsReport(make_scoped_refptr(report.get()))));
     // Make sure the callback is destroyed in the main thread as well.
     callback_.reset();
   }
@@ -1073,7 +1073,7 @@ class RTCPeerConnectionHandler::Observer
     main_thread_->PostTask(
         FROM_HERE,
         base::BindOnce(&RTCPeerConnectionHandler::Observer::OnRemoveStreamImpl,
-                       this, base::WrapRefCounted(remote_webrtc_stream.get())));
+                       this, make_scoped_refptr(remote_webrtc_stream.get())));
   }
 
   void OnDataChannel(
@@ -1723,7 +1723,7 @@ void RTCPeerConnectionHandler::GetStats(
   signaling_thread()->PostTask(
       FROM_HERE,
       base::BindOnce(&GetStatsOnSignalingThread, native_peer_connection_, level,
-                     base::WrapRefCounted(observer), track_id, track_type));
+                     make_scoped_refptr(observer), track_id, track_type));
 }
 
 void RTCPeerConnectionHandler::GetStats(

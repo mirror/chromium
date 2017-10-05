@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "printing/page_number.h"
+#include "printing/printed_pages_source.h"
 #include "printing/printed_page.h"
 #include "printing/units.h"
 #include "skia/ext/skia_utils_win.h"
@@ -30,7 +31,7 @@ namespace printing {
 
 void PrintedDocument::RenderPrintedPage(
     const PrintedPage& page,
-    printing::NativeDrawingContext context) const {
+    skia::NativeDrawingContext context) const {
 #ifndef NDEBUG
   {
     // Make sure the page is from our list.

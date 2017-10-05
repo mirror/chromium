@@ -4,6 +4,7 @@
 
 #include "modules/media_controls/elements/MediaControlTimelineElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/events/Event.h"
@@ -12,7 +13,6 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/TimeRanges.h"
 #include "core/html/shadow/ShadowElementNames.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutBoxModelObject.h"
 #include "core/page/ChromeClient.h"
 #include "modules/media_controls/MediaControlsImpl.h"

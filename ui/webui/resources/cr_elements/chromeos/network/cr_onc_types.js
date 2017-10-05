@@ -31,7 +31,6 @@
  *   networkListItemConnectingTo: string,
  *   networkListItemInitializing: string,
  *   networkListItemNotConnected: string,
- *   networkListItemNoNetwork: string,
  *   vpnNameTemplate: string,
  * }}
  */
@@ -121,13 +120,15 @@ CrOnc.IPConfigType = chrome.networkingPrivate.IPConfigType;
 CrOnc.ProxySettingsType = chrome.networkingPrivate.ProxySettingsType;
 
 /** @enum {string} */
-CrOnc.Type = chrome.networkingPrivate.NetworkType;
+CrOnc.VPNType = {
+  L2TP_IPSEC: 'L2TP-IPsec',
+  OPEN_VPN: 'OpenVPN',
+  THIRD_PARTY_VPN: 'ThirdPartyVPN',
+  ARCVPN: 'ARCVPN',
+};
 
 /** @enum {string} */
-CrOnc.IPsecAuthenticationType = {
-  CERT: 'Cert',
-  PSK: 'PSK',
-};
+CrOnc.Type = chrome.networkingPrivate.NetworkType;
 
 /** @enum {string} */
 CrOnc.IPType = {
@@ -190,22 +191,6 @@ CrOnc.Source = {
   USER: 'User',
   USER_POLICY: 'UserPolicy',
   ACTIVE_EXTENSION: 'ActiveExtension',
-};
-
-/** @enum {string} */
-CrOnc.UserAuthenticationType = {
-  NONE: 'None',
-  OTP: 'OTP',
-  PASSWORD: 'Password',
-  PASSWORD_AND_OTP: 'PasswordAndOTP',
-};
-
-/** @enum {string} */
-CrOnc.VPNType = {
-  L2TP_IPSEC: 'L2TP-IPsec',
-  OPEN_VPN: 'OpenVPN',
-  THIRD_PARTY_VPN: 'ThirdPartyVPN',
-  ARCVPN: 'ARCVPN',
 };
 
 /**

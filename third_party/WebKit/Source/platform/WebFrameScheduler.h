@@ -52,24 +52,21 @@ class WebFrameScheduler {
   virtual void RemoveThrottlingObserver(ObserverType, Observer*) = 0;
 
   // The scheduler may throttle tasks associated with offscreen frames.
-  virtual void SetFrameVisible(bool) = 0;
-  virtual bool IsFrameVisible() const = 0;
+  virtual void SetFrameVisible(bool) {}
 
   // Tells the scheduler that the page this frame belongs to is not visible.
   // The scheduler may throttle tasks associated with pages that are not
   // visible.
-  virtual void SetPageVisible(bool) = 0;
-  virtual bool IsPageVisible() const = 0;
+  virtual void SetPageVisible(bool) {}
 
   // Set whether this frame is suspended. Only unthrottledTaskRunner tasks are
   // allowed to run on a suspended frame.
-  virtual void SetPaused(bool) = 0;
+  virtual void SetPaused(bool) {}
 
   // Set whether this frame is cross origin w.r.t. the top level frame. Cross
   // origin frames may use a different scheduling policy from same origin
   // frames.
-  virtual void SetCrossOrigin(bool) = 0;
-  virtual bool IsCrossOrigin() const = 0;
+  virtual void SetCrossOrigin(bool) {}
 
   // The tasks runners below are listed in increasing QoS order.
   // - throttleable task queue. Designed for custom user-provided javascript
@@ -127,54 +124,50 @@ class WebFrameScheduler {
   virtual RefPtr<WebTaskRunner> LoadingControlTaskRunner() = 0;
 
   // Returns the parent WebViewScheduler.
-  virtual WebViewScheduler* GetWebViewScheduler() = 0;
+  virtual WebViewScheduler* GetWebViewScheduler() { return nullptr; }
 
   // Tells the scheduler a resource load has started. The scheduler may make
   // policy decisions based on this.
-  virtual void DidStartLoading(unsigned long identifier) = 0;
+  virtual void DidStartLoading(unsigned long identifier) {}
 
   // Tells the scheduler a resource load has stopped. The scheduler may make
   // policy decisions based on this.
-  virtual void DidStopLoading(unsigned long identifier) = 0;
+  virtual void DidStopLoading(unsigned long identifier) {}
 
   // Tells the scheduler that a history navigation is expected soon, virtual
   // time may be paused. Must be called from the main thread.
-  virtual void WillNavigateBackForwardSoon() = 0;
+  virtual void WillNavigateBackForwardSoon() {}
 
   // Tells the scheduler that a provisional load has started, virtual time may
   // be paused. Must be called from the main thread.
-  virtual void DidStartProvisionalLoad(bool is_main_frame) = 0;
+  virtual void DidStartProvisionalLoad(bool is_main_frame) {}
 
   // Tells the scheduler that a provisional load has failed, virtual time may be
   // unpaused. Must be called from the main thread.
-  virtual void DidFailProvisionalLoad() = 0;
+  virtual void DidFailProvisionalLoad() {}
 
   // Tells the scheduler that a provisional load has committed, virtual time ma
   // be unpaused. In addition the scheduler may reset the task cost estimators
   // and the UserModel. Must be called from the main thread.
   virtual void DidCommitProvisionalLoad(bool is_web_history_inert_commit,
                                         bool is_reload,
-                                        bool is_main_frame) = 0;
+                                        bool is_main_frame){};
 
   // Tells the scheduler if we are parsing a document on another thread. This
   // tells the scheduler not to advance virtual time if it's using the
   // DETERMINISTIC_LOADING policy.
-  virtual void SetDocumentParsingInBackground(
-      bool background_parsing_enabled) = 0;
+  virtual void SetDocumentParsingInBackground(bool) {}
 
   // Tells the scheduler that the first meaningful paint has occured for this
   // frame.
-  virtual void OnFirstMeaningfulPaint() = 0;
+  virtual void OnFirstMeaningfulPaint() {}
 
   // Notifies scheduler that this frame has established an active real time
   // connection (websocket, webrtc, etc). When connection is closed this handle
   // must be destroyed.
-  virtual std::unique_ptr<ActiveConnectionHandle>
-  OnActiveConnectionCreated() = 0;
-
-  // Returns true if this frame is should not throttled (e.g. because of audio
-  // or an active connection).
-  virtual bool IsExemptFromThrottling() const = 0;
+  virtual std::unique_ptr<ActiveConnectionHandle> OnActiveConnectionCreated() {
+    return nullptr;
+  };
 };
 
 }  // namespace blink

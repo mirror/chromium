@@ -33,11 +33,17 @@ void TestPersonalDataManager::AddTestingServerCreditCard(
   server_credit_cards_.push_back(base::MakeUnique<CreditCard>(credit_card));
 }
 
-std::vector<AutofillProfile*> TestPersonalDataManager::GetProfiles() const {
+const std::vector<AutofillProfile*>& TestPersonalDataManager::GetProfiles()
+    const {
+  return GetProfiles(false);
+}
+
+std::vector<AutofillProfile*> TestPersonalDataManager::web_profiles() const {
   return profiles_;
 }
 
-std::vector<CreditCard*> TestPersonalDataManager::GetCreditCards() const {
+const std::vector<CreditCard*>& TestPersonalDataManager::GetCreditCards()
+    const {
   return credit_cards_;
 }
 
@@ -64,6 +70,11 @@ const std::string& TestPersonalDataManager::GetDefaultCountryCodeForNewAddress()
     return PersonalDataManager::GetDefaultCountryCodeForNewAddress();
 
   return default_country_code_;
+}
+
+const std::vector<AutofillProfile*>& TestPersonalDataManager::GetProfiles(
+    bool record_metrics) const {
+  return profiles_;
 }
 
 }  // namespace autofill

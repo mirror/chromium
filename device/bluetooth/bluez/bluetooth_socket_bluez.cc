@@ -62,7 +62,7 @@ scoped_refptr<BluetoothSocketBlueZ> BluetoothSocketBlueZ::CreateBluetoothSocket(
     scoped_refptr<BluetoothSocketThread> socket_thread) {
   DCHECK(ui_task_runner->RunsTasksInCurrentSequence());
 
-  return base::WrapRefCounted(
+  return make_scoped_refptr(
       new BluetoothSocketBlueZ(ui_task_runner, socket_thread));
 }
 

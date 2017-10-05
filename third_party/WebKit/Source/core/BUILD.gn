@@ -363,7 +363,7 @@ generate_event_interfaces("core_event_interfaces") {
     "html/track/TrackEvent.idl",
     "mojo/test/MojoInterfaceRequestEvent.idl",
   ]
-  output_file = "core/EventNames.json5"
+  output_file = "core/EventInterfaces.json5"
 }
 
 # generated_testing_idls -------------------------------------------------------
@@ -851,8 +851,8 @@ process_json5_files("make_core_generated_html_element_factory") {
   outputs = [
     "$blink_core_output_dir/HTMLElementFactory.cpp",
     "$blink_core_output_dir/HTMLElementFactory.h",
-    "$blink_core_output_dir/html_names.cc",
-    "$blink_core_output_dir/html_names.h",
+    "$blink_core_output_dir/HTMLNames.cpp",
+    "$blink_core_output_dir/HTMLNames.h",
   ]
 }
 
@@ -878,8 +878,8 @@ process_json5_files("make_core_generated_svg_names") {
   outputs = [
     "$blink_core_output_dir/SVGElementFactory.cpp",
     "$blink_core_output_dir/SVGElementFactory.h",
-    "$blink_core_output_dir/svg_names.cc",
-    "$blink_core_output_dir/svg_names.h",
+    "$blink_core_output_dir/SVGNames.cpp",
+    "$blink_core_output_dir/SVGNames.h",
   ]
 }
 
@@ -897,7 +897,7 @@ process_json5_files("make_core_generated_svg_element_type_helpers") {
 
 make_event_factory("make_core_generated_event_factory") {
   in_files = [
-    "$blink_core_output_dir/EventNames.json5",
+    "$blink_core_output_dir/EventInterfaces.json5",
     "events/EventAliases.json5",
   ]
   outputs = [
@@ -916,44 +916,65 @@ code_generator("make_core_generated_media_feature_names") {
   ]
   other_inputs = make_names_files
   outputs = [
-    "$blink_core_output_dir/css/MediaFeatureNames.cc",
+    "$blink_core_output_dir/css/MediaFeatureNames.cpp",
     "$blink_core_output_dir/css/MediaFeatureNames.h",
   ]
 }
 
 make_names("make_core_generated_media_type_names") {
   in_files = [ "css/MediaTypeNames.json5" ]
-  output_dir = blink_core_output_dir
+  outputs = [
+    "$blink_core_output_dir/MediaTypeNames.cpp",
+    "$blink_core_output_dir/MediaTypeNames.h",
+  ]
 }
 
 make_names("make_core_generated_event_names") {
-  in_files = [ "$blink_core_output_dir/EventNames.json5" ]
-  output_dir = blink_core_output_dir
+  in_files = [ "$blink_core_output_dir/EventInterfaces.json5" ]
+  outputs = [
+    "$blink_core_output_dir/EventNames.cpp",
+    "$blink_core_output_dir/EventNames.h",
+  ]
 }
 
 make_names("make_core_generated_event_target_names") {
-  in_files = [ "events/EventTargetNames.json5" ]
-  output_dir = blink_core_output_dir
+  in_files = [ "events/EventTargetFactory.json5" ]
+  outputs = [
+    "$blink_core_output_dir/EventTargetNames.cpp",
+    "$blink_core_output_dir/EventTargetNames.h",
+  ]
 }
 
 make_names("make_core_generated_event_type_names") {
   in_files = [ "events/EventTypeNames.json5" ]
-  output_dir = blink_core_output_dir
+  outputs = [
+    "$blink_core_output_dir/EventTypeNames.cpp",
+    "$blink_core_output_dir/EventTypeNames.h",
+  ]
 }
 
 make_names("make_core_generated_html_tokenizer_names") {
   in_files = [ "html/parser/HTMLTokenizerNames.json5" ]
-  output_dir = blink_core_output_dir
+  outputs = [
+    "$blink_core_output_dir/HTMLTokenizerNames.cpp",
+    "$blink_core_output_dir/HTMLTokenizerNames.h",
+  ]
 }
 
 make_names("make_core_generated_input_type_names") {
   in_files = [ "html/forms/InputTypeNames.json5" ]
-  output_dir = blink_core_output_dir
+  outputs = [
+    "$blink_core_output_dir/InputTypeNames.cpp",
+    "$blink_core_output_dir/InputTypeNames.h",
+  ]
 }
 
 make_names("make_core_generated_input_mode_names") {
   in_files = [ "editing/InputModeNames.json5" ]
-  output_dir = blink_core_output_dir
+  outputs = [
+    "$blink_core_output_dir/InputModeNames.cpp",
+    "$blink_core_output_dir/InputModeNames.h",
+  ]
 }
 
 # make_qualified_names ---------------------------------------------------------
@@ -964,32 +985,32 @@ make_qualified_names("make_core_generated_math_ml_names") {
     "html/parser/MathMLAttributeNames.json5",
   ]
   outputs = [
-    "$blink_core_output_dir/mathml_names.cc",
-    "$blink_core_output_dir/mathml_names.h",
+    "$blink_core_output_dir/MathMLNames.cpp",
+    "$blink_core_output_dir/MathMLNames.h",
   ]
 }
 
 make_qualified_names("make_core_generated_xlink_names") {
   in_files = [ "svg/xlinkattrs.json5" ]
   outputs = [
-    "$blink_core_output_dir/xlink_names.cc",
-    "$blink_core_output_dir/xlink_names.h",
+    "$blink_core_output_dir/XLinkNames.cpp",
+    "$blink_core_output_dir/XLinkNames.h",
   ]
 }
 
 make_qualified_names("make_core_generated_xml_ns_names") {
   in_files = [ "xml/xmlnsattrs.json5" ]
   outputs = [
-    "$blink_core_output_dir/xmlns_names.cc",
-    "$blink_core_output_dir/xmlns_names.h",
+    "$blink_core_output_dir/XMLNSNames.cpp",
+    "$blink_core_output_dir/XMLNSNames.h",
   ]
 }
 
 make_qualified_names("make_core_generated_xml_names") {
   in_files = [ "xml/xmlattrs.json5" ]
   outputs = [
-    "$blink_core_output_dir/xml_names.cc",
-    "$blink_core_output_dir/xml_names.h",
+    "$blink_core_output_dir/XMLNames.cpp",
+    "$blink_core_output_dir/XMLNames.h",
   ]
 }
 
@@ -1122,12 +1143,12 @@ action("make_core_generated_origin_trials") {
   inputs = scripts_for_json5_files + [
              "../build/scripts/make_origin_trials.py",
              "../platform/runtime_enabled_features.json5",
-             "../build/scripts/templates/origin_trials.cc.tmpl",
-             "../build/scripts/templates/origin_trials.h.tmpl",
+             "../build/scripts/templates/OriginTrials.cpp.tmpl",
+             "../build/scripts/templates/OriginTrials.h.tmpl",
            ]
   outputs = [
-    "$blink_core_output_dir/origin_trials/origin_trials.cc",
-    "$blink_core_output_dir/origin_trials/origin_trials.h",
+    "$blink_core_output_dir/origin_trials/OriginTrials.cpp",
+    "$blink_core_output_dir/origin_trials/OriginTrials.h",
   ]
 
   args = [

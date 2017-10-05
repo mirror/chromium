@@ -44,12 +44,6 @@ class PolicyToolUITest : public InProcessBrowserTest {
 
   std::unique_ptr<base::DictionaryValue> ExtractPolicyValues(bool need_status);
 
-  bool IsInvalidSessionNameErrorMessageDisplayed();
-
-  std::unique_ptr<base::ListValue> ExtractSessionsList();
-
-  void CreateMultipleSessionFiles(int count);
-
  private:
   base::test::ScopedFeatureList scoped_feature_list_;
   DISALLOW_COPY_AND_ASSIGN(PolicyToolUITest);
@@ -128,20 +122,6 @@ std::unique_ptr<base::DictionaryValue> PolicyToolUITest::ExtractPolicyValues(
   return base::DictionaryValue::From(base::JSONReader::Read(json));
 }
 
-std::unique_ptr<base::ListValue> PolicyToolUITest::ExtractSessionsList() {
-  std::string javascript =
-      "var list = $('session-list');"
-      "var sessions = [];"
-      "for (var i = 0; i < list.length; i++) {"
-      "  sessions.push(list[i].value);"
-      "}"
-      "domAutomationController.send(JSON.stringify(sessions));";
-  std::string json;
-  EXPECT_TRUE(content::ExecuteScriptAndExtractString(
-      browser()->tab_strip_model()->GetActiveWebContents(), javascript, &json));
-  return base::ListValue::From(base::JSONReader::Read(json));
-}
-
 void PolicyToolUITest::LoadSessionAndWaitForAlert(
     const std::string& session_name) {
   content::WebContents* contents =
@@ -153,38 +133,6 @@ void PolicyToolUITest::LoadSessionAndWaitForAlert(
   LoadSession(session_name);
   dialog_wait.Run();
   EXPECT_TRUE(js_helper->IsShowingDialogForTesting());
-}
-
-bool PolicyToolUITest::IsInvalidSessionNameErrorMessageDisplayed() {
-  const std::string javascript =
-      "domAutomationController.send($('invalid-session-name-error')."
-      "offsetWidth > "
-      "0)";
-  content::WebContents* contents =
-      browser()->tab_strip_model()->GetActiveWebContents();
-  bool result = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(contents, javascript, &result));
-  return result;
-}
-
-void PolicyToolUITest::CreateMultipleSessionFiles(int count) {
-  base::ScopedAllowBlockingForTesting allow_blocking;
-  EXPECT_TRUE(base::CreateDirectory(GetSessionsDir()));
-  base::DictionaryValue contents;
-  base::Time initial_time = base::Time::Now();
-  for (int i = 0; i < count; ++i) {
-    contents.SetPath({"chromePolicies", "SessionId", "value"},
-                     base::Value(base::IntToString(i)));
-    base::FilePath::StringType session_name =
-        base::FilePath::FromUTF8Unsafe(base::IntToString(i)).value();
-    std::string stringified_contents;
-    base::JSONWriter::Write(contents, &stringified_contents);
-    base::WriteFile(GetSessionPath(session_name), stringified_contents.c_str(),
-                    stringified_contents.size());
-    base::Time current_time =
-        initial_time - base::TimeDelta::FromSeconds(count - i);
-    base::TouchFile(GetSessionPath(session_name), current_time, current_time);
-  }
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, CreatingSessionFiles) {
@@ -286,13 +234,9 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, Editing) {
   EXPECT_EQ(expected, *values);
 }
 
-IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidSessionName) {
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidFilename) {
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
-  EXPECT_FALSE(IsInvalidSessionNameErrorMessageDisplayed());
-  LoadSession("../test");
-  EXPECT_TRUE(IsInvalidSessionNameErrorMessageDisplayed());
-  LoadSession("policy");
-  EXPECT_FALSE(IsInvalidSessionNameErrorMessageDisplayed());
+  LoadSessionAndWaitForAlert("../test");
 }
 
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, InvalidJson) {
@@ -344,27 +288,25 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {
 IN_PROC_BROWSER_TEST_F(PolicyToolUITest, MultipleSessionsChoice) {
   base::ScopedAllowBlockingForTesting allow_blocking;
   base::CreateDirectory(GetSessionsDir());
-
   // Create 5 session files with different last access times and contents.
-  CreateMultipleSessionFiles(5);
+  base::DictionaryValue contents;
+  base::Time initial_time = base::Time::Now();
+  for (int i = 0; i < 5; ++i) {
+    contents.SetPath({"chromePolicies", "SessionId", "value"},
+                     base::Value(base::IntToString(i)));
+    base::FilePath::StringType session_name =
+        base::FilePath::FromUTF8Unsafe(base::IntToString(i)).value();
+    std::string stringified_contents;
+    base::JSONWriter::Write(contents, &stringified_contents);
+    base::WriteFile(GetSessionPath(session_name), stringified_contents.c_str(),
+                    stringified_contents.size());
+    base::Time current_time = initial_time + base::TimeDelta::FromSeconds(i);
+    base::TouchFile(GetSessionPath(session_name), current_time, current_time);
+  }
 
   // Load the page. This should load the last session.
   ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
   std::unique_ptr<base::DictionaryValue> page_contents =
       ExtractPolicyValues(false);
-  base::DictionaryValue expected;
-  expected.SetPath({"chromePolicies", "SessionId", "value"}, base::Value("4"));
-  EXPECT_EQ(expected, *page_contents);
-}
-
-IN_PROC_BROWSER_TEST_F(PolicyToolUITest, SessionsList) {
-  CreateMultipleSessionFiles(5);
-  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
-  content::RunAllTasksUntilIdle();
-  std::unique_ptr<base::ListValue> sessions = ExtractSessionsList();
-  base::ListValue expected;
-  for (int i = 4; i >= 0; --i) {
-    expected.GetList().push_back(base::Value(base::IntToString(i)));
-  }
-  EXPECT_EQ(expected, *sessions);
+  EXPECT_EQ(contents, *page_contents);
 }

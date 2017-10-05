@@ -28,6 +28,7 @@
 
 #include <algorithm>
 #include <memory>
+#include "core/HTMLNames.h"
 #include "core/MediaTypeNames.h"
 #include "core/animation/DocumentAnimations.h"
 #include "core/css/FontFaceSetDocument.h"
@@ -58,7 +59,6 @@
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/TextControlElement.h"
 #include "core/html/parser/TextResourceDecoder.h"
-#include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/intersection_observer/IntersectionObserverController.h"
@@ -102,6 +102,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/resize_observer/ResizeObserverController.h"
 #include "core/style/ComputedStyle.h"
+#include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGSVGElement.h"
 #include "platform/Histogram.h"
 #include "platform/Language.h"
@@ -1913,15 +1914,11 @@ bool LocalFrameView::ProcessUrlFragmentHelper(const String& name,
 
   if (frame_->GetDocument()->IsSVGDocument()) {
     if (SVGSVGElement* svg =
-            ToSVGSVGElementOrNull(frame_->GetDocument()->documentElement())) {
+            SVGDocumentExtensions::rootElement(*frame_->GetDocument())) {
       svg->SetupInitialView(name, anchor_node);
       if (!anchor_node)
         return true;
     }
-    // If this is not the top-level frame, then don't scroll to the
-    // anchor position.
-    if (!frame_->IsMainFrame())
-      behavior = kUrlFragmentDontScroll;
   }
 
   // Implement the rule that "" and "top" both mean top of page as in other

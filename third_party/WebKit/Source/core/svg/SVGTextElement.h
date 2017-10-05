@@ -21,6 +21,7 @@
 #ifndef SVGTextElement_h
 #define SVGTextElement_h
 
+#include "core/SVGNames.h"
 #include "core/svg/SVGTextPositioningElement.h"
 
 namespace blink {

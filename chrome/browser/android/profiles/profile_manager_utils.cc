@@ -41,7 +41,7 @@ void CommitPendingWritesForProfile(Profile* profile) {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&FlushCookiesOnIOThread,
-                 base::WrapRefCounted(profile->GetRequestContext())));
+                 make_scoped_refptr(profile->GetRequestContext())));
   content::BrowserContext::ForEachStoragePartition(
       profile, base::Bind(FlushStoragePartition));
 }
@@ -57,7 +57,7 @@ void RemoveSessionCookiesForProfile(Profile* profile) {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::Bind(&RemoveSessionCookiesOnIOThread,
-                 base::WrapRefCounted(profile->GetRequestContext())));
+                 make_scoped_refptr(profile->GetRequestContext())));
 }
 
 }  // namespace

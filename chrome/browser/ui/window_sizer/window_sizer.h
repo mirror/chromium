@@ -161,7 +161,7 @@ class WindowSizer {
   // ash's the target root window.
   display::Display GetTargetDisplay(const gfx::Rect& bounds) const;
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   // Ash specific logic for window placement. Returns true if |bounds| and
   // |show_state| have been fully determined, otherwise returns false (but
   // may still affect |show_state|).

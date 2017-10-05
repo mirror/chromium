@@ -30,10 +30,11 @@
 
 #include "public/web/WebFormElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/html/HTMLFormControlElement.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLInputElement.h"
-#include "core/html_names.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/web/WebFormControlElement.h"

@@ -527,7 +527,7 @@ void ServiceWorkerVersion::ScheduleUpdate() {
 
   // Protect |this| until the timer fires, since we may be stopping
   // and soon no one might hold a reference to us.
-  context_->ProtectVersion(base::WrapRefCounted(this));
+  context_->ProtectVersion(make_scoped_refptr(this));
   update_timer_.Start(FROM_HERE, kUpdateDelay,
                       base::Bind(&ServiceWorkerVersion::StartUpdate,
                                  weak_factory_.GetWeakPtr()));
@@ -741,17 +741,7 @@ void ServiceWorkerVersion::SetStartWorkerStatusCode(
 }
 
 void ServiceWorkerVersion::Doom() {
-  // Tell controllees that this version is dead. Each controllee will call
-  // ServiceWorkerVersion::RemoveControllee(), so be careful with iterators.
-  auto iter = controllee_map_.begin();
-  while (iter != controllee_map_.end()) {
-    ServiceWorkerProviderHost* host = iter->second;
-    ++iter;
-    host->NotifyControllerLost();
-  }
-  // Any controllee this version had should have removed itself.
   DCHECK(!HasControllee());
-
   SetStatus(REDUNDANT);
   if (running_status() == EmbeddedWorkerStatus::STARTING ||
       running_status() == EmbeddedWorkerStatus::RUNNING) {

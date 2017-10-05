@@ -941,6 +941,9 @@ extern const char kWebvrDescription[];
 extern const char kWifiCredentialSyncName[];
 extern const char kWifiCredentialSyncDescription[];
 
+extern const char kWindowNavNativeFlagName[];
+extern const char kWindowNavNativeFlagDescription[];
+
 extern const char kZeroCopyName[];
 extern const char kZeroCopyDescription[];
 
@@ -1380,9 +1383,6 @@ extern const char kHostedAppsInWindowsDescription[];
 extern const char kMacRTLName[];
 extern const char kMacRTLDescription[];
 
-extern const char kMacSystemShareMenuName[];
-extern const char kMacSystemShareMenuDescription[];
-
 extern const char kMacTouchBarName[];
 extern const char kMacTouchBarDescription[];
 
@@ -1685,7 +1685,7 @@ extern const char kWebrtcH264WithOpenh264FfmpegDescription[];
 
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
 
 extern const char kAshDisableSmoothScreenRotationName[];
 extern const char kAshDisableSmoothScreenRotationDescription[];
@@ -1723,7 +1723,7 @@ extern const char kUiShowCompositedLayerBordersAll[];
 extern const char kUiSlowAnimationsName[];
 extern const char kUiSlowAnimationsDescription[];
 
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(USE_ASH)
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 

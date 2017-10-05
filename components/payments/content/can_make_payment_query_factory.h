@@ -35,8 +35,6 @@ class CanMakePaymentQueryFactory : public BrowserContextKeyedServiceFactory {
   ~CanMakePaymentQueryFactory() override;
 
   // BrowserContextKeyedServiceFactory:
-  content::BrowserContext* GetBrowserContextToUse(
-      content::BrowserContext* context) const override;
   KeyedService* BuildServiceInstanceFor(
       content::BrowserContext* context) const override;
 

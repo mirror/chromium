@@ -336,27 +336,10 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
     @Override
     public boolean shouldAutocomplete() {
         boolean retVal = mBatchEditNestCount == 0 && mLastEditWasTyping
-                && mCurrentState.isCursorAtEndOfUserText() && !isKeyboardBlacklisted()
+                && mCurrentState.isCursorAtEndOfUserText()
                 && isNonCompositionalText(getTextWithoutAutocomplete());
         if (DEBUG) Log.i(TAG, "shouldAutocomplete: " + retVal);
         return retVal;
-    }
-
-    private boolean isKeyboardBlacklisted() {
-        String pkgName = mDelegate.getKeyboardPackageName();
-        return pkgName.contains(".iqqi"); // crbug.com/767016
-    }
-
-    private boolean shouldFinishCompositionOnDeletion() {
-        // crbug.com/758443, crbug.com/766888: Japanese keyboard does not finish composition when we
-        // restore the deleted text, and later typing will make Japanese keyboard move before the
-        // restored character. Most keyboards accept finishComposingText and update their internal
-        // states. One exception is the recent version of Samsung keyboard which works goofily only
-        // when we finish composing text here. Since it is more difficult to blacklist all Japanese
-        // keyboards, instead we call finishComposingText() for all the keyboards except for Samsung
-        // keyboard.
-        String pkgName = mDelegate.getKeyboardPackageName();
-        return !pkgName.contains("com.sec.android.inputmethod");
     }
 
     @VisibleForTesting
@@ -423,12 +406,8 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
             // Keep the original selection before adding spannable string.
             Selection.setSelection(editable, sel, sel);
-            setCursorVisible(false);
+            mDelegate.setCursorVisible(false);
             if (DEBUG) Log.i(TAG, "setSpan: " + getEditableDebugString(editable));
-        }
-
-        private void setCursorVisible(boolean visible) {
-            if (mDelegate.isFocused()) mDelegate.setCursorVisible(visible);
         }
 
         private int getSpanIndex(Editable editable) {
@@ -437,7 +416,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
         }
 
         public boolean removeSpan() {
-            setCursorVisible(true);
+            mDelegate.setCursorVisible(true);
             Editable editable = mDelegate.getEditableText();
             int idx = getSpanIndex(editable);
             if (idx == -1) return false;
@@ -453,7 +432,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
 
         public void commitSpan() {
             mDelegate.getEditableText().removeSpan(mSpan);
-            setCursorVisible(true);
+            mDelegate.setCursorVisible(true);
         }
 
         public void reflectTextUpdateInState(AutocompleteState state, CharSequence text) {
@@ -546,7 +525,9 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
                 mDeletePostfixOnNextBeginImeCommand = diff.length();
             }
             if (mBatchEditNestCount == 0) { // only at the outermost batch edit
-                if (shouldFinishCompositionOnDeletion()) super.finishComposingText();
+                // crbug.com/758443: Japanese keyboard does not finish composition when we restore
+                // the deleted text.
+                super.finishComposingText();
             }
             incrementBatchEditCount(); // avoids additional notifyAutocompleteTextStateChanged()
             Editable editable = mDelegate.getEditableText();

@@ -32,10 +32,14 @@ void EndFloatClipDisplayItem::AppendToWebDisplayItemList(
 }
 
 #ifndef NDEBUG
-void FloatClipDisplayItem::PropertiesAsJSON(JSONObject& json) const {
-  DisplayItem::PropertiesAsJSON(json);
-  json.SetString("floatClipRect", clip_rect_.ToString());
+void FloatClipDisplayItem::DumpPropertiesAsDebugString(
+    WTF::StringBuilder& string_builder) const {
+  DisplayItem::DumpPropertiesAsDebugString(string_builder);
+  string_builder.Append(WTF::String::Format(
+      ", floatClipRect: [%f,%f,%f,%f]}", clip_rect_.X(), clip_rect_.Y(),
+      clip_rect_.Width(), clip_rect_.Height()));
 }
+
 #endif
 
 }  // namespace blink

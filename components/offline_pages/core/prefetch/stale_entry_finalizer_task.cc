@@ -9,7 +9,6 @@
 #include "base/bind.h"
 #include "components/offline_pages/core/offline_time_utils.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
-#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "sql/connection.h"
@@ -34,7 +33,7 @@ const base::TimeDelta FreshnessPeriodForState(PrefetchItemState state) {
       return base::TimeDelta::FromDays(1);
     // Bucket 3.
     case PrefetchItemState::DOWNLOADING:
-      return kPrefetchDownloadLifetime;
+      return base::TimeDelta::FromDays(2);
     default:
       NOTREACHED();
   }

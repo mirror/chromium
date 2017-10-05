@@ -24,8 +24,10 @@ class DrawingDisplayItemTest : public ::testing::Test {
 
 class MockWebDisplayItemList : public WebDisplayItemList {
  public:
-  MOCK_METHOD2(AppendDrawingItem,
-               void(const WebRect& visual_rect, sk_sp<const cc::PaintRecord>));
+  MOCK_METHOD3(AppendDrawingItem,
+               void(const WebRect& visual_rect,
+                    sk_sp<const cc::PaintRecord>,
+                    const WebRect& record_bounds));
 };
 
 static sk_sp<PaintRecord> CreateRectRecord(const FloatRect& record_bounds) {
@@ -47,7 +49,9 @@ TEST_F(DrawingDisplayItemTest, VisualRectAndDrawingBounds) {
 
   MockWebDisplayItemList list1;
   WebRect expected_rect = EnclosingIntRect(drawing_bounds);
-  EXPECT_CALL(list1, AppendDrawingItem(expected_rect, _)).Times(1);
+  WebRect expected_record_rect = EnclosingIntRect(record_bounds);
+  EXPECT_CALL(list1, AppendDrawingItem(expected_rect, _, expected_record_rect))
+      .Times(1);
   item.AppendToWebDisplayItemList(LayoutSize(), &list1);
 
   LayoutSize offset(LayoutUnit(2.1), LayoutUnit(3.6));
@@ -55,7 +59,9 @@ TEST_F(DrawingDisplayItemTest, VisualRectAndDrawingBounds) {
   visual_rect_with_offset.Move(-offset);
   WebRect expected_visual_rect = EnclosingIntRect(visual_rect_with_offset);
   MockWebDisplayItemList list2;
-  EXPECT_CALL(list2, AppendDrawingItem(expected_visual_rect, _)).Times(1);
+  EXPECT_CALL(list2,
+              AppendDrawingItem(expected_visual_rect, _, expected_record_rect))
+      .Times(1);
   item.AppendToWebDisplayItemList(offset, &list2);
 }
 

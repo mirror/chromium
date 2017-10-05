@@ -617,8 +617,7 @@ void PasswordManagerBrowserTestBase::AddHSTSHost(const std::string& host) {
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(
           &AddHSTSHostImpl,
-          base::WrapRefCounted(browser()->profile()->GetRequestContext()),
-          host),
+          make_scoped_refptr(browser()->profile()->GetRequestContext()), host),
       run_loop.QuitClosure());
 
   run_loop.Run();

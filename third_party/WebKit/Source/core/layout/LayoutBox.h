@@ -35,7 +35,6 @@ namespace blink {
 
 class LayoutBlockFlow;
 class LayoutMultiColumnSpannerPlaceholder;
-struct NGPhysicalBoxStrut;
 class ShapeOutsideInfo;
 
 struct PaintInfo;
@@ -613,7 +612,6 @@ class CORE_EXPORT LayoutBox : public LayoutBoxModelObject {
   LayoutUnit MarginRight() const override {
     return margin_box_outsets_.Right();
   }
-  void SetMargin(const NGPhysicalBoxStrut&);
   void SetMarginTop(LayoutUnit margin) { margin_box_outsets_.SetTop(margin); }
   void SetMarginBottom(LayoutUnit margin) {
     margin_box_outsets_.SetBottom(margin);

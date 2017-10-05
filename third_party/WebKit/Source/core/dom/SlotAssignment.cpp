@@ -4,6 +4,7 @@
 
 #include "core/dom/SlotAssignment.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/Node.h"
@@ -11,7 +12,6 @@
 #include "core/dom/ShadowRoot.h"
 #include "core/dom/V0InsertionPoint.h"
 #include "core/html/HTMLSlotElement.h"
-#include "core/html_names.h"
 
 namespace blink {
 
@@ -208,7 +208,7 @@ void SlotAssignment::ResolveAssignment() {
 
 void SlotAssignment::ResolveDistribution() {
   ResolveAssignment();
-  const HeapVector<Member<HTMLSlotElement>>& slots = Slots();
+  const HeapVector<Member<HTMLSlotElement>>& slots = this->Slots();
 
   for (auto slot : slots)
     slot->ResolveDistributedNodes();

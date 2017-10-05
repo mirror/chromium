@@ -20,7 +20,7 @@ namespace {
 PacketRef FastCopyPacket(const PacketRef& packet) {
   if (packet->HasOneRef())
     return packet;
-  return base::WrapRefCounted(new base::RefCountedData<Packet>(packet->data));
+  return make_scoped_refptr(new base::RefCountedData<Packet>(packet->data));
 }
 
 }  // namespace

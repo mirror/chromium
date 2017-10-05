@@ -1935,8 +1935,6 @@ UI.createExternalLink = function(url, linkText, className, preventClick) {
     linkText = url;
 
   var a = createElementWithClass('span', className);
-  UI.ARIAUtils.markAsLink(a);
-
   var href = url;
   if (url.trim().toLowerCase().startsWith('javascript:'))
     href = null;

@@ -73,6 +73,9 @@ EXTRA_TRACE_FILE = ('org.chromium.base.test.BaseJUnit4ClassRunner.TraceFile')
 _EXTRA_TEST_LIST = (
     'org.chromium.base.test.BaseChromiumAndroidJUnitRunner.TestList')
 
+_TEST_LIST_JUNIT4_RUNNERS = [
+    'org.chromium.base.test.BaseChromiumAndroidJUnitRunner']
+
 UI_CAPTURE_DIRS = ['chromium_tests_root', 'UiCapture']
 
 FEATURE_ANNOTATION = 'Feature'
@@ -164,33 +167,31 @@ class LocalDeviceInstrumentationTestRun(
           d.Install(apk, permissions=permissions)
         return install_helper_internal
 
-      def incremental_install_helper(apk, json_path, permissions):
+      def incremental_install_helper(apk, json_path):
         @trace_event.traced("apk_path")
         def incremental_install_helper_internal(d, apk_path=apk.path):
           # pylint: disable=unused-argument
-          installer.Install(d, json_path, apk=apk, permissions=permissions)
+          installer.Install(d, json_path, apk=apk)
         return incremental_install_helper_internal
 
       if self._test_instance.apk_under_test:
-        permissions = self._test_instance.apk_under_test.GetPermissions()
         if self._test_instance.apk_under_test_incremental_install_json:
           steps.append(incremental_install_helper(
                            self._test_instance.apk_under_test,
                            self._test_instance.
-                               apk_under_test_incremental_install_json,
-                           permissions))
+                               apk_under_test_incremental_install_json))
         else:
+          permissions = self._test_instance.apk_under_test.GetPermissions()
           steps.append(install_helper(self._test_instance.apk_under_test,
                                       permissions))
 
-      permissions = self._test_instance.test_apk.GetPermissions()
       if self._test_instance.test_apk_incremental_install_json:
         steps.append(incremental_install_helper(
                          self._test_instance.test_apk,
                          self._test_instance.
-                             test_apk_incremental_install_json,
-                         permissions))
+                             test_apk_incremental_install_json))
       else:
+        permissions = self._test_instance.test_apk.GetPermissions()
         steps.append(install_helper(self._test_instance.test_apk,
                                     permissions))
 
@@ -201,16 +202,15 @@ class LocalDeviceInstrumentationTestRun(
       def set_debug_app(dev):
         # Set debug app in order to enable reading command line flags on user
         # builds
-        if not self._test_instance.package_info:
-          logging.error("Couldn't set debug app: no package info")
-        elif not self._test_instance.package_info.package:
-          logging.error("Couldn't set debug app: no package defined")
-        else:
-          cmd = ['am', 'set-debug-app', '--persistent']
-          if self._test_instance.wait_for_java_debugger:
-            cmd.append('-w')
-          cmd.append(self._test_instance.package_info.package)
-          dev.RunShellCommand(cmd, check_return=True)
+        if self._test_instance.flags:
+          if not self._test_instance.package_info:
+            logging.error("Couldn't set debug app: no package info")
+          elif not self._test_instance.package_info.package:
+            logging.error("Couldn't set debug app: no package defined")
+          else:
+            dev.RunShellCommand(['am', 'set-debug-app', '--persistent',
+                               self._test_instance.package_info.package],
+                              check_return=True)
 
       @trace_event.traced
       def edit_shared_prefs(dev):
@@ -329,7 +329,8 @@ class LocalDeviceInstrumentationTestRun(
 
   #override
   def _GetTests(self):
-    if self._test_instance.junit4_runner_supports_listing:
+    tests = None
+    if self._test_instance.junit4_runner_class in _TEST_LIST_JUNIT4_RUNNERS:
       raw_tests = self._GetTestsFromRunner()
       tests = self._test_instance.ProcessRawTests(raw_tests)
     else:
@@ -420,8 +421,6 @@ class LocalDeviceInstrumentationTestRun(
         valgrind_tools.SetChromeTimeoutScale(
             device, test_timeout_scale * self._test_instance.timeout_scale)
 
-    if self._test_instance.wait_for_java_debugger:
-      timeout = None
     logging.info('preparing to run %s: %s', test_display_name, test)
 
     render_tests_device_output_dir = None
@@ -612,11 +611,8 @@ class LocalDeviceInstrumentationTestRun(
           extras['log'] = 'true'
           extras[_EXTRA_TEST_LIST] = dev_test_list_json.name
           target = '%s/%s' % (test_package, junit4_runner_class)
-          kwargs = {}
-          if self._test_instance.wait_for_java_debugger:
-            kwargs['timeout'] = None
           test_list_run_output = dev.StartInstrumentation(
-              target, extras=extras, retries=0, **kwargs)
+              target, extras=extras)
           if any(test_list_run_output):
             logging.error('Unexpected output while listing tests:')
             for line in test_list_run_output:

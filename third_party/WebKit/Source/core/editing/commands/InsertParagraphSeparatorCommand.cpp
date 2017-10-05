@@ -25,6 +25,7 @@
 
 #include "core/editing/commands/InsertParagraphSeparatorCommand.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/Text.h"
@@ -38,7 +39,6 @@
 #include "core/html/HTMLBRElement.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLQuoteElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 
@@ -579,6 +579,8 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   // Handle whitespace that occurs after the split
   if (position_after_split.IsNotNull()) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    // TODO(yosin) |isRenderedCharacter()| should be removed, and we should
+    // use |VisiblePosition::characterAfter()|.
     if (!IsRenderedCharacter(position_after_split)) {
       // Clear out all whitespace and insert one non-breaking space
       DCHECK(!position_after_split.ComputeContainerNode()->GetLayoutObject() ||

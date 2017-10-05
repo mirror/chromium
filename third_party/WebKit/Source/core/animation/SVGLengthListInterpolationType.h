@@ -5,6 +5,7 @@
 #ifndef SVGLengthListInterpolationType_h
 #define SVGLengthListInterpolationType_h
 
+#include "core/SVGNames.h"
 #include "core/animation/SVGInterpolationType.h"
 #include "core/svg/SVGLength.h"
 

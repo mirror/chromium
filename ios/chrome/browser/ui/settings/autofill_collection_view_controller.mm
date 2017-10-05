@@ -233,7 +233,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
 }
 
 - (BOOL)localProfilesOrCreditCardsExist {
-  return !_personalDataManager->GetProfiles().empty() ||
+  return !_personalDataManager->web_profiles().empty() ||
          !_personalDataManager->GetLocalCreditCards().empty();
 }
 

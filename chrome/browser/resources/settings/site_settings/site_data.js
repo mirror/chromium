@@ -23,7 +23,6 @@ Polymer({
   behaviors: [
     CookieTreeBehavior,
     I18nBehavior,
-    settings.RouteObserverBehavior,
   ],
 
   properties: {
@@ -37,6 +36,9 @@ Polymer({
       value: '',
     },
 
+    /** @private */
+    confirmationDeleteMsg_: String,
+
     /** @type {!Map<string, string>} */
     focusConfig: {
       type: Object,
@@ -44,17 +46,9 @@ Polymer({
     },
   },
 
-  /**
-   * Reload cookies when the site data page is visited.
-   *
-   * settings.RouteObserverBehavior
-   * @param {!settings.Route} currentRoute
-   * @protected
-   */
-  currentRouteChanged: function(currentRoute) {
-    if (currentRoute == settings.routes.SITE_SETTINGS_SITE_DATA) {
-      this.loadCookies();
-    }
+  /** @override */
+  ready: function() {
+    this.loadCookies();
   },
 
   /**
@@ -66,6 +60,7 @@ Polymer({
   favicon_: function(url) {
     return cr.icon.getFavicon(url);
   },
+
 
   /**
    * @param {!Map<string, string>} newConfig
@@ -140,6 +135,8 @@ Polymer({
    */
   onRemoveShowingSitesTap_: function(e) {
     e.preventDefault();
+    this.confirmationDeleteMsg_ =
+        loadTimeData.getString('siteSettingsCookieRemoveMultipleConfirmation');
     this.$.confirmDeleteDialog.showModal();
   },
 
@@ -159,7 +156,7 @@ Polymer({
           this.browserProxy_.removeCookie(items[i].id);
       }
       // We just deleted all items found by the filter, let's reset the filter.
-      this.fire('clear-subpage-search');
+      /** @type {SettingsSubpageSearchElement} */ (this.$.filter).setValue('');
     }
   },
 

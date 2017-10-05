@@ -11,19 +11,11 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "platform/DragImage.h"
-#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
 
-typedef bool TestParamRootLayerScrolling;
-class DataTransferTest
-    : public RenderingTest,
-      public ::testing::WithParamInterface<TestParamRootLayerScrolling>,
-      private ScopedRootLayerScrollingForTest {
- public:
-  DataTransferTest() : ScopedRootLayerScrollingForTest(GetParam()) {}
-
+class DataTransferTest : public RenderingTest {
  protected:
   Page& GetPage() const { return *GetDocument().GetPage(); }
   LocalFrame& GetFrame() const { return *GetDocument().GetFrame(); }
@@ -32,9 +24,7 @@ class DataTransferTest
   }
 };
 
-INSTANTIATE_TEST_CASE_P(All, DataTransferTest, ::testing::Bool());
-
-TEST_P(DataTransferTest, NodeImage) {
+TEST_F(DataTransferTest, NodeImage) {
   SetBodyInnerHTML(
       "<style>"
       "  #sample { width: 100px; height: 100px; }"
@@ -46,7 +36,7 @@ TEST_P(DataTransferTest, NodeImage) {
   EXPECT_EQ(IntSize(100, 100), image->Size());
 }
 
-TEST_P(DataTransferTest, NodeImageWithNestedElement) {
+TEST_F(DataTransferTest, NodeImageWithNestedElement) {
   SetBodyInnerHTML(
       "<style>"
       "  div { -webkit-user-drag: element }"
@@ -62,7 +52,7 @@ TEST_P(DataTransferTest, NodeImageWithNestedElement) {
       << "Descendants node should have :-webkit-drag.";
 }
 
-TEST_P(DataTransferTest, NodeImageWithPsuedoClassWebKitDrag) {
+TEST_F(DataTransferTest, NodeImageWithPsuedoClassWebKitDrag) {
   SetBodyInnerHTML(
       "<style>"
       "  #sample { width: 100px; height: 100px; }"
@@ -76,7 +66,7 @@ TEST_P(DataTransferTest, NodeImageWithPsuedoClassWebKitDrag) {
       << ":-webkit-drag should affect dragged image.";
 }
 
-TEST_P(DataTransferTest, NodeImageWithoutDraggedLayoutObject) {
+TEST_F(DataTransferTest, NodeImageWithoutDraggedLayoutObject) {
   SetBodyInnerHTML(
       "<style>"
       "  #sample { width: 100px; height: 100px; }"
@@ -89,7 +79,7 @@ TEST_P(DataTransferTest, NodeImageWithoutDraggedLayoutObject) {
   EXPECT_EQ(nullptr, image.get()) << ":-webkit-drag blows away layout object";
 }
 
-TEST_P(DataTransferTest, NodeImageWithChangingLayoutObject) {
+TEST_F(DataTransferTest, NodeImageWithChangingLayoutObject) {
   SetBodyInnerHTML(
       "<style>"
       "  #sample { color: blue; }"
@@ -116,7 +106,7 @@ TEST_P(DataTransferTest, NodeImageWithChangingLayoutObject) {
       << "#sample doesn't have :-webkit-drag.";
 }
 
-TEST_P(DataTransferTest, NodeImageExceedsViewportBounds) {
+TEST_F(DataTransferTest, NodeImageExceedsViewportBounds) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; } "
@@ -128,7 +118,7 @@ TEST_P(DataTransferTest, NodeImageExceedsViewportBounds) {
   EXPECT_EQ(IntSize(800, 600), image->Size());
 }
 
-TEST_P(DataTransferTest, NodeImageUnderScrollOffset) {
+TEST_F(DataTransferTest, NodeImageUnderScrollOffset) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; } "
@@ -158,7 +148,7 @@ TEST_P(DataTransferTest, NodeImageUnderScrollOffset) {
             second_image->Size());
 }
 
-TEST_P(DataTransferTest, NodeImageSizeWithPageScaleFactor) {
+TEST_F(DataTransferTest, NodeImageSizeWithPageScaleFactor) {
   SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; } "
@@ -188,7 +178,7 @@ TEST_P(DataTransferTest, NodeImageSizeWithPageScaleFactor) {
             image_with_offset->Size());
 }
 
-TEST_P(DataTransferTest, NodeImageWithPageScaleFactor) {
+TEST_F(DataTransferTest, NodeImageWithPageScaleFactor) {
   // #bluegreen is a 2x1 rectangle where the left pixel is blue and the right
   // pixel is green. The element is offset by a margin of 1px.
   SetBodyInnerHTML(

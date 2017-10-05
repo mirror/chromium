@@ -144,10 +144,8 @@ void AddUniqueUrlsTask::Run() {
 }
 
 void AddUniqueUrlsTask::OnUrlsAdded(Result result) {
-  if (result == Result::URLS_ADDED) {
+  if (result == Result::URLS_ADDED)
     prefetch_dispatcher_->EnsureTaskScheduled();
-    prefetch_dispatcher_->SchedulePipelineProcessing();
-  }
   TaskComplete();
 }
 

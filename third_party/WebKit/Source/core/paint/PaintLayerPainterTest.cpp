@@ -12,10 +12,26 @@
 
 namespace blink {
 
-class PaintLayerPainterTest : public PaintControllerPaintTest {
+struct PaintLayerPainterTestParam {
+  PaintLayerPainterTestParam(bool root_layer_scrolling, bool slimming_paint_v2)
+      : root_layer_scrolling(root_layer_scrolling),
+        slimming_paint_v2(slimming_paint_v2) {}
+
+  bool root_layer_scrolling;
+  bool slimming_paint_v2;
+};
+
+class PaintLayerPainterTest
+    : public ::testing::WithParamInterface<PaintLayerPainterTestParam>,
+      private ScopedRootLayerScrollingForTest,
+      public PaintControllerPaintTestBase {
   USING_FAST_MALLOC(PaintLayerPainterTest);
 
  public:
+  PaintLayerPainterTest()
+      : ScopedRootLayerScrollingForTest(GetParam().root_layer_scrolling),
+        PaintControllerPaintTestBase(GetParam().slimming_paint_v2) {}
+
   void ExpectPaintedOutputInvisible(const char* element_name,
                                     bool expected_value) {
     // The optimization to skip painting for effectively-invisible content is
@@ -44,14 +60,22 @@ class PaintLayerPainterTest : public PaintControllerPaintTest {
 
  private:
   void SetUp() override {
-    PaintControllerPaintTest::SetUp();
+    PaintControllerPaintTestBase::SetUp();
     EnableCompositing();
   }
 };
 
 INSTANTIATE_TEST_CASE_P(All,
                         PaintLayerPainterTest,
-                        ::testing::ValuesIn(kDefaultPaintTestConfigurations));
+                        ::testing::Values(
+                            // non-root-layer-scrolls, slimming-paint-v1
+                            PaintLayerPainterTestParam(false, false),
+                            // non-root-layer-scrolls, slimming-paint-v2
+                            PaintLayerPainterTestParam(false, true),
+                            // root-layer-scrolls, slimming-paint-v1
+                            PaintLayerPainterTestParam(true, false),
+                            // root-layer-scrolls, slimming-paint-v2
+                            PaintLayerPainterTestParam(true, true)));
 
 TEST_P(PaintLayerPainterTest, CachedSubsequence) {
   SetBodyInnerHTML(

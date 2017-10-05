@@ -30,6 +30,7 @@
 
 #include "public/web/WebFrameSerializer.h"
 
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -48,7 +49,6 @@
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLTableElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutBox.h"
 #include "core/loader/DocumentLoader.h"
 #include "platform/Histogram.h"

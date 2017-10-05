@@ -145,10 +145,6 @@ Profile* ExtensionBrowserTest::profile() {
   return profile_;
 }
 
-bool ExtensionBrowserTest::ShouldEnableContentVerification() {
-  return false;
-}
-
 // static
 const Extension* ExtensionBrowserTest::GetExtensionByPath(
     const extensions::ExtensionSet& extensions,
@@ -195,11 +191,6 @@ void ExtensionBrowserTest::SetUpOnMainThread() {
   if (extension_service()->updater()) {
     extension_service()->updater()->SetExtensionCacheForTesting(
         test_extension_cache_.get());
-  }
-
-  if (!ShouldEnableContentVerification()) {
-    ignore_content_verification_.reset(
-        new extensions::ScopedIgnoreContentVerifierForTest());
   }
 
   // We don't use test_data_dir_ here because we want this to point to

@@ -11,9 +11,9 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/event_constants.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
 #include "ash/accelerators/accelerator_table.h"
-#endif
+#endif  // USE_ASH
 
 namespace chrome {
 
@@ -102,6 +102,6 @@ TEST(AcceleratorTableTest, CheckDuplicatedAcceleratorsAsh) {
         << (ash_entry.action);
   }
 }
-#endif  // OS_CHROMEOS
+#endif  // USE_ASH
 
 }  // namespace chrome

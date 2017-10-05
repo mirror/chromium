@@ -154,8 +154,8 @@ void LocationBarView::Init() {
   layer()->SetMasksToBounds(true);
 
   // Determine the main font.
-  gfx::FontList font_list = ui::ResourceBundle::GetSharedInstance().GetFontList(
-      ui::ResourceBundle::BaseFont);
+  gfx::FontList font_list = ResourceBundle::GetSharedInstance().GetFontList(
+      ResourceBundle::BaseFont);
   const int current_font_size = font_list.GetFontSize();
   constexpr int kDesiredFontSize = 14;
   if (current_font_size != kDesiredFontSize) {
@@ -698,7 +698,7 @@ void LocationBarView::RefreshLocationIcon() {
                            : GetSecureTextColor(security_level);
   location_icon_view_->SetImage(gfx::CreateVectorIcon(
       omnibox_view_->GetVectorIcon(), kIconWidth, icon_color));
-  location_icon_view_->UpdateInkDropMode();
+  location_icon_view_->SetEnabled(!omnibox_view_->IsEditingOrEmpty());
 }
 
 bool LocationBarView::RefreshContentSettingViews() {

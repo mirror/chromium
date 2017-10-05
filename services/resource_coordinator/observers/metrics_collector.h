@@ -15,7 +15,7 @@
 
 namespace resource_coordinator {
 
-class CoordinationUnitBase;
+class CoordinationUnitImpl;
 class FrameCoordinationUnitImpl;
 class PageCoordinationUnitImpl;
 
@@ -36,11 +36,11 @@ class MetricsCollector : public CoordinationUnitGraphObserver {
   ~MetricsCollector() override;
 
   // CoordinationUnitGraphObserver implementation.
-  bool ShouldObserve(const CoordinationUnitBase* coordination_unit) override;
+  bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
   void OnCoordinationUnitCreated(
-      const CoordinationUnitBase* coordination_unit) override;
+      const CoordinationUnitImpl* coordination_unit) override;
   void OnBeforeCoordinationUnitDestroyed(
-      const CoordinationUnitBase* coordination_unit) override;
+      const CoordinationUnitImpl* coordination_unit) override;
   void OnFramePropertyChanged(const FrameCoordinationUnitImpl* frame_cu,
                               const mojom::PropertyType property_type,
                               int64_t value) override;

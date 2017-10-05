@@ -320,7 +320,6 @@ TEST(FunctionalTest, MemberFunctionBindByPassedUniquePtr) {
 
 class Number {
  public:
-  REQUIRE_ADOPTION_FOR_REFCOUNTED_TYPE();
   static RefPtr<Number> Create(int value) {
     return WTF::AdoptRef(new Number(value));
   }

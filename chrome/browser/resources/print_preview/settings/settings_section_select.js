@@ -8,21 +8,15 @@ cr.define('print_preview', function() {
   /**
    * Base class for the printer option element visualizing the generic selection
    * based option.
-   * @param {(!print_preview.ticket_items.Dpi |
-   *          !print_preview.ticket_items.MediaSize)} ticketItem
-   *     Ticket item visualized by this component. Must have a defined
-   *     capability() getter.
+   * @param {!print_preview.ticket_items.TicketItem} ticketItem Ticket item
+   *     visualized by this component.
    * @constructor
    * @extends {print_preview.SettingsSection}
    */
   function SettingsSectionSelect(ticketItem) {
     print_preview.SettingsSection.call(this);
 
-    /**
-     * {(!print_preview.ticket_items.Dpi |
-     *   !print_preview.ticket_items.MediaSize)}
-     * @private
-     */
+    /** @private {!print_preview.ticket_items.TicketItem} */
     this.ticketItem_ = ticketItem;
   }
 

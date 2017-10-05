@@ -6,6 +6,7 @@ package org.chromium.incrementalinstall;
 
 import android.app.Application;
 import android.app.Instrumentation;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -42,7 +43,6 @@ public final class BootstrapApplication extends Application {
     private Instrumentation mRealInstrumentation;
     private Object mStashedProviderList;
     private Object mActivityThread;
-    public static File[] sIncrementalDexFiles; // Needed by junit test runner.
 
     @Override
     protected void attachBaseContext(Context context) {
@@ -99,7 +99,7 @@ public final class BootstrapApplication extends Application {
             }
 
             mClassLoaderPatcher.importNativeLibs(instLibDir);
-            sIncrementalDexFiles = mClassLoaderPatcher.loadDexFiles(instDexDir);
+            mClassLoaderPatcher.loadDexFiles(instDexDir);
             if (instPackageNameDiffers) {
                 mClassLoaderPatcher.importNativeLibs(appLibDir);
                 mClassLoaderPatcher.loadDexFiles(appDexDir);
@@ -187,12 +187,16 @@ public final class BootstrapApplication extends Application {
                 Class.forName(realInstrumentationName));
 
         // Initialize the fields that are set by Instrumentation.init().
-        String[] initFields = {"mAppContext", "mComponent", "mInstrContext", "mMessageQueue",
-                "mThread", "mUiAutomationConnection", "mWatcher"};
+        String[] initFields = {"mThread", "mMessageQueue", "mInstrContext", "mAppContext",
+                "mWatcher", "mUiAutomationConnection"};
         for (String fieldName : initFields) {
             Reflect.setField(mRealInstrumentation, fieldName,
                     Reflect.getField(mOrigInstrumentation, fieldName));
         }
+        // But make sure the correct ComponentName is used.
+        ComponentName newName = new ComponentName(
+                mOrigInstrumentation.getComponentName().getPackageName(), realInstrumentationName);
+        Reflect.setField(mRealInstrumentation, "mComponent", newName);
     }
 
     /**

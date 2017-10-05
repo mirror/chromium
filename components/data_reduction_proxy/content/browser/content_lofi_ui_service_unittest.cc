@@ -76,6 +76,7 @@ class ContentLoFiUIServiceTest : public content::RenderViewHostTestHarness {
         web_contents()->GetMainFrame()->GetProcess()->GetID(), -1,
         web_contents()->GetMainFrame()->GetRoutingID(),
         /*is_main_frame=*/false,
+        /*parent_is_main_frame=*/false,
         /*allow_download=*/false,
         /*is_async=*/false, content::SERVER_LOFI_ON);
 

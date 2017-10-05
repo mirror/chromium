@@ -18,7 +18,6 @@ const unsigned int VR_DEVICE_LAST_ID = 0xFFFFFFFF;
 
 // Represents one of the platform's VR devices. Owned by the respective
 // VRDeviceProvider.
-// TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
 class DEVICE_VR_EXPORT VRDevice {
  public:
   VRDevice();
@@ -27,15 +26,13 @@ class DEVICE_VR_EXPORT VRDevice {
   unsigned int id() const { return id_; }
 
   virtual mojom::VRDisplayInfoPtr GetVRDisplayInfo() = 0;
-  virtual void RequestPresent(
-      VRDisplayImpl* display,
-      mojom::VRSubmitFrameClientPtr submit_client,
-      mojom::VRPresentationProviderRequest request,
-      mojom::VRDisplayHost::RequestPresentCallback callback) = 0;
+  virtual void RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                              mojom::VRPresentationProviderRequest request,
+                              const base::Callback<void(bool)>& callback) = 0;
   virtual void ExitPresent() = 0;
-  virtual void GetPose(
+  virtual void GetNextMagicWindowPose(
       VRDisplayImpl* display,
-      mojom::VRMagicWindowProvider::GetPoseCallback callback) = 0;
+      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) = 0;
 
   void AddDisplay(VRDisplayImpl* display);
   void RemoveDisplay(VRDisplayImpl* display);
@@ -56,6 +53,9 @@ class DEVICE_VR_EXPORT VRDevice {
   void OnFocus();
 
  protected:
+  friend class VRDisplayImpl;
+  friend class VRDisplayImplTest;
+
   void SetPresentingDisplay(VRDisplayImpl* display);
 
  private:
@@ -66,6 +66,8 @@ class DEVICE_VR_EXPORT VRDevice {
   unsigned int id_;
 
   static unsigned int next_id_;
+
+  base::WeakPtrFactory<VRDevice> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(VRDevice);
 };

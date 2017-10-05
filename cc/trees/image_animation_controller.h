@@ -98,8 +98,6 @@ class CC_EXPORT ImageAnimationController {
 
   const base::flat_set<AnimationDriver*>& GetDriversForTesting(
       PaintImage::Id paint_image_id) const;
-  size_t GetLastNumOfFramesSkippedForTesting(
-      PaintImage::Id paint_image_id) const;
 
  private:
   class AnimationState {
@@ -125,9 +123,6 @@ class CC_EXPORT ImageAnimationController {
     }
     const base::flat_set<AnimationDriver*>& drivers_for_testing() const {
       return drivers_;
-    }
-    size_t last_num_frames_skipped_for_testing() const {
-      return last_num_frames_skipped_;
     }
 
    private:
@@ -181,10 +176,6 @@ class CC_EXPORT ImageAnimationController {
     // recording received.
     PaintImage::CompletionState completion_state_ =
         PaintImage::CompletionState::PARTIALLY_DONE;
-
-    // The number of frames skipped during catch-up the last time this animation
-    // was advanced.
-    size_t last_num_frames_skipped_ = 0u;
 
     DISALLOW_COPY_AND_ASSIGN(AnimationState);
   };

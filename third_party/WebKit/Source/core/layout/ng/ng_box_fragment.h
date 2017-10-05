@@ -30,8 +30,7 @@ class CORE_EXPORT NGBoxFragment final : public NGFragment {
   //
   // Baseline requests must be added to constraint space when this fragment was
   // laid out.
-  NGLineHeightMetrics BaselineMetrics(const NGBaselineRequest&,
-                                      const NGConstraintSpace&) const;
+  NGLineHeightMetrics BaselineMetrics(const NGBaselineRequest&) const;
 };
 
 DEFINE_TYPE_CASTS(NGBoxFragment,

@@ -26,10 +26,10 @@
 
 #include "core/layout/LayoutTable.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLTableElement.h"
-#include "core/html_names.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutTableCaption.h"
@@ -51,6 +51,15 @@
 namespace blink {
 
 using namespace HTMLNames;
+
+namespace {
+
+bool g_disable_updating_collapsed_borders = false;
+
+}  // namespace
+
+LayoutTable::DisableUpdatingCollapsedBorders::DisableUpdatingCollapsedBorders()
+    : disabler_(&g_disable_updating_collapsed_borders, true) {}
 
 LayoutTable::LayoutTable(Element* element)
     : LayoutBlock(element),
@@ -1650,9 +1659,10 @@ void LayoutTable::UpdateCollapsedOuterBorders() const {
   if (collapsed_outer_borders_valid_)
     return;
 
-  // Something needs our collapsed borders before we've calculated them. Return
-  // the old ones.
-  if (NeedsSectionRecalc())
+  // If further valid code paths are found to call this function when
+  // needs_section_recalc_ is true, then we should remove this check in favor of
+  // if (NeedsSectionRecalc()) return;
+  if (g_disable_updating_collapsed_borders)
     return;
 
   collapsed_outer_borders_valid_ = true;

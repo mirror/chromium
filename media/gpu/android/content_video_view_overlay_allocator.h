@@ -62,7 +62,7 @@ class MEDIA_GPU_EXPORT ContentVideoViewOverlayAllocator {
  private:
   friend class ContentVideoViewOverlayAllocatorTest;
 
-  ContentVideoViewOverlayAllocator(AVDACodecAllocator* allocator);
+  ContentVideoViewOverlayAllocator();
   ~ContentVideoViewOverlayAllocator();
 
   struct OwnerRecord {

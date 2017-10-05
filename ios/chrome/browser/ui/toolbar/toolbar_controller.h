@@ -92,7 +92,6 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 @protocol ToolbarFrameDelegate<NSObject>
 - (void)frameDidChangeFrame:(CGRect)newFrame fromFrame:(CGRect)oldFrame;
 - (void)windowDidChange;
-- (void)traitCollectionDidChange;
 @end
 
 @interface ToolbarView : UIView<RelaxedBoundsConstraintsHitTestSupport>
@@ -208,12 +207,16 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // Subclasses must call |super| if they override this method.
 - (IBAction)recordUserMetrics:(id)sender;
 
+// Height of the toolbar's drop shadow.  This drop shadow is drawn by the
+// toolbar and included in the toolbar's height, so it must be subtracted away
+// when positioning the web content area.
++ (CGFloat)toolbarDropShadowHeight;
+
 // Height and Y offset to account for the status bar. Overridden by subclasses
 // if the toolbar shouldn't extend through the status bar.
 - (CGFloat)statusBarOffset;
 
-// Update share button visibility and |standardButtons_| array.
-- (void)updateStandardButtons;
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection;
 
 @end
 

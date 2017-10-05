@@ -121,8 +121,8 @@ constexpr CGFloat kHorizontalPaddingBetweenAvatarAndLabel = 10;
     [self setCell:cell.get()];
 
     [self setBordered:NO];
-    [self setFont:ui::ResourceBundle::GetSharedInstance()
-                      .GetFontList(ui::ResourceBundle::SmallFont)
+    [self setFont:ResourceBundle::GetSharedInstance()
+                      .GetFontList(ResourceBundle::SmallFont)
                       .GetPrimaryFont()
                       .GetNativeFont()];
     [self setButtonType:NSMomentaryLightButton];
@@ -146,7 +146,7 @@ constexpr CGFloat kHorizontalPaddingBetweenAvatarAndLabel = 10;
 
 + (NSImage*)defaultAvatar {
   return gfx::NSImageFromImageSkia(ScaleImageForAccountAvatar(
-      *ui::ResourceBundle::GetSharedInstance()
+      *ResourceBundle::GetSharedInstance()
            .GetImageNamed(IDR_PROFILE_AVATAR_PLACEHOLDER_LARGE)
            .ToImageSkia()));
 }

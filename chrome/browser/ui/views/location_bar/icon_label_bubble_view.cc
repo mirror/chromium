@@ -138,9 +138,6 @@ void IconLabelBubbleView::InkDropAnimationStarted() {
   separator_view_->UpdateOpacity();
 }
 
-void IconLabelBubbleView::InkDropRippleAnimationEnded(
-    views::InkDropState state) {}
-
 void IconLabelBubbleView::SetLabel(const base::string16& label) {
   label_->SetText(label);
   separator_view_->SetVisible(ShouldShowLabel());

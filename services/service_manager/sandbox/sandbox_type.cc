@@ -87,7 +87,9 @@ SandboxType SandboxTypeFromCommandLine(const base::CommandLine& command_line) {
   if (process_type == switches::kPpapiPluginProcess)
     return SANDBOX_TYPE_PPAPI;
 
-  // This is a process which we don't know about.
+  // This is a process which we don't know about, i.e. an embedder-defined
+  // process. If the embedder wants it sandboxed, they have a chance to return
+  // the sandbox profile in ContentClient::GetSandboxProfileForSandboxType.
   return SANDBOX_TYPE_INVALID;
 }
 

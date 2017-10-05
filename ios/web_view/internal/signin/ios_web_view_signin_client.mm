@@ -4,19 +4,29 @@
 
 #include "ios/web_view/internal/signin/ios_web_view_signin_client.h"
 
+#include "base/memory/ptr_util.h"
+#include "components/content_settings/core/browser/cookie_settings.h"
+#include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/signin_cookie_changed_subscription.h"
+#include "ios/web_view/internal/content_settings/web_view_cookie_settings_factory.h"
+#include "ios/web_view/internal/content_settings/web_view_host_content_settings_map_factory.h"
+#include "ios/web_view/internal/web_view_browser_state.h"
+#include "net/url_request/url_request_context_getter.h"
+#include "url/gurl.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
 IOSWebViewSigninClient::IOSWebViewSigninClient(
-    PrefService* pref_service,
-    net::URLRequestContextGetter* url_request_context,
+    ios_web_view::WebViewBrowserState* browser_state,
     SigninErrorController* signin_error_controller,
-    scoped_refptr<content_settings::CookieSettings> cookie_settings,
-    scoped_refptr<HostContentSettingsMap> host_content_settings_map,
+    content_settings::CookieSettings* cookie_settings,
+    HostContentSettingsMap* host_content_settings_map,
     scoped_refptr<TokenWebData> token_web_data)
-    : IOSSigninClient(pref_service,
-                      url_request_context,
+    : IOSSigninClient(browser_state->GetPrefs(),
+                      browser_state->GetRequestContext(),
                       signin_error_controller,
                       cookie_settings,
                       host_content_settings_map,

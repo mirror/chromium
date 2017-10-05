@@ -13,7 +13,6 @@
 #include "base/strings/string16.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h"
-#include "ios/chrome/browser/ui/omnibox/omnibox_popup_provider.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.h"
 
 class OmniboxEditModel;
@@ -30,17 +29,13 @@ class ChromeBrowserState;
 
 // iOS implementation of AutocompletePopupView.
 class OmniboxPopupViewIOS : public OmniboxPopupView,
-                            public OmniboxPopupMediatorDelegate,
-                            public OmniboxPopupProvider {
+                            public OmniboxPopupMediatorDelegate {
  public:
   OmniboxPopupViewIOS(ios::ChromeBrowserState* browser_state,
                       OmniboxEditModel* edit_model,
                       OmniboxPopupViewSuggestionsDelegate* delegate,
                       id<OmniboxPopupPositioner> positioner);
   ~OmniboxPopupViewIOS() override;
-
-  // Popup model used for this.
-  OmniboxPopupModel* model() const;
 
   // AutocompletePopupView implementation.
   bool IsOpen() const override;
@@ -53,10 +48,7 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
   void OnDragCanceled() override {}
 
   void UpdateEditViewIcon();
-
-  // OmniboxPopupProvider implemetation.
-  void SetTextAlignment(NSTextAlignment alignment) override;
-  bool IsPopupOpen() override;
+  void SetTextAlignment(NSTextAlignment alignment);
 
   // OmniboxPopupViewControllerDelegate implementation.
   bool IsStarredMatch(const AutocompleteMatch& match) const override;

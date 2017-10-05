@@ -8,6 +8,8 @@
 
 #include "base/bind.h"
 #include "device/vr/vr_device.h"
+#include "device/vr/vr_device_manager.h"
+#include "device/vr/vr_service_impl.h"
 
 namespace device {
 
@@ -15,18 +17,17 @@ VRDisplayImpl::VRDisplayImpl(device::VRDevice* device,
                              int render_frame_process_id,
                              int render_frame_routing_id,
                              mojom::VRServiceClient* service_client,
-                             mojom::VRDisplayInfoPtr display_info,
-                             mojom::VRDisplayHostPtr display_host)
+                             mojom::VRDisplayInfoPtr display_info)
     : binding_(this),
       device_(device),
       render_frame_process_id_(render_frame_process_id),
-      render_frame_routing_id_(render_frame_routing_id) {
+      render_frame_routing_id_(render_frame_routing_id),
+      weak_ptr_factory_(this) {
   device_->AddDisplay(this);
-  mojom::VRMagicWindowProviderPtr magic_window_provider;
-  binding_.Bind(mojo::MakeRequest(&magic_window_provider));
+  mojom::VRDisplayPtr display;
+  binding_.Bind(mojo::MakeRequest(&display));
   service_client->OnDisplayConnected(
-      std::move(magic_window_provider), std::move(display_host),
-      mojo::MakeRequest(&client_), std::move(display_info));
+      std::move(display), mojo::MakeRequest(&client_), std::move(display_info));
 }
 
 VRDisplayImpl::~VRDisplayImpl() {
@@ -58,17 +59,25 @@ void VRDisplayImpl::OnDeactivate(mojom::VRDisplayEventReason reason) {
   client_->OnDeactivate(reason);
 }
 
-void VRDisplayImpl::RequestPresent(
-    mojom::VRSubmitFrameClientPtr submit_client,
-    mojom::VRPresentationProviderRequest request,
-    mojom::VRDisplayHost::RequestPresentCallback callback) {
+void VRDisplayImpl::RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                                   mojom::VRPresentationProviderRequest request,
+                                   RequestPresentCallback callback) {
   if (!device_->IsAccessAllowed(this)) {
     std::move(callback).Run(false);
     return;
   }
 
-  device_->RequestPresent(this, std::move(submit_client), std::move(request),
-                          std::move(callback));
+  device_->RequestPresent(
+      std::move(submit_client), std::move(request),
+      base::Bind(&VRDisplayImpl::RequestPresentResult,
+                 weak_ptr_factory_.GetWeakPtr(), base::Passed(&callback)));
+}
+
+void VRDisplayImpl::RequestPresentResult(RequestPresentCallback callback,
+                                         bool success) {
+  if (success)
+    device_->SetPresentingDisplay(this);
+  std::move(callback).Run(success);
 }
 
 void VRDisplayImpl::ExitPresent() {
@@ -76,12 +85,13 @@ void VRDisplayImpl::ExitPresent() {
     device_->ExitPresent();
 }
 
-void VRDisplayImpl::GetPose(GetPoseCallback callback) {
+void VRDisplayImpl::GetNextMagicWindowPose(
+    GetNextMagicWindowPoseCallback callback) {
   if (!device_->IsAccessAllowed(this)) {
     std::move(callback).Run(nullptr);
     return;
   }
-  device_->GetPose(this, std::move(callback));
+  device_->GetNextMagicWindowPose(this, std::move(callback));
 }
 
 void VRDisplayImpl::SetListeningForActivate(bool listening) {

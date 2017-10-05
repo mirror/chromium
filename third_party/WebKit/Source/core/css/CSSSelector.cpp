@@ -28,10 +28,10 @@
 
 #include <algorithm>
 #include <memory>
+#include "core/HTMLNames.h"
 #include "core/css/CSSMarkup.h"
 #include "core/css/CSSSelectorList.h"
 #include "core/css/parser/CSSParserContext.h"
-#include "core/html_names.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashMap.h"
@@ -61,9 +61,7 @@ void CSSSelector::CreateRareData() {
   AtomicString value(data_.value_);
   if (data_.value_)
     data_.value_->Release();
-  auto rare_data = RareData::Create(value);
-  rare_data->AddRef();
-  data_.rare_data_ = rare_data.get();
+  data_.rare_data_ = RareData::Create(value).LeakRef();
   has_rare_data_ = true;
 }
 

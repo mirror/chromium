@@ -76,10 +76,7 @@ enum NTPLoggingEventType {
   // An animated Doodle was clicked.
   NTP_ANIMATED_LOGO_CLICKED = 36,
 
-  // The One Google Bar was shown.
-  NTP_ONE_GOOGLE_BAR_SHOWN = 37,
-
-  NTP_EVENT_TYPE_LAST = NTP_ONE_GOOGLE_BAR_SHOWN
+  NTP_EVENT_TYPE_LAST = NTP_ANIMATED_LOGO_CLICKED
 };
 
 #endif  // CHROME_COMMON_SEARCH_NTP_LOGGING_EVENTS_H_

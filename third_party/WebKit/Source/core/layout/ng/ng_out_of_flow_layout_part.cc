@@ -16,15 +16,29 @@
 
 namespace blink {
 
+namespace {
+
+// True if the container will contain an absolute descendant.
+bool IsContainingBlockForAbsoluteDescendant(
+    const ComputedStyle& container_style,
+    const ComputedStyle& descendant_style) {
+  EPosition position = descendant_style.GetPosition();
+  bool contains_fixed = container_style.CanContainFixedPositionObjects();
+  bool contains_absolute =
+      container_style.CanContainAbsolutePositionObjects() || contains_fixed;
+
+  return (contains_absolute && position == EPosition::kAbsolute) ||
+         (contains_fixed && position == EPosition::kFixed);
+}
+
+}  // namespace
+
 NGOutOfFlowLayoutPart::NGOutOfFlowLayoutPart(
     const NGBlockNode container,
     const NGConstraintSpace& container_space,
     const ComputedStyle& container_style,
     NGFragmentBuilder* container_builder)
-    : container_style_(container_style),
-      container_builder_(container_builder),
-      contains_absolute_(container.IsAbsoluteContainer()),
-      contains_fixed_(container.IsFixedContainer()) {
+    : container_style_(container_style), container_builder_(container_builder) {
   NGWritingMode writing_mode(
       FromPlatformWritingMode(container_style_.GetWritingMode()));
 
@@ -53,10 +67,12 @@ void NGOutOfFlowLayoutPart::Run() {
 
   while (descendant_candidates.size() > 0) {
     for (auto& candidate : descendant_candidates) {
-      if (IsContainingBlockForDescendant(candidate.node.Style())) {
+      if (IsContainingBlockForAbsoluteDescendant(container_style_,
+                                                 candidate.node.Style())) {
         NGLogicalOffset offset;
         RefPtr<NGLayoutResult> result = LayoutDescendant(
             candidate.node, candidate.static_position, &offset);
+        // TODO(atotic) Need to adjust size of overflow rect per spec.
         container_builder_->AddChild(std::move(result), offset);
       } else {
         container_builder_->AddOutOfFlowDescendant(candidate);
@@ -142,13 +158,6 @@ RefPtr<NGLayoutResult> NGOutOfFlowLayoutPart::LayoutDescendant(
   offset->block_offset = inset.block_start + content_offset_.block_offset;
 
   return layout_result;
-}
-
-bool NGOutOfFlowLayoutPart::IsContainingBlockForDescendant(
-    const ComputedStyle& descendant_style) {
-  EPosition position = descendant_style.GetPosition();
-  return (contains_absolute_ && position == EPosition::kAbsolute) ||
-         (contains_fixed_ && position == EPosition::kFixed);
 }
 
 // The fragment is generated in one of these two scenarios:

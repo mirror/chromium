@@ -96,7 +96,7 @@ HistoryMenuBridge::HistoryMenuBridge(Profile* profile)
     }
   }
 
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   default_favicon_.reset(
       rb.GetNativeImageNamed(IDR_DEFAULT_FAVICON).CopyNSImage());
 

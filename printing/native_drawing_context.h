@@ -6,21 +6,20 @@
 #define PRINTING_NATIVE_DRAWING_CONTEXT_H_
 
 #include "build/build_config.h"
-#include "build/config/linux/pangocairo/features.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
-#elif BUILDFLAG(USE_PANGOCAIRO)
+#elif defined(USE_CAIRO)
 typedef struct _cairo cairo_t;
 #elif defined(OS_MACOSX)
 typedef struct CGContext* CGContextRef;
 #endif
 
-namespace printing {
+namespace skia {
 
 #if defined(OS_WIN)
 typedef HDC NativeDrawingContext;
-#elif BUILDFLAG(USE_PANGOCAIRO)
+#elif defined(USE_CAIRO)
 typedef cairo_t* NativeDrawingContext;
 #elif defined(OS_MACOSX)
 typedef CGContextRef NativeDrawingContext;

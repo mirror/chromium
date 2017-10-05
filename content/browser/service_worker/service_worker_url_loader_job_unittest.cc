@@ -497,7 +497,7 @@ class ServiceWorkerURLLoaderJobTest
     StartLoaderCallback callback;
     job_ = base::MakeUnique<ServiceWorkerURLLoaderJob>(
         base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, *request,
-        base::WrapRefCounted<URLLoaderFactoryGetter>(
+        make_scoped_refptr<URLLoaderFactoryGetter>(
             helper_->context()->loader_factory_getter()),
         GetBlobStorageContext());
     job_->ForwardToServiceWorker();
@@ -537,9 +537,6 @@ class ServiceWorkerURLLoaderJobTest
         base::MakeUnique<ResourceRequest>();
     request->url = GURL("https://www.example.com/");
     request->method = "GET";
-    request->fetch_request_mode = FETCH_REQUEST_MODE_NAVIGATE;
-    request->fetch_credentials_mode = FETCH_CREDENTIALS_MODE_INCLUDE;
-    request->fetch_redirect_mode = FetchRedirectMode::MANUAL_MODE;
     return request;
   }
 
@@ -824,14 +821,11 @@ TEST_F(ServiceWorkerURLLoaderJobTest, FallbackToNetwork) {
   ResourceRequest request;
   request.url = GURL("https://www.example.com/");
   request.method = "GET";
-  request.fetch_request_mode = FETCH_REQUEST_MODE_NAVIGATE;
-  request.fetch_credentials_mode = FETCH_CREDENTIALS_MODE_INCLUDE;
-  request.fetch_redirect_mode = FetchRedirectMode::MANUAL_MODE;
 
   StartLoaderCallback callback;
   auto job = base::MakeUnique<ServiceWorkerURLLoaderJob>(
       base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request,
-      base::WrapRefCounted<URLLoaderFactoryGetter>(
+      make_scoped_refptr<URLLoaderFactoryGetter>(
           helper_->context()->loader_factory_getter()),
       GetBlobStorageContext());
   // Ask the job to fallback to network. In production code,

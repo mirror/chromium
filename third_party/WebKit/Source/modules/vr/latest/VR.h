@@ -34,8 +34,7 @@ class VR final : public EventTargetWithInlineData,
   ScriptPromise getDevices(ScriptState*);
 
   // VRServiceClient overrides.
-  void OnDisplayConnected(device::mojom::blink::VRMagicWindowProviderPtr,
-                          device::mojom::blink::VRDisplayHostPtr,
+  void OnDisplayConnected(device::mojom::blink::VRDisplayPtr,
                           device::mojom::blink::VRDisplayClientRequest,
                           device::mojom::blink::VRDisplayInfoPtr) override;
 

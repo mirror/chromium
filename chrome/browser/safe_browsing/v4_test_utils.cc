@@ -114,9 +114,9 @@ FullHashInfo GetFullHashInfo(const GURL& url, const ListIdentifier& list_id) {
 FullHashInfo GetFullHashInfoWithMetadata(
     const GURL& url,
     const ListIdentifier& list_id,
-    const ThreatMetadata& threat_metadata) {
+    ThreatPatternType threat_pattern_type) {
   FullHashInfo fhi = GetFullHashInfo(url, list_id);
-  fhi.metadata = threat_metadata;
+  fhi.metadata.threat_pattern_type = threat_pattern_type;
   return fhi;
 }
 

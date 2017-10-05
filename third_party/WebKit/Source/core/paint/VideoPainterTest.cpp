@@ -4,9 +4,12 @@
 
 #include "core/paint/VideoPainter.h"
 
+#include "core/frame/LocalFrameView.h"
+#include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
-#include "core/paint/PaintControllerPaintTest.h"
+#include "core/loader/EmptyClients.h"
 #include "core/paint/StubChromeClientForSPv2.h"
+#include "core/testing/DummyPageHolder.h"
 #include "platform/testing/EmptyWebMediaPlayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -14,6 +17,7 @@
 #include "public/platform/WebCompositorSupport.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebSize.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 // Integration tests of video painting code (in SPv2 mode).
 
@@ -57,33 +61,43 @@ class VideoStubLocalFrameClient : public EmptyLocalFrameClient {
   }
 };
 
-class VideoPainterTestForSPv2 : private ScopedSlimmingPaintV2ForTest,
-                                public PaintControllerPaintTestBase {
+class VideoPainterTestForSPv2 : public ::testing::Test,
+                                private ScopedSlimmingPaintV2ForTest {
  public:
-  VideoPainterTestForSPv2()
-      : ScopedSlimmingPaintV2ForTest(true),
-        PaintControllerPaintTestBase(new VideoStubLocalFrameClient),
-        chrome_client_(new StubChromeClientForSPv2) {}
+  VideoPainterTestForSPv2() : ScopedSlimmingPaintV2ForTest(true) {}
 
+ protected:
   void SetUp() override {
-    PaintControllerPaintTestBase::SetUp();
-    EnableCompositing();
+    chrome_client_ = new StubChromeClientForSPv2();
+    local_frame_client_ = new VideoStubLocalFrameClient;
+    Page::PageClients clients;
+    FillWithEmptyClients(clients);
+    clients.chrome_client = chrome_client_.Get();
+    page_holder_ = DummyPageHolder::Create(
+        IntSize(800, 600), &clients, local_frame_client_.Get(),
+        [](Settings& settings) {
+          settings.SetAcceleratedCompositingEnabled(true);
+        });
+    GetDocument().View()->SetParentVisible(true);
+    GetDocument().View()->SetSelfVisible(true);
     GetDocument().SetURL(KURL(NullURL(), "https://example.com/"));
   }
 
+  Document& GetDocument() { return page_holder_->GetDocument(); }
   bool HasLayerAttached(const WebLayer& layer) {
     return chrome_client_->HasLayer(layer);
   }
 
-  ChromeClient& GetChromeClient() const override { return *chrome_client_; }
-
  private:
   Persistent<StubChromeClientForSPv2> chrome_client_;
+  Persistent<VideoStubLocalFrameClient> local_frame_client_;
+  std::unique_ptr<DummyPageHolder> page_holder_;
 };
 
 TEST_F(VideoPainterTestForSPv2, VideoLayerAppearsInLayerTree) {
   // Insert a <video> and allow it to begin loading.
-  SetBodyInnerHTML("<video width=300 height=200 src=test.ogv>");
+  GetDocument().body()->SetInnerHTMLFromString(
+      "<video width=300 height=200 src=test.ogv>");
   testing::RunPendingTasks();
 
   // Force the page to paint.

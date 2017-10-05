@@ -5,32 +5,51 @@
 #ifndef DEVICE_HID_INPUT_SERVICE_LINUX_H_
 #define DEVICE_HID_INPUT_SERVICE_LINUX_H_
 
-#include <map>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/containers/hash_tables.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
-#include "device/hid/public/interfaces/input_service.mojom.h"
 
 namespace device {
 
 // This class provides information and notifications about
 // connected/disconnected input/HID devices. This class is *NOT*
 // thread-safe and all methods must be called from the FILE thread.
-// TODO(ke.he@intel.com): We'll move the InputServiceLinux into
-// device service, and run it in the FILE thread.
 class InputServiceLinux {
  public:
-  using DeviceMap = std::map<std::string, device::mojom::InputDeviceInfoPtr>;
+  struct InputDeviceInfo {
+    enum Subsystem { SUBSYSTEM_HID, SUBSYSTEM_INPUT, SUBSYSTEM_UNKNOWN };
+    enum Type { TYPE_BLUETOOTH, TYPE_USB, TYPE_SERIO, TYPE_UNKNOWN };
+
+    InputDeviceInfo();
+    InputDeviceInfo(const InputDeviceInfo& other);
+
+    std::string id;
+    std::string name;
+    Subsystem subsystem;
+    Type type;
+
+    bool is_accelerometer : 1;
+    bool is_joystick : 1;
+    bool is_key : 1;
+    bool is_keyboard : 1;
+    bool is_mouse : 1;
+    bool is_tablet : 1;
+    bool is_touchpad : 1;
+    bool is_touchscreen : 1;
+  };
+
+  using DeviceMap = base::hash_map<std::string, InputDeviceInfo>;
 
   class Observer {
    public:
     virtual ~Observer() {}
-    virtual void OnInputDeviceAdded(device::mojom::InputDeviceInfoPtr info) = 0;
+    virtual void OnInputDeviceAdded(const InputDeviceInfo& info) = 0;
     virtual void OnInputDeviceRemoved(const std::string& id) = 0;
   };
 
@@ -55,11 +74,15 @@ class InputServiceLinux {
   void RemoveObserver(Observer* observer);
 
   // Returns list of all currently connected input/hid devices.
-  virtual void GetDevices(
-      std::vector<device::mojom::InputDeviceInfoPtr>* devices);
+  virtual void GetDevices(std::vector<InputDeviceInfo>* devices);
+
+  // Returns an info about input device identified by |id|. When there're
+  // no input or hid device with such id, returns false and doesn't
+  // modify |info|.
+  bool GetDeviceInfo(const std::string& id, InputDeviceInfo* info) const;
 
  protected:
-  void AddDevice(device::mojom::InputDeviceInfoPtr info);
+  void AddDevice(const InputDeviceInfo& info);
   void RemoveDevice(const std::string& id);
 
   bool CalledOnValidThread() const;

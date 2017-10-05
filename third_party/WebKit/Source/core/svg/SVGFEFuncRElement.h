@@ -21,6 +21,7 @@
 #ifndef SVGFEFuncRElement_h
 #define SVGFEFuncRElement_h
 
+#include "core/SVGNames.h"
 #include "core/svg/SVGComponentTransferFunctionElement.h"
 
 namespace blink {

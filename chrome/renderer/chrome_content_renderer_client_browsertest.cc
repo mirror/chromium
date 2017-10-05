@@ -61,21 +61,23 @@ TEST_F(InstantProcessNavigationTest, ForkForNavigationsFromInstantProcess) {
 // Tests that renderer-initiated navigations from a non-Instant render process
 // to potentially Instant URLs get bounced back to the browser to be rebucketed
 // into an Instant renderer if necessary.
-TEST_F(InstantProcessNavigationTest, ForkForNavigationsToNewTabURLs) {
+TEST_F(InstantProcessNavigationTest, ForkForNavigationsToSearchURLs) {
   ChromeContentRendererClient* client =
       static_cast<ChromeContentRendererClient*>(content_renderer_client_.get());
   chrome_render_thread_->set_io_task_runner(
       base::ThreadTaskRunnerHandle::Get());
   client->RenderThreadStarted();
-  SearchBouncer::GetInstance()->SetNewTabPageURL(
-      GURL("http://example.com/newtab"));
+  std::vector<GURL> search_urls;
+  search_urls.push_back(GURL("http://example.com/search"));
+  SearchBouncer::GetInstance()->SetSearchURLs(
+      search_urls, GURL("http://example.com/newtab"));
   bool unused;
   EXPECT_TRUE(client->ShouldFork(
       GetMainFrame(), GURL("http://example.com/newtab"), "GET", false, false,
       &unused));
-  EXPECT_FALSE(client->ShouldFork(GetMainFrame(),
-                                  GURL("http://example.com/search?q=foo"),
-                                  "GET", false, false, &unused));
+  EXPECT_TRUE(client->ShouldFork(
+      GetMainFrame(), GURL("http://example.com/search?q=foo"), "GET", false,
+      false, &unused));
   EXPECT_FALSE(client->ShouldFork(
       GetMainFrame(), GURL("http://example.com/"), "GET", false, false,
       &unused));

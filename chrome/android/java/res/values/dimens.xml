@@ -327,7 +327,7 @@
     <dimen name="ntp_logo_height">116dp</dimen>
     <dimen name="ntp_logo_height_modern">30dp</dimen>
     <dimen name="ntp_logo_margin_top_modern">25dp</dimen>
-    <dimen name="ntp_logo_margin_bottom_modern">8dp</dimen>
+    <dimen name="ntp_logo_margin_bottom_modern">14dp</dimen>
     <dimen name="ntp_search_box_height">62dp</dimen>
     <dimen name="ntp_search_box_shadow_width">4dp</dimen>
     <dimen name="ntp_search_box_transition_length">16dp</dimen>
@@ -499,8 +499,6 @@
     <dimen name="chrome_home_min_full_half_distance">160dp</dimen>
     <dimen name="chrome_home_progress_bar_height">4dp</dimen>
     <dimen name="chrome_home_incognito_ntp_bottom_margin">32dp</dimen>
-    <dimen name="chrome_home_promo_illustration_width">108dp</dimen>
-    <dimen name="chrome_home_promo_illustration_height">206dp</dimen>
 
     <!-- TextBubble dimensions -->
     <dimen name="text_bubble_margin">4dp</dimen>

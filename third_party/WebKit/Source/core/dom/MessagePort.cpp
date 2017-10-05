@@ -90,7 +90,6 @@ void MessagePort::postMessage(ScriptState* script_state,
 
 MessagePortChannel MessagePort::Disentangle() {
   DCHECK(!IsNeutered());
-  channel_.ClearCallback();
   auto result = std::move(channel_);
   channel_ = MessagePortChannel();
   return result;
@@ -127,10 +126,10 @@ void MessagePort::start() {
 }
 
 void MessagePort::close() {
-  // A closed port should not be neutered, so don't disconnect the message pipe.
-  // TODO(crbug.com/673526): Make sure that transfering a closed port keeps the
-  // port closed.
-  channel_.ClearCallback();
+  // A closed port should not be neutered, so rather than merely disconnecting
+  // from the mojo message pipe, also entangle with a new dangling message pipe.
+  if (IsEntangled())
+    channel_ = MessagePortChannel(mojo::MessagePipe().handle0);
   closed_ = true;
 }
 

@@ -28,6 +28,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "core/CSSPropertyNames.h"
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/css/CSSStyleDeclaration.h"
 #include "core/css/StylePropertySet.h"
@@ -59,7 +60,6 @@
 #include "core/html/HTMLQuoteElement.h"
 #include "core/html/HTMLSelectElement.h"
 #include "core/html/HTMLSpanElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"

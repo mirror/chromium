@@ -367,22 +367,7 @@ class BlinkPerfBindings(_BlinkPerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.DisableStory(
-            'structured-clone-long-string-serialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/764868')
-        self.DisableStory(
-            'structured-clone-json-serialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/764868')
-        self.DisableStory(
-            'structured-clone-long-string-deserialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/764868')
-        self.DisableStory(
-            'structured-clone-json-deserialize.html',
-            [story.expectations.ANDROID_ONE],
-            'crbug.com/764868')
+        pass # Nothing disabled.
     return StoryExpectations()
 
 
@@ -426,6 +411,11 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
         self.DisableStory('draw-static-canvas-2d-to-hw-accelerated-canvas-2d.html',
             [story.expectations.ANDROID_NEXUS6], 'crbug.com/765799')
     return StoryExpectations()
+
+  def SetExtraBrowserOptions(self, options):
+    options.AppendExtraBrowserArgs([
+        '--enable-color-correct-rendering',
+    ])
 
 @benchmark.Owner(emails=['jbroman@chromium.org',
                          'yukishiino@chromium.org',

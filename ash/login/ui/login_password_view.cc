@@ -46,6 +46,9 @@ constexpr int kPasswordTotalWidthDp = 204;
 // Distance between the last password dot and the submit arrow/button.
 constexpr int kDistanceBetweenPasswordAndSubmitDp = 0;
 
+// The character used for displaying obscured password text.
+constexpr base::char16 kPasswordReplacementChar = 0x2219;
+
 // Color of the password field text.
 constexpr SkColor kTextColor = SkColorSetARGBMacro(0xAB, 0xFF, 0xFF, 0xFF);
 
@@ -107,6 +110,7 @@ LoginPasswordView::LoginPasswordView() {
 
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
+  textfield_->SetPasswordReplacementChar(kPasswordReplacementChar);
 
   textfield_sizer->AddChildView(textfield_);
   row->AddChildView(textfield_sizer);
@@ -148,10 +152,10 @@ void LoginPasswordView::Init(
   on_password_text_changed_ = on_password_text_changed;
 }
 
-void LoginPasswordView::UpdateForUser(const mojom::LoginUserInfoPtr& user) {
+void LoginPasswordView::UpdateForUser(const mojom::UserInfoPtr& user) {
   textfield_->SetAccessibleName(l10n_util::GetStringFUTF16(
       IDS_ASH_LOGIN_POD_PASSWORD_FIELD_ACCESSIBLE_NAME,
-      base::UTF8ToUTF16(user->basic_user_info->display_email)));
+      base::UTF8ToUTF16(user->display_email)));
 }
 
 void LoginPasswordView::SetFocusEnabledForChildViews(bool enable) {

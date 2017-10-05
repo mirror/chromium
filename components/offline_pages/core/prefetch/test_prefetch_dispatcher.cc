@@ -6,7 +6,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/offline_page_item.h"
-#include "components/offline_pages/core/prefetch/prefetch_background_task.h"
 
 namespace offline_pages {
 
@@ -34,7 +33,7 @@ void TestPrefetchDispatcher::RemovePrefetchURLsByClientId(
 }
 
 void TestPrefetchDispatcher::BeginBackgroundTask(
-    std::unique_ptr<PrefetchBackgroundTask> task) {}
+    std::unique_ptr<ScopedBackgroundTask> task) {}
 
 void TestPrefetchDispatcher::StopBackgroundTask() {}
 
@@ -66,4 +65,5 @@ void TestPrefetchDispatcher::DownloadCompleted(
 void TestPrefetchDispatcher::ImportCompleted(int64_t offline_id, bool success) {
 }
 
+void TestPrefetchDispatcher::RequestFinishBackgroundTaskForTest() {}
 }  // namespace offline_pages

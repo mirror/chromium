@@ -83,17 +83,14 @@ class VRDisplayFrameRequestCallback
 
 }  // namespace
 
-VRDisplay::VRDisplay(
-    NavigatorVR* navigator_vr,
-    device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider,
-    device::mojom::blink::VRDisplayHostPtr display,
-    device::mojom::blink::VRDisplayClientRequest request)
+VRDisplay::VRDisplay(NavigatorVR* navigator_vr,
+                     device::mojom::blink::VRDisplayPtr display,
+                     device::mojom::blink::VRDisplayClientRequest request)
     : SuspendableObject(navigator_vr->GetDocument()),
       navigator_vr_(navigator_vr),
       capabilities_(new VRDisplayCapabilities()),
       eye_parameters_left_(new VREyeParameters()),
       eye_parameters_right_(new VREyeParameters()),
-      magic_window_provider_(std::move(magic_window_provider)),
       display_(std::move(display)),
       submit_frame_client_binding_(this),
       display_client_binding_(this, std::move(request)) {
@@ -203,7 +200,7 @@ void VRDisplay::RequestVSync() {
     return;
 
   if (!is_presenting_) {
-    magic_window_provider_->GetPose(ConvertToBaseCallback(
+    display_->GetNextMagicWindowPose(ConvertToBaseCallback(
         WTF::Bind(&VRDisplay::OnMagicWindowPose, WrapWeakPersistent(this))));
     pending_vsync_ = true;
     pending_vsync_id_ =

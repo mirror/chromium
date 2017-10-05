@@ -5,6 +5,7 @@
 #ifndef SVGNumberListInterpolationType_h
 #define SVGNumberListInterpolationType_h
 
+#include "core/SVGNames.h"
 #include "core/animation/SVGInterpolationType.h"
 
 namespace blink {

@@ -32,6 +32,7 @@
 #include "core/html/forms/TextFieldInputType.h"
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/HTMLNames.h"
 #include "core/dom/ShadowRoot.h"
 #include "core/editing/FrameSelection.h"
 #include "core/events/BeforeTextInsertedEvent.h"
@@ -42,7 +43,6 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/forms/TextControlInnerElements.h"
 #include "core/html/shadow/ShadowElementNames.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutDetailsMarker.h"
 #include "core/layout/LayoutTextControlSingleLine.h"
 #include "core/layout/LayoutTheme.h"
@@ -460,7 +460,7 @@ void TextFieldInputType::UpdatePlaceholderText() {
   if (!SupportsPlaceholder())
     return;
   HTMLElement* placeholder = GetElement().PlaceholderElement();
-  String placeholder_text = GetElement().StrippedPlaceholder();
+  String placeholder_text = GetElement().GetPlaceholderValue();
   if (placeholder_text.IsEmpty()) {
     if (placeholder)
       placeholder->remove(ASSERT_NO_EXCEPTION);
@@ -525,10 +525,8 @@ void TextFieldInputType::SpinButtonStepUp() {
 }
 
 void TextFieldInputType::UpdateView() {
-  if (!GetElement().SuggestedValue().IsNull()) {
-    GetElement().SetInnerEditorValue(GetElement().SuggestedValue());
-    GetElement().UpdatePlaceholderVisibility();
-  } else if (GetElement().NeedsToUpdateViewValue()) {
+  if (GetElement().SuggestedValue().IsEmpty() &&
+      GetElement().NeedsToUpdateViewValue()) {
     // Update the view only if needsToUpdateViewValue is true. It protects
     // an unacceptable view value from being overwritten with the DOM value.
     //

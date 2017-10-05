@@ -48,26 +48,28 @@ ExtensionsTestRunner.runExtensionTests = async function() {
   Extensions.extensionServer.initializeExtensions();
 };
 
-TestRunner.initAsync(`
-  function extensionFunctions() {
-    var functions = '';
+TestRunner.initAsync(async function() {
+  await TestRunner.evaluateInPagePromise(`
+    function extensionFunctions() {
+      var functions = '';
 
-    for (symbol in window) {
-      if (/^extension_/.exec(symbol) && typeof window[symbol] === 'function')
-        functions += window[symbol].toString();
+      for (symbol in window) {
+        if (/^extension_/.exec(symbol) && typeof window[symbol] === 'function')
+          functions += window[symbol].toString();
+      }
+
+      return functions;
     }
 
-    return functions;
-  }
+    var extensionsOrigin = 'http://devtools-extensions.oopif.test:8000';
 
-  var extensionsOrigin = 'http://devtools-extensions.oopif.test:8000';
+    function extension_showPanel(panelId, callback) {
+      evaluateOnFrontend('InspectorTest.showPanel(unescape(\'' + escape(panelId) + '\')).then(function() { reply(); });', callback);
+    }
 
-  function extension_showPanel(panelId, callback) {
-    evaluateOnFrontend('InspectorTest.showPanel(unescape(\'' + escape(panelId) + '\')).then(function() { reply(); });', callback);
-  }
-
-  var test = function() {
-    Common.moduleSetting('shortcutPanelSwitch').set(true);
-    InspectorTest.runExtensionTests();
-  };
-`);
+    var test = function() {
+      Common.moduleSetting('shortcutPanelSwitch').set(true);
+      InspectorTest.runExtensionTests();
+    };
+  `);
+});

@@ -404,6 +404,9 @@ crbug.com/714962 virtual/layout_ng/fast/block/float/overhanging-float-crashes-wh
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-007.xht [ Failure ]
 crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-011.xht [ Failure ]
 crbug.com/635619 [ Linux ] virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-012.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-001.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-002.xht [ Failure ]
+crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-containing-block-007.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-inline-001.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-inline-002.xht [ Skip ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/positioning/abspos-inline-003.xht [ Skip ]
@@ -663,6 +666,7 @@ crbug.com/518989 [ Mac ] external/wpt/css/css-writing-modes-3/writing-mode-verti
 crbug.com/432129 html/marquee/marquee-scroll.html [ Failure Pass ]
 crbug.com/326139 crbug.com/390125 media/video-frame-accurate-seek.html [ Failure Pass ]
 crbug.com/248938 virtual/threaded/animations/stability/animation-iteration-event-destroy-renderer.html [ Pass Timeout ]
+crbug.com/248938 virtual/threaded/animations/dynamic-stylesheet-loading.html [ Pass Failure Timeout ]
 crbug.com/248938 [ Linux Win7 Debug ] virtual/threaded/animations/display-none-terminates-animation.html [ Pass Failure ]
 crbug.com/421283 html/marquee/marquee-scrollamount.html [ Pass Failure ]
 
@@ -1531,6 +1535,7 @@ crbug.com/605059 [ Retina ] fast/text/international/rtl-negative-letter-spacing.
 
 crbug.com/610464 [ Linux Win7 Debug ] http/tests/devtools/components/throttler.html [ Failure Pass ]
 crbug.com/667560 [ Linux Win7 Debug ] virtual/mojo-loading/http/tests/devtools/components/throttler.html [ Failure Pass ]
+crbug.com/654477 paint/invalidation/video-paint-invalidation.html [ Failure Crash ]
 crbug.com/654477 [ Win ] compositing/video/video-controls-layer-creation.html [ Pass Failure ]
 crbug.com/654477 fast/hidpi/video-controls-in-hidpi.html [ Failure ]
 crbug.com/654477 fast/layers/video-layer.html [ Failure ]
@@ -1735,8 +1740,6 @@ crbug.com/751952 virtual/mojo-loading/http/tests/inspector-unit/datagrid-editabl
 crbug.com/751952 virtual/origin-trials-runtimeflags-disabled/http/tests/origin_trials/webexposed/budget-api-origin-trial-interfaces.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
-crbug.com/626703 [ Android Linux Mac10.10 Mac10.11 Mac10.12 Retina Win ] external/wpt/speech-api/SpeechSynthesis-speak-twice.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/basic.html [ Timeout ]
 crbug.com/626703 external/wpt/payment-request/PaymentRequestUpdateEvent/updateWith-call-immediate-manual.https.html [ Skip ]
 crbug.com/626703 external/wpt/payment-request/PaymentRequestUpdateEvent/updateWith-method-abort-update-manual.https.html [ Skip ]
 crbug.com/626703 external/wpt/css/css-text-3/line-break/line-break-anywhere-001.html [ Failure ]
@@ -1909,12 +1912,12 @@ crbug.com/626703 external/wpt/html/semantics/grouping-content/the-li-element/gro
 crbug.com/626703 external/wpt/html/semantics/grouping-content/the-li-element/grouping-li-reftest-list-owner-skip-no-boxes.html [ Failure ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/async_007.htm [ Timeout ]
 crbug.com/626703 external/wpt/html/semantics/scripting-1/the-script-element/async_010.htm [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/callback-exception.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/callback-iframe.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/callback-invoked.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/callback-timeout.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/callback-xhr-sync.html [ Timeout ]
-crbug.com/626703 external/wpt/requestidlecallback/cancel-invoked.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-exception.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-iframe.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-invoked.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-timeout.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/callback-xhr-sync.html [ Timeout ]
+crbug.com/626703 external/wpt/html/webappapis/idle-callbacks/cancel-invoked.html [ Timeout ]
 crbug.com/626703 external/wpt/html/webappapis/scripting/events/contextmenu-event-manual.htm [ Timeout ]
 crbug.com/626703 external/wpt/http/basic-auth-cache-test.html [ Timeout ]
 crbug.com/626703 virtual/outofblink-cors/external/wpt/http/basic-auth-cache-test.html [ Timeout ]
@@ -2211,8 +2214,9 @@ crbug.com/626703 virtual/service-worker-script-streaming/external/wpt/service-wo
 crbug.com/763933 virtual/display_list_2d_canvas/fast/canvas/canvas-pattern-no-repeat-with-transformations.html [ Failure ]
 crbug.com/763933 virtual/display_list_2d_canvas/fast/canvas/image-object-in-canvas.html [ Failure ]
 
-crbug.com/666993 external/wpt/requestidlecallback/callback-idle-periods.html [ Timeout ]
-crbug.com/666993 external/wpt/requestidlecallback/callback-timeout-with-raf.html [ Timeout ]
+crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/basic.html [ Timeout ]
+crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/callback-idle-periods.html [ Timeout ]
+crbug.com/666993 external/wpt/html/webappapis/idle-callbacks/callback-timeout-with-raf.html [ Timeout ]
 
 crbug.com/713732 fast/dom/Window/dom-access-from-closure-iframe.html [ NeedsManualRebaseline ]
 crbug.com/713732 fast/dom/Window/dom-access-from-closure-window-with-gc.html [ NeedsManualRebaseline ]
@@ -2441,7 +2445,6 @@ crbug.com/669473 external/wpt/css/css-ui-3/outline-016.html [ Failure ]
 crbug.com/670024 external/wpt/webmessaging/broadcastchannel/sandbox.html [ Failure ]
 crbug.com/660384 external/wpt/webmessaging/with-ports/001.html [ Failure ]
 crbug.com/660384 external/wpt/webmessaging/without-ports/001.html [ Failure ]
-crbug.com/673526 external/wpt/webmessaging/message-channels/close.html [ Failure ]
 
 # Added 2016-12-12
 crbug.com/610835 http/tests/security/XFrameOptions/x-frame-options-deny-multiple-clients.html [ Failure Pass ]
@@ -3499,7 +3502,7 @@ crbug.com/757165 [ Win ] fast/spatial-navigation/snav-z-index.html [ Pass Failur
 crbug.com/757165 [ Win ] http/tests/devtools/console/console-filter-test.js [ Skip ]
 crbug.com/757165 [ Win ] http/tests/devtools/console/console-links-in-errors-with-trace.js [ Skip ]
 crbug.com/757165 [ Win ] http/tests/devtools/extensions/extensions-panel.html [ Skip ]
-crbug.com/757165 [ Win ] http/tests/devtools/sources/ui-source-code-metadata.js [ Skip ]
+crbug.com/757165 [ Win ] http/tests/devtools/sources/ui-source-code-metadata.html [ Skip ]
 crbug.com/757165 [ Win ] http/tests/misc/client-hints-accept-meta-preloader.html [ Skip ]
 crbug.com/757165 [ Win ] inspector-protocol/debugger/debugger-evaluate-in-worker-while-pause-in-page.js [ Skip ]
 crbug.com/757165 [ Win ] paint/invalidation/filter-repaint-accelerated-child-with-filter-child.html [ Skip ]
@@ -3608,6 +3611,7 @@ crbug.com/757955 [ Win7 Debug ] storage/indexeddb/mozilla/cursors.html [ Pass Ti
 crbug.com/757955 [ Win7 Debug ] storage/indexeddb/objectstore-cursor.html [ Pass Timeout ]
 crbug.com/757955 [ Win7 Debug ] http/tests/devtools/tracing/timeline-paint/layer-tree.html [ Pass Failure Timeout ]
 crbug.com/760546 [ Win7 Debug ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-paint/layer-tree.html [ Pass Failure Timeout ]
+crbug.com/757955 [ Linux Win7 Debug ] virtual/threaded/transitions/transition-end-event-transform.html [ Pass Failure ]
 
 # Tests flakely timing out on WebKit Linux Trusty dbg builder
 crbug.com/758109 [ Linux Debug ] fast/workers/worker-multi-startup.html [ Pass Timeout ]
@@ -3644,6 +3648,7 @@ crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/trac
 crbug.com/760543 [ Linux Release ] http/tests/devtools/tracing/timeline-paint/timeline-paint.html [ Pass Timeout ]
 crbug.com/760543 [ Linux Release ] virtual/mojo-loading/http/tests/devtools/tracing/timeline-paint/timeline-paint.html [ Pass Timeout ]
 
+crbug.com/761891 [ Win7 Linux Debug ] virtual/threaded/animations/transition-and-animation-3.html [ Pass Failure Timeout ]
 crbug.com/769347 [ Mac ] fast/dom/inert/inert-node-is-uneditable.html [ Failure ]
 
 # Paint-timing tests timeout without threaded-compositing, so skip them.
@@ -3671,6 +3676,7 @@ crbug.com/763667 external/wpt/upgrade-insecure-requests/iframe-redirect-upgrade.
 
 # Sheriff failures 2017-09-11
 crbug.com/763809 [ Win7 Debug ] fast/multicol/nested-very-tall-inside-short-crash.html [ Pass Failure Timeout ]
+crbug.com/763810 [ Linux Win7 Debug ] virtual/threaded/transitions/transition-end-event-nested.html [ Pass Failure ]
 crbug.com/763975 [ Linux Mac Debug ] webaudio/internals/cycle-connection-gc.html [ Pass Failure ]
 
 # Sheriff failures 2017-09-12
@@ -3713,13 +3719,7 @@ crbug.com/767469 virtual/mojo-loading/http/tests/navigation/start-load-during-pr
 crbug.com/767892 [ Win Linux Mac ] virtual/mojo-loading/http/tests/devtools/startup/database-open.html [ Pass Timeout ]
 
 # Sheriff failures 2017-09-29
+crbug.com/770362 [ Linux Debug ] virtual/threaded/animations/unanimated-style.html [ Pass Timeout ]
 
 # Sheriff failures 2017-10-02
 crbug.com/770971 [ Win7 ] fast/forms/suggested-value.html [ Pass Failure ]
-crbug.com/771492 [ Win Linux Mac ] external/wpt/css/css-tables-3/table-model-fixup-2.html [ Failure ]
-
-# Sheriff failures 2017-10-04
-crbug.com/770691 [ Win7 ] media/controls/lazy-loaded-style.html [ Failure Pass ]
-crbug.com/770691 [ Win7 ] virtual/new-remote-playback-pipeline/media/controls/lazy-loaded-style.html [ Failure Pass ]
-crbug.com/771518 [ Win7 ] http/tests/devtools/persistence/persistence-move-breakpoints-on-reload.html [ Pass Failure ]
-crbug.com/771518 [ Win7 ] virtual/mojo-loading/http/tests/devtools/persistence/persistence-move-breakpoints-on-reload.html [ Pass Failure ]

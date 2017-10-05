@@ -62,7 +62,7 @@ std::string TestSafeBrowsingBlockingPageQuiet::GetHTML() {
   webui::SetLoadTimeDataDefaults(controller()->GetApplicationLocale(),
                                  &load_time_data);
   std::string html =
-      ui::ResourceBundle::GetSharedInstance()
+      ResourceBundle::GetSharedInstance()
           .GetRawDataResource(IDR_SECURITY_INTERSTITIAL_QUIET_HTML)
           .as_string();
   webui::AppendWebUiCssTextDefaults(&html);

@@ -54,7 +54,7 @@ void LayoutNGListItem::OrdinalValueChanged() {
 void LayoutNGListItem::UpdateMarkerText(LayoutText* text) {
   DCHECK(text);
   StringBuilder marker_text_builder;
-  MarkerText(&marker_text_builder, kWithSuffix);
+  MarkerText(&marker_text_builder);
   text->SetText(marker_text_builder.ToString().ReleaseImpl());
 }
 
@@ -100,8 +100,7 @@ int LayoutNGListItem::Value() const {
   return ordinal_.Value(*GetNode());
 }
 
-void LayoutNGListItem::MarkerText(StringBuilder* text,
-                                  MarkerTextFormat format) const {
+void LayoutNGListItem::MarkerText(StringBuilder* text) const {
   const ComputedStyle& style = StyleRef();
   switch (style.ListStyleType()) {
     case EListStyleType::kNone:
@@ -111,8 +110,7 @@ void LayoutNGListItem::MarkerText(StringBuilder* text,
     case EListStyleType::kSquare:
       // value is ignored for these types
       text->Append(ListMarkerText::GetText(Style()->ListStyleType(), 0));
-      if (format == kWithSuffix)
-        text->Append(' ');
+      text->Append(' ');
       break;
     case EListStyleType::kArabicIndic:
     case EListStyleType::kArmenian:
@@ -168,19 +166,11 @@ void LayoutNGListItem::MarkerText(StringBuilder* text,
     case EListStyleType::kUrdu: {
       int value = Value();
       text->Append(ListMarkerText::GetText(Style()->ListStyleType(), value));
-      if (format == kWithSuffix) {
-        text->Append(ListMarkerText::Suffix(Style()->ListStyleType(), value));
-        text->Append(' ');
-      }
+      text->Append(ListMarkerText::Suffix(Style()->ListStyleType(), value));
+      text->Append(' ');
       break;
     }
   }
-}
-
-String LayoutNGListItem::MarkerTextWithoutSuffix() const {
-  StringBuilder text;
-  MarkerText(&text, kWithoutSuffix);
-  return text.ToString();
 }
 
 }  // namespace blink

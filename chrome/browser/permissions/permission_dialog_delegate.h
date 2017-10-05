@@ -43,6 +43,7 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
   void Accept(JNIEnv* env, const JavaParamRef<jobject>& obj, jboolean persist);
   void Cancel(JNIEnv* env, const JavaParamRef<jobject>& obj, jboolean persist);
   void Dismissed(JNIEnv* env, const JavaParamRef<jobject>& obj);
+  void LinkClicked(JNIEnv* env, const JavaParamRef<jobject>& obj);
 
   // Frees this object. Called from Java once the permission dialog has been
   // responded to.
@@ -54,7 +55,7 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
       PermissionPromptAndroid* permission_prompt);
   ~PermissionDialogDelegate() override;
 
-  void CreateJavaDelegate(JNIEnv* env, TabAndroid* tab);
+  void CreateJavaDelegate(JNIEnv* env);
 
   // On navigation or page destruction, hide the dialog.
   void DismissDialog();
@@ -65,6 +66,8 @@ class PermissionDialogDelegate : public content::WebContentsObserver {
   void WebContentsDestroyed() override;
 
   base::android::ScopedJavaGlobalRef<jobject> j_delegate_;
+
+  TabAndroid* tab_;
 
   // The PermissionPromptAndroid is deleted when either the dialog is resolved
   // or the tab is navigated/closed. We close the prompt on DidFinishNavigation

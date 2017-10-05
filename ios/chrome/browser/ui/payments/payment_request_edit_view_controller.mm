@@ -131,6 +131,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
 - (void)addOrRemoveErrorMessage:(NSString*)errorMessage
         inSectionWithIdentifier:(NSInteger)sectionIdentifier;
 
+// Validates each field. If there is a validation error, displays an error
+// message item in the same section as the field and returns NO. Otherwise
+// removes the error message item in that section if one exists and sets the
+// value on the field. Returns YES if all the fields are validated successfully.
+- (BOOL)validateForm;
+
 // Returns the index path for the cell associated with the currently focused
 // text field.
 - (NSIndexPath*)indexPathForCurrentTextField;
@@ -585,25 +591,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
   if (index < 0 || index >= static_cast<NSInteger>(self.fields.count))
     return;
 
-  // Early return if the validation message and not the field is selected.
-  if (indexPath.row != 0)
-    return;
-
   EditorField* field = [self.fields objectAtIndex:index];
 
-  // If a selector field is selected, blur the currently focused UITextField.
-  // And if a text field is selected, focus the corresponding UITextField.
-  if (field.fieldType == EditorFieldTypeSelector) {
+  // If a selector field is selected, blur the focused text field.
+  if (field.fieldType == EditorFieldTypeSelector)
     [[_currentEditingCell textField] resignFirstResponder];
-  } else if (field.fieldType == EditorFieldTypeTextField) {
-    id cell = [collectionView cellForItemAtIndexPath:indexPath];
-    // |cell| may be nil if the cell is not visible.
-    if (cell) {
-      AutofillEditCell* autofillEditCell =
-          base::mac::ObjCCastStrict<AutofillEditCell>(cell);
-      [autofillEditCell.textField becomeFirstResponder];
-    }
-  }
 
   if ([self.delegate respondsToSelector:@selector
                      (paymentRequestEditViewController:didSelectField:)]) {
@@ -678,8 +670,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
       [self indexPathWithSectionOffset:offset fromPath:currentCellPath];
   while (nextCellPath) {
     id nextCell = [collectionView cellForItemAtIndexPath:nextCellPath];
-    if ([nextCell isKindOfClass:[AutofillEditCell class]])
-      return nextCell;
+    if ([nextCell isKindOfClass:[AutofillEditCell class]]) {
+      return base::mac::ObjCCastStrict<AutofillEditCell>(
+          [collectionView cellForItemAtIndexPath:nextCellPath]);
+    }
     nextCellPath =
         [self indexPathWithSectionOffset:offset fromPath:nextCellPath];
   }
@@ -734,23 +728,8 @@ typedef NS_ENUM(NSInteger, ItemType) {
                                                validateField:field];
     [self addOrRemoveErrorMessage:errorMessage
           inSectionWithIdentifier:field.sectionIdentifier];
-
-    if (errorMessage.length) {
-      // Give the first invalid editor field focus, if possible
-      if (field.fieldType == EditorFieldTypeTextField) {
-        NSIndexPath* indexPath = [self.collectionViewModel
-            indexPathForItemType:ItemTypeTextField
-               sectionIdentifier:field.sectionIdentifier];
-        id cell = [[self collectionView] cellForItemAtIndexPath:indexPath];
-        // |cell| may be nil if the cell is not visible.
-        if (cell) {
-          AutofillEditCell* autofillEditCell =
-              base::mac::ObjCCastStrict<AutofillEditCell>(cell);
-          [autofillEditCell.textField becomeFirstResponder];
-        }
-      }
+    if (errorMessage.length)
       return NO;
-    }
   }
   return YES;
 }

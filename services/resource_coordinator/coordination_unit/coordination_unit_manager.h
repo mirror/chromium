@@ -23,7 +23,7 @@ class ServiceContextRefFactory;
 
 namespace resource_coordinator {
 
-class CoordinationUnitBase;
+class CoordinationUnitImpl;
 class CoordinationUnitGraphObserver;
 class CoordinationUnitProviderImpl;
 
@@ -46,9 +46,9 @@ class CoordinationUnitManager {
                service_manager::ServiceContextRefFactory* service_ref_factory);
   void RegisterObserver(
       std::unique_ptr<CoordinationUnitGraphObserver> observer);
-  void OnCoordinationUnitCreated(CoordinationUnitBase* coordination_unit);
+  void OnCoordinationUnitCreated(CoordinationUnitImpl* coordination_unit);
   void OnBeforeCoordinationUnitDestroyed(
-      CoordinationUnitBase* coordination_unit);
+      CoordinationUnitImpl* coordination_unit);
 
   std::vector<std::unique_ptr<CoordinationUnitGraphObserver>>&
   observers_for_testing() {

@@ -47,7 +47,6 @@
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_controller_impl.h"
 #include "ios/chrome/browser/ui/omnibox/location_bar_delegate.h"
-#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #import "ios/chrome/browser/ui/popup_menu/popup_menu_view.h"
 #import "ios/chrome/browser/ui/reversed_animation.h"
@@ -55,6 +54,7 @@
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_delegate.h"
 #import "ios/chrome/browser/ui/toolbar/keyboard_assist/toolbar_assistive_keyboard_views.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller+protected.h"
+#import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_model_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_resource_macros.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -250,8 +250,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   UIImageView* _incognitoIcon;
   UIView* _clippingView;
 
-  std::unique_ptr<LocationBarControllerImpl> _locationBar;
-  std::unique_ptr<OmniboxPopupViewIOS> _popupView;
+  std::unique_ptr<LocationBarController> _locationBar;
   BOOL _initialLayoutComplete;
   // If |YES|, toolbar is incognito.
   BOOL _incognito;
@@ -355,8 +354,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)updateSnapshotWithWidth:(CGFloat)width forced:(BOOL)force;
 // Insert 'com' without the period if cursor is directly after a period.
 - (NSString*)updateTextForDotCom:(NSString*)text;
-// Updates all buttons visibility, including the parent class buttons.
-- (void)updateToolbarButtons;
 @end
 
 @implementation WebToolbarController
@@ -623,8 +620,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                    UIViewAutoresizingFlexibleBottomMargin];
   [_webToolbar setFrame:[self specificControlsArea]];
   _locationBar = base::MakeUnique<LocationBarControllerImpl>(
-      _omniBox, _browserState, self, self.dispatcher);
-  _popupView = _locationBar->CreatePopupView(self);
+      _omniBox, _browserState, self, self, self.dispatcher);
 
   // Create the determinate progress bar (phone only).
   if (idiom == IPHONE_IDIOM) {
@@ -685,8 +681,7 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 - (void)browserStateDestroyed {
   // The location bar has a browser state reference, so must be destroyed at
-  // this point. The popup has to be destroyed before the location bar.
-  _popupView.reset();
+  // this point.
   _locationBar.reset();
   _browserState = nullptr;
 }
@@ -816,6 +811,16 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   [self cancelOmniboxEdit];
 }
 
+- (CGRect)bookmarkButtonAnchorRect {
+  // Shrink the padding around the bookmark button so the popovers are anchored
+  // correctly.
+  return CGRectInset([_starButton bounds], 6, 11);
+}
+
+- (UIView*)bookmarkButtonView {
+  return _starButton;
+}
+
 - (CGRect)visibleOmniboxFrame {
   CGRect frame = _omniboxBackground.frame;
   frame = [self.view.superview convertRect:frame
@@ -842,8 +847,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return omniboxViewIOS->IsPopupOpen();
 }
 
-- (void)updateToolbarButtons {
-  [super updateStandardButtons];
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
   _lastKnownTraitCollection = [UITraitCollection
       traitCollectionWithTraitsFromCollections:@[ self.view.traitCollection ]];
   if (IsIPadIdiom()) {
@@ -1337,7 +1342,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
     // For iPhone place the popup just below the toolbar.
     CGRect fieldFrame =
         [parent convertRect:[_webToolbar bounds] fromView:_webToolbar];
-    frame.origin.y = CGRectGetMaxY(fieldFrame);
+    frame.origin.y =
+        CGRectGetMaxY(fieldFrame) - [ToolbarController toolbarDropShadowHeight];
     frame.size.height = CGRectGetMaxY([parent bounds]) - frame.origin.y;
   }
   return frame;
@@ -1355,12 +1361,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 - (void)windowDidChange {
   if (![_lastKnownTraitCollection
           containsTraitsInCollection:self.view.traitCollection]) {
-    [self updateToolbarButtons];
+    [self traitCollectionDidChange:_lastKnownTraitCollection];
   }
-}
-
-- (void)traitCollectionDidChange {
-  [self updateToolbarButtons];
 }
 
 #pragma mark -

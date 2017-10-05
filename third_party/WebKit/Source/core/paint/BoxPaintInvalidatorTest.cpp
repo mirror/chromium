@@ -4,13 +4,12 @@
 
 #include "core/paint/BoxPaintInvalidator.h"
 
+#include "core/HTMLNames.h"
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLFrameOwnerElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutTestHelper.h"
 #include "core/layout/LayoutView.h"
-#include "core/paint/PaintControllerPaintTest.h"
 #include "core/paint/PaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
 #include "platform/graphics/GraphicsLayer.h"
@@ -19,10 +18,13 @@
 
 namespace blink {
 
-class BoxPaintInvalidatorTest : public PaintControllerPaintTest {
+class BoxPaintInvalidatorTest : public ::testing::WithParamInterface<bool>,
+                                private ScopedRootLayerScrollingForTest,
+                                public RenderingTest {
  public:
   BoxPaintInvalidatorTest()
-      : PaintControllerPaintTest(SingleChildLocalFrameClient::Create()) {}
+      : ScopedRootLayerScrollingForTest(GetParam()),
+        RenderingTest(SingleChildLocalFrameClient::Create()) {}
 
  protected:
   const RasterInvalidationTracking* GetRasterInvalidationTracking() const {
@@ -113,9 +115,7 @@ class BoxPaintInvalidatorTest : public PaintControllerPaintTest {
   }
 };
 
-INSTANTIATE_TEST_CASE_P(All,
-                        BoxPaintInvalidatorTest,
-                        ::testing::Values(0, kRootLayerScrolling));
+INSTANTIATE_TEST_CASE_P(All, BoxPaintInvalidatorTest, ::testing::Bool());
 
 TEST_P(BoxPaintInvalidatorTest, SlowMapToVisualRectInAncestorSpaceLayoutView) {
   SetBodyInnerHTML(

@@ -30,6 +30,7 @@
 
 #include "core/css/RuleSet.h"
 
+#include "core/HTMLNames.h"
 #include "core/css/CSSFontSelector.h"
 #include "core/css/CSSSelector.h"
 #include "core/css/CSSSelectorList.h"
@@ -37,7 +38,6 @@
 #include "core/css/StyleRuleImport.h"
 #include "core/css/StyleSheetContents.h"
 #include "core/html/track/TextTrackCue.h"
-#include "core/html_names.h"
 #include "platform/heap/HeapTerminatedArrayBuilder.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/weborigin/SecurityOrigin.h"

@@ -588,7 +588,7 @@ StoragePartitionImpl::GetMediaURLRequestContext() {
 
 mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
   // Create the NetworkContext as needed, when the network service is disabled.
-  if (!network_context_) {
+  if (!network_context_.get()) {
     DCHECK(!base::FeatureList::IsEnabled(features::kNetworkService));
     DCHECK(!network_context_owner_);
     network_context_owner_ = base::MakeUnique<NetworkContextOwner>();
@@ -599,17 +599,6 @@ mojom::NetworkContext* StoragePartitionImpl::GetNetworkContext() {
                        MakeRequest(&network_context_), url_request_context_));
   }
   return network_context_.get();
-}
-
-mojom::URLLoaderFactory*
-StoragePartitionImpl::GetURLLoaderFactoryForBrowserProcess() {
-  // Create the URLLoaderFactory as needed.
-  if (!url_loader_factory_for_browser_process_) {
-    GetNetworkContext()->CreateURLLoaderFactory(
-        mojo::MakeRequest(&url_loader_factory_for_browser_process_),
-        base::GetUniqueIdForProcess());
-  }
-  return url_loader_factory_for_browser_process_.get();
 }
 
 storage::QuotaManager* StoragePartitionImpl::GetQuotaManager() {
@@ -879,9 +868,9 @@ void StoragePartitionImpl::DataDeletionHelper::ClearDataOnUIThread(
     IncrementTaskCountOnUI();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&ClearCookiesOnIOThread,
-                       base::WrapRefCounted(rq_context), begin, end,
-                       storage_origin, cookie_matcher, decrement_callback));
+        base::BindOnce(&ClearCookiesOnIOThread, make_scoped_refptr(rq_context),
+                       begin, end, storage_origin, cookie_matcher,
+                       decrement_callback));
   }
 
   if (remove_mask & REMOVE_DATA_MASK_INDEXEDDB ||
@@ -893,19 +882,21 @@ void StoragePartitionImpl::DataDeletionHelper::ClearDataOnUIThread(
     IncrementTaskCountOnUI();
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(
-            &DataDeletionHelper::ClearQuotaManagedDataOnIOThread,
-            base::Unretained(this), base::WrapRefCounted(quota_manager), begin,
-            storage_origin, base::WrapRefCounted(special_storage_policy),
-            origin_matcher, decrement_callback));
+        base::BindOnce(&DataDeletionHelper::ClearQuotaManagedDataOnIOThread,
+                       base::Unretained(this),
+                       make_scoped_refptr(quota_manager), begin, storage_origin,
+                       make_scoped_refptr(special_storage_policy),
+                       origin_matcher, decrement_callback));
   }
 
   if (remove_mask & REMOVE_DATA_MASK_LOCAL_STORAGE) {
     IncrementTaskCountOnUI();
-    ClearLocalStorageOnUIThread(base::WrapRefCounted(dom_storage_context),
-                                base::WrapRefCounted(special_storage_policy),
-                                origin_matcher, storage_origin, begin, end,
-                                decrement_callback);
+    ClearLocalStorageOnUIThread(
+        make_scoped_refptr(dom_storage_context),
+        make_scoped_refptr(special_storage_policy),
+        origin_matcher,
+        storage_origin, begin, end,
+        decrement_callback);
 
     // ClearDataImpl cannot clear session storage data when a particular origin
     // is specified. Therefore we ignore clearing session storage in this case.
@@ -913,8 +904,9 @@ void StoragePartitionImpl::DataDeletionHelper::ClearDataOnUIThread(
     if (storage_origin.is_empty()) {
       IncrementTaskCountOnUI();
       ClearSessionStorageOnUIThread(
-          base::WrapRefCounted(dom_storage_context),
-          base::WrapRefCounted(special_storage_policy), origin_matcher,
+          make_scoped_refptr(dom_storage_context),
+          make_scoped_refptr(special_storage_policy),
+          origin_matcher,
           decrement_callback);
     }
   }
@@ -932,7 +924,7 @@ void StoragePartitionImpl::DataDeletionHelper::ClearDataOnUIThread(
     filesystem_context->default_file_task_runner()->PostTask(
         FROM_HERE,
         base::BindOnce(&ClearPluginPrivateDataOnFileTaskRunner,
-                       base::WrapRefCounted(filesystem_context), storage_origin,
+                       make_scoped_refptr(filesystem_context), storage_origin,
                        begin, end, decrement_callback));
   }
 #endif  // BUILDFLAG(ENABLE_PLUGINS)

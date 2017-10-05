@@ -25,6 +25,9 @@
 #include "core/svg/SVGElement.h"
 
 #include "bindings/core/v8/ScriptEventListener.h"
+#include "core/HTMLNames.h"
+#include "core/SVGNames.h"
+#include "core/XMLNames.h"
 #include "core/animation/DocumentAnimations.h"
 #include "core/animation/EffectStack.h"
 #include "core/animation/ElementAnimations.h"
@@ -40,7 +43,6 @@
 #include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/HTMLElement.h"
-#include "core/html_names.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/svg/LayoutSVGResourceContainer.h"
@@ -52,8 +54,6 @@
 #include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg/SVGUseElement.h"
 #include "core/svg/properties/SVGProperty.h"
-#include "core/svg_names.h"
-#include "core/xml_names.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/Threading.h"
 

@@ -66,7 +66,8 @@ ResourceFetcher* WorkerOrWorkletGlobalScope::GetResourceFetcher() {
   if (resource_fetcher_)
     return resource_fetcher_;
   WorkerFetchContext* fetch_context = WorkerFetchContext::Create(*this);
-  resource_fetcher_ = ResourceFetcher::Create(fetch_context);
+  resource_fetcher_ =
+      ResourceFetcher::Create(fetch_context, fetch_context->GetTaskRunner());
   return resource_fetcher_;
 }
 

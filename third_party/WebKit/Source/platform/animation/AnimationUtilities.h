@@ -33,6 +33,7 @@
 #include "platform/wtf/MathExtras.h"
 #include "ui/gfx/geometry/cubic_bezier.h"
 
+#include <algorithm>
 #include <type_traits>
 
 namespace blink {
@@ -79,11 +80,8 @@ inline FloatPoint Blend(const FloatPoint& from,
 // Calculates the accuracy for evaluating a timing function for an animation
 // with the specified duration.
 inline double AccuracyForDuration(double duration) {
-  double accuracy = 1.0 / (200.0 * duration);
-  double default_epsilon = gfx::CubicBezier::GetDefaultEpsilon();
-  // Avoid min()/max() from std here in the header, because that would require
-  // inclusion of <algorithm>, which is slow to compile.
-  return accuracy > default_epsilon ? accuracy : default_epsilon;
+  return std::max(1.0 / (200.0 * duration),
+                  gfx::CubicBezier::GetDefaultEpsilon());
 }
 
 }  // namespace blink

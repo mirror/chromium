@@ -274,7 +274,7 @@ enum SnapAxis {
   kSnapAxisInline,
 };
 
-enum class SnapStrictness { kProximity, kMandatory };
+enum SnapStrictness { kSnapStrictnessProximity, kSnapStrictnessMandatory };
 
 enum SnapAlignment {
   kSnapAlignmentNone,

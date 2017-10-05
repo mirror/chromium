@@ -31,6 +31,7 @@
 #include "core/html/HTMLSlotElement.h"
 
 #include <array>
+#include "core/HTMLNames.h"
 #include "core/css/StyleChangeReason.h"
 #include "core/css/StyleEngine.h"
 #include "core/dom/ElementShadow.h"
@@ -41,7 +42,6 @@
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/AssignedNodesOptions.h"
-#include "core/html_names.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/bindings/Microtask.h"
 

@@ -446,13 +446,8 @@ Status ExecuteSwitchToWindow(Session* session,
                              const base::DictionaryValue& params,
                              std::unique_ptr<base::Value>* value) {
   std::string name;
-  if (session->w3c_compliant) {
-    if (!params.GetString("handle", &name))
-      return Status(kInvalidArgument, "'handle' must be a string");
-  } else {
-    if (!params.GetString("name", &name))
-      return Status(kUnknownError, "'name' must be a string");
-  }
+  if (!params.GetString("name", &name))
+    return Status(kUnknownError, "'name' must be a string");
 
   std::list<std::string> web_view_ids;
   Status status = session->chrome->GetWebViewIds(&web_view_ids,
@@ -747,46 +742,6 @@ Status ExecuteSetNetworkConnection(Session* session,
   }
 
   value->reset(new base::Value(connection_type));
-  return Status(kOk);
-}
-
-Status ExecuteGetWindowRect(Session* session,
-                            const base::DictionaryValue& params,
-                            std::unique_ptr<base::Value>* value) {
-  ChromeDesktopImpl* desktop = NULL;
-  Status status = session->chrome->GetAsDesktop(&desktop);
-  if (status.IsError())
-    return status;
-
-  int x, y;
-  int width, height;
-
-  if (desktop->GetBrowserInfo()->build_no >= kBrowserWindowDevtoolsBuildNo) {
-    status = desktop->GetWindowPosition(session->window, &x, &y);
-    if (status.IsError())
-      return status;
-    status = desktop->GetWindowSize(session->window, &width, &height);
-  } else {
-    AutomationExtension* extension = NULL;
-    status =
-        desktop->GetAutomationExtension(&extension, session->w3c_compliant);
-    if (status.IsError())
-      return status;
-
-    status = extension->GetWindowPosition(&x, &y);
-    if (status.IsError())
-      return status;
-    status = extension->GetWindowSize(&width, &height);
-  }
-  if (status.IsError())
-    return status;
-
-  base::DictionaryValue rect;
-  rect.SetInteger("x", x);
-  rect.SetInteger("y", y);
-  rect.SetInteger("width", width);
-  rect.SetInteger("height", height);
-  value->reset(rect.DeepCopy());
   return Status(kOk);
 }
 

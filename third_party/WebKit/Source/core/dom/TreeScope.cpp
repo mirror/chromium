@@ -26,6 +26,7 @@
 
 #include "core/dom/TreeScope.h"
 
+#include "core/HTMLNames.h"
 #include "core/css/StyleChangeReason.h"
 #include "core/css/resolver/ScopedStyleResolver.h"
 #include "core/dom/ContainerNode.h"
@@ -44,7 +45,6 @@
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLMapElement.h"
-#include "core/html_names.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/page/FocusController.h"

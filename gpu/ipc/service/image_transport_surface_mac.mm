@@ -52,11 +52,11 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
     case gl::kGLImplementationDesktopGL:
     case gl::kGLImplementationDesktopGLCoreProfile:
     case gl::kGLImplementationAppleGL:
-      return base::WrapRefCounted<gl::GLSurface>(
+      return make_scoped_refptr<gl::GLSurface>(
           new ImageTransportSurfaceOverlayMac(delegate));
     case gl::kGLImplementationMockGL:
     case gl::kGLImplementationStubGL:
-      return base::WrapRefCounted<gl::GLSurface>(new gl::GLSurfaceStub);
+      return make_scoped_refptr<gl::GLSurface>(new gl::GLSurfaceStub);
     default:
       // Content shell in DRT mode spins up a gpu process which needs an
       // image transport surface, but that surface isn't used to read pixel
@@ -68,7 +68,7 @@ scoped_refptr<gl::GLSurface> ImageTransportSurface::CreateNativeSurface(
       scoped_refptr<gl::GLSurface> surface(new DRTSurfaceOSMesa());
       if (!surface.get() || !surface->Initialize(format))
         return surface;
-      return base::WrapRefCounted<gl::GLSurface>(
+      return make_scoped_refptr<gl::GLSurface>(
           new PassThroughImageTransportSurface(
               delegate, surface.get(), kMultiWindowSwapIntervalDefault));
   }

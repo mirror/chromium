@@ -28,12 +28,6 @@ CanMakePaymentQueryFactory::CanMakePaymentQueryFactory()
 
 CanMakePaymentQueryFactory::~CanMakePaymentQueryFactory() {}
 
-content::BrowserContext* CanMakePaymentQueryFactory::GetBrowserContextToUse(
-    content::BrowserContext* context) const {
-  // Create a separate instance of the service for the Incognito context.
-  return context;
-}
-
 KeyedService* CanMakePaymentQueryFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   return new CanMakePaymentQuery;

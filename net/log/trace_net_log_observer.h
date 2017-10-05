@@ -6,7 +6,6 @@
 #define NET_LOG_TRACE_NET_LOG_OBSERVER_H_
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/trace_event/trace_log.h"
 #include "net/base/net_export.h"
 #include "net/log/net_log.h"
@@ -17,7 +16,7 @@ namespace net {
 // events to TraceLog if it is enabled.
 class NET_EXPORT TraceNetLogObserver
     : public NetLog::ThreadSafeObserver,
-      public base::trace_event::TraceLog::AsyncEnabledStateObserver {
+      public base::trace_event::TraceLog::EnabledStateObserver {
  public:
   TraceNetLogObserver();
   ~TraceNetLogObserver() override;
@@ -41,7 +40,6 @@ class NET_EXPORT TraceNetLogObserver
 
  private:
   NetLog* net_log_to_watch_;
-  base::WeakPtrFactory<TraceNetLogObserver> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TraceNetLogObserver);
 };

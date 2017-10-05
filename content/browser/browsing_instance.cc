@@ -60,7 +60,7 @@ BrowsingInstance::GetDefaultSubframeSiteInstance() {
     default_subframe_site_instance_ = instance;
   }
 
-  return base::WrapRefCounted(default_subframe_site_instance_);
+  return make_scoped_refptr(default_subframe_site_instance_);
 }
 
 void BrowsingInstance::RegisterSiteInstance(SiteInstanceImpl* site_instance) {

@@ -15,9 +15,8 @@ FakeInputServiceLinux::FakeInputServiceLinux() {
 FakeInputServiceLinux::~FakeInputServiceLinux() {
 }
 
-void FakeInputServiceLinux::AddDeviceForTesting(
-    device::mojom::InputDeviceInfoPtr info) {
-  AddDevice(std::move(info));
+void FakeInputServiceLinux::AddDeviceForTesting(const InputDeviceInfo& info) {
+  AddDevice(info);
 }
 
 void FakeInputServiceLinux::RemoveDeviceForTesting(const std::string& id) {
@@ -28,10 +27,9 @@ void FakeInputServiceLinux::ClearDeviceList() {
   devices_.clear();
 }
 
-void FakeInputServiceLinux::GetDevices(
-    std::vector<device::mojom::InputDeviceInfoPtr>* devices) {
-  for (auto& device : devices_)
-    devices->push_back(device.second->Clone());
+void FakeInputServiceLinux::GetDevices(std::vector<InputDeviceInfo>* devices) {
+  for (const auto& device : devices_)
+    devices->push_back(device.second);
 }
 
 }  // namespace device

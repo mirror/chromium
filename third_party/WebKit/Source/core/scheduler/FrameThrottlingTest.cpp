@@ -45,8 +45,10 @@ class MockWebDisplayItemList : public WebDisplayItemList {
  public:
   ~MockWebDisplayItemList() override {}
 
-  MOCK_METHOD2(AppendDrawingItem,
-               void(const WebRect& visual_rect, sk_sp<const cc::PaintRecord>));
+  MOCK_METHOD3(AppendDrawingItem,
+               void(const WebRect& visual_rect,
+                    sk_sp<const cc::PaintRecord>,
+                    const WebRect& record_bounds));
 };
 
 }  // namespace
@@ -911,7 +913,7 @@ TEST_P(FrameThrottlingTest, PaintingViaGraphicsLayerIsThrottled) {
   InvalidateRecursively(WebView().RootGraphicsLayer());
 
   MockWebDisplayItemList display_items_not_throttled;
-  EXPECT_CALL(display_items_not_throttled, AppendDrawingItem(_, _)).Times(3);
+  EXPECT_CALL(display_items_not_throttled, AppendDrawingItem(_, _, _)).Times(3);
   PaintRecursively(WebView().RootGraphicsLayer(), &display_items_not_throttled);
 
   // Move the frame offscreen to throttle it and make sure it is backed by a
@@ -930,7 +932,7 @@ TEST_P(FrameThrottlingTest, PaintingViaGraphicsLayerIsThrottled) {
   InvalidateRecursively(WebView().RootGraphicsLayer());
 
   MockWebDisplayItemList display_items_throttled;
-  EXPECT_CALL(display_items_throttled, AppendDrawingItem(_, _)).Times(2);
+  EXPECT_CALL(display_items_throttled, AppendDrawingItem(_, _, _)).Times(2);
   PaintRecursively(WebView().RootGraphicsLayer(), &display_items_throttled);
 }
 
@@ -959,7 +961,7 @@ TEST_P(FrameThrottlingTest, ThrottleInnerCompositedLayer) {
   InvalidateRecursively(WebView().RootGraphicsLayer());
 
   MockWebDisplayItemList display_items_not_throttled;
-  EXPECT_CALL(display_items_not_throttled, AppendDrawingItem(_, _)).Times(4);
+  EXPECT_CALL(display_items_not_throttled, AppendDrawingItem(_, _, _)).Times(4);
   PaintRecursively(WebView().RootGraphicsLayer(), &display_items_not_throttled);
 
   // Move the frame offscreen to throttle it.
@@ -976,7 +978,7 @@ TEST_P(FrameThrottlingTest, ThrottleInnerCompositedLayer) {
   // // drawing items.
   InvalidateRecursively(WebView().RootGraphicsLayer());
   MockWebDisplayItemList display_items_throttled;
-  EXPECT_CALL(display_items_throttled, AppendDrawingItem(_, _)).Times(2);
+  EXPECT_CALL(display_items_throttled, AppendDrawingItem(_, _, _)).Times(2);
   PaintRecursively(WebView().RootGraphicsLayer(), &display_items_throttled);
 
   // Remove compositing trigger of inner_div.
@@ -1003,7 +1005,7 @@ TEST_P(FrameThrottlingTest, ThrottleInnerCompositedLayer) {
 
   MockWebDisplayItemList display_items_throttled1;
   InvalidateRecursively(WebView().RootGraphicsLayer());
-  EXPECT_CALL(display_items_throttled1, AppendDrawingItem(_, _)).Times(2);
+  EXPECT_CALL(display_items_throttled1, AppendDrawingItem(_, _, _)).Times(2);
   PaintRecursively(WebView().RootGraphicsLayer(), &display_items_throttled1);
 
   // Move the frame back on screen.
@@ -1021,7 +1023,8 @@ TEST_P(FrameThrottlingTest, ThrottleInnerCompositedLayer) {
   // After the iframe is unthrottled, we should create all drawing items.
   InvalidateRecursively(WebView().RootGraphicsLayer());
   MockWebDisplayItemList display_items_not_throttled1;
-  EXPECT_CALL(display_items_not_throttled1, AppendDrawingItem(_, _)).Times(4);
+  EXPECT_CALL(display_items_not_throttled1, AppendDrawingItem(_, _, _))
+      .Times(4);
   PaintRecursively(WebView().RootGraphicsLayer(),
                    &display_items_not_throttled1);
 }

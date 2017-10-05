@@ -25,7 +25,6 @@
 #include "components/offline_pages/core/prefetch/mark_operation_done_task.h"
 #include "components/offline_pages/core/prefetch/metrics_finalization_task.h"
 #include "components/offline_pages/core/prefetch/page_bundle_update_task.h"
-#include "components/offline_pages/core/prefetch/prefetch_background_task.h"
 #include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_configuration.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
@@ -43,7 +42,8 @@
 namespace offline_pages {
 
 namespace {
-void DeleteBackgroundTaskHelper(std::unique_ptr<PrefetchBackgroundTask> task) {
+void DeleteBackgroundTaskHelper(
+    std::unique_ptr<PrefetchDispatcher::ScopedBackgroundTask> task) {
   task.reset();
 }
 }  // namespace
@@ -66,8 +66,8 @@ void PrefetchDispatcherImpl::SchedulePipelineProcessing() {
 
 void PrefetchDispatcherImpl::EnsureTaskScheduled() {
   if (background_task_) {
-    background_task_->SetReschedule(
-        PrefetchBackgroundTaskRescheduleType::RESCHEDULE_WITHOUT_BACKOFF);
+    background_task_->SetNeedsReschedule(true /* reschedule */,
+                                         false /* backoff */);
   } else {
     service_->GetPrefetchBackgroundTaskHandler()->EnsureTaskScheduled();
   }
@@ -87,6 +87,9 @@ void PrefetchDispatcherImpl::AddCandidatePrefetchURLs(
   std::unique_ptr<Task> add_task = base::MakeUnique<AddUniqueUrlsTask>(
       this, prefetch_store, name_space, prefetch_urls);
   task_queue_.AddTask(std::move(add_task));
+
+  // TODO(dewittj): Remove when we have proper scheduling.
+  EnsureTaskScheduled();
 }
 
 void PrefetchDispatcherImpl::RemoveAllUnprocessedPrefetchURLs(
@@ -106,27 +109,19 @@ void PrefetchDispatcherImpl::RemovePrefetchURLsByClientId(
 }
 
 void PrefetchDispatcherImpl::BeginBackgroundTask(
-    std::unique_ptr<PrefetchBackgroundTask> background_task) {
+    std::unique_ptr<ScopedBackgroundTask> background_task) {
   if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
     return;
   service_->GetLogger()->RecordActivity(
       "Dispatcher: Beginning background task.");
 
   background_task_ = std::move(background_task);
-  service_->GetPrefetchBackgroundTaskHandler()->RemoveSuspension();
-
-  // Reset suspended state in case that it was set last time and Chrome is still
-  // running till new background task starts after the suspension period.
-  suspended_ = false;
 
   QueueReconcileTasks();
   QueueActionTasks();
 }
 
 void PrefetchDispatcherImpl::QueueReconcileTasks() {
-  if (suspended_)
-    return;
-
   service_->GetLogger()->RecordActivity("Dispatcher: Adding reconcile tasks.");
   // Note: For optimal results StaleEntryFinalizerTask should be executed before
   // other reconciler tasks that deal with external systems so that entries
@@ -158,9 +153,6 @@ void PrefetchDispatcherImpl::QueueReconcileTasks() {
 }
 
 void PrefetchDispatcherImpl::QueueActionTasks() {
-  if (suspended_)
-    return;
-
   service_->GetLogger()->RecordActivity("Dispatcher: Adding action tasks.");
 
   // Don't schedule any downloads if the download service can't be used at all.
@@ -204,8 +196,15 @@ void PrefetchDispatcherImpl::StopBackgroundTask() {
   DisposeTask();
 }
 
+void PrefetchDispatcherImpl::RequestFinishBackgroundTaskForTest() {
+  if (!service_->GetPrefetchConfiguration()->IsPrefetchingEnabled())
+    return;
+
+  DisposeTask();
+}
+
 void PrefetchDispatcherImpl::OnTaskQueueIsIdle() {
-  if (!suspended_ && needs_pipeline_processing_) {
+  if (needs_pipeline_processing_) {
     needs_pipeline_processing_ = false;
     QueueActionTasks();
   } else {
@@ -254,28 +253,9 @@ void PrefetchDispatcherImpl::DidGenerateBundleOrGetOperationRequest(
       prefetch_store, this, operation_name, pages));
 
   if (background_task_ && status != PrefetchRequestStatus::SUCCESS) {
-    PrefetchBackgroundTaskRescheduleType reschedule_type =
-        PrefetchBackgroundTaskRescheduleType::NO_RESCHEDULE;
-    switch (status) {
-      case PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF:
-        reschedule_type =
-            PrefetchBackgroundTaskRescheduleType::RESCHEDULE_WITH_BACKOFF;
-        break;
-      case PrefetchRequestStatus::SHOULD_RETRY_WITHOUT_BACKOFF:
-        reschedule_type =
-            PrefetchBackgroundTaskRescheduleType::RESCHEDULE_WITHOUT_BACKOFF;
-        break;
-      case PrefetchRequestStatus::SHOULD_SUSPEND:
-        reschedule_type = PrefetchBackgroundTaskRescheduleType::SUSPEND;
-        break;
-      default:
-        NOTREACHED();
-        break;
-    }
-    background_task_->SetReschedule(reschedule_type);
-
-    if (reschedule_type == PrefetchBackgroundTaskRescheduleType::SUSPEND)
-      suspended_ = true;
+    bool need_backoff =
+        status == PrefetchRequestStatus::SHOULD_RETRY_WITH_BACKOFF;
+    background_task_->SetNeedsReschedule(true /* reschedule */, need_backoff);
   }
 }
 

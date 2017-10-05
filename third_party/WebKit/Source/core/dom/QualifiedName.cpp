@@ -19,12 +19,12 @@
 
 #include "core/dom/QualifiedName.h"
 
-#include "core/html_names.h"
-#include "core/mathml_names.h"
-#include "core/svg_names.h"
-#include "core/xlink_names.h"
-#include "core/xml_names.h"
-#include "core/xmlns_names.h"
+#include "core/HTMLNames.h"
+#include "core/MathMLNames.h"
+#include "core/SVGNames.h"
+#include "core/XLinkNames.h"
+#include "core/XMLNSNames.h"
+#include "core/XMLNames.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/StaticConstructors.h"
@@ -65,11 +65,11 @@ struct QNameComponentsTranslator {
                         const QualifiedNameData& data,
                         unsigned) {
     const QualifiedNameComponents& components = data.components_;
-    auto name = QualifiedName::QualifiedNameImpl::Create(
-        AtomicString(components.prefix_), AtomicString(components.local_name_),
-        AtomicString(components.namespace_), data.is_static_);
-    name->AddRef();
-    location = name.get();
+    location = QualifiedName::QualifiedNameImpl::Create(
+                   AtomicString(components.prefix_),
+                   AtomicString(components.local_name_),
+                   AtomicString(components.namespace_), data.is_static_)
+                   .LeakRef();
   }
 };
 

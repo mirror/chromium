@@ -5,7 +5,6 @@
 # pylint: disable=relative-import
 
 import argparse
-import os
 import posixpath
 
 from code_generator import initialize_jinja_env
@@ -213,8 +212,6 @@ class ExternalReferenceTableGenerator(object):
             'interfaces': interfaces,
             'include_files': sorted(include_files),
             'this_include_header_name': header_name,
-            'code_generator': os.path.basename(__file__),
-            'jinja_template_filename': TEMPLATE_FILE
         }
 
     # Applies a Jinja template on a context and generates a C++ code.

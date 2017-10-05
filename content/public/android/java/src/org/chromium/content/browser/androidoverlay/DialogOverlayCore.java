@@ -38,10 +38,6 @@ class DialogOverlayCore {
         // Wait until the host has been told to clean up.  We are allowed to let surfaceDestroyed
         // proceed once this happens.
         void waitForCleanup();
-
-        // Notify the host that waitForCleanup() is done waiting, so that it can enforce that
-        // cleanup happens.
-        void enforceCleanup();
     }
 
     private Host mHost;
@@ -144,10 +140,9 @@ class DialogOverlayCore {
         public void surfaceDestroyed(SurfaceHolder holder) {
             if (mDialog == null || mHost == null) return;
 
-            // Notify the host that we've been destroyed, and wait for it to clean up or time out.
+            // Notify the host that we've been destroyed, and wait for it to clean up.
             mHost.onOverlayDestroyed();
             mHost.waitForCleanup();
-            mHost.enforceCleanup();
             mHost = null;
         }
 

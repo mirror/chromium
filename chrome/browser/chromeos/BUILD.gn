@@ -1512,6 +1512,8 @@ source_set("chromeos") {
     "upgrade_detector_chromeos.h",
 
     # Extension API implementations.
+    "../ui/webui/voice_search_ui.cc",
+    "../ui/webui/voice_search_ui.h",
     "extensions/echo_private_api.cc",
     "extensions/echo_private_api.h",
     "extensions/file_manager/device_event_router.cc",
@@ -1675,7 +1677,6 @@ source_set("unit_tests") {
     "arc/fileapi/arc_content_file_system_url_util_unittest.cc",
     "arc/fileapi/arc_documents_provider_root_unittest.cc",
     "arc/fileapi/arc_documents_provider_util_unittest.cc",
-    "arc/fileapi/arc_file_system_bridge_unittest.cc",
     "arc/fileapi/arc_file_system_operation_runner_unittest.cc",
     "arc/fileapi/chrome_content_provider_url_util_unittest.cc",
     "arc/fileapi/file_stream_forwarder_unittest.cc",
@@ -1689,7 +1690,6 @@ source_set("unit_tests") {
     "arc/process/arc_process_unittest.cc",
     "arc/tts/arc_tts_service_unittest.cc",
     "arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
-    "arc/wallpaper/arc_wallpaper_service_unittest.cc",
     "attestation/attestation_ca_client_unittest.cc",
     "attestation/attestation_policy_observer_unittest.cc",
     "attestation/fake_certificate.cc",

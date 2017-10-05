@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include <memory>
+#include "core/HTMLNames.h"
 #include "core/css/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -10,7 +11,6 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLElement.h"
-#include "core/html_names.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

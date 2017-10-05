@@ -36,8 +36,7 @@ void VerifyScaling(gfx::Image& image, gfx::Size& size) {
 TEST(ProfileInfoUtilTest, SizedMenuIcon) {
   // Test that an avatar icon isn't changed.
   const gfx::Image& profile_image(
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          IDR_PROFILE_AVATAR_0));
+      ResourceBundle::GetSharedInstance().GetImageNamed(IDR_PROFILE_AVATAR_0));
   gfx::Image result =
       profiles::GetSizedAvatarIcon(profile_image, false, 50, 50);
 
@@ -57,8 +56,7 @@ TEST(ProfileInfoUtilTest, SizedMenuIcon) {
 TEST(ProfileInfoUtilTest, MenuIcon) {
   // Test that an avatar icon isn't changed.
   const gfx::Image& profile_image(
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          IDR_PROFILE_AVATAR_0));
+      ResourceBundle::GetSharedInstance().GetImageNamed(IDR_PROFILE_AVATAR_0));
   gfx::Image result = profiles::GetAvatarIconForMenu(profile_image, false);
   EXPECT_FALSE(gfx::test::IsEmpty(result));
   EXPECT_TRUE(gfx::test::AreImagesEqual(profile_image, result));
@@ -74,8 +72,7 @@ TEST(ProfileInfoUtilTest, MenuIcon) {
 TEST(ProfileInfoUtilTest, WebUIIcon) {
   // Test that an avatar icon isn't changed.
   const gfx::Image& profile_image(
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          IDR_PROFILE_AVATAR_0));
+      ResourceBundle::GetSharedInstance().GetImageNamed(IDR_PROFILE_AVATAR_0));
   gfx::Image result = profiles::GetAvatarIconForWebUI(profile_image, false);
   EXPECT_FALSE(gfx::test::IsEmpty(result));
   EXPECT_TRUE(gfx::test::AreImagesEqual(profile_image, result));
@@ -94,8 +91,7 @@ TEST(ProfileInfoUtilTest, TitleBarIcon) {
 
   // Test that an avatar icon isn't changed.
   const gfx::Image& profile_image(
-      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-          IDR_PROFILE_AVATAR_0));
+      ResourceBundle::GetSharedInstance().GetImageNamed(IDR_PROFILE_AVATAR_0));
   gfx::Image result = profiles::GetAvatarIconForTitleBar(
       profile_image, false, width, height);
   EXPECT_FALSE(gfx::test::IsEmpty(result));

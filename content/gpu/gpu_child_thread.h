@@ -38,7 +38,7 @@
 #include "ui/gfx/native_widget_types.h"
 
 namespace gpu {
-class GpuInit;
+class GpuWatchdogThread;
 }
 
 namespace content {
@@ -57,11 +57,15 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
   };
   typedef std::vector<LogMessage> DeferredMessages;
 
-  GpuChildThread(std::unique_ptr<gpu::GpuInit> gpu_init,
+  GpuChildThread(std::unique_ptr<gpu::GpuWatchdogThread> gpu_watchdog_thread,
+                 bool dead_on_arrival,
+                 const gpu::GPUInfo& gpu_info,
+                 const gpu::GpuFeatureInfo& gpu_feature_info,
                  DeferredMessages deferred_messages);
 
   GpuChildThread(const InProcessChildThreadParams& params,
-                 std::unique_ptr<gpu::GpuInit> gpu_init);
+                 const gpu::GPUInfo& gpu_info,
+                 const gpu::GpuFeatureInfo& gpu_feature_info);
 
   ~GpuChildThread() override;
 
@@ -69,7 +73,11 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
 
  private:
   GpuChildThread(const ChildThreadImpl::Options& options,
-                 std::unique_ptr<gpu::GpuInit> gpu_init);
+                 std::unique_ptr<gpu::GpuWatchdogThread> gpu_watchdog_thread,
+                 bool dead_on_arrival,
+                 bool in_browser_process,
+                 const gpu::GPUInfo& gpu_info,
+                 const gpu::GpuFeatureInfo& gpu_feature_info);
 
   void CreateGpuMainService(ui::mojom::GpuMainAssociatedRequest request);
 
@@ -105,10 +113,15 @@ class GpuChildThread : public ChildThreadImpl, public ui::mojom::GpuMain {
       media::AndroidOverlayConfig);
 #endif
 
-  std::unique_ptr<gpu::GpuInit> gpu_init_;
+  // Set this flag to true if a fatal error occurred before we receive the
+  // OnInitialize message, in which case we just declare ourselves DOA.
+  const bool dead_on_arrival_;
 
   // Error messages collected in gpu_main() before the thread is created.
   DeferredMessages deferred_messages_;
+
+  // Whether the GPU thread is running in the browser process.
+  const bool in_browser_process_;
 
   // ServiceFactory for service_manager::Service hosting.
   std::unique_ptr<GpuServiceFactory> service_factory_;

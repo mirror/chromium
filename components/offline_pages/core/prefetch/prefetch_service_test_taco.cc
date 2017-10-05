@@ -40,9 +40,6 @@ class StubPrefetchBackgroundTaskHandler : public PrefetchBackgroundTaskHandler {
   void EnsureTaskScheduled() override {}
   void Backoff() override {}
   void ResetBackoff() override {}
-  void PauseBackoffUntilNextRun() override {}
-  void Suspend() override {}
-  void RemoveSuspension() override {}
   int GetAdditionalBackoffSeconds() const override { return 0; }
 
  private:

@@ -17,7 +17,6 @@
 #include "components/ukm/ukm_recorder_impl.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
-#include "url/gurl.h"
 
 namespace ukm {
 
@@ -38,9 +37,6 @@ class TestUkmRecorder : public UkmRecorderImpl {
   }
 
   const UkmSource* GetSourceForUrl(const char* url) const;
-  const UkmSource* GetSourceForUrl(const GURL& url) const {
-    return GetSourceForUrl(url.spec().c_str());
-  }
   std::vector<const ukm::UkmSource*> GetSourcesForUrl(const char* url) const;
   const UkmSource* GetSourceForSourceId(ukm::SourceId source_id) const;
 

@@ -42,7 +42,11 @@
 #include "bindings/core/v8/string_or_dictionary.h"
 #include "core/HTMLElementFactory.h"
 #include "core/HTMLElementTypeHelpers.h"
+#include "core/HTMLNames.h"
 #include "core/SVGElementFactory.h"
+#include "core/SVGNames.h"
+#include "core/XMLNSNames.h"
+#include "core/XMLNames.h"
 #include "core/animation/DocumentAnimations.h"
 #include "core/animation/DocumentTimeline.h"
 #include "core/animation/PendingAnimations.h"
@@ -144,6 +148,7 @@
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/html/HTMLHeadElement.h"
 #include "core/html/HTMLHtmlElement.h"
+#include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/HTMLMetaElement.h"
@@ -169,7 +174,6 @@
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/parser/NestingLevelIncrementer.h"
 #include "core/html/parser/TextResourceDecoder.h"
-#include "core/html_names.h"
 #include "core/input/EventHandler.h"
 #include "core/input/TouchList.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -191,7 +195,7 @@
 #include "core/loader/PrerendererClient.h"
 #include "core/loader/TextResourceDecoderBuilder.h"
 #include "core/loader/appcache/ApplicationCacheHost.h"
-#include "core/origin_trials/origin_trials.h"
+#include "core/origin_trials/OriginTrials.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "core/page/FocusController.h"
@@ -211,13 +215,10 @@
 #include "core/svg/SVGScriptElement.h"
 #include "core/svg/SVGTitleElement.h"
 #include "core/svg/SVGUseElement.h"
-#include "core/svg_names.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
 #include "core/workers/SharedWorkerRepositoryClient.h"
 #include "core/xml/parser/XMLDocumentParser.h"
-#include "core/xml_names.h"
-#include "core/xmlns_names.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/DateComponents.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -669,7 +670,8 @@ Document::Document(const DocumentInit& initializer,
   } else if (imports_controller_) {
     fetcher_ = FrameFetchContext::CreateFetcherFromDocument(this);
   } else {
-    fetcher_ = ResourceFetcher::Create(nullptr);
+    fetcher_ = ResourceFetcher::Create(
+        nullptr, Platform::Current()->CurrentThread()->GetWebTaskRunner());
   }
   DCHECK(fetcher_);
 
@@ -765,7 +767,7 @@ void Document::SetDoctype(DocumentType* doc_type) {
   DCHECK(!doc_type_ || !doc_type);
   doc_type_ = doc_type;
   if (doc_type_) {
-    AdoptIfNeeded(*doc_type_);
+    this->AdoptIfNeeded(*doc_type_);
     if (doc_type_->publicId().StartsWithIgnoringASCIICase(
             "-//wapforum//dtd xhtml mobile 1.")) {
       is_mobile_document_ = true;
@@ -1131,7 +1133,7 @@ bool Document::HaveImportsLoaded() const {
 LocalDOMWindow* Document::ExecutingWindow() const {
   if (LocalDOMWindow* owning_window = domWindow())
     return owning_window;
-  if (HTMLImportsController* import = ImportsController())
+  if (HTMLImportsController* import = this->ImportsController())
     return import->Master()->domWindow();
   return 0;
 }
@@ -1350,7 +1352,7 @@ Node* Document::adoptNode(Node* source, ExceptionState& exception_state) {
       }
   }
 
-  AdoptIfNeeded(*source);
+  this->AdoptIfNeeded(*source);
 
   return source;
 }
@@ -2228,7 +2230,7 @@ void Document::UpdateStyle() {
   TRACE_EVENT_CATEGORY_GROUP_ENABLED("blink,blink_style", &should_record_stats);
   GetStyleEngine().SetStatsEnabled(should_record_stats);
 
-  if (Element* document_element = documentElement()) {
+  if (Element* document_element = this->documentElement()) {
     if (document_element->ShouldCallRecalcStyle(change)) {
       TRACE_EVENT0("blink,blink_style", "Document::recalcStyle");
       Element* viewport_defining = ViewportDefiningElement();
@@ -2791,7 +2793,7 @@ void Document::Shutdown() {
 void Document::RemoveAllEventListeners() {
   ContainerNode::RemoveAllEventListeners();
 
-  if (LocalDOMWindow* dom_window = domWindow())
+  if (LocalDOMWindow* dom_window = this->domWindow())
     dom_window->RemoveAllEventListeners();
 }
 
@@ -2828,7 +2830,7 @@ AXObjectCache* Document::ExistingAXObjectCache() const {
 }
 
 AXObjectCache* Document::AxObjectCache() const {
-  Settings* settings = GetSettings();
+  Settings* settings = this->GetSettings();
   if (!settings || !settings->GetAccessibilityEnabled())
     return 0;
 
@@ -2837,7 +2839,7 @@ AXObjectCache* Document::AxObjectCache() const {
   // which share the AXObjectCache of their owner.
   //
   // See http://crbug.com/532249
-  Document& cache_owner = AxObjectCacheOwner();
+  Document& cache_owner = this->AxObjectCacheOwner();
 
   // If the document has already been detached, do not make a new axObjectCache.
   if (!cache_owner.GetLayoutView())
@@ -3172,8 +3174,8 @@ void Document::ImplicitClose() {
   if (SvgExtensions())
     AccessSVGExtensions().DispatchSVGLoadEventToOutermostSVGElements();
 
-  if (domWindow())
-    domWindow()->DocumentWasClosed();
+  if (this->domWindow())
+    this->domWindow()->DocumentWasClosed();
 
   if (GetFrame()) {
     GetFrame()->Client()->DispatchDidHandleOnloadEvents();
@@ -3808,7 +3810,7 @@ void Document::ProcessBaseElement() {
           kSecurityMessageSource, kErrorMessageLevel,
           "'data:' URLs may not be used as base URLs for a document."));
     }
-    if (!GetSecurityOrigin()->CanRequest(base_element_url))
+    if (!this->GetSecurityOrigin()->CanRequest(base_element_url))
       UseCounter::Count(*this, WebFeature::kBaseWithCrossOriginHref);
   }
 
@@ -4586,7 +4588,7 @@ bool Document::SetFocusedElement(Element* new_focused_element,
 
 SetFocusedElementDone:
   UpdateStyleAndLayoutTree();
-  if (LocalFrame* frame = GetFrame())
+  if (LocalFrame* frame = this->GetFrame())
     frame->Selection().DidChangeFocus();
   return !focus_change_blocked;
 }
@@ -4800,7 +4802,7 @@ void Document::DidSplitTextNode(const Text& old_node) {
 
 void Document::SetWindowAttributeEventListener(const AtomicString& event_type,
                                                EventListener* listener) {
-  LocalDOMWindow* dom_window = domWindow();
+  LocalDOMWindow* dom_window = this->domWindow();
   if (!dom_window)
     return;
   dom_window->SetAttributeEventListener(event_type, listener);
@@ -4808,7 +4810,7 @@ void Document::SetWindowAttributeEventListener(const AtomicString& event_type,
 
 EventListener* Document::GetWindowAttributeEventListener(
     const AtomicString& event_type) {
-  LocalDOMWindow* dom_window = domWindow();
+  LocalDOMWindow* dom_window = this->domWindow();
   if (!dom_window)
     return 0;
   return dom_window->GetAttributeEventListener(event_type);
@@ -5076,7 +5078,7 @@ String Document::cookie(ExceptionState& exception_state) const {
           Suborigin::SuboriginPolicyOptions::kUnsafeCookies))
     return String();
 
-  KURL cookie_url = CookieURL();
+  KURL cookie_url = this->CookieURL();
   if (cookie_url.IsEmpty())
     return String();
 
@@ -5110,7 +5112,7 @@ void Document::setCookie(const String& value, ExceptionState& exception_state) {
           Suborigin::SuboriginPolicyOptions::kUnsafeCookies))
     return;
 
-  KURL cookie_url = CookieURL();
+  KURL cookie_url = this->CookieURL();
   if (cookie_url.IsEmpty())
     return;
 
@@ -5768,7 +5770,7 @@ void Document::FinishedParsing() {
   ScriptableDocumentParser* parser = GetScriptableDocumentParser();
   well_formed_ = parser && parser->WellFormed();
 
-  if (LocalFrame* frame = GetFrame()) {
+  if (LocalFrame* frame = this->GetFrame()) {
     // Don't update the layout tree if we haven't requested the main resource
     // yet to avoid adding extra latency. Note that the first layout tree update
     // can be expensive since it triggers the parsing of the default stylesheets
@@ -6267,7 +6269,7 @@ void Document::DetachRange(Range* range) {
 }
 
 void Document::InitDNSPrefetch() {
-  Settings* settings = GetSettings();
+  Settings* settings = this->GetSettings();
 
   have_explicitly_disabled_dns_prefetch_ = false;
   is_dns_prefetch_enabled_ = settings && settings->GetDNSPrefetchingEnabled() &&
@@ -6374,7 +6376,7 @@ void Document::TasksWereResumed() {
 }
 
 bool Document::TasksNeedSuspension() {
-  Page* page = GetPage();
+  Page* page = this->GetPage();
   return page && page->Paused();
 }
 
@@ -6578,7 +6580,7 @@ Touch* Document::createTouch(DOMWindow* window,
   // implement them here. See https://bugs.webkit.org/show_bug.cgi?id=47819
   LocalFrame* frame = window && window->IsLocalDOMWindow()
                           ? blink::ToLocalDOMWindow(window)->GetFrame()
-                          : GetFrame();
+                          : this->GetFrame();
   return Touch::Create(
       frame, target, identifier, FloatPoint(screen_x, screen_y),
       FloatPoint(page_x, page_y), FloatSize(radius_x, radius_y), rotation_angle,
@@ -6988,7 +6990,7 @@ void Document::SetShadowCascadeOrder(ShadowCascadeOrder order) {
   // For V0 -> V1 upgrade, we need style recalculation for the whole document.
   if (shadow_cascade_order_ == ShadowCascadeOrder::kShadowCascadeV0 &&
       order == ShadowCascadeOrder::kShadowCascadeV1) {
-    SetNeedsStyleRecalc(
+    this->SetNeedsStyleRecalc(
         kSubtreeStyleChange,
         StyleChangeReasonForTracing::Create(StyleChangeReason::kShadow));
     UseCounter::Count(*this, WebFeature::kMixedShadowRootV0AndV1);

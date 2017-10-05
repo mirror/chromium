@@ -225,8 +225,10 @@ class CORE_EXPORT FrameSelection final
  private:
   friend class CaretDisplayItemClientTest;
   friend class FrameSelectionTest;
-  friend class PaintControllerPaintTestBase;
+  friend class PaintControllerPaintTestForSlimmingPaintV1AndV2;
   friend class SelectionControllerTest;
+  FRIEND_TEST_ALL_PREFIXES(PaintControllerPaintTestForSlimmingPaintV1AndV2,
+                           FullDocumentPaintingWithCaret);
 
   explicit FrameSelection(LocalFrame&);
 

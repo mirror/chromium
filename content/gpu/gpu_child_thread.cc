@@ -24,7 +24,6 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/gpu/content_gpu_client.h"
 #include "gpu/command_buffer/common/activity_flags.h"
-#include "gpu/ipc/service/gpu_init.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "ipc/ipc_sync_message_filter.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
@@ -131,39 +130,59 @@ class QueueingConnectionFilter : public ConnectionFilter {
 
 }  // namespace
 
-GpuChildThread::GpuChildThread(std::unique_ptr<gpu::GpuInit> gpu_init,
-                               DeferredMessages deferred_messages)
-    : GpuChildThread(GetOptions(), std::move(gpu_init)) {
+GpuChildThread::GpuChildThread(
+    std::unique_ptr<gpu::GpuWatchdogThread> watchdog_thread,
+    bool dead_on_arrival,
+    const gpu::GPUInfo& gpu_info,
+    const gpu::GpuFeatureInfo& gpu_feature_info,
+    DeferredMessages deferred_messages)
+    : GpuChildThread(GetOptions(),
+                     std::move(watchdog_thread),
+                     dead_on_arrival,
+                     false /* in_browser_process */,
+                     gpu_info,
+                     gpu_feature_info) {
   deferred_messages_ = std::move(deferred_messages);
 }
 
 GpuChildThread::GpuChildThread(const InProcessChildThreadParams& params,
-                               std::unique_ptr<gpu::GpuInit> gpu_init)
+                               const gpu::GPUInfo& gpu_info,
+                               const gpu::GpuFeatureInfo& gpu_feature_info)
     : GpuChildThread(ChildThreadImpl::Options::Builder()
                          .InBrowserProcess(params)
                          .AutoStartServiceManagerConnection(false)
                          .ConnectToBrowser(true)
                          .Build(),
-                     std::move(gpu_init)) {}
+                     nullptr /* watchdog_thread */,
+                     false /* dead_on_arrival */,
+                     true /* in_browser_process */,
+                     gpu_info,
+                     gpu_feature_info) {}
 
-GpuChildThread::GpuChildThread(const ChildThreadImpl::Options& options,
-                               std::unique_ptr<gpu::GpuInit> gpu_init)
+GpuChildThread::GpuChildThread(
+    const ChildThreadImpl::Options& options,
+    std::unique_ptr<gpu::GpuWatchdogThread> gpu_watchdog_thread,
+    bool dead_on_arrival,
+    bool in_browser_process,
+    const gpu::GPUInfo& gpu_info,
+    const gpu::GpuFeatureInfo& gpu_feature_info)
     : ChildThreadImpl(options),
-      gpu_init_(std::move(gpu_init)),
+      dead_on_arrival_(dead_on_arrival),
+      in_browser_process_(in_browser_process),
       gpu_service_(
-          new viz::GpuServiceImpl(gpu_init_->gpu_info(),
-                                  gpu_init_->TakeWatchdogThread(),
+          new viz::GpuServiceImpl(gpu_info,
+                                  std::move(gpu_watchdog_thread),
                                   ChildProcess::current()->io_task_runner(),
-                                  gpu_init_->gpu_feature_info())),
+                                  gpu_feature_info)),
       gpu_main_binding_(this),
       weak_factory_(this) {
-  if (gpu_init_->gpu_info().in_process_gpu) {
+  if (in_browser_process_) {
     DCHECK(base::CommandLine::ForCurrentProcess()->HasSwitch(
                switches::kSingleProcess) ||
            base::CommandLine::ForCurrentProcess()->HasSwitch(
                switches::kInProcessGPU));
   }
-  gpu_service_->set_in_host_process(gpu_init_->gpu_info().in_process_gpu);
+  gpu_service_->set_in_host_process(in_browser_process_);
 }
 
 GpuChildThread::~GpuChildThread() {}
@@ -174,10 +193,9 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
 #if defined(OS_ANDROID)
   // When running in in-process mode, this has been set in the browser at
   // ChromeBrowserMainPartsAndroid::PreMainMessageLoopRun().
-  if (!gpu_init_->gpu_info().in_process_gpu) {
+  if (!in_browser_process_)
     media::SetMediaDrmBridgeClient(
         GetContentClient()->GetMediaDrmBridgeClient());
-  }
 #endif
   AssociatedInterfaceRegistry* associated_registry = &associated_interfaces_;
   associated_registry->AddInterface(base::Bind(
@@ -231,7 +249,7 @@ void GpuChildThread::CreateGpuService(
     gpu_host->RecordLogMessage(log.severity, log.header, log.message);
   deferred_messages_.clear();
 
-  if (!gpu_init_->init_successful()) {
+  if (dead_on_arrival_) {
     LOG(ERROR) << "Exiting GPU process due to errors during initialization";
     gpu_service_.reset();
     gpu_host->DidFailInitialize();
@@ -263,7 +281,7 @@ void GpuChildThread::CreateGpuService(
 
   // Only set once per process instance.
   service_factory_.reset(new GpuServiceFactory(
-      gpu_preferences, gpu_service_->media_gpu_channel_manager()->AsWeakPtr(),
+      gpu_service_->media_gpu_channel_manager()->AsWeakPtr(),
       overlay_factory_cb));
 
   if (GetContentClient()->gpu())  // NULL in tests.

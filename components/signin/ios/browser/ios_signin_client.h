@@ -25,13 +25,12 @@ class IOSSigninClient
       public gaia::GaiaOAuthClient::Delegate,
       public OAuth2TokenService::Consumer {
  public:
-  IOSSigninClient(
-      PrefService* pref_service,
-      net::URLRequestContextGetter* url_request_context,
-      SigninErrorController* signin_error_controller,
-      scoped_refptr<content_settings::CookieSettings> cookie_settings,
-      scoped_refptr<HostContentSettingsMap> host_content_settings_map,
-      scoped_refptr<TokenWebData> token_web_data);
+  IOSSigninClient(PrefService* pref_service,
+                  net::URLRequestContextGetter* url_request_context,
+                  SigninErrorController* signin_error_controller,
+                  content_settings::CookieSettings* cookie_settings,
+                  HostContentSettingsMap* host_content_settings_map,
+                  scoped_refptr<TokenWebData> token_web_data);
   ~IOSSigninClient() override;
 
   // SigninClient implementation.
@@ -82,8 +81,8 @@ class IOSSigninClient
   PrefService* pref_service_;
   net::URLRequestContextGetter* url_request_context_;
   SigninErrorController* signin_error_controller_;
-  scoped_refptr<content_settings::CookieSettings> cookie_settings_;
-  scoped_refptr<HostContentSettingsMap> host_content_settings_map_;
+  content_settings::CookieSettings* cookie_settings_;
+  HostContentSettingsMap* host_content_settings_map_;
   scoped_refptr<TokenWebData> token_web_data_;
   std::list<base::Closure> delayed_callbacks_;
 

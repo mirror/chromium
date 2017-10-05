@@ -32,8 +32,6 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
 
   ~SourceBufferRangeByDts() override;
 
-  void DeleteAll(BufferQueue* deleted_buffers) override;
-
   // Appends the buffers from |range| into this range.
   // The first buffer in |range| must come directly after the last buffer
   // in this range.
@@ -173,12 +171,9 @@ class MEDIA_EXPORT SourceBufferRangeByDts : public SourceBufferRange {
  private:
   typedef std::map<DecodeTimestamp, int> KeyframeMap;
 
-  // Helper method to delete buffers in |buffers_| starting at
-  // |starting_point|, an iterator in |buffers_|.
-  // Returns true if everything in the range was removed. Returns
-  // false if the range still contains buffers.
+  // Implementation of protected SourceBufferRange interface.
   bool TruncateAt(const BufferQueue::iterator& starting_point,
-                  BufferQueue* deleted_buffers);
+                  BufferQueue* deleted_buffers) override;
 
   // Returns an iterator in |buffers_| pointing to the buffer at |timestamp|.
   // If |skip_given_timestamp| is true, this returns the first buffer with

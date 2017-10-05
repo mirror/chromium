@@ -14,6 +14,7 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_observer.h"
+#include "extensions/browser/scoped_ignore_content_verifier_for_test.h"
 #include "extensions/test/extension_test_message_listener.h"
 #include "extensions/test/result_catcher.h"
 
@@ -140,6 +141,7 @@ class EventsApiTest : public ExtensionApiTest {
 
  private:
   base::ScopedTempDir scoped_temp_dir_;
+  ScopedIgnoreContentVerifierForTest ignore_content_verification_;
 
   DISALLOW_COPY_AND_ASSIGN(EventsApiTest);
 };

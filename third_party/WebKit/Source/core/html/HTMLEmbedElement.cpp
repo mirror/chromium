@@ -25,6 +25,7 @@
 #include "core/html/HTMLEmbedElement.h"
 
 #include "core/CSSPropertyNames.h"
+#include "core/HTMLNames.h"
 #include "core/dom/Attribute.h"
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ShadowRoot.h"
@@ -33,7 +34,6 @@
 #include "core/html/HTMLObjectElement.h"
 #include "core/html/PluginDocument.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/api/LayoutEmbeddedItem.h"
 

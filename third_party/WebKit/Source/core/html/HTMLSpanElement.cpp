@@ -25,7 +25,7 @@
 
 #include "core/html/HTMLSpanElement.h"
 
-#include "core/html_names.h"
+#include "core/HTMLNames.h"
 
 namespace blink {
 

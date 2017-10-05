@@ -10,13 +10,15 @@
 #include "chrome/browser/notifications/notification_display_service.h"
 
 class Notification;
+class NotificationUIManager;
 class Profile;
 
 // Implementation of display service for notifications displayed by chrome
 // instead of the native platform notification center.
 class MessageCenterDisplayService : public NotificationDisplayService {
  public:
-  explicit MessageCenterDisplayService(Profile* profile);
+  MessageCenterDisplayService(Profile* profile,
+                              NotificationUIManager* ui_manager);
   ~MessageCenterDisplayService() override;
 
   // NotificationDisplayService implementation.
@@ -30,6 +32,7 @@ class MessageCenterDisplayService : public NotificationDisplayService {
 
  private:
   Profile* profile_;
+  NotificationUIManager* ui_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageCenterDisplayService);
 };

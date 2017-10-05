@@ -30,7 +30,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -146,8 +145,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome
     @Restriction(UiRestriction.RESTRICTION_TYPE_PHONE)
@@ -169,8 +167,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome(false)
     public void testTileGridAppearance_Full() throws IOException, InterruptedException {
@@ -191,8 +188,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @RetryOnFailure
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome
@@ -208,8 +204,7 @@ public class TileGridLayoutTest {
     }
 
     @Test
-    //@MediumTest
-    @DisabledTest(message = "crbug.com/771648")
+    @MediumTest
     @RetryOnFailure
     @Feature({"NewTabPage", "RenderTest"})
     @ChromeHome(false)

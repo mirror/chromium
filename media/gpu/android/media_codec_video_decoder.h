@@ -10,7 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/elapsed_timer.h"
-#include "gpu/command_buffer/service/gpu_preferences.h"
+#include "gpu/ipc/service/gpu_command_buffer_stub.h"
 #include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/overlay_info.h"
 #include "media/base/video_decoder.h"
@@ -54,7 +54,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
       public AVDACodecAllocatorClient {
  public:
   MediaCodecVideoDecoder(
-      const gpu::GpuPreferences& gpu_preferences,
+      scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner,
+      base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb,
       VideoFrameFactory::OutputWithReleaseMailboxCB output_cb,
       DeviceInfo* device_info,
       AVDACodecAllocator* codec_allocator,
@@ -77,6 +78,9 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   bool NeedsBitstreamConversion() const override;
   bool CanReadWithoutStalling() const override;
   int GetMaxDecodeRequests() const override;
+
+  // Updates the current overlay info.
+  void OnOverlayInfoChanged(const OverlayInfo& overlay_info);
 
  protected:
   // Protected for testing.
@@ -116,8 +120,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // accept buffers.
   void OnKeyAdded();
 
-  // Updates |surface_chooser_| with the new overlay info.
-  void OnOverlayInfoChanged(const OverlayInfo& overlay_info);
+  // Initializes |surface_chooser_|.
+  void InitializeSurfaceChooser();
   void OnSurfaceChosen(std::unique_ptr<AndroidOverlay> overlay);
   void OnSurfaceDestroyed(AndroidOverlay* overlay);
 
@@ -150,12 +154,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   void StartTimer();
   void StopTimerIfIdle();
 
-  // Runs |eos_decode_cb_| if it's valid and |reset_generation| matches
-  // |reset_generation_|.
-  void RunEosDecodeCb(int reset_generation);
-
-  // Forwards |frame| via |output_cb_| if |reset_generation| matches
-  // |reset_generation_|.
+  // Forwards |frame| via |output_cb_| if there hasn't been a Reset() since the
+  // frame was created (i.e., |reset_generation| matches |reset_generation_|).
   void ForwardVideoFrame(int reset_generation,
                          VideoFrameFactory::ReleaseMailboxCB release_cb,
                          const scoped_refptr<VideoFrame>& frame);
@@ -164,12 +164,12 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // if possible.
   void StartDrainingCodec(DrainType drain_type);
   void OnCodecDrained();
-  void CancelPendingDecodes(DecodeStatus status);
+
+  void ClearPendingDecodes(DecodeStatus status);
 
   // Sets |state_| and does common teardown for the terminal states. |state_|
   // must be either kSurfaceDestroyed or kError.
   void EnterTerminalState(State state);
-  bool InTerminalState();
 
   // Releases |codec_| if it's not null.
   void ReleaseCodec();
@@ -177,7 +177,7 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Creates an overlay factory cb based on the value of overlay_info_.
   AndroidOverlayFactoryCB CreateOverlayFactoryCb();
 
-  State state_ = State::kInitializing;
+  State state_;
 
   // Whether initialization still needs to be done on the first decode call.
   bool lazy_init_pending_ = true;
@@ -212,6 +212,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   std::unique_ptr<CodecWrapper> codec_;
   base::ElapsedTimer idle_timer_;
   base::RepeatingTimer pump_codec_timer_;
+  scoped_refptr<base::SingleThreadTaskRunner> gpu_task_runner_;
+  base::Callback<gpu::GpuCommandBufferStub*()> get_stub_cb_;
   AVDACodecAllocator* codec_allocator_;
 
   // The current target surface that |codec_| should be rendering to. It
@@ -240,11 +242,11 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // The factory for creating VideoFrames from CodecOutputBuffers.
   std::unique_ptr<VideoFrameFactory> video_frame_factory_;
 
-  // An optional factory callback for creating mojo AndroidOverlays.
+  // An optional factory callback for creating mojo AndroidOverlays. This must
+  // only be called on the GPU thread.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
   DeviceInfo* device_info_;
-  bool enable_threaded_texture_mailboxes_;
 
   // If we're running in a service context this ref lets us keep the service
   // thread alive until destruction.

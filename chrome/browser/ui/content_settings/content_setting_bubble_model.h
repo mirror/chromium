@@ -377,11 +377,7 @@ class ContentSettingMediaStreamBubbleModel : public ContentSettingBubbleModel {
   bool MicrophoneAccessed() const;
   bool CameraAccessed() const;
 
-  bool MicrophoneBlocked() const;
-  bool CameraBlocked() const;
-
   void SetTitle();
-  void SetMessage();
   void SetManageText();
 
   // Sets the data for the radio buttons of the bubble.

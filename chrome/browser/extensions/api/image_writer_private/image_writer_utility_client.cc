@@ -70,7 +70,7 @@ ImageWriterUtilityClient::~ImageWriterUtilityClient() = default;
 scoped_refptr<ImageWriterUtilityClient> ImageWriterUtilityClient::Create() {
   if (g_factory_for_testing)
     return g_factory_for_testing->Run();
-  return base::WrapRefCounted(new ImageWriterUtilityClient());
+  return make_scoped_refptr(new ImageWriterUtilityClient());
 }
 
 // static

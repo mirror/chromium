@@ -47,6 +47,8 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
   DCHECK_GE(constraint_space.AvailableSize().inline_size, LayoutUnit());
   DCHECK_GE(constraint_space.PercentageResolutionSize().inline_size,
             LayoutUnit());
+  DCHECK_EQ(constraint_space.WritingMode(),
+            FromPlatformWritingMode(style.GetWritingMode()));
 
   if (constraint_space.IsAnonymous())
     return constraint_space.AvailableSize().inline_size;
@@ -68,7 +70,9 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
     case kAuto:
     case kFillAvailable: {
       LayoutUnit content_size = constraint_space.AvailableSize().inline_size;
-      NGBoxStrut margins = ComputeMarginsForSelf(constraint_space, style);
+      NGBoxStrut margins = ComputeMargins(
+          constraint_space, style,
+          FromPlatformWritingMode(style.GetWritingMode()), style.Direction());
       return std::max(border_and_padding.InlineSum(),
                       content_size - margins.InlineSum());
     }
@@ -76,10 +80,7 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
     case kFixed:
     case kCalculated: {
       LayoutUnit percentage_resolution_size =
-          type == LengthResolveType::kMarginBorderPaddingSize
-              ? constraint_space
-                    .PercentageResolutionInlineSizeForParentWritingMode()
-              : constraint_space.PercentageResolutionSize().inline_size;
+          constraint_space.PercentageResolutionSize().inline_size;
       LayoutUnit value = ValueForLength(length, percentage_resolution_size);
       if (style.BoxSizing() == EBoxSizing::kContentBox) {
         value += border_and_padding.InlineSum();
@@ -101,7 +102,9 @@ LayoutUnit ResolveInlineLength(const NGConstraintSpace& constraint_space,
         // max-content. See css-sizing section 2.1.
         value = min_and_max->max_size;
       } else {
-        NGBoxStrut margins = ComputeMarginsForSelf(constraint_space, style);
+        NGBoxStrut margins = ComputeMargins(
+            constraint_space, style,
+            FromPlatformWritingMode(style.GetWritingMode()), style.Direction());
         LayoutUnit fill_available =
             std::max(LayoutUnit(), available_size - margins.InlineSum() -
                                        border_and_padding.InlineSum());
@@ -127,6 +130,8 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
                               LengthResolveType type) {
   DCHECK(!length.IsMaxSizeNone());
   DCHECK_NE(type, LengthResolveType::kMarginBorderPaddingSize);
+  DCHECK_EQ(constraint_space.WritingMode(),
+            FromPlatformWritingMode(style.GetWritingMode()));
 
   if (constraint_space.IsAnonymous())
     return content_size;
@@ -151,7 +156,9 @@ LayoutUnit ResolveBlockLength(const NGConstraintSpace& constraint_space,
   switch (length.GetType()) {
     case kFillAvailable: {
       LayoutUnit content_size = constraint_space.AvailableSize().block_size;
-      NGBoxStrut margins = ComputeMarginsForSelf(constraint_space, style);
+      NGBoxStrut margins = ComputeMargins(
+          constraint_space, style,
+          FromPlatformWritingMode(style.GetWritingMode()), style.Direction());
       return std::max(border_and_padding.BlockSum(),
                       content_size - margins.BlockSum());
     }
@@ -229,7 +236,8 @@ MinMaxSize ComputeMinAndMaxContentContribution(
   computed_sizes.min_size = std::max(computed_sizes.min_size, min);
   computed_sizes.max_size = std::max(computed_sizes.max_size, min);
 
-  NGBoxStrut margins = ComputeMarginsForSelf(*space, style);
+  NGBoxStrut margins =
+      ComputeMargins(*space, style, writing_mode, style.Direction());
   computed_sizes.min_size += margins.InlineSum();
   computed_sizes.max_size += margins.InlineSum();
   return computed_sizes;
@@ -408,9 +416,10 @@ LayoutUnit ResolveUsedColumnGap(const ComputedStyle& style) {
   return LayoutUnit(style.ColumnGap());
 }
 
-NGPhysicalBoxStrut ComputePhysicalMargins(
-    const NGConstraintSpace& constraint_space,
-    const ComputedStyle& style) {
+NGBoxStrut ComputeMargins(const NGConstraintSpace& constraint_space,
+                          const ComputedStyle& style,
+                          const NGWritingMode writing_mode,
+                          const TextDirection direction) {
   // We don't need these for margin computations
   MinMaxSize empty_sizes;
   // Margins always get computed relative to the inline size:
@@ -428,35 +437,7 @@ NGPhysicalBoxStrut ComputePhysicalMargins(
   physical_dim.bottom = ResolveInlineLength(
       constraint_space, style, empty_sizes, style.MarginBottom(),
       LengthResolveType::kMarginBorderPaddingSize);
-  return physical_dim;
-}
-
-NGBoxStrut ComputeMarginsFor(const NGConstraintSpace& constraint_space,
-                             const ComputedStyle& style,
-                             const NGConstraintSpace& compute_for) {
-  return ComputePhysicalMargins(constraint_space, style)
-      .ConvertToLogical(compute_for.WritingMode(), compute_for.Direction());
-}
-
-NGBoxStrut ComputeMarginsForContainer(const NGConstraintSpace& constraint_space,
-                                      const ComputedStyle& style) {
-  return ComputePhysicalMargins(constraint_space, style)
-      .ConvertToLogical(constraint_space.WritingMode(),
-                        constraint_space.Direction());
-}
-
-NGBoxStrut ComputeMarginsForVisualContainer(
-    const NGConstraintSpace& constraint_space,
-    const ComputedStyle& style) {
-  return ComputePhysicalMargins(constraint_space, style)
-      .ConvertToLogical(constraint_space.WritingMode(), TextDirection::kLtr);
-}
-
-NGBoxStrut ComputeMarginsForSelf(const NGConstraintSpace& constraint_space,
-                                 const ComputedStyle& style) {
-  return ComputePhysicalMargins(constraint_space, style)
-      .ConvertToLogical(FromPlatformWritingMode(style.GetWritingMode()),
-                        style.Direction());
+  return physical_dim.ConvertToLogical(writing_mode, direction);
 }
 
 NGBoxStrut ComputeBorders(const NGConstraintSpace& constraint_space,

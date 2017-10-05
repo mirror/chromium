@@ -972,10 +972,10 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 
 #if !defined(OS_CHROMEOS)
   // Convert active labs into switches. This needs to be done before
-  // ui::ResourceBundle::InitSharedInstanceWithLocale as some loaded resources
-  // are affected by experiment flags (--touch-optimized-ui in particular). On
-  // ChromeOS system level flags are applied from the device settings from the
-  // session manager.
+  // ResourceBundle::InitSharedInstanceWithLocale as some loaded resources are
+  // affected by experiment flags (--touch-optimized-ui in particular).
+  // On ChromeOS system level flags are applied from the device settings from
+  // the session manager.
   {
     TRACE_EVENT0("startup",
         "ChromeBrowserMainParts::PreCreateThreadsImpl:ConvertFlags");
@@ -1049,7 +1049,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 #if defined(OS_ANDROID)
     ui::LoadMainAndroidPackFile("assets/resources.pak", resources_pack_path);
 #else
-    ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+    ResourceBundle::GetSharedInstance().AddDataPackFromPath(
         resources_pack_path, ui::SCALE_FACTOR_NONE);
 #endif  // defined(OS_ANDROID)
   }
@@ -1155,8 +1155,7 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
   // tasks.
   SetupFieldTrials();
 
-  // ChromeOS needs ui::ResourceBundle::InitSharedInstance to be called before
-  // this.
+  // ChromeOS needs ResourceBundle::InitSharedInstance to be called before this.
   browser_process_->PreCreateThreads();
 
   // This must occur in PreCreateThreads() because it initializes global state

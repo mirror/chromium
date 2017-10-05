@@ -24,6 +24,7 @@
 #define SVGFilterElement_h
 
 #include "core/CoreExport.h"
+#include "core/SVGNames.h"
 #include "core/svg/SVGAnimatedEnumeration.h"
 #include "core/svg/SVGAnimatedLength.h"
 #include "core/svg/SVGElement.h"

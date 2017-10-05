@@ -38,16 +38,8 @@ WebContentsTopSitesObserver::~WebContentsTopSitesObserver() {
 void WebContentsTopSitesObserver::NavigationEntryCommitted(
     const content::LoadCommittedDetails& load_details) {
   DCHECK(load_details.entry);
-
-  // Frame-wise, we only care about navigating the main frame.
-  // Type-wise, we only care about navigating to a new page, or renavigating to
-  // an existing navigation entry.
-  if (top_sites_ && load_details.is_main_frame &&
-      (load_details.type == content::NavigationType::NAVIGATION_TYPE_NEW_PAGE ||
-       load_details.type ==
-           content::NavigationType::NAVIGATION_TYPE_EXISTING_PAGE)) {
+  if (top_sites_)
     top_sites_->OnNavigationCommitted(load_details.entry->GetURL());
-  }
 }
 
 }  // namespace history

@@ -6,7 +6,6 @@ import("//build/config/chrome_build.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/compiler/pgo/pgo.gni")
 import("//build/config/features.gni")
-import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/locales.gni")
 import("//build/config/sanitizers/sanitizers.gni")
 import("//build/config/ui.gni")
@@ -285,7 +284,7 @@ if (!is_android && !is_mac) {
           ldflags += [ "-Wl,--long-plt" ]
         }
 
-        if (use_pangocairo) {
+        if (use_pango || use_cairo) {
           # Needed for chrome_main.cc initialization of libraries.
           configs += [ "//build/config/linux/pangocairo" ]
         }
@@ -375,6 +374,8 @@ if (is_win) {
       "app/chrome_main.cc",
       "app/chrome_main_delegate.cc",
       "app/chrome_main_delegate.h",
+      "app/chrome_main_mac.h",
+      "app/chrome_main_mac.mm",
     ]
 
     output_name = "chrome"

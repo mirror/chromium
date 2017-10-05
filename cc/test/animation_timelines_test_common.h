@@ -18,9 +18,6 @@
 
 namespace cc {
 
-class AnimationPlayer;
-class AnimationTicker;
-
 class TestLayer {
  public:
   static std::unique_ptr<TestLayer> Create();
@@ -241,7 +238,7 @@ class AnimationTimelinesTest : public testing::Test {
   void CreateTestLayer(bool needs_active_value_observations,
                        bool needs_pending_value_observations);
   void AttachTimelinePlayerLayer();
-  virtual void CreateImplTimelineAndPlayer();
+  void CreateImplTimelineAndPlayer();
 
   void CreateTestMainLayer();
   void DestroyTestMainLayer();
@@ -252,12 +249,12 @@ class AnimationTimelinesTest : public testing::Test {
   void TickAnimationsTransferEvents(base::TimeTicks time,
                                     unsigned expect_events);
 
-  AnimationTicker* GetTickerForElementId(ElementId element_id);
-  AnimationTicker* GetImplTickerForLayerId(ElementId element_id);
+  AnimationPlayer* GetPlayerForElementId(ElementId element_id);
+  AnimationPlayer* GetImplPlayerForLayerId(ElementId element_id);
 
   int NextTestLayerId();
 
-  bool CheckTickerTimelineNeedsPushProperties(bool needs_push_properties) const;
+  bool CheckPlayerTimelineNeedsPushProperties(bool needs_push_properties) const;
 
   void PushProperties();
 

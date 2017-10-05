@@ -82,9 +82,6 @@ class CONTENT_EXPORT ServiceWorkerScriptURLLoader
       mojo::ScopedDataPipeConsumerHandle body) override;
   void OnComplete(const ResourceRequestCompletionStatus& status) override;
 
-  // Buffer size for reading script data from network.
-  const static uint32_t kReadBufferSize;
-
  private:
   enum class State {
     kNotStarted,

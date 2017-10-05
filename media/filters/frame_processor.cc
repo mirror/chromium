@@ -66,10 +66,6 @@ class MseTrackBuffer {
     return last_processed_decode_timestamp_;
   }
 
-  base::TimeDelta pending_group_start_pts() const {
-    return pending_group_start_pts_;
-  }
-
   // Gets a pointer to this track's ChunkDemuxerStream.
   ChunkDemuxerStream* stream() const { return stream_; }
 
@@ -95,32 +91,22 @@ class MseTrackBuffer {
   bool FlushProcessedFrames();
 
   // Signals this track buffer's stream that a coded frame group is starting
-  // with |start_dts| and |start_pts|.
-  void NotifyStartOfCodedFrameGroup(DecodeTimestamp start_dts,
-                                    base::TimeDelta start_pts);
+  // with decode timestamp |start_timestamp|.
+  void NotifyStartOfCodedFrameGroup(DecodeTimestamp start_time);
 
  private:
   // The decode timestamp of the last coded frame appended in the current coded
   // frame group. Initially kNoTimestamp, meaning "unset".
   DecodeTimestamp last_decode_timestamp_;
 
-  // On signalling the stream of a new coded frame group start, this is reset to
-  // that start decode time. Any buffers subsequently enqueued for emission to
+  // On signalling the stream of a new coded frame group start time, this is
+  // reset to that start time. Any buffers subsequently enqueued for emission to
   // the stream update this. This is managed separately from
   // |last_decode_timestamp_| because |last_processed_decode_timestamp_| is not
   // reset during Reset(), to especially be able to track the need to signal
-  // coded frame group start time for muxed post-discontinuity edge cases. See
+  // coded frame group start time for muxed post-discontiuity edge cases. See
   // also FrameProcessor::ProcessFrame().
   DecodeTimestamp last_processed_decode_timestamp_;
-
-  // On signalling the stream of a new coded frame group start, this is set to
-  // the group start PTS. If the first frame for this track in the coded frame
-  // group has a lower PTS, then this must be reset to that time. Once the first
-  // frame for this track has been queued, this is reset to kNoTimestamp. Like
-  // |last_processed_decode_timestamp_|, this is helpful for signalling an
-  // updated coded frame group start time for muxed post-discontinuity edge
-  // cases. See also FrameProcessor::ProcessFrame().
-  base::TimeDelta pending_group_start_pts_;
 
   // This is used to understand if the stream parser is producing random access
   // points that are not SAP Type 1, whose support is likely going to be
@@ -173,7 +159,6 @@ MseTrackBuffer::MseTrackBuffer(
     const SourceBufferParseWarningCB& parse_warning_cb)
     : last_decode_timestamp_(kNoDecodeTimestamp()),
       last_processed_decode_timestamp_(DecodeTimestamp()),
-      pending_group_start_pts_(kNoTimestamp),
       last_keyframe_presentation_timestamp_(kNoTimestamp),
       last_frame_duration_(kNoTimestamp),
       highest_presentation_timestamp_(kNoTimestamp),
@@ -244,9 +229,6 @@ void MseTrackBuffer::EnqueueProcessedFrame(
     }
   }
 
-  DCHECK(pending_group_start_pts_ == kNoTimestamp ||
-         pending_group_start_pts_ <= frame->timestamp());
-  pending_group_start_pts_ = kNoTimestamp;
   last_processed_decode_timestamp_ = frame->GetDecodeTimestamp();
   processed_frames_.push_back(frame);
 }
@@ -264,21 +246,17 @@ bool MseTrackBuffer::FlushProcessedFrames() {
   return result;
 }
 
-void MseTrackBuffer::NotifyStartOfCodedFrameGroup(DecodeTimestamp start_dts,
-                                                  base::TimeDelta start_pts) {
+void MseTrackBuffer::NotifyStartOfCodedFrameGroup(DecodeTimestamp start_time) {
   last_keyframe_presentation_timestamp_ = kNoTimestamp;
-  last_processed_decode_timestamp_ = start_dts;
-  pending_group_start_pts_ = start_pts;
-  stream_->OnStartOfCodedFrameGroup(start_dts, start_pts);
+  last_processed_decode_timestamp_ = start_time;
+  stream_->OnStartOfCodedFrameGroup(start_time);
 }
 
 FrameProcessor::FrameProcessor(const UpdateDurationCB& update_duration_cb,
-                               MediaLog* media_log,
-                               ChunkDemuxerStream::RangeApi range_api)
+                               MediaLog* media_log)
     : group_start_timestamp_(kNoTimestamp),
       update_duration_cb_(update_duration_cb),
-      media_log_(media_log),
-      range_api_(range_api) {
+      media_log_(media_log) {
   DVLOG(2) << __func__ << "()";
   DCHECK(!update_duration_cb.is_null());
 }
@@ -483,13 +461,12 @@ MseTrackBuffer* FrameProcessor::FindTrack(StreamParser::TrackId id) {
   return itr->second.get();
 }
 
-void FrameProcessor::NotifyStartOfCodedFrameGroup(DecodeTimestamp start_dts,
-                                                  base::TimeDelta start_pts) {
-  DVLOG(2) << __func__ << "(dts " << start_dts.InSecondsF() << ", pts "
-           << start_pts.InSecondsF() << ")";
+void FrameProcessor::NotifyStartOfCodedFrameGroup(
+    DecodeTimestamp start_timestamp) {
+  DVLOG(2) << __func__ << "(" << start_timestamp.InSecondsF() << ")";
 
   for (auto itr = track_buffers_.begin(); itr != track_buffers_.end(); ++itr) {
-    itr->second->NotifyStartOfCodedFrameGroup(start_dts, start_pts);
+    itr->second->NotifyStartOfCodedFrameGroup(start_timestamp);
   }
 }
 
@@ -825,14 +802,12 @@ bool FrameProcessor::ProcessFrame(
     }
 
     DCHECK(presentation_timestamp >= base::TimeDelta());
-    if (decode_timestamp < DecodeTimestamp() &&
-        range_api_ == ChunkDemuxerStream::RangeApi::kLegacyByDts) {
+    if (decode_timestamp < DecodeTimestamp()) {
       // B-frames may still result in negative DTS here after being shifted by
       // |timestamp_offset_|.
       // TODO(wolenetz): This is no longer a step in the CFP, since negative DTS
       // are allowed. Remove this parse failure and error log as part of fixing
       // PTS/DTS conflation in SourceBufferStream. See https://crbug.com/398141
-      // and https://crbug.com/718641.
       MEDIA_LOG(ERROR, media_log_)
           << frame->GetTypeName() << " frame with PTS "
           << presentation_timestamp.InMicroseconds() << "us has negative DTS "
@@ -864,23 +839,13 @@ bool FrameProcessor::ProcessFrame(
     // append mode from sequence append mode), notify all the track buffers
     // that a coded frame group is starting.
     //
-    // In muxed multi-track streams, it may occur that we already signaled a new
-    // coded frame group (CFG) upon detecting a discontinuity in trackA, only to
-    // now find that frames in trackB actually have an earlier timestamp. If
-    // this is detected using last_processed_decode_timestamp() (which persists
-    // across DTS-based discontinuity detection in sequence mode, and which
-    // contains either the last processed DTS or last signalled CFG DTS for
-    // trackB), re-signal trackB that a CFG is starting with its new earlier
-    // DTS. Similarly, if this is detected using pending_group_start_pts()
-    // (which is !kNoTimestamp only when the track hasn't yet been given the
-    // first buffer in the CFG, and if so, it's the expected PTS start of that
-    // CFG), re-signal trackB that a CFG is starting with its new earlier PTS.
-    // Avoid re-signalling trackA, as it has already started processing frames
-    // for this CFG.
+    // Otherwise, if the buffer's DTS indicates that a new coded frame group
+    // needs signalling, signal just the buffer's track buffer. This can
+    // happen in both sequence and segments append modes when the first
+    // processed track's frame following a discontinuity has a higher DTS than
+    // this later processed track's first frame following that discontinuity.
     if (pending_notify_all_group_start_ ||
-        track_buffer->last_processed_decode_timestamp() > decode_timestamp ||
-        (track_buffer->pending_group_start_pts() != kNoTimestamp &&
-         track_buffer->pending_group_start_pts() > presentation_timestamp)) {
+        track_buffer->last_processed_decode_timestamp() > decode_timestamp) {
       DCHECK(frame->is_key_frame());
 
       // First, complete the append to track buffer streams of the previous
@@ -889,16 +854,14 @@ bool FrameProcessor::ProcessFrame(
         return false;
 
       if (pending_notify_all_group_start_) {
-        NotifyStartOfCodedFrameGroup(decode_timestamp, presentation_timestamp);
+        // TODO(wolenetz): This should be changed to a presentation timestamp.
+        // See http://crbug.com/402502
+        NotifyStartOfCodedFrameGroup(decode_timestamp);
         pending_notify_all_group_start_ = false;
       } else {
-        // Don't signal later times than previously signalled for this group.
-        DecodeTimestamp updated_dts = std::min(
-            track_buffer->last_processed_decode_timestamp(), decode_timestamp);
-        base::TimeDelta updated_pts = track_buffer->pending_group_start_pts();
-        if (updated_pts == kNoTimestamp || updated_pts > presentation_timestamp)
-          updated_pts = presentation_timestamp;
-        track_buffer->NotifyStartOfCodedFrameGroup(updated_dts, updated_pts);
+        // TODO(wolenetz): This should be changed to a presentation timestamp.
+        // See http://crbug.com/402502
+        track_buffer->NotifyStartOfCodedFrameGroup(decode_timestamp);
       }
     }
 

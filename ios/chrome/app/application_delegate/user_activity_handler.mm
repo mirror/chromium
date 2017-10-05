@@ -116,24 +116,24 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
       }
       [startupInformation setStartupParameters:startupParams];
     } else if (!webpageURL && base::ios::IsRunningOnIOS10OrLater()) {
-      if (@available(iOS 10, *)) {
-        spotlight::GetURLForSpotlightItemID(itemID, ^(NSURL* contentURL) {
-          if (!contentURL) {
-            return;
-          }
-          dispatch_async(dispatch_get_main_queue(), ^{
-            // Update the isActive flag as it may have changed during the async
-            // calls.
-            BOOL isActive = [[UIApplication sharedApplication]
-                                applicationState] == UIApplicationStateActive;
-            [self continueUserActivityURL:contentURL
-                      applicationIsActive:isActive
-                                tabOpener:tabOpener
-                       startupInformation:startupInformation];
-          });
+      // spotlight::GetURLForSpotlightItemID uses CSSearchQuery, which is only
+      // supported from iOS 10.
+      spotlight::GetURLForSpotlightItemID(itemID, ^(NSURL* contentURL) {
+        if (!contentURL) {
+          return;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+          // Update the isActive flag as it may have changed during the async
+          // calls.
+          BOOL isActive = [[UIApplication sharedApplication]
+                              applicationState] == UIApplicationStateActive;
+          [self continueUserActivityURL:contentURL
+                    applicationIsActive:isActive
+                              tabOpener:tabOpener
+                     startupInformation:startupInformation];
         });
-        return YES;
-      }
+      });
+      return YES;
     }
   } else {
     // Do nothing for unknown activity type.
@@ -254,10 +254,7 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
                                              withURL:[[startupInformation
                                                          startupParameters]
                                                          externalURL]
-                                      dismissOmnibox:[[startupInformation
-                                                         startupParameters]
-                                                         postOpeningAction] !=
-                                                     FOCUS_OMNIBOX
+                                      dismissOmnibox:YES
                                           transition:ui::PAGE_TRANSITION_LINK
                                           completion:^{
                                             [startupInformation

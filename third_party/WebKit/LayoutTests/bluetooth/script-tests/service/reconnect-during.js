@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(() => {
+promise_test(() => {
   let device, service;
   return getHealthThermometerDeviceWithServicesDiscovered({
     filters: [{services: [health_thermometer.name]}],

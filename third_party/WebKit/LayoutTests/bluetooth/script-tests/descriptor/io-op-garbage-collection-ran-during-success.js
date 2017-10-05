@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(
+promise_test(
     () => {
       let val = new Uint8Array([1]);
       let promise;

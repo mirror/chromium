@@ -30,8 +30,7 @@ class VIZ_COMMON_EXPORT TileDrawQuad : public ContentDrawQuadBase {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor,
-              bool force_anti_aliasing_off);
+              bool nearest_neighbor);
 
   void SetAll(const SharedQuadState* shared_quad_state,
               const gfx::Rect& rect,
@@ -44,8 +43,7 @@ class VIZ_COMMON_EXPORT TileDrawQuad : public ContentDrawQuadBase {
               const gfx::RectF& tex_coord_rect,
               const gfx::Size& texture_size,
               bool swizzle_contents,
-              bool nearest_neighbor,
-              bool force_anti_aliasing_off);
+              bool nearest_neighbor);
 
   static const TileDrawQuad* MaterialCast(const DrawQuad*);
 

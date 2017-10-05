@@ -421,10 +421,8 @@ NSAttributedString* CreateClassifiedAttributedString(
       if (!match.description.empty()) {
         // Swap the contents and description of non-search suggestions in
         // vertical layouts.
-        BOOL swapMatchText = (base::FeatureList::IsEnabled(
-                                  omnibox::kUIExperimentVerticalLayout) ||
-                              base::FeatureList::IsEnabled(
-                                  omnibox::kUIExperimentSwapTitleAndUrl)) &&
+        BOOL swapMatchText = base::FeatureList::IsEnabled(
+                                 omnibox::kUIExperimentVerticalLayout) &&
                              !AutocompleteMatch::IsSearchType(match.type);
 
         description_ = [CreateClassifiedAttributedString(

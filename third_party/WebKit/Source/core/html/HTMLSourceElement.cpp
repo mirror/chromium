@@ -25,6 +25,7 @@
 
 #include "core/html/HTMLSourceElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/css/MediaList.h"
 #include "core/css/MediaQueryList.h"
 #include "core/css/MediaQueryMatcher.h"
@@ -33,7 +34,6 @@
 #include "core/dom/events/Event.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPictureElement.h"
-#include "core/html_names.h"
 
 #define SOURCE_LOG_LEVEL 3
 

@@ -50,7 +50,7 @@ void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&SiteDataCountingHelper::GetCookiesOnIOThread,
-                     base::Unretained(this), base::WrapRefCounted(rq_context)));
+                     base::Unretained(this), make_scoped_refptr(rq_context)));
 
   storage::QuotaManager* quota_manager = partition->GetQuotaManager();
   if (quota_manager) {
@@ -111,7 +111,7 @@ void SiteDataCountingHelper::CountAndDestroySelfWhenFinished() {
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&SiteDataCountingHelper::GetChannelIDsOnIOThread,
-                     base::Unretained(this), base::WrapRefCounted(rq_context)));
+                     base::Unretained(this), make_scoped_refptr(rq_context)));
 }
 
 void SiteDataCountingHelper::GetOriginsFromHostContentSettignsMap(

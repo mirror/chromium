@@ -27,6 +27,10 @@
 
 #include "core/editing/serializers/MarkupFormatter.h"
 
+#include "core/HTMLNames.h"
+#include "core/XLinkNames.h"
+#include "core/XMLNSNames.h"
+#include "core/XMLNames.h"
 #include "core/dom/CDATASection.h"
 #include "core/dom/Comment.h"
 #include "core/dom/Document.h"
@@ -37,10 +41,6 @@
 #include "core/editing/Editor.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLTemplateElement.h"
-#include "core/html_names.h"
-#include "core/xlink_names.h"
-#include "core/xml_names.h"
-#include "core/xmlns_names.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/CharacterNames.h"
 

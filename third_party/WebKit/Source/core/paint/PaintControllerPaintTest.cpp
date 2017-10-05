@@ -17,17 +17,13 @@
 
 namespace blink {
 
-using PaintControllerPaintTestForSlimmingPaintV1AndV2 =
-    PaintControllerPaintTest;
 INSTANTIATE_TEST_CASE_P(All,
                         PaintControllerPaintTestForSlimmingPaintV1AndV2,
-                        ::testing::Values(0, kSlimmingPaintV2));
+                        ::testing::Bool());
 
-using PaintControllerPaintTestForSlimmingPaintV2 = PaintControllerPaintTest;
-INSTANTIATE_TEST_CASE_P(
-    All,
-    PaintControllerPaintTestForSlimmingPaintV2,
-    ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
+INSTANTIATE_TEST_CASE_P(All,
+                        PaintControllerPaintTestForSlimmingPaintV2,
+                        ::testing::Bool());
 
 TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
        FullDocumentPaintingWithCaret) {
@@ -59,14 +55,20 @@ TEST_P(PaintControllerPaintTestForSlimmingPaintV1AndV2,
         RootPaintController().GetDisplayItemList(), 3,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
         TestDisplayItem(text_inline_box, kForegroundType),
-        TestDisplayItem(CaretDisplayItemClientForTesting(),
+        TestDisplayItem(GetDocument()
+                            .GetFrame()
+                            ->Selection()
+                            .CaretDisplayItemClientForTesting(),
                         DisplayItem::kCaret));  // New!
   } else {
     EXPECT_DISPLAY_LIST(
         RootPaintController().GetDisplayItemList(), 3,
         TestDisplayItem(GetLayoutView(), kDocumentBackgroundType),
         TestDisplayItem(text_inline_box, kForegroundType),
-        TestDisplayItem(CaretDisplayItemClientForTesting(),
+        TestDisplayItem(GetDocument()
+                            .GetFrame()
+                            ->Selection()
+                            .CaretDisplayItemClientForTesting(),
                         DisplayItem::kCaret));  // New!
   }
 }

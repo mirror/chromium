@@ -139,6 +139,8 @@ class ComponentCloudPolicyTest : public ExtensionBrowserTest {
 
     // The extension will receive an update event.
     EXPECT_TRUE(event_listener_->WaitUntilSatisfied());
+
+    ExtensionBrowserTest::SetUpOnMainThread();
   }
 
   void TearDownOnMainThread() override {

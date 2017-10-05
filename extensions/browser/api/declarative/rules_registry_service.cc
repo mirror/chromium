@@ -200,7 +200,7 @@ void RulesRegistryService::NotifyRegistriesHelper(
     } else {
       content::BrowserThread::PostTask(
           registry->owner_thread(), FROM_HERE,
-          base::Bind(&NotifyWithExtensionSafe, base::WrapRefCounted(extension),
+          base::Bind(&NotifyWithExtensionSafe, make_scoped_refptr(extension),
                      notification_callback, registry));
     }
   }

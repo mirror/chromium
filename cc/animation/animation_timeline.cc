@@ -126,9 +126,10 @@ void AnimationTimeline::PushPropertiesToImplThread(
     AnimationTimeline* timeline_impl) {
   for (auto& kv : id_to_player_map_) {
     AnimationPlayer* player = kv.second.get();
-    if (AnimationPlayer* player_impl =
-            timeline_impl->GetPlayerById(player->id())) {
-      player->PushPropertiesTo(player_impl);
+    if (player->needs_push_properties()) {
+      AnimationPlayer* player_impl = timeline_impl->GetPlayerById(player->id());
+      if (player_impl)
+        player->PushPropertiesTo(player_impl);
     }
   }
 }

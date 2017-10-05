@@ -377,12 +377,14 @@ TEST_F(ChromeContentRendererClientTest, AllowPepperMediaStreamAPI) {
 
 TEST_F(ChromeContentRendererClientTest, ShouldSuppressErrorPage) {
   ChromeContentRendererClient client;
-  SearchBouncer::GetInstance()->SetNewTabPageURL(GURL("http://example.com/n"));
+  SearchBouncer::GetInstance()->SetSearchURLs(std::vector<GURL>(),
+                                              GURL("http://example.com/n"));
   EXPECT_FALSE(client.ShouldSuppressErrorPage(nullptr,
                                               GURL("http://example.com")));
   EXPECT_TRUE(client.ShouldSuppressErrorPage(nullptr,
                                              GURL("http://example.com/n")));
-  SearchBouncer::GetInstance()->SetNewTabPageURL(GURL::EmptyGURL());
+  SearchBouncer::GetInstance()->SetSearchURLs(std::vector<GURL>(),
+                                              GURL::EmptyGURL());
 }
 
 TEST_F(ChromeContentRendererClientTest, AddImageContextMenuPropertiesForLoFi) {

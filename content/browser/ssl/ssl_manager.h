@@ -94,12 +94,24 @@ class CONTENT_EXPORT SSLManager {
   void OnCertError(std::unique_ptr<SSLErrorHandler> handler);
 
  private:
+  enum OnCertErrorInternalOptionsMask {
+    OVERRIDABLE = 1 << 0,
+    STRICT_ENFORCEMENT = 1 << 1,
+    EXPIRED_PREVIOUS_DECISION = 1 << 2
+  };
+
   // Helper method for handling certificate errors.
   //
-  // |expired_previous_decision| indicates whether a user decision had been
+  // Options should be a bitmask combination of OnCertErrorInternalOptionsMask.
+  // OVERRIDABLE indicates whether or not the user could (assuming perfect
+  // knowledge) successfully override the error and still get the security
+  // guarantees of TLS. STRICT_ENFORCEMENT indicates whether or not the site the
+  // user is trying to connect to has requested strict enforcement of
+  // certificate validation (e.g. with HTTP Strict-Transport-Security).
+  // EXPIRED_PREVIOUS_DECISION indicates whether a user decision had been
   // previously made but the decision has expired.
   void OnCertErrorInternal(std::unique_ptr<SSLErrorHandler> handler,
-                           bool expired_previous_decision);
+                           int options_mask);
 
   // Updates the NavigationEntry's |content_status| flags according to state in
   // |ssl_host_state_delegate|. |add_content_status_flags| and

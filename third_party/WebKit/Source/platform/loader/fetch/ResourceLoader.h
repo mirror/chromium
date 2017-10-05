@@ -67,7 +67,6 @@ class PLATFORM_EXPORT ResourceLoader final
 
   void Start();
 
-  void ScheduleCancel();
   void Cancel();
 
   void SetDefersLoading(bool);
@@ -155,8 +154,6 @@ class PLATFORM_EXPORT ResourceLoader final
   void RequestSynchronously(const ResourceRequest&);
   void Dispose();
 
-  void CancelTimerFired(TimerBase*);
-
   std::unique_ptr<WebURLLoader> loader_;
   ResourceLoadScheduler::ClientId scheduler_client_id_;
   Member<ResourceFetcher> fetcher_;
@@ -164,8 +161,6 @@ class PLATFORM_EXPORT ResourceLoader final
   Member<Resource> resource_;
 
   bool is_cache_aware_loading_activated_;
-
-  TaskRunnerTimer<ResourceLoader> cancel_timer_;
 };
 
 }  // namespace blink

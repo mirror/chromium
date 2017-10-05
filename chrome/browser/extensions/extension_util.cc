@@ -294,12 +294,12 @@ std::unique_ptr<base::DictionaryValue> GetExtensionInfo(
 }
 
 const gfx::ImageSkia& GetDefaultAppIcon() {
-  return *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+  return *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
       IDR_APP_DEFAULT_ICON);
 }
 
 const gfx::ImageSkia& GetDefaultExtensionIcon() {
-  return *ui::ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
+  return *ResourceBundle::GetSharedInstance().GetImageSkiaNamed(
       IDR_EXTENSION_DEFAULT_ICON);
 }
 

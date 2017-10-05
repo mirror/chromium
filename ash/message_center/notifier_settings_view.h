@@ -19,7 +19,6 @@
 
 namespace views {
 class Label;
-class ToggleButton;
 }  // namespace views
 
 namespace ash {
@@ -36,8 +35,6 @@ class ASH_EXPORT NotifierSettingsView
   ~NotifierSettingsView() override;
 
   bool IsScrollable();
-
-  void SetQuietModeState(bool is_quiet_mode);
 
   // Overridden from NotifierSettingsDelegate:
   void UpdateIconImage(const message_center::NotifierId& notifier_id,
@@ -107,8 +104,7 @@ class ASH_EXPORT NotifierSettingsView
   void OnMenuClosed();
 
   views::ImageButton* title_arrow_;
-  views::ToggleButton* quiet_mode_toggle_;
-  views::View* header_view_;
+  views::Label* title_label_;
   views::ScrollView* scroller_;
   message_center::NotifierSettingsProvider* provider_;
   std::set<NotifierButton*> buttons_;

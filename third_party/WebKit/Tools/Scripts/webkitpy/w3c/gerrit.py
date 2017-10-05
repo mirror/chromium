@@ -108,11 +108,7 @@ class GerritCL(object):
     def is_exportable(self):
         # TODO(robertma): Consolidate with the related part in chromium_exportable_commits.py.
 
-        try:
-            files = self.current_revision['files'].keys()
-        except KeyError:
-            # Empty (deleted) CL is not exportable.
-            return False
+        files = self.current_revision['files'].keys()
 
         # Guard against accidental CLs that touch thousands of files.
         if len(files) > 1000:

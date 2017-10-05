@@ -16,6 +16,7 @@
 #include "components/printing/browser/print_manager_utils.h"
 #include "components/printing/common/print_messages.h"
 #include "content/public/browser/render_view_host.h"
+#include "printing/pdf_metafile_skia.h"
 #include "printing/print_job_constants.h"
 #include "printing/units.h"
 
@@ -311,8 +312,18 @@ void HeadlessPrintManager::OnDidPrintPage(
       ReleaseJob(METAFILE_MAP_ERROR);
       return;
     }
-    data_ = std::string(static_cast<const char*>(shared_buf->memory()),
-                        params.data_size);
+    auto metafile = base::MakeUnique<printing::PdfMetafileSkia>(
+        printing::SkiaDocumentType::PDF);
+    if (!metafile->InitFromData(shared_buf->memory(), params.data_size)) {
+      ReleaseJob(METAFILE_INVALID_HEADER);
+      return;
+    }
+    std::vector<char> buffer;
+    if (!metafile->GetDataAsVector(&buffer)) {
+      ReleaseJob(METAFILE_GET_DATA_ERROR);
+      return;
+    }
+    data_ = std::string(buffer.data(), buffer.size());
   } else {
     if (base::SharedMemory::IsHandleValid(params.metafile_data_handle)) {
       base::SharedMemory::CloseHandle(params.metafile_data_handle);

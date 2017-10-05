@@ -193,7 +193,7 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Shows modal warning dialog on the current |web_contents| and pass the
   // |verdict_token| to callback of this dialog.
   virtual void ShowModalWarning(content::WebContents* web_contents,
-                                const std::string& verdict_token) = 0;
+                                const std::string& verdict_token) {}
 
   // Record UMA stats and trigger event logger when warning UI is shown.
   virtual void OnWarningShown(content::WebContents* web_contents,
@@ -202,23 +202,18 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Called when user interacts with warning UIs.
   virtual void OnUserAction(content::WebContents* web_contents,
                             WarningUIType ui_type,
-                            WarningAction action) = 0;
+                            WarningAction action) {}
 
   // If we want to show softer warnings based on Finch parameters.
   static bool ShouldShowSofterWarning();
 
   virtual void UpdateSecurityState(safe_browsing::SBThreatType threat_type,
-                                   content::WebContents* web_contents) = 0;
+                                   content::WebContents* web_contents) {}
 
   // Log the |reason| to several UMA metrics, depending on the value
   // of |matches_sync_password|.
   static void LogPasswordEntryRequestOutcome(RequestOutcome reason,
                                              bool matches_sync_password);
-
-  // If user has clicked through any Safe Browsing interstitial on this given
-  // |web_contents|.
-  virtual bool UserClickedThroughSBInterstitial(
-      content::WebContents* web_contents) = 0;
 
  protected:
   friend class PasswordProtectionRequest;

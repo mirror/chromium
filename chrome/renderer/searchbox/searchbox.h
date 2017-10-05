@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "chrome/common/search.mojom.h"
 #include "chrome/common/search/instant_types.h"
@@ -24,8 +23,6 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "url/gurl.h"
 
-// The renderer-side implementation of the embeddedSearch API (see
-// https://www.chromium.org/embeddedsearch).
 class SearchBox : public content::RenderFrameObserver,
                   public content::RenderFrameObserverTracker<SearchBox>,
                   public chrome::mojom::EmbeddedSearchClient {
@@ -108,15 +105,15 @@ class SearchBox : public content::RenderFrameObserver,
   bool GetMostVisitedItemWithID(InstantRestrictedID most_visited_item_id,
                                 InstantMostVisitedItem* item) const;
 
-  // Sends PasteAndOpenDropdown to the browser.
+  // Sends SearchBoxPaste to the browser.
   void Paste(const base::string16& text);
 
   const ThemeBackgroundInfo& GetThemeBackgroundInfo();
 
-  // Sends FocusOmnibox(OMNIBOX_FOCUS_INVISIBLE) to the browser.
+  // Sends ChromeViewHostMsg_StartCapturingKeyStrokes to the browser.
   void StartCapturingKeyStrokes();
 
-  // Sends FocusOmnibox(OMNIBOX_FOCUS_NONE) to the browser.
+  // Sends ChromeViewHostMsg_StopCapturingKeyStrokes to the browser.
   void StopCapturingKeyStrokes();
 
   // Sends UndoAllMostVisitedDeletions to the browser.
@@ -133,18 +130,20 @@ class SearchBox : public content::RenderFrameObserver,
   // Overridden from content::RenderFrameObserver:
   void OnDestruct() override;
 
-  // Overridden from chrome::mojom::EmbeddedSearchClient:
+  // Overridden from chrome::mojom::SearchBox:
   void SetPageSequenceNumber(int page_seq_no) override;
+  void ChromeIdentityCheckResult(const base::string16& identity,
+                                 bool identity_match) override;
   void FocusChanged(OmniboxFocusState new_focus_state,
                     OmniboxFocusChangeReason reason) override;
+  void HistorySyncCheckResult(bool sync_history) override;
   void MostVisitedChanged(
       const std::vector<InstantMostVisitedItem>& items) override;
   void SetInputInProgress(bool input_in_progress) override;
   void ThemeChanged(const ThemeBackgroundInfo& theme_info) override;
 
-  void HistorySyncCheckResult(bool sync_history);
-  void ChromeIdentityCheckResult(const base::string16& identity,
-                                 bool identity_match);
+  // Sets the searchbox values to their initial value.
+  void Reset();
 
   // Returns the URL of the Most Visited item specified by the |item_id|.
   GURL GetURLForMostVisitedItem(InstantRestrictedID item_id) const;
@@ -159,8 +158,6 @@ class SearchBox : public content::RenderFrameObserver,
   ThemeBackgroundInfo theme_info_;
   chrome::mojom::EmbeddedSearchAssociatedPtr embedded_search_service_;
   mojo::AssociatedBinding<chrome::mojom::EmbeddedSearchClient> binding_;
-
-  base::WeakPtrFactory<SearchBox> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBox);
 };

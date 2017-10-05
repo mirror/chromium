@@ -1174,8 +1174,7 @@ bool GLRenderer::InitializeRPDQParameters(
   // TODO(sunxd): unify the anti-aliasing logic of RPDQ and TileDrawQuad.
   params->surface_quad = SharedGeometryQuad();
   gfx::QuadF device_layer_quad;
-  if (settings_->allow_antialiasing && !quad->force_anti_aliasing_off &&
-      quad->IsEdge()) {
+  if (settings_->allow_antialiasing && quad->IsEdge()) {
     bool clipped = false;
     device_layer_quad = cc::MathUtil::MapQuad(params->contents_device_transform,
                                               params->surface_quad, &clipped);
@@ -1925,8 +1924,7 @@ void GLRenderer::DrawContentQuad(const ContentDrawQuadBase* quad,
 
   gfx::QuadF device_layer_quad;
   bool use_aa = false;
-  bool allow_aa = settings_->allow_antialiasing &&
-                  !quad->force_anti_aliasing_off && quad->IsEdge();
+  bool allow_aa = settings_->allow_antialiasing && quad->IsEdge();
   if (allow_aa) {
     bool clipped = false;
     bool force_aa = false;
@@ -2172,6 +2170,21 @@ void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
   gfx::ColorSpace src_color_space = quad->video_color_space;
   gfx::ColorSpace dst_color_space =
       current_frame()->current_render_pass->color_space;
+  if (!base::FeatureList::IsEnabled(media::kVideoColorManagement) &&
+      !settings_->enable_color_correct_rendering) {
+    dst_color_space = gfx::ColorSpace();
+    switch (quad->color_space) {
+      case YUVVideoDrawQuad::REC_601:
+        src_color_space = gfx::ColorSpace::CreateREC601();
+        break;
+      case YUVVideoDrawQuad::REC_709:
+        src_color_space = gfx::ColorSpace::CreateREC709();
+        break;
+      case YUVVideoDrawQuad::JPEG:
+        src_color_space = gfx::ColorSpace::CreateJpeg();
+        break;
+    }
+  }
   cc::DisplayResourceProvider::ScopedSamplerGL y_plane_lock(
       resource_provider_, quad->y_plane_resource_id(), GL_TEXTURE1, GL_LINEAR);
   cc::DisplayResourceProvider::ScopedSamplerGL u_plane_lock(
@@ -3173,14 +3186,19 @@ void GLRenderer::SetUseProgram(const ProgramKey& program_key,
   // rendering flag has been specified. This is because media mailboxes will
   // provide YUV color spaces despite YUV to RGB conversion already having been
   // performed.
-  SetUseProgram(program_key, src_color_space,
-                current_frame()->current_render_pass->color_space);
+  if (settings_->enable_color_correct_rendering) {
+    SetUseProgram(program_key, src_color_space,
+                  current_frame()->current_render_pass->color_space);
+  } else {
+    SetUseProgram(program_key, gfx::ColorSpace(), gfx::ColorSpace());
+  }
 }
 
 void GLRenderer::SetUseProgram(const ProgramKey& program_key_no_color,
                                const gfx::ColorSpace& src_color_space,
                                const gfx::ColorSpace& dst_color_space) {
-  DCHECK(dst_color_space.IsValid());
+  if (settings_->enable_color_correct_rendering)
+    DCHECK(dst_color_space.IsValid());
 
   ProgramKey program_key = program_key_no_color;
   const gfx::ColorTransform* color_transform =
@@ -3375,7 +3393,12 @@ void GLRenderer::ScheduleCALayers() {
 }
 
 void GLRenderer::ScheduleDCLayers() {
+  if (overlay_resource_pool_) {
+    overlay_resource_pool_->CheckBusyResources();
+  }
+
   scoped_refptr<DCLayerOverlaySharedState> shared_state;
+  size_t copied_render_pass_count = 0;
   for (DCLayerOverlay& dc_layer_overlay :
        current_frame()->dc_layer_overlay_list) {
     DCHECK(!dc_layer_overlay.rpdq);
@@ -3429,6 +3452,13 @@ void GLRenderer::ScheduleDCLayers() {
                                  dc_layer_overlay.background_color,
                                  dc_layer_overlay.edge_aa_mask, bounds_rect,
                                  filter);
+  }
+
+  // Take the number of copied render passes in this frame, and use 3 times that
+  // amount as the cache limit.
+  if (overlay_resource_pool_) {
+    overlay_resource_pool_->SetResourceUsageLimits(
+        std::numeric_limits<std::size_t>::max(), copied_render_pass_count * 5);
   }
 }
 

@@ -205,7 +205,7 @@
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/accelerators/accelerator_table.h"
 #include "ash/accessibility_types.h"
-#include "ash/public/cpp/ash_switches.h"
+#include "ash/ash_switches.h"
 #include "ash/shell.h"
 #include "ash/shell_port_classic.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
@@ -880,7 +880,7 @@ class LocalePolicyTest : public PolicyTest {
     // The "en-US" ResourceBundle is always loaded before this step for tests,
     // but in this test we want the browser to load the bundle as it
     // normally would.
-    ui::ResourceBundle::CleanupSharedInstance();
+    ResourceBundle::CleanupSharedInstance();
   }
 };
 

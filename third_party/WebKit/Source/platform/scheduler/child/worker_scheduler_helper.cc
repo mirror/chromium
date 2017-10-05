@@ -20,10 +20,7 @@ WorkerSchedulerHelper::WorkerSchedulerHelper(
   InitDefaultQueues(default_task_queue_, control_task_queue_);
 }
 
-WorkerSchedulerHelper::~WorkerSchedulerHelper() {
-  control_task_queue_->UnregisterTaskQueue();
-  default_task_queue_->UnregisterTaskQueue();
-}
+WorkerSchedulerHelper::~WorkerSchedulerHelper() {}
 
 scoped_refptr<WorkerTaskQueue> WorkerSchedulerHelper::DefaultWorkerTaskQueue() {
   return default_task_queue_;

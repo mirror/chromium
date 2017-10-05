@@ -16,7 +16,6 @@
 #include "base/guid.h"
 #include "base/json/json_writer.h"
 #include "base/json/string_escape.h"
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -207,14 +206,14 @@ void Coordinator::StopAndFlushAfterClockSync() {
   streaming_label_.clear();
 
   agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
+    bool data_is_array = agent_entry->type() == mojom::TraceDataType::ARRAY;
     mojom::RecorderPtr ptr;
     recorders_[agent_entry->label()].insert(base::MakeUnique<Recorder>(
-        MakeRequest(&ptr), agent_entry->type(),
+        MakeRequest(&ptr), data_is_array,
         base::BindRepeating(&Coordinator::OnRecorderDataChange,
                             base::Unretained(this), agent_entry->label()),
         background_task_runner_));
-    DCHECK(agent_entry->type() != mojom::TraceDataType::STRING ||
-           recorders_[agent_entry->label()].size() == 1);
+    DCHECK(data_is_array || recorders_[agent_entry->label()].size() == 1);
     agent_entry->agent()->StopAndFlush(std::move(ptr));
   });
 
@@ -275,8 +274,7 @@ void Coordinator::OnRecorderDataChange(const std::string& label) {
 bool Coordinator::StreamEventsForCurrentLabel() {
   DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
   bool waiting_for_agents = false;
-  mojom::TraceDataType data_type =
-      (*recorders_[streaming_label_].begin())->data_type();
+  bool data_is_array = (*recorders_[streaming_label_].begin())->data_is_array();
   for (const auto& recorder : recorders_[streaming_label_]) {
     waiting_for_agents |= recorder->is_recording();
     if (!agent_label_.empty() && streaming_label_ != agent_label_)
@@ -286,51 +284,27 @@ bool Coordinator::StreamEventsForCurrentLabel() {
 
     std::string prefix;
     if (!json_field_name_written_ && agent_label_.empty()) {
-      prefix = (stream_is_empty_ ? "{\"" : ",\"") + streaming_label_ + "\":";
-      switch (data_type) {
-        case mojom::TraceDataType::ARRAY:
-          prefix += "[";
-          break;
-        case mojom::TraceDataType::OBJECT:
-          prefix += "{";
-          break;
-        case mojom::TraceDataType::STRING:
-          prefix += "\"";
-          break;
-        default:
-          NOTREACHED();
-      }
+      prefix = stream_is_empty_ ? "{\"" : ",\"";
+      prefix += streaming_label_ + "\":" + (data_is_array ? "[" : "\"");
       json_field_name_written_ = true;
     }
-    if (data_type == mojom::TraceDataType::STRING) {
+    if (data_is_array) {
+      if (prefix.empty() && !stream_is_empty_)
+        prefix = ",";
+      mojo::common::BlockingCopyFromString(prefix + recorder->data(), stream_);
+    } else {
       // Escape characters if needed for string data.
       std::string escaped;
       base::EscapeJSONString(recorder->data(), false /* put_in_quotes */,
                              &escaped);
       mojo::common::BlockingCopyFromString(prefix + escaped, stream_);
-    } else {
-      if (prefix.empty() && !stream_is_empty_)
-        prefix = ",";
-      mojo::common::BlockingCopyFromString(prefix + recorder->data(), stream_);
     }
     stream_is_empty_ = false;
     recorder->clear_data();
   }
   if (!waiting_for_agents) {
     if (json_field_name_written_) {
-      switch (data_type) {
-        case mojom::TraceDataType::ARRAY:
-          mojo::common::BlockingCopyFromString("]", stream_);
-          break;
-        case mojom::TraceDataType::OBJECT:
-          mojo::common::BlockingCopyFromString("}", stream_);
-          break;
-        case mojom::TraceDataType::STRING:
-          mojo::common::BlockingCopyFromString("\"", stream_);
-          break;
-        default:
-          NOTREACHED();
-      }
+      mojo::common::BlockingCopyFromString(data_is_array ? "]" : "\"", stream_);
       stream_is_empty_ = false;
     }
   }

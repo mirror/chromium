@@ -206,14 +206,13 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   bool IsProviderForClient() const;
   blink::WebServiceWorkerClientType client_type() const;
 
-  // For service worker clients. Associates to |registration| to listen for its
-  // version change events and sets the controller. If |notify_controllerchange|
-  // is true, instructs the renderer to dispatch a 'controllerchange' event.
+  // Associates to |registration| to listen for its version change events and
+  // sets the controller. If |notify_controllerchange| is true, instructs the
+  // renderer to dispatch a 'controllerchange' event.
   void AssociateRegistration(ServiceWorkerRegistration* registration,
                              bool notify_controllerchange);
 
-  // For service worker clients. Clears the associated registration and stops
-  // listening to it.
+  // Clears the associated registration and stop listening to it.
   void DisassociateRegistration();
 
   // Returns a handler for a request, the handler may return nullptr if

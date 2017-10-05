@@ -8,23 +8,23 @@
 #include <set>
 
 #include "base/macros.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 
 namespace resource_coordinator {
 
-class ProcessCoordinationUnitImpl : public CoordinationUnitBase {
+class ProcessCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   ProcessCoordinationUnitImpl(
       const CoordinationUnitID& id,
       std::unique_ptr<service_manager::ServiceContextRef> service_ref);
   ~ProcessCoordinationUnitImpl() override;
 
-  // CoordinationUnitBase implementation.
-  std::set<CoordinationUnitBase*> GetAssociatedCoordinationUnitsOfType(
+  // CoordinationUnitImpl implementation.
+  std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) const override;
 
  private:
-  // CoordinationUnitBase implementation.
+  // CoordinationUnitImpl implementation.
   void PropagateProperty(mojom::PropertyType property_type,
                          int64_t value) override;
 

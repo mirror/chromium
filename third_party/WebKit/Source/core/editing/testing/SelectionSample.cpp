@@ -49,6 +49,7 @@ void ConvertTemplatesToShadowRoots(HTMLElement& element) {
 }
 
 // Parse selection text notation into Selection object.
+template <typename Strategy>
 class Parser final {
   STACK_ALLOCATED();
 
@@ -57,21 +58,22 @@ class Parser final {
   ~Parser() = default;
 
   // Set |selection_text| as inner HTML of |element| and returns
-  // |SelectionInDOMTree| marked up within |selection_text|.
-  SelectionInDOMTree SetSelectionText(HTMLElement* element,
-                                      const std::string& selection_text) {
+  // |SelectionTemplate<Strategy>| marked up within |selection_text|.
+  SelectionTemplate<Strategy> SetSelectionText(
+      HTMLElement* element,
+      const std::string& selection_text) {
     element->SetInnerHTMLFromString(String::FromUTF8(selection_text.c_str()));
     ConvertTemplatesToShadowRoots(*element);
     Traverse(element);
     if (anchor_node_ && focus_node_) {
-      return typename SelectionInDOMTree::Builder()
-          .Collapse(Position(anchor_node_, anchor_offset_))
-          .Extend(Position(focus_node_, focus_offset_))
+      return typename SelectionTemplate<Strategy>::Builder()
+          .Collapse(PositionTemplate<Strategy>(anchor_node_, anchor_offset_))
+          .Extend(PositionTemplate<Strategy>(focus_node_, focus_offset_))
           .Build();
     }
     DCHECK(focus_node_) << "Need just '|', or '^' and '|'";
-    return typename SelectionInDOMTree::Builder()
-        .Collapse(Position(focus_node_, focus_offset_))
+    return typename SelectionTemplate<Strategy>::Builder()
+        .Collapse(PositionTemplate<Strategy>(focus_node_, focus_offset_))
         .Build();
   }
 
@@ -352,7 +354,7 @@ SelectionInDOMTree SelectionSample::SetSelectionText(
     HTMLElement* element,
     const std::string& selection_text) {
   SelectionInDOMTree selection =
-      Parser().SetSelectionText(element, selection_text);
+      Parser<EditingStrategy>().SetSelectionText(element, selection_text);
   DCHECK(!selection.IsNone()) << "|selection_text| should container caret "
                                  "marker '|' or selection marker '^' and "
                                  "'|'.";

@@ -61,6 +61,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
 
     // Incoming parameters:
     public static final String EXTRA_COMING_FROM_CHROME_ICON = "Extra.ComingFromChromeIcon";
+    public static final String EXTRA_USE_FRE_FLOW_SEQUENCER = "Extra.UseFreFlowSequencer";
     public static final String EXTRA_CHROME_LAUNCH_INTENT = "Extra.FreChromeLaunchIntent";
 
     static final String SHOW_WELCOME_PAGE = "ShowWelcome";
@@ -68,7 +69,11 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     static final String SHOW_SEARCH_ENGINE_PAGE = "ShowSearchEnginePage";
     static final String SHOW_SIGNIN_PAGE = "ShowSignIn";
 
+    static final String POST_NATIVE_SETUP_NEEDED = "PostNativeSetupNeeded";
+
     // Outgoing results:
+    public static final String RESULT_SIGNIN_ACCOUNT_NAME = "ResultSignInTo";
+    public static final String RESULT_SHOW_SIGNIN_SETTINGS = "ResultShowSignInSettings";
     public static final String EXTRA_FIRST_RUN_ACTIVITY_RESULT = "Extra.FreActivityResult";
     public static final String EXTRA_FIRST_RUN_COMPLETE = "Extra.FreComplete";
 
@@ -115,13 +120,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
 
     private FirstRunFlowSequencer mFirstRunFlowSequencer;
 
-    private Bundle mFreProperties;
-
-    /**
-     * Whether the first run activity was launched as a result of the user launching Chrome from the
-     * Android app list.
-     */
-    private boolean mLaunchedFromChromeIcon;
+    protected Bundle mFreProperties;
 
     private List<Callable<FirstRunPage>> mPages;
 
@@ -197,7 +196,14 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
 
     @Override
     public void setContentView() {
-        initializeStateFromLaunchData();
+        Bundle savedInstanceState = getSavedInstanceState();
+        if (savedInstanceState != null) {
+            mFreProperties = savedInstanceState;
+        } else if (getIntent() != null) {
+            mFreProperties = getIntent().getExtras();
+        } else {
+            mFreProperties = new Bundle();
+        }
 
         setFinishOnTouchOutside(true);
 
@@ -206,7 +212,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         mPager.setOffscreenPageLimit(3);
         setContentView(mPager);
 
-        mFirstRunFlowSequencer = new FirstRunFlowSequencer(this) {
+        mFirstRunFlowSequencer = new FirstRunFlowSequencer(this, mFreProperties) {
             @Override
             public void onFlowIsKnown(Bundle freProperties) {
                 mFlowIsKnown = true;
@@ -305,8 +311,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(
-                FirstRunActivity.EXTRA_COMING_FROM_CHROME_ICON, mLaunchedFromChromeIcon);
+        outState.putAll(mFreProperties);
     }
 
     @Override
@@ -387,8 +392,9 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
             recordFreProgressHistogram(FRE_PROGRESS_COMPLETED_NOT_SIGNED_IN);
         }
 
-        FirstRunFlowSequencer.markFlowAsCompleted(
-                mResultSignInAccountName, mResultShowSignInSettings);
+        mFreProperties.putString(RESULT_SIGNIN_ACCOUNT_NAME, mResultSignInAccountName);
+        mFreProperties.putBoolean(RESULT_SHOW_SIGNIN_SETTINGS, mResultShowSignInSettings);
+        FirstRunFlowSequencer.markFlowAsCompleted(mFreProperties);
 
         if (DataReductionPromoUtils.getDisplayedFreOrSecondRunPromo()) {
             if (DataReductionProxySettings.getInstance().isDataReductionProxyEnabled()) {
@@ -457,18 +463,6 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
         jumpToPage(mPager.getCurrentItem() + 1);
     }
 
-    /** Initialize local state from launch intent and from saved instance state. */
-    private void initializeStateFromLaunchData() {
-        Bundle readFrom = new Bundle();
-        if (getSavedInstanceState() != null) {
-            readFrom = getSavedInstanceState();
-        } else if (getIntent() != null) {
-            readFrom = getIntent().getExtras();
-        }
-        mLaunchedFromChromeIcon =
-                readFrom.getBoolean(FirstRunActivity.EXTRA_COMING_FROM_CHROME_ICON);
-    }
-
     /**
      * Transitions to a given page.
      * @return Whether the transition to a given page was allowed.
@@ -507,7 +501,7 @@ public class FirstRunActivity extends FirstRunActivityBase implements FirstRunPa
     }
 
     private void recordFreProgressHistogram(int state) {
-        if (mLaunchedFromChromeIcon) {
+        if (mFreProperties.getBoolean(FirstRunActivity.EXTRA_COMING_FROM_CHROME_ICON)) {
             sMobileFreProgressMainIntentHistogram.record(state);
         } else {
             sMobileFreProgressViewIntentHistogram.record(state);

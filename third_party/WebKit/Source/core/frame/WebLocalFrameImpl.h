@@ -399,6 +399,8 @@ class CORE_EXPORT WebLocalFrameImpl final
 
   void SetInputEventsScaleForEmulation(float);
 
+  static void SelectWordAroundPosition(LocalFrame*, VisiblePosition);
+
   TextCheckerClient& GetTextCheckerClient() const;
   WebTextCheckClient* TextCheckClient() const { return text_check_client_; }
 

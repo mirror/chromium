@@ -434,7 +434,7 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
     // (see |-addSubviewToPermanentList:|) will be wiped out.
     permanentSubviews_.reset([[NSMutableArray alloc] init]);
 
-    ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+    ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     defaultFavicon_.reset(
         rb.GetNativeImageNamed(IDR_DEFAULT_FAVICON).CopyNSImage());
 
@@ -1564,22 +1564,19 @@ NSRect FlipRectInView(NSView* view, NSRect rect) {
     return;
 
   static NSImage* throbberWaitingImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_WAITING)
-          .CopyNSImage();
+      ResourceBundle::GetSharedInstance().GetNativeImageNamed(
+          IDR_THROBBER_WAITING).CopyNSImage();
   static NSImage* throbberWaitingIncognitoImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_WAITING_INCOGNITO)
-          .CopyNSImage();
-  static NSImage* throbberLoadingImage = ui::ResourceBundle::GetSharedInstance()
-                                             .GetNativeImageNamed(IDR_THROBBER)
-                                             .CopyNSImage();
+      ResourceBundle::GetSharedInstance().GetNativeImageNamed(
+          IDR_THROBBER_WAITING_INCOGNITO).CopyNSImage();
+  static NSImage* throbberLoadingImage =
+      ResourceBundle::GetSharedInstance().GetNativeImageNamed(
+          IDR_THROBBER).CopyNSImage();
   static NSImage* throbberLoadingIncognitoImage =
-      ui::ResourceBundle::GetSharedInstance()
-          .GetNativeImageNamed(IDR_THROBBER_INCOGNITO)
-          .CopyNSImage();
+      ResourceBundle::GetSharedInstance().GetNativeImageNamed(
+          IDR_THROBBER_INCOGNITO).CopyNSImage();
   static NSImage* sadFaviconImage =
-      ui::ResourceBundle::GetSharedInstance()
+      ResourceBundle::GetSharedInstance()
           .GetNativeImageNamed(IDR_CRASH_SAD_FAVICON)
           .CopyNSImage();
 

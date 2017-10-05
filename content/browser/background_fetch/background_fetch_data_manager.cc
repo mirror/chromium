@@ -501,7 +501,7 @@ BackgroundFetchDataManager::BackgroundFetchDataManager(
 
   // Store the blob storage context for the given |browser_context|.
   blob_storage_context_ =
-      base::WrapRefCounted(ChromeBlobStorageContext::GetFor(browser_context));
+      make_scoped_refptr(ChromeBlobStorageContext::GetFor(browser_context));
   DCHECK(blob_storage_context_);
 }
 

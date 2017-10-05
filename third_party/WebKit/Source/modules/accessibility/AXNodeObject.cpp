@@ -42,10 +42,12 @@
 #include "core/html/HTMLAnchorElement.h"
 #include "core/html/HTMLDListElement.h"
 #include "core/html/HTMLDivElement.h"
+#include "core/html/HTMLFieldSetElement.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLabelElement.h"
+#include "core/html/HTMLLegendElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLMeterElement.h"
 #include "core/html/HTMLPlugInElement.h"
@@ -58,8 +60,6 @@
 #include "core/html/HTMLTextAreaElement.h"
 #include "core/html/LabelsNodeList.h"
 #include "core/html/TextControlElement.h"
-#include "core/html/forms/HTMLFieldSetElement.h"
-#include "core/html/forms/HTMLLegendElement.h"
 #include "core/html/forms/RadioInputType.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutBlockFlow.h"
@@ -2227,19 +2227,6 @@ bool AXNodeObject::OnNativeFocusAction() {
   // to do what keyboard and mouse focus do, which is reset focus first.
   if (document->FocusedElement() == element)
     document->ClearFocusedElement();
-
-  // If the object is not natively focusable but can be focused using an ARIA
-  // active descendant, perform a native click instead. This will enable Web
-  // apps that set accessibility focus using an active descendant to capture and
-  // act on the click event. Otherwise, there is no other way to inform the app
-  // that an AT has requested the focus to be changed, except if the app is
-  // using AOM. To be extra safe, exclude objects that are clickable themselves.
-  // This won't prevent anyone from having a click handler on the object's
-  // container.
-  if (!IsClickable() && element->FastHasAttribute(idAttr) &&
-      AncestorExposesActiveDescendant()) {
-    return OnNativeClickAction();
-  }
 
   element->focus();
   return true;

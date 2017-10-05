@@ -30,7 +30,6 @@
 
 #include "core/frame/PageScaleConstraintsSet.h"
 
-#include <algorithm>
 #include "platform/Length.h"
 #include "platform/wtf/Assertions.h"
 

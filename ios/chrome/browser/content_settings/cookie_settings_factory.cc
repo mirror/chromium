@@ -13,6 +13,8 @@
 
 namespace ios {
 
+const char kDummyExtensionScheme[] = ":no-extension-scheme:";
+
 // static
 scoped_refptr<content_settings::CookieSettings>
 CookieSettingsFactory::GetForBrowserState(
@@ -53,9 +55,9 @@ CookieSettingsFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  return base::MakeRefCounted<content_settings::CookieSettings>(
+  return new content_settings::CookieSettings(
       ios::HostContentSettingsMapFactory::GetForBrowserState(browser_state),
-      browser_state->GetPrefs());
+      browser_state->GetPrefs(), kDummyExtensionScheme);
 }
 
 }  // namespace ios

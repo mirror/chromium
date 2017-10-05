@@ -454,7 +454,7 @@ void ContentHashFetcherJob::DispatchCallback() {
     if (cancelled_)
       return;
   }
-  callback_.Run(base::WrapRefCounted(this));
+  callback_.Run(make_scoped_refptr(this));
 }
 
 // ----

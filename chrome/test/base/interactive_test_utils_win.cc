@@ -19,18 +19,18 @@
 namespace ui_test_utils {
 
 void HideNativeWindow(gfx::NativeWindow window) {
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   HideNativeWindowAura(window);
 #else
   HWND hwnd = window->GetHost()->GetAcceleratedWidget();
   ::ShowWindow(hwnd, SW_HIDE);
-#endif  // OS_CHROMEOS
+#endif  // USE_ASH
 }
 
 bool ShowAndFocusNativeWindow(gfx::NativeWindow window) {
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   ShowAndFocusNativeWindowAura(window);
-#endif  // OS_CHROMEOS
+#endif  // USE_ASH
   window->Show();
   // Always make sure the window hosting ash is visible and focused.
   HWND hwnd = window->GetHost()->GetAcceleratedWidget();

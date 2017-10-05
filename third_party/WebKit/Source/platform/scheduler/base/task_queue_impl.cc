@@ -15,7 +15,6 @@
 #include "platform/scheduler/base/task_queue_manager_delegate.h"
 #include "platform/scheduler/base/time_domain.h"
 #include "platform/scheduler/base/work_queue.h"
-#include "platform/scheduler/util/tracing_helper.h"
 #include "platform/wtf/debug/CrashLogging.h"
 
 namespace blink {
@@ -130,18 +129,18 @@ TaskQueueImpl::MainThreadOnly::MainThreadOnly(
 
 TaskQueueImpl::MainThreadOnly::~MainThreadOnly() {}
 
-void TaskQueueImpl::UnregisterTaskQueue() {
+void TaskQueueImpl::UnregisterTaskQueue(scoped_refptr<TaskQueue> task_queue) {
   base::AutoLock lock(any_thread_lock_);
   base::AutoLock immediate_incoming_queue_lock(immediate_incoming_queue_lock_);
   if (main_thread_only().time_domain)
     main_thread_only().time_domain->UnregisterQueue(this);
-
   if (!any_thread().task_queue_manager)
     return;
 
   main_thread_only().on_task_completed_handler = OnTaskCompletedHandler();
   any_thread().time_domain = nullptr;
   main_thread_only().time_domain = nullptr;
+  any_thread().task_queue_manager->UnregisterTaskQueue(task_queue);
 
   any_thread().task_queue_manager = nullptr;
   main_thread_only().task_queue_manager = nullptr;
@@ -463,6 +462,10 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   state->SetBoolean("enabled", IsQueueEnabled());
   state->SetString("time_domain_name",
                    main_thread_only().time_domain->GetName());
+  bool verbose_snapshots_enabled = false;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+      TRACE_DISABLED_BY_DEFAULT("renderer.scheduler.enable_verbose_snapshots"),
+      &verbose_snapshots_enabled);
   state->SetInteger("immediate_incoming_queue_size",
                     immediate_incoming_queue().size());
   state->SetInteger("delayed_incoming_queue_size",
@@ -480,7 +483,7 @@ void TaskQueueImpl::AsValueInto(base::TimeTicks now,
   }
   if (main_thread_only().current_fence)
     state->SetInteger("current_fence", main_thread_only().current_fence);
-  if (AreVerboseSnapshotsEnabled()) {
+  if (verbose_snapshots_enabled) {
     state->BeginArray("immediate_incoming_queue");
     QueueAsValueInto(immediate_incoming_queue(), now, state);
     state->EndArray();
@@ -912,15 +915,6 @@ void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
 bool TaskQueueImpl::RequiresTaskTiming() const {
   return !main_thread_only().on_task_started_handler.is_null() ||
          !main_thread_only().on_task_completed_handler.is_null();
-}
-
-bool TaskQueueImpl::IsUnregistered() const {
-  base::AutoLock lock(any_thread_lock_);
-  return !any_thread().task_queue_manager;
-}
-
-base::WeakPtr<TaskQueueManager> TaskQueueImpl::GetTaskQueueManagerWeakPtr() {
-  return main_thread_only().task_queue_manager->GetWeakPtr();
 }
 
 void TaskQueueImpl::SetQueueEnabledForTest(bool enabled) {

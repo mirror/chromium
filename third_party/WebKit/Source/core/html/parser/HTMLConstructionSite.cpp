@@ -28,6 +28,7 @@
 
 #include <limits>
 #include "core/HTMLElementFactory.h"
+#include "core/HTMLNames.h"
 #include "core/dom/Comment.h"
 #include "core/dom/DocumentFragment.h"
 #include "core/dom/DocumentType.h"
@@ -55,7 +56,6 @@
 #include "core/html/parser/HTMLParserReentryPermit.h"
 #include "core/html/parser/HTMLStackItem.h"
 #include "core/html/parser/HTMLToken.h"
-#include "core/html_names.h"
 #include "core/loader/FrameLoader.h"
 #include "core/svg/SVGScriptElement.h"
 #include "platform/bindings/Microtask.h"

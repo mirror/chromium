@@ -155,13 +155,6 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   return self;
 }
 
-- (void)allowSystemUIForCurrentGesture {
-  // Reset the state of the recognizer so that it doesn't recognize the on-going
-  // touch.
-  _contextMenuRecognizer.enabled = NO;
-  _contextMenuRecognizer.enabled = YES;
-}
-
 - (UIGestureRecognizer*)gestureRecognizerWithDescriptionFragment:
     (NSString*)fragment {
   for (UIView* view in [[_webView scrollView] subviews]) {

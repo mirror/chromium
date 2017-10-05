@@ -17,12 +17,13 @@
 #include "device/bluetooth/test/mock_bluetooth_adapter.h"
 #include "device/hid/fake_input_service_linux.h"
 #include "device/hid/input_service_linux.h"
-#include "device/hid/public/interfaces/input_service.mojom.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using content::BrowserThread;
 using device::InputServiceLinux;
 using testing::_;
+
+using InputDeviceInfo = InputServiceLinux::InputDeviceInfo;
 
 namespace {
 
@@ -47,7 +48,7 @@ namespace chromeos {
 
 class HidDetectionTest : public OobeBaseTest {
  public:
-  typedef device::mojom::InputDeviceInfoPtr InputDeviceInfoPtr;
+  typedef device::InputServiceLinux::InputDeviceInfo InputDeviceInfo;
 
   HidDetectionTest() : weak_ptr_factory_(this) {
     InputServiceProxy::SetUseUIThreadForTesting(true);
@@ -73,28 +74,28 @@ class HidDetectionTest : public OobeBaseTest {
   }
 
   void AddUsbMouse(const std::string& mouse_id) {
-    auto mouse = device::mojom::InputDeviceInfo::New();
-    mouse->id = mouse_id;
-    mouse->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    mouse->type = device::mojom::InputDeviceType::TYPE_USB;
-    mouse->is_mouse = true;
-    AddDeviceForTesting(std::move(mouse));
+    InputDeviceInfo mouse;
+    mouse.id = mouse_id;
+    mouse.subsystem = InputDeviceInfo::SUBSYSTEM_INPUT;
+    mouse.type = InputDeviceInfo::TYPE_USB;
+    mouse.is_mouse = true;
+    AddDeviceForTesting(mouse);
   }
 
   void AddUsbKeyboard(const std::string& keyboard_id) {
-    auto keyboard = device::mojom::InputDeviceInfo::New();
-    keyboard->id = keyboard_id;
-    keyboard->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    keyboard->type = device::mojom::InputDeviceType::TYPE_USB;
-    keyboard->is_keyboard = true;
-    AddDeviceForTesting(std::move(keyboard));
+    InputDeviceInfo keyboard;
+    keyboard.id = keyboard_id;
+    keyboard.subsystem = InputDeviceInfo::SUBSYSTEM_INPUT;
+    keyboard.type = InputDeviceInfo::TYPE_USB;
+    keyboard.is_keyboard = true;
+    AddDeviceForTesting(keyboard);
   }
 
  private:
-  void AddDeviceForTesting(InputDeviceInfoPtr info) {
+  void AddDeviceForTesting(const InputDeviceInfo& info) {
     static_cast<device::FakeInputServiceLinux*>(
         device::InputServiceLinux::GetInstance())
-        ->AddDeviceForTesting(std::move(info));
+        ->AddDeviceForTesting(info);
   }
 
   scoped_refptr<

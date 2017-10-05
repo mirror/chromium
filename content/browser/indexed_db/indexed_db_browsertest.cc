@@ -463,11 +463,7 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed, DISABLED_BlobDidAck) {
   SimpleTest(GetTestUrl("indexeddb", "blob_did_ack.html"));
   // Wait for idle so that the blob ack has time to be received/processed by
   // the browser process.
-  scoped_refptr<base::ThreadTestHelper> helper =
-      base::MakeRefCounted<base::ThreadTestHelper>(GetContext()->TaskRunner());
-  ASSERT_TRUE(helper->Run());
   base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(helper->Run());
   content::ChromeBlobStorageContext* blob_context =
       ChromeBlobStorageContext::GetFor(
           shell()->web_contents()->GetBrowserContext());
@@ -785,12 +781,11 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest,
 IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTest, PRE_VersionChangeCrashResilience) {
   NavigateAndWaitForTitle(shell(), "version_change_crash.html", "#part2",
                           "pass - part2 - crash me");
-  // Previously this test would abruptly terminate the browser process
-  // to ensure that the version update was not partially committed,
-  // which was possible in the very early implementation (circa 2011).
-  // This test no longer abruptly terminates the process, but the
-  // commit scheme has changed so it's not plausible any more anyway.
-  // TODO(jsbell): Delete or rename the test.
+  // If we actually crash here then googletest will not run the next step
+  // (VersionChangeCrashResilience) as an optimization. googletest's
+  // ASSERT_DEATH/EXIT fails to work properly (on Windows) due to how we
+  // implement the PRE_* test mechanism.
+  exit(0);
 }
 
 // Fails to cleanup GPU processes on swarming.

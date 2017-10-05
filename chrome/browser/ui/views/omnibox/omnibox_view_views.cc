@@ -570,6 +570,9 @@ void OmniboxViewViews::ShowImeIfNeeded() {
   GetInputMethod()->ShowImeIfNeeded();
 }
 
+void OmniboxViewViews::OnMatchOpened(AutocompleteMatch::Type match_type) {
+}
+
 int OmniboxViewViews::GetOmniboxTextLength() const {
   // TODO(oshima): Support IME.
   return static_cast<int>(text().length());

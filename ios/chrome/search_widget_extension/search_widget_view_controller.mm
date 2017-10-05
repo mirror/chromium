@@ -72,31 +72,27 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 - (void)viewDidLoad {
   [super viewDidLoad];
 
-  CGFloat height = 110;
-  if (@available(iOS 10, *)) {
-    if (self.extensionContext) {
-      height = [self.extensionContext
-                   widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
-                   .height;
-    }
-  }
+  CGFloat height =
+      self.extensionContext && base::ios::IsRunningOnIOS10OrLater()
+          ? [self.extensionContext
+                widgetMaximumSizeForDisplayMode:NCWidgetDisplayModeCompact]
+                .height
+          : 110;
 
-  BOOL initiallyCompact = NO;
-  if (@available(iOS 10, *)) {
-    initiallyCompact = [self.extensionContext widgetActiveDisplayMode] ==
-                       NCWidgetDisplayModeCompact;
-  }
   // A local variable is necessary here as the property is declared weak and the
   // object would be deallocated before being retained by the addSubview call.
-  SearchWidgetView* widgetView =
-      [[SearchWidgetView alloc] initWithActionTarget:self
-                                       compactHeight:height
-                                    initiallyCompact:initiallyCompact];
+  SearchWidgetView* widgetView = [[SearchWidgetView alloc]
+         initWithActionTarget:self
+                compactHeight:height
+             initiallyCompact:(base::ios::IsRunningOnIOS10OrLater() &&
+                               [self.extensionContext
+                                       widgetActiveDisplayMode] ==
+                                   NCWidgetDisplayModeCompact)];
   self.widgetView = widgetView;
   [self.view addSubview:self.widgetView];
   [self updateWidget];
 
-  if (@available(iOS 10, *)) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
     self.extensionContext.widgetLargestAvailableDisplayMode =
         NCWidgetDisplayModeExpanded;
   } else {
@@ -138,11 +134,9 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
            (id<UIViewControllerTransitionCoordinator>)coordinator {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
-  BOOL isCompact = NO;
-  if (@available(iOS 10, *)) {
-    isCompact = [self.extensionContext widgetActiveDisplayMode] ==
-                NCWidgetDisplayModeCompact;
-  }
+  BOOL isCompact = base::ios::IsRunningOnIOS10OrLater() &&
+                   [self.extensionContext widgetActiveDisplayMode] ==
+                       NCWidgetDisplayModeCompact;
 
   [coordinator
       animateAlongsideTransition:^(
@@ -156,8 +150,7 @@ NSString* const kXCallbackURLHost = @"x-callback-url";
 #pragma mark - NCWidgetProviding
 
 - (void)widgetActiveDisplayModeDidChange:(NCWidgetDisplayMode)activeDisplayMode
-                         withMaximumSize:(CGSize)maxSize
-    API_AVAILABLE(ios(10.0)) {
+                         withMaximumSize:(CGSize)maxSize {
   switch (activeDisplayMode) {
     case NCWidgetDisplayModeCompact:
       self.preferredContentSize = maxSize;

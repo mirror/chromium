@@ -118,7 +118,7 @@ SyncerError ModelSafeWorker::DoWorkAndWaitUntilDone(WorkCallback work) {
           [](scoped_refptr<ModelSafeWorker> worker) {
             worker->work_done_or_abandoned_.Signal();
           },
-          base::WrapRefCounted(this)))),
+          make_scoped_refptr(this)))),
       base::Unretained(&error), base::Unretained(&did_run)));
 
   // Unblocked when the task runs or is deleted or when RequestStop() is called

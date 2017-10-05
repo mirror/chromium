@@ -28,7 +28,7 @@ class PLATFORM_EXPORT FloatClipDisplayItem final
 
  private:
 #ifndef NDEBUG
-  void PropertiesAsJSON(JSONObject&) const override;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const override;
 #endif
   bool Equals(const DisplayItem& other) const final {
     return DisplayItem::Equals(other) &&

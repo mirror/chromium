@@ -25,6 +25,7 @@
 
 #include "core/editing/commands/InsertLineBreakCommand.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Text.h"
 #include "core/editing/EditingStyle.h"
@@ -37,7 +38,6 @@
 #include "core/html/HTMLBRElement.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/TextControlElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 
@@ -177,6 +177,8 @@ void InsertLineBreakCommand::DoApply(EditingState* editing_state) {
 
     // Handle whitespace that occurs after the split
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    // TODO(yosin) |isRenderedCharacter()| should be removed, and we should
+    // use |VisiblePosition::characterAfter()|.
     if (!IsRenderedCharacter(ending_position)) {
       Position position_before_text_node(
           Position::InParentBeforeNode(*text_node));

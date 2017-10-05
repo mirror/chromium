@@ -202,15 +202,8 @@ RefPtr<StaticBitmapImage> NewImageFromRaster(
     RefPtr<Uint8Array>&& image_pixels) {
   unsigned image_row_bytes = info.width() * info.bytesPerPixel();
   SkPixmap pixmap(info, image_pixels->Data(), image_row_bytes);
-
-  Uint8Array* pixels = image_pixels.get();
-  if (pixels) {
-    pixels->AddRef();
-    image_pixels = nullptr;
-  }
-
   return StaticBitmapImage::Create(
-      SkImage::MakeFromRaster(pixmap, freePixels, pixels));
+      SkImage::MakeFromRaster(pixmap, freePixels, image_pixels.LeakRef()));
 }
 
 RefPtr<StaticBitmapImage> FlipImageVertically(RefPtr<StaticBitmapImage> input) {
@@ -290,16 +283,14 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
   pm_image->scalePixels(pm_resized_pixmap, resize_quality);
   sk_sp<SkImage> resized_image;
   if (original_alpha == kPremul_SkAlphaType) {
-    resized_pixels->AddRef();
     resized_image = SkImage::MakeFromRaster(pm_resized_pixmap, freePixels,
-                                            resized_pixels.get());
+                                            resized_pixels.LeakRef());
   } else {
     SkPixmap upm_resized_pixmap(
         pm_resized_info.makeAlphaType(kUnpremul_SkAlphaType),
         resized_pixels->Data(), resize_width * pm_info.bytesPerPixel());
-    resized_pixels->AddRef();
     resized_image = SkImage::MakeFromRaster(upm_resized_pixmap, freePixels,
-                                            resized_pixels.get());
+                                            resized_pixels.LeakRef());
   }
   return StaticBitmapImage::Create(resized_image,
                                    image->ContextProviderWrapper());

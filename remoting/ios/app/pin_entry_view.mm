@@ -21,7 +21,6 @@ static const CGFloat kLineSpace = 12.f;
 static const int kMinPinLength = 6;
 
 @interface PinEntryView ()<UITextFieldDelegate> {
-  UIView* _pairingView;
   UISwitch* _pairingSwitch;
   UILabel* _pairingLabel;
   MDCFloatingButton* _pinButton;
@@ -39,11 +38,6 @@ static const int kMinPinLength = 6;
   if (self) {
     self.backgroundColor = [UIColor clearColor];
 
-    // A view to enlarge the touch area to toggle the |_pairingSwitch|.
-    _pairingView = [[UIView alloc] initWithFrame:CGRectZero];
-    _pairingView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:_pairingView];
-
     NSString* rememberPinText =
         l10n_util::GetNSString(IDS_REMEMBER_PIN_ON_THIS_DEVICE);
     _pairingSwitch = [[UISwitch alloc] init];
@@ -51,25 +45,23 @@ static const int kMinPinLength = 6;
     _pairingSwitch.transform = CGAffineTransformMakeScale(0.5, 0.5);
     _pairingSwitch.accessibilityLabel = rememberPinText;
     _pairingSwitch.translatesAutoresizingMaskIntoConstraints = NO;
-    [_pairingView addSubview:_pairingSwitch];
+    [self addSubview:_pairingSwitch];
 
     _pairingLabel = [[UILabel alloc] init];
     _pairingLabel.textColor = RemotingTheme.pinEntryPairingColor;
     _pairingLabel.font = [UIFont systemFontOfSize:12.f];
     _pairingLabel.text = rememberPinText;
     _pairingLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [_pairingView addSubview:_pairingLabel];
+    [self addSubview:_pairingLabel];
 
-    // Allow toggling the switch by tapping the pairing view. Note that the
-    // gesture recognizer will handle the toggling logic and block tap gesture
-    // forwarding towards |_pairingSwitch|.
+    // Allow toggling the switch by tapping the label.
     UITapGestureRecognizer* tapGestureRecognizer =
         [[UITapGestureRecognizer alloc]
             initWithTarget:self
-                    action:@selector(didTapPairingView)];
+                    action:@selector(didTapPairingLabel)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
-    [_pairingView addGestureRecognizer:tapGestureRecognizer];
-    _pairingView.userInteractionEnabled = YES;
+    [_pairingLabel addGestureRecognizer:tapGestureRecognizer];
+    _pairingLabel.userInteractionEnabled = YES;
 
     _pinButton =
         [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
@@ -103,7 +95,10 @@ static const int kMinPinLength = 6;
     _pinEntry.delegate = self;
     [self addSubview:_pinEntry];
 
-    [self initializeLayoutConstraints];
+    [self
+        initializeLayoutConstraintsWithViews:NSDictionaryOfVariableBindings(
+                                                 _pairingSwitch, _pairingLabel,
+                                                 _pinButton, _pinEntry)];
 
     _supportsPairing = YES;
 
@@ -112,11 +107,10 @@ static const int kMinPinLength = 6;
   return self;
 }
 
-- (void)initializeLayoutConstraints {
-  NSDictionary* views =
-      NSDictionaryOfVariableBindings(_pairingView, _pinButton, _pinEntry);
+- (void)initializeLayoutConstraintsWithViews:(NSDictionary*)views {
   // Metrics to use in visual format strings.
   NSDictionary* layoutMetrics = @{
+    @"margin" : @(kMargin),
     @"padding" : @(kPadding),
     @"lineSpace" : @(kLineSpace),
   };
@@ -129,34 +123,20 @@ static const int kMinPinLength = 6;
                                     metrics:layoutMetrics
                                       views:views]];
 
+  [self addConstraints:
+            [NSLayoutConstraint
+                constraintsWithVisualFormat:
+                    @"H:|-[_pairingSwitch]-(padding)-[_pairingLabel]-|"
+                                    options:NSLayoutFormatAlignAllCenterY
+                                    metrics:layoutMetrics
+                                      views:views]];
+
   [self addConstraints:[NSLayoutConstraint
                            constraintsWithVisualFormat:
-                               @"V:|-[_pinButton]-(lineSpace)-[_pairingView]"
+                               @"V:|-[_pinButton]-(lineSpace)-[_pairingSwitch]"
                                                options:0
                                                metrics:layoutMetrics
                                                  views:views]];
-
-  [NSLayoutConstraint activateConstraints:@[
-    [_pairingSwitch.centerYAnchor
-        constraintEqualToAnchor:_pairingView.centerYAnchor],
-    [_pairingLabel.centerYAnchor
-        constraintEqualToAnchor:_pairingView.centerYAnchor],
-    [_pairingLabel.leadingAnchor
-        constraintEqualToAnchor:_pairingSwitch.trailingAnchor
-                       constant:kPadding],
-
-    [_pairingView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
-    [_pairingView.heightAnchor
-        constraintEqualToAnchor:_pairingLabel.heightAnchor
-                       constant:kMargin],
-    [_pairingView.leadingAnchor
-        constraintEqualToAnchor:_pairingSwitch.leadingAnchor
-                       constant:-kMargin],
-    [_pairingView.trailingAnchor
-        constraintEqualToAnchor:_pairingLabel.trailingAnchor
-                       constant:kMargin],
-  ]];
-
   [self setNeedsUpdateConstraints];
 }
 
@@ -219,7 +199,7 @@ static const int kMinPinLength = 6;
   [_pinEntry endEditing:YES];
 }
 
-- (void)didTapPairingView {
+- (void)didTapPairingLabel {
   [_pairingSwitch setOn:!_pairingSwitch.isOn animated:YES];
 }
 

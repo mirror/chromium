@@ -229,8 +229,7 @@ const gfx::Image& ProfileInfoCache::GetAvatarIconOfProfileAtIndex(
 
   int resource_id = profiles::GetDefaultAvatarIconResourceIDAtIndex(
       GetAvatarIconIndexOfProfileAtIndex(index));
-  return ui::ResourceBundle::GetSharedInstance().GetNativeImageNamed(
-      resource_id);
+  return ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
 }
 
 bool ProfileInfoCache::GetBackgroundStatusOfProfileAtIndex(

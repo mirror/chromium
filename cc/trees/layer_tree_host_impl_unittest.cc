@@ -4098,8 +4098,7 @@ class DidDrawCheckLayer : public LayerImpl {
     return base::WrapUnique(new DidDrawCheckLayer(tree_impl, id));
   }
 
-  bool WillDraw(DrawMode draw_mode,
-                LayerTreeResourceProvider* provider) override {
+  bool WillDraw(DrawMode draw_mode, ResourceProvider* provider) override {
     will_draw_called_ = true;
     if (will_draw_returns_false_)
       return false;
@@ -4112,7 +4111,7 @@ class DidDrawCheckLayer : public LayerImpl {
     LayerImpl::AppendQuads(render_pass, append_quads_data);
   }
 
-  void DidDraw(LayerTreeResourceProvider* provider) override {
+  void DidDraw(ResourceProvider* provider) override {
     did_draw_called_ = true;
     LayerImpl::DidDraw(provider);
   }
@@ -7765,7 +7764,7 @@ class BlendStateCheckLayer : public LayerImpl {
     test_blending_draw_quad->SetNew(
         shared_quad_state, quad_rect_, visible_quad_rect, needs_blending,
         resource_id_, gfx::RectF(0.f, 0.f, 1.f, 1.f), gfx::Size(1, 1), false,
-        false, false);
+        false);
 
     EXPECT_EQ(blend_, test_blending_draw_quad->ShouldDrawWithBlending());
     EXPECT_EQ(has_render_surface_,
@@ -12978,6 +12977,13 @@ TEST_F(LayerTreeHostImplTest, CheckerImagingTileInvalidation) {
   EXPECT_EQ(expected_invalidation, *(root->GetPendingInvalidation()));
 }
 
+TEST_F(LayerTreeHostImplTest, RasterColorSpaceNoColorCorrection) {
+  LayerTreeSettings settings = DefaultSettings();
+  settings.enable_color_correct_rasterization = false;
+  CreateHostImpl(settings, CreateLayerTreeFrameSink());
+  EXPECT_FALSE(host_impl_->GetRasterColorSpace().IsValid());
+}
+
 TEST_F(LayerTreeHostImplTest, RasterColorSpace) {
   LayerTreeSettings settings = DefaultSettings();
   CreateHostImpl(settings, CreateLayerTreeFrameSink());
@@ -12992,6 +12998,7 @@ TEST_F(LayerTreeHostImplTest, RasterColorSpace) {
 
 TEST_F(LayerTreeHostImplTest, RasterColorSpaceSoftware) {
   LayerTreeSettings settings = DefaultSettings();
+  settings.enable_color_correct_rasterization = true;
   CreateHostImpl(settings, FakeLayerTreeFrameSink::CreateSoftware());
   // Software composited resources should always use sRGB as their color space.
   EXPECT_EQ(host_impl_->GetRasterColorSpace(), gfx::ColorSpace::CreateSRGB());

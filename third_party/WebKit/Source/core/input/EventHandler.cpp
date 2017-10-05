@@ -32,6 +32,7 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "build/build_config.h"
+#include "core/HTMLNames.h"
 #include "core/InputTypeNames.h"
 #include "core/clipboard/DataTransfer.h"
 #include "core/dom/DOMNodeIds.h"
@@ -64,7 +65,6 @@
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLFrameSetElement.h"
 #include "core/html/HTMLInputElement.h"
-#include "core/html_names.h"
 #include "core/input/EventHandlingUtil.h"
 #include "core/input/InputDeviceCapabilities.h"
 #include "core/input/TouchActionUtil.h"

@@ -34,6 +34,9 @@ namespace app_list {
 
 namespace {
 
+// Layout constants.
+constexpr int kDefaultContentsViewHeight = 623;
+
 void DoCloseAnimation(base::TimeDelta animation_duration, ui::Layer* layer) {
   ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
   animation.SetTransitionDuration(animation_duration);
@@ -437,7 +440,10 @@ bool ContentsView::Back() {
 }
 
 gfx::Size ContentsView::GetDefaultContentsSize() const {
-  return apps_container_view_->GetPreferredSize();
+  gfx::Size size = apps_container_view_->GetPreferredSize();
+  if (is_fullscreen_app_list_enabled_)
+    size.set_height(kDefaultContentsViewHeight);
+  return size;
 }
 
 gfx::Size ContentsView::CalculatePreferredSize() const {

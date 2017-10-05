@@ -1715,7 +1715,7 @@ void RenderProcessHostImpl::CreateMessageFilters() {
       blob_storage_context.get()));
   AddFilter(new BlobDispatcherHost(
       GetID(), blob_storage_context,
-      base::WrapRefCounted(storage_partition_impl_->GetFileSystemContext())));
+      make_scoped_refptr(storage_partition_impl_->GetFileSystemContext())));
   AddFilter(new DatabaseMessageFilter(
       GetID(), storage_partition_impl_->GetDatabaseTracker()));
 #if defined(OS_MACOSX)
@@ -1870,7 +1870,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&BackgroundFetchServiceImpl::Create, GetID(),
-                 base::WrapRefCounted(
+                 make_scoped_refptr(
                      storage_partition_impl_->GetBackgroundFetchContext())));
 
   registry->AddInterface(base::Bind(&RenderProcessHostImpl::CreateMusGpuRequest,
@@ -1879,7 +1879,7 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(
           &WebDatabaseHostImpl::Create,
-          base::WrapRefCounted(storage_partition_impl_->GetDatabaseTracker())),
+          make_scoped_refptr(storage_partition_impl_->GetDatabaseTracker())),
       storage_partition_impl_->GetDatabaseTracker()->task_runner());
 
   MediaStreamManager* media_stream_manager =

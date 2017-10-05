@@ -21,6 +21,7 @@
 #ifndef SVGFEMergeNodeElement_h
 #define SVGFEMergeNodeElement_h
 
+#include "core/SVGNames.h"
 #include "core/svg/SVGAnimatedString.h"
 #include "core/svg/SVGElement.h"
 #include "platform/heap/Handle.h"

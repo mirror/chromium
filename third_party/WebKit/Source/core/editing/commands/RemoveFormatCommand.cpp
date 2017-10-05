@@ -27,6 +27,7 @@
 #include "core/editing/commands/RemoveFormatCommand.h"
 
 #include "core/CSSValueKeywords.h"
+#include "core/HTMLNames.h"
 #include "core/css/StylePropertySet.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -35,7 +36,6 @@
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/frame/LocalFrame.h"
-#include "core/html_names.h"
 
 namespace blink {
 

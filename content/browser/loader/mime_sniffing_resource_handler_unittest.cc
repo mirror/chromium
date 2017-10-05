@@ -235,6 +235,7 @@ MimeSniffingResourceHandlerTest::TestAcceptHeaderSettingWithURLRequest(
                                           0,              // render_view_id
                                           0,              // render_frame_id
                                           is_main_frame,  // is_main_frame
+                                          false,  // parent_is_main_frame
                                           false,  // allow_download
                                           true,   // is_async
                                           PREVIEWS_OFF);  // previews_state
@@ -271,6 +272,7 @@ bool MimeSniffingResourceHandlerTest::TestStreamIsIntercepted(
                                           0,              // render_view_id
                                           0,              // render_frame_id
                                           is_main_frame,  // is_main_frame
+                                          false,  // parent_is_main_frame
                                           allow_download,  // allow_download
                                           true,            // is_async
                                           PREVIEWS_OFF);   // previews_state
@@ -331,6 +333,7 @@ void MimeSniffingResourceHandlerTest::TestHandlerSniffing(
                                           0,        // render_view_id
                                           0,        // render_frame_id
                                           true,     // is_main_frame
+                                          false,    // parent_is_main_frame
                                           false,    // allow_download
                                           true,     // is_async
                                           PREVIEWS_OFF);  // previews_state
@@ -493,6 +496,7 @@ void MimeSniffingResourceHandlerTest::TestHandlerNoSniffing(
                                           0,        // render_view_id
                                           0,        // render_frame_id
                                           true,     // is_main_frame
+                                          false,    // parent_is_main_frame
                                           false,    // allow_download
                                           true,     // is_async
                                           PREVIEWS_OFF);  // previews_state
@@ -873,6 +877,7 @@ TEST_F(MimeSniffingResourceHandlerTest, 304Handling) {
                                           0,        // render_view_id
                                           0,        // render_frame_id
                                           true,     // is_main_frame
+                                          false,    // parent_is_main_frame
                                           true,     // allow_download
                                           true,     // is_async
                                           PREVIEWS_OFF);  // previews_state
@@ -924,6 +929,7 @@ TEST_F(MimeSniffingResourceHandlerTest, FetchShouldDisableMimeSniffing) {
                                           0,        // render_view_id
                                           0,        // render_frame_id
                                           true,     // is_main_frame
+                                          false,    // parent_is_main_frame
                                           false,    // allow_download
                                           true,     // is_async
                                           PREVIEWS_OFF);  // previews_state

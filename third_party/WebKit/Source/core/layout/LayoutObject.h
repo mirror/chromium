@@ -28,13 +28,13 @@
 #define LayoutObject_h
 
 #include "core/CoreExport.h"
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/DocumentLifecycle.h"
 #include "core/dom/Element.h"
 #include "core/editing/Forward.h"
 #include "core/editing/TextAffinity.h"
 #include "core/frame/LocalFrameView.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutObjectChildList.h"
 #include "core/layout/MapCoordinatesFlags.h"
 #include "core/layout/ScrollAlignment.h"
@@ -1909,8 +1909,6 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return rare_paint_data_ ? rare_paint_data_->SelectionVisualRect()
                             : LayoutRect();
   }
-
-  void InvalidateIfControlStateChanged(ControlState);
 
  protected:
   enum LayoutObjectType {

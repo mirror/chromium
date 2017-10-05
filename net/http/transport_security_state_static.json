@@ -250,7 +250,6 @@
     { "name": "dev", "include_subdomains": true, "mode": "force-https" },
     { "name": "foo", "include_subdomains": true, "mode": "force-https" },
     { "name": "page", "include_subdomains": true, "mode": "force-https" },
-    { "name": "app", "include_subdomains": true, "mode": "force-https" },
 
     // Google domains using Expect-CT.
     { "name": "mail.google.com", "include_subdomains": true, "mode": "force-https", "pins": "google", "expect_ct": true, "expect_ct_report_uri": "https://clients3.google.com/ct_upload" },
@@ -36334,8 +36333,6 @@
     },
     { "name": "ccu.plus", "include_subdomains": true, "mode": "force-https" },
     { "name": "mitm-software.badssl.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "hyatt.com", "mode": "force-https" },
-    { "name": "www.hyatt.com", "include_subdomains": true, "mode": "force-https" },
     // END OF MANUAL ENTRIES
 
     // TODO(lgarron): hstspreload.org can't scan IPv6-only sites due to Google

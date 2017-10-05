@@ -81,7 +81,6 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_switches.h"
-#include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
 #include "net/cert/cert_verifier.h"
 #include "net/cert/ct_log_verifier.h"
@@ -108,6 +107,7 @@
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "net/url_request/url_request_context_builder_mojo.h"
 #include "net/url_request/url_request_context_storage.h"
 #include "net/url_request/url_request_file_job.h"
 #include "net/url_request/url_request_intercepting_job_factory.h"
@@ -143,7 +143,6 @@
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/net/nss_context.h"
-#include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/tpm/tpm_token_info_getter.h"
@@ -284,14 +283,16 @@ class DebugDevToolsInterceptor : public net::URLRequestInterceptor {
 void DidGetTPMInfoForUserOnUIThread(
     std::unique_ptr<chromeos::TPMTokenInfoGetter> getter,
     const std::string& username_hash,
-    base::Optional<chromeos::CryptohomeClient::TpmTokenInfo> token_info) {
+    const chromeos::TPMTokenInfo& info) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  if (token_info.has_value() && token_info->slot != -1) {
+  if (info.tpm_is_enabled && info.token_slot_id != -1) {
     DVLOG(1) << "Got TPM slot for " << username_hash << ": "
-             << token_info->slot;
-    BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
-                            base::Bind(&crypto::InitializeTPMForChromeOSUser,
-                                       username_hash, token_info->slot));
+             << info.token_slot_id;
+    BrowserThread::PostTask(
+        BrowserThread::IO,
+        FROM_HERE,
+        base::Bind(&crypto::InitializeTPMForChromeOSUser,
+                   username_hash, info.token_slot_id));
   } else {
     NOTREACHED() << "TPMTokenInfoGetter reported invalid token.";
   }
@@ -313,9 +314,10 @@ void GetTPMInfoForUserOnUIThread(const AccountId& account_id,
   // before TPM token info is fetched.
   // TODO(tbarzic, pneubeck): Handle this in a nicer way when this logic is
   //     moved to a separate profile service.
-  token_info_getter->Start(base::BindOnce(&DidGetTPMInfoForUserOnUIThread,
-                                          std::move(scoped_token_info_getter),
-                                          username_hash));
+  token_info_getter->Start(
+      base::Bind(&DidGetTPMInfoForUserOnUIThread,
+                 base::Passed(&scoped_token_info_getter),
+                 username_hash));
 }
 
 void StartTPMSlotInitializationOnIOThread(const AccountId& account_id,
@@ -1006,8 +1008,8 @@ void ProfileIOData::Init(
   extensions_request_context_->set_name("extensions");
 
   // Create the main request context.
-  std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
-      base::MakeUnique<content::URLRequestContextBuilderMojo>();
+  std::unique_ptr<net::URLRequestContextBuilderMojo> builder =
+      base::MakeUnique<net::URLRequestContextBuilderMojo>();
 
   builder->set_net_log(io_thread->net_log());
   builder->set_shared_http_user_agent_settings(

@@ -17,17 +17,6 @@ void NewWindowController::BindRequest(
   bindings_.AddBinding(this, std::move(request));
 }
 
-void NewWindowController::SetClient(
-    mojom::NewWindowClientAssociatedPtrInfo client) {
-  client_.Bind(std::move(client));
-}
-
-void NewWindowController::ShowKeyboardOverlay() {
-  // TODO(estade): implement this here rather than passing off to |client_|.
-  if (client_)
-    client_->ShowKeyboardOverlay();
-}
-
 void NewWindowController::NewTab() {
   if (client_)
     client_->NewTab();
@@ -58,6 +47,11 @@ void NewWindowController::RestoreTab() {
     client_->RestoreTab();
 }
 
+void NewWindowController::ShowKeyboardOverlay() {
+  if (client_)
+    client_->ShowKeyboardOverlay();
+}
+
 void NewWindowController::ShowTaskManager() {
   if (client_)
     client_->ShowTaskManager();
@@ -66,6 +60,11 @@ void NewWindowController::ShowTaskManager() {
 void NewWindowController::OpenFeedbackPage() {
   if (client_)
     client_->OpenFeedbackPage();
+}
+
+void NewWindowController::SetClient(
+    mojom::NewWindowClientAssociatedPtrInfo client) {
+  client_.Bind(std::move(client));
 }
 
 }  // namespace ash

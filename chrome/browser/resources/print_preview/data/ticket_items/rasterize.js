@@ -5,39 +5,43 @@
 cr.define('print_preview.ticket_items', function() {
   'use strict';
 
-  class Rasterize extends print_preview.ticket_items.TicketItem {
-    /**
-     * Rasterize ticket item whose value is a {@code boolean} that indicates
-     * whether the PDF document should be rendered as images.
-     * @param {!print_preview.DocumentInfo} documentInfo Information about the
-     *     document to print, used to determine if document is a PDF.
-     */
-    constructor(destinationStore, documentInfo) {
-      super(
-          null /* appState */, null /* field */, null /* destinationStore */,
-          documentInfo);
-    }
+  /**
+   * Rasterize ticket item whose value is a {@code boolean} that indicates
+   * whether the PDF document should be rendered as images.
+   * @constructor
+   * @param {!print_preview.DocumentInfo} documentInfo Information about the
+   *     document to print, used to determine if document is a PDF.
+   * @extends {print_preview.ticket_items.TicketItem}
+   */
+  function Rasterize(destinationStore, documentInfo) {
+    print_preview.ticket_items.TicketItem.call(
+        this, null /* appState */, null /* field */,
+        null /* destinationStore */, documentInfo);
+  }
+
+  Rasterize.prototype = {
+    __proto__: print_preview.ticket_items.TicketItem.prototype,
 
     /** @override */
-    wouldValueBeValid(value) {
+    wouldValueBeValid: function(value) {
       return true;
-    }
+    },
 
     /** @override */
-    isCapabilityAvailable() {
+    isCapabilityAvailable: function() {
       return !this.getDocumentInfoInternal().isModifiable;
-    }
+    },
 
     /** @override */
-    getDefaultValueInternal() {
+    getDefaultValueInternal: function() {
       return false;
-    }
+    },
 
     /** @override */
-    getCapabilityNotAvailableValueInternal() {
+    getCapabilityNotAvailableValueInternal: function() {
       return this.getDefaultValueInternal();
     }
-  }
+  };
 
   // Export
   return {Rasterize: Rasterize};

@@ -1530,6 +1530,12 @@ const char kWifiCredentialSyncDescription[] =
     "credentials are synchronized subject to user preferences. (See also, "
     "chrome://settings/syncSetup.)";
 
+const char kWindowNavNativeFlagName[] =
+    "Enable native window navigation buttons.";
+const char kWindowNavNativeFlagDescription[] =
+    "Whether the window frame buttons should be drawn using the system theme. "
+    "Has no effect unless using the GTK3 theme.";
+
 const char kZeroCopyName[] = "Zero-copy rasterizer";
 const char kZeroCopyDescription[] =
     "Raster threads write directly to GPU memory associated with tiles.";
@@ -2253,10 +2259,6 @@ extern const char kMacRTLName[] = "Enable RTL";
 extern const char kMacRTLDescription[] =
     "Mirrors the UI for RTL language users";
 
-extern const char kMacSystemShareMenuName[] = "Enable System Share Menu";
-extern const char kMacSystemShareMenuDescription[] =
-    "Enables sharing via macOS share extensions.";
-
 extern const char kMacTouchBarName[] = "Hardware Touch Bar";
 extern const char kMacTouchBarDescription[] =
     "Control the use of the Touch Bar.";
@@ -2736,7 +2738,7 @@ const char kWebrtcH264WithOpenh264FfmpegDescription[] =
 
 #endif  // BUILDFLAG(ENABLE_WEBRTC)
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
 
 const char kAshDisableSmoothScreenRotationName[] =
     "Disable smooth rotation animations.";
@@ -2791,7 +2793,7 @@ const char kUiShowCompositedLayerBordersAll[] = "All";
 const char kUiSlowAnimationsName[] = "Slow UI animations";
 const char kUiSlowAnimationsDescription[] = "Makes all UI animations slow.";
 
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(USE_ASH)
 
 #if defined(TOOLKIT_VIEWS) || defined(OS_ANDROID)
 

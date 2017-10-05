@@ -31,7 +31,7 @@ QuotaReservationBuffer::QuotaReservationBuffer(
 
 scoped_refptr<QuotaReservation> QuotaReservationBuffer::CreateReservation() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
-  return base::WrapRefCounted(new QuotaReservation(this));
+  return make_scoped_refptr(new QuotaReservation(this));
 }
 
 std::unique_ptr<OpenFileHandle> QuotaReservationBuffer::GetOpenFileHandle(

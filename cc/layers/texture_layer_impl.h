@@ -12,7 +12,6 @@
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
-#include "components/viz/common/quads/texture_mailbox.h"
 
 namespace viz {
 class SingleReleaseCallback;
@@ -35,7 +34,7 @@ class CC_EXPORT TextureLayerImpl : public LayerImpl {
   void PushPropertiesTo(LayerImpl* layer) override;
 
   bool WillDraw(DrawMode draw_mode,
-                LayerTreeResourceProvider* resource_provider) override;
+                ResourceProvider* resource_provider) override;
   void AppendQuads(viz::RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override;
   SimpleEnclosedRegion VisibleOpaqueRegion() const override;
@@ -67,21 +66,21 @@ class CC_EXPORT TextureLayerImpl : public LayerImpl {
   const char* LayerTypeAsString() const override;
   void FreeTextureMailbox();
 
-  viz::ResourceId external_texture_resource_ = 0;
-  bool premultiplied_alpha_ = true;
-  bool blend_background_color_ = false;
-  bool flipped_ = true;
-  bool nearest_neighbor_ = false;
-  gfx::PointF uv_top_left_ = gfx::PointF();
-  gfx::PointF uv_bottom_right_ = gfx::PointF(1.f, 1.f);
-  float vertex_opacity_[4] = {1.f, 1.f, 1.f, 1.f};
+  viz::ResourceId external_texture_resource_;
+  bool premultiplied_alpha_;
+  bool blend_background_color_;
+  bool flipped_;
+  bool nearest_neighbor_;
+  gfx::PointF uv_top_left_;
+  gfx::PointF uv_bottom_right_;
+  float vertex_opacity_[4];
   // This is a resource that's a GL copy of a software texture mailbox.
   std::unique_ptr<ScopedResource> texture_copy_;
 
   viz::TextureMailbox texture_mailbox_;
   std::unique_ptr<viz::SingleReleaseCallback> release_callback_;
-  bool own_mailbox_ = false;
-  bool valid_texture_copy_ = false;
+  bool own_mailbox_;
+  bool valid_texture_copy_;
 
   DISALLOW_COPY_AND_ASSIGN(TextureLayerImpl);
 };

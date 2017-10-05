@@ -9,12 +9,11 @@
 #include "base/memory/ref_counted.h"
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_provider.h"
-#include "device/vr/vr_export.h"
+#include "device/vr/vr_service_impl.h"
 
 namespace device {
 
-// TODO(mthiesse, crbug.com/769373): Remove DEVICE_VR_EXPORT.
-class DEVICE_VR_EXPORT FakeVRDevice : public VRDevice {
+class FakeVRDevice : public VRDevice {
  public:
   explicit FakeVRDevice();
   ~FakeVRDevice() override;
@@ -25,14 +24,13 @@ class DEVICE_VR_EXPORT FakeVRDevice : public VRDevice {
 
   // VRDevice
   mojom::VRDisplayInfoPtr GetVRDisplayInfo() override;
-  void RequestPresent(
-      VRDisplayImpl* display,
-      mojom::VRSubmitFrameClientPtr submit_client,
-      mojom::VRPresentationProviderRequest request,
-      mojom::VRDisplayHost::RequestPresentCallback callback) override;
+  void RequestPresent(mojom::VRSubmitFrameClientPtr submit_client,
+                      mojom::VRPresentationProviderRequest request,
+                      const base::Callback<void(bool)>& callback) override;
   void ExitPresent() override;
-  void GetPose(VRDisplayImpl* display,
-               mojom::VRMagicWindowProvider::GetPoseCallback callback) override;
+  void GetNextMagicWindowPose(
+      VRDisplayImpl* display,
+      mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) override;
 
  private:
   mojom::VREyeParametersPtr InitEye(float fov, float offset, uint32_t size);

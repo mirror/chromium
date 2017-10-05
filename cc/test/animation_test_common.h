@@ -110,17 +110,17 @@ int AddOpacityStepsToPlayer(AnimationPlayer* player,
 void AddAnimationToElementWithPlayer(ElementId element_id,
                                      scoped_refptr<AnimationTimeline> timeline,
                                      std::unique_ptr<Animation> animation);
-void AddAnimationToElementWithExistingTicker(
+void AddAnimationToElementWithExistingPlayer(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
     std::unique_ptr<Animation> animation);
 
-void RemoveAnimationFromElementWithExistingTicker(
+void RemoveAnimationFromElementWithExistingPlayer(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
     int animation_id);
 
-Animation* GetAnimationFromElementWithExistingTicker(
+Animation* GetAnimationFromElementWithExistingPlayer(
     ElementId element_id,
     scoped_refptr<AnimationTimeline> timeline,
     int animation_id);

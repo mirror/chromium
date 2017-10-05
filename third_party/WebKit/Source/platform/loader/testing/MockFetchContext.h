@@ -10,7 +10,6 @@
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchParameters.h"
 #include "platform/loader/fetch/ResourceTimingInfo.h"
-#include "platform/scheduler/test/fake_web_frame_scheduler.h"
 #include "platform/scheduler/test/fake_web_task_runner.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
@@ -80,26 +79,23 @@ class MockFetchContext : public FetchContext {
   }
 
   std::unique_ptr<WebURLLoader> CreateURLLoader(
-      const ResourceRequest& request,
-      WebTaskRunner* task_runner) override {
+      const ResourceRequest& request) override {
     WrappedResourceRequest wrapped(request);
     return Platform::Current()->CreateURLLoader(
-        wrapped, task_runner->ToSingleThreadTaskRunner());
+        wrapped, runner_->ToSingleThreadTaskRunner());
   }
 
   WebFrameScheduler* GetFrameScheduler() override {
     return frame_scheduler_.get();
   }
 
-  RefPtr<WebTaskRunner> GetLoadingTaskRunner() override {
-    return frame_scheduler_->LoadingTaskRunner();
-  }
-
  private:
-  class MockFrameScheduler final : public scheduler::FakeWebFrameScheduler {
+  class MockFrameScheduler final : public WebFrameScheduler {
    public:
     MockFrameScheduler(RefPtr<WebTaskRunner> runner)
         : runner_(std::move(runner)) {}
+    void AddThrottlingObserver(ObserverType, Observer*) override {}
+    void RemoveThrottlingObserver(ObserverType, Observer*) override {}
     RefPtr<WebTaskRunner> LoadingTaskRunner() override { return runner_; }
     RefPtr<WebTaskRunner> LoadingControlTaskRunner() override {
       return runner_;

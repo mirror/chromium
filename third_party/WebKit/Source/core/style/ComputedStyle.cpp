@@ -708,8 +708,9 @@ void ComputedStyle::UpdatePropertySpecificDifferences(
     diff.SetTextDecorationOrColorChanged();
   }
 
-  bool has_clip = HasOutOfFlowPosition() && !HasAutoClip();
-  bool other_has_clip = other.HasOutOfFlowPosition() && !other.HasAutoClip();
+  bool has_clip = HasOutOfFlowPosition() && !HasAutoClipInternal();
+  bool other_has_clip =
+      other.HasOutOfFlowPosition() && !other.HasAutoClipInternal();
   if (has_clip != other_has_clip ||
       (has_clip && Clip() != other.Clip()))
     diff.SetCSSClipChanged();
@@ -1751,10 +1752,10 @@ void ComputedStyle::ClearMultiCol() {
   SetColumnRuleColorIsCurrentColor(InitialColumnRuleColorIsCurrentColor());
   SetVisitedLinkColumnRuleColorInternal(InitialVisitedLinkColumnRuleColor());
   SetColumnCountInternal(InitialColumnCount());
-  SetHasAutoColumnCountInternal(InitialHasAutoColumnCount());
-  SetHasAutoColumnWidthInternal(InitialHasAutoColumnWidth());
+  SetColumnAutoCountInternal(InitialColumnAutoCount());
+  SetColumnAutoWidthInternal(InitialColumnAutoWidth());
   ResetColumnFill();
-  SetHasNormalColumnGapInternal(InitialHasNormalColumnGap());
+  SetColumnNormalGapInternal(InitialColumnNormalGap());
   ResetColumnSpan();
 }
 

@@ -32,6 +32,10 @@ void SourceBufferRange::SeekToStart() {
   next_buffer_index_ = 0;
 }
 
+void SourceBufferRange::DeleteAll(BufferQueue* removed_buffers) {
+  TruncateAt(buffers_.begin(), removed_buffers);
+}
+
 bool SourceBufferRange::GetNextBuffer(
     scoped_refptr<StreamParserBuffer>* out_buffer) {
   if (!HasNextBuffer())

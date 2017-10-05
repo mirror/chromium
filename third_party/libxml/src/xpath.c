@@ -14,11 +14,6 @@
  *
  */
 
-/* To avoid EBCDIC trouble when parsing on zOS */
-#if defined(__MVS__)
-#pragma convert("ISO8859-1")
-#endif
-
 #define IN_LIBXML
 #include "libxml.h"
 
@@ -1678,17 +1673,10 @@ xmlXPathDebugDumpCompExpr(FILE *output, xmlXPathCompExprPtr comp,
 
     fprintf(output, "%s", shift);
 
-#ifdef XPATH_STREAMING
-    if (comp->stream) {
-        fprintf(output, "Streaming Expression\n");
-    } else
-#endif
-    {
-        fprintf(output, "Compiled Expression : %d elements\n",
-                comp->nbStep);
-        i = comp->last;
-        xmlXPathDebugDumpStepOp(output, comp, &comp->steps[i], depth + 1);
-    }
+    fprintf(output, "Compiled Expression : %d elements\n",
+	    comp->nbStep);
+    i = comp->last;
+    xmlXPathDebugDumpStepOp(output, comp, &comp->steps[i], depth + 1);
 }
 
 #ifdef XP_DEBUG_OBJ_USAGE
@@ -11932,11 +11920,11 @@ xmlXPathCompOpEvalPositionalPredicate(xmlXPathParserContextPtr ctxt,
 		}
 	    }
 
-	    valuePush(ctxt, contextObj);
             frame = xmlXPathSetFrame(ctxt);
+	    valuePush(ctxt, contextObj);
 	    res = xmlXPathCompOpEvalToBoolean(ctxt, exprOp, 1);
-            xmlXPathPopFrame(ctxt, frame);
             tmp = valuePop(ctxt);
+            xmlXPathPopFrame(ctxt, frame);
 
 	    if ((ctxt->error != XPATH_EXPRESSION_OK) || (res == -1)) {
                 while (tmp != contextObj) {
@@ -13531,8 +13519,10 @@ xmlXPathCompOpEval(xmlXPathParserContextPtr ctxt, xmlXPathStepOpPtr op)
                         xmlXPathCompOpEval(ctxt, &comp->steps[op->ch1]);
                 if (op->value5 == NULL) {
 		    val = xmlXPathVariableLookup(ctxt->context, op->value4);
-		    if (val == NULL)
-			XP_ERROR0(XPATH_UNDEF_VARIABLE_ERROR);
+		    if (val == NULL) {
+			ctxt->error = XPATH_UNDEF_VARIABLE_ERROR;
+			return(0);
+		    }
                     valuePush(ctxt, val);
 		} else {
                     const xmlChar *URI;
@@ -13547,8 +13537,10 @@ xmlXPathCompOpEval(xmlXPathParserContextPtr ctxt, xmlXPathStepOpPtr op)
                     }
 		    val = xmlXPathVariableLookupNS(ctxt->context,
                                                        op->value4, URI);
-		    if (val == NULL)
-			XP_ERROR0(XPATH_UNDEF_VARIABLE_ERROR);
+		    if (val == NULL) {
+			ctxt->error = XPATH_UNDEF_VARIABLE_ERROR;
+			return(0);
+		    }
                     valuePush(ctxt, val);
                 }
                 return (total);
@@ -15149,10 +15141,7 @@ xmlXPathNodeEval(xmlNodePtr node, const xmlChar *str, xmlXPathContextPtr ctx) {
  * @str:  the XPath expression
  * @ctxt:  the XPath context
  *
- * Alias for xmlXPathEval().
- *
- * Returns the xmlXPathObjectPtr resulting from the evaluation or NULL.
- *         the caller has to free the object.
+ * Alias for xmlXPathEval.
  */
 xmlXPathObjectPtr
 xmlXPathEvalExpression(const xmlChar *str, xmlXPathContextPtr ctxt) {

@@ -372,36 +372,38 @@ PerformanceTestRunner.loadTimeline = function(timelineData) {
   return promise;
 };
 
-TestRunner.initAsync(`
-  function wrapCallFunctionForTimeline(f) {
-    var script = document.createElement('script');
-    script.textContent = '(' + f.toString() + ')()\n//# sourceURL=wrapCallFunctionForTimeline.js';
-    document.body.appendChild(script);
-  }
-
-  function generateFrames(count) {
-    var promise = Promise.resolve();
-
-    for (let i = count; i > 0; --i)
-      promise = promise.then(changeBackgroundAndWaitForFrame.bind(null, i));
-
-    return promise;
-
-    function changeBackgroundAndWaitForFrame(i) {
-      document.body.style.backgroundColor = (i & 1 ? 'rgb(200, 200, 200)' : 'rgb(240, 240, 240)');
-      return waitForFrame();
+TestRunner.initAsync(async function() {
+  await TestRunner.evaluateInPagePromise(`
+    function wrapCallFunctionForTimeline(f) {
+      var script = document.createElement('script');
+      script.textContent = '(' + f.toString() + ')()\n//# sourceURL=wrapCallFunctionForTimeline.js';
+      document.body.appendChild(script);
     }
-  }
 
-  function waitForFrame() {
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
+    function generateFrames(count) {
+      var promise = Promise.resolve();
 
-    if (window.testRunner)
-      testRunner.capturePixelsAsyncThen(() => window.requestAnimationFrame(callback));
-    else
-      window.requestAnimationFrame(callback);
+      for (let i = count; i > 0; --i)
+        promise = promise.then(changeBackgroundAndWaitForFrame.bind(null, i));
 
-    return promise;
-  }
-`);
+      return promise;
+
+      function changeBackgroundAndWaitForFrame(i) {
+        document.body.style.backgroundColor = (i & 1 ? 'rgb(200, 200, 200)' : 'rgb(240, 240, 240)');
+        return waitForFrame();
+      }
+    }
+
+    function waitForFrame() {
+      var callback;
+      var promise = new Promise(fulfill => callback = fulfill);
+
+      if (window.testRunner)
+        testRunner.capturePixelsAsyncThen(() => window.requestAnimationFrame(callback));
+      else
+        window.requestAnimationFrame(callback);
+
+      return promise;
+    }
+  `);
+});

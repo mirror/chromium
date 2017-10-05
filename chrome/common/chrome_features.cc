@@ -231,10 +231,6 @@ const base::Feature kMacRTL{"MacRTL", base::FEATURE_DISABLED_BY_DEFAULT};
 // removed once we feel okay about leaving it on.
 const base::Feature kMacFullSizeContentView{"MacFullSizeContentView",
                                             base::FEATURE_ENABLED_BY_DEFAULT};
-
-// Enables "Share" submenu in File menu.
-const base::Feature kMacSystemShareMenu{"MacSystemShareMenu",
-                                        base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Enables or disables the Material Design version of chrome://bookmarks.
@@ -309,6 +305,11 @@ const base::Feature kNativeNotifications{"NativeNotifications",
 #endif
 #endif  // BUILDFLAG(ENABLE_NATIVE_NOTIFICATIONS)
 
+#if BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+const base::Feature kNativeWindowNavButtons{"NativeWindowNavButtons",
+                                            base::FEATURE_ENABLED_BY_DEFAULT};
+#endif  // BUILDFLAG(ENABLE_NATIVE_WINDOW_NAV_BUTTONS)
+
 const base::Feature kNetworkPrediction{"NetworkPrediction",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
 
@@ -323,7 +324,7 @@ const base::Feature kOfflinePageDownloadSuggestionsFeature{
 #if !defined(OS_ANDROID)
 // Enables or disabled the OneGoogleBar on the local NTP.
 const base::Feature kOneGoogleBarOnLocalNtp{"OneGoogleBarOnLocalNtp",
-                                            base::FEATURE_ENABLED_BY_DEFAULT};
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
 // Adds the base language code to the Language-Accept headers if at least one

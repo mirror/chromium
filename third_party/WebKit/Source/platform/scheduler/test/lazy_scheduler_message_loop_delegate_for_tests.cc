@@ -16,7 +16,7 @@ namespace scheduler {
 // static
 scoped_refptr<LazySchedulerMessageLoopDelegateForTests>
 LazySchedulerMessageLoopDelegateForTests::Create() {
-  return base::WrapRefCounted(new LazySchedulerMessageLoopDelegateForTests());
+  return make_scoped_refptr(new LazySchedulerMessageLoopDelegateForTests());
 }
 
 LazySchedulerMessageLoopDelegateForTests::

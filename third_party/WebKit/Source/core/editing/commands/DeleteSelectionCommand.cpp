@@ -25,6 +25,7 @@
 
 #include "core/editing/commands/DeleteSelectionCommand.h"
 
+#include "core/HTMLNames.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/NodeTraversal.h"
@@ -42,7 +43,6 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLStyleElement.h"
 #include "core/html/HTMLTableRowElement.h"
-#include "core/html_names.h"
 #include "core/layout/LayoutTableCell.h"
 
 namespace blink {
@@ -765,6 +765,9 @@ void DeleteSelectionCommand::HandleGeneralDelete(EditingState* editing_state) {
 
 void DeleteSelectionCommand::FixupWhitespace() {
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+  // TODO(yosin) |isRenderedCharacter()| should be removed, and we should use
+  // |VisiblePosition::characterAfter()| and
+  // |VisiblePosition::characterBefore()|
   if (leading_whitespace_.IsNotNull() &&
       !IsRenderedCharacter(leading_whitespace_) &&
       leading_whitespace_.AnchorNode()->IsTextNode()) {

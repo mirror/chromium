@@ -683,7 +683,7 @@ SkBitmap GetSkBitmapCopy(const gfx::Image& image) {
 // to another thread.
 SkBitmap GetImageResourceSkBitmapCopy(int resource_id) {
   const gfx::Image image =
-      ui::ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
+      ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
   return GetSkBitmapCopy(image);
 }
 

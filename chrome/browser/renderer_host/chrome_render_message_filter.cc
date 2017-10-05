@@ -172,9 +172,11 @@ void ChromeRenderMessageFilter::OnRequestFileSystemAccessSync(
     const GURL& top_origin_url,
     IPC::Message* reply_msg) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  base::Callback<void(bool)> callback = base::Bind(
-      &ChromeRenderMessageFilter::OnRequestFileSystemAccessSyncResponse,
-      base::WrapRefCounted(this), reply_msg);
+  base::Callback<void(bool)> callback =
+      base::Bind(&ChromeRenderMessageFilter::
+                 OnRequestFileSystemAccessSyncResponse,
+                 make_scoped_refptr(this),
+                 reply_msg);
   OnRequestFileSystemAccess(render_frame_id,
                             origin_url,
                             top_origin_url,
@@ -195,9 +197,12 @@ void ChromeRenderMessageFilter::OnRequestFileSystemAccessAsync(
     const GURL& origin_url,
     const GURL& top_origin_url) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  base::Callback<void(bool)> callback = base::Bind(
-      &ChromeRenderMessageFilter::OnRequestFileSystemAccessAsyncResponse,
-      base::WrapRefCounted(this), render_frame_id, request_id);
+  base::Callback<void(bool)> callback =
+      base::Bind(&ChromeRenderMessageFilter::
+                 OnRequestFileSystemAccessAsyncResponse,
+                 make_scoped_refptr(this),
+                 render_frame_id,
+                 request_id);
   OnRequestFileSystemAccess(render_frame_id,
                             origin_url,
                             top_origin_url,

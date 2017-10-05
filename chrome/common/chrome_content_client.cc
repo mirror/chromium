@@ -76,6 +76,7 @@
 #if BUILDFLAG(ENABLE_NACL)
 #include "components/nacl/common/nacl_constants.h"
 #include "components/nacl/common/nacl_process_type.h"
+#include "components/nacl/common/nacl_sandbox_type.h"
 #endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -539,7 +540,7 @@ void ChromeContentClient::AddPepperPlugins(
 
 void ChromeContentClient::AddContentDecryptionModules(
     std::vector<content::CdmInfo>* cdms,
-    std::vector<media::CdmHostFilePath>* cdm_host_file_paths) {
+    std::vector<content::CdmHostFilePath>* cdm_host_file_paths) {
   if (cdms) {
 // TODO(jrummell): Need to have a better flag to indicate systems Widevine
 // is available on. For now we continue to use ENABLE_LIBRARY_CDMS so that
@@ -674,19 +675,17 @@ base::string16 ChromeContentClient::GetLocalizedString(int message_id) const {
 base::StringPiece ChromeContentClient::GetDataResource(
     int resource_id,
     ui::ScaleFactor scale_factor) const {
-  return ui::ResourceBundle::GetSharedInstance().GetRawDataResourceForScale(
+  return ResourceBundle::GetSharedInstance().GetRawDataResourceForScale(
       resource_id, scale_factor);
 }
 
 base::RefCountedMemory* ChromeContentClient::GetDataResourceBytes(
     int resource_id) const {
-  return ui::ResourceBundle::GetSharedInstance().LoadDataResourceBytes(
-      resource_id);
+  return ResourceBundle::GetSharedInstance().LoadDataResourceBytes(resource_id);
 }
 
 gfx::Image& ChromeContentClient::GetNativeImageNamed(int resource_id) const {
-  return ui::ResourceBundle::GetSharedInstance().GetNativeImageNamed(
-      resource_id);
+  return ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
 }
 
 std::string ChromeContentClient::GetProcessTypeNameInEnglish(int type) {
@@ -702,6 +701,20 @@ std::string ChromeContentClient::GetProcessTypeNameInEnglish(int type) {
   NOTREACHED() << "Unknown child process type!";
   return "Unknown";
 }
+
+#if defined(OS_MACOSX)
+bool ChromeContentClient::GetSandboxProfileForSandboxType(
+    int sandbox_type,
+    const char** sandbox_profile) const {
+#if BUILDFLAG(ENABLE_NACL)
+  if (sandbox_type == NACL_SANDBOX_TYPE_NACL_LOADER) {
+    *sandbox_profile = service_manager::kSeatbeltPolicyString_nacl_loader;
+    return true;
+  }
+#endif
+  return false;
+}
+#endif
 
 bool ChromeContentClient::AllowScriptExtensionForServiceWorker(
     const GURL& script_url) {

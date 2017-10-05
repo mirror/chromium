@@ -49,8 +49,6 @@ class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
                       [expectations.ALL_WIN], 'crbug.com/728464')
     self.DisableStory('multitab:misc:typical24',
                       [expectations.ALL_MAC], 'crbug.com/742475')
-    self.DisableStory('browse_accessibility:tools:gmail_compose',
-                      [expectations.ALL], 'crbug.com/769809')
 
 
 class SystemHealthMobileCommonExpectations(expectations.StoryExpectations):
@@ -145,10 +143,6 @@ class V8BrowsingMobileExpecations(expectations.StoryExpectations):
     self.DisableStory('browse:news:cnn',
                       [expectations.ANDROID_WEBVIEW],
                       'Crash: crbug.com/767595')
-    self.DisableStory('browse:news:toi',
-                      [expectations.ANDROID_NEXUS5X,
-                       expectations.ANDROID_NEXUS6],
-                      'Crash: crbug.com/770920')
 
 
 class SystemHealthWebviewStartupExpectations(expectations.StoryExpectations):

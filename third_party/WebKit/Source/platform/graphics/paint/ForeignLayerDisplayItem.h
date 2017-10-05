@@ -44,7 +44,7 @@ class PLATFORM_EXPORT ForeignLayerDisplayItem final : public DisplayItem {
   bool DrawsContent() const override;
   bool Equals(const DisplayItem&) const override;
 #ifndef NDEBUG
-  void PropertiesAsJSON(JSONObject&) const override;
+  void DumpPropertiesAsDebugString(StringBuilder&) const override;
 #endif
 
  private:

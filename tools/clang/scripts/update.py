@@ -644,12 +644,11 @@ def UpdateClang(args):
     # If any Chromium tools were built, install those now.
     RunCommand(['ninja', 'cr-install'], msvc_arch='x64')
 
-  for f in ['clang', 'lld', 'llvm-ar', 'llvm-symbolizer', 'sancov']:
-    if sys.platform == 'darwin':
-      # See http://crbug.com/256342
-      RunCommand(['strip', '-x', os.path.join(LLVM_BUILD_DIR, 'bin', f)])
-    elif sys.platform.startswith('linux'):
-      RunCommand(['strip', os.path.join(LLVM_BUILD_DIR, 'bin', f)])
+  if sys.platform == 'darwin':
+    # See http://crbug.com/256342
+    RunCommand(['strip', '-x', os.path.join(LLVM_BUILD_DIR, 'bin', 'clang')])
+  elif sys.platform.startswith('linux'):
+    RunCommand(['strip', os.path.join(LLVM_BUILD_DIR, 'bin', 'clang')])
 
   VeryifyVersionOfBuiltClangMatchesVERSION()
 

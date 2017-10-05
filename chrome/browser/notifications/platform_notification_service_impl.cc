@@ -442,8 +442,6 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
 
   // TODO(peter): Handle different screen densities instead of always using the
   // 1x bitmap - crbug.com/585815.
-  // TODO(estade): The RichNotificationData should set |clickable| if there's a
-  // click handler.
   Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
       notification_data.title, notification_data.body,
@@ -467,7 +465,7 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(
             &ReportNotificationImageOnIOThread,
-            base::WrapRefCounted(g_browser_process->safe_browsing_service()),
+            make_scoped_refptr(g_browser_process->safe_browsing_service()),
             profile, origin, notification_resources.image));
   }
 

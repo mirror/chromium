@@ -528,8 +528,7 @@ StyleRuleBase* CSSParserImpl::ConsumeAtRule(CSSParserTokenStream& stream,
     stream.UncheckedConsumeComponentValue(prelude_buffer);
 
   const CSSParserTokenRange prelude = prelude_buffer.Range();
-  const RangeOffset prelude_offset(prelude_offset_start,
-                                   stream.LookAheadOffset());
+  const RangeOffset prelude_offset(prelude_offset_start, stream.Offset());
 
   if (id != kCSSAtRuleInvalid && context_->IsUseCounterRecordingEnabled())
     CountAtRule(context_, id);
@@ -616,8 +615,7 @@ StyleRuleBase* CSSParserImpl::ConsumeQualifiedRule(
   if (stream.AtEnd())
     return nullptr;  // Parse error, EOF instead of qualified rule block
 
-  const RangeOffset prelude_offset(prelude_offset_start,
-                                   stream.LookAheadOffset());
+  const RangeOffset prelude_offset(prelude_offset_start, stream.Offset());
 
   if (observer_wrapper_)
     observer_wrapper_->FinalizeConstruction(prelude_buffer.Range().begin());

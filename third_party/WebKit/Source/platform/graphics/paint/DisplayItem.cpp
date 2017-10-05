@@ -219,29 +219,39 @@ WTF::String DisplayItem::TypeAsDebugString(Type type) {
 }
 
 WTF::String DisplayItem::AsDebugString() const {
-  auto json = JSONObject::Create();
-  PropertiesAsJSON(*json);
-  return json->ToPrettyJSONString();
+  WTF::StringBuilder string_builder;
+  string_builder.Append('{');
+  DumpPropertiesAsDebugString(string_builder);
+  string_builder.Append('}');
+  return string_builder.ToString();
 }
 
-void DisplayItem::PropertiesAsJSON(JSONObject& json) const {
+void DisplayItem::DumpPropertiesAsDebugString(
+    WTF::StringBuilder& string_builder) const {
   if (!HasValidClient()) {
-    json.SetBoolean("validClient", false);
-    json.SetString("originalDebugString", ClientDebugString());
+    string_builder.Append("validClient: false, originalDebugString: ");
+    // This is the original debug string which is in json format.
+    string_builder.Append(ClientDebugString());
     return;
   }
 
-  json.SetString("client",
-                 ClientDebugString().IsEmpty()
-                     ? String::Format("%p", &Client())
-                     : String::Format("%p %s", &Client(),
-                                      ClientDebugString().Utf8().data()));
-  json.SetString("visualRect", VisualRect().ToString());
-  if (OutsetForRasterEffects())
-    json.SetDouble("outset", OutsetForRasterEffects().ToDouble());
-  json.SetString("type", TypeAsDebugString(GetType()));
+  string_builder.Append(String::Format("client: \"%p", &Client()));
+  if (!ClientDebugString().IsEmpty()) {
+    string_builder.Append(' ');
+    string_builder.Append(ClientDebugString());
+  }
+  string_builder.Append("\", visualRect: \"");
+  string_builder.Append(VisualRect().ToString());
+  string_builder.Append("\", ");
+  if (OutsetForRasterEffects()) {
+    string_builder.Append(
+        String::Format("outset: %f, ", OutsetForRasterEffects().ToFloat()));
+  }
+  string_builder.Append("type: \"");
+  string_builder.Append(TypeAsDebugString(GetType()));
+  string_builder.Append('"');
   if (skipped_cache_)
-    json.SetBoolean("skippedCache", true);
+    string_builder.Append(", skippedCache: true");
 }
 
 #endif

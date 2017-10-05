@@ -10,7 +10,7 @@
 namespace history_ui {
 
 base::RefCountedMemory* GetFaviconResourceBytes(ui::ScaleFactor scale_factor) {
-  return ui::ResourceBundle::GetSharedInstance().LoadDataResourceBytesForScale(
+  return ResourceBundle::GetSharedInstance().LoadDataResourceBytesForScale(
       IDR_HISTORY_FAVICON, scale_factor);
 }
 

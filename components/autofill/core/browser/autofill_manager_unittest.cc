@@ -675,7 +675,7 @@ class TestAutofillManager : public AutofillManager {
     return personal_data_->GetLocalCreditCards();
   }
 
-  std::vector<CreditCard*> GetCreditCards() const {
+  const std::vector<CreditCard*>& GetCreditCards() const {
     return personal_data_->GetCreditCards();
   }
 

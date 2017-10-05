@@ -6,6 +6,7 @@
 #define CustomElement_h
 
 #include "core/CoreExport.h"
+#include "core/HTMLNames.h"
 #include "core/dom/Element.h"
 #include "platform/text/Character.h"
 #include "platform/wtf/ASCIICType.h"

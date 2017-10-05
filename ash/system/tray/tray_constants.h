@@ -89,8 +89,6 @@ extern const SkColor kHeaderBackgroundColor;
 extern const SkColor kHeaderTextColorNormal;
 extern const SkColor kHeaderTextColorHover;
 
-extern const SkColor kMobileNotConnectedXIconColor;
-
 extern const int kTrayPopupMinWidth;
 extern const int kTrayPopupMaxWidth;
 extern const int kNotificationIconWidth;

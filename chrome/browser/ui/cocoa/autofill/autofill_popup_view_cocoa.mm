@@ -60,7 +60,7 @@ NSImage* GetCreditCardTouchBarImage(int iconId) {
         gfx::CreateVectorIcon(kCreditCardIcon, 16, SK_ColorWHITE));
   }
 
-  return ui::ResourceBundle::GetSharedInstance()
+  return ResourceBundle::GetSharedInstance()
       .GetNativeImageNamed(iconId)
       .AsNSImage();
 }

@@ -29,8 +29,8 @@
 #include "ui/views/win/hwnd_util.h"
 #endif
 
-#if defined(OS_CHROMEOS)
-#include "ash/shell.h"
+#if defined(USE_ASH)
+#include "ash/shell.h"  // nogncheck
 #endif
 
 namespace {
@@ -180,7 +180,7 @@ gfx::NativeViewId ScreenCaptureNotificationUIViews::OnStarted(
   params.remove_standard_frame = true;
   params.keep_on_top = true;
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   // TODO(sergeyu): The notification bar must be shown on the monitor that's
   // being captured. Make sure it's always the case. Currently we always capture
   // the primary monitor.

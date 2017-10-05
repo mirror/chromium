@@ -54,8 +54,7 @@ void FakeNotificationPresenter::RemovePotentialHotspotNotification() {
 }
 
 void FakeNotificationPresenter::NotifySetupRequired(
-    const std::string& device_name,
-    int signal_strength) {
+    const std::string& device_name) {
   is_setup_required_notification_shown_ = true;
 }
 

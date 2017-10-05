@@ -33,7 +33,7 @@ TEST_F(BookmarkBarFolderButtonCellTest, FaviconPositioning) {
   ASSERT_TRUE(view.get());
   ASSERT_TRUE(folder_view.get());
 
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   base::scoped_nsobject<NSImage> image(
       rb.GetNativeImageNamed(IDR_DEFAULT_FAVICON).CopyNSImage());
   ASSERT_TRUE(image.get());

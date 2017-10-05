@@ -81,10 +81,24 @@
 #include "chrome/browser/ui/views/outdated_upgrade_bubble_view.h"
 #endif
 
+#if defined(USE_ASH)
+#include "ash/shell.h"  // nogncheck
+#endif
+
 using base::UserMetricsAction;
 using content::WebContents;
 
 namespace {
+
+#if !defined(OS_CHROMEOS)
+bool HasAshShell() {
+#if defined(USE_ASH)
+  return ash::Shell::HasInstance();
+#else
+  return false;
+#endif  // USE_ASH
+}
+#endif  // OS_CHROMEOS
 
 int GetToolbarHorizontalPadding() {
   using Md = ui::MaterialDesignController;
@@ -210,7 +224,10 @@ void ToolbarView::Init() {
 
   // Start global error services now so we set the icon on the menu correctly.
 #if !defined(OS_CHROMEOS)
-  SigninGlobalErrorFactory::GetForProfile(browser_->profile());
+  if (!HasAshShell()) {
+    SigninGlobalErrorFactory::GetForProfile(browser_->profile());
+  }
+
 #if defined(OS_WIN)
   RecoveryInstallGlobalErrorFactory::GetForProfile(browser_->profile());
 #endif

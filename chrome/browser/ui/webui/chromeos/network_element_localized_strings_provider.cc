@@ -29,7 +29,6 @@ struct {
     {"networkListItemConnectingTo", IDS_NETWORK_LIST_CONNECTING_TO},
     {"networkListItemInitializing", IDS_NETWORK_LIST_INITIALIZING},
     {"networkListItemNotConnected", IDS_NETWORK_LIST_NOT_CONNECTED},
-    {"networkListItemNoNetwork", IDS_NETWORK_LIST_NO_NETWORK},
     {"vpnNameTemplate", IDS_NETWORK_LIST_THIRD_PARTY_VPN_NAME_TEMPLATE},
 };
 }  //  namespace
@@ -44,8 +43,6 @@ void AddLocalizedValuesToBuilder(::login::LocalizedValuesBuilder* builder) {
     builder->Add(entry.name, entry.id);
 }
 
-// TODO(stevenjb): Remove this function; it is mostly a duplicate of the strings
-// above.
 void AddDetailsLocalizedStrings(content::WebUIDataSource* html_source) {
   struct {
     const char* name;
@@ -61,7 +58,6 @@ void AddDetailsLocalizedStrings(content::WebUIDataSource* html_source) {
       {"networkListItemConnecting", IDS_STATUSBAR_NETWORK_DEVICE_CONNECTING},
       {"networkListItemConnectingTo", IDS_NETWORK_LIST_CONNECTING_TO},
       {"networkListItemNotConnected", IDS_NETWORK_LIST_NOT_CONNECTED},
-      {"networkListItemNoNetwork", IDS_NETWORK_LIST_NO_NETWORK},
       {"vpnNameTemplate", IDS_NETWORK_LIST_THIRD_PARTY_VPN_NAME_TEMPLATE},
   };
   for (const auto& entry : localized_strings)
@@ -133,7 +129,6 @@ void AddOncLocalizedStrings(content::WebUIDataSource* html_source) {
       {"OncEAP-SubjectMatch", IDS_ONC_EAP_SUBJECT_MATCH},
       {"OncEAP-UserCert", IDS_ONC_EAP_USER_CERT},
       {"OncMacAddress", IDS_ONC_MAC_ADDRESS},
-      {"OncName", IDS_ONC_NAME},
       {"OncNotConnected", IDS_ONC_NOT_CONNECTED},
       {"OncRestrictedConnectivity", IDS_ONC_RESTRICTED_CONNECTIVITY},
       {"OncTether-BatteryPercentage", IDS_ONC_TETHER_BATTERY_PERCENTAGE},
@@ -150,19 +145,14 @@ void AddOncLocalizedStrings(content::WebUIDataSource* html_source) {
       {"OncTether-Carrier", IDS_ONC_TETHER_CARRIER},
       {"OncTether-Carrier_Unknown", IDS_ONC_TETHER_CARRIER_UNKNOWN},
       {"OncVPN-Host", IDS_ONC_VPN_HOST},
-      {"OncVPN-IPsec-Group", IDS_ONC_VPN_IPSEC_GROUP},
-      {"OncVPN-IPsec-PSK", IDS_ONC_VPN_IPSEC_PSK},
-      {"OncVPN-OpenVPN-OTP", IDS_ONC_VPN_OPENVPN_OTP},
-      {"OncVPN-Password", IDS_ONC_VPN_PASSWORD},
+      {"OncVPN-L2TP-Username", IDS_ONC_VPN_L2TP_USERNAME},
+      {"OncVPN-OpenVPN-Username", IDS_ONC_VPN_OPEN_VPN_USERNAME},
       {"OncVPN-ThirdPartyVPN-ProviderName",
        IDS_ONC_VPN_THIRD_PARTY_VPN_PROVIDER_NAME},
       {"OncVPN-Type", IDS_ONC_VPN_TYPE},
-      {"OncVPN-Type_L2TP_IPsec", IDS_ONC_VPN_TYPE_L2TP_IPSEC},
-      {"OncVPN-Type_L2TP_IPsec_PSK", IDS_ONC_VPN_TYPE_L2TP_IPSEC_PSK},
-      {"OncVPN-Type_L2TP_IPsec_Cert", IDS_ONC_VPN_TYPE_L2TP_IPSEC_CERT},
+      {"OncVPN-Type_L2TP-IPsec", IDS_ONC_VPN_TYPE_L2TP_IPSEC},
       {"OncVPN-Type_OpenVPN", IDS_ONC_VPN_TYPE_OPENVPN},
       {"OncVPN-Type_ARCVPN", IDS_ONC_VPN_TYPE_ARCVPN},
-      {"OncVPN-Username", IDS_ONC_VPN_USERNAME},
       {"OncWiFi-Frequency", IDS_ONC_WIFI_FREQUENCY},
       {"OncWiFi-Passphrase", IDS_ONC_WIFI_PASSWORD},
       {"OncWiFi-SSID", IDS_ONC_WIFI_SSID},

@@ -40,7 +40,10 @@ class CORE_EXPORT NGConstraintSpace final
   // a root NGConstraintSpace.
   // override_logical_width/height are only used if
   // LayoutObject::OverideLogicalContentWidth/Height is undefined.
-  static RefPtr<NGConstraintSpace> CreateFromLayoutObject(const LayoutBox&);
+  static RefPtr<NGConstraintSpace> CreateFromLayoutObject(
+      const LayoutBox&,
+      Optional<LayoutUnit> override_logical_width = WTF::nullopt,
+      Optional<LayoutUnit> override_logical_height = WTF::nullopt);
 
   const NGExclusionSpace& ExclusionSpace() const { return *exclusion_space_; }
 
@@ -52,20 +55,11 @@ class CORE_EXPORT NGConstraintSpace final
     return static_cast<NGWritingMode>(writing_mode_);
   }
 
-  bool IsOrthogonalWritingModeRoot() const {
-    return is_orthogonal_writing_mode_root_;
-  }
-
   // The size to use for percentage resolution.
   // See: https://drafts.csswg.org/css-sizing/#percentage-sizing
   NGLogicalSize PercentageResolutionSize() const {
     return percentage_resolution_size_;
   }
-
-  // The size to use for percentage resolution for margin/border/padding.
-  // They are always get computed relative to the inline size, in the parent
-  // writing mode.
-  LayoutUnit PercentageResolutionInlineSizeForParentWritingMode() const;
 
   // Parent's PercentageResolutionInlineSize().
   // This is not always available.
@@ -199,7 +193,6 @@ class CORE_EXPORT NGConstraintSpace final
   // Default constructor.
   NGConstraintSpace(
       NGWritingMode,
-      bool is_orthogonal_writing_mode_root,
       TextDirection,
       NGLogicalSize available_size,
       NGLogicalSize percentage_resolution_size,
@@ -250,7 +243,6 @@ class CORE_EXPORT NGConstraintSpace final
   unsigned use_first_line_style_ : 1;
 
   unsigned writing_mode_ : 3;
-  unsigned is_orthogonal_writing_mode_root_ : 1;
   unsigned direction_ : 1;
 
   NGMarginStrut margin_strut_;

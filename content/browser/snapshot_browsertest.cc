@@ -236,13 +236,7 @@ IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, SingleWindowTest) {
   }
 }
 
-// Seen to time out / fail on debug Mac and Win bots; crbug.com/771119.
-#ifndef NDEBUG
-#define MAYBE_SyncMultiWindowTest DISABLED_SyncMultiWindowTest
-#else
-#define MAYBE_SyncMultiWindowTest SyncMultiWindowTest
-#endif
-IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, MAYBE_SyncMultiWindowTest) {
+IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, SyncMultiWindowTest) {
   SetupTestServer();
 
   for (int i = 0; i < 3; ++i) {
@@ -295,13 +289,7 @@ IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, MAYBE_SyncMultiWindowTest) {
   }
 }
 
-// Seen to time out / fail on debug Mac and Win bots; crbug.com/771119.
-#ifndef NDEBUG
-#define MAYBE_AsyncMultiWindowTest DISABLED_AsyncMultiWindowTest
-#else
-#define MAYBE_AsyncMultiWindowTest AsyncMultiWindowTest
-#endif
-IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, MAYBE_AsyncMultiWindowTest) {
+IN_PROC_BROWSER_TEST_F(SnapshotBrowserTest, AsyncMultiWindowTest) {
   SetupTestServer();
 
   for (int i = 0; i < 3; ++i) {

@@ -91,8 +91,6 @@ class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   NGFragmentBuilder& AddOutOfFlowChildCandidate(NGBlockNode,
                                                 const NGLogicalOffset&);
 
-  void AddOutOfFlowLegacyCandidate(NGBlockNode, const NGStaticPosition&);
-
   void GetAndClearOutOfFlowDescendantCandidates(
       Vector<NGOutOfFlowPositionedDescendant>* descendant_candidates);
 

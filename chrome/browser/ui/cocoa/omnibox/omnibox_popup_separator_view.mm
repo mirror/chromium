@@ -27,7 +27,7 @@
 @implementation OmniboxPopupBottomSeparatorView
 
 + (CGFloat)preferredHeight {
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   NSImage* shadowImage =
       rb.GetNativeImageNamed(IDR_OVERLAY_DROP_SHADOW).ToNSImage();
   return [shadowImage size].height;
@@ -66,7 +66,7 @@
   }
 
   // Draw the shadow.
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   NSImage* shadowImage =
       rb.GetNativeImageNamed(IDR_OVERLAY_DROP_SHADOW).ToNSImage();
   [shadowImage drawInRect:bounds

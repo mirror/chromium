@@ -45,7 +45,10 @@ void HoldRefCallback(const scoped_refptr<PrintJobWorkerOwner>& owner,
 }  // namespace
 
 PrintJob::PrintJob()
-    : is_job_pending_(false), is_canceling_(false), quit_factory_(this) {
+    : source_(nullptr),
+      is_job_pending_(false),
+      is_canceling_(false),
+      quit_factory_(this) {
   // This is normally a UI message loop, but in unit tests, the message loop is
   // of the 'default' type.
   DCHECK(base::MessageLoopForUI::IsCurrent() ||
@@ -62,17 +65,19 @@ PrintJob::~PrintJob() {
 }
 
 void PrintJob::Initialize(PrintJobWorkerOwner* job,
-                          const base::string16& name,
+                          PrintedPagesSource* source,
                           int page_count) {
+  DCHECK(!source_);
   DCHECK(!worker_);
   DCHECK(!is_job_pending_);
   DCHECK(!is_canceling_);
   DCHECK(!document_.get());
+  source_ = source;
   worker_ = job->DetachWorker(this);
   settings_ = job->settings();
 
   PrintedDocument* new_doc =
-      new PrintedDocument(settings_, name, job->cookie());
+      new PrintedDocument(settings_, source_, job->cookie());
 
   new_doc->set_page_count(page_count);
   UpdatePrintedDocument(new_doc);
@@ -122,7 +127,7 @@ void PrintJob::StartPrinting() {
 
   // Real work is done in PrintJobWorker::StartPrinting().
   worker_->PostTask(FROM_HERE,
-                    base::Bind(&HoldRefCallback, base::WrapRefCounted(this),
+                    base::Bind(&HoldRefCallback, make_scoped_refptr(this),
                                base::Bind(&PrintJobWorker::StartPrinting,
                                           base::Unretained(worker_.get()),
                                           base::RetainedRef(document_))));
@@ -198,6 +203,12 @@ bool PrintJob::FlushJob(base::TimeDelta timeout) {
   base::RunLoop().Run();
 
   return true;
+}
+
+void PrintJob::DisconnectSource() {
+  source_ = nullptr;
+  if (document_.get())
+    document_->DisconnectSource();
 }
 
 bool PrintJob::is_job_pending() const {
@@ -353,7 +364,7 @@ void PrintJob::UpdatePrintedDocument(PrintedDocument* new_document) {
     DCHECK(!is_job_pending_);
     // Sync the document with the worker.
     worker_->PostTask(FROM_HERE,
-                      base::Bind(&HoldRefCallback, base::WrapRefCounted(this),
+                      base::Bind(&HoldRefCallback, make_scoped_refptr(this),
                                  base::Bind(&PrintJobWorker::OnDocumentChanged,
                                             base::Unretained(worker_.get()),
                                             base::RetainedRef(document_))));

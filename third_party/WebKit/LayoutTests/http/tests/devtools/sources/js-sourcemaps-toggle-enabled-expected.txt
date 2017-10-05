@@ -4,35 +4,32 @@ Verify that JavaScript sourcemap enabling and disabling adds/removes sourcemap s
 Running: dumpInitialNavigator
 top
   127.0.0.1:8000
-    devtools
+    devtools/sources
       resources
-        inspected-page.html
-      sources/resources
         sourcemap-script.js
         sourcemap-typescript.ts
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+      js-sourcemaps-toggle-enabled.html
+    inspector
+      inspector-test.js
 
 Running: disableJSSourceMaps
 top
   127.0.0.1:8000
-    devtools
+    devtools/sources
       resources
-        inspected-page.html
-      sources/resources
         sourcemap-script.js
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+      js-sourcemaps-toggle-enabled.html
+    inspector
+      inspector-test.js
 
 Running: enableJSSourceMaps
 top
   127.0.0.1:8000
-    devtools
+    devtools/sources
       resources
-        inspected-page.html
-      sources/resources
         sourcemap-script.js
         sourcemap-typescript.ts
-  (no domain)
-    js-sourcemaps-toggle-enabled.js
+      js-sourcemaps-toggle-enabled.html
+    inspector
+      inspector-test.js
 

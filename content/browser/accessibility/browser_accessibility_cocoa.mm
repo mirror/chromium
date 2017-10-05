@@ -804,17 +804,13 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSArray*)columnHeaders {
   if (![self instanceActive])
     return nil;
-  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole()) &&
-      !ui::IsCellOrTableHeaderRole(browserAccessibility_->GetRole())) {
+  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole())) {
     return nil;
   }
-  BrowserAccessibility* table = [self containingTable];
-  if (!table)
-    return nil;
 
   NSMutableArray* ret = [[[NSMutableArray alloc] init] autorelease];
   const std::vector<int32_t>& uniqueCellIds =
-      table->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);
+      browserAccessibility_->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);
   for (size_t i = 0; i < uniqueCellIds.size(); ++i) {
     int id = uniqueCellIds[i];
     BrowserAccessibility* cell =
@@ -851,14 +847,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
       [ret addObject:child];
   }
   return ret;
-}
-
-- (BrowserAccessibility*)containingTable {
-  BrowserAccessibility* table = browserAccessibility_;
-  while (table && !ui::IsTableLikeRole(table->GetRole())) {
-    table = table->PlatformGetParent();
-  }
-  return table;
 }
 
 - (NSString*)description {
@@ -1616,17 +1604,13 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSArray*)rowHeaders {
   if (![self instanceActive])
     return nil;
-  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole()) &&
-      !ui::IsCellOrTableHeaderRole(browserAccessibility_->GetRole())) {
+  if (!ui::IsTableLikeRole(browserAccessibility_->GetRole())) {
     return nil;
   }
-  BrowserAccessibility* table = [self containingTable];
-  if (!table)
-    return nil;
 
   NSMutableArray* ret = [[[NSMutableArray alloc] init] autorelease];
   const std::vector<int32_t>& uniqueCellIds =
-      table->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);
+      browserAccessibility_->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);
   for (size_t i = 0; i < uniqueCellIds.size(); ++i) {
     int id = uniqueCellIds[i];
     BrowserAccessibility* cell =
@@ -2749,8 +2733,6 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
     [ret addObjectsFromArray:@[
       NSAccessibilityColumnIndexRangeAttribute,
       NSAccessibilityRowIndexRangeAttribute,
-      NSAccessibilityColumnHeaderUIElementsAttribute,
-      NSAccessibilityRowHeaderUIElementsAttribute,
       NSAccessibilityARIAColumnIndexAttribute,
       NSAccessibilityARIARowIndexAttribute,
       @"AXSortDirection",

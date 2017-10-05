@@ -20,6 +20,7 @@
 #include "core/layout/svg/SVGResources.h"
 
 #include <memory>
+#include "core/SVGNames.h"
 #include "core/layout/svg/LayoutSVGResourceClipper.h"
 #include "core/layout/svg/LayoutSVGResourceFilter.h"
 #include "core/layout/svg/LayoutSVGResourceMarker.h"
@@ -30,7 +31,6 @@
 #include "core/svg/SVGPatternElement.h"
 #include "core/svg/SVGTreeScopeResources.h"
 #include "core/svg/SVGURIReference.h"
-#include "core/svg_names.h"
 #include "platform/wtf/PtrUtil.h"
 
 #ifndef NDEBUG

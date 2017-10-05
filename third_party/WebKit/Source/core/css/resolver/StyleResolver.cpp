@@ -31,6 +31,7 @@
 #include "core/css/resolver/StyleResolver.h"
 
 #include "core/CSSPropertyNames.h"
+#include "core/HTMLNames.h"
 #include "core/MediaTypeNames.h"
 #include "core/StylePropertyShorthand.h"
 #include "core/animation/CSSInterpolationEnvironment.h"
@@ -86,7 +87,6 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLSlotElement.h"
-#include "core/html_names.h"
 #include "core/layout/GeneratedChildren.h"
 #include "core/probe/CoreProbes.h"
 #include "core/style/StyleInheritedVariables.h"
@@ -598,9 +598,7 @@ RefPtr<ComputedStyle> StyleResolver::StyleForElement(
   // loading.
   if (!GetDocument().IsRenderingReady() && !element->GetLayoutObject()) {
     if (!style_not_yet_available_) {
-      auto style = ComputedStyle::Create();
-      style->AddRef();
-      style_not_yet_available_ = style.get();
+      style_not_yet_available_ = ComputedStyle::Create().LeakRef();
       style_not_yet_available_->SetDisplay(EDisplay::kNone);
       style_not_yet_available_->GetFont().Update(
           GetDocument().GetStyleEngine().GetFontSelector());
@@ -1257,6 +1255,7 @@ void StyleResolver::ApplyAnimatedStandardProperties(
     } else if (interpolation.IsTransitionInterpolation()) {
       ToTransitionInterpolation(interpolation).Apply(state);
     } else {
+      // TODO(alancutter): Move CustomCompositorAnimations off AnimatableValues.
       ToLegacyStyleInterpolation(interpolation).Apply(state);
     }
   }

@@ -113,13 +113,12 @@ RefPtr<DrawingBuffer> DrawingBuffer::Create(
   if (multisample_supported) {
     extensions_util->EnsureExtensionEnabled("GL_OES_rgb8_rgba8");
     if (extensions_util->SupportsExtension(
-            "GL_CHROMIUM_framebuffer_multisample")) {
+            "GL_CHROMIUM_framebuffer_multisample"))
       extensions_util->EnsureExtensionEnabled(
           "GL_CHROMIUM_framebuffer_multisample");
-    } else {
+    else
       extensions_util->EnsureExtensionEnabled(
           "GL_EXT_multisampled_render_to_texture");
-    }
   }
   bool discard_framebuffer_supported =
       extensions_util->SupportsExtension("GL_EXT_discard_framebuffer");
@@ -394,6 +393,9 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
         color_buffer_for_mailbox->parameters.target,
         color_buffer_for_mailbox->mailbox.name);
     const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
+#if defined(OS_MACOSX)
+    gl_->DescheduleUntilFinishedCHROMIUM();
+#endif
     // It's critical to order the execution of this context's work relative
     // to other contexts, in particular the compositor. Previously this
     // used to be a Flush, and there was a bug that we didn't flush before
@@ -401,25 +403,25 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
     // incorrect rendering with complex WebGL content that wasn't always
     // properly flushed to the driver. There is now a basic assumption that
     // there are implicit flushes between contexts at the lowest level.
+    //
+    // Note also that theoretically this should be ShallowFlushCHROMIUM,
+    // but as we are moving toward using unverified sync tokens everywhere,
+    // and this code is working, we would rather not incur two synchronous
+    // IPCs here (which that would imply).
     gl_->OrderingBarrierCHROMIUM();
-    gl_->GenUnverifiedSyncTokenCHROMIUM(
+    gl_->GenSyncTokenCHROMIUM(
         fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
-#if defined(OS_MACOSX)
-    // Needed for GPU back-pressure on macOS. Used to be in the middle
-    // of the commands above; try to move it to the bottom to allow
-    // them to be treated atomically.
-    gl_->DescheduleUntilFinishedCHROMIUM();
-#endif
   }
 
   // Populate the output mailbox and callback.
   {
     bool is_overlay_candidate = color_buffer_for_mailbox->image_id != 0;
-    *out_mailbox =
-        viz::TextureMailbox(color_buffer_for_mailbox->mailbox,
-                            color_buffer_for_mailbox->produce_sync_token,
-                            color_buffer_for_mailbox->parameters.target,
-                            gfx::Size(size_), is_overlay_candidate);
+    bool secure_output_only = false;
+    *out_mailbox = viz::TextureMailbox(
+        color_buffer_for_mailbox->mailbox,
+        color_buffer_for_mailbox->produce_sync_token,
+        color_buffer_for_mailbox->parameters.target, gfx::Size(size_),
+        is_overlay_candidate, secure_output_only);
     out_mailbox->set_color_space(sampler_color_space_);
 
     // This holds a ref on the DrawingBuffer that will keep it alive until the
@@ -755,9 +757,8 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
     gl_->ProduceTextureDirectCHROMIUM(back_color_buffer_->texture_id, target,
                                       mailbox.name);
     const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
-    gl_->OrderingBarrierCHROMIUM();
-    gl_->GenUnverifiedSyncTokenCHROMIUM(fence_sync,
-                                        produce_sync_token.GetData());
+    gl_->Flush();
+    gl_->GenSyncTokenCHROMIUM(fence_sync, produce_sync_token.GetData());
   }
 
   if (!produce_sync_token.HasData()) {
@@ -787,9 +788,9 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
 
   const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
 
-  gl->OrderingBarrierCHROMIUM();
+  gl->Flush();
   gpu::SyncToken sync_token;
-  gl->GenUnverifiedSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
+  gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   gl_->WaitSyncTokenCHROMIUM(sync_token.GetData());
 
   return true;
@@ -1284,13 +1285,12 @@ void DrawingBuffer::AttachColorBufferToReadFramebuffer() {
 
   gl_->BindTexture(target, id);
 
-  if (anti_aliasing_mode_ == kMSAAImplicitResolve) {
+  if (anti_aliasing_mode_ == kMSAAImplicitResolve)
     gl_->FramebufferTexture2DMultisampleEXT(
         GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, target, id, 0, sample_count_);
-  } else {
+  else
     gl_->FramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, target, id,
                               0);
-  }
 }
 
 bool DrawingBuffer::WantExplicitResolve() {

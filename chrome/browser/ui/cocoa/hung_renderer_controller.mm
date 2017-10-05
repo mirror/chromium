@@ -104,7 +104,7 @@ class HungRendererWebContentsObserverBridge
 
 - (void)awakeFromNib {
   // Load in the image.
-  ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   NSImage* backgroundImage =
       rb.GetNativeImageNamed(IDR_FROZEN_TAB_ICON).ToNSImage();
   [imageView_ setImage:backgroundImage];

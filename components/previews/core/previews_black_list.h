@@ -81,11 +81,8 @@ class PreviewsBlackList {
   // navigated away from the page without opting out. |type| is only passed to
   // the backing store. If the in memory map has reached the max number of hosts
   // allowed, and |url| is a new host, a host will be evicted based on recency
-  // of the hosts most recent opt out. It returns the time used for recording
-  // the moment when the navigation is added for logging.
-  base::Time AddPreviewNavigation(const GURL& url,
-                                  bool opt_out,
-                                  PreviewsType type);
+  // of the hosts most recent opt out.
+  void AddPreviewNavigation(const GURL& url, bool opt_out, PreviewsType type);
 
   // Synchronously determines if |host_name| should be allowed to show previews.
   // Returns the reason the blacklist disallowed the preview, or
@@ -111,13 +108,10 @@ class PreviewsBlackList {
   CreateHostIndifferentBlackListItem();
 
  private:
-  // Synchronous version of AddPreviewNavigation method. |time| is the time
-  // stamp of when the navigation was determined to be an opt-out or non-opt
-  // out.
+  // Synchronous version of AddPreviewNavigation method.
   void AddPreviewNavigationSync(const GURL& host_name,
                                 bool opt_out,
-                                PreviewsType type,
-                                base::Time time);
+                                PreviewsType type);
 
   // Synchronous version of ClearBlackList method.
   void ClearBlackListSync(base::Time begin_time, base::Time end_time);

@@ -87,12 +87,11 @@ void IgnoreString(const std::string& ignored) {
 class CookieStoreIOSTest : public testing::Test {
  public:
   CookieStoreIOSTest()
-      : kTestCookieURLFooBar("http://foo.google.com/bar"),
-        kTestCookieURLFooBaz("http://foo.google.com/baz"),
-        kTestCookieURLFoo("http://foo.google.com"),
-        kTestCookieURLBarBar("http://bar.google.com/bar"),
+      : kTestCookieURL("http://foo.google.com/bar"),
+        kTestCookieURL2("http://foo.google.com/baz"),
+        kTestCookieURL3("http://foo.google.com"),
+        kTestCookieURL4("http://bar.google.com/bar"),
         backend_(new TestPersistentCookieStore) {
-    ClearCookies();
     std::unique_ptr<NSHTTPSystemCookieStore> system_store(
         base::MakeUnique<NSHTTPSystemCookieStore>());
     // |system_store_| doesn't own the NSHTTPSystemCookieStore object, the
@@ -101,22 +100,23 @@ class CookieStoreIOSTest : public testing::Test {
     system_store_ = system_store.get();
     store_ = base::MakeUnique<net::CookieStoreIOS>(std::move(system_store));
     cookie_changed_callback_ = store_->AddCallbackForCookie(
-        kTestCookieURLFooBar, "abc",
+        kTestCookieURL, "abc",
         base::Bind(&RecordCookieChanges, &cookies_changed_, &cookies_removed_));
   }
+
   ~CookieStoreIOSTest() override {}
 
   // Gets the cookies. |callback| will be called on completion.
   void GetCookies(net::CookieStore::GetCookiesCallback callback) {
     net::CookieOptions options;
     options.set_include_httponly();
-    store_->GetCookiesWithOptionsAsync(kTestCookieURLFooBar, options,
+    store_->GetCookiesWithOptionsAsync(kTestCookieURL, options,
                                        std::move(callback));
   }
 
   // Sets a cookie.
   void SetCookie(const std::string& cookie_line) {
-    net::SetCookie(cookie_line, kTestCookieURLFooBar, store_.get());
+    net::SetCookie(cookie_line, kTestCookieURL, store_.get());
   }
 
   void SetSystemCookie(const GURL& url,
@@ -145,10 +145,10 @@ class CookieStoreIOSTest : public testing::Test {
   }
 
  protected:
-  const GURL kTestCookieURLFooBar;
-  const GURL kTestCookieURLFooBaz;
-  const GURL kTestCookieURLFoo;
-  const GURL kTestCookieURLBarBar;
+  const GURL kTestCookieURL;
+  const GURL kTestCookieURL2;
+  const GURL kTestCookieURL3;
+  const GURL kTestCookieURL4;
 
   base::MessageLoop loop_;
   scoped_refptr<TestPersistentCookieStore> backend_;
@@ -182,7 +182,7 @@ TEST_F(CookieStoreIOSTest, SetCookieCallsHookWhenSynchronized) {
   EXPECT_EQ("abc", cookies_changed_[2].Name());
   EXPECT_EQ("ghi", cookies_changed_[2].Value());
   EXPECT_FALSE(cookies_removed_[2]);
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, DeleteCallsHook) {
@@ -191,7 +191,7 @@ TEST_F(CookieStoreIOSTest, DeleteCallsHook) {
   SetCookie("abc=def");
   EXPECT_EQ(1U, cookies_changed_.size());
   EXPECT_EQ(1U, cookies_removed_.size());
-  store_->DeleteCookieAsync(kTestCookieURLFooBar, "abc",
+  store_->DeleteCookieAsync(kTestCookieURL, "abc",
                             base::Bind(&IgnoreBoolean, false));
   CookieStoreIOS::NotifySystemCookiesChanged();
   base::RunLoop().RunUntilIdle();
@@ -209,7 +209,7 @@ TEST_F(CookieStoreIOSTest, SameValueDoesNotCallHook) {
 
 TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
   base::MessageLoop loop;
-  const GURL kTestCookieURLFooBar("http://foo.google.com/bar");
+  const GURL kTestCookieURL("http://foo.google.com/bar");
   ClearCookies();
   std::unique_ptr<CookieStoreIOS> cookie_store(base::MakeUnique<CookieStoreIOS>(
       base::MakeUnique<NSHTTPSystemCookieStore>()));
@@ -218,12 +218,11 @@ TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
   net::CookieOptions options;
   options.set_include_httponly();
   cookie_store->SetCookieWithOptionsAsync(
-      kTestCookieURLFooBar, "a=b", options,
-      net::CookieStore::SetCookiesCallback());
+      kTestCookieURL, "a=b", options, net::CookieStore::SetCookiesCallback());
   // Check we can get the cookie.
   GetAllCookiesCallback callback;
   cookie_store->GetAllCookiesForURLAsync(
-      kTestCookieURLFooBar,
+      kTestCookieURL,
       base::Bind(&GetAllCookiesCallback::Run, base::Unretained(&callback)));
   EXPECT_TRUE(callback.did_run());
   EXPECT_EQ(1u, callback.cookie_list().size());
@@ -235,19 +234,19 @@ TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
 TEST_F(CookieStoreIOSTest, NoInitialNotifyWithNoCookie) {
   std::vector<net::CanonicalCookie> cookies;
   store_->AddCallbackForCookie(
-      kTestCookieURLFooBar, "abc",
+      kTestCookieURL, "abc",
       base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
 }
 
 TEST_F(CookieStoreIOSTest, NoInitialNotifyWithSystemCookie) {
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   std::vector<net::CanonicalCookie> cookies;
   store_->AddCallbackForCookie(
-      kTestCookieURLFooBar, "abc",
+      kTestCookieURL, "abc",
       base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, NotifyOnAdd) {
@@ -255,23 +254,23 @@ TEST_F(CookieStoreIOSTest, NotifyOnAdd) {
   std::vector<bool> removes;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, &removes));
   EXPECT_EQ(0U, cookies.size());
   EXPECT_EQ(0U, removes.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   EXPECT_EQ(1U, cookies.size());
   EXPECT_EQ(1U, removes.size());
   EXPECT_EQ("abc", cookies[0].Name());
   EXPECT_EQ("def", cookies[0].Value());
   EXPECT_FALSE(removes[0]);
 
-  SetSystemCookie(kTestCookieURLFooBar, "ghi", "jkl");
+  SetSystemCookie(kTestCookieURL, "ghi", "jkl");
   EXPECT_EQ(1U, cookies.size());
   EXPECT_EQ(1U, removes.size());
 
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
-  DeleteSystemCookie(kTestCookieURLFooBar, "ghi");
+  DeleteSystemCookie(kTestCookieURL, "abc");
+  DeleteSystemCookie(kTestCookieURL, "ghi");
 }
 
 TEST_F(CookieStoreIOSTest, NotifyOnChange) {
@@ -279,12 +278,12 @@ TEST_F(CookieStoreIOSTest, NotifyOnChange) {
   std::vector<bool> removes;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, &removes));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   EXPECT_EQ(1U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "ghi");
+  SetSystemCookie(kTestCookieURL, "abc", "ghi");
   EXPECT_EQ(3U, cookies.size());
   EXPECT_EQ(3U, removes.size());
   EXPECT_EQ("abc", cookies[1].Name());
@@ -294,41 +293,41 @@ TEST_F(CookieStoreIOSTest, NotifyOnChange) {
   EXPECT_EQ("ghi", cookies[2].Value());
   EXPECT_FALSE(removes[2]);
 
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, NotifyOnDelete) {
   std::vector<net::CanonicalCookie> cookies;
   std::vector<bool> removes;
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, &removes));
   EXPECT_EQ(0U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
   EXPECT_EQ(1U, cookies.size());
   EXPECT_EQ(1U, removes.size());
   EXPECT_TRUE(removes[0]);
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   EXPECT_EQ(2U, cookies.size());
   EXPECT_EQ(2U, removes.size());
   EXPECT_FALSE(removes[1]);
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, NoNotifyOnNoChange) {
   std::vector<net::CanonicalCookie> cookies;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   EXPECT_EQ(1U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   EXPECT_EQ(1U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, MultipleNotifies) {
@@ -338,88 +337,88 @@ TEST_F(CookieStoreIOSTest, MultipleNotifies) {
   std::vector<net::CanonicalCookie> cookies4;
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle2 =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBaz, "abc",
+          kTestCookieURL2, "abc",
           base::Bind(&RecordCookieChanges, &cookies2, nullptr));
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle3 =
       store_->AddCallbackForCookie(
-          kTestCookieURLFoo, "abc",
+          kTestCookieURL3, "abc",
           base::Bind(&RecordCookieChanges, &cookies3, nullptr));
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle4 =
       store_->AddCallbackForCookie(
-          kTestCookieURLBarBar, "abc",
+          kTestCookieURL4, "abc",
           base::Bind(&RecordCookieChanges, &cookies4, nullptr));
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
-  SetSystemCookie(kTestCookieURLFooBaz, "abc", "def");
-  SetSystemCookie(kTestCookieURLFoo, "abc", "def");
-  SetSystemCookie(kTestCookieURLBarBar, "abc", "def");
-  EXPECT_EQ(2U, cookies.size());
-  EXPECT_EQ(2U, cookies2.size());
-  EXPECT_EQ(1U, cookies3.size());
+  SetSystemCookie(kTestCookieURL, "abc", "def");
+  SetSystemCookie(kTestCookieURL2, "abc", "def");
+  SetSystemCookie(kTestCookieURL3, "abc", "def");
+  SetSystemCookie(kTestCookieURL4, "abc", "def");
+  EXPECT_EQ(1U, cookies.size());
+  EXPECT_EQ(1U, cookies2.size());
+  EXPECT_EQ(0U, cookies3.size());
   EXPECT_EQ(1U, cookies4.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
-  DeleteSystemCookie(kTestCookieURLFooBaz, "abc");
-  DeleteSystemCookie(kTestCookieURLFoo, "abc");
-  DeleteSystemCookie(kTestCookieURLBarBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
+  DeleteSystemCookie(kTestCookieURL2, "abc");
+  DeleteSystemCookie(kTestCookieURL3, "abc");
+  DeleteSystemCookie(kTestCookieURL4, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, LessSpecificNestedCookie) {
   std::vector<net::CanonicalCookie> cookies;
-  SetSystemCookie(kTestCookieURLFooBaz, "abc", "def");
+  SetSystemCookie(kTestCookieURL2, "abc", "def");
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBaz, "abc",
+          kTestCookieURL2, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFoo, "abc", "ghi");
+  SetSystemCookie(kTestCookieURL3, "abc", "ghi");
   EXPECT_EQ(1U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, MoreSpecificNestedCookie) {
   std::vector<net::CanonicalCookie> cookies;
-  SetSystemCookie(kTestCookieURLFoo, "abc", "def");
+  SetSystemCookie(kTestCookieURL3, "abc", "def");
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBaz, "abc",
+          kTestCookieURL2, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBaz, "abc", "ghi");
-  EXPECT_EQ(1U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  SetSystemCookie(kTestCookieURL2, "abc", "ghi");
+  EXPECT_EQ(2U, cookies.size());
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, MoreSpecificNestedCookieWithSameValue) {
   std::vector<net::CanonicalCookie> cookies;
-  SetSystemCookie(kTestCookieURLFoo, "abc", "def");
+  SetSystemCookie(kTestCookieURL3, "abc", "def");
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBaz, "abc",
+          kTestCookieURL2, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBaz, "abc", "def");
-  EXPECT_EQ(1U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  SetSystemCookie(kTestCookieURL2, "abc", "def");
+  EXPECT_EQ(2U, cookies.size());
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 TEST_F(CookieStoreIOSTest, RemoveCallback) {
   std::vector<net::CanonicalCookie> cookies;
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "def");
+  SetSystemCookie(kTestCookieURL, "abc", "def");
   std::unique_ptr<net::CookieStore::CookieChangedSubscription> handle =
       store_->AddCallbackForCookie(
-          kTestCookieURLFooBar, "abc",
+          kTestCookieURL, "abc",
           base::Bind(&RecordCookieChanges, &cookies, nullptr));
   EXPECT_EQ(0U, cookies.size());
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "ghi");
+  SetSystemCookie(kTestCookieURL, "abc", "ghi");
   EXPECT_EQ(2U, cookies.size());
   // this deletes the callback
   handle.reset();
-  SetSystemCookie(kTestCookieURLFooBar, "abc", "jkl");
+  SetSystemCookie(kTestCookieURL, "abc", "jkl");
   EXPECT_EQ(2U, cookies.size());
-  DeleteSystemCookie(kTestCookieURLFooBar, "abc");
+  DeleteSystemCookie(kTestCookieURL, "abc");
 }
 
 }  // namespace net

@@ -17,7 +17,6 @@
 #include "chrome/browser/chromeos/policy/proto/install_attributes.pb.h"
 #include "chromeos/chromeos_paths.h"
 #include "chromeos/cryptohome/cryptohome_util.h"
-#include "chromeos/dbus/cryptohome/rpc.pb.h"
 #include "chromeos/dbus/cryptohome_client.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -32,6 +31,13 @@ void CopyLockResult(base::RunLoop* loop,
                     InstallAttributes::LockResult result) {
   *out = result;
   loop->Quit();
+}
+
+void OnSetBlockDevmode(chromeos::DBusMethodCallStatus* out_status,
+                       chromeos::DBusMethodCallStatus call_status,
+                       bool result,
+                       const cryptohome::BaseReply& reply) {
+  *out_status = call_status;
 }
 
 }  // namespace
@@ -300,17 +306,13 @@ TEST_F(InstallAttributesTest, VerifyFakeInstallAttributesCache) {
 }
 
 TEST_F(InstallAttributesTest, CheckSetBlockDevmodeInTpm) {
-  bool succeeded = false;
+  chromeos::DBusMethodCallStatus status =
+      chromeos::DBusMethodCallStatus::DBUS_METHOD_CALL_FAILURE;
   install_attributes_->SetBlockDevmodeInTpm(
-      true,
-      base::BindOnce(
-          [](bool* succeeded, base::Optional<cryptohome::BaseReply> reply) {
-            *succeeded = reply.has_value();
-          },
-          &succeeded));
+      true, base::Bind(&OnSetBlockDevmode, &status));
   base::RunLoop().RunUntilIdle();
 
-  EXPECT_TRUE(succeeded);
+  EXPECT_EQ(chromeos::DBusMethodCallStatus::DBUS_METHOD_CALL_SUCCESS, status);
 }
 
 }  // namespace chromeos

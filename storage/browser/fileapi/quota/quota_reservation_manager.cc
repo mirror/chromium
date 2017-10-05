@@ -71,7 +71,7 @@ QuotaReservationManager::GetReservationBuffer(
     *buffer = new QuotaReservationBuffer(
         weak_ptr_factory_.GetWeakPtr(), origin, type);
   }
-  return base::WrapRefCounted(*buffer);
+  return make_scoped_refptr(*buffer);
 }
 
 void QuotaReservationManager::ReleaseReservationBuffer(

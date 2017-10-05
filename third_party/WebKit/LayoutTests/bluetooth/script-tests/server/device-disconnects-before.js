@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(t => {
+promise_test(t => {
   return setBluetoothFakeAdapter('DisconnectingHeartRateAdapter')
       .then(() => requestDeviceWithKeyDown({
               filters: [{services: ['heart_rate']}],

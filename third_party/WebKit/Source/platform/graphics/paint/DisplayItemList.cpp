@@ -59,25 +59,30 @@ void DisplayItemList::AppendSubsequenceAsJSON(size_t begin_index,
 #endif
 
 #ifdef NDEBUG
-    // This is for NDEBUG only because DisplayItem::PropertiesAsJSON will output
-    // these information.
+    // This is for NDEBUG only because DisplayItem::DumpPropertiesAsDebugString
+    // will output these information.
     if (show_client_debug_name)
       json->SetString("clientDebugName", display_item.Client().DebugName());
 
     json->SetInteger("type", static_cast<int>(display_item.GetType()));
     json->SetString("visualRect", display_item.VisualRect().ToString());
 #else
+    StringBuilder string_builder;
+    display_item.DumpPropertiesAsDebugString(string_builder);
+
     if (options & kShownOnlyDisplayItemTypes) {
       json->SetString("type",
                       DisplayItem::TypeAsDebugString(display_item.GetType()));
     } else {
-      display_item.PropertiesAsJSON(*json);
+      json->SetString("properties", string_builder.ToString());
     }
 
     if ((options & kShowPaintRecords) && display_item.IsDrawing()) {
       const auto& item = static_cast<const DrawingDisplayItem&>(display_item);
-      if (const auto* record = item.GetPaintRecord().get())
-        json->SetArray("record", RecordAsJSON(*record));
+      if (const PaintRecord* record = item.GetPaintRecord().get()) {
+        json->SetString(
+            "record", RecordAsDebugString(record, item.GetPaintRecordBounds()));
+      }
     }
 #endif
 

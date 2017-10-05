@@ -4,15 +4,13 @@
 
 #include "chrome/browser/ui/webui/settings/chromeos/device_keyboard_handler.h"
 
-#include "ash/public/interfaces/constants.mojom.h"
-#include "ash/public/interfaces/new_window.mojom.h"
+#include "ash/new_window_controller.h"
+#include "ash/shell.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/values.h"
 #include "chromeos/chromeos_switches.h"
 #include "content/public/browser/web_ui.h"
-#include "content/public/common/service_manager_connection.h"
-#include "services/service_manager/public/cpp/connector.h"
 #include "ui/events/devices/input_device_manager.h"
 
 namespace {
@@ -73,11 +71,7 @@ void KeyboardHandler::HandleInitialize(const base::ListValue* args) {
 
 void KeyboardHandler::HandleShowKeyboardShortcutsOverlay(
     const base::ListValue* args) const {
-  ash::mojom::NewWindowControllerPtr new_window_controller;
-  content::ServiceManagerConnection::GetForProcess()
-      ->GetConnector()
-      ->BindInterface(ash::mojom::kServiceName, &new_window_controller);
-  new_window_controller->ShowKeyboardOverlay();
+  ash::Shell::Get()->new_window_controller()->ShowKeyboardOverlay();
 }
 
 void KeyboardHandler::UpdateShowKeys() {

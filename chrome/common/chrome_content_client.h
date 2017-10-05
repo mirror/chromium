@@ -76,7 +76,7 @@ class ChromeContentClient : public content::ContentClient {
       std::vector<content::PepperPluginInfo>* plugins) override;
   void AddContentDecryptionModules(
       std::vector<content::CdmInfo>* cdms,
-      std::vector<media::CdmHostFilePath>* cdm_host_file_paths) override;
+      std::vector<content::CdmHostFilePath>* cdm_host_file_paths) override;
 
   void AddAdditionalSchemes(Schemes* schemes) override;
   std::string GetProduct() const override;
@@ -90,7 +90,14 @@ class ChromeContentClient : public content::ContentClient {
   gfx::Image& GetNativeImageNamed(int resource_id) const override;
   std::string GetProcessTypeNameInEnglish(int type) override;
 
+#if defined(OS_MACOSX)
+  bool GetSandboxProfileForSandboxType(
+      int sandbox_type,
+      const char** sandbox_profile) const override;
+#endif
+
   bool AllowScriptExtensionForServiceWorker(const GURL& script_url) override;
+
   bool IsSupplementarySiteIsolationModeEnabled() override;
 
   content::OriginTrialPolicy* GetOriginTrialPolicy() override;

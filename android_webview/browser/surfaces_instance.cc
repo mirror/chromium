@@ -38,8 +38,8 @@ SurfacesInstance* g_surfaces_instance = nullptr;
 // static
 scoped_refptr<SurfacesInstance> SurfacesInstance::GetOrCreateInstance() {
   if (g_surfaces_instance)
-    return base::WrapRefCounted(g_surfaces_instance);
-  return base::WrapRefCounted(new SurfacesInstance);
+    return make_scoped_refptr(g_surfaces_instance);
+  return make_scoped_refptr(new SurfacesInstance);
 }
 
 SurfacesInstance::SurfacesInstance()
@@ -69,7 +69,7 @@ SurfacesInstance::SurfacesInstance()
       new viz::TextureMailboxDeleter(nullptr));
   std::unique_ptr<ParentOutputSurface> output_surface_holder(
       new ParentOutputSurface(AwRenderThreadContextProvider::Create(
-          base::WrapRefCounted(new AwGLSurface),
+          make_scoped_refptr(new AwGLSurface),
           DeferredGpuCommandService::GetInstance())));
   output_surface_ = output_surface_holder.get();
   auto scheduler = base::MakeUnique<viz::DisplayScheduler>(

@@ -16,7 +16,7 @@
 #include "chrome/test/base/testing_profile.h"
 #include "components/signin/core/browser/fake_signin_manager.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
 #include "ash/shell.h"
 #endif
 
@@ -61,7 +61,7 @@ TestingProfile* ChromeRenderViewHostTestHarness::profile() {
 
 void ChromeRenderViewHostTestHarness::TearDown() {
   RenderViewHostTestHarness::TearDown();
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   ash::Shell::DeleteInstance();
 #endif
 }

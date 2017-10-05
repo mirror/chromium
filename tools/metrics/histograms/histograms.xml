@@ -1410,21 +1410,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="AnimatedImage.NumOfFramesSkipped" units="count">
-  <owner>khushalsagar@chromium.org</owner>
-  <summary>
-    If the frame rate for the image animation can not be reached, frames in the
-    animation are skipped to catch up to the desired frame. This metric tracks
-    the number of frames skipped during catch up, and can be used to assess the
-    smoothness of these animations. It records the number of frames skipped each
-    time the animation is ticked forward to draw the next frame. In the ideal
-    case, where the animation can be drawn at the desired rate, 0 frames should
-    be skipped. Note that skipping of frames can also be triggered if the
-    animation was intentionally paused (on becoming off-screen, or the tab being
-    hidden).
-  </summary>
-</histogram>
-
 <histogram name="AppBanners.BeforeInstallEvent"
     enum="AppBannersBeforeInstallEvent">
   <owner>dominickn@chromium.org</owner>
@@ -18191,14 +18176,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="EnterpriseCheck.IsDomainJoined" enum="BooleanEnabled">
-  <owner>mad@chromium.org</owner>
-  <summary>
-    Whether the machine is joined to an AD domain. This check is performed once
-    at start-up on Windows.
-  </summary>
-</histogram>
-
 <histogram name="EnterpriseCheck.IsEnterpriseUser" enum="BooleanEnabled">
   <owner>rogerta@chromium.org</owner>
   <summary>
@@ -18213,15 +18190,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Whether the machine is managed via MDM. This check is performed once at
     start-up on Windows.
-  </summary>
-</histogram>
-
-<histogram name="EnterpriseCheck.NetGetJoinInformationAddress"
-    enum="BooleanEnabled">
-  <owner>rogerta@chromium.org</owner>
-  <summary>
-    Whether we could obtain the address of the NetGetJoinInformation function.
-    This check is performed once at start-up on Windows.
   </summary>
 </histogram>
 
@@ -32065,8 +32033,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.FallbackToHighLatencyAudioPath"
-    enum="BooleanDidFallBack">
+<histogram name="Media.FallbackToHighLatencyAudioPath" enum="BooleanSuccess">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
     Whether Chrome had to fallback to the high latency audio path or not.
@@ -36455,16 +36422,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The time spent inside RenderWidgetHost::OnMsgPaintRect.</summary>
 </histogram>
 
-<histogram name="MPArch.RWH_OnMsgResizeOrRepaintACK">
-  <owner>fsamuel@chromium.org</owner>
-  <owner>piman@chromium.org</owner>
-  <summary>
-    The time delta for processing a paint message. On platforms that don't
-    support asynchronous painting, this is equivalent to
-    MPArch.RWH_TotalPaintTime.
-  </summary>
-</histogram>
-
 <histogram name="MPArch.RWH_OnMsgScrollRect" units="ms">
   <obsolete>
     Deprecated 04/2016 as doesn't have data nor owner.
@@ -36474,9 +36431,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="MPArch.RWH_OnMsgUpdateRect">
-  <obsolete>
-    Deprecated 10/2017. Replaced with MPArch.RWH_OnMsgResizeOrRepaintACK.
-  </obsolete>
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>TBD</summary>
 </histogram>
@@ -49017,14 +48971,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="NewTabPage.OneGoogleBar.ShownTime" units="ms">
-  <owner>treib@chromium.org</owner>
-  <summary>
-    Histogram of the time, in milliseconds since navigation start, it took until
-    the OneGoogleBar showed up on the NTP. Recorded only on the local NTP.
-  </summary>
-</histogram>
-
 <histogram name="NewTabPage.OtherSessionsMenu" enum="OtherSessionsActions">
   <obsolete>
     Deprecated 05/2015. Feature was removed.
@@ -50911,28 +50857,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Result of servicing requests that may contain offline page.</summary>
 </histogram>
 
-<histogram base="true"
-    name="OfflinePages.ArchiveManager.ArchiveDirsCreationResult"
+<histogram name="OfflinePages.ArchiveManager.ArchiveDirsCreationResult"
     enum="PlatformFileError">
-  <obsolete>
-    Deprecated 2017-10, and replaced by
-    OfflinePages.ArchiveManager.ArchiveDirsCreationResult2 with suffixes for
-    temporary and persistent pages.
-  </obsolete>
   <owner>romax@chromium.org</owner>
   <summary>
     This is recorded every time the archive directory is being created. It
     doesn't include the case which the archive directory exists.
-  </summary>
-</histogram>
-
-<histogram name="OfflinePages.ArchiveManager.ArchiveDirsCreationResult2"
-    enum="PlatformFileError">
-  <owner>romax@chromium.org</owner>
-  <summary>
-    This is recorded every time the archive directory is being created. It
-    doesn't include the case which the archive directory exists. It has suffixes
-    indicating results for temporary or persistent archives directories.
   </summary>
 </histogram>
 
@@ -56865,17 +56795,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>nparker@chromium.org</owner>
   <summary>
     Verdict types returned by Safe Browsing server for unfamiliar login pages.
-  </summary>
-</histogram>
-
-<histogram name="PasswordProtection.UserClickedThroughSafeBrowsingInterstitial"
-    enum="BooleanClickedThroughSBInterstitial">
-  <owner>jialiul@chromium.org</owner>
-  <owner>nparker@chromium.org</owner>
-  <summary>
-    Whether the user has clicked through the Safe Browsing interstitial before
-    the password protection ping is triggered on the same page. Logged right
-    before password protection ping is sent.
   </summary>
 </histogram>
 
@@ -66323,18 +66242,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="RendererScheduler.TaskDurationPerFrameType" units="ms">
-  <owner>altimin@chromium.org</owner>
-  <summary>
-    Total duration of renderer per-frame tasks split per frame type. Used to
-    monitor workload coming from different frames. Reported each time when task
-    is completed and current accumulated duration is longer than 1ms.
-
-    This metric is susceptible to problematic outliers and should be analyzed
-    with custom scripts accounting for that rather than from a dashboard.
-  </summary>
-</histogram>
-
 <histogram name="RendererScheduler.TaskDurationPerQueueType"
     enum="RendererSchedulerTaskQueueType" units="ms">
   <obsolete>
@@ -70692,7 +70599,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The elapsed time to upload a safe browsing incident report.</summary>
 </histogram>
 
-<histogram name="SBIRS.StateStoreInit" enum="StateStoreInitResult">
+<histogram name="SBIRS.StateStoreInitResult" enum="StateStoreInitResult">
   <owner>proberge@google.com</owner>
   <summary>
     The result of initializing the state store and comparing the preferences to
@@ -78132,15 +78039,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SoftwareReporter.Cleaner.SettingsPageActiveOnRebootRequired"
-    enum="SoftwareReporterCleanerSettingsPageActiveOnRebootRequired">
-  <owner>ftirelo@chromium.org</owner>
-  <summary>
-    Indicates if the Settings page was the active tab once a cleanup finished
-    with reboot required.
-  </summary>
-</histogram>
-
 <histogram name="SoftwareReporter.Cleaner.Version">
   <owner>mad@chromium.org</owner>
   <summary>The build version of the software reporter cleaner tool.</summary>
@@ -83259,14 +83157,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Tab.TabUnderAction" enum="TabUnderAction">
-  <owner>csharrison@chromium.org</owner>
-  <summary>
-    Various actions related to the tab under intervention, logged during main
-    frame navigation.
-  </summary>
-</histogram>
-
 <histogram name="Tab.TimeSinceActive" units="ms">
   <obsolete>
     Deprecated as of 10/2016.
@@ -83324,15 +83214,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The total count of tabs which were kept while Chrome process is in the
     foreground. This is recorded only for Android right before Chrome process
     goes into the background.
-  </summary>
-</histogram>
-
-<histogram name="Tab.VisibleTime" units="ms">
-  <owner>csharrison@chromium.org</owner>
-  <summary>
-    Measures the total time a tab is visible. Measured at the WebContents layer
-    so this metric does not attempt to account for things like session restore.
-    Logged at WebContents destruction.
   </summary>
 </histogram>
 
@@ -100349,13 +100230,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="SBOffDomainInclusion2.Abort"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="OfflinePagesArchiveDirectoryType" separator=".">
-  <suffix name="Temporary" label="Temporary archive directory"/>
-  <suffix name="Persistent" label="Persistent archive directory"/>
-  <affected-histogram
-      name="OfflinePages.ArchiveManager.ArchiveDirsCreationResult2"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="OfflinePagesNamespace" separator=".">
   <suffix name="bookmark" label="Offline bookmark cache"/>
   <suffix name="last_n" label="Offline recent pages"/>
@@ -101513,8 +101387,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="PasswordProtection.NumberOfCachedVerdictBeforeShutdown"/>
   <affected-histogram name="PasswordProtection.PageInfoAction"/>
   <affected-histogram name="PasswordProtection.RequestOutcome"/>
-  <affected-histogram
-      name="PasswordProtection.UserClickedThroughSafeBrowsingInterstitial"/>
   <affected-histogram name="PasswordProtection.Verdict"/>
 </histogram_suffixes>
 
@@ -102642,13 +102514,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Time spent in tasks of a particular type when the renderer is
              hidden and is playing audible sound."/>
   <affected-histogram name="RendererScheduler.TaskDurationPerQueueType2"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="RendererThreadType" separator=".">
-  <suffix name="Main" label="Measurement taken on the main/render thread."/>
-  <suffix name="Compositor"
-      label="Measurement taken on the compositor thread."/>
-  <affected-histogram name="AnimatedImage.NumOfFramesSkipped"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="RequestMediaKeySystemAccessKeySystems" separator=".">

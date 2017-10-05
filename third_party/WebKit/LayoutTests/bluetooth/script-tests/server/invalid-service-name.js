@@ -1,5 +1,5 @@
 'use strict';
-bluetooth_test(() => {
+promise_test(() => {
   return getHealthThermometerDevice()
     .then(({device}) => {
       return assert_promise_rejects_with_message(

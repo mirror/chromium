@@ -4,25 +4,9 @@
 
 cr.define('settings_subpage', function() {
   suite('SettingsSubpage', function() {
-    setup(function() {
-      PolymerTest.clearBody();
-    });
-
-    test('clear search', function() {
-      var subpage = document.createElement('settings-subpage');
-      // Having a searchLabel will create the settings-subpage-search.
-      subpage.searchLabel = 'test';
-      document.body.appendChild(subpage);
-      Polymer.dom.flush();
-      var search = subpage.$$('settings-subpage-search');
-      assertTrue(!!search);
-      search.setValue('Hello');
-      subpage.fire('clear-subpage-search');
-      Polymer.dom.flush();
-      assertEquals('', search.getValue());
-    });
-
     test('navigates to parent when there is no history', function() {
+      PolymerTest.clearBody();
+
       // Pretend that we initially started on the CERTIFICATES route.
       window.history.replaceState(
           undefined, '', settings.routes.CERTIFICATES.path);
@@ -37,6 +21,8 @@ cr.define('settings_subpage', function() {
     });
 
     test('navigates to any route via window.back()', function(done) {
+      PolymerTest.clearBody();
+
       settings.navigateTo(settings.routes.BASIC);
       settings.navigateTo(settings.routes.SYNC);
       assertEquals(settings.routes.SYNC, settings.getCurrentRoute());

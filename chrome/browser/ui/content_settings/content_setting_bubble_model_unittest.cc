@@ -166,8 +166,6 @@ TEST_F(ContentSettingBubbleModelTest, MediastreamMicAndCamera) {
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_MICROPHONE_CAMERA_ALLOWED_TITLE));
-  EXPECT_EQ(bubble_content.message,
             l10n_util::GetStringUTF16(IDS_MICROPHONE_CAMERA_ALLOWED));
   EXPECT_EQ(2U, bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(bubble_content.radio_group.radio_items[0],
@@ -529,8 +527,6 @@ TEST_F(ContentSettingBubbleModelTest, MediastreamMic) {
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_MICROPHONE_ACCESSED_TITLE));
-  EXPECT_EQ(bubble_content.message,
             l10n_util::GetStringUTF16(IDS_MICROPHONE_ACCESSED));
   EXPECT_EQ(2U, bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(bubble_content.radio_group.radio_items[0],
@@ -561,8 +557,6 @@ TEST_F(ContentSettingBubbleModelTest, MediastreamMic) {
   const ContentSettingBubbleModel::BubbleContent& new_bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(new_bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_MICROPHONE_BLOCKED_TITLE));
-  EXPECT_EQ(new_bubble_content.message,
             l10n_util::GetStringUTF16(IDS_MICROPHONE_BLOCKED));
   EXPECT_EQ(2U, new_bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(new_bubble_content.radio_group.radio_items[0],
@@ -604,8 +598,6 @@ TEST_F(ContentSettingBubbleModelTest, MediastreamCamera) {
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_CAMERA_ACCESSED_TITLE));
-  EXPECT_EQ(bubble_content.message,
             l10n_util::GetStringUTF16(IDS_CAMERA_ACCESSED));
   EXPECT_EQ(2U, bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(bubble_content.radio_group.radio_items[0],
@@ -636,8 +628,6 @@ TEST_F(ContentSettingBubbleModelTest, MediastreamCamera) {
   const ContentSettingBubbleModel::BubbleContent& new_bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(new_bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_CAMERA_BLOCKED_TITLE));
-  EXPECT_EQ(new_bubble_content.message,
             l10n_util::GetStringUTF16(IDS_CAMERA_BLOCKED));
   EXPECT_EQ(2U, new_bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(new_bubble_content.radio_group.radio_items[0],
@@ -682,8 +672,6 @@ TEST_F(ContentSettingBubbleModelTest, AccumulateMediastreamMicAndCamera) {
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_MICROPHONE_ACCESSED_TITLE));
-  EXPECT_EQ(bubble_content.message,
             l10n_util::GetStringUTF16(IDS_MICROPHONE_ACCESSED));
   EXPECT_EQ(2U, bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(bubble_content.radio_group.radio_items[0],
@@ -712,8 +700,6 @@ TEST_F(ContentSettingBubbleModelTest, AccumulateMediastreamMicAndCamera) {
   const ContentSettingBubbleModel::BubbleContent& new_bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_EQ(new_bubble_content.title,
-            l10n_util::GetStringUTF16(IDS_MICROPHONE_CAMERA_ALLOWED_TITLE));
-  EXPECT_EQ(new_bubble_content.message,
             l10n_util::GetStringUTF16(IDS_MICROPHONE_CAMERA_ALLOWED));
   EXPECT_EQ(2U, new_bubble_content.radio_group.radio_items.size());
   EXPECT_EQ(new_bubble_content.radio_group.radio_items[0],
@@ -743,7 +729,8 @@ TEST_F(ContentSettingBubbleModelTest, Plugins) {
   const ContentSettingBubbleModel::BubbleContent& bubble_content =
       content_setting_bubble_model->bubble_content();
   EXPECT_FALSE(bubble_content.title.empty());
-  ASSERT_EQ(0U, bubble_content.list_items.size());
+  ASSERT_EQ(1U, bubble_content.list_items.size());
+  EXPECT_EQ(plugin_name, bubble_content.list_items[0].title);
   EXPECT_EQ(0U, bubble_content.radio_group.radio_items.size());
   EXPECT_FALSE(bubble_content.custom_link.empty());
   EXPECT_TRUE(bubble_content.custom_link_enabled);

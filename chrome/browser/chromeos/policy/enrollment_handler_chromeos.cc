@@ -474,18 +474,20 @@ void EnrollmentHandlerChromeOS::SetFirmwareManagementParametersData() {
 
   install_attributes_->SetBlockDevmodeInTpm(
       GetBlockdevmodeFromPolicy(policy_.get()),
-      base::BindOnce(
+      base::Bind(
           &EnrollmentHandlerChromeOS::OnFirmwareManagementParametersDataSet,
           weak_ptr_factory_.GetWeakPtr()));
 }
 
 void EnrollmentHandlerChromeOS::OnFirmwareManagementParametersDataSet(
-    base::Optional<cryptohome::BaseReply> reply) {
+    chromeos::DBusMethodCallStatus call_status,
+    bool result,
+    const cryptohome::BaseReply& reply) {
   DCHECK_EQ(STEP_SET_FWMP_DATA, enrollment_step_);
-  if (!reply.has_value()) {
+  if (!result) {
     LOG(ERROR)
         << "Failed to update firmware management parameters in TPM, error: "
-        << reply->error();
+        << reply.error();
   }
 
   SetStep(STEP_LOCK_DEVICE);

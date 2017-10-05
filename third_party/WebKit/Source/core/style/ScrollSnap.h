@@ -16,7 +16,7 @@ struct ScrollSnapType {
   ScrollSnapType()
       : is_none(true),
         axis(kSnapAxisBoth),
-        strictness(SnapStrictness::kProximity) {}
+        strictness(kSnapStrictnessProximity) {}
 
   ScrollSnapType(const ScrollSnapType& other)
       : is_none(other.is_none),

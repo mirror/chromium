@@ -7,6 +7,7 @@
 #include <string>
 
 #include "core/CSSPropertyNames.h"
+#include "core/HTMLNames.h"
 #include "core/css/StyleEngine.h"
 #include "core/dom/NodeComputedStyle.h"
 #include "core/frame/FrameTestHelpers.h"
@@ -14,7 +15,6 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/HTMLLinkElement.h"
-#include "core/html_names.h"
 #include "core/page/Page.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/graphics/Color.h"

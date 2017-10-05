@@ -1,20 +1,20 @@
 AXWebArea
-++AXTable AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXHeader='AXGroup' AXRowHeaderUIElements=[]
-++++AXRow AXIndex='0'
-++++++AXCell AXTitle='Browser' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":0} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":0}
+++AXTable
+++++AXRow
+++++++AXCell AXTitle='Browser'
 ++++++++AXStaticText AXValue='Browser'
-++++++AXCell AXTitle='Rendering Engine' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":1} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":0}
+++++++AXCell AXTitle='Rendering Engine'
 ++++++++AXStaticText AXValue='Rendering Engine'
-++++AXRow AXIndex='1'
-++++++AXCell AXTitle='Chrome' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":0} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":1}
+++++AXRow
+++++++AXCell AXTitle='Chrome'
 ++++++++AXStaticText AXValue='Chrome'
-++++++AXCell AXTitle='Blink' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":1} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":1}
+++++++AXCell AXTitle='Blink'
 ++++++++AXStaticText AXValue='Blink'
-++++AXRow AXIndex='2'
-++++++AXCell AXTitle='Safari' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":0} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":2}
+++++AXRow
+++++++AXCell AXTitle='Safari'
 ++++++++AXStaticText AXValue='Safari'
-++++++AXCell AXTitle='WebKit' AXColumnHeaderUIElements=["AXCell Browser","AXCell Rendering Engine"] AXColumnIndexRange={"len":1,"loc":1} AXRowHeaderUIElements=[] AXRowIndexRange={"len":1,"loc":2}
+++++++AXCell AXTitle='WebKit'
 ++++++++AXStaticText AXValue='WebKit'
-++++AXColumn AXHeader='AXCell Browser' AXIndex='0'
-++++AXColumn AXHeader='AXCell Rendering Engine' AXIndex='1'
+++++AXColumn
+++++AXColumn
 ++++AXGroup

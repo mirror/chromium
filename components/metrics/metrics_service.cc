@@ -361,8 +361,10 @@ bool MetricsService::has_unsent_logs() const {
 
 void MetricsService::RecordDelta(const base::HistogramBase& histogram,
                                  const base::HistogramSamples& snapshot) {
+  histogram.ValidateHistogramContents(true, -1);
   log_manager_.current_log()->RecordHistogramDelta(histogram.histogram_name(),
                                                    snapshot);
+  histogram.ValidateHistogramContents(true, -2);
 }
 
 void MetricsService::HandleIdleSinceLastTransmission(bool in_idle) {

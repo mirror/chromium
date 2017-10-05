@@ -4,7 +4,6 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
-import("//build/config/linux/pangocairo/pangocairo.gni")
 import("//build/config/ui.gni")
 import("//gpu/vulkan/features.gni")
 import("//media/media_options.gni")
@@ -873,8 +872,6 @@ source_set("browser") {
     "indexed_db/indexed_db_internals_ui.h",
     "indexed_db/indexed_db_leveldb_coding.cc",
     "indexed_db/indexed_db_leveldb_coding.h",
-    "indexed_db/indexed_db_leveldb_operations.cc",
-    "indexed_db/indexed_db_leveldb_operations.h",
     "indexed_db/indexed_db_observer.cc",
     "indexed_db/indexed_db_observer.h",
     "indexed_db/indexed_db_pending_connection.cc",
@@ -883,8 +880,6 @@ source_set("browser") {
     "indexed_db/indexed_db_pre_close_task_queue.h",
     "indexed_db/indexed_db_quota_client.cc",
     "indexed_db/indexed_db_quota_client.h",
-    "indexed_db/indexed_db_reporting.cc",
-    "indexed_db/indexed_db_reporting.h",
     "indexed_db/indexed_db_return_value.h",
     "indexed_db/indexed_db_tombstone_sweeper.cc",
     "indexed_db/indexed_db_tombstone_sweeper.h",
@@ -1887,6 +1882,8 @@ source_set("browser") {
       "renderer_host/pepper/pepper_truetype_font_list_host.cc",
       "renderer_host/pepper/pepper_truetype_font_list_host.h",
       "renderer_host/pepper/pepper_truetype_font_list_mac.mm",
+      "renderer_host/pepper/pepper_truetype_font_list_ozone.cc",
+      "renderer_host/pepper/pepper_truetype_font_list_pango.cc",
       "renderer_host/pepper/pepper_truetype_font_list_win.cc",
       "renderer_host/pepper/pepper_truetype_font_mac.mm",
       "renderer_host/pepper/pepper_truetype_font_win.cc",
@@ -1905,11 +1902,11 @@ source_set("browser") {
       "//ppapi/proxy:ipc",
       "//ppapi/shared_impl",
     ]
-    if (use_ozone) {
-      sources += [ "renderer_host/pepper/pepper_truetype_font_list_ozone.cc" ]
+    if (!use_ozone || use_pango) {
+      sources -= [ "renderer_host/pepper/pepper_truetype_font_list_ozone.cc" ]
     }
-    if (use_pangocairo) {
-      sources += [ "renderer_host/pepper/pepper_truetype_font_list_pango.cc" ]
+    if (!use_pango) {
+      sources -= [ "renderer_host/pepper/pepper_truetype_font_list_pango.cc" ]
     }
   }
 
@@ -1942,7 +1939,7 @@ source_set("browser") {
     deps += [ "//ui/gfx/x" ]
   }
 
-  if (use_pangocairo) {
+  if (use_pango) {
     configs += [ "//build/config/linux/pangocairo" ]
   }
 

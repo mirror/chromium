@@ -476,8 +476,6 @@ class ContentVerifierTest : public ExtensionBrowserTest {
         switches::kExtensionContentVerificationEnforce);
   }
 
-  bool ShouldEnableContentVerification() override { return true; }
-
   virtual void OpenPageAndWaitForUnload() {
     ScopedContentVerifyJobDelegateOverride scoped_delegate(&delegate_);
     std::string id = "npnbmohejbjohgpjnmjagbafnjhkmgko";

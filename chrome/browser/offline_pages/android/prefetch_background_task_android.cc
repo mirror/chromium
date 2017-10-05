@@ -5,14 +5,12 @@
 
 #include <memory>
 
-#include "base/logging.h"
 #include "base/time/time.h"
+#include "chrome/browser/offline_pages/prefetch/prefetch_background_task.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "components/offline_pages/core/offline_page_feature.h"
-#include "components/offline_pages/core/prefetch/prefetch_background_task.h"
-#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "jni/PrefetchBackgroundTask_jni.h"
 
@@ -44,12 +42,26 @@ static jboolean StartPrefetchTask(JNIEnv* env,
 
 }  // namespace prefetch
 
+// static
+void PrefetchBackgroundTask::Schedule(int additional_delay_seconds,
+                                      bool update_current) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return prefetch::Java_PrefetchBackgroundTask_scheduleTask(
+      env, additional_delay_seconds, update_current);
+}
+
+// static
+void PrefetchBackgroundTask::Cancel() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  return prefetch::Java_PrefetchBackgroundTask_cancelTask(env);
+}
+
 PrefetchBackgroundTaskAndroid::PrefetchBackgroundTaskAndroid(
     JNIEnv* env,
     const JavaParamRef<jobject>& java_prefetch_background_task,
     PrefetchService* service)
-    : PrefetchBackgroundTask(service),
-      java_prefetch_background_task_(java_prefetch_background_task) {
+    : java_prefetch_background_task_(java_prefetch_background_task),
+      service_(service) {
   // Give the Java side a pointer to the new background task object.
   prefetch::Java_PrefetchBackgroundTask_setNativeTask(
       env, java_prefetch_background_task_, reinterpret_cast<jlong>(this));
@@ -58,29 +70,51 @@ PrefetchBackgroundTaskAndroid::PrefetchBackgroundTaskAndroid(
 PrefetchBackgroundTaskAndroid::~PrefetchBackgroundTaskAndroid() {
   JNIEnv* env = base::android::AttachCurrentThread();
   prefetch::Java_PrefetchBackgroundTask_doneProcessing(
-      env, java_prefetch_background_task_, false);
+      env, java_prefetch_background_task_, needs_reschedule_);
+
+  PrefetchBackgroundTaskHandler* handler =
+      service_->GetPrefetchBackgroundTaskHandler();
+  if (needs_backoff_)
+    handler->Backoff();
+  else
+    handler->ResetBackoff();
+
+  if (needs_reschedule_) {
+    // If the task is killed due to the system, it should be rescheduled without
+    // backoff even when it is in effect because we want to rerun the task asap.
+    PrefetchBackgroundTask::Schedule(
+        task_killed_by_system_ ? 0 : handler->GetAdditionalBackoffSeconds(),
+        true /*update_current*/);
+  }
 }
 
 bool PrefetchBackgroundTaskAndroid::OnStopTask(
     JNIEnv* env,
     const JavaParamRef<jobject>& jcaller) {
-  SetReschedule(PrefetchBackgroundTaskRescheduleType::RESCHEDULE_DUE_TO_SYSTEM);
-  service()->GetPrefetchDispatcher()->StopBackgroundTask();
+  task_killed_by_system_ = true;
+  needs_reschedule_ = true;
+  service_->GetPrefetchDispatcher()->StopBackgroundTask();
   return false;
 }
 
 void PrefetchBackgroundTaskAndroid::SetTaskReschedulingForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
-    int reschedule_type) {
-  SetReschedule(
-      static_cast<PrefetchBackgroundTaskRescheduleType>(reschedule_type));
+    jboolean reschedule,
+    jboolean backoff) {
+  SetNeedsReschedule(static_cast<bool>(reschedule), static_cast<bool>(backoff));
 }
 
 void PrefetchBackgroundTaskAndroid::SignalTaskFinishedForTesting(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller) {
-  service()->GetPrefetchDispatcher()->StopBackgroundTask();
+  service_->GetPrefetchDispatcher()->RequestFinishBackgroundTaskForTest();
+}
+
+void PrefetchBackgroundTaskAndroid::SetNeedsReschedule(bool reschedule,
+                                                       bool backoff) {
+  needs_reschedule_ = needs_reschedule_ || reschedule;
+  needs_backoff_ = needs_backoff_ || backoff;
 }
 
 }  // namespace offline_pages

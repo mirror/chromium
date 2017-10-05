@@ -25,6 +25,7 @@
 #include "core/layout/LayoutBlock.h"
 
 #include <memory>
+#include "core/HTMLNames.h"
 #include "core/css/StyleEngine.h"
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
@@ -35,7 +36,6 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMarqueeElement.h"
-#include "core/html_names.h"
 #include "core/layout/HitTestLocation.h"
 #include "core/layout/HitTestResult.h"
 #include "core/layout/LayoutAnalyzer.h"
@@ -553,8 +553,7 @@ void LayoutBlock::AddVisualOverflowFromTheme() {
     return;
 
   IntRect inflated_rect = PixelSnappedBorderBoxRect();
-  LayoutTheme::GetTheme().AddVisualOverflow(GetNode(), StyleRef(),
-                                            inflated_rect);
+  LayoutTheme::GetTheme().AddVisualOverflow(*this, inflated_rect);
   AddSelfVisualOverflow(LayoutRect(inflated_rect));
 }
 
@@ -1637,10 +1636,8 @@ LayoutUnit LayoutBlock::BaselinePosition(
     //        baselines.
     // FIXME: Need to patch form controls to deal with vertical lines.
     if (Style()->HasAppearance() &&
-        !LayoutTheme::GetTheme().IsControlContainer(Style()->Appearance())) {
-      return Size().Height() + MarginTop() +
-             LayoutTheme::GetTheme().BaselinePositionAdjustment(StyleRef());
-    }
+        !LayoutTheme::GetTheme().IsControlContainer(Style()->Appearance()))
+      return LayoutTheme::GetTheme().BaselinePosition(this);
 
     LayoutUnit baseline_pos = (IsWritingModeRoot() && !IsRubyRun())
                                   ? LayoutUnit(-1)

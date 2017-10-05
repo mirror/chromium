@@ -38,7 +38,7 @@ class PLATFORM_EXPORT ClipDisplayItem final : public PairedBeginDisplayItem {
 
  private:
 #ifndef NDEBUG
-  void PropertiesAsJSON(JSONObject&) const override;
+  void DumpPropertiesAsDebugString(WTF::StringBuilder&) const override;
 #endif
   bool Equals(const DisplayItem& other) const final {
     return DisplayItem::Equals(other) &&

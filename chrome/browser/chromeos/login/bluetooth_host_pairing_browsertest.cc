@@ -67,7 +67,7 @@ class BluetoothHostPairingNoInputTest : public OobeBaseTest {
   }
 
  protected:
-  using InputDeviceInfoPtr = device::mojom::InputDeviceInfoPtr;
+  using InputDeviceInfo = device::InputServiceLinux::InputDeviceInfo;
 
   BluetoothHostPairingNoInputTest() {
     InputServiceProxy::SetUseUIThreadForTesting(true);
@@ -126,37 +126,37 @@ class BluetoothHostPairingNoInputTest : public OobeBaseTest {
   }
 
   void AddUsbMouse() {
-    InputDeviceInfoPtr mouse = device::mojom::InputDeviceInfo::New();
-    mouse->id = "usb_mouse";
-    mouse->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    mouse->type = device::mojom::InputDeviceType::TYPE_USB;
-    mouse->is_mouse = true;
-    AddDeviceForTesting(std::move(mouse));
+    InputDeviceInfo mouse;
+    mouse.id = "usb_mouse";
+    mouse.subsystem = InputDeviceInfo::SUBSYSTEM_INPUT;
+    mouse.type = InputDeviceInfo::TYPE_USB;
+    mouse.is_mouse = true;
+    AddDeviceForTesting(mouse);
   }
 
   void AddUsbKeyboard() {
-    InputDeviceInfoPtr keyboard = device::mojom::InputDeviceInfo::New();
-    keyboard->id = "usb_keyboard";
-    keyboard->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    keyboard->type = device::mojom::InputDeviceType::TYPE_USB;
-    keyboard->is_keyboard = true;
-    AddDeviceForTesting(std::move(keyboard));
+    InputDeviceInfo keyboard;
+    keyboard.id = "usb_keyboard";
+    keyboard.subsystem = InputDeviceInfo::SUBSYSTEM_INPUT;
+    keyboard.type = InputDeviceInfo::TYPE_USB;
+    keyboard.is_keyboard = true;
+    AddDeviceForTesting(keyboard);
   }
 
   void AddBluetoothMouse() {
-    InputDeviceInfoPtr mouse = device::mojom::InputDeviceInfo::New();
-    mouse->id = "bluetooth_mouse";
-    mouse->subsystem = device::mojom::InputDeviceSubsystem::SUBSYSTEM_INPUT;
-    mouse->type = device::mojom::InputDeviceType::TYPE_BLUETOOTH;
-    mouse->is_mouse = true;
-    AddDeviceForTesting(std::move(mouse));
+    InputDeviceInfo mouse;
+    mouse.id = "bluetooth_mouse";
+    mouse.subsystem = InputDeviceInfo::SUBSYSTEM_INPUT;
+    mouse.type = InputDeviceInfo::TYPE_BLUETOOTH;
+    mouse.is_mouse = true;
+    AddDeviceForTesting(mouse);
   }
 
  private:
-  void AddDeviceForTesting(InputDeviceInfoPtr info) {
+  void AddDeviceForTesting(const InputDeviceInfo& info) {
     static_cast<device::FakeInputServiceLinux*>(
         device::InputServiceLinux::GetInstance())
-        ->AddDeviceForTesting(std::move(info));
+        ->AddDeviceForTesting(info);
   }
 
   scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_;

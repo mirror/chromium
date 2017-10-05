@@ -30,9 +30,10 @@
 
 #include "public/web/WebSelectElement.h"
 
+#include "core/HTMLNames.h"
 #include "core/html/HTMLOptionElement.h"
 #include "core/html/HTMLSelectElement.h"
-#include "core/html_names.h"
+#include "platform/wtf/RefPtr.h"
 #include "public/platform/WebString.h"
 
 namespace blink {

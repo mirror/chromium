@@ -472,9 +472,11 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Gets height on top of the all apps tiles for |page|.
   int GetHeightOnTopOfAllAppsTiles(int page) const;
 
-  // Gets the bounds of the tile located at |index|, where |index| contains the
-  // page/slot info.
-  gfx::Rect GetExpectedTileBounds(const Index& index) const;
+  // Gets the bounds of the tile located at |slot| on the current page.
+  gfx::Rect GetExpectedTileBounds(int slot) const;
+
+  // Gets the bounds of the tile located at |row| and |col| on the current page.
+  gfx::Rect GetExpectedTileBounds(int row, int col) const;
 
   // Gets the item view currently displayed at |slot| on the current page. If
   // there is no item displayed at |slot|, returns NULL. Note that this finds an
@@ -516,13 +518,6 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Returns true if the grid view is under an OEM folder.
   bool IsUnderOEMFolder();
-
-  // Handle focus movement triggered by arrow up and down in PEEKING state.
-  bool HandleFocusMovementInPeekingState(bool arrow_up);
-
-  // Handle focus movement triggered by arrow up and down in FULLSCREEN_ALL_APPS
-  // state.
-  bool HandleFocusMovementInFullscreenAllAppsState(bool arrow_up);
 
   AppListModel* model_ = nullptr;         // Owned by AppListView.
   AppListItemList* item_list_ = nullptr;  // Not owned.

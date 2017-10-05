@@ -161,6 +161,7 @@ BluetoothDeviceBlueZ::BluetoothDeviceBlueZ(
     : BluetoothDevice(adapter),
       object_path_(object_path),
       num_connecting_calls_(0),
+      connection_monitor_started_(false),
       ui_task_runner_(ui_task_runner),
       socket_thread_(socket_thread),
       weak_ptr_factory_(this) {

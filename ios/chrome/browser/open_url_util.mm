@@ -14,7 +14,7 @@
 
 void OpenUrlWithCompletionHandler(NSURL* url,
                                   void (^completion_handler)(BOOL success)) {
-  if (@available(iOS 10, *)) {
+  if (base::ios::IsRunningOnIOS10OrLater()) {
     [[UIApplication sharedApplication] openURL:url
                                        options:@{}
                              completionHandler:completion_handler];

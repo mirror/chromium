@@ -92,7 +92,7 @@ UniqueElementData* ElementData::MakeUniqueCopy() const {
 }
 
 bool ElementData::IsEquivalent(const ElementData* other) const {
-  AttributeCollection attributes = Attributes();
+  AttributeCollection attributes = this->Attributes();
   if (!other)
     return attributes.IsEmpty();
 

@@ -32,7 +32,10 @@
 
 namespace blink {
 
+class KURL;
+
 PLATFORM_EXPORT String MimeTypeFromDataURL(const String& url);
+PLATFORM_EXPORT String MimeTypeFromURL(const KURL&);
 
 }  // namespace blink
 

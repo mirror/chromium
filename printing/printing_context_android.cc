@@ -239,7 +239,7 @@ void PrintingContextAndroid::ReleaseContext() {
   // Intentional No-op.
 }
 
-printing::NativeDrawingContext PrintingContextAndroid::context() const {
+skia::NativeDrawingContext PrintingContextAndroid::context() const {
   // Intentional No-op.
   return nullptr;
 }

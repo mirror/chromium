@@ -11,14 +11,13 @@
 #include "platform/graphics/paint/ClipPathRecorder.h"
 #include "platform/graphics/paint/ClipRecorder.h"
 #include "platform/graphics/paint/CompositingRecorder.h"
-#include "platform/graphics/paint/DisplayItemCacheSkipper.h"
 #include "platform/graphics/paint/DrawingDisplayItem.h"
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/graphics/paint/SubsequenceRecorder.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/testing/FakeDisplayItemClient.h"
 #include "platform/testing/PaintPropertyTestHelpers.h"
-#include "platform/testing/PaintTestConfigurations.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -120,13 +119,24 @@ void DrawClippedRect(GraphicsContext& context,
   DrawRect(context, client, drawing_type, bound);
 }
 
+enum TestConfigurations {
+  kSPv2 = 1 << 0,
+  kUnderInvalidationChecking = 1 << 1,
+};
+
 // Tests using this class will be tested with under-invalidation-checking
 // enabled and disabled.
-class PaintControllerTest : public PaintTestConfigurations,
-                            public PaintControllerTestBase {
+class PaintControllerTest
+    : public PaintControllerTestBase,
+      public ::testing::WithParamInterface<TestConfigurations>,
+      private ScopedSlimmingPaintV2ForTest,
+      private ScopedPaintUnderInvalidationCheckingForTest {
  public:
   PaintControllerTest()
-      : root_paint_property_client_("root"),
+      : ScopedSlimmingPaintV2ForTest(GetParam() & kSPv2),
+        ScopedPaintUnderInvalidationCheckingForTest(GetParam() &
+                                                    kUnderInvalidationChecking),
+        root_paint_property_client_("root"),
         root_paint_chunk_id_(root_paint_property_client_,
                              DisplayItem::kUninitializedType) {}
 
@@ -137,10 +147,9 @@ class PaintControllerTest : public PaintTestConfigurations,
 INSTANTIATE_TEST_CASE_P(All,
                         PaintControllerTest,
                         ::testing::Values(0,
-                                          kSlimmingPaintV2,
+                                          kSPv2,
                                           kUnderInvalidationChecking,
-                                          kSlimmingPaintV2 |
-                                              kUnderInvalidationChecking));
+                                          kSPv2 | kUnderInvalidationChecking));
 
 TEST_P(PaintControllerTest, NestedRecorders) {
   GraphicsContext context(GetPaintController());
@@ -2065,10 +2074,7 @@ TEST_P(PaintControllerTest, PartialSkipCache) {
                          .GetPaintRecord());
 }
 
-TEST_P(PaintControllerTest, OptimizeNoopPairs) {
-  if (RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
-    return;
-
+TEST_F(PaintControllerTestBase, OptimizeNoopPairs) {
   FakeDisplayItemClient first("first");
   FakeDisplayItemClient second("second");
   FakeDisplayItemClient third("third");
@@ -2122,7 +2128,7 @@ TEST_P(PaintControllerTest, OptimizeNoopPairs) {
                       TestControllerDisplayItem(third, kBackgroundDrawingType));
 }
 
-TEST_P(PaintControllerTest, SmallPaintControllerHasOnePaintChunk) {
+TEST_F(PaintControllerTestBase, SmallPaintControllerHasOnePaintChunk) {
   ScopedSlimmingPaintV2ForTest enable_s_pv2(true);
   FakeDisplayItemClient client("test client");
 
@@ -2162,7 +2168,7 @@ void DrawPath(GraphicsContext& context,
     context.DrawPath(path, flags);
 }
 
-TEST_P(PaintControllerTest, BeginAndEndFrame) {
+TEST_F(PaintControllerTestBase, BeginAndEndFrame) {
   class FakeFrame {};
 
   // PaintController should have one null frame in the stack since beginning.
@@ -2553,69 +2559,6 @@ TEST_F(PaintControllerUnderInvalidationTest, InvalidationInSubsequence) {
 
 TEST_F(PaintControllerUnderInvalidationTest, SubsequenceBecomesEmpty) {
   EXPECT_DEATH(TestSubsequenceBecomesEmpty(), "");
-}
-
-TEST_F(PaintControllerUnderInvalidationTest, SkipCacheInSubsequence) {
-  FakeDisplayItemClient container("container");
-  FakeDisplayItemClient content("content");
-  GraphicsContext context(GetPaintController());
-
-  {
-    SubsequenceRecorder r(context, container);
-    {
-      DisplayItemCacheSkipper cache_skipper(context);
-      DrawRect(context, content, kBackgroundDrawingType,
-               FloatRect(100, 100, 300, 300));
-    }
-    DrawRect(context, content, kForegroundDrawingType,
-             FloatRect(200, 200, 400, 400));
-  }
-  GetPaintController().CommitNewDisplayItems();
-
-  {
-    EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
-        context, container));
-    SubsequenceRecorder r(context, container);
-    {
-      DisplayItemCacheSkipper cache_skipper(context);
-      DrawRect(context, content, kBackgroundDrawingType,
-               FloatRect(200, 200, 400, 400));
-    }
-    DrawRect(context, content, kForegroundDrawingType,
-             FloatRect(200, 200, 400, 400));
-  }
-  GetPaintController().CommitNewDisplayItems();
-}
-
-TEST_F(PaintControllerUnderInvalidationTest,
-       EmptySubsequenceInCachedSubsequence) {
-  FakeDisplayItemClient container("container");
-  FakeDisplayItemClient content("content");
-  GraphicsContext context(GetPaintController());
-
-  {
-    SubsequenceRecorder r(context, container);
-    DrawRect(context, container, kBackgroundDrawingType,
-             FloatRect(100, 100, 300, 300));
-    { SubsequenceRecorder r1(context, content); }
-    DrawRect(context, container, kForegroundDrawingType,
-             FloatRect(100, 100, 300, 300));
-  }
-  GetPaintController().CommitNewDisplayItems();
-
-  {
-    EXPECT_FALSE(SubsequenceRecorder::UseCachedSubsequenceIfPossible(
-        context, container));
-    SubsequenceRecorder r(context, container);
-    DrawRect(context, container, kBackgroundDrawingType,
-             FloatRect(100, 100, 300, 300));
-    EXPECT_FALSE(
-        SubsequenceRecorder::UseCachedSubsequenceIfPossible(context, content));
-    { SubsequenceRecorder r1(context, content); }
-    DrawRect(context, container, kForegroundDrawingType,
-             FloatRect(100, 100, 300, 300));
-  }
-  GetPaintController().CommitNewDisplayItems();
 }
 
 #endif  // defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID)

@@ -26,6 +26,7 @@
 
 #include "bindings/core/v8/ScriptEventListener.h"
 #include "core/CSSValueKeywords.h"
+#include "core/HTMLNames.h"
 #include "core/css/CSSImageValue.h"
 #include "core/css/StyleChangeReason.h"
 #include "core/css/StylePropertySet.h"
@@ -36,7 +37,6 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/parser/HTMLParserIdioms.h"
-#include "core/html_names.h"
 
 namespace blink {
 

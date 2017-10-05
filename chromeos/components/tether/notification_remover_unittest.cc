@@ -19,10 +19,6 @@ namespace chromeos {
 
 namespace tether {
 
-namespace {
-const int kTestSignalStrength = 100;
-}  // namespace
-
 class NotificationRemoverTest : public NetworkStateTest {
  protected:
   NotificationRemoverTest()
@@ -113,8 +109,7 @@ TEST_F(NotificationRemoverTest, TestStartConnectingToWifiNetwork) {
 
 TEST_F(NotificationRemoverTest, TestTetherDisabled) {
   NotifyPotentialHotspotNearby();
-  notification_presenter_->NotifySetupRequired("testDevice",
-                                               kTestSignalStrength);
+  notification_presenter_->NotifySetupRequired("testDevice");
   notification_presenter_->NotifyConnectionToHostFailed();
 
   notification_remover_.reset();

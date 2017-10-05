@@ -26,9 +26,7 @@ class TextureMailboxDeleter;
 namespace cc {
 class DisplayResourceProvider;
 class FakeOutputSurfaceClient;
-class LayerTreeResourceProvider;
 class OutputSurface;
-class TestInProcessContextProvider;
 class TestSharedBitmapManager;
 
 class PixelTest : public testing::Test {
@@ -68,8 +66,6 @@ class PixelTest : public testing::Test {
   std::unique_ptr<TestSharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<viz::TestGpuMemoryBufferManager> gpu_memory_buffer_manager_;
   std::unique_ptr<DisplayResourceProvider> resource_provider_;
-  scoped_refptr<TestInProcessContextProvider> child_context_provider_;
-  std::unique_ptr<LayerTreeResourceProvider> child_resource_provider_;
   std::unique_ptr<viz::TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<viz::DirectRenderer> renderer_;
   viz::SoftwareRenderer* software_renderer_ = nullptr;

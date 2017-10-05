@@ -24,8 +24,7 @@ class VRDevice final : public EventTargetWithInlineData,
 
  public:
   VRDevice(VR*,
-           device::mojom::blink::VRMagicWindowProviderPtr,
-           device::mojom::blink::VRDisplayHostPtr,
+           device::mojom::blink::VRDisplayPtr,
            device::mojom::blink::VRDisplayClientRequest,
            device::mojom::blink::VRDisplayInfoPtr);
   VR* vr() const { return vr_; }
@@ -52,7 +51,7 @@ class VRDevice final : public EventTargetWithInlineData,
 
   void Dispose();
 
-  const device::mojom::blink::VRDisplayHostPtr& vrDisplayHostPtr() const {
+  const device::mojom::blink::VRDisplayPtr& vrDisplayPtr() const {
     return display_;
   }
   const device::mojom::blink::VRDisplayInfoPtr& vrDisplayInfoPtr() const {
@@ -71,8 +70,7 @@ class VRDevice final : public EventTargetWithInlineData,
   bool is_external_;
   bool supports_exclusive_;
 
-  device::mojom::blink::VRMagicWindowProviderPtr magic_window_provider_;
-  device::mojom::blink::VRDisplayHostPtr display_;
+  device::mojom::blink::VRDisplayPtr display_;
   device::mojom::blink::VRDisplayInfoPtr display_info_;
 
   mojo::Binding<device::mojom::blink::VRDisplayClient> display_client_binding_;

@@ -29,15 +29,16 @@
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/dom/events/Event.h"
 #include "core/frame/UseCounter.h"
+#include "core/html/HTMLDataListElement.h"
+#include "core/html/HTMLFieldSetElement.h"
 #include "core/html/HTMLFormElement.h"
 #include "core/html/HTMLInputElement.h"
+#include "core/html/HTMLLegendElement.h"
 #include "core/html/ValidityState.h"
-#include "core/html/forms/HTMLDataListElement.h"
-#include "core/html/forms/HTMLFieldSetElement.h"
-#include "core/html/forms/HTMLLegendElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/LayoutObject.h"
+#include "core/layout/LayoutTheme.h"
 #include "core/page/Page.h"
 #include "core/page/ValidationMessageClient.h"
 #include "platform/EventDispatchForbiddenScope.h"
@@ -161,8 +162,9 @@ void HTMLFormControlElement::ParseAttribute(
       SetNeedsWillValidateCheck();
       PseudoStateChanged(CSSSelector::kPseudoReadOnly);
       PseudoStateChanged(CSSSelector::kPseudoReadWrite);
-      if (LayoutObject* o = GetLayoutObject())
-        o->InvalidateIfControlStateChanged(kReadOnlyControlState);
+      if (GetLayoutObject())
+        LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                    kReadOnlyControlState);
     }
   } else if (name == requiredAttr) {
     if (params.old_value.IsNull() != params.new_value.IsNull())
@@ -184,9 +186,9 @@ void HTMLFormControlElement::DisabledAttributeChanged() {
   SetNeedsWillValidateCheck();
   PseudoStateChanged(CSSSelector::kPseudoDisabled);
   PseudoStateChanged(CSSSelector::kPseudoEnabled);
-  if (LayoutObject* o = GetLayoutObject())
-    o->InvalidateIfControlStateChanged(kEnabledControlState);
-
+  if (GetLayoutObject())
+    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                kEnabledControlState);
   // TODO(dmazzoni): http://crbug.com/699438.
   // Replace |CheckedStateChanged| with a generic tree changed event.
   if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
@@ -402,9 +404,9 @@ void HTMLFormControlElement::WillCallDefaultEventHandler(const Event& event) {
   // LayoutTheme::isFocused().  Inform LayoutTheme if
   // shouldHaveFocusAppearance() changes.
   if (old_should_have_focus_appearance != ShouldHaveFocusAppearance() &&
-      GetLayoutObject()) {
-    GetLayoutObject()->InvalidateIfControlStateChanged(kFocusControlState);
-  }
+      GetLayoutObject())
+    LayoutTheme::GetTheme().ControlStateChanged(*GetLayoutObject(),
+                                                kFocusControlState);
 }
 
 int HTMLFormControlElement::tabIndex() const {

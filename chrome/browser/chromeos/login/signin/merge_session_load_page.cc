@@ -88,7 +88,7 @@ std::string MergeSessionLoadPage::GetHTMLContents() {
   webui::SetLoadTimeDataDefaults(app_locale, &strings);
 
   base::StringPiece html(
-      ui::ResourceBundle::GetSharedInstance().GetRawDataResource(
+      ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_MERGE_SESSION_LOAD_HTML));
   return webui::GetI18nTemplateHtml(html, &strings);
 }

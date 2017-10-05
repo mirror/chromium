@@ -65,12 +65,11 @@
     document.addEventListener('animationend', function() {
       endEventReceived = true;
       document.getElementById('box').className = '';
-
-      document.getElementById('box').offsetTop; // force style recalc
-
       // Launch again the animation to catch the animation iteration events this time.
-      document.getElementById('box').style.animationIterationCount = "infinite";
-      document.getElementById('box').className = 'animate';
+      setTimeout(function () {
+        document.getElementById('box').style.animationIterationCount = "infinite";
+        document.getElementById('box').className = 'animate';
+      }, 200);
     }, false);
 
     onload = function()

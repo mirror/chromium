@@ -21,8 +21,7 @@ AnimationTicker::AnimationTicker(AnimationPlayer* animation_player)
       element_animations_(),
       needs_to_start_animations_(false),
       scroll_offset_animation_was_interrupted_(false),
-      is_ticking_(false),
-      needs_push_properties_(false) {
+      is_ticking_(false) {
   DCHECK(animation_player_);
 }
 
@@ -30,30 +29,16 @@ AnimationTicker::~AnimationTicker() {
   DCHECK(!has_bound_element_animations());
 }
 
-void AnimationTicker::SetNeedsPushProperties() {
-  needs_push_properties_ = true;
-
-  // TODO(smcgruer): We only need the below calls when needs_push_properties_
-  // goes from false to true - see http://crbug.com/764405
-  DCHECK(element_animations());
-  element_animations()->SetNeedsPushProperties();
-
-  animation_player_->SetNeedsPushProperties();
-}
-
-void AnimationTicker::BindElementAnimations(
-    ElementAnimations* element_animations) {
-  DCHECK(element_animations);
+void AnimationTicker::BindElementAnimations(AnimationHost* host) {
   DCHECK(!element_animations_);
-  element_animations_ = element_animations;
+  element_animations_ = host->GetElementAnimationsForElementId(element_id_);
+  DCHECK(element_animations_);
 
   if (has_any_animation())
     AnimationAdded();
-  SetNeedsPushProperties();
 }
 
 void AnimationTicker::UnbindElementAnimations() {
-  SetNeedsPushProperties();
   element_animations_ = nullptr;
 }
 
@@ -133,10 +118,7 @@ void AnimationTicker::TickAnimation(base::TimeTicks monotonic_time,
 
 void AnimationTicker::RemoveFromTicking() {
   is_ticking_ = false;
-  // Resetting last_tick_time_ here ensures that calling ::UpdateState
-  // before ::Animate doesn't start an animation.
   last_tick_time_ = base::TimeTicks();
-  animation_player_->AnimationRemovedFromTicking();
 }
 
 void AnimationTicker::UpdateState(bool start_ready_animations,
@@ -177,7 +159,7 @@ void AnimationTicker::UpdateTickingState(UpdateTickingType type) {
     if (is_ticking_ && ((!was_ticking && has_element_in_any_list) || force)) {
       animation_player_->AddToTicking();
     } else if (!is_ticking_ && (was_ticking || force)) {
-      RemoveFromTicking();
+      animation_player_->RemoveFromTicking();
     }
   }
 }
@@ -193,7 +175,7 @@ void AnimationTicker::AddAnimation(std::unique_ptr<Animation> animation) {
 
   if (has_bound_element_animations()) {
     AnimationAdded();
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
   }
 }
 
@@ -209,7 +191,7 @@ void AnimationTicker::PauseAnimation(int animation_id, double time_offset) {
 
   if (has_bound_element_animations()) {
     animation_player_->SetNeedsCommit();
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
   }
 }
 
@@ -236,11 +218,11 @@ void AnimationTicker::RemoveAnimation(int animation_id) {
   animations_.erase(animations_to_remove, animations_.end());
 
   if (has_bound_element_animations()) {
-    UpdateTickingState(UpdateTickingType::NORMAL);
+    animation_player_->UpdateTickingState(UpdateTickingType::NORMAL);
     if (animation_removed)
       element_animations_->UpdateClientAnimationState();
     animation_player_->SetNeedsCommit();
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
   }
 }
 
@@ -255,7 +237,7 @@ void AnimationTicker::AbortAnimation(int animation_id) {
 
   if (has_bound_element_animations()) {
     animation_player_->SetNeedsCommit();
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
   }
 }
 
@@ -284,7 +266,7 @@ void AnimationTicker::AbortAnimations(TargetProperty::Type target_property,
     if (aborted_animation)
       element_animations_->UpdateClientAnimationState();
     animation_player_->SetNeedsCommit();
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
   }
 }
 
@@ -318,7 +300,6 @@ void AnimationTicker::AnimationAdded() {
 }
 
 bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
   for (auto& animation : animations_) {
     if (animation->group() == event.group_id &&
         animation->target_property_id() == event.target_property &&
@@ -326,7 +307,6 @@ bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
       animation->set_needs_synchronized_start_time(false);
       if (!animation->has_set_start_time())
         animation->set_start_time(event.monotonic_time);
-      animation_player_->NotifyAnimationStarted(event);
       return true;
     }
   }
@@ -334,40 +314,22 @@ bool AnimationTicker::NotifyAnimationStarted(const AnimationEvent& event) {
 }
 
 bool AnimationTicker::NotifyAnimationFinished(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
   for (auto& animation : animations_) {
     if (animation->group() == event.group_id &&
         animation->target_property_id() == event.target_property) {
       animation->set_received_finished_event(true);
-      animation_player_->NotifyAnimationFinished(event);
       return true;
     }
   }
-
-  // This is for the case when an animation is already removed on main thread,
-  // but the impl version of it sent a finished event and is now waiting for
-  // deletion. We would need to delete that animation during push properties.
-  SetNeedsPushProperties();
   return false;
 }
 
-void AnimationTicker::NotifyAnimationTakeover(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
-
-  // We need to purge animations marked for deletion on CT.
-  SetNeedsPushProperties();
-
-  animation_player_->NotifyAnimationTakeover(event);
-}
-
 bool AnimationTicker::NotifyAnimationAborted(const AnimationEvent& event) {
-  DCHECK(!event.is_impl_only);
   for (auto& animation : animations_) {
     if (animation->group() == event.group_id &&
         animation->target_property_id() == event.target_property) {
       animation->SetRunState(Animation::ABORTED, event.monotonic_time);
       animation->set_received_finished_event(true);
-      animation_player_->NotifyAnimationAborted(event);
       return true;
     }
   }
@@ -595,7 +557,7 @@ void AnimationTicker::MarkAbortedAnimationsForDeletion(
   }
 
   if (has_bound_element_animations() && animation_aborted)
-    element_animations_->SetNeedsPushProperties();
+    element_animations_->SetNeedsUpdateImplClientState();
 }
 
 void AnimationTicker::PurgeAnimationsMarkedForDeletion(bool impl_only) {
@@ -680,42 +642,11 @@ void AnimationTicker::RemoveAnimationsCompletedOnMainThread(
   base::EraseIf(animations, affects_active_only_and_is_waiting_for_deletion);
 
   if (has_bound_element_animations() && animation_completed)
-    element_animations_->SetNeedsPushProperties();
+    element_animations_->SetNeedsUpdateImplClientState();
 }
 
-void AnimationTicker::PushPropertiesTo(AnimationTicker* animation_ticker_impl) {
-  if (!needs_push_properties_)
-    return;
-  needs_push_properties_ = false;
-
-  // Synchronize the animation target between main and impl size.
-  if (element_id_ != animation_ticker_impl->element_id_) {
-    // We have to detach/attach via the AnimationPlayer as it may need to inform
-    // the host as well.
-    if (animation_ticker_impl->has_attached_element())
-      animation_ticker_impl->animation_player_->DetachElement();
-    if (element_id_)
-      animation_ticker_impl->animation_player_->AttachElement(element_id_);
-  }
-
-  // If neither main nor impl have any animations, there is nothing further to
-  // synchronize.
-  if (!has_any_animation() && !animation_ticker_impl->has_any_animation())
-    return;
-
-  // Synchronize the main-thread and impl-side animation lists, removing aborted
-  // animations and pushing any new animations.
-  MarkAbortedAnimationsForDeletion(animation_ticker_impl);
-  PurgeAnimationsMarkedForDeletion(/* impl_only */ false);
-  PushNewAnimationsToImplThread(animation_ticker_impl);
-
-  // Remove finished impl side animations only after pushing,
-  // and only after the animations are deleted on the main thread
-  // this insures we will never push an animation twice.
-  RemoveAnimationsCompletedOnMainThread(animation_ticker_impl);
-
-  // Now that the animation lists are synchronized, push the properties for the
-  // individual animations.
+void AnimationTicker::PushPropertiesToImplThread(
+    AnimationTicker* animation_ticker_impl) {
   for (const auto& animation : animations_) {
     Animation* current_impl =
         animation_ticker_impl->GetAnimationById(animation->id());
@@ -725,8 +656,6 @@ void AnimationTicker::PushPropertiesTo(AnimationTicker* animation_ticker_impl) {
   animation_ticker_impl->scroll_offset_animation_was_interrupted_ =
       scroll_offset_animation_was_interrupted_;
   scroll_offset_animation_was_interrupted_ = false;
-
-  animation_ticker_impl->UpdateTickingState(UpdateTickingType::NORMAL);
 }
 
 std::string AnimationTicker::AnimationsToString() const {
@@ -855,7 +784,7 @@ void AnimationTicker::PromoteStartedAnimations(AnimationEvents* events) {
         started_event.is_impl_only = animation->is_impl_only();
         if (started_event.is_impl_only) {
           // Notify delegate directly, do not record the event.
-          animation_player_->NotifyAnimationStarted(started_event);
+          animation_player_->NotifyImplOnlyAnimationStarted(started_event);
         } else {
           events->events_.push_back(started_event);
         }
@@ -905,7 +834,7 @@ void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
           animation->curve()->ToScrollOffsetAnimationCurve();
       aborted_event.curve = scroll_offset_animation_curve->Clone();
       // Notify the compositor that the animation is finished.
-      animation_player_->NotifyAnimationFinished(aborted_event);
+      animation_player_->NotifyAnimationTakeoverByMain(aborted_event);
       // Notify main thread.
       events->events_.push_back(aborted_event);
 
@@ -970,7 +899,7 @@ void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
           finished_event.is_impl_only = grouped_animation->is_impl_only();
           if (finished_event.is_impl_only) {
             // Notify delegate directly, do not record the event.
-            animation_player_->NotifyAnimationFinished(finished_event);
+            animation_player_->NotifyImplOnlyAnimationFinished(finished_event);
           } else {
             events->events_.push_back(finished_event);
           }
@@ -983,9 +912,9 @@ void AnimationTicker::MarkAnimationsForDeletion(base::TimeTicks monotonic_time,
   }
 
   // We need to purge animations marked for deletion, which happens in
-  // PushPropertiesTo().
+  // PushProperties().
   if (marked_animations_for_deletions)
-    SetNeedsPushProperties();
+    animation_player_->SetNeedsPushProperties();
 }
 
 void AnimationTicker::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
@@ -996,7 +925,7 @@ void AnimationTicker::MarkFinishedAnimations(base::TimeTicks monotonic_time) {
     if (!animation->is_finished() && animation->IsFinishedAt(monotonic_time)) {
       animation->SetRunState(Animation::FINISHED, monotonic_time);
       animation_finished = true;
-      SetNeedsPushProperties();
+      animation_player_->SetNeedsPushProperties();
     }
     if (!animation->affects_active_elements() &&
         !animation->affects_pending_elements()) {

@@ -32,10 +32,10 @@ class TestSafeBrowsingDatabaseHelper {
       std::vector<safe_browsing::ListIdentifier> lists_to_insert);
   ~TestSafeBrowsingDatabaseHelper();
 
-  void MarkUrlAsMatchingListIdWithMetadata(
+  void MarkUrlAsMatchingListWithId(
       const GURL& bad_url,
       const safe_browsing::ListIdentifier& list_id,
-      const safe_browsing::ThreatMetadata& threat_metadata);
+      safe_browsing::ThreatPatternType threat_pattern_type);
 
   bool HasListSynced(const safe_browsing::ListIdentifier& list_id);
 

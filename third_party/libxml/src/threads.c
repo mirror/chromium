@@ -48,7 +48,7 @@
 
 static int libxml_is_threaded = -1;
 #if defined(__GNUC__) && defined(__GLIBC__)
-#ifdef __linux__
+#ifdef linux
 #if (__GNUC__ == 3 && __GNUC_MINOR__ >= 3) || (__GNUC__ > 3)
 #pragma weak pthread_once
 #pragma weak pthread_getspecific
@@ -68,7 +68,7 @@ static int libxml_is_threaded = -1;
 #pragma weak pthread_key_delete
 #pragma weak pthread_cond_signal
 #endif
-#endif /* __linux__ */
+#endif /* linux */
 #endif /* defined(__GNUC__) && defined(__GLIBC__) */
 #endif /* HAVE_PTHREAD_H */
 

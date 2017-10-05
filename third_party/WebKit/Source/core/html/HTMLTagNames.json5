@@ -73,10 +73,7 @@
       name: "br",
       interfaceName: "HTMLBRElement",
     },
-    {
-      name: "button",
-      interfaceHeaderDir: "core/html/forms",
-    },
+    "button",
     "canvas",
     {
       name: "caption",
@@ -117,7 +114,6 @@
     {
       name: "datalist",
       interfaceName: "HTMLDataListElement",
-      interfaceHeaderDir: "core/html/forms",
     },
     {
       name: "dd",
@@ -157,7 +153,6 @@
     {
       name: "fieldset",
       interfaceName: "HTMLFieldSetElement",
-      interfaceHeaderDir: "core/html/forms",
     },
     {
       name: "figcaption",
@@ -254,10 +249,7 @@
       name: "layer",
       interfaceName: "HTMLElement",
     },
-    {
-      name: "legend",
-      interfaceHeaderDir: "core/html/forms",
-    },
+    "legend",
     {
       name: "li",
       interfaceName: "HTMLLIElement",

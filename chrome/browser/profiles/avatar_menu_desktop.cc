@@ -49,8 +49,7 @@ AvatarMenu::ImageLoadStatus AvatarMenu::GetImageForMenuButton(
   const size_t icon_index = entry->GetAvatarIconIndex();
   const int resource_id =
       profiles::GetDefaultAvatarIconResourceIDAtIndex(icon_index);
-  *image =
-      ui::ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
+  *image = ResourceBundle::GetSharedInstance().GetNativeImageNamed(resource_id);
 
   return status;
 }

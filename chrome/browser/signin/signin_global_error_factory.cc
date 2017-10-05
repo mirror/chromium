@@ -36,7 +36,7 @@ SigninGlobalErrorFactory* SigninGlobalErrorFactory::GetInstance() {
 
 KeyedService* SigninGlobalErrorFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-#if defined(OS_CHROMEOS)
+#if defined(USE_ASH)
   return nullptr;
 #endif
 

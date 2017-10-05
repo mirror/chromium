@@ -236,7 +236,7 @@ const char ThemeService::kDefaultThemeID[] = "";
 
 ThemeService::ThemeService()
     : ready_(false),
-      rb_(ui::ResourceBundle::GetSharedInstance()),
+      rb_(ResourceBundle::GetSharedInstance()),
       profile_(nullptr),
       installed_pending_load_id_(kDefaultThemeID),
       number_of_infobars_(0),

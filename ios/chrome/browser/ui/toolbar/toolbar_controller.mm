@@ -201,11 +201,6 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   return [super actionForLayer:layer forKey:event];
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
-  [super traitCollectionDidChange:previousTraitCollection];
-  [delegate_ traitCollectionDidChange];
-}
-
 @end
 
 @interface ToolbarController () {
@@ -231,6 +226,9 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 
 // Whether the share button should be visible in the toolbar.
 - (BOOL)shareButtonShouldBeVisible;
+
+// Update share button visibility and |standardButtons_| array.
+- (void)updateStandardButtons;
 
 // Returns an animation for |button| for a toolbar transition animation with
 // |style|.  |button|'s frame will be interpolated between its layout in the
@@ -888,7 +886,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   } else {
     InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
     CGFloat shadowHeight = kShadowViewFrame[idiom].size.height;
-    CGFloat shadowVerticalOffset = 0.0;
+    CGFloat shadowVerticalOffset = [[self class] toolbarDropShadowHeight];
     beginFrame = CGRectOffset(beginBounds, 0.0,
                               beginBounds.size.height - shadowVerticalOffset);
     beginFrame.size.height = shadowHeight;
@@ -1011,6 +1009,10 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     base::RecordAction(UserMetricsAction("MobileToolbarShareMenu"));
   else
     NOTREACHED();
+}
+
++ (CGFloat)toolbarDropShadowHeight {
+  return 0.0;
 }
 
 - (uint32_t)snapshotHash {
