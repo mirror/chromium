@@ -586,6 +586,7 @@ void BlinkTestRunner::TestFinished() {
       ->ToWebLocalFrame()
       ->FrameWidget()
       ->UpdateAllLifecyclePhases();
+
   CaptureDump();
 }
 
@@ -934,6 +935,11 @@ void BlinkTestRunner::OnSetTestConfiguration(
   ForceResizeRenderView(render_view(),
                         WebSize(local_params->initial_size.width(),
                                 local_params->initial_size.height()));
+
+  // Tests should always start with the browser controls hidden.
+  render_view()->GetWebView()->UpdateBrowserControlsState(
+      blink::kWebBrowserControlsBoth, blink::kWebBrowserControlsHidden, false);
+
   LayoutTestRenderThreadObserver::GetInstance()
       ->test_interfaces()
       ->TestRunner()
