@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "505e5469_e9150610",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:25:36Z",
+      "side": 1,
+      "message": "Done, great idea.",
+      "parentUuid": "fbfd7e55_e80c09ee",
+      "range": {
+        "startLine": 306,
+        "startChar": 9,
+        "endLine": 306,
+        "endChar": 16
+      },
+      "revId": "4fdfe73ad88c17d9682c4fccdf74b566d0d03aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4038f9ae_3a07ae86",
         "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager_unittest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "4fdfe73ad88c17d9682c4fccdf74b566d0d03aaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae10cc74_f3ff84f5",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-05T19:25:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4038f9ae_3a07ae86",
+      "range": {
+        "startLine": 513,
+        "startChar": 4,
+        "endLine": 513,
+        "endChar": 20
+      },
+      "revId": "4fdfe73ad88c17d9682c4fccdf74b566d0d03aaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
