@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6c42c5_b13b433a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "It might be nice to reference the specific changes for future reference, though I suppose the BUG can serve that purpose.\n\nIf you were to identify commits, you could use the \"[1]\" style to keep the comment simple.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 15
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3c974d_9469e7e6",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "While not strictly forbidden in the style guide, TODOs in the middle of a line is uncommon. I suggest moving to a newline.",
+      "range": {
+        "startLine": 688,
+        "startChar": 40,
+        "endLine": 688,
+        "endChar": 53
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21efab19_1e67b4e0",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "Devices other than what?",
+      "range": {
+        "startLine": 689,
+        "startChar": 5,
+        "endLine": 689,
+        "endChar": 18
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7518fc1b_08bdc6be",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "behavior or assumptions?",
+      "range": {
+        "startLine": 693,
+        "startChar": 32,
+        "endLine": 693,
+        "endChar": 38
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0eafb88_77bba0fc",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-10-05T23:25:14Z",
+      "side": 1,
+      "message": "Is this a summary of that bug? We don\u0027t usually do that. You could say earlier that this results in a fast-slow pattern, though, if you want to note that behavior.",
+      "range": {
+        "startLine": 698,
+        "startChar": 5,
+        "endLine": 698,
+        "endChar": 46
+      },
+      "revId": "5f042bd18cbb800950650e163f2557e1d8e7382a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
