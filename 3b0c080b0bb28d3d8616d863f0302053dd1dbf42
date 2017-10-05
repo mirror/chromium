@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60234fd6_5089f4c5",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-05T07:54:52Z",
+      "side": 1,
+      "message": "Fixed in followup.",
+      "parentUuid": "cfc73bad_3b193f50",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b6e0094_98fdcfd7",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0a7f4671_0c33a541",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-05T07:54:52Z",
+      "side": 1,
+      "message": "Fixed in followup.",
+      "parentUuid": "0b6e0094_98fdcfd7",
+      "range": {
+        "startLine": 29,
+        "startChar": 26,
+        "endLine": 29,
+        "endChar": 29
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dd2cd8c_6cf40aeb",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
         "patchSetId": 7
@@ -68,6 +116,30 @@
       "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801c886c_f87a2ec9",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-05T07:54:52Z",
+      "side": 1,
+      "message": "Fixed in followup.",
+      "parentUuid": "2dd2cd8c_6cf40aeb",
+      "range": {
+        "startLine": 33,
+        "startChar": 3,
+        "endLine": 33,
+        "endChar": 10
+      },
+      "revId": "3b0c080b0bb28d3d8616d863f0302053dd1dbf42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
