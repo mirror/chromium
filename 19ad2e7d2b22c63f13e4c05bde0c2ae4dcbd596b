@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33fa5818_97060467",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-05T22:53:35Z",
+      "side": 1,
+      "message": "shouldn\u0027t need callback either. You can do ContentViewCore.fromWebContents(webContents).getPopupControllerResultCallback",
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
