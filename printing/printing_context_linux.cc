@@ -7,7 +7,6 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
-#include "printing/metafile.h"
 #include "printing/print_dialog_gtk_interface.h"
 #include "printing/print_job_constants.h"
 #include "printing/units.h"
@@ -60,9 +59,9 @@ void PrintingContextLinux::SetPdfPaperSizeFunction(
   get_pdf_paper_size_ = get_pdf_paper_size;
 }
 
-void PrintingContextLinux::PrintDocument(const MetafilePlayer& metafile) {
+void PrintingContextLinux::PrintDocument(const std::vector<char>& data) {
   DCHECK(print_dialog_);
-  print_dialog_->PrintDocument(metafile, document_name_);
+  print_dialog_->PrintDocument(data, document_name_);
 }
 
 void PrintingContextLinux::AskUserForSettings(

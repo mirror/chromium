@@ -22,7 +22,6 @@ class RefCountedMemory;
 
 namespace printing {
 
-class MetafilePlayer;
 class PrintedPage;
 class PrintingContext;
 
@@ -44,7 +43,7 @@ class PRINTING_EXPORT PrintedDocument
   // Sets a page's data. 0-based. Takes metafile ownership.
   // Note: locks for a short amount of time.
   void SetPage(int page_number,
-               std::unique_ptr<MetafilePlayer> metafile,
+               std::unique_ptr<std::vector<char>> metafile,
 #if defined(OS_WIN)
                float shrink,
 #endif  // OS_WIN
