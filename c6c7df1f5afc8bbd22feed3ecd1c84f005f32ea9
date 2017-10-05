@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75115c64_afe3eb8a",
+        "filename": "media/audio/audio_output_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5766f45b_c94589b0",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b272cf9d_78515a2a",
         "filename": "media/audio/audio_output_dispatcher.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T11:29:52Z",
       "side": 1,
       "message": "Was DCHECK -\u003e CHECK intentional? If it was, add a comment.",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0b1ce_44d87b66",
+        "filename": "media/audio/audio_output_dispatcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T13:00:07Z",
+      "side": 1,
+      "message": "Yep, just followed the original logic (CHECK was in child destructors). But I don\u0027t see why it is needed. Removed for now, but probably better to put it back",
+      "parentUuid": "b272cf9d_78515a2a",
       "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "74936676_583a497f",
+        "filename": "media/audio/audio_output_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775b1b4c_4fbf41a2",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e9f7a0a_6dcb3616",
         "filename": "media/audio/audio_output_resampler.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533ca2fd_7a756249",
+        "filename": "media/audio/audio_output_resampler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T13:00:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e9f7a0a_6dcb3616",
+      "revId": "c6c7df1f5afc8bbd22feed3ecd1c84f005f32ea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
