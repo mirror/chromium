@@ -16,6 +16,24 @@
       "revId": "9bc32f29c738ef43d23da47b0b1d3f4e42d875a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0923204_b2c3d9e1",
+        "filename": "third_party/harfbuzz-ng/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-05T21:22:40Z",
+      "side": 1,
+      "message": "Added back the \u0027else\u0027 to not define these in that case. Added an assert to the freetype BUILD.gn to assure the same there.",
+      "parentUuid": "0680f016_42dd3d92",
+      "revId": "9bc32f29c738ef43d23da47b0b1d3f4e42d875a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
