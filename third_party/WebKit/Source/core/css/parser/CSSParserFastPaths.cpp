@@ -1228,6 +1228,8 @@ static CSSValue* ParseSimpleTransform(CSSPropertyID property_id,
   return ParseSimpleTransformList(string.Characters16(), string.length());
 }
 
+}  // namespace blink
+
 CSSValue* CSSParserFastPaths::MaybeParseValue(CSSPropertyID property_id,
                                               const String& string,
                                               CSSParserMode parser_mode) {
