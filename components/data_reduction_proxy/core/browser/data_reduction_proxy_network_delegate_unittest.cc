@@ -655,7 +655,8 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
       EXPECT_NE(0, request->GetTotalSentBytes());
       EXPECT_NE(0, request->GetTotalReceivedBytes());
       EXPECT_FALSE(request->was_cached());
-      VerifyBrotliPresent(request.get(), expect_brotli);
+      VerifyBrotliPresent(request.get(), expect_brotli,
+                          delegate.full_request_headers());
     } else {
       EXPECT_TRUE(request->was_cached());
       std::string content_encoding_value;
@@ -665,9 +666,10 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     }
   }
 
-  void VerifyBrotliPresent(net::URLRequest* request, bool expect_brotli) {
-    net::HttpRequestHeaders request_headers_sent;
-    EXPECT_TRUE(request->GetFullRequestHeaders(&request_headers_sent));
+  void VerifyBrotliPresent(
+      net::URLRequest* request,
+      bool expect_brotli,
+      const net::HttpRequestHeaders& request_headers_sent) {
     std::string accept_encoding_value;
     EXPECT_TRUE(request_headers_sent.GetHeader("Accept-Encoding",
                                                &accept_encoding_value));
@@ -792,15 +794,16 @@ class DataReductionProxyNetworkDelegateTest : public testing::Test {
     EXPECT_EQ(expect_cached, request->GetTotalSentBytes() == 0);
     EXPECT_EQ(expect_cached, request->GetTotalReceivedBytes() == 0);
 
-    net::HttpRequestHeaders sent_request_headers;
-    EXPECT_NE(expect_cached,
-              request->GetFullRequestHeaders(&sent_request_headers));
+    EXPECT_NE(expect_cached, delegate.have_full_request_headers());
 
     if (expect_cached) {
       // Request headers are missing. Return since there is nothing left to
       // check.
       return;
     }
+
+    net::HttpRequestHeaders sent_request_headers =
+        delegate.full_request_headers();
 
     // Verify that chrome-proxy-ect header is present in the request headers
     // only if |expect_ect_header| is true.
@@ -1811,14 +1814,7 @@ TEST_F(DataReductionProxyNetworkDelegateTest,
 
   // Use secure sockets when fetching the request since Brotli is only enabled
   // for secure connections.
-  std::unique_ptr<net::URLRequest> request(
-      FetchURLRequest(GURL(kTestURL), nullptr, response_headers, 140, 0));
-  EXPECT_EQ(140, request->received_response_content_length());
-  EXPECT_NE(0, request->GetTotalSentBytes());
-  EXPECT_NE(0, request->GetTotalReceivedBytes());
-  EXPECT_FALSE(request->was_cached());
-  // Brotli should be added to Accept Encoding header only if secure proxy is in
-  VerifyBrotliPresent(request.get(), false);
+  FetchURLRequestAndVerifyBrotli(nullptr, response_headers, false, false);
 }
 
 // Test that Brotli is not added to the accept-encoding header when it is
