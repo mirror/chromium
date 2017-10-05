@@ -22,6 +22,30 @@
       "revId": "ead9d3cb02a51b8553b2ec8796b1da49ce5c649e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "605018e3_44d174f0",
+        "filename": "headless/lib/browser/headless_devtools_manager_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1245991
+      },
+      "writtenOn": "2017-10-05T03:49:19Z",
+      "side": 1,
+      "message": "Oops, accidentally left that in. Done.",
+      "parentUuid": "3ba274f9_158bff95",
+      "range": {
+        "startLine": 576,
+        "startChar": 40,
+        "endLine": 576,
+        "endChar": 49
+      },
+      "revId": "ead9d3cb02a51b8553b2ec8796b1da49ce5c649e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
