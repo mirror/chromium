@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "c01aaeca_cec17094",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T23:02:23Z",
+      "side": 1,
+      "message": "I\u0027d bump the third step up to the second or even first next step. We should have one URL eliding algorithm. It\u0027s definitely tough to prioritize here and recall all the details :)\n\nI guess I\u0027m agnostic to RenderText actually encapsulating elision code versus an external component using RenderText\u0027s layout data to elide more efficiently.",
+      "parentUuid": "ab7b76fc_fb6a5bf5",
+      "revId": "ec6857bcb91613071db7dbf66906ae862dd348b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d3f4953_0252200b",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 2

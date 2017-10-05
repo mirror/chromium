@@ -105,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "b28148a5_5af95b39",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T23:02:23Z",
+      "side": 1,
+      "message": "Ah yeah... that will hopefully land very soon.",
+      "parentUuid": "492255e0_25f6b7ca",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91b3938d_fecec2b5",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -272,6 +290,24 @@
       "side": 1,
       "message": "As per my previous comment, I don\u0027t think we want to deprecate yet because (1) the new algo doesn\u0027t yet do special handling of the last path element, and (2) I\u0027m afraid to tie unblocking VR to churn on Chrome\u0027s existing method, and would sleep way easier if they were decoupled.",
       "parentUuid": "2722c4e7_58bc5e30",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f33310_a881c404",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T23:02:23Z",
+      "side": 1,
+      "message": "I guess that is okay, as long as we clarify this \u0027securely\u0027 distinction and we have a bug to consolidate these functions asap.",
+      "parentUuid": "843e75dd_550c7034",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
