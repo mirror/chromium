@@ -59,6 +59,10 @@ extern const base::Feature kEnableManualPasswordGeneration = {
 extern const base::Feature kEnableUsernameCorrection{
     "EnableUsernameCorrection", base::FEATURE_ENABLED_BY_DEFAULT};
 
+// Enables different way of drawing the popup
+extern const base::Feature kExpandedPopupViews{
+    "ExpandedPopupViews", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enables password selection while saving username and password details.
 extern const base::Feature kEnablePasswordSelection{
     "EnablePasswordSelection", base::FEATURE_ENABLED_BY_DEFAULT};
