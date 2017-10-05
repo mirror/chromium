@@ -42,6 +42,7 @@
 
 using content::NotificationResources;
 using content::PlatformNotificationData;
+using message_center::Notification;
 
 namespace {
 
@@ -93,7 +94,7 @@ class PlatformNotificationServiceTest : public testing::Test {
   }
 
   Notification GetDisplayedNotificationForType(NotificationCommon::Type type) {
-    std::vector<Notification> notifications =
+    std::vector<message_center::Notification> notifications =
         display_service_tester_->GetDisplayedNotificationsForType(type);
     DCHECK_EQ(1u, notifications.size());
 

@@ -325,14 +325,17 @@ void PlatformNotificationServiceImpl::DisplayNotification(
   DCHECK_EQ(0u, notification_data.actions.size());
   DCHECK_EQ(0u, notification_resources.action_icons.size());
 
-  Notification notification = CreateNotificationFromData(
+  message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
       notification_resources,
       new WebNotificationDelegate(NotificationCommon::NON_PERSISTENT, profile,
                                   notification_id, origin));
+  auto metadata = std::make_unique<NonPersistentNotificationMetadata>();
+  metadata->tag = notification_data.tag;
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
-      NotificationCommon::NON_PERSISTENT, notification_id, notification);
+      NotificationCommon::NON_PERSISTENT, notification_id, notification,
+      std::move(metadata));
   if (cancel_callback) {
 #if defined(OS_WIN)
     std::string profile_id =
@@ -363,12 +366,13 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
   Profile* profile = Profile::FromBrowserContext(browser_context);
   DCHECK(profile);
 
-  Notification notification = CreateNotificationFromData(
+  message_center::Notification notification = CreateNotificationFromData(
       profile, origin, notification_id, notification_data,
       notification_resources,
       new WebNotificationDelegate(NotificationCommon::PERSISTENT, profile,
                                   notification_id, origin));
   auto metadata = std::make_unique<PersistentNotificationMetadata>();
+  metadata->tag = notification_data.tag;
   metadata->service_worker_scope = service_worker_scope;
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
@@ -430,7 +434,8 @@ void PlatformNotificationServiceImpl::OnCloseEventDispatchComplete(
           PERSISTENT_NOTIFICATION_STATUS_MAX);
 }
 
-Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
+message_center::Notification
+PlatformNotificationServiceImpl::CreateNotificationFromData(
     Profile* profile,
     const GURL& origin,
     const std::string& notification_id,
@@ -444,12 +449,12 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
   // 1x bitmap - crbug.com/585815.
   // TODO(estade): The RichNotificationData should set |clickable| if there's a
   // click handler.
-  Notification notification(
+  message_center::Notification notification(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
       notification_data.title, notification_data.body,
       gfx::Image::CreateFrom1xBitmap(notification_resources.notification_icon),
-      NotifierId(origin), base::UTF8ToUTF16(origin.host()), origin,
-      notification_data.tag, message_center::RichNotificationData(), delegate);
+      base::UTF8ToUTF16(origin.host()), origin, NotifierId(origin),
+      message_center::RichNotificationData(), delegate);
 
   notification.set_context_message(
       DisplayNameForContextMessage(profile, origin));

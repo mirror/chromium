@@ -9,7 +9,6 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/notifications/message_center_notification_manager.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_test_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/browser_with_test_window_test.h"
@@ -23,6 +22,7 @@
 #include "ui/message_center/fake_message_center_tray_delegate.h"
 #include "ui/message_center/message_center_tray.h"
 #include "ui/message_center/message_center_types.h"
+#include "ui/message_center/notification.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
 
@@ -69,13 +69,12 @@ class MessageCenterNotificationManagerTest : public BrowserWithTestWindowTest {
 
   MessageCenter* message_center() { return message_center_; }
 
-  const ::Notification GetANotification(const std::string& id) {
-    return ::Notification(
+  const Notification GetANotification(const std::string& id) {
+    return Notification(
         message_center::NOTIFICATION_TYPE_SIMPLE, id, base::string16(),
-        base::string16(), gfx::Image(),
+        base::string16(), gfx::Image(), base::string16(),
+        GURL("chrome-extension://adflkjsdflkdsfdsflkjdsflkdjfs"),
         NotifierId(NotifierId::APPLICATION, "adflkjsdflkdsfdsflkjdsflkdjfs"),
-        base::string16(),
-        GURL("chrome-extension://adflkjsdflkdsfdsflkjdsflkdjfs"), id,
         message_center::RichNotificationData(),
         new message_center::NotificationDelegate());
   }
@@ -88,30 +87,30 @@ class MessageCenterNotificationManagerTest : public BrowserWithTestWindowTest {
 
 TEST_F(MessageCenterNotificationManagerTest, SetupNotificationManager) {
   TestingProfile profile;
-  notification_manager()->Add(GetANotification("test"), &profile);
+  notification_manager()->Add(GetANotification("test"), nullptr, &profile);
 }
 
 TEST_F(MessageCenterNotificationManagerTest, AddNotificationOnShutdown) {
   TestingProfile profile;
   EXPECT_TRUE(message_center()->NotificationCount() == 0);
-  notification_manager()->Add(GetANotification("test"), &profile);
+  notification_manager()->Add(GetANotification("test"), nullptr, &profile);
   EXPECT_TRUE(message_center()->NotificationCount() == 1);
 
   // Verify the number of notifications does not increase when trying to add a
   // notifcation on shutdown.
   notification_manager()->StartShutdown();
   EXPECT_TRUE(message_center()->NotificationCount() == 0);
-  notification_manager()->Add(GetANotification("test2"), &profile);
+  notification_manager()->Add(GetANotification("test2"), nullptr, &profile);
   EXPECT_TRUE(message_center()->NotificationCount() == 0);
 }
 
 TEST_F(MessageCenterNotificationManagerTest, UpdateNotification) {
   TestingProfile profile;
   EXPECT_TRUE(message_center()->NotificationCount() == 0);
-  notification_manager()->Add(GetANotification("test"), &profile);
+  notification_manager()->Add(GetANotification("test"), nullptr, &profile);
   EXPECT_TRUE(message_center()->NotificationCount() == 1);
-  ASSERT_TRUE(
-      notification_manager()->Update(GetANotification("test"), &profile));
+  ASSERT_TRUE(notification_manager()->Update(GetANotification("test"), &profile,
+                                             nullptr));
   EXPECT_TRUE(message_center()->NotificationCount() == 1);
 }
 

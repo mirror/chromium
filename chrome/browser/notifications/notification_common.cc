@@ -41,6 +41,22 @@ const PersistentNotificationMetadata* PersistentNotificationMetadata::From(
   return static_cast<const PersistentNotificationMetadata*>(metadata);
 }
 
+NonPersistentNotificationMetadata::NonPersistentNotificationMetadata() {
+  type = NotificationCommon::NON_PERSISTENT;
+}
+
+NonPersistentNotificationMetadata::~NonPersistentNotificationMetadata() =
+    default;
+
+// static
+const NonPersistentNotificationMetadata*
+NonPersistentNotificationMetadata::From(const Metadata* metadata) {
+  if (!metadata || metadata->type != NotificationCommon::NON_PERSISTENT)
+    return nullptr;
+
+  return static_cast<const NonPersistentNotificationMetadata*>(metadata);
+}
+
 // static
 void NotificationCommon::OpenNotificationSettings(
     content::BrowserContext* browser_context) {

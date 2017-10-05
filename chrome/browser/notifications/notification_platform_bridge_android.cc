@@ -16,7 +16,6 @@
 #include "base/strings/nullable_string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_display_service.h"
 #include "chrome/browser/notifications/notification_display_service_factory.h"
@@ -33,6 +32,7 @@
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/gfx/android/java_bitmap.h"
 #include "ui/gfx/image/image.h"
+#include "ui/message_center/notification.h"
 
 using base::android::AttachCurrentThread;
 using base::android::ConvertJavaStringToUTF8;
@@ -240,7 +240,7 @@ void NotificationPlatformBridgeAndroid::Display(
     const std::string& notification_id,
     const std::string& profile_id,
     bool incognito,
-    const Notification& notification,
+    const message_center::Notification& notification,
     std::unique_ptr<NotificationCommon::Metadata> metadata) {
   JNIEnv* env = AttachCurrentThread();
 
@@ -250,8 +250,9 @@ void NotificationPlatformBridgeAndroid::Display(
   // persistent once/if non persistent notifications are ever implemented on
   // Android.
   DCHECK_EQ(notification_type, NotificationCommon::PERSISTENT);
-  GURL scope_url(PersistentNotificationMetadata::From(metadata.get())
-                     ->service_worker_scope);
+  const auto* persistent_data =
+      PersistentNotificationMetadata::From(metadata.get());
+  GURL scope_url(persistent_data->service_worker_scope);
   if (!scope_url.is_valid())
     scope_url = origin_url;
 
@@ -263,7 +264,7 @@ void NotificationPlatformBridgeAndroid::Display(
   ScopedJavaLocalRef<jstring> j_origin =
       ConvertUTF8ToJavaString(env, origin_url.spec());
   ScopedJavaLocalRef<jstring> tag =
-      ConvertUTF8ToJavaString(env, notification.tag());
+      ConvertUTF8ToJavaString(env, persistent_data->tag);
   ScopedJavaLocalRef<jstring> title =
       ConvertUTF16ToJavaString(env, notification.title());
   ScopedJavaLocalRef<jstring> body =
