@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41042970_23c56c55",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 7166,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-10-05T12:22:50Z",
+      "side": 0,
+      "message": "Somehow we still need this hack even though we now have Supplementable\u003cDocument\u003e::TraceWrappers(visitor) instead.  I don\u0027t yet understand why.  mlippautz@, if you have time, could you help me understand why I cannot replace this with Supplementable\u003cDocument\u003e::TraceWrappers(visitor)?",
+      "revId": "ed5ff8061b49bb675bf8d461fd141b4542ce17db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
