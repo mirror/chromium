@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc1d3070_fe0e1ba6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T05:12:41Z",
+      "side": 1,
+      "message": "Replaced. Looks nicer :)\n\nI used this pattern because I didn\u0027t know the utility and some tests did it:\nhttps://cs.chromium.org/search/?q\u003d%22%7B%7Bhost%7D%7D:%7B%7Bports%5Bhttp%5D%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nMaybe we can replace them with this utility, too.",
+      "parentUuid": "b3f6f9e3_dd5ac392",
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "240dfcfc_5fb67d7f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "dd656204_6d64356d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T05:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240dfcfc_5fb67d7f",
+      "range": {
+        "startLine": 103,
+        "startChar": 18,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675e2a95_903f3294",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
         "patchSetId": 6
@@ -62,6 +104,30 @@
       "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3c73d0_1e06fdf8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/worklets/resources/import-tests.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T05:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "675e2a95_903f3294",
+      "range": {
+        "startLine": 114,
+        "startChar": 18,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "e1fd9019f2c18231839382d4c35b0b51af427cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
