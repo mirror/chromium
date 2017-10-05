@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ac28c29_28c1aa82",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T12:39:19Z",
+      "side": 1,
+      "message": "Optional nit: To avoid wondering if there is a chrome account here, you may also extract first_chrome_account to a local variable:\nconst std::string\u0026 first_chrome_account \u003d chrome_accounts_[0];",
+      "revId": "9024d4a2d89693ce15a8a061c5d166f3eb84cba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
