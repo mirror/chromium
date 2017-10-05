@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d098205d_88337d6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T23:14:10Z",
+      "side": 1,
+      "message": "We should be able to remove this since we no longer rely on native to tell us whether to use the toolbar handle.",
+      "range": {
+        "startLine": 722,
+        "startChar": 9,
+        "endLine": 722,
+        "endChar": 27
+      },
+      "revId": "ee8ec320519696be72b1e2728aadc7ccb5807a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
