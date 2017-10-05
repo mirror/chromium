@@ -19,6 +19,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_errors.h"
 #include "net/websockets/websocket_frame.h"
 #include "net/websockets/websocket_frame_parser.h"
@@ -64,6 +65,10 @@ int CalculateSerializedSizeAndTurnOnMaskBit(
   }
   return static_cast<int>(total_size);
 }
+
+// TODO(rhalavati): To be updated. Frames are all annotated in constructor.
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotationInternal =
+    NO_TRAFFIC_ANNOTATION_YET;
 
 }  // namespace
 
@@ -205,12 +210,9 @@ int WebSocketBasicStream::WriteEverything(
     // The use of base::Unretained() here is safe because on destruction we
     // disconnect the socket, preventing any further callbacks.
     int result = connection_->socket()->Write(
-        buffer.get(),
-        buffer->BytesRemaining(),
+        kTrafficAnnotationInternal, buffer.get(), buffer->BytesRemaining(),
         base::Bind(&WebSocketBasicStream::OnWriteComplete,
-                   base::Unretained(this),
-                   buffer,
-                   callback));
+                   base::Unretained(this), buffer, callback));
     if (result > 0) {
       UMA_HISTOGRAM_COUNTS_100000("Net.WebSocket.DataUse.Upstream", result);
       buffer->DidConsume(result);
@@ -376,7 +378,7 @@ std::unique_ptr<WebSocketFrame> WebSocketBasicStream::CreateFrame(
   if (is_final_chunk_in_message || data_size > 0 ||
       current_frame_header_->opcode !=
           WebSocketFrameHeader::kOpCodeContinuation) {
-    result_frame.reset(new WebSocketFrame(opcode));
+    result_frame.reset(new WebSocketFrame(opcode, kTrafficAnnotationInternal));
     result_frame->header.CopyFrom(*current_frame_header_);
     result_frame->header.final = is_final_chunk_in_message;
     result_frame->header.payload_length = data_size;

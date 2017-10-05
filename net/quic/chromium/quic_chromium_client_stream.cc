@@ -18,6 +18,7 @@
 #include "net/quic/core/quic_spdy_session.h"
 #include "net/quic/core/quic_write_blocked_list.h"
 #include "net/quic/core/spdy_utils.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 namespace {
@@ -205,6 +206,7 @@ int QuicChromiumClientStream::Handle::WriteHeaders(
 }
 
 int QuicChromiumClientStream::Handle::WriteStreamData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     base::StringPiece data,
     bool fin,
     const CompletionCallback& callback) {
@@ -212,7 +214,7 @@ int QuicChromiumClientStream::Handle::WriteStreamData(
   if (!stream_)
     return net_error_;
 
-  if (stream_->WriteStreamData(data, fin))
+  if (stream_->WriteStreamData(traffic_annotation, data, fin))
     return HandleIOComplete(OK);
 
   SetCallback(callback, &write_callback_);
@@ -220,6 +222,7 @@ int QuicChromiumClientStream::Handle::WriteStreamData(
 }
 
 int QuicChromiumClientStream::Handle::WritevStreamData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool fin,
@@ -228,7 +231,7 @@ int QuicChromiumClientStream::Handle::WritevStreamData(
   if (!stream_)
     return net_error_;
 
-  if (stream_->WritevStreamData(buffers, lengths, fin))
+  if (stream_->WritevStreamData(traffic_annotation, buffers, lengths, fin))
     return HandleIOComplete(OK);
 
   SetCallback(callback, &write_callback_);
@@ -533,15 +536,19 @@ SpdyPriority QuicChromiumClientStream::priority() const {
                                : kV3HighestPriority;
 }
 
-bool QuicChromiumClientStream::WriteStreamData(QuicStringPiece data, bool fin) {
+bool QuicChromiumClientStream::WriteStreamData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    QuicStringPiece data,
+    bool fin) {
   // Must not be called when data is buffered.
   DCHECK(!HasBufferedData());
   // Writes the data, or buffers it.
-  WriteOrBufferData(data, fin, nullptr);
+  WriteOrBufferData(traffic_annotation, data, fin, nullptr);
   return !HasBufferedData();  // Was all data written?
 }
 
 bool QuicChromiumClientStream::WritevStreamData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool fin) {
@@ -556,7 +563,7 @@ bool QuicChromiumClientStream::WritevStreamData(
     for (size_t i = 0; i < buffers.size(); ++i) {
       bool is_fin = fin && (i == buffers.size() - 1);
       QuicStringPiece string_data(buffers[i]->data(), lengths[i]);
-      WriteOrBufferData(string_data, is_fin, nullptr);
+      WriteOrBufferData(traffic_annotation, string_data, is_fin, nullptr);
     }
   }
   return !HasBufferedData();  // Was all data written?

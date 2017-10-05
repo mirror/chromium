@@ -340,7 +340,8 @@ int TCPSocketPosix::ReadIfReady(IOBuffer* buf,
   return rv;
 }
 
-int TCPSocketPosix::Write(IOBuffer* buf,
+int TCPSocketPosix::Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+                          IOBuffer* buf,
                           int buf_len,
                           const CompletionCallback& callback) {
   DCHECK(socket_);
@@ -355,9 +356,9 @@ int TCPSocketPosix::Write(IOBuffer* buf,
   int rv;
 
   if (use_tcp_fastopen_ && !tcp_fastopen_write_attempted_) {
-    rv = TcpFastOpenWrite(buf, buf_len, write_callback);
+    rv = TcpFastOpenWrite(traffic_annotation, buf, buf_len, write_callback);
   } else {
-    rv = socket_->Write(buf, buf_len, write_callback);
+    rv = socket_->Write(traffic_annotation, buf, buf_len, write_callback);
   }
 
   if (rv != ERR_IO_PENDING)
@@ -713,9 +714,11 @@ int TCPSocketPosix::HandleWriteCompleted(IOBuffer* buf, int rv) {
   return rv;
 }
 
-int TCPSocketPosix::TcpFastOpenWrite(IOBuffer* buf,
-                                     int buf_len,
-                                     const CompletionCallback& callback) {
+int TCPSocketPosix::TcpFastOpenWrite(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   SockaddrStorage storage;
   int rv = socket_->GetPeerAddress(&storage);
   if (rv != OK)
@@ -771,7 +774,7 @@ int TCPSocketPosix::TcpFastOpenWrite(IOBuffer* buf,
   }
 
   tcp_fastopen_status_ = TCP_FASTOPEN_SLOW_CONNECT_RETURN;
-  return socket_->WaitForWrite(buf, buf_len, callback);
+  return socket_->WaitForWrite(traffic_annotation, buf, buf_len, callback);
 }
 
 void TCPSocketPosix::NotifySocketPerformanceWatcher() {

@@ -622,7 +622,7 @@ int PepperUDPSocketMessageFilter::StartPendingSend() {
   // See OnMsgRecvFrom() for the reason why we use base::Unretained(this)
   // when calling |socket_| methods.
   int net_result = socket_->SendTo(
-      pending_send.buffer.get(),
+      NO_TRAFFIC_ANNOTATION_YET, pending_send.buffer.get(),
       pending_send.buffer->size(),
       net::IPEndPoint(pending_send.address, pending_send.port),
       base::Bind(&PepperUDPSocketMessageFilter::OnSendToCompleted,

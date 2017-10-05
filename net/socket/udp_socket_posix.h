@@ -25,6 +25,7 @@
 #include "net/socket/datagram_socket.h"
 #include "net/socket/diff_serv_code_point.h"
 #include "net/socket/socket_descriptor.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -126,7 +127,10 @@ class NET_EXPORT UDPSocketPosix {
   // Writes to the socket.
   // Only usable from the client-side of a UDP socket, after the socket
   // has been connected.
-  int Write(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
+  int Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
+            int buf_len,
+            const CompletionCallback& callback);
 
   // Reads from a socket and receive sender address information.
   // |buf| is the buffer to read data into.
@@ -151,7 +155,8 @@ class NET_EXPORT UDPSocketPosix {
   // Returns a net error code, or ERR_IO_PENDING if the IO is in progress.
   // If ERR_IO_PENDING is returned, the caller must keep |buf| and |address|
   // alive until the callback is called.
-  int SendTo(IOBuffer* buf,
+  int SendTo(const NetworkTrafficAnnotationTag& traffic_annotation,
+             IOBuffer* buf,
              int buf_len,
              const IPEndPoint& address,
              const CompletionCallback& callback);
@@ -293,14 +298,18 @@ class NET_EXPORT UDPSocketPosix {
   // Same as SendTo(), except that address is passed by pointer
   // instead of by reference. It is called from Write() with |address|
   // set to NULL.
-  int SendToOrWrite(IOBuffer* buf,
+  int SendToOrWrite(const NetworkTrafficAnnotationTag& traffic_annotation,
+                    IOBuffer* buf,
                     int buf_len,
                     const IPEndPoint* address,
                     const CompletionCallback& callback);
 
   int InternalConnect(const IPEndPoint& address);
   int InternalRecvFrom(IOBuffer* buf, int buf_len, IPEndPoint* address);
-  int InternalSendTo(IOBuffer* buf, int buf_len, const IPEndPoint* address);
+  int InternalSendTo(const NetworkTrafficAnnotationTag& traffic_annotation,
+                     IOBuffer* buf,
+                     int buf_len,
+                     const IPEndPoint* address);
 
   // Applies |socket_options_| to |socket_|. Should be called before
   // Bind().

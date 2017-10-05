@@ -10,6 +10,7 @@
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/platform/api/quic_socket_address.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -43,11 +44,13 @@ class QUIC_EXPORT_PRIVATE QuicPacketWriter {
   // WRITE_STATUS_BLOCKED or WRITE_STATUS_ERROR and error_code is populated.
   // Options must be either null, or created for the particular QuicPacketWriter
   // implementation. Options may be ignored, depending on the implementation.
-  virtual WriteResult WritePacket(const char* buffer,
-                                  size_t buf_len,
-                                  const QuicIpAddress& self_address,
-                                  const QuicSocketAddress& peer_address,
-                                  PerPacketOptions* options) = 0;
+  virtual WriteResult WritePacket(
+      const char* buffer,
+      size_t buf_len,
+      const QuicIpAddress& self_address,
+      const QuicSocketAddress& peer_address,
+      const NetworkTrafficAnnotationTag& traffic_annotation,
+      PerPacketOptions* options) = 0;
 
   // Returns true if the writer buffers and subsequently rewrites data
   // when an attempt to write results in the underlying socket becoming

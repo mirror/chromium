@@ -18,6 +18,7 @@
 #include "net/quic/chromium/quic_chromium_client_session.h"
 #include "net/quic/chromium/quic_chromium_client_stream.h"
 #include "net/spdy/core/spdy_header_block.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace base {
 class Timer;
@@ -44,7 +45,8 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
              std::unique_ptr<base::Timer> timer) override;
   void SendRequestHeaders() override;
   int ReadData(IOBuffer* buffer, int buffer_len) override;
-  void SendvData(const std::vector<scoped_refptr<IOBuffer>>& buffers,
+  void SendvData(const NetworkTrafficAnnotationTag& traffic_annotation,
+                 const std::vector<scoped_refptr<IOBuffer>>& buffers,
                  const std::vector<int>& lengths,
                  bool end_stream) override;
   NextProto GetProtocol() const override;

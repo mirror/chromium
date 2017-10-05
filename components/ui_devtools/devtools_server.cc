@@ -20,6 +20,7 @@
 #include "net/server/http_server_request_info.h"
 #include "net/socket/server_socket.h"
 #include "net/socket/tcp_server_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace ui_devtools {
 
@@ -105,12 +106,14 @@ void UiDevToolsServer::AttachClient(std::unique_ptr<UiDevToolsClient> client) {
   clients_.push_back(std::move(client));
 }
 
-void UiDevToolsServer::SendOverWebSocket(int connection_id,
-                                         const String& message) {
+void UiDevToolsServer::SendOverWebSocket(
+    int connection_id,
+    const String& message,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   io_thread_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&net::HttpServer::SendOverWebSocket,
-                 base::Unretained(server_.get()), connection_id, message));
+      FROM_HERE, base::Bind(&net::HttpServer::SendOverWebSocket,
+                            base::Unretained(server_.get()), connection_id,
+                            message, traffic_annotation));
 }
 
 void UiDevToolsServer::Start(const std::string& address_string, uint16_t port) {

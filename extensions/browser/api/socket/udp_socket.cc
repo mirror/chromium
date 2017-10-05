@@ -16,6 +16,7 @@
 #include "net/log/net_log_source.h"
 #include "net/socket/datagram_socket.h"
 #include "net/socket/udp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -133,13 +134,16 @@ void UDPSocket::Read(int count, const ReadCompletionCallback& callback) {
     OnReadComplete(io_buffer, result);
 }
 
-int UDPSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int UDPSocket::WriteImpl(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback) {
   if (!socket_.is_connected())
     return net::ERR_SOCKET_NOT_CONNECTED;
   else
-    return socket_.Write(io_buffer, io_buffer_size, callback);
+    return socket_.Write(traffic_annotation, io_buffer, io_buffer_size,
+                         callback);
 }
 
 void UDPSocket::RecvFrom(int count,
@@ -183,10 +187,12 @@ void UDPSocket::RecvFrom(int count,
     OnRecvFromComplete(io_buffer, address, result);
 }
 
-void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
-                       int byte_count,
-                       const net::IPEndPoint& address,
-                       const CompletionCallback& callback) {
+void UDPSocket::SendTo(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const net::IPEndPoint& address,
+    const CompletionCallback& callback) {
   DCHECK(!callback.is_null());
 
   if (!send_to_callback_.is_null()) {
@@ -206,7 +212,7 @@ void UDPSocket::SendTo(scoped_refptr<net::IOBuffer> io_buffer,
     }
 
     result = socket_.SendTo(
-        io_buffer.get(), byte_count, address,
+        traffic_annotation, io_buffer.get(), byte_count, address,
         base::Bind(&UDPSocket::OnSendToComplete, base::Unretained(this)));
   } while (false);
 
