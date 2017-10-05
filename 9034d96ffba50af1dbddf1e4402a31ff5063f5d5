@@ -34,6 +34,24 @@
       "revId": "9034d96ffba50af1dbddf1e4402a31ff5063f5d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db212a6b_7c10fb71",
+        "filename": "third_party/WebKit/Tools/gdb/webkit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-05T20:30:19Z",
+      "side": 1,
+      "message": "Utf8() is String\u0027s method which returns a CString. data() is CString\u0027s method which returns a const char*.\n\nI can print a WTF string in gdb command line, e.g.\n  String s(\"1234\");\n\n(gdb) p s.Utf8(0).data()\n... \"1234\"\n\nI think using the public API of WTF::String instead of internal data structures in these printers can avoid future breakage when internal data structure changes. I don\u0027t know how to do it here though.",
+      "parentUuid": "41203c0c_29727bda",
+      "revId": "9034d96ffba50af1dbddf1e4402a31ff5063f5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
