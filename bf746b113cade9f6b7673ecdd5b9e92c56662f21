@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b1dc87a5_ae88b06d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c86f338_b9c74a30",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97d4a12_1b3bfa3c",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T02:11:32Z",
       "side": 1,
       "message": "In script streaming, at this point do we not have csp and referrer policy and origin trial tokens yet set in creation_params? It might make more sense to DCHECK on all of those to make clear why we\u0027re early returning (I the comment is reassuring that we\u0027ll do the work eventually, but doesn\u0027t explain why we don\u0027t do the work now).",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959becb1_fb79f072",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "Yes, these should be empty:\nhttps://chromium.googlesource.com/chromium/src/+/cf8ba228c036ec11cf2fbfc09863ae93565583b3/third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp#407\n\nAdded DCHEKs and updated the comment.",
+      "parentUuid": "d97d4a12_1b3bfa3c",
       "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af28a9c2_c36e4ce8",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a56969_d804f033",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03f1aebf_c3a91f59",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-05T02:19:24Z",
       "side": 1,
       "message": "How about adding DCHECKs like the following?\nDCHECK(source_code.IsNull());\nDCHECK(!cached_meta_data);",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39ea563_db0dff94",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "We check them at line 161-162. Do you want me to move them to here?\n\n(I don\u0027t have a strong opinion, but I\u0027d slightly prefer to put DCHECKs near the place where we use them)",
+      "parentUuid": "03f1aebf_c3a91f59",
       "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a1be0230_6b1c7e7b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "Yeah, this comment is no longer meaningful. Removed.",
+      "parentUuid": "d3c697ef_f9451769",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b30339e_885452f3",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978e6759_b767872b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-05T04:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b30339e_885452f3",
+      "revId": "bf746b113cade9f6b7673ecdd5b9e92c56662f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
