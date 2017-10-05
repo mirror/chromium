@@ -56,6 +56,24 @@
       "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94697db_d8fa7454",
+        "filename": "tools/clang/value_cleanup/tests/list-value-append-original.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-10-05T20:40:10Z",
+      "side": 1,
+      "message": "I definitely see the appeal of simply removing the outdated tests and matchers. However, I found looking at your code quite educational when writing my own rewriter in https://crrev.com/c/702454. Also we recommend looking at existing matchers in https://chromium.googlesource.com/chromium/src/+/master/docs/clang_tool_refactoring.md. I do suppose we could simply add https://crbug.com/581865#c19 to the list of tool aided cleanups, though. That way is would still be relatively easy to discover your old code. What do you think?",
+      "parentUuid": "7b9bc05a_935a2a61",
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
