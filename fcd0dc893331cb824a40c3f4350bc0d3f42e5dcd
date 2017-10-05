@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "693bae86_eb8f30e5",
+        "filename": "chrome/browser/ui/blocked_content/popup_opener_tab_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-05T18:06:40Z",
+      "side": 1,
+      "message": "I am still sad that Android infobars !\u003d desktop infobars.",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 16
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
