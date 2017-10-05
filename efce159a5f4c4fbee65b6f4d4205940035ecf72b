@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af915b2e_64ae1520",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-05T21:01:03Z",
+      "side": 1,
+      "message": "This can return null, right (if all the buttons are disabled)?",
+      "revId": "efce159a5f4c4fbee65b6f4d4205940035ecf72b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
