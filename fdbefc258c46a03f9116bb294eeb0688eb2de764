@@ -242,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "3b796da0_b0443730",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_operation_response_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-05T22:56:46Z",
+      "side": 1,
+      "message": "Acknowledged IRT the test name.\n\nI am concerned about removing these checks because of them being related to the bug you just fixed while working on this. We could instead change the custom classes used as tested types to add information about regarding the operation name check (if it should be tested or not; what should be the expected value for the check; or something like that). That shouldn\u0027t require much duplication or complex changes.",
+      "parentUuid": "40bf69b4_cc66738b",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66f94055_4ee82df4",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1

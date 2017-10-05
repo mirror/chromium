@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "04b526ad_25f28b28",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-05T22:56:46Z",
+      "side": 1,
+      "message": "This comment still has some of the issues I fixed in my suggestion: a couple typos, the constant is not all caps and it seems to refer to the wrong value (I\u0027m guessing it should be the SHOULD_SUSPEND bucket tested for in the ExpectUniqueSample below).",
+      "parentUuid": "0db110d3_6d86959d",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 219,
+        "endChar": 73
+      },
+      "revId": "be4f9cdb38cd5d1f053eab4ee2452c9525b783f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91710133_b5009b56",
         "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory_impl_unittest.cc",
         "patchSetId": 3

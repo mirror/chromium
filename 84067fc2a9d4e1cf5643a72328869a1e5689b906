@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b15dbe08_a1166119",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_test_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-05T22:56:46Z",
+      "side": 1,
+      "message": "nit: unneeded new line.",
+      "revId": "84067fc2a9d4e1cf5643a72328869a1e5689b906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
