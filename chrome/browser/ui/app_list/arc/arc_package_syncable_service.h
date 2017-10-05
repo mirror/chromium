@@ -15,6 +15,7 @@
 #include "chrome/browser/sync/glue/sync_start_util.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "components/sync/model/sync_change.h"
 #include "components/sync/model/sync_change_processor.h"
 #include "components/sync/model/sync_error_factory.h"
@@ -104,6 +105,12 @@ class ArcPackageSyncableService : public syncer::SyncableService,
   // use cases.
   bool ShouldSyncPackage(const std::string& package_name) const;
 
+  // Returns if play auto install has started or not.
+  bool IsPaiStarted() const;
+
+  // Listener on when play auto install has started.
+  void OnPaiStarted();
+
   Profile* const profile_;
   std::unique_ptr<syncer::SyncChangeProcessor> sync_processor_;
   std::unique_ptr<syncer::SyncErrorFactory> sync_error_handler_;
@@ -130,6 +137,8 @@ class ArcPackageSyncableService : public syncer::SyncableService,
   syncer::SyncableService::StartSyncFlare flare_;
 
   ArcAppListPrefs* const prefs_;
+
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcPackageSyncableService);
 };

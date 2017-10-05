@@ -582,7 +582,12 @@ bool ArcVoiceInteractionFrameworkService::InitiateUserInteraction(
   PrefService* prefs = Profile::FromBrowserContext(context_)->GetPrefs();
   if (!prefs->GetBoolean(prefs::kArcVoiceInteractionValuePropAccepted)) {
     VLOG(1) << "Voice interaction feature not accepted.";
-    should_start_runtime_flow_ = true;
+    // Only use runtime flow when the ARC container is fully setup
+    // otherwise use the setup wizard. This will make sure PAI will be
+    // successfully started. Also runtime flow is started with a voice
+    // interaction session, it won't start if the device is provisioned
+    // and user setup is complete.
+    should_start_runtime_flow_ = prefs->GetBoolean(prefs::kArcPaiStarted);
     // If voice interaction value prop has not been accepted, show the value
     // prop OOBE page again.
     StartVoiceInteractionOobe();
