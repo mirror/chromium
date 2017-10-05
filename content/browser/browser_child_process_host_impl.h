@@ -23,6 +23,7 @@
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/child_process_host_delegate.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
@@ -134,6 +135,9 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   // available.
   void ShareMetricsAllocatorToProcess();
 
+  resource_coordinator::ResourceCoordinatorInterface*
+  GetProcessResourceCoordinator();
+
   // ChildProcessLauncher::Client implementation.
   void OnProcessLaunched() override;
   void OnProcessLaunchFailed(int error_code) override;
@@ -161,6 +165,9 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   std::unique_ptr<ChildConnection> child_connection_;
 
   std::unique_ptr<ChildProcessLauncher> child_process_;
+
+  std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
+      process_resource_coordinator_;
 
 #if defined(OS_WIN)
   // Watches to see if the child process exits before the IPC channel has

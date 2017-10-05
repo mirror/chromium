@@ -32,6 +32,14 @@ void CoordinationUnitIntrospectorImpl::GetProcessToURLMap(
     process_info->pid = pid;
     DCHECK_NE(base::kNullProcessId, process_info->pid);
 
+    int64_t launch_time;
+    if (process_cu->GetProperty(mojom::PropertyType::kLaunchTime,
+                                &launch_time)) {
+      process_info->launch_time = launch_time;
+    } else {
+      process_info->launch_time = 0;
+    }
+
     std::set<CoordinationUnitImpl*> page_cus =
         process_cu->GetAssociatedCoordinationUnitsOfType(
             CoordinationUnitType::kPage);
