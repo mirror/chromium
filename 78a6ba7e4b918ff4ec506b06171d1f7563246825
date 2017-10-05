@@ -16,6 +16,24 @@
       "revId": "78a6ba7e4b918ff4ec506b06171d1f7563246825",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbb0add_16d0ac13",
+        "filename": "chrome/browser/vr/elements/text_texture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-10-05T20:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe7320e_92753910",
+      "revId": "78a6ba7e4b918ff4ec506b06171d1f7563246825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
