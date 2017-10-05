@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "91de7d03_29740280",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:18:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3899efa3_ac31228a",
+      "range": {
+        "startLine": 68,
+        "startChar": 24,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d87552e_0edd051d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
         "patchSetId": 19
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "Using the ItemDecoration, it\u0027s applied on the fly as the view is scrolled, and applies to the first and last item in the current list of size N, so items 0 and N-1 will have the top/bottom padding applied respectively.",
       "parentUuid": "7d87552e_0edd051d",
+      "range": {
+        "startLine": 79,
+        "startChar": 36,
+        "endLine": 79,
+        "endChar": 42
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06f6d04e_8db0690a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:18:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9dfc974c_c0621fe0",
       "range": {
         "startLine": 79,
         "startChar": 36,
@@ -225,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "ea5af8b3_9ef78be8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:18:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "26b03b7a_04b6f3d2",
+      "range": {
+        "startLine": 85,
+        "startChar": 24,
+        "endLine": 85,
+        "endChar": 48
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27799156_ad348e01",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
         "patchSetId": 19
@@ -272,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "ebda7afa_a45fb714",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:18:49Z",
+      "side": 1,
+      "message": "You might cause a scrollbar to appear when not needed previously, but we can resolve that if needed at a later point.",
+      "parentUuid": "bc0939d3_252cd10c",
+      "range": {
+        "startLine": 92,
+        "startChar": 20,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "349da6b6_125522e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
         "patchSetId": 19
@@ -307,6 +403,30 @@
       "side": 1,
       "message": "We\u0027re actually applying this to ScrollViews for the most part, so that we can show the content beneath the transparent bottom nav, but also scroll it up high enough to access it all. For instance, the Incognito NTP uses a ScrollView, but Learn More hides behind the bottom nav on small devices. Using this method on that ScrollView fixes that issue.\n\nThe reason we have a specific RecyclerView padding method is simply because RecyclerViews don\u0027t play by the rules when it comes to applying basic padding for this purpose.",
       "parentUuid": "349da6b6_125522e4",
+      "range": {
+        "startLine": 111,
+        "startChar": 29,
+        "endLine": 111,
+        "endChar": 43
+      },
+      "revId": "21ddf0b2123d1d52761b18f67d868442f0c2ba30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f88c370_e39f10bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetPaddingUtils.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T00:18:49Z",
+      "side": 1,
+      "message": "For the case of ScrollViews, we are essentially making the nav-bar not transparent though.  We\u0027re applying padding to the scrollview which means the scrollable content is never behind the nav bar right?\n\nI guess in the case of ScrollView, I\u0027m wondering if we should be passing in the child view to allow it to scroll behind the toolbar (ScrollView\u0027s have 1 and only one child so that is an ok assumption).",
+      "parentUuid": "c913d6a3_fae74ca1",
       "range": {
         "startLine": 111,
         "startChar": 29,
