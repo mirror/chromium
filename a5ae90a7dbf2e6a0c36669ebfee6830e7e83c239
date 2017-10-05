@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3944fa_65c50298",
+        "filename": "components/bookmarks/managed/managed_bookmarks_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T19:03:49Z",
+      "side": 1,
+      "message": "Style guide says no else after return (just as you don\u0027t have an else on line 96).",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 10
+      },
+      "revId": "a5ae90a7dbf2e6a0c36669ebfee6830e7e83c239",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
