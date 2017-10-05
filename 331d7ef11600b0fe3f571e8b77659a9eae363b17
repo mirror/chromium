@@ -34,6 +34,24 @@
       "revId": "331d7ef11600b0fe3f571e8b77659a9eae363b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd3891c_b691d611",
+        "filename": "chrome/browser/metrics/chromeos_metrics_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T21:07:20Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "2b45bf18_972fa485",
+      "revId": "331d7ef11600b0fe3f571e8b77659a9eae363b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
