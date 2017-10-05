@@ -19,9 +19,10 @@ namespace blink {
 
 std::unique_ptr<WebVideoFrameSubmitter> WebVideoFrameSubmitter::Create(
     cc::VideoFrameProvider* provider,
-    WebContextProviderCallback context_provider_callback) {
+    WebContextProviderCallback context_provider_callback,
+    viz::SharedBitmapManager* shared_bitmap_manager) {
   return std::make_unique<VideoFrameSubmitter>(
-      provider, std::move(context_provider_callback));
+      provider, std::move(context_provider_callback), shared_bitmap_manager);
 }
 
 }  // namespace blink

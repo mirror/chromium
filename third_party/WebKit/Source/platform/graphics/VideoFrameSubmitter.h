@@ -22,7 +22,9 @@ class PLATFORM_EXPORT VideoFrameSubmitter
     : public WebVideoFrameSubmitter,
       public viz::mojom::blink::CompositorFrameSinkClient {
  public:
-  VideoFrameSubmitter(cc::VideoFrameProvider*, WebContextProviderCallback);
+  VideoFrameSubmitter(cc::VideoFrameProvider*,
+                      WebContextProviderCallback,
+                      viz::SharedBitmapManager*);
 
   ~VideoFrameSubmitter() override;
 
@@ -39,6 +41,11 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   }
   void SetSink(viz::mojom::blink::CompositorFrameSinkPtr* sink) {
     compositor_frame_sink_ = std::move(*sink);
+  }
+  // For test only.
+  void SetResourceProvider(
+      std::unique_ptr<VideoFrameResourceProvider> resource_provider) {
+    resource_provider_ = std::move(resource_provider);
   }
 
   // VideoFrameProvider::Client implementation.
@@ -59,6 +66,8 @@ class PLATFORM_EXPORT VideoFrameSubmitter
       const WTF::Vector<viz::ReturnedResource>& resources) override {}
 
  private:
+  void SubmitFrameInternal(viz::BeginFrameAck, scoped_refptr<media::VideoFrame>);
+
   cc::VideoFrameProvider* provider_;
   viz::mojom::blink::CompositorFrameSinkPtr compositor_frame_sink_;
   mojo::Binding<viz::mojom::blink::CompositorFrameSinkClient> binding_;
@@ -66,6 +75,7 @@ class PLATFORM_EXPORT VideoFrameSubmitter
   viz::LocalSurfaceId current_local_surface_id_;
   WebContextProviderCallback context_provider_callback_;
   std::unique_ptr<VideoFrameResourceProvider> resource_provider_;
+  viz::SharedBitmapManager* shared_bitmap_manager_;
 
   bool is_rendering_;
 

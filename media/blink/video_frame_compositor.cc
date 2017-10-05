@@ -23,7 +23,8 @@ const int kBackgroundRenderingTimeoutMs = 250;
 
 VideoFrameCompositor::VideoFrameCompositor(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    blink::WebContextProviderCallback media_context_provider_callback)
+    blink::WebContextProviderCallback media_context_provider_callback,
+    viz::SharedBitmapManager* shared_bitmap_manager)
     : task_runner_(task_runner),
       tick_clock_(new base::DefaultTickClock()),
       background_rendering_enabled_(true),
@@ -48,7 +49,7 @@ VideoFrameCompositor::VideoFrameCompositor(
 
   if (surface_layer_for_video_enabled_) {
     submitter_ = blink::WebVideoFrameSubmitter::Create(
-        this, media_context_provider_callback);
+        this, media_context_provider_callback, shared_bitmap_manager);
   }
 }
 

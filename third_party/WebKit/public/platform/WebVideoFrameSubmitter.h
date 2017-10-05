@@ -11,6 +11,7 @@
 namespace viz {
 class ContextProvider;
 class FrameSinkId;
+class SharedBitmapManager;
 }  // namespace viz
 
 namespace blink {
@@ -26,7 +27,8 @@ class BLINK_PLATFORM_EXPORT WebVideoFrameSubmitter
  public:
   static std::unique_ptr<WebVideoFrameSubmitter> Create(
       cc::VideoFrameProvider*,
-      WebContextProviderCallback);
+      WebContextProviderCallback,
+      viz::SharedBitmapManager*);
   virtual ~WebVideoFrameSubmitter() = default;
   virtual void StartSubmitting(const viz::FrameSinkId&) = 0;
 };

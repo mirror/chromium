@@ -13,6 +13,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/time/time.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "media/base/media_log.h"
 #include "media/base/media_observer.h"
 #include "media/base/routing_token_callback.h"
@@ -24,6 +25,10 @@
 namespace base {
 class SingleThreadTaskRunner;
 class TaskRunner;
+}
+
+namespace viz {
+class ContextProvider;
 }
 
 namespace blink {
@@ -49,6 +54,12 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
   typedef base::Callback<Context3D()> Context3DCB;
   typedef base::Callback<mojom::VideoDecodeStatsRecorderPtr()>
       CreateCapabilitiesRecorderCB;
+
+  // Callback to obtain the media ContextProvider.
+  // Requires being called on the media thread.
+  // The argument callback is also called on the media thread as a reply.
+  using ContextProviderCB =
+      base::Callback<void(base::Callback<void(viz::ContextProvider*)>)>;
 
   // Callback to tell V8 about the amount of memory used by the WebMediaPlayer
   // instance.  The input parameter is the delta in bytes since the last call to
@@ -80,7 +91,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
           blink::WebSurfaceLayerBridgeObserver*)> bridge_callback,
       blink::WebContextProviderCallback context_provider_callback,
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<viz::ContextProvider> context_provider,
+      viz::SharedBitmapManager* shared_bitmap_manager);
 
   ~WebMediaPlayerParams();
 
@@ -162,6 +174,10 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
     return context_provider_;
   }
 
+  viz::SharedBitmapManager* shared_bitmap_manager() {
+    return shared_bitmap_manager_;
+  }
+
  private:
   DeferLoadCB defer_load_cb_;
   scoped_refptr<SwitchableAudioRendererSink> audio_renderer_sink_;
@@ -186,6 +202,7 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerParams {
       create_bridge_callback_;
   blink::WebContextProviderCallback context_provider_callback_;
   scoped_refptr<viz::ContextProvider> context_provider_;
+  viz::SharedBitmapManager* shared_bitmap_manager_;
 
   DISALLOW_IMPLICIT_CONSTRUCTORS(WebMediaPlayerParams);
 };

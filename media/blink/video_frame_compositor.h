@@ -72,7 +72,8 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // thread.
   VideoFrameCompositor(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      blink::WebContextProviderCallback media_context_provider_callback);
+      blink::WebContextProviderCallback media_context_provider_callback,
+      viz::SharedBitmapManager* shared_bitmap_manager);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.
