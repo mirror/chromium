@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01339abf_50b3b295",
+        "filename": "headless/lib/browser/headless_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-10-05T14:33:14Z",
+      "side": 0,
+      "message": "Looks like DevToolsHeaderStrippingTest is failing, we really don\u0027t want that to fail :) Can you please make this configurable? See the way the AcceptLanguage option is wired up and used in HeadlessURLRequestContextGetter::GetURLRequestContext, you\u0027ll need to do something similar.",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 78
+      },
+      "revId": "f6da1574e04bd7d06b26ce8f18d85d891bc54dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
