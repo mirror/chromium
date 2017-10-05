@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bb278d4_bb8bb5d9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-05T15:37:10Z",
+      "side": 1,
+      "message": "I rephrased the comment. This TODO will be anyway removed by the follow-up CL.",
+      "parentUuid": "aa35d20d_93dce3ab",
+      "range": {
+        "startLine": 470,
+        "startChar": 79,
+        "endLine": 470,
+        "endChar": 0
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eb79fa8_98c1263a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a64ed7b_b00175db",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-05T15:37:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8eb79fa8_98c1263a",
+      "range": {
+        "startLine": 641,
+        "startChar": 2,
+        "endLine": 641,
+        "endChar": 8
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728c2269_e6323c50",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-10-05T15:37:10Z",
+      "side": 1,
+      "message": "Huh, good points.\n - Yes, this is false. Your comment actually turns the whole TODO moot, it makes little sense to restrict to SURFACE_OPENED here. We set the treshold for IsLastSuccessfulFetchStale() to the same threshold as for startup fetches. My feeling is that we very rarely get the SURFACE_OPENED trigger that is not preceded by some very recent startup trigger. So in most cases, the refetch that qualifies for IsLastSuccessfulFetchStale() would be done by a startup trigger, ending in RefetchInTheBackground(). We would very rarely see the placeholder cards. This would need quite a different implementation which I find hard and cumbersome to explain here in this TODO. I removed the TODO.\n\n - I changed to enumerate the enabled triggers.",
+      "parentUuid": "1e2f4a34_3d755e0d",
+      "range": {
+        "startLine": 773,
+        "startChar": 57,
+        "endLine": 774,
+        "endChar": 21
+      },
+      "revId": "0edb854a12b8bfec2b6bce765d72f23e4e5b56a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
