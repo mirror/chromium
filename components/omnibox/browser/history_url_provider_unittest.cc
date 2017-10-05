@@ -138,6 +138,8 @@ struct TestURLInfo {
     {"http://moo/bar", "Intranet moo", 1, 1, 80},
     {"http://typedhost/typedpath", "Intranet typed", 1, 1, 80},
     {"http://typedhost/untypedpath", "Intranet untyped", 1, 0, 80},
+    {"https://inetsecure", "Intranet main", 1, 1, 80},
+    {"https://inetsecure/page", "Intranet specific page", 2, 2, 80},
 
     {"http://x.com/one", "Internet", 2, 2, 80},
     {"http://x.com/two", "Internet two", 1, 1, 80},
@@ -883,6 +885,11 @@ TEST_F(HistoryURLProviderTest, IntranetURLCompletion) {
                                   arraysize(expected7)));
   EXPECT_LE(1400, matches_.front().relevance);
   EXPECT_LT(matches_.front().relevance, 1410);
+
+  const UrlAndLegalDefault expected8[] = {{"https://inetsecure/", true},
+                                          {"https://inetsecure/page", true}};
+  ASSERT_NO_FATAL_FAILURE(RunTest(ASCIIToUTF16("inetsecure"), std::string(),
+                                  false, expected8, arraysize(expected8)));
 }
 
 TEST_F(HistoryURLProviderTest, CrashDueToFixup) {
