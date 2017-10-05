@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75e5c0a3_e2f4b8d4",
+        "filename": "third_party/WebKit/Source/platform/bindings/CallbackFunctionBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-10-05T12:20:15Z",
+      "side": 1,
+      "message": "You no longer need this forward declaration",
+      "revId": "d93f357b7650b7cc8a357e89b58af8ef5d4619d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
