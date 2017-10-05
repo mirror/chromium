@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1fb8d66_5c63a829",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T08:33:42Z",
+      "side": 1,
+      "message": "Why does this make sense?",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7a71c4_b4a8c0e4",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T08:33:42Z",
+      "side": 1,
+      "message": "std::min() and std::max() require #include \u003calgorithm\u003e. I don\u0027t know which header provides it for free here, but better be explicit about it.",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5a37d6_afa9feeb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T08:33:42Z",
+      "side": 1,
+      "message": "You get LayoutUnit for free via both ng_logical_offset and ng_logical_size, but since LayoutUnit isn\u0027t used directly here, there\u0027s no need to include it.",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7a4fa0_3e3e89af",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T08:33:42Z",
+      "side": 1,
+      "message": "No big deal, but do we want getters for public members? I\u0027m not too familiar with structs and their coding style in Chromium, so I\u0027m asking.",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9661485e_287367aa",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-05T08:33:42Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "1780d118c5be49da054798051826aba040649e4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
