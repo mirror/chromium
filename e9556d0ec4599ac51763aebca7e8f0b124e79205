@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25d5d458_a3a25990",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsTabCreatorManager.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T23:11:05Z",
+      "side": 1,
+      "message": "why do we need to call initialize here now?  is it required for reparenting?",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 26
+      },
+      "revId": "e9556d0ec4599ac51763aebca7e8f0b124e79205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a4e198_5c4c5c0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 2941,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T23:11:05Z",
+      "side": 1,
+      "message": "undo and just return here again?",
+      "range": {
+        "startLine": 2941,
+        "startChar": 12,
+        "endLine": 2941,
+        "endChar": 15
+      },
+      "revId": "e9556d0ec4599ac51763aebca7e8f0b124e79205",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

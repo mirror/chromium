@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "05210800_b39b5bb1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T23:11:05Z",
+      "side": 1,
+      "message": "I would change getActivity() to handle the windowAndroid being null then.  I\u0027m not convinced anyone uses createFrozenTab except for some legacy document mode stuff and the tab persistent store.  We could likely change TabDelegate to also pass a non-null WindowAndroid if we wanted to enforce non-null WindowAndroids.",
+      "parentUuid": "7b5eb815_1d94e2fd",
+      "revId": "bad02746fb6249faeb7ed6abf88056b50b4a8742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9623d17e_32cd8e5d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 10
