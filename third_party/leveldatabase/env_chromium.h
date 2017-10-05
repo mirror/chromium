@@ -260,6 +260,9 @@ class DBTracker {
    public:
     // Name that OpenDatabase() was called with.
     virtual const std::string& name() const = 0;
+
+    // Hanlde to the block cache of the database.
+    virtual const leveldb::Cache* block_cache() const = 0;
   };
 
   // Opens a database and starts tracking it. As long as the opened database
@@ -275,18 +278,15 @@ class DBTracker {
   class MemoryDumpProvider;
   class TrackedDBImpl;
 
-  using DatabaseVisitor = base::RepeatingCallback<void(TrackedDB*)>;
+  using DatabaseVisitor =
+      base::RepeatingCallback<void(TrackedDB*, int block_cache_share_count)>;
 
   friend class ChromiumEnvDBTrackerTest;
   FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, IsTrackedDB);
-  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, GetOrCreateAllocatorDump);
+  FRIEND_TEST_ALL_PREFIXES(ChromiumEnvDBTrackerTest, MemoryDumpCreation);
 
   DBTracker();
   ~DBTracker();
-
-  static base::trace_event::MemoryAllocatorDump* GetOrCreateAllocatorDump(
-      base::trace_event::ProcessMemoryDump* pmd,
-      TrackedDB* db);
 
   // Calls |visitor| for each live database. The database is live from the
   // point it was returned from OpenDatabase() and up until its instance is
@@ -306,6 +306,7 @@ class DBTracker {
 
   mutable base::Lock databases_lock_;
   base::LinkedList<TrackedDBImpl> databases_;
+  std::map<const leveldb::Cache*, int> block_cache_share_counts_;
 
   DISALLOW_COPY_AND_ASSIGN(DBTracker);
 };
