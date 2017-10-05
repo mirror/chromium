@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "114c87fe_0770cd6b",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T21:47:12Z",
+      "side": 1,
+      "message": "nit: cache the severity instead to shorten the if statement, or use curly braces around the if statement body when the conditional is longer than one line.",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52469c4_296a9e27",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T21:47:12Z",
+      "side": 1,
+      "message": "nit: move this into SetIsProminent (or remove it if it\u0027s no longer needed); ditto for line 81",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b660cc56_ad5e9f9f",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T21:47:12Z",
+      "side": 1,
+      "message": "Move this to a file-local helper in an anon namespace (it doesn\u0027t need to be a member function)",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d33c25_62b63166",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T21:47:12Z",
+      "side": 1,
+      "message": "nit: forward declare AppMenuButton and move this include to the cc file.",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e6d4e81_64158379",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T21:47:12Z",
+      "side": 1,
+      "message": "Please add screenshots to the bug showing the black and white dots on this colored button.",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
