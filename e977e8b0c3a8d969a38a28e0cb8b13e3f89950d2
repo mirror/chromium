@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f3e6ab1_dfa9f1c9",
+        "filename": "extensions/renderer/messaging_util.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Good point; I can see why that\u0027s confusing.  Re-worded, lemme know if it\u0027s better.",
+      "parentUuid": "72c7af00_6977e62c",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea260740_54ad0f1e",
         "filename": "extensions/renderer/native_renderer_messaging_service.h",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-04T23:29:39Z",
       "side": 1,
       "message": "Not obvious to me: I don\u0027t see anything using this method (other than test file). Is this CL only exposing this and you plan to use it later?",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252cd356_241ae884",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Yep - in fact, nothing (other than tests) uses this entire class.  We need to hook it up in production in one fell swoop, because otherwise we\u0027ll break existing functionality with native bindings.  The other option was to introduce *another* feature switch, but that seemed excessive.  All of these will be used in a few more CLs.",
+      "parentUuid": "ea260740_54ad0f1e",
       "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "b389575a_3ef54dd3",
+        "filename": "extensions/renderer/native_renderer_messaging_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6df486a_183fd8ae",
+      "range": {
+        "startLine": 75,
+        "startChar": 32,
+        "endLine": 75,
+        "endChar": 43
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e2a9208_4aa22c85",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-10-04T23:29:39Z",
       "side": 1,
       "message": "Can these be OnceCallback?",
+      "range": {
+        "startLine": 48,
+        "startChar": 37,
+        "endLine": 48,
+        "endChar": 45
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe36bc5_78e4e850",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "I think they can!  The V8 function can be called multiple times (e.g. in [1]), but these should only be used once.  It\u0027s a little awkward only because we still need to store them as pointers (because we need them to stay at the same location in memory), but I think it works.\n\n[1]\nchrome.runtime.onMessage.addListener(function(msg, sender, reply) {\n  reply(\u0027hi\u0027);\n  reply(\u0027bye\u0027);\n})",
+      "parentUuid": "5e2a9208_4aa22c85",
       "range": {
         "startLine": 48,
         "startChar": 37,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "cea64b37_1546a9ab",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4667d7fc_5ed56ecd",
+      "range": {
+        "startLine": 241,
+        "startChar": 70,
+        "endLine": 241,
+        "endChar": 79
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54c66310_5c5d92df",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 8
@@ -122,6 +236,30 @@
       "writtenOn": "2017-10-04T23:29:39Z",
       "side": 1,
       "message": "nitty-nit: not sure if this pattern is increasing readability or creating slight confusion as it makes readers scan for places where this is set to true... Since this value is not complicated, consider:\n\nconstexpr bool kNotHandled \u003d false;\nconstexpr bool kHandled \u003d true;\nand use return kNotHandled/kHandled.\n\nNot strong on this though.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 23
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9663f3_32b04744",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Hmm... not sure I agree with that.  Having readers scan for where it\u0027s true isn\u0027t bad - it shows where we consider the reply handled (in this patch set, line 284).  I think I\u0027d prefer to keep it as-is, if you\u0027re alright with that.",
+      "parentUuid": "54c66310_5c5d92df",
       "range": {
         "startLine": 274,
         "startChar": 2,
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "0e0d4dc2_e86c71d8",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27be8b7d_e53c78fd",
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709aad0b_5ce4f829",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 8
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "b7fd15e7_dcd2e23a",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Looking back, it looks like this can\u0027t be -1.  It was originally going to be if the opener didn\u0027t specify a callback, but now we don\u0027t even persist the opener information if that\u0027s the case.  Removed the if\u0027s here and below.  Good catch!",
+      "parentUuid": "709aad0b_5ce4f829",
+      "range": {
+        "startLine": 340,
+        "startChar": 25,
+        "endLine": 340,
+        "endChar": 27
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23921a8a_7e5a95cd",
         "filename": "extensions/renderer/one_time_message_handler.h",
         "patchSetId": 8
@@ -194,6 +374,30 @@
       "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a6b30a_a94f0559",
+        "filename": "extensions/renderer/one_time_message_handler.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23921a8a_7e5a95cd",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "e977e8b0c3a8d969a38a28e0cb8b13e3f89950d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

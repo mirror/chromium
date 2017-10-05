@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0def8378_bd31e074",
+        "filename": "extensions/renderer/bindings/api_request_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:29:45Z",
+      "side": 1,
+      "message": "Good to know.  I wonder if at some point it will be worth auditing sites to see how many allocate extra scopes.  Thanks!",
+      "parentUuid": "4d516fe7_8c7aa601",
+      "revId": "d834670b2e49f0be4b45c8c48d7692cd6083ed86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72c2e230_0114fda8",
         "filename": "extensions/renderer/one_time_message_handler.cc",
         "patchSetId": 7
