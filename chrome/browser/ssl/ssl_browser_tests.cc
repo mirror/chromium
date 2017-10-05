@@ -6252,6 +6252,14 @@ IN_PROC_BROWSER_TEST_F(SymantecMessageSSLUITest, PostJune2016) {
                                  "*The certificate used to load*"));
 }
 
+IN_PROC_BROWSER_TEST_F(SSLUITest, DoBrowserTestsRunOnAndroid) {
+#if defined(OS_ANDROID)
+  ASSERT_TRUE(false) << "Yes, browser tests run on Android";
+#else
+  ASSERT_TRUE(true);
+#endif
+}
+
 // TODO(jcampan): more tests to do below.
 
 // Visit a page over https that contains a frame with a redirect.
