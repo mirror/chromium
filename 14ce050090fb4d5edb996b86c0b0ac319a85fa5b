@@ -16,6 +16,24 @@
       "revId": "14ce050090fb4d5edb996b86c0b0ac319a85fa5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dde152c_bda2a012",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 5864,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T20:53:19Z",
+      "side": 0,
+      "message": "TL;DR: Most are coming.\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/703470 removes some more (anything unused alphabetically after IDS_COOKIES_COOKIE_ACCESSIBLE_TO_SCRIPT_LABEL).  I sharded CLs by a number of resources to check in each, going in alphabetical order (so that it\u0027s at least not random).  Sharding by \"topic\" would have been nice, but is more than my dumb little script can handle :)\n\nAlso, I\u0027m currently only looking at strings removed in https://crrev.com/1f2b58d76f2d61471b9afe04de743b127ae49685 - so there may be other unused strings that won\u0027t be part of this first patch (apparently, IDS_COOKIES_BLOCK_3RDPARTY_CHKBOX falls into this category).  Once we finish cleaning up all the ones that were orphaned by that CL, I might see about just checking all resources in generated_resources.grd, but I haven\u0027t gotten to that point yet.",
+      "parentUuid": "fc2f7397_87649a83",
+      "revId": "14ce050090fb4d5edb996b86c0b0ac319a85fa5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
