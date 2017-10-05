@@ -105,6 +105,8 @@ class WebURLRequest {
     kFrameTypeTopLevel
   };
 
+  // Corresponds to Fetch request's "mode" and "use-CORS-preflight flag":
+  // https://fetch.spec.whatwg.org/#concept-request-mode
   enum FetchRequestMode : uint8_t {
     kFetchRequestModeSameOrigin,
     kFetchRequestModeNoCORS,
@@ -113,6 +115,9 @@ class WebURLRequest {
     kFetchRequestModeNavigate
   };
 
+  // Corresponds to Fetch request's "credentials mode":
+  // https://fetch.spec.whatwg.org/#concept-request-credentials-mode
+  // https://github.github.io/fetch/#credentials
   enum FetchCredentialsMode : uint8_t {
     kFetchCredentialsModeOmit,
     kFetchCredentialsModeSameOrigin,
@@ -120,6 +125,8 @@ class WebURLRequest {
     kFetchCredentialsModePassword
   };
 
+  // Corresponds to Fetch request's "cache mode":
+  // https://fetch.spec.whatwg.org/#concept-request-cache-mode
   enum FetchRequestCacheMode : uint8_t {
     kFetchRequestCacheModeDefault,
     kFetchRequestCacheModeNoStore,
@@ -129,6 +136,8 @@ class WebURLRequest {
     kFetchRequestCacheModeOnlyIfCached
   };
 
+  // Corresponds to Fetch request's "redirect mode":
+  // https://fetch.spec.whatwg.org/#concept-request-redirect-mode
   enum FetchRedirectMode : uint8_t {
     kFetchRedirectModeFollow,
     kFetchRedirectModeError,
