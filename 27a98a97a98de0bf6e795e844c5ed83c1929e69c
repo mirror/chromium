@@ -34,6 +34,24 @@
       "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af19a09c_9d708976",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-05T22:46:16Z",
+      "side": 1,
+      "message": "Suppose you have an existing WebGL or Canvas app -- something very big and complicated -- and you want to add WCG or HDR support to it. The easiest path is to use extended-sRGB half-float. We don\u0027t have this as part of the spec, but we should.\n\nIf the user is forced to use linear-scRGB, then they have to re-write their entire application (because writing gl_FragColor\u003dvec4(0.5, 0.5, 0.5, 1) will no longer match #808080, but rather, will match #373737).",
+      "parentUuid": "f9c65055_b756ed2f",
+      "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
