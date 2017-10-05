@@ -340,6 +340,8 @@ source_set("chromeos") {
     "arc/enterprise/arc_cert_store_bridge.h",
     "arc/enterprise/arc_enterprise_reporting_service.cc",
     "arc/enterprise/arc_enterprise_reporting_service.h",
+    "arc/enterprise/chrome_keymaster.cc",
+    "arc/enterprise/chrome_keymaster.h",
     "arc/extensions/arc_support_message_host.cc",
     "arc/extensions/arc_support_message_host.h",
     "arc/fileapi/arc_content_file_system_async_file_util.cc",

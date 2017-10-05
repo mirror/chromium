@@ -105,6 +105,7 @@ ArcCertStoreBridge::ArcCertStoreBridge(content::BrowserContext* context,
       weak_ptr_factory_(this) {
   DVLOG(1) << "ArcCertStoreBridge::ArcCertStoreBridge";
 
+  keymaster_ = std::make_unique<ChromeKeymaster>();
   const auto* profile_policy_connector =
       policy::ProfilePolicyConnectorFactory::GetForBrowserContext(context_);
   policy_service_ = profile_policy_connector->policy_service();
@@ -177,9 +178,9 @@ void ArcCertStoreBridge::GetKeyCharacteristics(
                             base::nullopt);
     return;
   }
-  // TODO(pbond): implement.
-  std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED,
-                          base::nullopt);
+
+  std::move(callback).Run(mojom::KeymasterError::ERROR_OK,
+                          keymaster_->GetKeyCharacteristics(cert));
 }
 
 void ArcCertStoreBridge::Begin(const std::string& alias,
@@ -199,8 +200,13 @@ void ArcCertStoreBridge::Begin(const std::string& alias,
     std::move(callback).Run(mojom::KeymasterError::ERROR_INVALID_KEY_BLOB, 0);
     return;
   }
-  // TODO(pbond): implement.
-  std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED, 0);
+  uint64_t operation_handle = 0;
+  if (!keymaster_->Begin(std::move(cert), params, &operation_handle)) {
+    std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED, 0);
+    return;
+  }
+
+  std::move(callback).Run(mojom::KeymasterError::ERROR_OK, operation_handle);
 }
 
 void ArcCertStoreBridge::Update(uint64_t operation_handle,
@@ -214,8 +220,13 @@ void ArcCertStoreBridge::Update(uint64_t operation_handle,
         mojom::KeymasterError::ERROR_INVALID_OPERATION_HANDLE, 0);
     return;
   }
-  // TODO(pbond): implement.
-  std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED, 0);
+  int32_t input_consumed = 0;
+  if (!keymaster_->Update(operation_handle, data, &input_consumed)) {
+    std::move(callback).Run(mojom::KeymasterError::ERROR_UNKNOWN_ERROR, 0);
+    return;
+  }
+  std::move(callback).Run(mojom::KeymasterError::ERROR_UNKNOWN_ERROR,
+                          input_consumed);
 }
 
 void ArcCertStoreBridge::Finish(uint64_t operation_handle,
@@ -228,9 +239,13 @@ void ArcCertStoreBridge::Finish(uint64_t operation_handle,
         mojom::KeymasterError::ERROR_INVALID_OPERATION_HANDLE, base::nullopt);
     return;
   }
-  // TODO(pbond): implement.
-  std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED,
-                          base::nullopt);
+  std::vector<uint8_t> signature;
+  if (!keymaster_->Finish(operation_handle, &signature)) {
+    std::move(callback).Run(mojom::KeymasterError::ERROR_UNKNOWN_ERROR,
+                            base::nullopt);
+    return;
+  }
+  std::move(callback).Run(mojom::KeymasterError::ERROR_OK, signature);
 }
 
 void ArcCertStoreBridge::Abort(uint64_t operation_handle,
@@ -243,8 +258,11 @@ void ArcCertStoreBridge::Abort(uint64_t operation_handle,
         mojom::KeymasterError::ERROR_INVALID_OPERATION_HANDLE);
     return;
   }
-  // TODO(pbond): implement.
-  std::move(callback).Run(mojom::KeymasterError::ERROR_UNIMPLEMENTED);
+  if (!keymaster_->Abort(operation_handle)) {
+    std::move(callback).Run(mojom::KeymasterError::ERROR_UNKNOWN_ERROR);
+    return;
+  }
+  std::move(callback).Run(mojom::KeymasterError::ERROR_OK);
 }
 
 void ArcCertStoreBridge::OnCertDBChanged() {

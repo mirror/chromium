@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_CHROMEOS_ARC_ENTERPRISE_ARC_CERT_STORE_BRIDGE_H_
 
 #include "base/memory/weak_ptr.h"
+#include "chrome/browser/chromeos/arc/enterprise/chrome_keymaster.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/common/cert_store.mojom.h"
 #include "components/arc/instance_holder.h"
@@ -78,6 +79,7 @@ class ArcCertStoreBridge
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<CertStoreHost> binding_;
   policy::PolicyService* policy_service_ = nullptr;
+  std::unique_ptr<ChromeKeymaster> keymaster_;
   // Set to true if at least one ARC app is whitelisted by KeyPermissions
   // policy.
   bool channel_enabled_ = false;
