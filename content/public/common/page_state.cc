@@ -15,15 +15,11 @@
 namespace content {
 namespace {
 
-base::NullableString16 ToNullableString16(const std::string& utf8) {
-  return base::NullableString16(base::UTF8ToUTF16(utf8), false);
+base::FilePath ToFilePath(base::Optional<base::string16> s) {
+  return base::FilePath::FromUTF16Unsafe(s.value());
 }
 
-base::FilePath ToFilePath(const base::NullableString16& s) {
-  return base::FilePath::FromUTF16Unsafe(s.string());
-}
-
-void ToFilePathVector(const std::vector<base::NullableString16>& input,
+void ToFilePathVector(const std::vector<base::Optional<base::string16>>& input,
                       std::vector<base::FilePath>* output) {
   output->clear();
   output->reserve(input.size());
@@ -48,7 +44,7 @@ void RecursivelyRemoveScrollOffset(ExplodedFrameState* state) {
 }
 
 void RecursivelyRemoveReferrer(ExplodedFrameState* state) {
-  state->referrer = base::NullableString16();
+  state->referrer.reset();
   state->referrer_policy = blink::kWebReferrerPolicyDefault;
   for (std::vector<ExplodedFrameState>::iterator it = state->children.begin();
        it != state->children.end();
@@ -68,7 +64,7 @@ PageState PageState::CreateFromEncodedData(const std::string& data) {
 PageState PageState::CreateFromURL(const GURL& url) {
   ExplodedPageState state;
 
-  state.top.url_string = ToNullableString16(url.possibly_invalid_spec());
+  state.top.url_string = base::UTF8ToUTF16(url.possibly_invalid_spec());
 
   return ToPageState(state);
 }
@@ -81,7 +77,7 @@ PageState PageState::CreateForTesting(
     const base::FilePath* optional_body_file_path) {
   ExplodedPageState state;
 
-  state.top.url_string = ToNullableString16(url.possibly_invalid_spec());
+  state.top.url_string = base::UTF8ToUTF16(url.possibly_invalid_spec());
 
   if (optional_body_data || optional_body_file_path) {
     if (optional_body_data) {
@@ -96,8 +92,8 @@ PageState PageState::CreateForTesting(
           *optional_body_file_path,
           0, std::numeric_limits<uint64_t>::max(),
           base::Time());
-      state.referenced_files.push_back(base::NullableString16(
-          optional_body_file_path->AsUTF16Unsafe(), false));
+      state.referenced_files.push_back(
+          optional_body_file_path->AsUTF16Unsafe());
     }
     state.top.http_body.contains_passwords =
         body_contains_password_data;
@@ -112,7 +108,7 @@ PageState PageState::CreateForTestingWithSequenceNumbers(
     int64_t item_sequence_number,
     int64_t document_sequence_number) {
   ExplodedPageState page_state;
-  page_state.top.url_string = ToNullableString16(url.spec());
+  page_state.top.url_string = base::UTF8ToUTF16(url.spec());
   page_state.top.item_sequence_number = item_sequence_number;
   page_state.top.document_sequence_number = document_sequence_number;
 

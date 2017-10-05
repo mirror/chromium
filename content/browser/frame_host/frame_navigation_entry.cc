@@ -89,7 +89,7 @@ void FrameNavigationEntry::set_document_sequence_number(
 
 void FrameNavigationEntry::SetPageState(const PageState& page_state) {
   page_state_ = page_state;
-
+hist
   ExplodedPageState exploded_state;
   if (!DecodePageState(page_state_.ToEncodedData(), &exploded_state))
     return;
@@ -109,7 +109,8 @@ scoped_refptr<ResourceRequestBody> FrameNavigationEntry::GetPostData(
     return nullptr;
 
   *content_type = base::UTF16ToASCII(
-      exploded_state.top.http_body.http_content_type.string());
+      exploded_state.top.http_body.http_content_type.value_or(
+          base::string16()));
   return exploded_state.top.http_body.request_body;
 }
 
