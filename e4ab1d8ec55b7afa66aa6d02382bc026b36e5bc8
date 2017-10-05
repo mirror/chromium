@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "986b0f96_dcf0e6ab",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:45:57Z",
+      "side": 1,
+      "message": "Terminate()",
+      "range": {
+        "startLine": 243,
+        "startChar": 16,
+        "endLine": 243,
+        "endChar": 20
+      },
+      "revId": "e4ab1d8ec55b7afa66aa6d02382bc026b36e5bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5747fb15_8d06f1c9",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:45:57Z",
+      "side": 1,
+      "message": "Terminate()",
+      "range": {
+        "startLine": 548,
+        "startChar": 52,
+        "endLine": 548,
+        "endChar": 56
+      },
+      "revId": "e4ab1d8ec55b7afa66aa6d02382bc026b36e5bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b6e29e_13868f4e",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:45:57Z",
+      "side": 1,
+      "message": "Terminate()",
+      "range": {
+        "startLine": 549,
+        "startChar": 44,
+        "endLine": 549,
+        "endChar": 48
+      },
+      "revId": "e4ab1d8ec55b7afa66aa6d02382bc026b36e5bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e085418_01171060",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:45:57Z",
+      "side": 1,
+      "message": "This can be const?",
+      "range": {
+        "startLine": 291,
+        "startChar": 24,
+        "endLine": 291,
+        "endChar": 39
+      },
+      "revId": "e4ab1d8ec55b7afa66aa6d02382bc026b36e5bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5ba9ac_11ff170e",
+        "filename": "chrome/browser/banners/app_banner_manager_desktop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T04:45:57Z",
+      "side": 1,
+      "message": "Minor comment nit:\n\n\"Terminate the flow but don\u0027t record a dismiss metric here ...\"",
+      "range": {
+        "startLine": 53,
+        "startChar": 19,
+        "endLine": 53,
+        "endChar": 64
+      },
+      "revId": "e4ab1d8ec55b7afa66aa6d02382bc026b36e5bc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
