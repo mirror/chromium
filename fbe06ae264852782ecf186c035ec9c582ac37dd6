@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c846497_fdfffaf6",
+        "filename": "base/tuple.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T16:27:28Z",
+      "side": 1,
+      "message": "How come we don\u0027t need std::decay here? I guess it\u0027s because OutTuple must be a pointer type so it can\u0027t point to a reference...?",
+      "revId": "fbe06ae264852782ecf186c035ec9c582ac37dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
