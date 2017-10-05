@@ -22,6 +22,30 @@
       "revId": "b99f4efe750711ba83675b2f314fa01e2c2c0d1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31621d1b_c2c600a3",
+        "filename": "components/data_reduction_proxy/core/browser/warmup_url_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-05T21:18:16Z",
+      "side": 1,
+      "message": "\"Cache-Control: no-cache\"  is added to the request. See Line 64 above.\n\nUsing query params provides additional safeguards. When this experiment was turned on, the number of bypasses (due to missing via) went up in countries where HTTP Flywheel is used majority of the time (http://shortn/_KjYbVmYfnb). It is possible that some of the middleware boxes are not 100% cache compliant.\n\nOther possibility is that they are simply stripping out the Via header, but we can differentiate that from captive portals by having the server echo back the random query, and verifying it back in Chrome (next CL once the server side changes are in).",
+      "parentUuid": "61a5be28_a44b1626",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "b99f4efe750711ba83675b2f314fa01e2c2c0d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
