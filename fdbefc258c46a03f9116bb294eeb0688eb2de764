@@ -224,6 +224,24 @@
     },
     {
       "key": {
+        "uuid": "40bf69b4_cc66738b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_operation_response_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-05T21:55:22Z",
+      "side": 1,
+      "message": "This is a bit more complicated.  First off, the name should be fine as it, it is checking for an empty operation, not a missing operation name.\n\nSecondly, this TYPED_TEST is used on multiple objects, including both GetOperations and GeneratePageBundles.  While the operation_name does in fact get set now for the GetOperation, it is not getting set for the GeneratePageBundle.  So, there is no one value that is correct for both, I ended up removing the call above in the latest version of the patch.\n\nAn alternative to removing it might be to split all these tests, one set of tests for GetOperation, and one for GeneratePageBundle. I thought that it would be better to keep the tests cleaner to just remove the operation name check, and live with the small loss of test coverage.",
+      "parentUuid": "50f8390d_1f4e9455",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66f94055_4ee82df4",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1
