@@ -43,7 +43,8 @@ public class ChromeHomeAppMenuTest {
     }
 
     @Test
-    @SmallTest
+    //@SmallTest
+    @DisabledIf.Build(supported_abis_includes = "arm64-v8a", message = "see crbug.com/772000")
     public void testPageMenu() throws IllegalArgumentException, InterruptedException {
         mBottomSheetTestRule.loadUrl(TEST_URL);
 
