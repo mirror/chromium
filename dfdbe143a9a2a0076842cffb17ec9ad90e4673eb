@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4492cebb_f8e33a9b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-05T23:28:01Z",
+      "side": 1,
+      "message": "Thanks for catching this! Yes, don\u0027t need to call AccountInfo constructor here.",
+      "parentUuid": "340c90a2_cfa34bbb",
+      "range": {
+        "startLine": 606,
+        "startChar": 4,
+        "endLine": 606,
+        "endChar": 69
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a7515d_a11db9e6",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "587dbb7a_d794f124",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-05T23:28:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a7515d_a11db9e6",
+      "range": {
+        "startLine": 608,
+        "startChar": 2,
+        "endLine": 608,
+        "endChar": 15
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ba8764d_c9608158",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0558441d_505715c9",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-10-05T23:28:01Z",
+      "side": 1,
+      "message": "Done.\nNo need \u0026 here. \u0026 removed.",
+      "parentUuid": "6ba8764d_c9608158",
+      "range": {
+        "startLine": 613,
+        "startChar": 19,
+        "endLine": 613,
+        "endChar": 20
+      },
+      "revId": "dfdbe143a9a2a0076842cffb17ec9ad90e4673eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
