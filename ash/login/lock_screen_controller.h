@@ -72,6 +72,11 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
   void CancelAddUser();
   void OnMaxIncorrectPasswordAttempted(const AccountId& account_id);
 
+  // Enable or disable authentication for the debug overlay.
+  void set_force_fail_auth_for_debug_overlay(bool force_fail) {
+    force_fail_auth_for_debug_overlay_ = force_fail;
+  }
+
  private:
   using PendingAuthenticateUserCall =
       base::OnceCallback<void(const std::string& system_salt)>;
@@ -96,6 +101,9 @@ class ASH_EXPORT LockScreenController : public mojom::LockScreen {
 
   // User authentication call that will run when we have system salt.
   PendingAuthenticateUserCall pending_user_auth_;
+
+  // If set to false, all auth requests will forcibly fail.
+  bool force_fail_auth_for_debug_overlay_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(LockScreenController);
 };
