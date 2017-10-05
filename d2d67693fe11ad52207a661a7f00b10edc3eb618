@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1f45d7f_7fcf6e96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-05T22:39:58Z",
+      "side": 1,
+      "message": "Really nice writeup, thanks for forwarding.\n\nAgreed, let\u0027s check with UI Review for this. I will chase this now.",
+      "parentUuid": "79c8404c_f41ebb13",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f8851d7_40eb9683",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a57dc119_dabd2b52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-05T22:39:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8851d7_40eb9683",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "716db10c_03165919",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T16:53:25Z",
       "side": 1,
       "message": "Oops, just noticed this channel id needs updating to the new one for correct uma.\n\nThis is a really easy mistake to make, I\u0027m sorry about that. I have filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d772027 for me or David Trainor to fix it so you only need to update the channel ID in one place not two.",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e609a1c_0085184a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1191013
+      },
+      "writtenOn": "2017-10-05T22:39:58Z",
+      "side": 1,
+      "message": "Well spotted! Done!",
+      "parentUuid": "716db10c_03165919",
       "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
