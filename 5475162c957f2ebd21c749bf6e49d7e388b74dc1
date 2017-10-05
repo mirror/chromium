@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "699f51e3_59253506",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-05T12:47:03Z",
+      "side": 1,
+      "message": "if (username_correction_found)\n  metrics_recorder_-\u003eRecordDetailedUserAction(...::kCorrectedUsernameInForm);\n(see other occurrences of RecordDetailedUserAction).\n\nIn password_form_metrics_recorder.h:\n\nenum class DetailedUserAction {\n    kUnknown \u003d 0,\n    ...\n    // Interactions with form.\n    kCorrectedUsernameInForm \u003d 200,\n};",
+      "revId": "5475162c957f2ebd21c749bf6e49d7e388b74dc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
