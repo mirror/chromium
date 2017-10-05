@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be0a9a7_2647a7f0",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T11:47:19Z",
+      "side": 1,
+      "message": "This DCHECK is not needed (else branch of if(gaia_accounts_.empty()).",
+      "range": {
+        "startLine": 454,
+        "startChar": 12,
+        "endLine": 454,
+        "endChar": 26
+      },
+      "revId": "17d9e7c2d77a9c87d509bd16378531ce98117177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafef4f9_d7f09a04",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T11:47:19Z",
+      "side": 1,
+      "message": "I suggest we use a local variable for gaia_accounts_[0].id as it is used a lot in this function. Let\u0027s call it first_gaia_account_id;",
+      "range": {
+        "startLine": 456,
+        "startChar": 22,
+        "endLine": 456,
+        "endChar": 23
+      },
+      "revId": "17d9e7c2d77a9c87d509bd16378531ce98117177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bdcf13_d8ad994c",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-05T11:47:19Z",
+      "side": 1,
+      "message": "I was always distracted by this if and I finally realized why: here we are sure that first_gaia_account_is_valid and valid_primary_account are false, so you can remove the if and return std::string all the time.",
+      "range": {
+        "startLine": 481,
+        "startChar": 11,
+        "endLine": 481,
+        "endChar": 38
+      },
+      "revId": "17d9e7c2d77a9c87d509bd16378531ce98117177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
