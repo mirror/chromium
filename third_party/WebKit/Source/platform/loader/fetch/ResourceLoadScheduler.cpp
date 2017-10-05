@@ -181,6 +181,8 @@ void ResourceLoadScheduler::OnNetworkQuiet() {
       else
         sub_frame_partially_throttled.Count(maximum_running_requests_seen_);
       break;
+    case ThrottlingHistory::kStopped:
+      break;
   }
 }
 
@@ -201,6 +203,10 @@ void ResourceLoadScheduler::OnThrottlingStateChanged(
         throttling_history_ = ThrottlingHistory::kPartiallyThrottled;
       SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
       break;
+    case WebFrameScheduler::ThrottlingState::kStopped:
+      throttling_history_ = ThrottlingHistory::kStopped;
+      SetOutstandingLimitAndMaybeRun(0u);
+      break;
   }
 }
 
@@ -217,7 +223,7 @@ void ResourceLoadScheduler::MaybeRun() {
     return;
 
   while (!pending_request_queue_.empty()) {
-    if (outstanding_limit_ && running_requests_.size() >= outstanding_limit_)
+    if (running_requests_.size() >= outstanding_limit_)
       return;
     ClientId id = pending_request_queue_.TakeFirst();
     auto found = pending_request_map_.find(id);
