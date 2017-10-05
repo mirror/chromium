@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b670bbe8_bac3eb22",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-10-05T05:40:57Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes sense to check this any more either, since we unconditionally call ReportStatus just above.  Let me know otherwise. I\u0027ve also removed IsWaitingForData because it doesn\u0027t seem to be used anywhere else.",
+      "range": {
+        "startLine": 375,
+        "startChar": 10,
+        "endLine": 375,
+        "endChar": 45
+      },
+      "revId": "73e92470903ba6a6b2834bb995d4145cff13546d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
