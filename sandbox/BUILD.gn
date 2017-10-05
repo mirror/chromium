@@ -4,6 +4,7 @@
 
 import("//build/buildflag_header.gni")
 import("//sandbox/features.gni")
+import("//testing/libfuzzer/fuzzer_test.gni")
 
 # Several targets want to include this header file. We separate it out
 # here so multiple targets can depend on it.
@@ -35,4 +36,14 @@ group("sandbox") {
 buildflag_header("sandbox_features") {
   header = "sandbox_features.h"
   flags = [ "USE_SECCOMP_BPF=$use_seccomp_bpf" ]
+}
+
+fuzzer_test("sandbox_ipc_fuzzer") {
+  sources = [
+    "fuzzer/fuzzer_defines.h",
+    "fuzzer/sandbox_ipc_fuzzer.cc",
+  ]
+  deps = [
+    "//base",
+  ]
 }
