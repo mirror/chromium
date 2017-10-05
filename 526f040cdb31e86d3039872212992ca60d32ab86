@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cec40006_cfe92418",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "nit: This test can be avoided by moving the #if WIN block inside the block above.",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 39
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb43122b_aa41e3de",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Doing this check again can be avoided by combining it with the block above. Do the condition check before #if WIN.",
+      "range": {
+        "startLine": 480,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 41
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca0eb7f_1086c1a3",
+        "filename": "media/cdm/cdm_host_files.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Can this be replaced with OpenCdmFiles(GetCdmPath(cdm_adapter_path))?",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 62
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb55a2a1_9a6aab29",
+        "filename": "media/cdm/cdm_host_files.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Can you use emplace(CdmHostFile::Create(...))?",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 31
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ece153_06332e1e",
+        "filename": "media/cdm/cdm_module.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Should this be IsInitializeCalled() (or WasInitializeCalled or HasInitializeBeenCalled)?",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d71f1d1_3a51f113",
+        "filename": "media/mojo/services/media_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Can this get moved to InitializeCdmModule()? Makes more sense as if it\u0027s not called then the next statement is to call Initialize().",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597e078b_18aaf796",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Missing rest of comment?",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13fd7921_2d22f7cd",
+        "filename": "media/mojo/services/mojo_media_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-05T21:01:30Z",
+      "side": 1,
+      "message": "Is this not adding anything due to everything being loaded already? If so, there should probably be a comment noting that.\n\nOr is this simply the default implementation? Does it make sense to not specify anything for other derived classes?",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
