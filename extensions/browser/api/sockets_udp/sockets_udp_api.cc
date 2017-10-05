@@ -9,6 +9,7 @@
 #include "extensions/browser/api/sockets_udp/udp_socket_event_dispatcher.h"
 #include "extensions/common/api/sockets/sockets_manifest_data.h"
 #include "net/base/net_errors.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 namespace api {
@@ -261,7 +262,8 @@ void SocketsUdpSendFunction::StartSendTo() {
     return;
   }
 
-  socket->SendTo(io_buffer_, io_buffer_size_, addresses_.front(),
+  socket->SendTo(NO_TRAFFIC_ANNOTATION_YET, io_buffer_, io_buffer_size_,
+                 addresses_.front(),
                  base::Bind(&SocketsUdpSendFunction::OnCompleted, this));
 }
 

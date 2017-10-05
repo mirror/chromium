@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -96,7 +97,9 @@ struct NET_EXPORT WebSocketFrameHeader {
 // frames may need to be split in order for the data to fit in memory).
 struct NET_EXPORT_PRIVATE WebSocketFrame {
   // A frame must always have an opcode, so this parameter is compulsory.
-  explicit WebSocketFrame(WebSocketFrameHeader::OpCode opcode);
+  explicit WebSocketFrame(
+      WebSocketFrameHeader::OpCode opcode,
+      const NetworkTrafficAnnotationTag& traffic_annotation);
   ~WebSocketFrame();
 
   // |header| is always present.
@@ -105,6 +108,8 @@ struct NET_EXPORT_PRIVATE WebSocketFrame {
   // |data| is always unmasked even if the frame is masked. The size of |data|
   // is given by |header.payload_length|.
   scoped_refptr<IOBuffer> data;
+
+  NetworkTrafficAnnotationTag traffic_annotation;
 };
 
 // Structure describing one chunk of a WebSocket frame.

@@ -378,30 +378,35 @@ int UDPSocketPosix::RecvFrom(IOBuffer* buf,
   return ERR_IO_PENDING;
 }
 
-int UDPSocketPosix::Write(IOBuffer* buf,
+int UDPSocketPosix::Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+                          IOBuffer* buf,
                           int buf_len,
                           const CompletionCallback& callback) {
-  return SendToOrWrite(buf, buf_len, NULL, callback);
+  return SendToOrWrite(traffic_annotation, buf, buf_len, NULL, callback);
 }
 
-int UDPSocketPosix::SendTo(IOBuffer* buf,
-                           int buf_len,
-                           const IPEndPoint& address,
-                           const CompletionCallback& callback) {
-  return SendToOrWrite(buf, buf_len, &address, callback);
+int UDPSocketPosix::SendTo(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint& address,
+    const CompletionCallback& callback) {
+  return SendToOrWrite(traffic_annotation, buf, buf_len, &address, callback);
 }
 
-int UDPSocketPosix::SendToOrWrite(IOBuffer* buf,
-                                  int buf_len,
-                                  const IPEndPoint* address,
-                                  const CompletionCallback& callback) {
+int UDPSocketPosix::SendToOrWrite(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint* address,
+    const CompletionCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(kInvalidSocket, socket_);
   CHECK(write_callback_.is_null());
   DCHECK(!callback.is_null());  // Synchronous operation not supported
   DCHECK_GT(buf_len, 0);
 
-  int result = InternalSendTo(buf, buf_len, address);
+  int result = InternalSendTo(traffic_annotation, buf, buf_len, address);
   if (result != ERR_IO_PENDING)
     return result;
 
@@ -703,8 +708,9 @@ void UDPSocketPosix::LogRead(int result,
 }
 
 void UDPSocketPosix::DidCompleteWrite() {
-  int result =
-      InternalSendTo(write_buf_.get(), write_buf_len_, send_to_address_.get());
+  // TODO(rhalavati): Originate from here or store previous ones?
+  int result = InternalSendTo(NO_TRAFFIC_ANNOTATION_YET, write_buf_.get(),
+                              write_buf_len_, send_to_address_.get());
 
   if (result != ERR_IO_PENDING) {
     write_buf_ = NULL;
@@ -768,9 +774,11 @@ int UDPSocketPosix::InternalRecvFrom(IOBuffer* buf,
   return result;
 }
 
-int UDPSocketPosix::InternalSendTo(IOBuffer* buf,
-                                   int buf_len,
-                                   const IPEndPoint* address) {
+int UDPSocketPosix::InternalSendTo(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const IPEndPoint* address) {
   SockaddrStorage storage;
   struct sockaddr* addr = storage.addr;
   if (!address) {

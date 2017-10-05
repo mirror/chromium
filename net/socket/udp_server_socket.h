@@ -12,6 +12,7 @@
 #include "net/base/net_export.h"
 #include "net/socket/datagram_server_socket.h"
 #include "net/socket/udp_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -32,7 +33,8 @@ class NET_EXPORT UDPServerSocket : public DatagramServerSocket {
                int buf_len,
                IPEndPoint* address,
                const CompletionCallback& callback) override;
-  int SendTo(IOBuffer* buf,
+  int SendTo(const NetworkTrafficAnnotationTag& traffic_annotation,
+             IOBuffer* buf,
              int buf_len,
              const IPEndPoint& address,
              const CompletionCallback& callback) override;

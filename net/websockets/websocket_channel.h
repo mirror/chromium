@@ -20,6 +20,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "net/base/net_export.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_event_interface.h"
 #include "net/websockets/websocket_frame.h"
 #include "net/websockets/websocket_stream.h"
@@ -93,7 +94,8 @@ class NET_EXPORT WebSocketChannel {
   ChannelState SendFrame(bool fin,
                          WebSocketFrameHeader::OpCode op_code,
                          scoped_refptr<IOBuffer> buffer,
-                         size_t buffer_size);
+                         size_t buffer_size,
+                         const NetworkTrafficAnnotationTag& traffic_annotation);
 
   // Sends |quota| units of flow control to the remote side. If the underlying
   // transport has a concept of |quota|, then it permits the remote server to
@@ -248,27 +250,34 @@ class NET_EXPORT WebSocketChannel {
   // This method performs sanity checks on the frame that are needed regardless
   // of the current state. Then, calls the HandleFrameByState() method below
   // which performs the appropriate action(s) depending on the current state.
-  ChannelState HandleFrame(std::unique_ptr<WebSocketFrame> frame)
-      WARN_UNUSED_RESULT;
+  ChannelState HandleFrame(
+      std::unique_ptr<WebSocketFrame> frame,
+      const NetworkTrafficAnnotationTag& traffic_annotation) WARN_UNUSED_RESULT;
 
   // Handles a single frame depending on the current state. It's used by the
   // HandleFrame() method.
-  ChannelState HandleFrameByState(const WebSocketFrameHeader::OpCode opcode,
-                                  bool final,
-                                  scoped_refptr<IOBuffer> data_buffer,
-                                  uint64_t size) WARN_UNUSED_RESULT;
+  ChannelState HandleFrameByState(
+      const WebSocketFrameHeader::OpCode opcode,
+      bool final,
+      scoped_refptr<IOBuffer> data_buffer,
+      uint64_t size,
+      const NetworkTrafficAnnotationTag& traffic_annotation) WARN_UNUSED_RESULT;
 
   // Forwards a received data frame to the renderer, if connected. If
   // |expecting_continuation| is not equal to |expecting_to_read_continuation_|,
   // will fail the channel. Also checks the UTF-8 validity of text frames.
-  ChannelState HandleDataFrame(WebSocketFrameHeader::OpCode opcode,
-                               bool final,
-                               scoped_refptr<IOBuffer> data_buffer,
-                               uint64_t size) WARN_UNUSED_RESULT;
+  ChannelState HandleDataFrame(
+      WebSocketFrameHeader::OpCode opcode,
+      bool final,
+      scoped_refptr<IOBuffer> data_buffer,
+      uint64_t size,
+      const NetworkTrafficAnnotationTag& traffic_annotation) WARN_UNUSED_RESULT;
 
   // Handles an incoming close frame with |code| and |reason|.
-  ChannelState HandleCloseFrame(uint16_t code,
-                                const std::string& reason) WARN_UNUSED_RESULT;
+  ChannelState HandleCloseFrame(
+      uint16_t code,
+      const std::string& reason,
+      const NetworkTrafficAnnotationTag& traffic_annotation) WARN_UNUSED_RESULT;
 
   // Responds to a closing handshake initiated by the server.
   ChannelState RespondToClosingHandshake() WARN_UNUSED_RESULT;
@@ -278,10 +287,12 @@ class NET_EXPORT WebSocketChannel {
   // when the current write finishes. |fin| and |op_code| are defined as for
   // SendFrame() above, except that |op_code| may also be a control frame
   // opcode.
-  ChannelState SendFrameInternal(bool fin,
-                                 WebSocketFrameHeader::OpCode op_code,
-                                 scoped_refptr<IOBuffer> buffer,
-                                 uint64_t buffer_size) WARN_UNUSED_RESULT;
+  ChannelState SendFrameInternal(
+      bool fin,
+      WebSocketFrameHeader::OpCode op_code,
+      scoped_refptr<IOBuffer> buffer,
+      uint64_t buffer_size,
+      const NetworkTrafficAnnotationTag& traffic_annotation) WARN_UNUSED_RESULT;
 
   // Performs the "Fail the WebSocket Connection" operation as defined in
   // RFC6455. A NotifyFailure message is sent to the renderer with |message|.

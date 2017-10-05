@@ -35,6 +35,7 @@
 #include "net/quic/platform/api/quic_mem_slice_span.h"
 #include "net/quic/platform/api/quic_reference_counted.h"
 #include "net/quic/platform/api/quic_string_piece.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -189,6 +190,7 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
   // If fin is true: if it is immediately passed on to the session,
   // write_side_closed() becomes true, otherwise fin_buffered_ becomes true.
   void WriteOrBufferData(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicStringPiece data,
       bool fin,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
@@ -221,6 +223,7 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
   // TODO(fayang): Let WritevData return boolean when deprecating
   // quic_reloadable_flag_quic_save_data_before_consumption2.
   QuicConsumedData WritevData(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       const struct iovec* iov,
       int iov_count,
       bool fin,
@@ -233,6 +236,7 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
   // Allows override of the session level writev, for the force HOL
   // blocking experiment.
   virtual QuicConsumedData WritevDataInner(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicIOVector iov,
       QuicStreamOffset offset,
       bool fin,
@@ -290,7 +294,8 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
   struct PendingData {
     PendingData(
         std::string data_in,
-        QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
+        QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener,
+        const NetworkTrafficAnnotationTag& traffic_annotation);
     ~PendingData();
 
     // Pending data to be written.
@@ -300,6 +305,8 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
     // AckListener that should be notified when the pending data is acked.
     // Can be nullptr.
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener;
+    // Traffic Annotation.
+    const NetworkTrafficAnnotationTag traffic_annotation;
   };
 
   // Calls MaybeSendBlocked on the stream's flow controller and the connection

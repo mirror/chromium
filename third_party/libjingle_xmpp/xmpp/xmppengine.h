@@ -12,6 +12,7 @@
 #define WEBRTC_LIBJINGLE_XMPP_XMPPENGINE_H_
 
 // also part of the API
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/libjingle_xmpp/xmllite/qname.h"
 #include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 #include "third_party/libjingle_xmpp/xmpp/jid.h"
@@ -77,7 +78,10 @@ public:
   virtual ~XmppOutputHandler() {}
 
   //! Deliver the specified bytes to the XMPP socket.
-  virtual void WriteOutput(const char * bytes, size_t len) = 0;
+  virtual void WriteOutput(
+      const net::NetworkTrafficAnnotationTag& traffic_annotation,
+      const char* bytes,
+      size_t len) = 0;
 
   //! Initiate TLS encryption on the socket.
   //! The implementation must verify that the SSL

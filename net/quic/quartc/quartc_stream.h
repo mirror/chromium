@@ -9,6 +9,7 @@
 #include "net/quic/core/quic_stream.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/quic/quartc/quartc_stream_interface.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -38,7 +39,8 @@ class QUIC_EXPORT_PRIVATE QuartcStream : public QuicStream,
 
   int connection_error() override;
 
-  void Write(const char* data,
+  void Write(const NetworkTrafficAnnotationTag& traffic_annotation,
+             const char* data,
              size_t size,
              const WriteParameters& param) override;
 

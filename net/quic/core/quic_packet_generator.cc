@@ -53,6 +53,7 @@ void QuicPacketGenerator::AddControlFrame(const QuicFrame& frame) {
 }
 
 QuicConsumedData QuicPacketGenerator::ConsumeData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStreamId id,
     QuicIOVector iov,
     QuicStreamOffset offset,
@@ -91,9 +92,9 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
                                HAS_RETRANSMITTABLE_DATA,
                                has_handshake ? IS_HANDSHAKE : NOT_HANDSHAKE)) {
     QuicFrame frame;
-    if (!packet_creator_.ConsumeData(id, iov, total_bytes_consumed,
-                                     offset + total_bytes_consumed, fin,
-                                     has_handshake, &frame)) {
+    if (!packet_creator_.ConsumeData(
+            traffic_annotation, id, iov, total_bytes_consumed,
+            offset + total_bytes_consumed, fin, has_handshake, &frame)) {
       // The creator is always flushed if there's not enough room for a new
       // stream frame before ConsumeData, so ConsumeData should always succeed.
       QUIC_BUG << "Failed to ConsumeData, stream:" << id;
@@ -134,8 +135,9 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
 
   if (run_fast_path) {
     QUIC_FLAG_COUNT(quic_reloadable_flag_quic_consuming_data_faster);
-    return ConsumeDataFastPath(id, iov, offset, state != NO_FIN,
-                               total_bytes_consumed, ack_listener);
+    return ConsumeDataFastPath(traffic_annotation, id, iov, offset,
+                               state != NO_FIN, total_bytes_consumed,
+                               ack_listener);
   }
 
   // Don't allow the handshake to be bundled with other retransmittable frames.
@@ -148,6 +150,7 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
 }
 
 QuicConsumedData QuicPacketGenerator::ConsumeDataFastPath(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStreamId id,
     const QuicIOVector& iov,
     QuicStreamOffset offset,
@@ -162,8 +165,8 @@ QuicConsumedData QuicPacketGenerator::ConsumeDataFastPath(
     // Serialize and encrypt the packet.
     size_t bytes_consumed = 0;
     packet_creator_.CreateAndSerializeStreamFrame(
-        id, iov, total_bytes_consumed, offset + total_bytes_consumed, fin,
-        ack_listener, &bytes_consumed);
+        traffic_annotation, id, iov, total_bytes_consumed,
+        offset + total_bytes_consumed, fin, ack_listener, &bytes_consumed);
     total_bytes_consumed += bytes_consumed;
   }
 

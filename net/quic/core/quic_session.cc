@@ -15,6 +15,7 @@
 #include "net/quic/platform/api/quic_logging.h"
 #include "net/quic/platform/api/quic_map_util.h"
 #include "net/quic/platform/api/quic_str_cat.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
@@ -306,6 +307,7 @@ void QuicSession::ProcessUdpPacket(const QuicSocketAddress& self_address,
 }
 
 QuicConsumedData QuicSession::WritevData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     QuicStream* stream,
     QuicStreamId id,
     QuicIOVector iov,
@@ -330,8 +332,8 @@ QuicConsumedData QuicSession::WritevData(
     // up write blocked until OnCanWrite is next called.
     return QuicConsumedData(0, false);
   }
-  QuicConsumedData data = connection_->SendStreamData(id, iov, offset, state,
-                                                      std::move(ack_listener));
+  QuicConsumedData data = connection_->SendStreamData(
+      traffic_annotation, id, iov, offset, state, std::move(ack_listener));
   write_blocked_streams_.UpdateBytesForStream(id, data.bytes_consumed);
   return data;
 }

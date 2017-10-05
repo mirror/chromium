@@ -13,6 +13,7 @@
 #include "net/base/ip_endpoint.h"
 #include "net/base/net_errors.h"
 #include "net/socket/socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace extensions {
 
@@ -37,11 +38,13 @@ Socket::~Socket() {
   DCHECK(!is_connected_);
 }
 
-void Socket::Write(scoped_refptr<net::IOBuffer> io_buffer,
+void Socket::Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                   scoped_refptr<net::IOBuffer> io_buffer,
                    int byte_count,
                    const CompletionCallback& callback) {
   DCHECK(!callback.is_null());
-  write_queue_.push(WriteRequest(io_buffer, byte_count, callback));
+  write_queue_.push(
+      WriteRequest(traffic_annotation, io_buffer, byte_count, callback));
   WriteData();
 }
 
@@ -55,10 +58,10 @@ void Socket::WriteData() {
   DCHECK(request.byte_count >= request.bytes_written);
   io_buffer_write_ = new net::WrappedIOBuffer(request.io_buffer->data() +
                                               request.bytes_written);
-  int result =
-      WriteImpl(io_buffer_write_.get(),
-                request.byte_count - request.bytes_written,
-                base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
+  int result = WriteImpl(
+      net::NetworkTrafficAnnotationTag(request.traffic_annotation),
+      io_buffer_write_.get(), request.byte_count - request.bytes_written,
+      base::Bind(&Socket::OnWriteComplete, base::Unretained(this)));
 
   if (result != net::ERR_IO_PENDING)
     OnWriteComplete(result);
@@ -128,13 +131,17 @@ void Socket::IPEndPointToStringAndPort(const net::IPEndPoint& address,
   }
 }
 
-Socket::WriteRequest::WriteRequest(scoped_refptr<net::IOBuffer> io_buffer,
-                                   int byte_count,
-                                   const CompletionCallback& callback)
+Socket::WriteRequest::WriteRequest(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    scoped_refptr<net::IOBuffer> io_buffer,
+    int byte_count,
+    const CompletionCallback& callback)
     : io_buffer(io_buffer),
       byte_count(byte_count),
       callback(callback),
-      bytes_written(0) {}
+      bytes_written(0),
+      traffic_annotation(
+          net::MutableNetworkTrafficAnnotationTag(traffic_annotation)) {}
 
 Socket::WriteRequest::WriteRequest(const WriteRequest& other) = default;
 

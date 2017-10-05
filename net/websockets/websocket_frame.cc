@@ -75,8 +75,10 @@ void WebSocketFrameHeader::CopyFrom(const WebSocketFrameHeader& source) {
   payload_length = source.payload_length;
 }
 
-WebSocketFrame::WebSocketFrame(WebSocketFrameHeader::OpCode opcode)
-    : header(opcode) {}
+WebSocketFrame::WebSocketFrame(
+    WebSocketFrameHeader::OpCode opcode,
+    const NetworkTrafficAnnotationTag& traffic_annotation)
+    : header(opcode), traffic_annotation(traffic_annotation) {}
 
 WebSocketFrame::~WebSocketFrame() {}
 

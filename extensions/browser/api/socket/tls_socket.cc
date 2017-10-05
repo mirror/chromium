@@ -18,6 +18,7 @@
 #include "net/socket/client_socket_handle.h"
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/tcp_client_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/url_canon.h"
 
 namespace {
@@ -132,13 +133,16 @@ void TLSSocket::OnReadComplete(const scoped_refptr<net::IOBuffer>& io_buffer,
       .Run(result, io_buffer, false /* socket_destroying */);
 }
 
-int TLSSocket::WriteImpl(net::IOBuffer* io_buffer,
-                         int io_buffer_size,
-                         const net::CompletionCallback& callback) {
+int TLSSocket::WriteImpl(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    net::IOBuffer* io_buffer,
+    int io_buffer_size,
+    const net::CompletionCallback& callback) {
   if (!IsConnected()) {
     return net::ERR_SOCKET_NOT_CONNECTED;
   }
-  return tls_socket_->Write(io_buffer, io_buffer_size, callback);
+  return tls_socket_->Write(traffic_annotation, io_buffer, io_buffer_size,
+                            callback);
 }
 
 bool TLSSocket::SetKeepAlive(bool enable, int delay) {

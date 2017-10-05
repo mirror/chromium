@@ -15,6 +15,7 @@
 #include "net/quic/platform/api/quic_containers.h"
 #include "net/quic/platform/api/quic_export.h"
 #include "net/spdy/core/spdy_framer.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -50,6 +51,7 @@ class QUIC_EXPORT_PRIVATE QuicHeadersStream : public QuicStream {
   // ack_listener is notified once data within [offset, offset + length] is
   // acked or retransmitted.
   QuicConsumedData WritevDataInner(
+      const NetworkTrafficAnnotationTag& traffic_annotation,
       QuicIOVector iov,
       QuicStreamOffset offset,
       bool fin,

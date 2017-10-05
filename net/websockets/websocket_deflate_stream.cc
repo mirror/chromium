@@ -35,6 +35,9 @@ namespace {
 const int kWindowBits = 15;
 const size_t kChunkSize = 4 * 1024;
 
+constexpr NetworkTrafficAnnotationTag kTrafficAnnotationInternal =
+    NO_TRAFFIC_ANNOTATION_YET;
+
 }  // namespace
 
 WebSocketDeflateStream::WebSocketDeflateStream(
@@ -218,7 +221,8 @@ int WebSocketDeflateStream::AppendCompressedFrame(
              << "deflater_.GetOutput() returns an error.";
     return ERR_WS_PROTOCOL_ERROR;
   }
-  std::unique_ptr<WebSocketFrame> compressed(new WebSocketFrame(opcode));
+  std::unique_ptr<WebSocketFrame> compressed(
+      new WebSocketFrame(opcode, kTrafficAnnotationInternal));
   compressed->header.CopyFrom(header);
   compressed->header.opcode = opcode;
   compressed->header.final = header.final;
@@ -269,7 +273,8 @@ int WebSocketDeflateStream::AppendPossiblyCompressedMessage(
     frames->clear();
     return OK;
   }
-  std::unique_ptr<WebSocketFrame> compressed(new WebSocketFrame(opcode));
+  std::unique_ptr<WebSocketFrame> compressed(
+      new WebSocketFrame(opcode, kTrafficAnnotationInternal));
   compressed->header.CopyFrom((*frames)[0]->header);
   compressed->header.opcode = opcode;
   compressed->header.final = true;
@@ -343,8 +348,8 @@ int WebSocketDeflateStream::Inflate(
       while (inflater_.CurrentOutputSize() >= kChunkSize ||
              frame->header.final) {
         size_t size = std::min(kChunkSize, inflater_.CurrentOutputSize());
-        std::unique_ptr<WebSocketFrame> inflated(
-            new WebSocketFrame(WebSocketFrameHeader::kOpCodeText));
+        std::unique_ptr<WebSocketFrame> inflated(new WebSocketFrame(
+            WebSocketFrameHeader::kOpCodeText, kTrafficAnnotationInternal));
         scoped_refptr<IOBufferWithSize> data = inflater_.GetOutput(size);
         bool is_final = !inflater_.CurrentOutputSize() && frame->header.final;
         if (!data.get()) {

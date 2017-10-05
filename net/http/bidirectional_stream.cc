@@ -30,6 +30,7 @@
 #include "net/spdy/core/spdy_header_block.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_config.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -168,6 +169,7 @@ int BidirectionalStream::ReadData(IOBuffer* buf, int buf_len) {
 }
 
 void BidirectionalStream::SendvData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool end_stream) {
@@ -180,7 +182,7 @@ void BidirectionalStream::SendvData(
     net_log_.AddEvent(NetLogEventType::BIDIRECTIONAL_STREAM_SENDV_DATA,
                       NetLog::IntCallback("num_buffers", buffers.size()));
   }
-  stream_impl_->SendvData(buffers, lengths, end_stream);
+  stream_impl_->SendvData(traffic_annotation, buffers, lengths, end_stream);
   for (size_t i = 0; i < buffers.size(); ++i) {
     write_buffer_list_.push_back(buffers[i]);
     write_buffer_len_list_.push_back(lengths[i]);

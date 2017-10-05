@@ -111,6 +111,7 @@ int BidirectionalStreamSpdyImpl::ReadData(IOBuffer* buf, int buf_len) {
 }
 
 void BidirectionalStreamSpdyImpl::SendvData(
+    const NetworkTrafficAnnotationTag& traffic_annotation,
     const std::vector<scoped_refptr<IOBuffer>>& buffers,
     const std::vector<int>& lengths,
     bool end_stream) {
@@ -148,7 +149,8 @@ void BidirectionalStreamSpdyImpl::SendvData(
       len += lengths[i];
     }
   }
-  stream_->SendData(pending_combined_buffer_.get(), total_len,
+  stream_->SendData(traffic_annotation, pending_combined_buffer_.get(),
+                    total_len,
                     end_stream ? NO_MORE_DATA_TO_SEND : MORE_DATA_TO_SEND);
 }
 
@@ -292,10 +294,11 @@ int BidirectionalStreamSpdyImpl::SendRequestHeadersHelper() {
   CreateSpdyHeadersFromHttpRequest(
       http_request_info, http_request_info.extra_headers, true, &headers);
   written_end_of_stream_ = request_info_->end_stream_on_headers;
-  return stream_->SendRequestHeaders(std::move(headers),
-                                     request_info_->end_stream_on_headers
-                                         ? NO_MORE_DATA_TO_SEND
-                                         : MORE_DATA_TO_SEND);
+  // TODO(rhalavati): Can this be an internal annotation, or tunneled?
+  return stream_->SendRequestHeaders(
+      NO_TRAFFIC_ANNOTATION_YET, std::move(headers),
+      request_info_->end_stream_on_headers ? NO_MORE_DATA_TO_SEND
+                                           : MORE_DATA_TO_SEND);
 }
 
 void BidirectionalStreamSpdyImpl::OnStreamInitialized(int rv) {

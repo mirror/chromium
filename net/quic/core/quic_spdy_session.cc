@@ -17,6 +17,7 @@
 #include "net/quic/platform/api/quic_str_cat.h"
 #include "net/quic/platform/api/quic_text_utils.h"
 #include "net/spdy/core/http2_frame_decoder_adapter.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using std::string;
 
@@ -96,6 +97,9 @@ class ForceHolAckListener : public QuicAckListenerInterface {
   DISALLOW_COPY_AND_ASSIGN(ForceHolAckListener);
 };
 
+// TODO(rhalavati): To be updated.
+const NetworkTrafficAnnotationTag kTrafficAnnotationInternal =
+    NO_TRAFFIC_ANNOTATION_YET;
 }  // namespace
 
 // A SpdyFramerVisitor that passes HEADERS frames to the QuicSpdyStream, and
@@ -457,8 +461,8 @@ size_t QuicSpdySession::WriteHeadersImpl(
   }
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(headers_frame));
   headers_stream_->WriteOrBufferData(
-      QuicStringPiece(frame.data(), frame.size()), false,
-      std::move(ack_notifier_delegate));
+      kTrafficAnnotationInternal, QuicStringPiece(frame.data(), frame.size()),
+      false, std::move(ack_notifier_delegate));
   return frame.size();
 }
 
@@ -478,7 +482,8 @@ size_t QuicSpdySession::WritePushPromise(QuicStreamId original_stream_id,
 
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(push_promise));
   headers_stream_->WriteOrBufferData(
-      QuicStringPiece(frame.data(), frame.size()), false, nullptr);
+      kTrafficAnnotationInternal, QuicStringPiece(frame.data(), frame.size()),
+      false, nullptr);
   return frame.size();
 }
 
@@ -488,7 +493,8 @@ size_t QuicSpdySession::SendMaxHeaderListSize(size_t value) {
 
   SpdySerializedFrame frame(spdy_framer_.SerializeFrame(settings_frame));
   headers_stream_->WriteOrBufferData(
-      QuicStringPiece(frame.data(), frame.size()), false, nullptr);
+      kTrafficAnnotationInternal, QuicStringPiece(frame.data(), frame.size()),
+      false, nullptr);
   return frame.size();
 }
 
