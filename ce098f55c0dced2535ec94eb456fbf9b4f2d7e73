@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2835a7cb_9bbd4ecd",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T20:29:11Z",
+      "side": 1,
+      "message": "reuse the shared paper-button styling by doing the following:\n\n- importing at the top of file:\n\u003clink rel\u003d\"import\" href\u003d\"chrome://resources/cr_elements/paper_button_style_css.html\"\u003e\n\n- add \"paper-button-style\" in the style-tag include attribute on line 22. (this name matches the module name in paper_button_style_css.html)\n\nI think after that, the only rules you need to keep here is \"color:\" and maybe width.",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee4d84a_af1fcaad",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T20:29:11Z",
+      "side": 1,
+      "message": "I think there\u0027s a missing \u003c/div\u003e closing tag somewhere here, and an extra one towards the end of the file. All the \"section\"s are supposed to be siblings. My detail view page after patching the CL looks like this: https://imgur.com/a/SnHyC\n\nTry updating upstream to tip of tree and run again to see if you see what I see?",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fae389_ece41d6b",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T20:29:11Z",
+      "side": 1,
+      "message": "I see from the js console that disabledReasons has another property \"updateRequired\", do we need a warning message for that also?",
+      "revId": "ce098f55c0dced2535ec94eb456fbf9b4f2d7e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

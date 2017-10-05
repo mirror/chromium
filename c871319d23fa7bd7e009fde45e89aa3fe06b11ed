@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8027077b_e7cd1f0e",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T20:29:11Z",
+      "side": 0,
+      "message": "This container div is needed for top-bar\u0027s dropshadow to work correctly. Accidentally removed during merge?",
+      "revId": "c871319d23fa7bd7e009fde45e89aa3fe06b11ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

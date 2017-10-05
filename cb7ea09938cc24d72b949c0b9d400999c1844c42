@@ -316,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "77eb3c60_aaf80fa9",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-05T20:29:11Z",
+      "side": 1,
+      "message": "Ok, I understand better what you\u0027re trying to do now - you want to leave the same amount of space on the right regardless of whether or not the button is there.\n\nIn that case we can even do it without display:flex (allowing us to remove all .warning-content wrappers), since the container width is fixed to 640px you can just set the span width to always be 484px. \n\nSo...\n\n.warning span {\n  width: 484px;\n\n  /* to vertical align with the icon */\n  display: inline-block;\n  vertical-align: middle;\n}\n\n.warning paper-button { width: 78px; }\n\n\u003cdiv class\u003d\"section continuation warning\" .....\u003e\n  \u003ciron-icon ...\u003e\n  \u003cspan\u003etext...\u003c/span\u003e\n  \u003cpaper-button ...\u003e \u003c!-- sometimes --\u003e\n\u003c/div\u003e\nwhat do you think?",
+      "parentUuid": "f82b6942_58649677",
+      "revId": "cb7ea09938cc24d72b949c0b9d400999c1844c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6858ee2_7ee80426",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
