@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "241fd31b_5de73eea",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1332,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-05T00:02:40Z",
+      "side": 1,
+      "message": "Agreed, that would a good thing to add at this location.",
+      "parentUuid": "127ea471_690a2c0e",
+      "revId": "790a985e2cc02e2f030d7a2731fcefbc09ee0088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b79aabe7_ca7e041b",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T22:36:13Z",
       "side": 1,
       "message": "This can never happen!",
+      "revId": "790a985e2cc02e2f030d7a2731fcefbc09ee0088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d09511_0cb8f44e",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4653,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-05T00:02:40Z",
+      "side": 1,
+      "message": "Untrue; The call to the dialog manager\u0027s RunJavaScriptDialog on line 4648 can set the |suppress_this_message| flag to true, which is why it\u0027s passed by pointer to that call.",
+      "parentUuid": "b79aabe7_ca7e041b",
       "revId": "790a985e2cc02e2f030d7a2731fcefbc09ee0088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
