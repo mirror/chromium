@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dea506d_d2b0777e",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "How does this interact with the app menu button when it\u0027s showing an upgrade icon (with different severity colors), and when it\u0027s using a system theme or custom chrome theme, and when either of those states causes the icon to change colors (white on dark theme, black on light theme, different colors for upgrade severities, etc.)? I think we need to see some screenshots on the bug.",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f54651_07a0ca46",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "What does this look like? Are you just filling the canvas? If so, just do this:\n  if (background_color_needed_) {\n    canvas-\u003eDrawColor(GetNativeTheme()-\u003eGetSystemColor(\n        ui::NativeTheme::kColorId_ProminentButtonColor));\n  }\n\nOr better yet, replace the flag and override with something like this:\nvoid AppMenuButton::SetIsProminent(bool is_prominent) {\n  if (!is_prominent) {\n    SetBackground(nullptr);\n    return;\n  }\n  SetBackground(views::CreateSolidBackground(GetNativeTheme()-\u003eGetSystemColor(ui::NativeTheme::kColorId_ProminentButtonColor)));\n}\n(with a good header comment noting that this is for an experimental UI)",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f228445b_3ba5b79a",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this should be an else; just call before/after the rest.",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc97c694_7a84e22f",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "nit: note that this is for an experimental UI feature.",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbbea6ff_a650e6b2",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "Rename this |is_prominent_| and set_is_prominent() to parallel MdTextButton.",
+      "revId": "69215288c187dc5cd1e47193297e810e7bde42e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

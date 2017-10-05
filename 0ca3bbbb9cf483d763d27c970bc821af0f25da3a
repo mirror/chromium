@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "c803bcda_5f409661",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-05T05:40:32Z",
+      "side": 1,
+      "message": "More pertinently, it was copied from the new tab code. It\u0027s best to avoid copying code, but when you do [roughly] copy non-trivial code, please explicitly note where it\u0027s coming from, either in comments or in CL descriptions. That context is valuable for review.",
+      "parentUuid": "a8c18a07_600a8d7a",
+      "revId": "0ca3bbbb9cf483d763d27c970bc821af0f25da3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a90b3a30_2c4bd5a8",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 2
