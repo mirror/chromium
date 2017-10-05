@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fb11249_901635b6",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T07:08:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed. It should already be in |job_settings| which gets merged on line 1814.",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c48c1b_16f85e8d",
+        "filename": "printing/print_settings_conversion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T07:08:18Z",
+      "side": 1,
+      "message": "Not sure how this ended up here. Let\u0027s move it up to between lines 200-201.",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
