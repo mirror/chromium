@@ -22,6 +22,30 @@
       "revId": "178b1bdd7cda2201a934728fe8b246a357b5e28e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726b7e67_ede02186",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorMutatorImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-10-05T19:23:30Z",
+      "side": 1,
+      "message": "That sounds like a prediction that we will change from one too many frames to one too few.  I expect the change that adds the new logic can plumb in the new start condition.  I\u0027ve talked to Majid about it, and added TODOs for the work.",
+      "parentUuid": "f16a4664_768bbe33",
+      "range": {
+        "startLine": 57,
+        "startChar": 28,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "178b1bdd7cda2201a934728fe8b246a357b5e28e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
