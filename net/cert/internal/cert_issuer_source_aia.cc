@@ -4,12 +4,20 @@
 
 #include "net/cert/internal/cert_issuer_source_aia.h"
 
+#include "base/threading/thread_restrictions.h"
 #include "net/cert/cert_net_fetcher.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/x509_util.h"
 #include "url/gurl.h"
 
 namespace net {
+
+// AiaRequestScopedAllowBaseSyncPrimitives is a friend and derived class of
+// base::ScopedAllowBaseSyncPrimitives which can be instantiated by AiaRequest.
+// AiaRequest can't itself be a friend of base::ScopedAllowBaseSyncPrimitives
+// because it is in the anonymous namespace.
+class AiaRequestScopedAllowBaseSyncPrimitives
+    : public base::ScopedAllowBaseSyncPrimitives {};
 
 namespace {
 
@@ -49,7 +57,10 @@ void AiaRequest::GetNext(ParsedCertificateList* out_certs) {
     Error error;
     std::vector<uint8_t> bytes;
     auto req = std::move(cert_fetcher_requests_[current_request_++]);
-    req->WaitForResult(&error, &bytes);
+    {
+      AiaRequestScopedAllowBaseSyncPrimitives allow_base_sync_primitives;
+      req->WaitForResult(&error, &bytes);
+    }
 
     if (AddCompletedFetchToResults(error, std::move(bytes), out_certs))
       return;

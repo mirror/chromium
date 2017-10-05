@@ -71,6 +71,7 @@ class CommandBufferLocal;
 class GpuState;
 }
 namespace net {
+class AiaRequestScopedAllowBaseSyncPrimitives;
 class NetworkChangeNotifierMac;
 class OSCPScopedAllowBaseSyncPrimitives;
 namespace internal {
@@ -209,6 +210,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
                            ScopedAllowBaseSyncPrimitivesResetsState);
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
+  friend class net::AiaRequestScopedAllowBaseSyncPrimitives;
   friend class net::OSCPScopedAllowBaseSyncPrimitives;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
