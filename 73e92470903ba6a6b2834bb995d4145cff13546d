@@ -22,6 +22,30 @@
       "revId": "73e92470903ba6a6b2834bb995d4145cff13546d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4017c97c_2737877f",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-05T06:05:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b670bbe8_bac3eb22",
+      "range": {
+        "startLine": 375,
+        "startChar": 10,
+        "endLine": 375,
+        "endChar": 45
+      },
+      "revId": "73e92470903ba6a6b2834bb995d4145cff13546d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
