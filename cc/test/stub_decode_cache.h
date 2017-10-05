@@ -21,7 +21,7 @@ class StubDecodeCache : public ImageDecodeCache {
   void UnrefImage(const DrawImage& image) override {}
   DecodedDrawImage GetDecodedImageForDraw(const DrawImage& image) override;
   void DrawWithImageFinished(const DrawImage& image,
-                             const DecodedDrawImage& decoded_image) override {}
+                             DecodedDrawImage decoded_image) override {}
   void ReduceCacheUsage() override {}
   void SetShouldAggressivelyFreeResources(
       bool aggressively_free_resources) override {}

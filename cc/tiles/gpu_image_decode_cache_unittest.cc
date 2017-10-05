@@ -593,7 +593,7 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDraw) {
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -628,7 +628,7 @@ TEST_P(GpuImageDecodeCacheTest, GetLargeDecodedImageForDraw) {
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
   EXPECT_TRUE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 }
@@ -664,7 +664,7 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawAtRasterDecode) {
   EXPECT_TRUE(decoded_draw_image.is_at_raster_decode());
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawLargerScale) {
@@ -722,9 +722,10 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawLargerScale) {
 
   EXPECT_FALSE(decoded_draw_image.image() == larger_decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
-  cache.DrawWithImageFinished(larger_draw_image, larger_decoded_draw_image);
+  cache.DrawWithImageFinished(larger_draw_image,
+                              std::move(larger_decoded_draw_image));
   cache.UnrefImage(larger_draw_image);
 }
 
@@ -781,10 +782,10 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawHigherQuality) {
 
   EXPECT_FALSE(decoded_draw_image.image() == larger_decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
   cache.DrawWithImageFinished(higher_quality_draw_image,
-                              larger_decoded_draw_image);
+                              std::move(larger_decoded_draw_image));
   cache.UnrefImage(higher_quality_draw_image);
 }
 
@@ -821,7 +822,7 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawNegative) {
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -859,7 +860,7 @@ TEST_P(GpuImageDecodeCacheTest, GetLargeScaledDecodedImageForDraw) {
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
   EXPECT_TRUE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 }
@@ -899,7 +900,7 @@ TEST_P(GpuImageDecodeCacheTest, AtRasterUsedDirectlyIfSpaceAllows) {
 
   // Finish our draw after increasing the memory limit, image should be added to
   // cache.
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 
   ImageDecodeCache::TaskResult another_result =
       cache.GetTaskForImageAndRef(draw_image, ImageDecodeCache::TracingInfo());
@@ -940,8 +941,9 @@ TEST_P(GpuImageDecodeCacheTest,
   EXPECT_EQ(decoded_draw_image.image()->uniqueID(),
             another_decoded_draw_image.image()->uniqueID());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
-  cache.DrawWithImageFinished(draw_image, another_decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
+  cache.DrawWithImageFinished(draw_image,
+                              std::move(another_decoded_draw_image));
 }
 
 TEST_P(GpuImageDecodeCacheTest,
@@ -969,7 +971,7 @@ TEST_P(GpuImageDecodeCacheTest,
   EXPECT_TRUE(decoded_draw_image.is_at_raster_decode());
   EXPECT_TRUE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 
   DecodedDrawImage second_decoded_draw_image =
@@ -981,7 +983,7 @@ TEST_P(GpuImageDecodeCacheTest,
   EXPECT_TRUE(second_decoded_draw_image.is_at_raster_decode());
   EXPECT_TRUE(cache.DiscardableIsLockedForTesting(draw_image));
 
-  cache.DrawWithImageFinished(draw_image, second_decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(second_decoded_draw_image));
   EXPECT_FALSE(cache.DiscardableIsLockedForTesting(draw_image));
 }
 
@@ -1010,7 +1012,7 @@ TEST_P(GpuImageDecodeCacheTest, ZeroSizedImagesAreSkipped) {
       cache.GetDecodedImageForDraw(draw_image);
   EXPECT_FALSE(decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST_P(GpuImageDecodeCacheTest, NonOverlappingSrcRectImagesAreSkipped) {
@@ -1038,7 +1040,7 @@ TEST_P(GpuImageDecodeCacheTest, NonOverlappingSrcRectImagesAreSkipped) {
       cache.GetDecodedImageForDraw(draw_image);
   EXPECT_FALSE(decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST_P(GpuImageDecodeCacheTest, CanceledTasksDoNotCountAgainstBudget) {
@@ -1324,7 +1326,7 @@ TEST_P(GpuImageDecodeCacheTest, GetDecodedImageForDrawMipUsageChange) {
       PaintImage::kDefaultFrameIndex, DefaultColorSpace());
   DecodedDrawImage decoded_draw_image =
       cache.GetDecodedImageForDraw(draw_image_mips);
-  cache.DrawWithImageFinished(draw_image_mips, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image_mips, std::move(decoded_draw_image));
 }
 
 TEST_P(GpuImageDecodeCacheTest, MemoryStateSuspended) {
@@ -1751,7 +1753,7 @@ TEST_P(GpuImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(1u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(draw_image, decoded_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_image));
 
   // Scaled.
   DrawImage scaled_draw_image(draw_image, 0.5f, 2u,
@@ -1761,7 +1763,7 @@ TEST_P(GpuImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(2u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(scaled_draw_image, decoded_image);
+  cache.DrawWithImageFinished(scaled_draw_image, std::move(decoded_image));
 
   // Subset.
   DrawImage subset_draw_image(
@@ -1773,7 +1775,7 @@ TEST_P(GpuImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(3u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(subset_draw_image, decoded_image);
+  cache.DrawWithImageFinished(subset_draw_image, std::move(decoded_image));
 }
 
 INSTANTIATE_TEST_CASE_P(GpuImageDecodeCacheTests,

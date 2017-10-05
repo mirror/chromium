@@ -118,7 +118,7 @@ class CC_EXPORT ImageDecodeCache {
   // Unrefs an image. This should be called for every GetDecodedImageForDraw
   // when the draw with the image is finished.
   virtual void DrawWithImageFinished(const DrawImage& image,
-                                     const DecodedDrawImage& decoded_image) = 0;
+                                     DecodedDrawImage decoded_image) = 0;
 
   // This function informs the cache that now is a good time to clean up
   // memory. This is called periodically from the compositor thread.

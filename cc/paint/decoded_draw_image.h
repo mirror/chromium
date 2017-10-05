@@ -8,6 +8,7 @@
 #include <cfloat>
 #include <cmath>
 
+#include "base/macros.h"
 #include "cc/paint/paint_export.h"
 #include "third_party/skia/include/core/SkFilterQuality.h"
 #include "third_party/skia/include/core/SkImage.h"
@@ -23,7 +24,8 @@ class CC_PAINT_EXPORT DecodedDrawImage {
                    const SkSize& scale_adjustment,
                    SkFilterQuality filter_quality);
   DecodedDrawImage(sk_sp<const SkImage> image, SkFilterQuality filter_quality);
-  DecodedDrawImage(const DecodedDrawImage& other);
+  DecodedDrawImage(DecodedDrawImage&& other);
+  DecodedDrawImage& operator=(DecodedDrawImage&& other);
   DecodedDrawImage();
   ~DecodedDrawImage();
 
@@ -47,6 +49,8 @@ class CC_PAINT_EXPORT DecodedDrawImage {
   SkSize scale_adjustment_;
   SkFilterQuality filter_quality_;
   bool at_raster_decode_;
+
+  DISALLOW_COPY_AND_ASSIGN(DecodedDrawImage);
 };
 
 }  // namespace cc

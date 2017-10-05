@@ -131,7 +131,7 @@ class CC_EXPORT SoftwareImageDecodeCache
   void UnrefImage(const DrawImage& image) override;
   DecodedDrawImage GetDecodedImageForDraw(const DrawImage& image) override;
   void DrawWithImageFinished(const DrawImage& image,
-                             const DecodedDrawImage& decoded_image) override;
+                             DecodedDrawImage decoded_image) override;
   void ReduceCacheUsage() override;
   // Software doesn't keep outstanding images pinned, so this is a no-op.
   void SetShouldAggressivelyFreeResources(

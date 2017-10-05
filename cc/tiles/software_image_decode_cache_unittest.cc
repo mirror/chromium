@@ -987,7 +987,7 @@ TEST(SoftwareImageDecodeCacheTest, GetDecodedImageForDraw) {
   EXPECT_FALSE(decoded_draw_image.is_scale_adjustment_identity());
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1021,7 +1021,7 @@ TEST(SoftwareImageDecodeCacheTest,
   EXPECT_FALSE(decoded_draw_image.is_scale_adjustment_identity());
   EXPECT_FALSE(decoded_draw_image.is_at_raster_decode());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1047,7 +1047,7 @@ TEST(SoftwareImageDecodeCacheTest, GetDecodedImageForDrawAtRasterDecode) {
   EXPECT_FALSE(decoded_draw_image.is_scale_adjustment_identity());
   EXPECT_TRUE(decoded_draw_image.is_at_raster_decode());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST(SoftwareImageDecodeCacheTest,
@@ -1078,8 +1078,9 @@ TEST(SoftwareImageDecodeCacheTest,
   EXPECT_EQ(decoded_draw_image.image()->uniqueID(),
             another_decoded_draw_image.image()->uniqueID());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
-  cache.DrawWithImageFinished(draw_image, another_decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
+  cache.DrawWithImageFinished(draw_image,
+                              std::move(another_decoded_draw_image));
 }
 
 TEST(SoftwareImageDecodeCacheTest,
@@ -1122,8 +1123,9 @@ TEST(SoftwareImageDecodeCacheTest,
             another_decoded_draw_image.image()->uniqueID());
   EXPECT_FALSE(another_decoded_draw_image.is_at_raster_decode());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
-  cache.DrawWithImageFinished(draw_image, another_decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
+  cache.DrawWithImageFinished(draw_image,
+                              std::move(another_decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1141,6 +1143,7 @@ TEST(SoftwareImageDecodeCacheTest,
 
   DecodedDrawImage decoded_draw_image =
       cache.GetDecodedImageForDraw(draw_image);
+  uint32_t first_image_unique_id = decoded_draw_image.image()->uniqueID();
   EXPECT_TRUE(decoded_draw_image.image());
   EXPECT_EQ(50, decoded_draw_image.image()->width());
   EXPECT_EQ(50, decoded_draw_image.image()->height());
@@ -1157,7 +1160,7 @@ TEST(SoftwareImageDecodeCacheTest,
 
   // If we finish the draw here, then we will use it for the locked decode
   // instead of decoding again.
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 
   TestTileTaskRunner::ProcessTask(result.task.get());
 
@@ -1165,11 +1168,12 @@ TEST(SoftwareImageDecodeCacheTest,
       cache.GetDecodedImageForDraw(draw_image);
   // This should get the decoded/locked image which we originally decoded at
   // raster time, since it's now in the locked cache.
-  EXPECT_EQ(decoded_draw_image.image()->uniqueID(),
+  EXPECT_EQ(first_image_unique_id,
             another_decoded_draw_image.image()->uniqueID());
   EXPECT_FALSE(another_decoded_draw_image.is_at_raster_decode());
 
-  cache.DrawWithImageFinished(draw_image, another_decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image,
+                              std::move(another_decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1193,7 +1197,7 @@ TEST(SoftwareImageDecodeCacheTest, ZeroSizedImagesAreSkipped) {
       cache.GetDecodedImageForDraw(draw_image);
   EXPECT_FALSE(decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST(SoftwareImageDecodeCacheTest, NonOverlappingSrcRectImagesAreSkipped) {
@@ -1217,7 +1221,7 @@ TEST(SoftwareImageDecodeCacheTest, NonOverlappingSrcRectImagesAreSkipped) {
       cache.GetDecodedImageForDraw(draw_image);
   EXPECT_FALSE(decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST(SoftwareImageDecodeCacheTest, LowQualityFilterIsHandled) {
@@ -1245,7 +1249,7 @@ TEST(SoftwareImageDecodeCacheTest, LowQualityFilterIsHandled) {
   // SkImage object.
   EXPECT_FALSE(decoded_draw_image.image()->isLazyGenerated());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1278,7 +1282,7 @@ TEST(SoftwareImageDecodeCacheTest, LowQualityScaledSubrectIsHandled) {
   EXPECT_EQ(0.5f, decoded_draw_image.scale_adjustment().width());
   EXPECT_EQ(0.5f, decoded_draw_image.scale_adjustment().height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1308,7 +1312,7 @@ TEST(SoftwareImageDecodeCacheTest, NoneQualityScaledSubrectIsHandled) {
   EXPECT_EQ(kNone_SkFilterQuality, decoded_draw_image.filter_quality());
   EXPECT_TRUE(decoded_draw_image.is_scale_adjustment_identity());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1339,7 +1343,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt01_5ScaleIsHandled) {
   EXPECT_EQ(500, decoded_draw_image.image()->width());
   EXPECT_EQ(200, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1370,7 +1374,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt1_0ScaleIsHandled) {
   EXPECT_EQ(500, decoded_draw_image.image()->width());
   EXPECT_EQ(200, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1401,7 +1405,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_75ScaleIsHandled) {
   EXPECT_EQ(500, decoded_draw_image.image()->width());
   EXPECT_EQ(200, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1432,7 +1436,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_5ScaleIsHandled) {
   EXPECT_EQ(250, decoded_draw_image.image()->width());
   EXPECT_EQ(100, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1463,7 +1467,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_49ScaleIsHandled) {
   EXPECT_EQ(250, decoded_draw_image.image()->width());
   EXPECT_EQ(100, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1494,7 +1498,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_1ScaleIsHandled) {
   EXPECT_EQ(62, decoded_draw_image.image()->width());
   EXPECT_EQ(25, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1525,7 +1529,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_01ScaleIsHandled) {
   EXPECT_EQ(7, decoded_draw_image.image()->width());
   EXPECT_EQ(3, decoded_draw_image.image()->height());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
   cache.UnrefImage(draw_image);
 }
 
@@ -1549,7 +1553,7 @@ TEST(SoftwareImageDecodeCacheTest, MediumQualityAt0_001ScaleIsHandled) {
       cache.GetDecodedImageForDraw(draw_image);
   EXPECT_FALSE(decoded_draw_image.image());
 
-  cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
 }
 
 TEST(SoftwareImageDecodeCacheTest,
@@ -1597,9 +1601,9 @@ TEST(SoftwareImageDecodeCacheTest,
 
   EXPECT_EQ(decoded_draw_image_50.image(), decoded_draw_image_49.image());
 
-  cache.DrawWithImageFinished(draw_image_50, decoded_draw_image_50);
+  cache.DrawWithImageFinished(draw_image_50, std::move(decoded_draw_image_50));
   cache.UnrefImage(draw_image_50);
-  cache.DrawWithImageFinished(draw_image_49, decoded_draw_image_49);
+  cache.DrawWithImageFinished(draw_image_49, std::move(decoded_draw_image_49));
   cache.UnrefImage(draw_image_49);
 }
 
@@ -1651,7 +1655,7 @@ TEST(SoftwareImageDecodeCacheTest, RemoveUnusedImage) {
     EXPECT_TRUE(result.need_unref);
     EXPECT_TRUE(result.task);
     TestTileTaskRunner::ProcessTask(result.task.get());
-    cache.DrawWithImageFinished(draw_image, decoded_draw_image);
+    cache.DrawWithImageFinished(draw_image, std::move(decoded_draw_image));
     cache.UnrefImage(draw_image);
   }
 
@@ -1693,7 +1697,7 @@ TEST(SoftwareImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(1u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(draw_image, decoded_image);
+  cache.DrawWithImageFinished(draw_image, std::move(decoded_image));
 
   // Scaled.
   DrawImage scaled_draw_image(draw_image, 0.5f, 2u,
@@ -1703,7 +1707,7 @@ TEST(SoftwareImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(2u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(scaled_draw_image, decoded_image);
+  cache.DrawWithImageFinished(scaled_draw_image, std::move(decoded_image));
 
   // Subset.
   DrawImage subset_draw_image(
@@ -1715,7 +1719,7 @@ TEST(SoftwareImageDecodeCacheTest, CacheDecodesExpectedFrames) {
   ASSERT_EQ(generator->frames_decoded().size(), 1u);
   EXPECT_EQ(generator->frames_decoded().count(3u), 1u);
   generator->reset_frames_decoded();
-  cache.DrawWithImageFinished(subset_draw_image, decoded_image);
+  cache.DrawWithImageFinished(subset_draw_image, std::move(decoded_image));
 }
 
 }  // namespace
