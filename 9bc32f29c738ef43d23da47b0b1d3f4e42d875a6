@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0680f016_42dd3d92",
+        "filename": "third_party/harfbuzz-ng/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-05T20:44:07Z",
+      "side": 1,
+      "message": "If we have use_system_harfbuzz\u003d\u003dtrue, then this\u0027ll still define targets for harfbuzz_source which will get compiled as part of all. Do we want/need that? Same goes for the FT targets.",
+      "revId": "9bc32f29c738ef43d23da47b0b1d3f4e42d875a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
