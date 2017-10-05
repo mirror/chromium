@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d902a5b0_660d8b85",
+        "filename": "components/offline_pages/core/model/clear_digest_task.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-05T00:21:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f1fc4e4_5197020c",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 25
+      },
+      "revId": "e5241881934345a276819712085202185463ea67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5c67bf8_9aa5a764",
         "filename": "components/offline_pages/core/model/clear_digest_task.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "e5241881934345a276819712085202185463ea67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c8841e_b991aff7",
+        "filename": "components/offline_pages/core/model/clear_digest_task.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-05T00:21:34Z",
+      "side": 1,
+      "message": "Done\nAdded a TODO in the cc file, will implement the UMA in future patches.",
+      "parentUuid": "f5c67bf8_9aa5a764",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "e5241881934345a276819712085202185463ea67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
