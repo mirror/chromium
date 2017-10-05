@@ -10,6 +10,8 @@
 #include "base/macros.h"
 #include "extensions/browser/extension_api_frame_id_map.h"
 
+enum class WindowOpenDisposition;
+
 namespace content {
 class NavigationHandle;
 }
@@ -23,7 +25,10 @@ class ExtensionNavigationUIData {
   ExtensionNavigationUIData();
   ExtensionNavigationUIData(content::NavigationHandle* navigation_handle,
                             int tab_id,
-                            int window_id);
+                            int window_id,
+                            WindowOpenDisposition disposition,
+                            bool had_target_contents,
+                            bool is_from_app);
 
   std::unique_ptr<ExtensionNavigationUIData> DeepCopy() const;
 
@@ -35,12 +40,20 @@ class ExtensionNavigationUIData {
   int web_view_instance_id() const { return web_view_instance_id_; }
   int web_view_rules_registry_id() const { return web_view_rules_registry_id_; }
 
+  WindowOpenDisposition disposition() const { return disposition_; }
+  bool had_target_contents() const { return had_target_contents_; }
+  bool is_from_app() const { return is_from_app_; }
+
  private:
   ExtensionApiFrameIdMap::FrameData frame_data_;
   bool is_web_view_;
   // These are only valid iff is_web_view_.
   int web_view_instance_id_;
   int web_view_rules_registry_id_;
+
+  WindowOpenDisposition disposition_;
+  bool had_target_contents_;
+  bool is_from_app_;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionNavigationUIData);
 };

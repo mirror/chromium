@@ -164,6 +164,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   ReloadType GetReloadType() override;
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
+  NavigationUIData* GetNavigationUIData() const override;
   const GlobalRequestID& GetGlobalRequestID() override;
 
   // Resume and CancelDeferredNavigation must only be called by the
@@ -354,10 +355,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   // Called when the navigation is transferred to a different renderer.
   void Transfer();
-
-  NavigationUIData* navigation_ui_data() const {
-    return navigation_ui_data_.get();
-  }
 
   const GURL& base_url() { return base_url_; }
 

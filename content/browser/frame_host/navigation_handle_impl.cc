@@ -307,6 +307,10 @@ bool NavigationHandleImpl::IsExternalProtocol() {
   return is_external_protocol_;
 }
 
+NavigationUIData* NavigationHandleImpl::GetNavigationUIData() const {
+  return navigation_ui_data_.get();
+}
+
 net::Error NavigationHandleImpl::GetNetErrorCode() {
   return net_error_code_;
 }
