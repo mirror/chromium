@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a0d2f0_b873103b",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T10:25:05Z",
+      "side": 1,
+      "message": "AudioOutputResampler is constructed for both linear and low latency PCM, see AudiomanagerBase::MakeAudioOutputStreamProxy [https://cs.chromium.org/chromium/src/media/audio/audio_manager_base.cc?type\u003dcs\u0026l\u003d304]",
+      "revId": "dbfb4814b1c0a91818abc33b5c7389462a5bb582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac16a17_41bd251a",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T10:25:05Z",
+      "side": 1,
+      "message": "The original code changes |device_id_| to \"\" here once and forever, even if the fallback dispatcher is reinitialized after timeout because of not having open streams.",
+      "revId": "dbfb4814b1c0a91818abc33b5c7389462a5bb582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30a5e40_537a3018",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T10:25:05Z",
+      "side": 1,
+      "message": "The original code keeps the dispatcher until it\u0027s reinitialized upon the timeout.",
+      "revId": "dbfb4814b1c0a91818abc33b5c7389462a5bb582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d531e5_3532680f",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-05T10:25:05Z",
+      "side": 1,
+      "message": "This is required for consistency with Stop().\nCan it be that we are crashing in Stop() because we are out of memory and allocation at l.370 returned nullptr?",
+      "revId": "dbfb4814b1c0a91818abc33b5c7389462a5bb582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
