@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ed3109b_06fbe9fe",
+        "filename": "content/browser/keyboard_lock/keyboard_lock_service_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-05T18:42:07Z",
+      "side": 1,
+      "message": "Don\u0027t use a reference; just pass the callback by value.",
+      "range": {
+        "startLine": 43,
+        "startChar": 47,
+        "endLine": 43,
+        "endChar": 49
+      },
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
