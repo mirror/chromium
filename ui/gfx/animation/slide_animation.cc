@@ -16,13 +16,13 @@ SlideAnimation::SlideAnimation(AnimationDelegate* target)
       target_(target),
       tween_type_(Tween::EASE_OUT),
       showing_(false),
+      slide_timing_(kConstantSpeed),
       value_start_(0),
       value_end_(0),
       value_current_(0),
       slide_duration_(kDefaultDurationMs) {}
 
-SlideAnimation::~SlideAnimation() {
-}
+SlideAnimation::~SlideAnimation() {}
 
 void SlideAnimation::Reset() {
   Reset(0);
@@ -47,13 +47,12 @@ void SlideAnimation::Show() {
   if (slide_duration_ == 0) {
     AnimateToState(1.0);  // Skip to the end of the animation.
     return;
-  } else if (value_current_ == value_end_)  {
+  } else if (value_current_ == value_end_) {
     return;
   }
 
   // This will also reset the currently-occurring animation.
-  SetDuration(base::TimeDelta::FromMilliseconds(
-      static_cast<int>(slide_duration_ * (1 - value_current_))));
+  SetDuration(base::TimeDelta::FromMilliseconds(GetDuration()));
   Start();
 }
 
@@ -77,8 +76,7 @@ void SlideAnimation::Hide() {
   }
 
   // This will also reset the currently-occurring animation.
-  SetDuration(base::TimeDelta::FromMilliseconds(
-      static_cast<int>(slide_duration_ * value_current_)));
+  SetDuration(base::TimeDelta::FromMilliseconds(GetDuration()));
   Start();
 }
 
@@ -86,8 +84,19 @@ void SlideAnimation::SetSlideDuration(int duration) {
   slide_duration_ = duration;
 }
 
+void SlideAnimation::SetDampenedDuration(int dampening_value) {
+  slide_timing_ = kDampenedDuration;
+  dampening_value_ = dampening_value;
+}
+
 double SlideAnimation::GetCurrentValue() const {
   return value_current_;
+}
+
+int SlideAnimation::GetDuration() {
+  if (slide_timing_ == kDampenedDuration)
+    return slide_duration_ * (1 - pow(value_current_, dampening_value_));
+  return slide_duration_ * (1 - value_current_);
 }
 
 void SlideAnimation::AnimateToState(double state) {
