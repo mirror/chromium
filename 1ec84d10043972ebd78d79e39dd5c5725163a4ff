@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a482441_fded6ee6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T16:58:24Z",
+      "side": 1,
+      "message": "Nit: remove",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27653ea_a9ab2e29",
+        "filename": "tools/clang/value_cleanup/ListValueRewriter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T16:58:24Z",
+      "side": 1,
+      "message": "Should these matchers just be removed?",
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b9bc05a_935a2a61",
+        "filename": "tools/clang/value_cleanup/tests/list-value-append-original.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-05T16:58:24Z",
+      "side": 1,
+      "message": "Given that fundamental value is removed, shouldn\u0027t these test cases just be deleted?\n\n(I guess that means we should update the stub values.h as well.)",
+      "revId": "1ec84d10043972ebd78d79e39dd5c5725163a4ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
