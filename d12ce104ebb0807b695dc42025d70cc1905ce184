@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b2279886_c7bf82a5",
+        "filename": "chrome/common/extensions/api/language_settings_private.idl",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T01:39:22Z",
+      "side": 1,
+      "message": "I think this would be more descriptive as something like\nsetShouldTranslateLanguage()\nor\nsetTranslateForLanguageEnabled()\n\nWDYT?\n\nAdditionally, instead of simply \"value\", let\u0027s give this a meaningful name like \"isEnabled\" or \"shouldTranslate\".",
+      "revId": "d12ce104ebb0807b695dc42025d70cc1905ce184",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd647b21_3831d066",
         "filename": "components/translate/core/common/translate_util.cc",
         "patchSetId": 8
