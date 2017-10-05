@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5bc10b2_ffd22e64",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Rephrased.",
+      "parentUuid": "e3e21827_41e005ae",
+      "range": {
+        "startLine": 427,
+        "startChar": 0,
+        "endLine": 429,
+        "endChar": 37
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70679cad_41d14da0",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -39,6 +63,24 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3245c6_6376bcac",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Invoking SetNetworkReadOnly(false) from here after the size check is done.",
+      "parentUuid": "70679cad_41d14da0",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "f419d965_62897afe",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "It needs to be before InitiateTruncateEntry since that could change the next_state_. Taking it to line 174.",
+      "parentUuid": "69690beb_0e794569",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71e8fdbc_9c52c8a5",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b9edb57_e440ac25",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 34
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44ed8c67_b2e0b468",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -122,6 +206,48 @@
     },
     {
       "key": {
+        "uuid": "8b8177ce_f3982b96",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "We will need the extra variable to decide if  cache_-\u003eCurrentWritersDoneWritingToEntry should be invoked. Removing it from other call sites except this one.",
+      "parentUuid": "73e84134_d1326763",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 13
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8dcfee8b_0a67bacd",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "But we will still need to check the return value of InitiateTruncateEntry to see if it was able to initiate truncation. If we invoke doloop before returning it would be tricky because that could actually invoke cache_callback_ at doloop\u0027s end and cause this object to be deleted.",
+      "parentUuid": "44ed8c67_b2e0b468",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4fd2d1e_650883d6",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -136,6 +262,24 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2015545_21d5b312",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Added is_exclusive resetting there and partial_do_not_truncate_ in AddTransaction since it will be needed in InitiateTruncateEntry which can be called after ResetState..",
+      "parentUuid": "b4fd2d1e_650883d6",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +353,30 @@
     },
     {
       "key": {
+        "uuid": "9776309c_25f2ea82",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a12f908_ee0a6730",
+      "range": {
+        "startLine": 229,
+        "startChar": 28,
+        "endLine": 229,
+        "endChar": 58
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42aeab41_b2ad154d",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -232,6 +400,30 @@
     },
     {
       "key": {
+        "uuid": "d0c2d9f1_0f4d7fbb",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42aeab41_b2ad154d",
+      "range": {
+        "startLine": 231,
+        "startChar": 33,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a556f6_5e10f2c7",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -252,6 +444,30 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d4d981b_1c977494",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6a556f6_5e10f2c7",
+      "range": {
+        "startLine": 251,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 31
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "db016c2e_52f7e135",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c385cf9_950c8e1f",
+      "range": {
+        "startLine": 362,
+        "startChar": 55,
+        "endLine": 362,
+        "endChar": 76
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6691a958_0f318168",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -369,6 +609,30 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b6b3b9_3d7dc2ad",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6691a958_0f318168",
+      "range": {
+        "startLine": 372,
+        "startChar": 7,
+        "endLine": 372,
+        "endChar": 11
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -415,6 +679,54 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6406d88a_2c53a7da",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3bb1a1b_16babd7c",
+      "range": {
+        "startLine": 408,
+        "startChar": 7,
+        "endLine": 408,
+        "endChar": 25
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "349555d7_12b1799f",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c65e03_87d99c54",
+      "range": {
+        "startLine": 406,
+        "startChar": 0,
+        "endLine": 408,
+        "endChar": 28
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -494,6 +806,30 @@
     },
     {
       "key": {
+        "uuid": "8e13aa17_2aa1f9bf",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70a67a99_1fc80e6e",
+      "range": {
+        "startLine": 504,
+        "startChar": 9,
+        "endLine": 504,
+        "endChar": 27
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd5abccf_77ab2f94",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -564,6 +900,30 @@
     },
     {
       "key": {
+        "uuid": "98aa0a03_23e923e5",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88bacd14_9da064fd",
+      "range": {
+        "startLine": 122,
+        "startChar": 12,
+        "endLine": 122,
+        "endChar": 30
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e005a70_a9e8b1c0",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 52
@@ -584,6 +944,30 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "327ef08c_228d3cb2",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e005a70_a9e8b1c0",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -610,6 +994,30 @@
     },
     {
       "key": {
+        "uuid": "3d89e9ea_fa9581d9",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "\"the entry is being discarded\" case is already present in \"if the entry cannot be resumed later\". Added the case where an async operation is already ongoing.",
+      "parentUuid": "498bf707_c90d4cc1",
+      "range": {
+        "startLine": 226,
+        "startChar": 13,
+        "endLine": 226,
+        "endChar": 30
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9df9e05_09465274",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 52
@@ -630,6 +1038,30 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a67681de_2b56cc08",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-05T19:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9df9e05_09465274",
+      "range": {
+        "startLine": 230,
+        "startChar": 25,
+        "endLine": 230,
+        "endChar": 33
+      },
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
