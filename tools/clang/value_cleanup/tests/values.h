@@ -5,6 +5,7 @@
 #ifndef VALUES_H_
 #define VALUES_H_
 
+#include <memory>
 #include <vector>
 
 #include "base/strings/string16.h"
@@ -12,7 +13,26 @@
 
 namespace base {
 
-class Value {};
+class Value {
+ public:
+  enum class Type {
+    NONE = 0,
+    BOOLEAN,
+    INTEGER,
+    DOUBLE,
+    STRING,
+    BINARY,
+    DICTIONARY,
+    LIST
+  };
+
+  // Returns the type of the value stored by the current Value object.
+  Type GetType() const { return type_; }  // DEPRECATED, use type().
+  Type type() const { return type_; }
+
+ private:
+  Type type_ = Type::NONE;
+};
 
 // FundamentalValue represents the simple fundamental types of values.
 class FundamentalValue : public Value {
