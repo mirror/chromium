@@ -74,14 +74,14 @@ void ServiceWorkerSubresourceLoader::StartRequest(
   // get response for this.
   controller_connector_->GetControllerServiceWorker()->DispatchFetchEvent(
       *request, std::move(response_callback_ptr),
-      base::Bind(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
-                 weak_factory_.GetWeakPtr()));
+      base::BindOnce(&ServiceWorkerSubresourceLoader::OnFetchEventFinished,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void ServiceWorkerSubresourceLoader::OnFetchEventFinished(
-    ServiceWorkerStatusCode status,
+    blink::mojom::ServiceWorkerEventStatus status,
     base::Time dispatch_event_time) {
-  if (status != SERVICE_WORKER_OK) {
+  if (status != blink::mojom::ServiceWorkerEventStatus::COMPLETED) {
     // TODO(kinuko): Log the failure.
     // If status is not OK response callback may not be called.
     weak_factory_.InvalidateWeakPtrs();
