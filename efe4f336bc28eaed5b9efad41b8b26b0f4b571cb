@@ -22,6 +22,30 @@
       "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cffe9de_4c683835",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapFactories.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-05T10:52:14Z",
+      "side": 1,
+      "message": "Would it be an option to introduce SupplementBase? It looks error-prone if developers sometimes have to add TraceWrapperBase and sometimes not.",
+      "parentUuid": "5fa98177_ae2a03da",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 29
+      },
+      "revId": "efe4f336bc28eaed5b9efad41b8b26b0f4b571cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
