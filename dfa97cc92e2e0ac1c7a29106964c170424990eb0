@@ -140,6 +140,30 @@
       "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582c61fb_970c0fdc",
+        "filename": "third_party/WebKit/Source/controller/BlinkInitializer.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-05T01:28:16Z",
+      "side": 1,
+      "message": "Perhaps we could add some kind of `content::ChildProcess::InitializeAfterSpawning` method? I was surprised to see it appears we don\u0027t already have something like that. (I don\u0027t know if that\u0027s a good method name, but you get the idea.)\n\nThen, in `content::RenderProcess`\u0027s override, we could add this reservation code.",
+      "parentUuid": "35ae665a_7e2ccd58",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 70
+      },
+      "revId": "dfa97cc92e2e0ac1c7a29106964c170424990eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
