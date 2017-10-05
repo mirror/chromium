@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0721fc7_87d77278",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerOrWorkletGlobalScope.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-05T23:58:25Z",
+      "side": 1,
+      "message": "I think we should not use const_cast.\n\nCan we have WorkerOrWorkletGlobalScope::EnsureResourceFetcher() and call it from WorkerThreadableLoadingContext::GetResourceFetcher() and WorkerInspectorController::ConnectFrontend()?\n\nAnd please call it before loading fonts from worker.\n\n\nResourceFetcher* WorkerOrWorkletGlobalScope::EnsureResourceFetcher() {\n  DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());\n  DCHECK(!IsMainThreadWorkletGlobalScope());\n  if (resource_fetcher_)\n    return resource_fetcher_;\n  WorkerFetchContext* fetch_context \u003d WorkerFetchContext::Create(*this);\n  resource_fetcher_ \u003d ResourceFetcher::Create(fetch_context);\n  return resource_fetcher_;\n}\n\nResourceFetcher* WorkerOrWorkletGlobalScope::Fetcher() const {\n  DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());\n  DCHECK(!IsMainThreadWorkletGlobalScope());\n  return resource_fetcher_;\n}",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "db96043ad078d2a1af53a3779ec6ba96e7d68319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
