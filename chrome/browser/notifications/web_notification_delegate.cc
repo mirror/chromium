@@ -38,6 +38,10 @@ bool WebNotificationDelegate::ShouldDisplaySettingsButton() {
   return notification_type_ != NotificationCommon::EXTENSION;
 }
 
+void WebNotificationDelegate::DisableNotification() {
+  // FIXME
+}
+
 bool WebNotificationDelegate::ShouldDisplayOverFullscreen() const {
   NotificationDisplayService* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
