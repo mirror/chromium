@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef284772_e194beb2",
+        "filename": "chrome/browser/crash_upload_list/crash_upload_list_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-05T22:24:14Z",
+      "side": 1,
+      "message": "where is the corresponding entry in histograms.xml?",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "29a63ef4aeb5a667f2dbe7109ac6c32afc1d0bd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
