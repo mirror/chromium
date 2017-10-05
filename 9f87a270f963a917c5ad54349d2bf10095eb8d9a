@@ -22,6 +22,30 @@
       "revId": "9f87a270f963a917c5ad54349d2bf10095eb8d9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3a3028_9ed5db03",
+        "filename": "testing/libfuzzer/efficient_fuzzer.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-10-05T22:17:48Z",
+      "side": 1,
+      "message": "That sounds like a good opportunity to promote new coverage tool. Added one sentence, could you please take a look?",
+      "parentUuid": "438c227e_aa5e4313",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 21
+      },
+      "revId": "9f87a270f963a917c5ad54349d2bf10095eb8d9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
