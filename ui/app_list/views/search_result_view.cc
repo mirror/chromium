@@ -418,6 +418,7 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 void SearchResultView::OnFocus() {
+  ScrollRectToVisible(GetLocalBounds());
   SetSelected(true);
 }
 

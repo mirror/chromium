@@ -31,6 +31,8 @@ class APP_LIST_EXPORT SearchResultAnswerCardView
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   views::View* GetSelectedView() const override;
   views::View* SetFirstResultSelected(bool selected) override;
+  void OnFocus() override;
+  void OnBlur() override;
 
  private:
   class SearchAnswerContainerView;

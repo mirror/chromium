@@ -705,6 +705,46 @@ TEST_F(AppListViewFocusTest, VerticalFocusTraversalInFullscreenAllAppsState) {
   TestFocusTraversal(backward_view_list, ui::VKEY_UP, false);
 }
 
+// Tests the vertical focus traversal in HALF state with opened search box.
+TEST_F(AppListViewFocusTest, VerticalFocusTraversalInHalfState) {
+  Show();
+
+  // Type something in search box to transition to HALF state and populate
+  // fake search results.
+  search_box_view()->search_box()->InsertText(base::UTF8ToUTF16("test"));
+  EXPECT_EQ(app_list_view()->app_list_state(), AppListView::HALF);
+  const int kTileResults = 3;
+  const int kListResults = 2;
+  SetUpSearchResults(kTileResults, kListResults);
+
+  std::vector<views::View*> forward_view_list;
+  forward_view_list.push_back(search_box_view()->search_box());
+  const std::vector<SearchResultTileItemView*>& tile_views =
+      contents_view()
+          ->search_result_tile_item_list_view_for_test()
+          ->tile_views_for_test();
+  forward_view_list.push_back(tile_views[0]);
+  views::View* results_container = contents_view()
+                                       ->search_result_list_view_for_test()
+                                       ->results_container_for_test();
+  for (int i = 0; i < kListResults; ++i)
+    forward_view_list.push_back(results_container->child_at(i));
+  forward_view_list.push_back(search_box_view()->search_box());
+
+  // Test traversal triggered by down.
+  TestFocusTraversal(forward_view_list, ui::VKEY_DOWN, false);
+
+  std::vector<views::View*> backward_view_list;
+  backward_view_list.push_back(search_box_view()->search_box());
+  for (int i = kListResults - 1; i >= 0; --i)
+    backward_view_list.push_back(results_container->child_at(i));
+  backward_view_list.push_back(tile_views[kTileResults - 1]);
+  backward_view_list.push_back(search_box_view()->search_box());
+
+  // Test traversal triggered by up.
+  TestFocusTraversal(backward_view_list, ui::VKEY_UP, false);
+}
+
 // Tests the vertical focus traversal in FULLSCREEN_ALL_APPS state within
 // folder.
 TEST_F(AppListViewFocusTest, VerticalFocusTraversalInFolder) {
