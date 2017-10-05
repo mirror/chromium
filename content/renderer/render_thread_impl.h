@@ -257,6 +257,21 @@ class CONTENT_EXPORT RenderThreadImpl
   // blink::scheduler::RendererScheduler::RAILModeObserver implementation.
   void OnRAILModeChanged(v8::RAILMode rail_mode) override;
 
+  void DisableGpuCompositing();
+
+  // When true, gpu will not be use for compositing and clients should submit
+  // resources to the compositor as software bitmaps instead. This should be
+  // checked by clients *after* grabbing a gpu ContextProvider, as doing so may
+  // change the result of this variable, and the context will be lost if the
+  // value of this changes. As such, this takes a ContextProvider as an argument
+  // even though it is not used.
+  bool IsGpuCompositingDisabled(viz::ContextProvider* p) {
+    // Don't cheat, you need to have a context before checking this to avoid
+    // races.
+    DCHECK(p);
+    return gpu_compositing_disabled_;
+  }
+
   // Synchronously establish a channel to the GPU plugin if not previously
   // established or if it has been lost (for example if the GPU plugin crashed).
   // If there is a pending asynchronous request, it will be completed by the
@@ -268,7 +283,6 @@ class CONTENT_EXPORT RenderThreadImpl
   using LayerTreeFrameSinkCallback =
       base::Callback<void(std::unique_ptr<cc::LayerTreeFrameSink>)>;
   void RequestNewLayerTreeFrameSink(
-      bool use_software,
       int routing_id,
       scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
       const GURL& url,
@@ -401,6 +415,12 @@ class CONTENT_EXPORT RenderThreadImpl
 
   media::GpuVideoAcceleratorFactories* GetGpuFactories();
 
+  // Returns the context for all main thread applications. This context
+  // synchronizes with compositor state, so that you can assume software
+  // compositing will be used if this returns null. If non-null, then
+  // IsGpuCompositingDisabled() can be used to determine the compositing mode.
+  // If this returns null once, it may return non-null in the future, but
+  // gpu compositing mode will not change thereafter.
   scoped_refptr<ui::ContextProviderCommandBuffer>
   SharedMainThreadContextProvider();
 
@@ -671,6 +691,10 @@ class CONTENT_EXPORT RenderThreadImpl
 
   // Timer that periodically calls IdleHandler.
   base::RepeatingTimer idle_timer_;
+
+  // Whether attempts will be made to perform compositing with the gpu. Once
+  // this becomes false it sticks permanently.
+  bool gpu_compositing_disabled_ = false;
 
   // The channel from the renderer process to the GPU process.
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_;

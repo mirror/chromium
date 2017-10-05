@@ -20,9 +20,9 @@ namespace blink {
 
 OffscreenCanvasResourceProvider::OffscreenCanvasResourceProvider(int width,
                                                                  int height)
-    : width_(width), height_(height), next_resource_id_(1u) {}
+    : width_(width), height_(height) {}
 
-OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() {}
+OffscreenCanvasResourceProvider::~OffscreenCanvasResourceProvider() = default;
 
 std::unique_ptr<OffscreenCanvasResourceProvider::FrameResource>
 OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
@@ -31,6 +31,28 @@ OffscreenCanvasResourceProvider::CreateOrRecycleFrameResource() {
     return std::move(recycleable_resource_);
   }
   return std::unique_ptr<FrameResource>(new FrameResource());
+}
+
+WeakPtr<WebGraphicsContext3DProviderWrapper>
+OffscreenCanvasResourceProvider::GetContextForGpuCompositedFrame() {
+  // Once this is known, it is a one-way trip. The compositor won't stop being
+  // software.
+  if (using_software_compositing_)
+    return nullptr;
+
+  // TODO(crbug.com/652707): When committing the first frame, there is no
+  // instance of SharedGpuContext yet, calling SharedGpuContext::gl() will
+  // trigger a creation of an instace, which requires to create a
+  // WebGraphicsContext3DProvider. This process is quite expensive, because
+  // WebGraphicsContext3DProvider can only be constructed on the main thread,
+  // and bind to the worker thread if commit() is called on worker. In the
+  // subsequent frame, we should already have a SharedGpuContext, then getting
+  // the gl interface should not be expensive.
+  bool software;
+  WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper =
+      SharedGpuContext::ContextProviderWrapper(&software);
+  using_software_compositing_ |= software;
+  return context_provider_wrapper;
 }
 
 void OffscreenCanvasResourceProvider::TransferResource(
@@ -74,27 +96,17 @@ void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedBitmap(
 }
 
 void OffscreenCanvasResourceProvider::SetTransferableResourceToSharedGPUContext(
+    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
     viz::TransferableResource& resource,
     RefPtr<StaticBitmapImage> image) {
+  DCHECK(context_provider_wrapper);
   DCHECK(!image->IsTextureBacked());
-
-  // TODO(crbug.com/652707): When committing the first frame, there is no
-  // instance of SharedGpuContext yet, calling SharedGpuContext::gl() will
-  // trigger a creation of an instace, which requires to create a
-  // WebGraphicsContext3DProvider. This process is quite expensive, because
-  // WebGraphicsContext3DProvider can only be constructed on the main thread,
-  // and bind to the worker thread if commit() is called on worker. In the
-  // subsequent frame, we should already have a SharedGpuContext, then getting
-  // the gl interface should not be expensive.
-  WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper =
-      SharedGpuContext::ContextProviderWrapper();
-  if (!context_provider_wrapper)
-    return;
 
   gpu::gles2::GLES2Interface* gl =
       context_provider_wrapper->ContextProvider()->ContextGL();
+
   GrContext* gr = context_provider_wrapper->ContextProvider()->GetGrContext();
-  if (!gl || !gr)
+  if (!gr)
     return;
 
   std::unique_ptr<FrameResource> frame_resource =

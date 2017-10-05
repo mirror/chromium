@@ -512,11 +512,16 @@ class BLINK_PLATFORM_EXPORT Platform {
     WebString driver_version;
     WebString error_message;
   };
+
   // Returns a newly allocated and initialized offscreen context provider,
   // backed by an independent context. Returns null if the context cannot be
   // created or initialized.
   // Passing an existing provider to |share_context| will create the new context
   // in the same share group as the one passed.
+  // If this returns null, then the client can assume the compositor is not
+  // using the gpu, unless |shared_context| is non-null. In that case this can
+  // fail and return null without gpu compositing being disabled, and the client
+  // will need to retry making a context.
   virtual std::unique_ptr<WebGraphicsContext3DProvider>
   CreateOffscreenGraphicsContext3DProvider(
       const ContextAttributes&,
@@ -526,7 +531,8 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Returns a newly allocated and initialized offscreen context provider,
   // backed by the process-wide shared main thread context. Returns null if
-  // the context cannot be created or initialized.
+  // the context cannot be created or initialized, in which case the client
+  // can assume the compositor is not using the gpu.
   virtual std::unique_ptr<WebGraphicsContext3DProvider>
   CreateSharedOffscreenGraphicsContext3DProvider();
 
@@ -550,12 +556,6 @@ class BLINK_PLATFORM_EXPORT Platform {
       WebGestureDevice device_source,
       const WebFloatPoint& velocity,
       const WebSize& cumulative_scroll);
-
-  // Whether the command line flag: --disable-gpu-compositing or --disable-gpu
-  // exists or not
-  // NOTE: This function should not be called from core/ and modules/, but
-  // called by platform/graphics/ is fine.
-  virtual bool IsGPUCompositingEnabled() { return true; }
 
   // WebRTC ----------------------------------------------------------
 

@@ -51,9 +51,13 @@ class CONTENT_EXPORT RenderWidgetCompositorDelegate {
   // Notifies that the compositor has issed a BeginMainFrame.
   virtual void BeginMainFrame(double frame_time_sec) = 0;
 
+  // Used to disable gpu compositing, this is a one-way operation, and from
+  // then calls to RequestNewLayerTreeFrameSink should give a result that does
+  // not use the gpu.
+  virtual void DisableGpuCompositing() = 0;
+
   // Requests a LayerTreeFrameSink to submit CompositorFrames to.
   virtual void RequestNewLayerTreeFrameSink(
-      bool fallback,
       const LayerTreeFrameSinkCallback& callback) = 0;
 
   // Notifies that the draw commands for a committed frame have been issued.

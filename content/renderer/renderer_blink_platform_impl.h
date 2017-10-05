@@ -140,7 +140,6 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
 
   bool IsThreadedCompositingEnabled() override;
   bool IsThreadedAnimationEnabled() override;
-  bool IsGPUCompositingEnabled() override;
   double AudioHardwareSampleRate() override;
   size_t AudioHardwareBufferSize() override;
   unsigned AudioHardwareOutputChannels() override;

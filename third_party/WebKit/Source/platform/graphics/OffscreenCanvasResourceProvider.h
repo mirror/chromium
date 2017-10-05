@@ -20,11 +20,21 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
 
   ~OffscreenCanvasResourceProvider();
 
+  // Returns a context for the current frame if gpu compositing is being used,
+  // and null otherwise. May only be used for a single frame at a time, in order
+  // to know the current gpu compositing state. Because this is on another
+  // thread, it may return null one frame but non-null the next if it recovers
+  // and the compositor hasn't changed modes.
+  WeakPtr<WebGraphicsContext3DProviderWrapper>
+  GetContextForGpuCompositedFrame();
+
   void TransferResource(viz::TransferableResource*);
   void SetTransferableResourceToSharedBitmap(viz::TransferableResource&,
                                              RefPtr<StaticBitmapImage>);
-  void SetTransferableResourceToSharedGPUContext(viz::TransferableResource&,
-                                                 RefPtr<StaticBitmapImage>);
+  void SetTransferableResourceToSharedGPUContext(
+      WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper,
+      viz::TransferableResource&,
+      RefPtr<StaticBitmapImage>);
   void SetTransferableResourceToStaticBitmapImage(viz::TransferableResource&,
                                                   RefPtr<StaticBitmapImage>);
   void ReclaimResource(unsigned resource_id);
@@ -40,7 +50,7 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
  private:
   int width_;
   int height_;
-  unsigned next_resource_id_;
+  unsigned next_resource_id_ = 1;
 
   struct FrameResource {
     RefPtr<StaticBitmapImage> image_;
@@ -62,6 +72,8 @@ class PLATFORM_EXPORT OffscreenCanvasResourceProvider {
   std::unique_ptr<FrameResource> CreateOrRecycleFrameResource();
 
   void SetNeedsBeginFrameInternal();
+
+  bool using_software_compositing_ = false;
 
   typedef HashMap<unsigned, std::unique_ptr<FrameResource>> ResourceMap;
   void ReclaimResourceInternal(const ResourceMap::iterator&);

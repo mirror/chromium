@@ -17,13 +17,19 @@ namespace blink {
 
 SkiaTextureHolder::SkiaTextureHolder(
     sk_sp<SkImage> image,
-    WeakPtr<WebGraphicsContext3DProviderWrapper>&& context_provider_wrapper)
-    : TextureHolder(std::move(context_provider_wrapper)),
-      image_(std::move(image)) {}
+    WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper)
+    : image_(std::move(image)) {
+  Init(std::move(context_provider_wrapper));
+}
 
 SkiaTextureHolder::SkiaTextureHolder(
-    std::unique_ptr<TextureHolder> texture_holder)
-    : TextureHolder(SharedGpuContext::ContextProviderWrapper()) {
+    std::unique_ptr<TextureHolder> texture_holder) {
+  // TODO(junov): Should we use this state here?
+  bool using_software_compositing;
+  WeakPtr<WebGraphicsContext3DProviderWrapper> context_wrapper =
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+  Init(std::move(context_wrapper));
+
   DCHECK(texture_holder->IsMailboxTextureHolder());
   const gpu::Mailbox mailbox = texture_holder->GetMailbox();
   const gpu::SyncToken sync_token = texture_holder->GetSyncToken();

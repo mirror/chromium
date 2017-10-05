@@ -964,16 +964,17 @@ HTMLCanvasElement::CreateAcceleratedImageBufferSurface(OpacityMode opacity_mode,
 
   // Avoid creating |contextProvider| until we're sure we want to try use it,
   // since it costs us GPU memory.
+  bool using_software_compositing;
   WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper =
-      SharedGpuContext::ContextProviderWrapper();
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
   if (!context_provider_wrapper) {
     CanvasMetrics::CountCanvasContextUsage(
         CanvasMetrics::kAccelerated2DCanvasGPUContextLost);
     return nullptr;
   }
 
-  if (context_provider_wrapper->ContextProvider()->IsSoftwareRendering())
-    return nullptr;  // Don't use accelerated canvas with swiftshader.
+  if (using_software_compositing)
+    return nullptr;  // Don't use accelerated canvas with software compositor.
 
   auto surface = WTF::MakeUnique<Canvas2DLayerBridge>(
       Size(), *msaa_sample_count, opacity_mode,

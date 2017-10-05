@@ -68,16 +68,23 @@ class BadSharedGpuContextTest : public Test {
 };
 
 TEST_F(SharedGpuContextTest, contextLossAutoRecovery) {
-  EXPECT_NE(SharedGpuContext::ContextProviderWrapper(), nullptr);
+  bool using_software_compositing;
+  EXPECT_NE(
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing),
+      nullptr);
+  EXPECT_FALSE(using_software_compositing);
   WeakPtr<WebGraphicsContext3DProviderWrapper> context =
-      SharedGpuContext::ContextProviderWrapper();
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+  EXPECT_FALSE(using_software_compositing);
   gl_.SetIsContextLost(true);
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
   EXPECT_TRUE(!!context);
 
   // Context recreation results in old provider being discarded.
-  EXPECT_TRUE(!!SharedGpuContext::ContextProviderWrapper());
+  EXPECT_TRUE(
+      !!SharedGpuContext::ContextProviderWrapper(&using_software_compositing));
   EXPECT_FALSE(!!context);
+  EXPECT_FALSE(using_software_compositing);
 }
 
 TEST_F(SharedGpuContextTest, AccelerateImageBufferSurfaceAutoRecovery) {
@@ -110,7 +117,10 @@ TEST_F(SharedGpuContextTest, Canvas2DLayerBridgeAutoRecovery) {
 }
 
 TEST_F(SharedGpuContextTest, IsValidWithoutRestoring) {
-  EXPECT_NE(SharedGpuContext::ContextProviderWrapper(), nullptr);
+  bool using_software_compositing;
+  EXPECT_NE(
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing),
+      nullptr);
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
 }
 
@@ -156,8 +166,11 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
       .WillOnce(::testing::Invoke(&mailboxGenerator,
                                   &FakeMailboxGenerator::GenMailbox));
 
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  bool using_software_compositing;
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
 
   EXPECT_EQ(mailbox.name[0], 1);
 
@@ -167,8 +180,10 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
       .Times(0);  // GenMailboxCHROMIUM must not be called!
 
   mailbox.name[0] = 0;
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
   EXPECT_EQ(mailbox.name[0], 1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
@@ -192,8 +207,11 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
       .WillOnce(::testing::Invoke(&mailboxGenerator,
                                   &FakeMailboxGenerator::GenMailbox));
 
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  bool using_software_compositing;
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
 
   EXPECT_EQ(mailbox.name[0], 1);
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
@@ -217,8 +235,10 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
       .Times(0);  // GenMailboxCHROMIUM must not be called!
 
   mailbox.name[0] = 0;
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
   EXPECT_EQ(mailbox.name[0], 1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);

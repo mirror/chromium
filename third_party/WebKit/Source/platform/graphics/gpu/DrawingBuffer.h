@@ -410,7 +410,7 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
 
   // Updates the current size of the buffer, ensuring that
   // s_currentResourceUsePixels is updated.
-  void SetSize(const IntSize& size);
+  void SetSize(const IntSize&);
 
   // This is the order of bytes to use when doing a readback.
   enum ReadbackOrder { kReadbackRGBA, kReadbackSkia };
@@ -474,7 +474,7 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   const bool discard_framebuffer_supported_;
   const bool want_alpha_channel_;
   const bool premultiplied_alpha_;
-  const bool software_rendering_;
+  const bool software_compositing_;
   bool has_implicit_stencil_buffer_ = false;
   bool storage_texture_supported_ = false;
 

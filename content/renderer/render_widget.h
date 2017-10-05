@@ -244,8 +244,8 @@ class CONTENT_EXPORT RenderWidget
   void RecordWheelAndTouchScrollingCount(bool has_scrolled_by_wheel,
                                          bool has_scrolled_by_touch) override;
   void BeginMainFrame(double frame_time_sec) override;
+  void DisableGpuCompositing() override;
   void RequestNewLayerTreeFrameSink(
-      bool fallback,
       const LayerTreeFrameSinkCallback& callback) override;
   void DidCommitAndDrawCompositorFrame() override;
   void DidCommitCompositorFrame() override;
