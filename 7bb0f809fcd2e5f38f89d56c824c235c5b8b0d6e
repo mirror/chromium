@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77ffeac7_7c5a5536",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_impl_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0dc7880_63da7db7",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4457a072_dbadb740",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e3db636a_d59548f9",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4457a072_dbadb740",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77fc5056_6072707b",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "066d920d_7aead3f2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "This object works the other way around. Close() will call OnInteractionDone(), which will delete the object. Changed the comment above to explicit what object needs to get deleted.",
+      "parentUuid": "77fc5056_6072707b",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bc18c345_e953f018",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "719913c8_35aa47d0",
+      "range": {
+        "startLine": 139,
+        "startChar": 12,
+        "endLine": 139,
+        "endChar": 17
+      },
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60aaeb0_98424862",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173672aa_50be911e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "I will send metrics collection in a follow-up CL. By keeping this hook here, we will not need to get approvals from UI owners.",
+      "parentUuid": "d60aaeb0_98424862",
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +209,30 @@
       "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa59287c_c54b5657",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-10-05T21:41:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ff1fa7_a213f22a",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 18
+      },
+      "revId": "7bb0f809fcd2e5f38f89d56c824c235c5b8b0d6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
