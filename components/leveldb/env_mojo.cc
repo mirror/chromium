@@ -525,10 +525,9 @@ void MojoEnv::SleepForMicroseconds(int micros) {
 }
 
 void MojoEnv::Schedule(void (*function)(void* arg), void* arg) {
-  base::PostTaskWithTraits(FROM_HERE,
-                           {base::MayBlock(), base::WithBaseSyncPrimitives(),
-                            base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
-                           base::Bind(function, arg));
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
+      base::Bind(function, arg));
 }
 
 void MojoEnv::StartThread(void (*function)(void* arg), void* arg) {
