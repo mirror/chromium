@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8ffd0c_8ac0f721",
+        "filename": "ui/base/resource/resource_bundle.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-05T23:14:15Z",
+      "side": 0,
+      "message": "Today is someday. :)",
+      "revId": "81ad83e4ff4a0a606e83f26d5a3b0deb22ca28a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
