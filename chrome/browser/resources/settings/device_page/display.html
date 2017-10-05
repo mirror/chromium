@@ -56,7 +56,8 @@
       }
 
       #nightLightSlider {
-        margin-top: 20px;
+        flex: 1;
+        margin: 20px;
       }
     </style>
     <div class="settings-box first layout vertical self-stretch">
@@ -235,7 +236,7 @@
           <iron-collapse id="nightLightCustomScheduleCollapse"
               class="start text-area layout vertical"
               opened="[[shouldOpenCustomScheduleCollapse_]]">
-            <div class="settings-box indented continuation">
+            <div class="settings-box continuation self-stretch">
               <night-light-slider id="nightLightSlider" prefs="{{prefs}}">
               </night-light-slider>
             </div>
