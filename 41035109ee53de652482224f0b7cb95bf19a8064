@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1afe57_722b8d68",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:12:40Z",
+      "side": 1,
+      "message": "Should we handle the case of ReadAtCurrentPos() returning -1 (an error case)?",
+      "revId": "41035109ee53de652482224f0b7cb95bf19a8064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5861a5db_17c883cd",
+        "filename": "components/crx_file/crx_creator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:12:40Z",
+      "side": 1,
+      "message": "Similarly here, error case?  Otherwise we\u0027ll return true if we fail to read.",
+      "revId": "41035109ee53de652482224f0b7cb95bf19a8064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26a2526_9a491d27",
+        "filename": "components/crx_file/crx_creator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-05T21:12:40Z",
+      "side": 1,
+      "message": "Are any of these includes needed?",
+      "revId": "41035109ee53de652482224f0b7cb95bf19a8064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
