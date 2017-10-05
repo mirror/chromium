@@ -19,6 +19,11 @@ public final class FeatureConstants {
 
     public static final String MEDIA_DOWNLOAD_FEATURE = "IPH_MediaDownload";
 
+    public static final String CONTEXTUAL_SEARCH_FEATURE = "IPH_ContextualSearch";
+    public static final String CONTEXTUAL_SEARCH_TAP_FEATURE = "IPH_ContextualSearchTap";
+    public static final String CONTEXTUAL_SEARCH_PANEL_FEATURE = "IPH_ContextualSearchPanel";
+    public static final String CONTEXTUAL_SEARCH_OPT_IN_FEATURE = "IPH_ContextualSearchOptIn";
+
     /**
      * Do not instantiate.
      */
