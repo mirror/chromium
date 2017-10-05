@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f545b45c_2616f578",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-10-05T11:28:21Z",
+      "side": 1,
+      "message": "Did for complete function. \nPTAL if it is ok with this patch!",
+      "parentUuid": "e4969481_ea930f06",
+      "revId": "3066571a6b5bbca72ce9bc30ebfb36c84a5efa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f83aed99_3c6d9d60",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T09:01:18Z",
       "side": 1,
       "message": "nit: Could you swap condition to reduce indentation?\n\nif (IsValidDocument(document))\n  return result;\nediting_state-\u003eAbort();\nreturn result;",
+      "revId": "3066571a6b5bbca72ce9bc30ebfb36c84a5efa59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02dbfe3_b02656ae",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-10-05T11:28:21Z",
+      "side": 1,
+      "message": "Did for complete function. \nPTAL if it is ok with this patch!",
+      "parentUuid": "f83aed99_3c6d9d60",
       "revId": "3066571a6b5bbca72ce9bc30ebfb36c84a5efa59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
