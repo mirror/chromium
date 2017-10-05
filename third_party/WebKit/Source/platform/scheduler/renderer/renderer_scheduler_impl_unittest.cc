@@ -270,7 +270,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
         fake_task_(TaskQueue::PostedTask(base::Bind([] {}),
                                          FROM_HERE,
                                          base::TimeDelta(),
-                                         true),
+                                         base::Nestable::kNestable),
                    base::TimeTicks()) {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
   }
@@ -280,7 +280,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
         fake_task_(TaskQueue::PostedTask(base::Bind([] {}),
                                          FROM_HERE,
                                          base::TimeDelta(),
-                                         true),
+                                         base::Nestable::kNestable),
                    base::TimeTicks()),
         message_loop_(message_loop) {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));

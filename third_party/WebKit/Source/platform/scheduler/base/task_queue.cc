@@ -24,7 +24,7 @@ TaskQueue::Task::Task(TaskQueue::PostedTask task,
 TaskQueue::PostedTask::PostedTask(base::OnceClosure callback,
                                   base::Location posted_from,
                                   base::TimeDelta delay,
-                                  bool nestable)
+                                  base::Nestable nestable)
     : callback(std::move(callback)),
       posted_from(posted_from),
       delay(delay),
@@ -42,14 +42,18 @@ bool TaskQueue::PostDelayedTask(const base::Location& from_here,
                                 base::OnceClosure task,
                                 base::TimeDelta delay) {
   return impl_->PostDelayedTask(
-      PostedTask(std::move(task), from_here, delay, /* nestable */ true));
+      PostedTask(std::move(task), from_here, delay, base::Nestable::kNestable));
 }
 
 bool TaskQueue::PostNonNestableDelayedTask(const base::Location& from_here,
                                            base::OnceClosure task,
                                            base::TimeDelta delay) {
-  return impl_->PostDelayedTask(
-      PostedTask(std::move(task), from_here, delay, /* nestable */ false));
+  return impl_->PostDelayedTask(PostedTask(std::move(task), from_here, delay,
+                                           base::Nestable::kNonNestable));
+}
+
+bool TaskQueue::PostTaskWithMetadata(PostedTask task) {
+  return impl_->PostDelayedTask(std::move(task));
 }
 
 std::unique_ptr<TaskQueue::QueueEnabledVoter>
