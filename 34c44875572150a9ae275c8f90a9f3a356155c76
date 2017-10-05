@@ -140,6 +140,52 @@
     },
     {
       "key": {
+        "uuid": "c78754ce_145ebdb8",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:04:21Z",
+      "side": 1,
+      "message": "Any particular reason to not inject HistoryService in the constructor, which is more common?",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6509e388_db2f9215",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:04:21Z",
+      "side": 1,
+      "message": "You can probably remove this and make it an implementation detail of frecencyprovider?",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af53aa6a_0f247acd",
         "filename": "chrome/browser/history/top_sites_factory.cc",
         "patchSetId": 3
@@ -156,6 +202,29 @@
         "startChar": 6,
         "endLine": 111,
         "endChar": 13
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817ceedb_4a84f36b",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:04:21Z",
+      "side": 1,
+      "message": "I would recommend moving the code above to a helper function and then avoid the local variable here and the std::move.",
+      "range": {
+        "startLine": 119,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 0
       },
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -306,6 +375,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "Please put this into its own file.",
+      "range": {
+        "startLine": 28,
+        "startChar": 79,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e834e4b_f13a01a3",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-05T13:04:21Z",
+      "side": 1,
+      "message": "Somewhat related, mentioned here to loop treib@ in: is this naming desirable? Since none of the HistoryService APIs use this term (\"frecency\" doesn\u0027t occur in related code) nor guarantee that needs to be the implementation, I think it could be misleading. How about DefaultMostVisitedProvider?\n\nAlternatively rename QueryMostVisitedURLs()--\u003eQueryTopSites() and TopSitesMostVisitedProvider--\u003eTopSitesProvider.\n\ntreib@, WDYT?",
+      "parentUuid": "b6355353_4d7b764f",
       "range": {
         "startLine": 28,
         "startChar": 79,
