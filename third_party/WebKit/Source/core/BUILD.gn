@@ -1736,7 +1736,7 @@ fuzzer_test("stylesheet_contents_fuzzer") {
     "../platform:blink_fuzzer_test_support",
   ]
   seed_corpus = "//third_party/WebKit/LayoutTests/fast/css/resources"
-  libfuzzer_options = [ "max_len=2048" ]
+  libfuzzer_options = [ "max_len=1024" ]
 }
 
 # Fuzzer for blink::HTMLPreloadScanner.
