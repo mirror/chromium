@@ -1950,6 +1950,11 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kChromeHomeSwipeLogicDescription, kOsAndroid,
      MULTI_VALUE_TYPE(kChromeHomeSwipeLogicChoices)},
 #endif  // OS_ANDROID
+#if defined(OS_ANDROID)
+    {"enable-oldspice-android", flag_descriptions::kOldSpiceAndroidName,
+     flag_descriptions::kOldSpiceAndroidDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kOldSpiceFeature)},
+#endif  // OS_ANDROID
     {"in-product-help-demo-mode-choice",
      flag_descriptions::kInProductHelpDemoModeChoiceName,
      flag_descriptions::kInProductHelpDemoModeChoiceDescription, kOsAll,
