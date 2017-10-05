@@ -709,6 +709,7 @@ void GetScreenInfoForWindow(ScreenInfo* results,
   results->device_scale_factor = display.device_scale_factor();
   results->color_space = display.color_space();
   results->color_space.GetICCProfile(&results->icc_profile);
+  NOTREACHED();
 
   // The Display rotation and the ScreenInfo orientation are not the same
   // angle. The former is the physical display rotation while the later is the
