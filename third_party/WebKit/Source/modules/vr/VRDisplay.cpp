@@ -684,6 +684,31 @@ void VRDisplay::submitFrame() {
     }
   }
 
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. Do this step as late as possible before
+  // SubmitFrame to ensure we can do as much work as possible in parallel with
+  // the previous frame's rendering.
+  //
+  // To avoid unhelpful GPU driver scheduling of frame rendering (see for
+  // example http://crbug.com/747159), we also want to avoid executing
+  // render-initiating GL commands for the new frame before the previous frame
+  // finishes rendering.
+  //
+  // TODO(klausw): The specific sequencing of commands is an implementation
+  // detail, and using mojo in the Renderer to sequence GPU process operations
+  // seems wrong. Consider using WaitForSyncTokenCHROMIUM here with a sequence
+  // point signalled by the vr/device/ end point, though this appears to
+  // require support for future sync tokens.
+  {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::GetStaticBitmapImage");
   RefPtr<Image> image_ref = rendering_context_->GetStaticBitmapImage();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetStaticBitmapImage");
@@ -726,21 +751,6 @@ void VRDisplay::submitFrame() {
   auto mailbox = static_image->GetMailbox();
   TRACE_EVENT_END0("gpu", "VRDisplay::GetMailbox");
   auto sync_token = static_image->GetSyncToken();
-
-  // Wait for the previous render to finish, to avoid losing frames in the
-  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
-  // Other devices may have different preferences. Do this step as late
-  // as possible before SubmitFrame to ensure we can do as much work as
-  // possible in parallel with the previous frame's rendering.
-  {
-    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
-    while (pending_previous_frame_render_) {
-      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
-        DLOG(ERROR) << "Failed to receive SubmitFrame response";
-        break;
-      }
-    }
-  }
 
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
