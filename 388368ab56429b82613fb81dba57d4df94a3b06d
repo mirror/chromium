@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7469e8bf_1cab67c6",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "365822a4_37566256",
+      "range": {
+        "startLine": 279,
+        "startChar": 66,
+        "endLine": 279,
+        "endChar": 74
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58a5a9ed_91e2c431",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12d0910f_e2e5d93e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a5a9ed_91e2c431",
+      "range": {
+        "startLine": 281,
+        "startChar": 5,
+        "endLine": 281,
+        "endChar": 76
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f95ebd0_6a0d3641",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1227d43_af0c771a",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 76
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e11ef1f1_4fd9e1e6",
         "filename": "components/autofill/core/browser/autofill_experiments.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b135df8_83a4f969",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e11ef1f1_4fd9e1e6",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 1
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "6e3682f2_05f98800",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9b0e14c_b819d25c",
+      "range": {
+        "startLine": 145,
+        "startChar": 39,
+        "endLine": 145,
+        "endChar": 43
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c95e737f_ac16a716",
         "filename": "components/autofill/core/browser/autofill_experiments.h",
         "patchSetId": 10
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a9ec05a4_f663a8d1",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c95e737f_ac16a716",
+      "range": {
+        "startLine": 147,
+        "startChar": 5,
+        "endLine": 147,
+        "endChar": 60
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60e92658_86f0ac6b",
         "filename": "components/autofill/core/browser/autofill_manager.cc",
         "patchSetId": 10
@@ -151,6 +295,30 @@
       "writtenOn": "2017-10-04T21:21:15Z",
       "side": 1,
       "message": "How does this work?  It looks like it\u0027s setting the customer id to 0.",
+      "range": {
+        "startLine": 275,
+        "startChar": 64,
+        "endLine": 275,
+        "endChar": 0
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84af16d4_178dd9dd",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "We register the preference here and set a default value as 0, if this is set in priorityPreference through chrome-sync, we will get that number, otherwise we get 0.",
+      "parentUuid": "60e92658_86f0ac6b",
       "range": {
         "startLine": 275,
         "startChar": 64,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "e7d30e5a_fc07f427",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Since autofillClient is already passed in the constructor, so we can directly use that.",
+      "parentUuid": "1067e0c3_22d52dba",
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "753200a6_497823c5",
         "filename": "components/autofill/core/browser/payments/payments_client.cc",
         "patchSetId": 10
@@ -191,6 +377,30 @@
       "writtenOn": "2017-10-04T21:21:15Z",
       "side": 1,
       "message": "Why is billing_customer_number is part of request_details_?  Is it because payments_client_ and its pref service aren\u0027t accessible here?",
+      "range": {
+        "startLine": 218,
+        "startChar": 23,
+        "endLine": 218,
+        "endChar": 63
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37850831_5b6a4539",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Yep...",
+      "parentUuid": "753200a6_497823c5",
       "range": {
         "startLine": 218,
         "startChar": 23,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "1d0d3a95_91ffd17d",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4623b4bf_4a05a9e6",
+      "range": {
+        "startLine": 102,
+        "startChar": 18,
+        "endLine": 102,
+        "endChar": 19
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b80ff7f1_6639945d",
         "filename": "components/autofill/core/browser/payments/payments_client.h",
         "patchSetId": 10
@@ -246,6 +480,30 @@
       "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b765d775_b825e414",
+        "filename": "components/autofill/core/browser/payments/payments_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b80ff7f1_6639945d",
+      "range": {
+        "startLine": 102,
+        "startChar": 51,
+        "endLine": 103,
+        "endChar": 26
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "b459c608_7ffcaca5",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cea4e16_948cdd57",
+      "range": {
+        "startLine": 209,
+        "startChar": 7,
+        "endLine": 209,
+        "endChar": 20
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e25523fe_2ac7a6e5",
         "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
         "patchSetId": 10
@@ -292,6 +574,30 @@
       "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d321df8d_9d06494c",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25523fe_2ac7a6e5",
+      "range": {
+        "startLine": 221,
+        "startChar": 7,
+        "endLine": 221,
+        "endChar": 20
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "861da78f_97818ba9",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b790dec_a57315e8",
+      "range": {
+        "startLine": 309,
+        "startChar": 7,
+        "endLine": 309,
+        "endChar": 20
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f85710c2_412a5c36",
         "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
         "patchSetId": 10
@@ -338,6 +668,30 @@
       "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef5ba32_f40037d5",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f85710c2_412a5c36",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 48
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "f7853964_9e228cd4",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8222d82_b1e0fdd7",
+      "range": {
+        "startLine": 322,
+        "startChar": 7,
+        "endLine": 322,
+        "endChar": 20
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccb81211_95916c51",
         "filename": "components/browser_sync/profile_sync_service_autofill_unittest.cc",
         "patchSetId": 10
@@ -375,6 +753,30 @@
       "writtenOn": "2017-10-04T21:21:15Z",
       "side": 1,
       "message": "Chrome Sync still overwrites the value if it\u0027s zero, right?  And doesn\u0027t overwrite it if non-zero?",
+      "range": {
+        "startLine": 109,
+        "startChar": 30,
+        "endLine": 109,
+        "endChar": 31
+      },
+      "revId": "388368ab56429b82613fb81dba57d4df94a3b06d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a5e9ad_819bffd7",
+        "filename": "components/browser_sync/profile_sync_service_autofill_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1175253
+      },
+      "writtenOn": "2017-10-05T00:57:08Z",
+      "side": 1,
+      "message": "Actually I am not sure how this goes, will defer to the step I figured out how to do the unittest for the registered pref.",
+      "parentUuid": "ccb81211_95916c51",
       "range": {
         "startLine": 109,
         "startChar": 30,
