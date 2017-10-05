@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87d0838a_c7901205",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1686,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-10-05T15:06:49Z",
+      "side": 1,
+      "message": "nit. in blink, we\u0027d say \"in M66\" / \"in the future\" (see https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/Deprecation.cpp)",
+      "revId": "0143322fda854ac3deb48032768b00a5fa2743b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
