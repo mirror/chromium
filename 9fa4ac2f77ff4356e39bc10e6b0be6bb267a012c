@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06284704_599b2326",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 9707,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-10-05T20:25:04Z",
+      "side": 1,
+      "message": "Not sure if the test name here is supposed to match the name we\u0027re giving (which distinguishes the paired headset, etc.) or the build target\u0027s name (chrome_public_test_vr_apk). I went with the former since that\u0027s preferable if it\u0027s allowed.",
+      "range": {
+        "startLine": 9707,
+        "startChar": 13,
+        "endLine": 9707,
+        "endChar": 63
+      },
+      "revId": "9fa4ac2f77ff4356e39bc10e6b0be6bb267a012c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
