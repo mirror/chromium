@@ -8,6 +8,7 @@ include_rules = [
   "+content/public/renderer",
   "+content/public/common",
   "+content/public/test",
+  "+gpu/config/gpu_switches.h",
   "+mojo/public",
   "+net",
   "+printing/features",

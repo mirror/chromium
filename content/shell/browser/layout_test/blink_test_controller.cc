@@ -65,6 +65,7 @@
 #include "content/shell/common/shell_messages.h"
 #include "content/shell/renderer/layout_test/blink_test_helpers.h"
 #include "content/shell/test_runner/test_common.h"
+#include "gpu/config/gpu_switches.h"
 #include "ui/gfx/codec/png_codec.h"
 
 #if defined(OS_MACOSX)

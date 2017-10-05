@@ -95,7 +95,6 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
                     std::string* gl_version) override;
   void DisableHardwareAcceleration() override;
   bool HardwareAccelerationEnabled() const override;
-  bool CanUseGpuBrowserCompositor() const override;
   void GetDisabledExtensions(std::string* disabled_extensions) const override;
   void SetGpuInfo(const gpu::GPUInfo& gpu_info) override;
 
@@ -129,6 +128,8 @@ class CONTENT_EXPORT GpuDataManagerImpl : public GpuDataManager {
 
   // Update GpuPreferences based on blacklisting decisions.
   void UpdateGpuPreferences(gpu::GpuPreferences* gpu_preferences) const;
+
+  bool CanUseGpuBrowserCompositor() const;
 
   std::string GetBlacklistVersion() const;
   std::string GetDriverBugListVersion() const;

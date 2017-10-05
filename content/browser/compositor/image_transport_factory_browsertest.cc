@@ -8,10 +8,10 @@
 #include "build/build_config.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "content/browser/compositor/owned_mailbox.h"
-#include "content/public/browser/gpu_data_manager.h"
 #include "content/public/test/content_browser_test.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/config/gpu_util.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/compositor/compositor.h"
 
@@ -37,7 +37,7 @@ class MockContextFactoryObserver : public ui::ContextFactoryObserver {
 IN_PROC_BROWSER_TEST_F(ImageTransportFactoryBrowserTest,
                        MAYBE_TestLostContext) {
   // This test doesn't make sense in software compositing mode.
-  if (!GpuDataManager::GetInstance()->CanUseGpuBrowserCompositor())
+  if (gpu::IsFeatureDisabled(gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING))
     return;
 
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
@@ -98,7 +98,7 @@ class ImageTransportFactoryTearDownBrowserTest : public ContentBrowserTest {
 IN_PROC_BROWSER_TEST_F(ImageTransportFactoryTearDownBrowserTest,
                        MAYBE_LoseOnTearDown) {
   // This test doesn't make sense in software compositing mode.
-  if (!GpuDataManager::GetInstance()->CanUseGpuBrowserCompositor())
+  if (gpu::IsFeatureDisabled(gpu::GPU_FEATURE_TYPE_GPU_COMPOSITING))
     return;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   viz::GLHelper* helper = factory->GetGLHelper();

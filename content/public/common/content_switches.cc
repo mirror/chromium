@@ -148,15 +148,8 @@ const char kDisableFlashStage3d[]           = "disable-flash-stage3d";
 const char kDisableGestureRequirementForPresentation[] =
     "disable-gesture-requirement-for-presentation";
 
-// Disables GPU hardware acceleration.  If software renderer is not in place,
-// then the GPU process won't launch.
-const char kDisableGpu[]                    = "disable-gpu";
-
 // Disable async worker context.
 const char kDisableGpuAsyncWorkerContext[] = "disable-gpu-async-worker-context";
-
-// Prevent the compositor from using its GPU implementation.
-const char kDisableGpuCompositing[]         = "disable-gpu-compositing";
 
 // Disable proactive early init of GPU process.
 const char kDisableGpuEarlyInit[]           = "disable-gpu-early-init";

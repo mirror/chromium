@@ -37,6 +37,9 @@ GPU_EXPORT GpuFeatureInfo
 ComputeGpuFeatureInfo(const GPUInfo& gpu_info, base::CommandLine* command_line);
 
 GPU_EXPORT void SetKeysForCrashLogging(const GPUInfo& gpu_info);
+
+// Check if a feature is disabled by commandline switch.
+GPU_EXPORT bool IsFeatureDisabled(GpuFeatureType feature);
 }  // namespace gpu
 
 #endif  // GPU_CONFIG_GPU_UTIL_H_
