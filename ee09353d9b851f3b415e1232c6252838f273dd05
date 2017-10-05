@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "973149ab_33502740",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-05T02:29:04Z",
+      "side": 1,
+      "message": "LazyIsntance -\u003e LazyInstance",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5814b30b_aecf0bc7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-05T02:29:04Z",
+      "side": 1,
+      "message": "patches replace -\u003e patch replaces",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02368fb8_0e37984f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-05T02:29:04Z",
+      "side": 1,
+      "message": "reduce -\u003e reduction\n\nor reducing",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "203989a6_c3081eb3",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp",
         "patchSetId": 1
@@ -13,6 +64,24 @@
       "writtenOn": "2017-10-04T07:54:41Z",
       "side": 1,
       "message": "Hum, looks like I reviewed both changes but I think we were initially making this per-thread cache when we introduced off-main-thread fetch, but then it gotten removed when we landed:\n\nhttps://chromium-review.googlesource.com/c/chromium/src/+/618716/21/third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp#120\n\nI think we probably need to make it back to thread-specific one?",
+      "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427e0a09_51f50e96",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORSPreflightResultCache.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-10-05T02:29:04Z",
+      "side": 1,
+      "message": "In the following CL by horo@, he attempted to instantiate a WebCORSPreflightResultCache for each WorkerFetchContext (patchset 6).\nhttps://chromium-review.googlesource.com/c/chromium/src/+/627939/6\n\nkinuko@ suggested that we instead let Shared() return a per-thread instance, and let the user (DocumentThreadableLoader) just call it.\nhttps://chromium-review.googlesource.com/c/chromium/src/+/627939/6/third_party/WebKit/public/platform/WebCORSPreflightResultCache.h#89\n\nAs I explained in the comment, there\u0027s no explicit requirements in the spec regarding cross thread sharing of CORS preflight cache entries. So, sharing one instance among document/workers is fine. But it looks it\u0027s broken now? It looks there\u0027s race around the WebCORSPreflightResultCache instance.\n\nI agree with kinuko@ that we should make it thread-specific again.",
+      "parentUuid": "203989a6_c3081eb3",
       "revId": "ee09353d9b851f3b415e1232c6252838f273dd05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
