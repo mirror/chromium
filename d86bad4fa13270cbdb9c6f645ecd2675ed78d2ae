@@ -16,6 +16,24 @@
       "revId": "d86bad4fa13270cbdb9c6f645ecd2675ed78d2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4abe7d_a6915aaa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-05T23:01:57Z",
+      "side": 1,
+      "message": "Yeap. Fixed.",
+      "parentUuid": "119efb93_4fb0be64",
+      "revId": "d86bad4fa13270cbdb9c6f645ecd2675ed78d2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

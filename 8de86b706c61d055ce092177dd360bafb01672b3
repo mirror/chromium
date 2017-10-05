@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9bcb1aae_1ccdd30c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-05T23:01:57Z",
+      "side": 1,
+      "message": "Hmm. That sounds like testing AudioParam functionality. I think we have extensive coverage for AudioParam and testing it here seems redundant to me.",
+      "parentUuid": "fcea61b7_5cec124f",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a50807e_cecb3e6d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
         "patchSetId": 22
@@ -353,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "6ba55bfd_0e0aa5cd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-05T23:01:57Z",
+      "side": 1,
+      "message": "Yes, the check seems redundant. Removing.",
+      "parentUuid": "781d8842_92756e8d",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d117bcff_d403ef88",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 22
@@ -453,6 +489,24 @@
       "side": 1,
       "message": "As before, the if block, not the DCHECK.",
       "parentUuid": "7ec7966a_5088db7d",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10c9db27_baf23041",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-05T23:01:57Z",
+      "side": 1,
+      "message": "Note that all AudioWorkletProcessors share this method for the processing. AudioWorkletGlobalScope\u0027s |current_time_| must be updated only once per render quantum.\n\nAdded a comment on it.",
+      "parentUuid": "08680be4_9dc9bac6",
       "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
