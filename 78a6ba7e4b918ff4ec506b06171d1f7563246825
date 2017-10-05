@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe7320e_92753910",
+        "filename": "chrome/browser/vr/elements/text_texture.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-05T18:31:01Z",
+      "side": 1,
+      "message": "Lets make these font_height_meters_/text_width_meters_ and ditch the semi-helpful comment.",
+      "revId": "78a6ba7e4b918ff4ec506b06171d1f7563246825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
