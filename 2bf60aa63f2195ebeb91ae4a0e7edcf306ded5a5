@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dd70a8f_2840a004",
+        "filename": "chrome/browser/android/chrome_feature_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-10-05T18:54:34Z",
+      "side": 1,
+      "message": "You may want to use a user-understandable name here. I used \"AutoDismissingDialogs\" when I had it feature-enabled, and that\u0027s still a good name as it makes it more obvious what it is.",
+      "range": {
+        "startLine": 258,
+        "startChar": 38,
+        "endLine": 258,
+        "endChar": 46
+      },
+      "revId": "2bf60aa63f2195ebeb91ae4a0e7edcf306ded5a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
