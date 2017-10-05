@@ -4,7 +4,11 @@
 
 #include "core/dom/NodeComputedStyle.h"
 #include "core/layout/LayoutTestHelper.h"
+#include "core/loader/DocumentLoader.h"
+#include "core/loader/SubresourceFilter.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/UnitTestHelpers.h"
+#include "public/platform/WebDocumentSubresourceFilter.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -100,4 +104,35 @@ TEST_F(StyleAdjusterTest, TouchActionRestrictedByLowerAncestor) {
   EXPECT_EQ(TouchAction::kTouchActionPanX,
             target->GetComputedStyle()->GetEffectiveTouchAction());
 }
+
+namespace {
+
+class BlockAllSubresourceFilter : public WebDocumentSubresourceFilter {
+ public:
+  LoadPolicy GetLoadPolicy(const WebURL& resource_url,
+                           WebURLRequest::RequestContext) override {
+    return kDisallow;
+  }
+
+  LoadPolicy GetLoadPolicyForWebSocketConnect(const WebURL& url) override {
+    return kDisallow;
+  }
+
+  void ReportDisallowedLoad() override {}
+
+  bool ShouldLogToConsole() override { return false; }
+};
+
+}  // namespace
+
+TEST_F(StyleAdjusterTest, CollapsedImage) {
+  GetDocument().SetBaseURLOverride(KURL(kParsedURLString, "http://test.com"));
+  GetDocument().Loader()->SetSubresourceFilter(SubresourceFilter::Create(
+      GetDocument(), std::make_unique<BlockAllSubresourceFilter>()));
+  SetBodyInnerHTML(
+      "<div style='display: grid;'><img src='http://test.com/image'></div>");
+  blink::testing::RunPendingTasks();
+  GetDocument().View()->UpdateAllLifecyclePhases();
+}
+
 }  // namespace blink
