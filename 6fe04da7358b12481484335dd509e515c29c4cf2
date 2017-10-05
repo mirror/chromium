@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20b3df07_234c5cee",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-05T18:58:59Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed, I will verify by next patch.",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ca43ef_a842a896",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-05T18:58:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure why, but without this, the view is sometimes draw below the selector times.\n\nAny ideas?",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
