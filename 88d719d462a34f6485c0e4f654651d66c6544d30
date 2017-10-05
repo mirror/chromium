@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89427600_4d32cab4",
+        "filename": "chrome/browser/chromeos/extensions/device_local_account_management_policy_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-05T04:25:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3d6ebcd_0f788aaf",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d06c032_b82ae072",
         "filename": "extensions/common/api/_permission_features.json",
         "patchSetId": 5
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "is that absolutely necessary (and I\u0027m not sure why a demo app would need that)? The api gives the app a lot of power.",
       "parentUuid": "ecdea12d_d0c45cc1",
+      "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5726d49f_7e5f9b47",
+        "filename": "extensions/common/api/_permission_features.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-10-05T04:25:50Z",
+      "side": 1,
+      "message": "OK. I\u0027ve reverted this file for now.\nI\u0027m confirming the necessity of the API, but it\u0027s not a blocker for release, so we can discuss it in a separate CL.",
+      "parentUuid": "f89ca3e2_19717813",
       "revId": "88d719d462a34f6485c0e4f654651d66c6544d30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
