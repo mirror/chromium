@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c26fd522_9fb38f3d",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:25:53Z",
+      "side": 1,
+      "message": "How about also adding a comment like:\n\n// If the script is being loaded via script streaming, the script is not yet loaded.",
+      "revId": "1de997f24ec0b723426677f570d2a6ca5cc30799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9802204_fbf81219",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:25:53Z",
+      "side": 1,
+      "message": "Maybe a comment here like:\n\n// Receive the main script via script streaming if needed.",
+      "revId": "1de997f24ec0b723426677f570d2a6ca5cc30799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b785a25a_e207f79e",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:25:53Z",
+      "side": 1,
+      "message": "nit: sufficient to just say \"kTaken\" instead of writing out the namespace",
+      "revId": "1de997f24ec0b723426677f570d2a6ca5cc30799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d050f9b2_44986ccc",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:25:53Z",
+      "side": 1,
+      "message": "eventually",
+      "revId": "1de997f24ec0b723426677f570d2a6ca5cc30799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e8b56e_e97aaed0",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-05T04:25:53Z",
+      "side": 1,
+      "message": "a blank line here seems reasonable",
+      "revId": "1de997f24ec0b723426677f570d2a6ca5cc30799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
