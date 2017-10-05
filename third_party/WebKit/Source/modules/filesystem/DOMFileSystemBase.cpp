@@ -57,7 +57,6 @@ namespace blink {
 
 const char DOMFileSystemBase::kPersistentPathPrefix[] = "persistent";
 const char DOMFileSystemBase::kTemporaryPathPrefix[] = "temporary";
-const char DOMFileSystemBase::kIsolatedPathPrefix[] = "isolated";
 const char DOMFileSystemBase::kExternalPathPrefix[] = "external";
 
 DOMFileSystemBase::DOMFileSystemBase(ExecutionContext* context,

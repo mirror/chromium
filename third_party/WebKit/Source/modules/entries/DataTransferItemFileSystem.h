@@ -28,24 +28,25 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef HTMLInputElementFileSystem_h
-#define HTMLInputElementFileSystem_h
+#ifndef DataTransferItemFileSystem_h
+#define DataTransferItemFileSystem_h
 
-#include "modules/filesystem/EntriesCallback.h"
+#include "platform/heap/Handle.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
 
-class HTMLInputElement;
+class DataTransferItem;
+class FileSystemEntry;
 class ScriptState;
 
-class HTMLInputElementFileSystem {
-  STATIC_ONLY(HTMLInputElementFileSystem);
+class DataTransferItemFileSystem {
+  STATIC_ONLY(DataTransferItemFileSystem);
 
  public:
-  static EntryHeapVector webkitEntries(ScriptState*, HTMLInputElement&);
+  static FileSystemEntry* webkitGetAsEntry(ScriptState*, DataTransferItem&);
 };
 
 }  // namespace blink
 
-#endif  // HTMLInputElementFileSystem_h
+#endif  // DataTransferItemFileSystem_h
