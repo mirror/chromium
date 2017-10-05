@@ -121,7 +121,7 @@ ChromePaymentRequestDelegate::GetAddressNormalizer() {
 }
 
 ukm::UkmRecorder* ChromePaymentRequestDelegate::GetUkmRecorder() {
-  return g_browser_process->ukm_recorder();
+  return ukm::UkmRecorder::Get();
 }
 
 std::string ChromePaymentRequestDelegate::GetAuthenticatedEmail() const {

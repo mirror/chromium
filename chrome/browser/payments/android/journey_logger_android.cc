@@ -19,9 +19,7 @@ using ::base::android::ConvertJavaStringToUTF8;
 
 JourneyLoggerAndroid::JourneyLoggerAndroid(bool is_incognito,
                                            const std::string& url)
-    : journey_logger_(is_incognito,
-                      GURL(url),
-                      g_browser_process->ukm_recorder()) {}
+    : journey_logger_(is_incognito, GURL(url), ukm::UkmRecorder::Get()) {}
 
 JourneyLoggerAndroid::~JourneyLoggerAndroid() {}
 

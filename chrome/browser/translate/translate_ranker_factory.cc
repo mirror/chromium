@@ -36,7 +36,7 @@ KeyedService* TranslateRankerFactory::BuildServiceInstanceFor(
     content::BrowserContext* browser_context) const {
   return new TranslateRankerImpl(
       TranslateRankerImpl::GetModelPath(browser_context->GetPath()),
-      TranslateRankerImpl::GetModelURL(), g_browser_process->ukm_recorder());
+      TranslateRankerImpl::GetModelURL(), ukm::UkmRecorder::Get());
 }
 
 content::BrowserContext* TranslateRankerFactory::GetBrowserContextToUse(
