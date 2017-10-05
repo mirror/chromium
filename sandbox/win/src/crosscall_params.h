@@ -5,8 +5,13 @@
 #ifndef SANDBOX_SRC_CROSSCALL_PARAMS_H__
 #define SANDBOX_SRC_CROSSCALL_PARAMS_H__
 
+#if !defined(FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION)
 #include <windows.h>
 #include <lmaccess.h>
+#else
+#include "sandbox/fuzzer/fuzzer_types.h"
+#endif
+
 #include <stddef.h>
 #include <stdint.h>
 
