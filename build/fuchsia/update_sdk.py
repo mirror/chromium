@@ -12,6 +12,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import zipfile
 
 REPOSITORY_ROOT = os.path.abspath(os.path.join(
     os.path.dirname(__file__), '..', '..'))
@@ -53,7 +54,14 @@ def main():
     subprocess.check_call(cmd)
     f.seek(0)
     EnsureDirExists(output_dir)
-    tarfile.open(mode='r:gz', fileobj=f).extractall(path=output_dir)
+
+    if zipfile.is_zipfile(f.name):
+      zipfile.ZipFile(f, 'r').extractall(path=output_dir)
+    elif tarfile.is_tarfile(f.name):
+      tarfile.open(mode='r:gz', fileobj=f).extractall(path=output_dir)
+    else:
+      print "Unknown SDK archive format"
+      return 1
 
   with open(hash_filename, 'w') as f:
     f.write(sdk_hash)
