@@ -765,10 +765,8 @@ RefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
 
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
   IntSize size = ClampedCanvasSize();
-  OpacityMode opacity_mode =
-      CreationAttributes().hasAlpha() ? kNonOpaque : kOpaque;
   std::unique_ptr<AcceleratedImageBufferSurface> surface =
-      WTF::MakeUnique<AcceleratedImageBufferSurface>(size, opacity_mode);
+      WTF::MakeUnique<AcceleratedImageBufferSurface>(size, ColorParams());
   if (!surface->IsValid())
     return nullptr;
   std::unique_ptr<ImageBuffer> buffer = ImageBuffer::Create(std::move(surface));
@@ -1094,7 +1092,7 @@ RefPtr<DrawingBuffer> WebGLRenderingContextBase::CreateDrawingBuffer(
       std::move(context_provider), this, ClampedCanvasSize(),
       premultiplied_alpha, want_alpha_channel, want_depth_buffer,
       want_stencil_buffer, want_antialiasing, preserve, web_gl_version,
-      chromium_image_usage, color_params());
+      chromium_image_usage, ColorParams());
 }
 
 void WebGLRenderingContextBase::InitializeNewContext() {
@@ -7565,7 +7563,7 @@ ImageBuffer* WebGLRenderingContextBase::LRUImageBufferCache::GetImageBuffer(
     ImageBuffer* buf = buffers_[i].get();
     if (!buf)
       break;
-    if (buf->size() != size)
+    if (buf->Size() != size)
       continue;
     BubbleToFront(i);
     return buf;

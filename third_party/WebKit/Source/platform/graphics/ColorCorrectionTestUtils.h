@@ -7,29 +7,9 @@
 
 #include "platform/runtime_enabled_features.h"
 
+typedef uint32_t SkColor;
+
 namespace blink {
-
-class ScopedEnableColorCanvasExtensions {
- public:
-  ScopedEnableColorCanvasExtensions()
-      : experimental_canvas_features_(
-            RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled()),
-        color_canvas_extensions_(
-            RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled()) {
-    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
-  }
-  ~ScopedEnableColorCanvasExtensions() {
-    RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(
-        experimental_canvas_features_);
-    RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(
-        color_canvas_extensions_);
-  }
-
- private:
-  bool experimental_canvas_features_;
-  bool color_canvas_extensions_;
-};
 
 class ColorCorrectionTestUtils {
  public:
@@ -47,6 +27,10 @@ class ColorCorrectionTestUtils {
                                           uint8_t* color_components_2,
                                           int,
                                           int);
+  static void CompareColorCorrectedPixelsUnpremul(SkColor* colors1,
+                                                  SkColor* colors2,
+                                                  int num_pixels,
+                                                  int tolerance);
   static void CompareColorCorrectedPixels(
       float* color_components_1,
       float* color_components_2,

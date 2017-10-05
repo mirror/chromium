@@ -48,7 +48,6 @@ class ImageData;
 class ImageBitmap;
 class WebLayer;
 
-constexpr const char* kLegacyCanvasColorSpaceName = "legacy-srgb";
 constexpr const char* kSRGBCanvasColorSpaceName = "srgb";
 constexpr const char* kRec2020CanvasColorSpaceName = "rec2020";
 constexpr const char* kP3CanvasColorSpaceName = "p3";
@@ -92,7 +91,7 @@ class CORE_EXPORT CanvasRenderingContext
   WTF::String ColorSpaceAsString() const;
   WTF::String PixelFormatAsString() const;
 
-  const CanvasColorParams& color_params() const { return color_params_; }
+  const CanvasColorParams& ColorParams() const { return color_params_; }
 
   virtual RefPtr<StaticBitmapImage> GetImage(AccelerationHint,
                                              SnapshotReason) const = 0;
