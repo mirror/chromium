@@ -777,6 +777,8 @@ void PrintPreviewHandler::HandlePrint(const base::ListValue* args) {
   // Set ID to know whether printing is for preview.
   settings->SetInteger(printing::kPreviewUIID,
                        print_preview_ui()->GetIDForPrintPreviewUI());
+  // Set the document is not modifiable since a PDF file is printed.
+  settings->SetBoolean(printing::kSettingPreviewModifiable, false);
 
   // Save the settings and notify print preview. Print preview will respond
   // with a "hidePreviewDialog" message, and then the message can be sent to
