@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "283c8909_18f772f2",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-05T20:31:34Z",
+      "side": 1,
+      "message": "This is already checked with the CheckMemoryMetricWithName.\nThis is checking that the uptime is between 0 and 4000 seconds.",
+      "parentUuid": "e26abe62_29a71cc4",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38238ed7_903c3e1c",
         "filename": "content/browser/browser_child_process_host_impl.cc",
         "patchSetId": 4
@@ -83,6 +101,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "38238ed7_903c3e1c",
+      "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b751801_1169b6d2",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-05T20:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ee38a66_9f626c13",
       "revId": "5aad9d0942a53e74090cd29b7b5d861ef0b5b981",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
