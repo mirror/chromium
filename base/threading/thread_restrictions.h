@@ -65,6 +65,9 @@ namespace edk {
 class ScopedIPCSupport;
 }
 }
+namespace rlz_lib {
+class FinancialPing;
+}
 namespace ui {
 class CommandBufferClientImpl;
 class CommandBufferLocal;
@@ -210,6 +213,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
   friend class net::OSCPScopedAllowBaseSyncPrimitives;
+  friend class rlz_lib::FinancialPing;
 
   ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBaseSyncPrimitives() EMPTY_BODY_IF_DCHECK_IS_OFF;
