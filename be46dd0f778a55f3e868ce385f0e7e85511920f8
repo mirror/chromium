@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a4eed65_3cfee74f",
+        "filename": "ash/message_center/message_center_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-10-05T04:58:31Z",
+      "side": 1,
+      "message": "I would rebase this CL and use GetFontListForSizeAndWeight in https://chromium-review.googlesource.com/c/chromium/src/+/697168/5/ash/message_center/message_center_style.h, after the function is landed.",
+      "revId": "be46dd0f778a55f3e868ce385f0e7e85511920f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
