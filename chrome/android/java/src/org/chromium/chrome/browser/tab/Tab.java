@@ -385,7 +385,7 @@ public class Tab
      */
     private long mDataSavedOnStartPageLoad;
 
-    private final int mDefaultThemeColor;
+    private int mDefaultThemeColor;
     private int mThemeColor;
 
     private ChromeDownloadDelegate mDownloadDelegate;
@@ -505,13 +505,9 @@ public class Tab
         mLaunchType = type;
         mIsDetached = (getWindowAndroid() != null && getActivity() == null);
 
-        boolean useModernDesign = getActivity() != null && getActivity().getBottomSheet() != null;
-
         Resources resources = mThemedApplicationContext.getResources();
         mIdealFaviconSize = resources.getDimensionPixelSize(R.dimen.default_favicon_size);
-        // TODO(ltian): this should be updated when tab is attached. crbug.com/772136.
-        mDefaultThemeColor =
-                ColorUtils.getDefaultThemeColor(resources, useModernDesign, mIncognito);
+        mDefaultThemeColor = calculateDefaultThemeColor();
         mThemeColor = calculateThemeColor(false);
 
         // Restore data from the TabState, if it existed.
@@ -539,6 +535,12 @@ public class Tab
                         && creationState == TabCreationState.FROZEN_ON_RESTORE;
             }
         }
+    }
+
+    private int calculateDefaultThemeColor() {
+        boolean useModernDesign = getActivity() != null && getActivity().getBottomSheet() != null;
+        Resources resources = mThemedApplicationContext.getResources();
+        return ColorUtils.getDefaultThemeColor(resources, useModernDesign, mIncognito);
     }
 
     /**
@@ -1450,6 +1452,8 @@ public class Tab
     public void attach(ChromeActivity activity, TabDelegateFactory tabDelegateFactory) {
         assert mIsDetached;
         updateWindowAndroid(activity.getWindowAndroid());
+        mDefaultThemeColor = calculateDefaultThemeColor();
+        updateThemeColorIfNeeded(false);
 
         // Update for the controllers that need the Compositor from the new Activity.
         attachTabContentManager(activity.getTabContentManager());
