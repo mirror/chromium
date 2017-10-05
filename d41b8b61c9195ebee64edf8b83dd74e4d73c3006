@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f022261_a186d84f",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-10-05T20:09:58Z",
+      "side": 1,
+      "message": "For consistency, better to use LPWSTR and GetUserNameExW.",
+      "range": {
+        "startLine": 315,
+        "startChar": 52,
+        "endLine": 315,
+        "endChar": 58
+      },
+      "revId": "d41b8b61c9195ebee64edf8b83dd74e4d73c3006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21eb0e68_ec7e4a14",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000389
+      },
+      "writtenOn": "2017-10-05T20:09:58Z",
+      "side": 1,
+      "message": "Instead of !!, maybe ::GetUserNameEx(format, name, size) !\u003d 0 ?",
+      "range": {
+        "startLine": 316,
+        "startChar": 9,
+        "endLine": 316,
+        "endChar": 11
+      },
+      "revId": "d41b8b61c9195ebee64edf8b83dd74e4d73c3006",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
