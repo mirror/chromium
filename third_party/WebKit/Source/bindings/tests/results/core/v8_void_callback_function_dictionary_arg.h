@@ -14,6 +14,7 @@
 
 #include "bindings/core/v8/NativeValueTraits.h"
 #include "core/CoreExport.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/Handle.h"
@@ -21,7 +22,6 @@
 
 namespace blink {
 
-class ScriptState;
 class TestDictionary;
 
 class CORE_EXPORT V8VoidCallbackFunctionDictionaryArg final : public GarbageCollectedFinalized<V8VoidCallbackFunctionDictionaryArg>, public TraceWrapperBase {
@@ -38,6 +38,8 @@ class CORE_EXPORT V8VoidCallbackFunctionDictionaryArg final : public GarbageColl
   v8::Local<v8::Function> v8Value(v8::Isolate* isolate) {
     return callback_.NewLocal(isolate);
   }
+
+  v8::Isolate* GetIsolate() const { return script_state_->GetIsolate(); }
 
  private:
   V8VoidCallbackFunctionDictionaryArg(ScriptState*, v8::Local<v8::Function>);
