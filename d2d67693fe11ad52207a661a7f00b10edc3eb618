@@ -33,6 +33,23 @@
       "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716db10c_03165919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActionsNotificationManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-10-05T16:53:25Z",
+      "side": 1,
+      "message": "Oops, just noticed this channel id needs updating to the new one for correct uma.\n\nThis is a really easy mistake to make, I\u0027m sorry about that. I have filed https://bugs.chromium.org/p/chromium/issues/detail?id\u003d772027 for me or David Trainor to fix it so you only need to update the channel ID in one place not two.",
+      "revId": "d2d67693fe11ad52207a661a7f00b10edc3eb618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
