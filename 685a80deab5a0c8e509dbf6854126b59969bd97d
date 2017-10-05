@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e639def_f313b24a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-05T03:20:14Z",
+      "side": 1,
+      "message": "Nit: it\u0027s 2017 now.",
+      "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44936db3_03903605",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-05T03:20:14Z",
+      "side": 1,
+      "message": "This is pretty weird. Let me get this straight - there are 11 buckets, but one of the buckets is just for value \u003d exactly 100% (or current \u003d\u003d max). Is that right?",
+      "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
