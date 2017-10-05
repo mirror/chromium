@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7df90886_af7047fb",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T17:20:29Z",
+      "side": 1,
+      "message": "Can you add a comment outlining the logic here?\n\nThinking about this more, I think this makes sense assuming the code for previous session data will actually record the previous client id and not reset it with the current one. (Can you double check that?)\n\nIf it does indeed report it with the previous client id, then I agree this makes sense - since then we\u0027re reporting data from previous session which was in the *cloned install* state. (This current session is no longer in that state because we executed the code to reset the client id.)",
+      "range": {
+        "startLine": 94,
+        "startChar": 8,
+        "endLine": 94,
+        "endChar": 42
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b415fb3_36abcd95",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T17:20:29Z",
+      "side": 1,
+      "message": "I find this name hard to parse. How about: metrics_ids_were_reset_?",
+      "range": {
+        "startLine": 106,
+        "startChar": 42,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8539aad_df0a20a6",
+        "filename": "components/metrics/metrics_state_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-05T17:20:29Z",
+      "side": 1,
+      "message": "Nit: Preserve newline above this.",
+      "range": {
+        "startLine": 107,
+        "startChar": 27,
+        "endLine": 107,
+        "endChar": 54
+      },
+      "revId": "560a366538c0caf0ae589ce72d012eb37aa57159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
