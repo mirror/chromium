@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e137fa0_4cd56cef",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-10-05T23:54:43Z",
+      "side": 1,
+      "message": "The CL desc could use more detail that you told me offline. I would\nbullet point each change done by this CL for example:\n1. RasterInvalidationTracking is converted from a struct to a class.\n2. Now each GraphicsLayer is associated with a RasterInvalidator instead\n   of a RasterInvalidationTracking. Previously the association was\n   implemented by a hash map, now is directly owned using unique_ptr.\n3. Empty invalidation rect is no longer reported in SPv2.\n\nThis makes it easier to review by verifying each change against the claims. :)",
+      "revId": "64beb6713e54383a222babe73e515db8e2fa959d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e20315e9_080796b4",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
         "patchSetId": 3
