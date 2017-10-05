@@ -10,3 +10,10 @@ enum ServiceWorkerEventStatus {
   ABORTED,
   MAX=ABORTED
 };
+
+enum ServiceWorkerEventStatus2 {
+  COMPLETED,
+  REJECTED,
+  ABORTED,
+  MAX=ABORTED
+};

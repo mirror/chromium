@@ -168,6 +168,18 @@ ServiceWorkerStatusCode EventResultToStatus(
   return SERVICE_WORKER_ERROR_FAILED;
 }
 
+blink::mojom::ServiceWorkerEventStatus2 EventResultToMojo(
+    blink::WebServiceWorkerEventResult result) {
+  switch (result) {
+    case blink::kWebServiceWorkerEventResultCompleted:
+      return blink::mojom::ServiceWorkerEventStatus2::COMPLETED;
+    case blink::kWebServiceWorkerEventResultRejected:
+      return blink::mojom::ServiceWorkerEventStatus2::REJECTED;
+  }
+  NOTREACHED() << "Got invalid result: " << result;
+  return blink::mojom::ServiceWorkerEventStatus2::ABORTED;
+}
+
 WebURLRequest::FetchRequestMode GetBlinkFetchRequestMode(
     FetchRequestMode mode) {
   return static_cast<WebURLRequest::FetchRequestMode>(mode);
@@ -286,8 +298,16 @@ void ToWebServiceWorkerResponse(const ServiceWorkerResponse& response,
       blink::WebVector<blink::WebString>(cors_exposed_header_names));
 }
 
-// Use this template in willDestroyWorkerContext to abort all the pending
-// events callbacks.
+template <typename T, class... TArgs>
+void AbortPendingEventCallbacks2(T& callbacks, TArgs... args) {
+  for (typename T::iterator it(&callbacks); !it.IsAtEnd(); it.Advance()) {
+    std::move(*it.GetCurrentValue())
+        .Run(blink::mojom::ServiceWorkerEventStatus2::ABORTED, args...,
+             base::Time::Now());
+  }
+}
+
+// Used for all callbacks.
 template <typename T, class... TArgs>
 void AbortPendingEventCallbacks(T& callbacks, TArgs... args) {
   for (typename T::iterator it(&callbacks); !it.IsAtEnd(); it.Advance()) {
@@ -296,6 +316,7 @@ void AbortPendingEventCallbacks(T& callbacks, TArgs... args) {
   }
 }
 
+// Used for Fetch Event.
 template <typename Key, typename Callback>
 void AbortPendingEventCallbacks(std::map<Key, Callback>& callbacks) {
   for (auto& item : callbacks)
@@ -825,9 +846,16 @@ void ServiceWorkerContextClient::WillDestroyWorkerContext(
 
   blob_registry_.reset();
 
+#if 0
   // Aborts all the pending events callbacks.
-  AbortPendingEventCallbacks(context_->install_event_callbacks,
-                             false /* has_fetch_handler */);
+  for (auto& item : context_->install_event_callbacks) {
+    std::move(item.second)
+        .Run(blink::mojom::ServiceWorkerEventStatus2::ABORTED,
+             false /* has_fetch_handler */, base::Time::Now());
+  }
+#endif
+
+  AbortPendingEventCallbacks2(context_->install_event_callbacks, false);
   AbortPendingEventCallbacks(context_->activate_event_callbacks);
   AbortPendingEventCallbacks(context_->background_fetch_abort_event_callbacks);
   AbortPendingEventCallbacks(context_->background_fetch_click_event_callbacks);
@@ -1007,7 +1035,7 @@ void ServiceWorkerContextClient::DidHandleInstallEvent(
       context_->install_event_callbacks.Lookup(event_id);
   DCHECK(callback);
   DCHECK(*callback);
-  std::move(*callback).Run(EventResultToStatus(result),
+  std::move(*callback).Run(EventResultToMojo(result),
                            proxy_->HasFetchEventHandler(),
                            base::Time::FromDoubleT(event_dispatch_time));
   context_->install_event_callbacks.Remove(event_id);

@@ -63,7 +63,7 @@ struct ExtendableMessageEvent {
 // to create the callback for these.
 interface ServiceWorkerEventDispatcher {
   DispatchInstallEvent(associated ServiceWorkerInstallEventMethods method)
-      => (blink.mojom.ServiceWorkerEventStatus status,
+      => (blink.mojom.ServiceWorkerEventStatus2 status,
           bool has_fetch_handler,
           mojo.common.mojom.Time dispatch_event_time);
   DispatchActivateEvent()
