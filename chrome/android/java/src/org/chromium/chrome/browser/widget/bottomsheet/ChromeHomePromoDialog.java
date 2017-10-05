@@ -42,16 +42,18 @@ public class ChromeHomePromoDialog extends PromoDialog {
         params.subheaderStringResource = R.string.chrome_home_promo_dialog_message;
         params.primaryButtonStringResource = R.string.ok;
         params.drawableResource = R.drawable.chrome_home_promo_static;
+        setOnDismissListener(this);
 
         return params;
     }
 
     @Override
     public void onClick(View view) {
-        if (mSwitchStateShouldEnable != FeatureUtilities.isChromeHomeEnabled()) {
-            FeatureUtilities.switchChromeHomeUserSetting(mSwitchStateShouldEnable);
-            restartChromeInstances();
-        }
+        boolean restartRequired =
+                mSwitchStateShouldEnable != FeatureUtilities.isChromeHomeEnabled();
+        FeatureUtilities.switchChromeHomeUserSetting(mSwitchStateShouldEnable);
+
+        if (restartRequired) restartChromeInstances();
 
         // There is only one button for this dialog, so dismiss on any click.
         dismiss();
@@ -98,5 +100,9 @@ public class ChromeHomePromoDialog extends PromoDialog {
     }
 
     @Override
-    public void onDismiss(DialogInterface dialogInterface) {}
+    public void onDismiss(DialogInterface dialogInterface) {
+        // If the user dismissed the promo without making a decision, use set the current enabled
+        // state of Chrome Home to be the user setting.
+        FeatureUtilities.switchChromeHomeUserSetting(FeatureUtilities.isChromeHomeEnabled());
+    }
 }
