@@ -22,6 +22,30 @@
       "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38aa267c_e47ce57f",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-05T20:42:01Z",
+      "side": 1,
+      "message": "I honestly have no idea.  I don\u0027t know what this is used for (maybe app indexing?).  For VR, it\u0027s probably better to ask VR folk.  But very good questions that I don\u0027t honestly know.",
+      "parentUuid": "21e3e877_9f33ca9f",
+      "range": {
+        "startLine": 261,
+        "startChar": 12,
+        "endLine": 262,
+        "endChar": 53
+      },
+      "revId": "732f3482f0bfd7d82143c7d161d98c41855bbdf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
