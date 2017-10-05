@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c3d96b_1ccd6241",
+        "filename": "content/public/test/fake_download_item.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-05T19:15:51Z",
+      "side": 1,
+      "message": "This file is a bit of a mess. Overrides should be grouped with where they come from, not spread out like this. But I see your change isn\u0027t making things worse. I would be inclined to inline the setters and use unix_hacker_style, but I see the rest of the files doesn\u0027t. *SIGH*",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 31
+      },
+      "revId": "222f6c8a6c9501abab1353501d662a5c403d06e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
