@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05b7cfe8_aeffec7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:27:43Z",
+      "side": 1,
+      "message": "Do we also want to notify if a quick action has been shown?",
+      "range": {
+        "startLine": 716,
+        "startChar": 9,
+        "endLine": 716,
+        "endChar": 0
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c650d6_52fca453",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:27:43Z",
+      "side": 1,
+      "message": "As an aside, Donn, we should remove this now that actions are rolled out to 100%.",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 722,
+        "endChar": 80
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f2a876fe_88a317b2",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/EventConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:27:43Z",
+      "side": 1,
+      "message": "This needs to be updated",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 61
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952a467a_75a44fc8",
+        "filename": "components/feature_engagement/public/android/java/src/org/chromium/components/feature_engagement/FeatureConstants.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:27:43Z",
+      "side": 1,
+      "message": "nyquist@ - If we only use one feature for now, and add more features in the future, will the future features have access to the events logged now? I\u0027m wondering if we actually need 4 different features yet.\n\nIf we need to keep all of these, I think it\u0027d be helpful to add some comments for each these describing what they are for since there are so many flavors.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 93
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9e087f_79894107",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 97437,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-05T00:27:43Z",
+      "side": 1,
+      "message": "s/openning/opening",
+      "range": {
+        "startLine": 97437,
+        "startChar": 33,
+        "endLine": 97437,
+        "endChar": 41
+      },
+      "revId": "a2eee895322c5ad9731ed384f1219dc714a0edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
