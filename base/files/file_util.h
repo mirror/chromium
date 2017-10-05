@@ -109,7 +109,7 @@ BASE_EXPORT bool ReplaceFile(const FilePath& from_path,
 // varies per platform:
 //
 // - This function keeps the metadata on Windows. The read only bit is not kept.
-// - On Mac and iOS, |to_path| retains |from_path|'s permissions, except user
+// - On Mac and iOS, |to_path| retains |from_path|'s metadata, except user
 //   read/write permissions are always set.
 // - On Linux and Android, |to_path| has user read/write permissions only. i.e.
 //   Always 0600.

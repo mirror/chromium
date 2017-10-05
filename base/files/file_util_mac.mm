@@ -21,8 +21,37 @@ bool CopyFile(const FilePath& from_path, const FilePath& to_path) {
   ThreadRestrictions::AssertIOAllowed();
   if (from_path.ReferencesParent() || to_path.ReferencesParent())
     return false;
-  return (copyfile(from_path.value().c_str(),
-                   to_path.value().c_str(), NULL, COPYFILE_DATA) == 0);
+  stat_wrapper_t file_info = {};
+#if defined(MAC_OS_X_VERSION_10_12) && \
+    MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_12
+  FilePath final_path = to_path;
+  // Follow symbolic links and retrieve POSIX file info for destination file.
+  while (lstat(final_path.value().c_str(), &file_info) == 0 &&
+         S_ISLNK(file_info.st_mode)) {
+    if (!ReadSymbolicLink(final_path, &final_path))
+      return false;
+  }
+  if (S_ISDIR(file_info.st_mode))
+    return false;
+  if (copyfile(from_path.value().c_str(), final_path.value().c_str(), NULL,
+               COPYFILE_CLONE | COPYFILE_UNLINK | COPYFILE_ALL) != 0)
+    return false;
+#else
+  stat(to_path.value().c_str(), &file_info);
+  if (copyfile(from_path.value().c_str(), to_path.value().c_str(), NULL,
+               COPYFILE_ALL) != 0)
+    return false;
+#endif
+  // Restore permissions and make destination file writable if needed.
+  if (file_info.st_mode) {
+    chmod(to_path.value().c_str(), file_info.st_mode);
+  } else if (stat(to_path.value().c_str(), &file_info) != 0) {
+    return false;
+  } else if (!(file_info.st_mode & S_IWUSR)) {
+    chmod(to_path.value().c_str(), file_info.st_mode | S_IWUSR);
+  }
+
+  return true;
 }
 
 bool GetTempDir(base::FilePath* path) {
