@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fea985a_4b6a346f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2489,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-05T13:32:56Z",
+      "side": 1,
+      "message": "Will this also help with something like:\nLOG(INFO) \u003c\u003c some_ax_object;\n?",
+      "revId": "8696199f8240bff554ee063dcdc2adb85cf74aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f392328_f569868b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/testing/AccessibilityTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-05T13:32:56Z",
+      "side": 1,
+      "message": "Interesting that we need to use the Impl class here rather than AxObjectCache. I would think that an Impl class should be private implementation details. But I won\u0027t hold up the review for this, it\u0027s just food for thought.",
+      "revId": "8696199f8240bff554ee063dcdc2adb85cf74aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e79666_b2dc7393",
+        "filename": "third_party/WebKit/Source/modules/accessibility/testing/AccessibilityTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-05T13:32:56Z",
+      "side": 1,
+      "message": "Do we usually use 2 + characters per level? I don\u0027t care, whatever works for you, but we should probably be consistent?",
+      "revId": "8696199f8240bff554ee063dcdc2adb85cf74aa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
