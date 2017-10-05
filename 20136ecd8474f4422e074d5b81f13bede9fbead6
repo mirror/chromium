@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61dca582_13c5c1b0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T07:01:25Z",
+      "side": 1,
+      "message": "Please add |return String()|.\nWe should leave the function after abort and we prefer early-return style.",
+      "revId": "20136ecd8474f4422e074d5b81f13bede9fbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4ebdaa_bfdb7ca7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T07:01:25Z",
+      "side": 1,
+      "message": "Please add |return result|.\nWe should leave the function after abort and we prefer early-return style.",
+      "revId": "20136ecd8474f4422e074d5b81f13bede9fbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bdbd89_ea5a5e03",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-05T07:01:25Z",
+      "side": 1,
+      "message": "We should return after abort.",
+      "revId": "20136ecd8474f4422e074d5b81f13bede9fbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
