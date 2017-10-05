@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf7b487_f3d6cef7",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-05T19:58:01Z",
+      "side": 1,
+      "message": "It\u0027s not clear that these parameters have a mechanism for differentiating between\n- extended-sRGB half-float\n- linear-scRGB half-float",
+      "revId": "27a98a97a98de0bf6e795e844c5ed83c1929e69c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
