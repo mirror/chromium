@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94fe5e50_991d7aa1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-05T04:57:05Z",
+      "side": 1,
+      "message": "Could you include some concrete time?\n\nE.g.\nhere is a pathological example of moving focus in 1000 nested slots:\nhttp://jsbin.com/romexozero/1/edit?html,output\nhitting tab on the focused field takes ~3 seconds on my development Linux\nbox with M61 release.",
+      "revId": "de4635f7a9f771812e5626a681213b075f6dbfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2316f09a_3a815758",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-05T04:57:05Z",
+      "side": 1,
+      "message": "Is this stackoverflow?  And is it fixed in this CL?\nIf it is a separate issue, you don\u0027t have to mention it.",
+      "revId": "de4635f7a9f771812e5626a681213b075f6dbfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf07be3d_e911f03b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-05T04:57:05Z",
+      "side": 1,
+      "message": "Please also link to the design doc, like\n\nFor more details, read the design doc:\nhttps://docs.google.com/...",
+      "revId": "de4635f7a9f771812e5626a681213b075f6dbfb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
