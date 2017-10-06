@@ -164,7 +164,6 @@ test("display_unittests") {
     ":test_support",
     "//base",
     "//base/test:test_support",
-    "//cc/base",
     "//mojo/edk/test:run_all_unittests",
     "//testing/gmock",
     "//testing/gtest",
