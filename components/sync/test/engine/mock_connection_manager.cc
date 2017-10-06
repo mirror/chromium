@@ -77,10 +77,10 @@ bool MockConnectionManager::PostBufferToPath(PostBufferParams* params,
                                              const string& path,
                                              const string& auth_token) {
   ClientToServerMessage post;
-  CHECK(post.ParseFromString(params->buffer_in));
-  CHECK(post.has_protocol_version());
-  CHECK(post.has_api_key());
-  CHECK(post.has_bag_of_chips());
+  DCHECK(post.ParseFromString(params->buffer_in));
+  DCHECK(post.has_protocol_version());
+  DCHECK(post.has_api_key());
+  DCHECK(post.has_bag_of_chips());
 
   requests_.push_back(post);
   client_stuck_ = post.sync_problem_detected();
@@ -92,7 +92,7 @@ bool MockConnectionManager::PostBufferToPath(PostBufferParams* params,
     // use this function could take a while to return because it accesses the
     // network. As we can't test this we do the next best thing and hang here
     // when there's an issue.
-    CHECK(directory_->good());
+    DCHECK(directory_->good());
     WriteTransaction wt(FROM_HERE, syncable::UNITTEST, directory_);
   }
 
@@ -511,7 +511,7 @@ void MockConnectionManager::SetChangesRemaining(int64_t timestamp) {
 void MockConnectionManager::ProcessGetUpdates(
     sync_pb::ClientToServerMessage* csm,
     sync_pb::ClientToServerResponse* response) {
-  CHECK(csm->has_get_updates());
+  DCHECK(csm->has_get_updates());
   ASSERT_EQ(csm->message_contents(), ClientToServerMessage::GET_UPDATES);
   const GetUpdatesMessage& gu = csm->get_updates();
   num_get_updates_requests_++;
@@ -593,7 +593,7 @@ bool MockConnectionManager::ShouldTransientErrorThisId(syncable::Id id) {
 void MockConnectionManager::ProcessCommit(
     sync_pb::ClientToServerMessage* csm,
     sync_pb::ClientToServerResponse* response_buffer) {
-  CHECK(csm->has_commit());
+  DCHECK(csm->has_commit());
   ASSERT_EQ(csm->message_contents(), ClientToServerMessage::COMMIT);
   map<string, string> changed_ids;
   const CommitMessage& commit_message = csm->commit();
@@ -603,11 +603,11 @@ void MockConnectionManager::ProcessCommit(
   map<string, sync_pb::CommitResponse_EntryResponse*> response_map;
   for (int i = 0; i < commit_message.entries_size(); i++) {
     const sync_pb::SyncEntity& entry = commit_message.entries(i);
-    CHECK(entry.has_id_string());
+    DCHECK(entry.has_id_string());
     string id_string = entry.id_string();
     ASSERT_LT(entry.name().length(), 256ul)
         << " name probably too long. True "
-           "server name checking not implemented";
+           "server name dchecking not implemented";
     syncable::Id id;
     if (entry.version() == 0) {
       // Relies on our new item string id format. (string representation of a
@@ -661,7 +661,7 @@ void MockConnectionManager::ProcessCommit(
 void MockConnectionManager::ProcessClearServerData(
     sync_pb::ClientToServerMessage* csm,
     sync_pb::ClientToServerResponse* response) {
-  CHECK(csm->has_clear_server_data());
+  DCHECK(csm->has_clear_server_data());
   ASSERT_EQ(csm->message_contents(), ClientToServerMessage::CLEAR_SERVER_DATA);
   response->mutable_clear_server_data();
 }

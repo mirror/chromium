@@ -333,7 +333,8 @@ bool SyncTest::CreateGaiaAccount(const std::string& username,
   content::WebContents* contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   content::NavigationEntry* entry = contents->GetController().GetVisibleEntry();
-  CHECK(entry) << "Could not get a hold on NavigationEntry post URL navigate.";
+  EXPECT_TRUE(entry)
+      << "Could not get a hold on NavigationEntry post URL navigate.";
   DVLOG(1) << "Create Gaia account request return code = "
       << entry->GetHttpStatusCode();
   return entry->GetHttpStatusCode() == 200;
@@ -346,15 +347,15 @@ void SyncTest::CreateProfile(int index) {
     // For multi profile UI signin, profile paths should be outside user data
     // dir to allow signing-in multiple profiles to same account. Otherwise, we
     // get an error that the profile has already signed in on this device.
-    CHECK(tmp_profile_paths_[index]->CreateUniqueTempDir());
+    ASSERT_TRUE(tmp_profile_paths_[index]->CreateUniqueTempDir());
   } else {
     // Create new profiles in user data dir so that other profiles can know
     // about it. This is needed in tests such as supervised user cases which
     // assume browser->profile() as the custodian profile.
     base::FilePath user_data_dir;
     PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
-    CHECK(
-      tmp_profile_paths_[index]->CreateUniqueTempDirUnderPath(user_data_dir));
+    ASSERT_TRUE(
+        tmp_profile_paths_[index]->CreateUniqueTempDirUnderPath(user_data_dir));
   }
   base::FilePath profile_path = tmp_profile_paths_[index]->GetPath();
   if (UsingExternalServers()) {
@@ -523,8 +524,9 @@ bool SyncTest::SetupClients() {
   fake_server_invalidation_services_.resize(num_clients_);
 
   if (create_gaia_account_at_runtime_) {
-    CHECK(UsingExternalServers()) <<
-        "Cannot create Gaia accounts without external authentication servers";
+    EXPECT_TRUE(UsingExternalServers()) << "Cannot create Gaia accounts "
+                                           "without external authentication "
+                                           "servers";
     if (!CreateGaiaAccount(username_, password_))
       LOG(FATAL) << "Could not create Gaia account.";
   }
@@ -611,7 +613,7 @@ void SyncTest::InitializeInvalidations(int index) {
     // invalidations in sync'ed data. In this case, to notify other profiles of
     // invalidations, we use sync refresh notifications instead.
   } else if (server_type_ == IN_PROCESS_FAKE_SERVER) {
-    CHECK(fake_server_.get());
+    ASSERT_TRUE(fake_server_.get());
     fake_server::FakeServerInvalidationService* invalidation_service =
         static_cast<fake_server::FakeServerInvalidationService*>(
             static_cast<invalidation::ProfileInvalidationProvider*>(
@@ -748,8 +750,8 @@ void SyncTest::TearDownOnMainThread() {
   for (size_t i = 0; i < browsers_.size(); ++i) {
     CloseBrowserSynchronously(browsers_[i]);
   }
-  CHECK_EQ(chrome::GetTotalBrowserCount(),
-           init_browser_count - browsers_.size());
+  ASSERT_EQ(chrome::GetTotalBrowserCount(),
+            init_browser_count - browsers_.size());
 
   if (fake_server_.get()) {
     std::vector<fake_server::FakeServerInvalidationService*>::const_iterator it;

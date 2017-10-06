@@ -62,7 +62,7 @@ SyncBackendHostImpl::~SyncBackendHostImpl() {
 }
 
 void SyncBackendHostImpl::Initialize(InitParams params) {
-  CHECK(params.sync_task_runner);
+  DCHECK(params.sync_task_runner);
   DCHECK(params.host);
   DCHECK(params.registrar);
 
@@ -137,7 +137,7 @@ void SyncBackendHostImpl::Shutdown(ShutdownReason reason) {
   DCHECK(!host_);
 
   if (invalidation_handler_registered_) {
-    CHECK(invalidator_->UpdateRegisteredInvalidationIds(this, ObjectIdSet()));
+    DCHECK(invalidator_->UpdateRegisteredInvalidationIds(this, ObjectIdSet()));
     invalidator_->UnregisterInvalidationHandler(this);
     invalidator_ = nullptr;
   }
@@ -227,7 +227,7 @@ bool SyncBackendHostImpl::IsCryptographerReady(
 void SyncBackendHostImpl::GetModelSafeRoutingInfo(
     ModelSafeRoutingInfo* out) const {
   if (initialized()) {
-    CHECK(registrar_);
+    DCHECK(registrar_);
     registrar_->GetModelSafeRoutingInfo(out);
   } else {
     NOTREACHED();
@@ -276,7 +276,7 @@ void SyncBackendHostImpl::FinishConfigureDataTypesOnFrontendLoop(
     const ModelTypeSet failed_configuration_types,
     const base::Callback<void(ModelTypeSet, ModelTypeSet)>& ready_task) {
   if (invalidator_) {
-    CHECK(invalidator_->UpdateRegisteredInvalidationIds(
+    DCHECK(invalidator_->UpdateRegisteredInvalidationIds(
         this, ModelTypeSetToObjectIdSet(enabled_types)));
   }
 
@@ -285,7 +285,7 @@ void SyncBackendHostImpl::FinishConfigureDataTypesOnFrontendLoop(
 }
 
 void SyncBackendHostImpl::AddExperimentalTypes() {
-  CHECK(initialized());
+  DCHECK(initialized());
   Experiments experiments;
   if (core_->sync_manager()->ReceivedExperiment(&experiments))
     host_->OnExperimentsChanged(experiments);
