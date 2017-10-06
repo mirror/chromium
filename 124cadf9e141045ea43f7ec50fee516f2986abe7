@@ -338,6 +338,30 @@
     },
     {
       "key": {
+        "uuid": "0f8291c3_540c7287",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T18:41:24Z",
+      "side": 1,
+      "message": "Ah, so that\u0027s what the crbug should be about. Basically: In the case where a context can be created after a context loss, but the compositor fell back to software rendering mode, then the canvas should also fall back to software.",
+      "parentUuid": "4b504845_a3db80d4",
+      "range": {
+        "startLine": 929,
+        "startChar": 37,
+        "endLine": 929,
+        "endChar": 48
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc8c56e0_e1dcddfd",
         "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
         "patchSetId": 5
