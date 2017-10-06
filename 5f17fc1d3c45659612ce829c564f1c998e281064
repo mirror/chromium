@@ -22,6 +22,30 @@
       "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d941f35f_757ffb60",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-06T21:32:42Z",
+      "side": 1,
+      "message": "In Chromoting scenario, we usually need to identify whether a certain feature is supported before creating its instance. So returning bool from this static function won\u0027t impact its logic and also is better for us.\n\nAnd I have not found any requirement of using media foundation video encoder. Is the check of Windows 8 in CreateHardwareEncoderMFT() useful? Should not GetModuleHandle() and InitializeMediaFoundation() around 339 - 346 be enough?",
+      "parentUuid": "c411754f_77719632",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 72
+      },
+      "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
