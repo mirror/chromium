@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a9d1239_644cff6f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/buildbot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "I wonder whether it\u0027s worth it to have a docstring explaining that we might either want full_results.json or failing_results.json.\n\nPerhaps this optional parameter could also be called results_filename? e.g.\n\n    ..., results_filename\u003d\u0027failing_results.json\u0027):\n    ... self.fetch_file(results_url, results_filename) ...\n\nThat may make the significance of the passed strings clearer.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb9b30c_5755dddd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_expectations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "Might want to return this sorted, so that the order is deterministic.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1771122_156da81f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "(1) win_chromium_rel_ng now has to be updated to win7_chromium_rel_ng, which now runs layout tests after https://chromium-review.googlesource.com/c/chromium/tools/build/+/704188.\n\n(2) it seems like this should be stored in: https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/config/builders.json\n-- We\u0027re already keeping a hard-coded list of builder names and their build types and platforms there.\n\nI\u0027m not sure whether we want to add CQ bots to that list immediately though; we might need to adjust rebaseline-cl to make it not use these for rebaselining.\n\n(3) We could also consider using the *_blink_rel bots which are already there.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b17ef470_b75696cf",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "Alternate way to do this:\n\n    self._host.print_(\u0027message...\u0027)\n\nAlthough the main advantage of this would be that it uses host.stdout by default. Here you already get stdout from host above, so this should do the same thing, I believe.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395832a4_60ecdf07",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "For consistency with above, you could print to self._host.stderr -- and then in the unit test you can also assert about messages printed to stderr.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "582c7cd9_ff392ed4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "Optionally, this could go in Scripts/try-flag (so that sys doesn\u0027t have to be imported this file).",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fda03b_4f7d7ac6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T02:03:18Z",
+      "side": 1,
+      "message": "Could be called test_main_update or test_update since in this method, main is called with \"update\".\n\nThis test method is a bit long -- do you think it would be more or less readable if some of the setup were separated out into separate methods?",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
