@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aad60337_53a27cb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T16:52:23Z",
+      "side": 1,
+      "message": "\"Do not clear..\"",
+      "revId": "3767a2d851586574e221c6eff3b3775f04a5c78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c98b0122_106e7bf7",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T16:52:23Z",
+      "side": 1,
+      "message": "FYI: This helps a lot, but it\u0027s still possible to circumvent by switching hosts mid-password. It\u0027d require some trickery to keep the page looking identical. This is worth landing as is I think.",
+      "revId": "3767a2d851586574e221c6eff3b3775f04a5c78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1317f42_564424f5",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T16:52:23Z",
+      "side": 1,
+      "message": "nit: how about if (..\u003d\u003d..) {return} so it\u0027s less indenty.",
+      "revId": "3767a2d851586574e221c6eff3b3775f04a5c78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "176ee655_d232b6c1",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T16:52:23Z",
+      "side": 1,
+      "message": "s/origin/host, since that\u0027s what you\u0027re checking in the code.",
+      "range": {
+        "startLine": 153,
+        "startChar": 56,
+        "endLine": 153,
+        "endChar": 62
+      },
+      "revId": "3767a2d851586574e221c6eff3b3775f04a5c78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
