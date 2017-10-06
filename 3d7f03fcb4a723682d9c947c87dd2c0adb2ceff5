@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0db0b95_70d436b3",
+        "filename": "ios/chrome/browser/app_startup_parameters_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-06T15:25:43Z",
+      "side": 1,
+      "message": "I had to rename the test because \"AppStartupParameters\" is already the name of an Objective-C class and it cannot also be the name of the test fixture.",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "3d7f03fcb4a723682d9c947c87dd2c0adb2ceff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e302159_b116aa86",
+        "filename": "ios/chrome/browser/ui/stack_view/card_stack_layout_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-06T15:25:43Z",
+      "side": 1,
+      "message": "I made this change for consistency with the all the \"using FooTest \u003d PlatformTest;\" I\u0027ve added in the other files.",
+      "revId": "3d7f03fcb4a723682d9c947c87dd2c0adb2ceff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97a612b9_dc6ed2cf",
+        "filename": "ios/net/cookies/cookie_store_ios_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-06T15:25:43Z",
+      "side": 1,
+      "message": "The fixture \"CookieStoreIOSTest\" already exists so I\u0027m just re-using it here. I think it was by mistake that this test was not using it.",
+      "revId": "3d7f03fcb4a723682d9c947c87dd2c0adb2ceff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
