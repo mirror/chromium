@@ -38,6 +38,8 @@ vars = {
   # custom_vars.
   'checkout_src_internal': 'False',
 
+  'checkout_traffic_annotation_tools': 'checkout_configuration != "small"',
+
   'chromium_git': 'https://chromium.googlesource.com',
   'swiftshader_git': 'https://swiftshader.googlesource.com',
   'pdfium_git': 'https://pdfium.googlesource.com',
@@ -1042,6 +1044,21 @@ hooks = [
                 '--no_auth',
                 '--bucket', 'chromium-android-tools/checkstyle',
                 '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
+    ],
+  },
+
+  {
+    'name': 'tools_traffic_annotation_linux',
+    'pattern': '.',
+    'condition': 'checkout_configuration != "small" and checkout_linux',
+    'action': [ 'python',
+                'src/third_party/depot_tools/download_from_google_storage.py',
+                '--no_resume',
+                '--platform=linux*',
+                '--no_auth',
+                '--num_threads=4',
+                '--bucket', 'chromium-tools-traffic_annotation',
+                '-d', 'src/tools/traffic_annotation/bin/linux64',
     ],
   },
 
