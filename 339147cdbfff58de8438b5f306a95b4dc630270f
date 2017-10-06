@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a587446_dbc13225",
+        "filename": "chrome/browser/resources/md_extensions/error_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T18:29:20Z",
+      "side": 1,
+      "message": "Would it be equivalent if you revert changes to cr_expand_button.* and change this one to\ntabindex\u003d\"-1\" (note the missing dash).\n\nThis would set the HTML tabindex attribute, not the newly defined tabIndex polymer property, which I think should be sufficient.",
+      "revId": "339147cdbfff58de8438b5f306a95b4dc630270f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35786565_65bc732c",
+        "filename": "ui/webui/resources/cr_elements/cr_expand_button/cr_expand_button.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T18:29:20Z",
+      "side": 1,
+      "message": "As discussed, this does not need a function wrapper, and can be a number instead of a string.",
+      "revId": "339147cdbfff58de8438b5f306a95b4dc630270f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
