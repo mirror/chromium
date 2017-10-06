@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67b4229f_a47b90d1",
+        "filename": "extensions/renderer/one_time_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-06T20:17:57Z",
+      "side": 0,
+      "message": "Ditto :)",
+      "parentUuid": "bc6fc215_0d175448",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 30
+      },
+      "revId": "1664f7f6fc61f9d5c8e0b723a63d1ae31d711166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d95e241_5dc63c4e",
         "filename": "extensions/renderer/one_time_message_handler.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "1664f7f6fc61f9d5c8e0b723a63d1ae31d711166",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b3e35c_b533d412",
+        "filename": "extensions/renderer/one_time_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-10-06T20:17:57Z",
+      "side": 0,
+      "message": "Yes.  In fact, I didn\u0027t even remove it, because this patch was based on a version before it was added.  I wonder what fancy git magic Gerrit used to see this as a removal...\n\nIn any case, it\u0027s no longer removed in the rebase.",
+      "parentUuid": "2d95e241_5dc63c4e",
+      "revId": "1664f7f6fc61f9d5c8e0b723a63d1ae31d711166",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
