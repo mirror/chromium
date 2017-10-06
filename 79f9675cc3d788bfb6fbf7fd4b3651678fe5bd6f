@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be139e2e_da34302b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-06T21:36:16Z",
+      "side": 1,
+      "message": "Fixed.",
+      "parentUuid": "343d06c0_60751089",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82f62fd0_322c6801",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T17:28:43Z",
       "side": 1,
       "message": "Why do we need this?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bee962f_1974ca8a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-06T21:36:16Z",
+      "side": 1,
+      "message": "Problem:\nIn updateMessageList(), we update counters on stale items.  This involves calling ListControl\u0027s refreshItem(), which re-selects the currently selected item.  Console reacts to selectionChanged events by calling updateMessageList() again, creating the loop.\n\nThis line avoids re-entrance with a simple check, but one alternative is to introduce a silent flag for refreshItem(), to avoid triggering a selectionChanged event.",
+      "parentUuid": "82f62fd0_322c6801",
       "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "078ffc30_faf90b4b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-06T21:36:16Z",
+      "side": 1,
+      "message": "On stable, it works because each shouldBeVisible() gets the latest `UI.context.flavor(SDK.ExecutionContext)`.  Now that shouldBeVisible() relies solely on a filter.applyFilter(), I\u0027m using this line to keep the current filter\u0027s executionContext up-to-date.",
+      "parentUuid": "b9d8ce37_0a0316fa",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d34e4989_91e649cf",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "17f38812_79f2d55d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-06T21:36:16Z",
+      "side": 1,
+      "message": "Done, just one _currentFilter!",
+      "parentUuid": "d34e4989_91e649cf",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19444719_610c36bd",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-05T17:28:43Z",
       "side": 1,
       "message": "I don\u0027t like this. Now that ConsoleFilter is large, perhaps we should switch to setters?",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf0bfb7_c1ee5002",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-10-06T21:36:16Z",
+      "side": 1,
+      "message": "Hm, would you be fine with keeping it a struct if setting the executionContext was simpler?  Perhaps we make ExecutionContext a required, nullable parameter, so that this could could look like\n`settingFilter.executionContext \u003d setting.get() ? UI.context.flavor() : null`\ninstead of deleting the property?\n\nConsoleFilter still remains a container of data, simply grouping parsedFilters/levels/executionContext in a convenient structure for storing and retrieving, with the exception of incrementing counters and applyFilter.\n\nAlthough, if you prefer setters here, let me know and I\u0027ll gladly change it.",
+      "parentUuid": "19444719_610c36bd",
       "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
