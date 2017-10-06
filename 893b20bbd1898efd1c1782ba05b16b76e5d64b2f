@@ -22,6 +22,30 @@
       "revId": "893b20bbd1898efd1c1782ba05b16b76e5d64b2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59755be6_02b11beb",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-06T20:42:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aabdb3a3_e4e501c0",
+      "range": {
+        "startLine": 328,
+        "startChar": 32,
+        "endLine": 328,
+        "endChar": 36
+      },
+      "revId": "893b20bbd1898efd1c1782ba05b16b76e5d64b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
