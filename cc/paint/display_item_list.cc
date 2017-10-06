@@ -85,6 +85,7 @@ void DisplayItemList::Finalize() {
                    // into offsets.
                    return offsets_[index];
                  });
+    GenerateDiscardableImagesMetadata();
   }
   paint_op_buffer_.ShrinkToFit();
   visual_rects_.clear();
@@ -162,7 +163,7 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
 
 void DisplayItemList::GenerateDiscardableImagesMetadata() {
   DCHECK(usage_hint_ == kTopLevelDisplayItemList);
-  image_map_.Generate(&paint_op_buffer_, rtree_.GetBounds());
+  image_map_.Generate(&paint_op_buffer_, rtree_.GetBounds(), visual_rects_);
 }
 
 void DisplayItemList::Reset() {

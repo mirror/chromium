@@ -77,8 +77,6 @@ class CC_EXPORT RecordingSource {
                                         const gfx::Rect& new_recorded_viewport,
                                         Region* invalidation);
 
-  void FinishDisplayItemListUpdate();
-
   friend class RasterSource;
 
   void DetermineIfSolidColor();
