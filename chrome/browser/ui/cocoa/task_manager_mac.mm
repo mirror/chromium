@@ -540,9 +540,7 @@ namespace task_manager {
 // TaskManagerMac implementation:
 
 TaskManagerMac::TaskManagerMac()
-    : table_model_(new TaskManagerTableModel(
-          REFRESH_TYPE_CPU | REFRESH_TYPE_MEMORY | REFRESH_TYPE_NETWORK_USAGE,
-          this)),
+    : table_model_(new TaskManagerTableModel(this)),
       window_controller_([[TaskManagerWindowController alloc]
           initWithTaskManagerMac:this
                       tableModel:table_model_.get()]) {
