@@ -52,6 +52,24 @@
       "revId": "7bfe51306a2c7a092e0ead8bba929265a02eacfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723e9053_7e7242f2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-06T23:51:17Z",
+      "side": 1,
+      "message": "Thanks! That\u0027s definitely better, I also felt something wrong here but couldn\u0027t tell where it was..\n\nDone",
+      "parentUuid": "8c7f9346_ab2251d2",
+      "revId": "7bfe51306a2c7a092e0ead8bba929265a02eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
