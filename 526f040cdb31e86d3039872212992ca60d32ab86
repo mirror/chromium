@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c8448b9e_1793dfd9",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "good point! done",
+      "parentUuid": "cec40006_cfe92418",
+      "range": {
+        "startLine": 377,
+        "startChar": 6,
+        "endLine": 377,
+        "endChar": 39
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb43122b_aa41e3de",
         "filename": "content/ppapi_plugin/ppapi_thread.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a0e243_2028a264",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb43122b_aa41e3de",
+      "range": {
+        "startLine": 480,
+        "startChar": 8,
+        "endLine": 480,
+        "endChar": 41
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5557800c_931185a2",
+        "filename": "media/cdm/cdm_host_files.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bca0eb7f_1086c1a3",
+      "range": {
+        "startLine": 209,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 62
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb55a2a1_9a6aab29",
         "filename": "media/cdm/cdm_host_files.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "541498ff_e6695ca0",
+        "filename": "media/cdm/cdm_host_files.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb55a2a1_9a6aab29",
+      "range": {
+        "startLine": 221,
+        "startChar": 22,
+        "endLine": 221,
+        "endChar": 31
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ece153_06332e1e",
         "filename": "media/cdm/cdm_module.h",
         "patchSetId": 1
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-05T21:01:30Z",
       "side": 1,
       "message": "Should this be IsInitializeCalled() (or WasInitializeCalled or HasInitializeBeenCalled)?",
+      "range": {
+        "startLine": 73,
+        "startChar": 7,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96aaedd5_949f1485",
+        "filename": "media/cdm/cdm_module.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Renamed to was_initialize_called(). The lower case name should be fine per style guide: https://google.github.io/styleguide/cppguide.html#Function_Names",
+      "parentUuid": "a4ece153_06332e1e",
       "range": {
         "startLine": 73,
         "startChar": 7,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ace872b8_40a8ec44",
+        "filename": "media/mojo/services/media_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Removed InitializeCdmModule(), so now it\u0027s effectively what you asked for :)",
+      "parentUuid": "0d71f1d1_3a51f113",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597e078b_18aaf796",
         "filename": "media/mojo/services/media_service.h",
         "patchSetId": 1
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7d287300_8009c340",
+        "filename": "media/mojo/services/media_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "Removed this method now.",
+      "parentUuid": "597e078b_18aaf796",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13fd7921_2d22f7cd",
         "filename": "media/mojo/services/mojo_media_client.cc",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-05T21:01:30Z",
       "side": 1,
       "message": "Is this not adding anything due to everything being loaded already? If so, there should probably be a comment noting that.\n\nOr is this simply the default implementation? Does it make sense to not specify anything for other derived classes?",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "526f040cdb31e86d3039872212992ca60d32ab86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c9ecbfe_7628708a",
+        "filename": "media/mojo/services/mojo_media_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:11:43Z",
+      "side": 1,
+      "message": "This is the default implementation. In theory, it doesn\u0027t make sense if ENABLE_CDM_HOST_VERIFICATION is true, but this function is not implemented. But MojoMediaClient is not only used by our CDM service, but also by the MediaSevice, e.g. the one running in the GPU process hosting the hardware video decoder. I agree that by trying to reuse the same code we are actually making things more complex than it should be. That\u0027s why I filed crbug.com/771791.",
+      "parentUuid": "13fd7921_2d22f7cd",
       "range": {
         "startLine": 62,
         "startChar": 44,
