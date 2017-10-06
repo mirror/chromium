@@ -26,6 +26,7 @@ test("cronet_test") {
   deps = [
     "//base",
     "//base:i18n",
+    "//components/cronet/interfaces:cronet_c_impl_tests",
     "//components/cronet/ios:cronet_framework+link",
     "//components/grpc_support:bidirectional_stream_unittest",
     "//components/grpc_support/test:quic_test_server",
