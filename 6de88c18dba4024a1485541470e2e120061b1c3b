@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "2430ae25_b068f821",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T13:25:27Z",
+      "side": 1,
+      "message": "Thanks for adding this. What is |developer_id| and |unique_id|? They aren\u0027t explained at the spec link. It seems you have to go to find content::BackgroundFetchRegistrationId to get to the proper documentation of developer_id. Maybe we could add a brief explanation and direct the reader to that file or somehow rearrange documentation so that it\u0027s centered on the mojom.",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25e59e16_19348559",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.cpp",
         "patchSetId": 5
