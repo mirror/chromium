@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ce8f05_b7fa068a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-06T17:54:50Z",
+      "side": 1,
+      "message": "Design question: Should this be done for all certificates and not just client certificates?\n\nDo you have data (other than bug reports) that indicates this is only a problem with client certificates? This seems like something that is going to keep coming up as the change rolls out further, although maybe in the context of self-signed dev certificates, or ones chaining to a locally installed trust anchor.\n\nI wonder if it wouldn\u0027t be better to match the existing laxness in certificate parsing, and try to ratchet strictness down in a separate pass accompanied with an explicit intent-to-implement and data showing its prevalence.",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e230c11c_1ccb3b8e",
+        "filename": "net/cert/internal/parse_name.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-06T17:54:50Z",
+      "side": 1,
+      "message": "Please also document the meaning of kAsUTF8Hack",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9baeb71_a11d277b",
+        "filename": "net/cert/x509_cert_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-10-06T17:54:50Z",
+      "side": 1,
+      "message": "optional nit: this name is long, suggest abbreviating (even just string_handling seems sufficient to me).",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
