@@ -365,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "ac267a85_bde14315",
+        "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T20:18:45Z",
+      "side": 1,
+      "message": "RunLoop is not deprecated however RunUntilIdle is no longer considered to be a risk factor for flaky tests so it is fine to use.",
+      "parentUuid": "3a869184_0cfb7d02",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "296d379f_6bf81b07",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 3

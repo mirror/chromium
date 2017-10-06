@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d33836c_f1ff749d",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T20:18:45Z",
+      "side": 1,
+      "message": "This doesn\u0027t appear to have been changed to use an ID.",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a29269_a8b54f43",
+        "filename": "device/u2f/u2f_register_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T20:18:45Z",
+      "side": 1,
+      "message": "Here and in the U2fSign tests, instead of exposing the list of discoveries and this static cast can you keep a raw pointer to the MockU2fDiscovery created at the beginning of the test like you do in the U2fRequest tests?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
