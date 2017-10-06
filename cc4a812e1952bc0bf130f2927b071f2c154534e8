@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "5cf649cc_95e93567",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:38:27Z",
+      "side": 1,
+      "message": "Mostly I\u0027m trying to understand if there\u0027s significance to tying this to WidgetWillClose() instead of, say, OnDestruct(). It would be clearer to do the latter, since we already need to override OnDestruct() anyway (and it will always Just Work--whereas if PresentationReceiver ever ends up in a situation where it\u0027s used by a subframe, WidgetWillClose might not be called).",
+      "parentUuid": "0c454d53_2803c260",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b938e6d_afd67750",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -318,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "5cae5bfb_1987a002",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:38:27Z",
+      "side": 1,
+      "message": "What are the cases there would be multiple connections? Can you present multiple things at the same time?",
+      "parentUuid": "604d9d1f_2aaf635d",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e92c32b1_9c0a4a09",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -382,6 +418,24 @@
       "side": 1,
       "message": "Ok, I will pass in an empty callback here (I assume this will get properly handled by mojo, but I can do some testing to verify)",
       "parentUuid": "cda97220_412f49cd",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fefd2e7_f0920f9b",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:38:27Z",
+      "side": 1,
+      "message": "I think I was asking for OnMessage to not just not have a result callback by removing the \u003d\u003e (bool) in the mojom. It doesn\u0027t seem used for anything other than DLOGing failure.",
+      "parentUuid": "29651323_ebcfad29",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -522,6 +576,24 @@
       "side": 1,
       "message": "The new RemotePlayback pipeline is implemented on top of Presentation, this makes sense because they share the same implementation in the backend (Media Router).\n - This class uses Presentation screen availability to detect potential devices to initiate remote playback for a media element.\n- A remote playback session is implemented as a presentation connection.",
       "parentUuid": "3f4a095b_b10bb7b6",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f9ab61_e8440340",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:38:27Z",
+      "side": 1,
+      "message": "Probably worth adding this to a class-level comment. Followup is OK.",
+      "parentUuid": "6c141561_acb33355",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
