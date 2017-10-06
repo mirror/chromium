@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "586072ac_9ec4e4b5",
+        "filename": "chrome/browser/ui/browser_commands.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "const \u0026",
+      "range": {
+        "startLine": 156,
+        "startChar": 9,
+        "endLine": 156,
+        "endChar": 15
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1394eb7_f0104c8f",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "Add a description as to what all these args are.",
+      "range": {
+        "startLine": 299,
+        "startChar": 30,
+        "endLine": 299,
+        "endChar": 34
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e396b7b_a27d0d46",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "On the previous line put\n// static\n(just like you have on line 99).",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 22
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8cf9b7e_ac2a05f3",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "Please do this now as otherwise it\u0027s mildly confusing the way you have it here.",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 122,
+        "endChar": 34
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c13fa0_4ae9f8bd",
+        "filename": "chrome/browser/ui/views/intent_picker_bubble_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "Why would you want to keep it in memory?",
+      "range": {
+        "startLine": 368,
+        "startChar": 5,
+        "endLine": 369,
+        "endChar": 23
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73af2fe_2e231c11",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "Why do you hvae this call here?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12b3ce7_9c62b75d",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "When is browser_ null? If you really allow it to be null, then I would expect a null check in IsIncognitoMode too.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c96b09_ec5031c8",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "This will hit for guest profiles too. Are you sure you don\u0027t want to look for a regular profile?",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a0875d_05820e65",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "No \u0026",
+      "range": {
+        "startLine": 26,
+        "startChar": 14,
+        "endLine": 26,
+        "endChar": 15
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea86f01_888b6984",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "No need to go to the tabstripmodel for this. Use the browser_-\u003eprofile().",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87f394c3_4d68cec8",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "ifdef here and 399?",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a45b73a_50f9912f",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "AFAICT you don\u0027t use this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 14,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deacdcba_f425a4e6",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "AFAICT you don\u0027t use this.",
+      "range": {
+        "startLine": 87,
+        "startChar": 14,
+        "endLine": 87,
+        "endChar": 19
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "873a0ef4_b00d4e1f",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:44:43Z",
+      "side": 1,
+      "message": "const\u0026",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 17
+      },
+      "revId": "46bde8e3b84d5de5bd8bb7a79353c2975aded6f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
