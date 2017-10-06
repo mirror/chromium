@@ -9,6 +9,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ public class MainActivity extends Activity {
     private static final String LAST_RESORT_HOST_BROWSER = "com.android.chrome";
     private static final String LAST_RESORT_HOST_BROWSER_APPLICATION_NAME = "Google Chrome";
     private static final String TAG = "cr_MainActivity";
+    private static final int MINMUM_REQUIRED_CHROME_VERSION = 57;
 
     /**
      * Name of class which launches browser in WebAPK mode.
@@ -134,6 +137,20 @@ public class MainActivity extends Activity {
     }
 
     private void launchInHostBrowser(String runtimeHost) {
+        PackageInfo info;
+        try {
+            info = getPackageManager().getPackageInfo(runtimeHost, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Unable to get the host browser's package info.");
+            return;
+        }
+
+        int version = Integer.valueOf(info.versionName.substring(0, info.versionName.indexOf(".")));
+        if (version < MINMUM_REQUIRED_CHROME_VERSION) {
+            launchInTab(runtimeHost);
+            return;
+        }
+
         boolean forceNavigation = false;
         int source = getIntent().getIntExtra(WebApkConstants.EXTRA_SOURCE, 0);
         if (mOverrideUrl != null) {
@@ -160,6 +177,13 @@ public class MainActivity extends Activity {
             Log.w(TAG, "Unable to launch browser in WebAPK mode.");
             e.printStackTrace();
         }
+    }
+
+    /** Launches a WebAPK in a tab. */
+    private void launchInTab(String runtimeHost) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mStartUrl));
+        intent.setPackage(runtimeHost);
+        startActivity(intent);
     }
 
     /**
