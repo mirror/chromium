@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbe16d3c_2e92b5c6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-06T20:00:45Z",
+      "side": 1,
+      "message": "Note: I had to split this string because \"foo\" starts with a hex digit. Should I just use a different word?",
+      "revId": "019f7fe576b6d94251c751c2df4cc3495679ff5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

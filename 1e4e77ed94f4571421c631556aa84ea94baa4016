@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "0ffbf5ac_850977fb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-06T20:00:45Z",
+      "side": 1,
+      "message": "Changwan, for your second proposed test:\n\"foo^bar| \" --\u003e insertText(\"\")\n\nThe space after \"bar\" is already being collapsed, so it\u0027s not correct for InsertTextCommand to change it to non-collapsed.\n\nSame for the third reversed test:\n\"\u003cp\u003ebaz\u003c/p\u003e ^bar|foo\" --\u003e insertText(\"\")",
+      "parentUuid": "404429fd_421083c3",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 60
+      },
+      "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2848fadc_21241abc",
         "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
         "patchSetId": 1
