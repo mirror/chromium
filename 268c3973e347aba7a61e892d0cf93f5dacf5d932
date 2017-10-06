@@ -33,6 +33,24 @@
       "revId": "268c3973e347aba7a61e892d0cf93f5dacf5d932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13b2d4b_4738b971",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-10-06T18:46:45Z",
+      "side": 1,
+      "message": "V8 supports 4.8 as a minimum.",
+      "parentUuid": "73cca11f_4f219e6e",
+      "revId": "268c3973e347aba7a61e892d0cf93f5dacf5d932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
