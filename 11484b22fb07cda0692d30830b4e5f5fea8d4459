@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8dcd386_804e1448",
+        "filename": "media/video/h264_parser.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-06T19:51:34Z",
+      "side": 1,
+      "message": "I see that off_t is used elsewhere in this file, but it should be size_t.",
+      "range": {
+        "startLine": 390,
+        "startChar": 25,
+        "endLine": 390,
+        "endChar": 30
+      },
+      "revId": "11484b22fb07cda0692d30830b4e5f5fea8d4459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ab9d39d_da0431d8",
+        "filename": "media/video/h264_parser_fuzzertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-06T19:51:34Z",
+      "side": 1,
+      "message": "This looks like it will double the fuzzing time without adding any new coverage. I don\u0027t think it\u0027s worth it if it\u0027s so similar to the loop below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "11484b22fb07cda0692d30830b4e5f5fea8d4459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
