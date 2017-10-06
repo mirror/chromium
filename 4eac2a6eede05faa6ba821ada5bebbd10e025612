@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "448b429e_2d13c468",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T21:27:30Z",
+      "side": 1,
+      "message": "Since you removed \u003ca\u003e, you don\u0027t need this part either.",
+      "revId": "4eac2a6eede05faa6ba821ada5bebbd10e025612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7077dacd_33f4b6e4",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T21:27:30Z",
+      "side": 1,
+      "message": "Could you attach a screenshot in the bug or here after your change?",
+      "revId": "4eac2a6eede05faa6ba821ada5bebbd10e025612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5518d302_7d1dddae",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
         "patchSetId": 3

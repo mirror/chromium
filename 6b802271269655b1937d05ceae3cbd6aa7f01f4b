@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2393b3_51982377",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T21:27:30Z",
+      "side": 0,
+      "message": "If you remove this part, make sure you also remove the corresponding strings in https://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc?rcl\u003df0794182a95e64e07c4d351ff51543aa1ad4722a\u0026l\u003d1496 and https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?rcl\u003df6051161237b285ceb6ba797eb37db3a8af1ee48\u0026l\u003d1169.",
+      "revId": "6b802271269655b1937d05ceae3cbd6aa7f01f4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
