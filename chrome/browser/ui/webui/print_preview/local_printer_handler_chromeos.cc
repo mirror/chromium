@@ -8,24 +8,38 @@
 #include <vector>
 
 #include "base/bind_helpers.h"
+#include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted_memory.h"
+#include "base/memory/weak_ptr.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
 #include "chrome/browser/chromeos/printing/cups_printers_manager.h"
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
+#include "chrome/browser/printing/print_job_manager.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
+#include "chrome/browser/printing/print_view_manager.h"
+#include "chrome/browser/printing/printer_query.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 #include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/debug_daemon_client.h"
 #include "chromeos/printing/ppd_provider.h"
 #include "chromeos/printing/printer_configuration.h"
+#include "components/printing/common/print_messages.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "printing/backend/print_backend_consts.h"
+#include "printing/page_range.h"
+#include "printing/print_settings.h"
 
 namespace {
 
@@ -71,8 +85,12 @@ void FetchCapabilities(std::unique_ptr<chromeos::Printer> printer,
 
 }  // namespace
 
-LocalPrinterHandlerChromeos::LocalPrinterHandlerChromeos(Profile* profile)
-    : printers_manager_(CupsPrintersManager::Create(profile)),
+LocalPrinterHandlerChromeos::LocalPrinterHandlerChromeos(
+    Profile* profile,
+    content::WebContents* preview_web_contents)
+    : preview_web_contents_(preview_web_contents),
+      queue_(g_browser_process->print_job_manager()->queue()),
+      printers_manager_(CupsPrintersManager::Create(profile)),
       printer_configurer_(chromeos::PrinterConfigurer::Create(profile)),
       weak_factory_(this) {
   // Construct the CupsPrintJobManager to listen for printing events.
@@ -200,4 +218,98 @@ void LocalPrinterHandlerChromeos::HandlePrinterSetup(
 
   // TODO(skau): Open printer settings if this is resolvable.
   cb.Run(nullptr);
+}
+
+// TODO: factor this out so chromeos and default share code.
+void LocalPrinterHandlerChromeos::StartPrint(
+    const std::string& destination_id,
+    const std::string& capability,
+    const base::string16& job_title,
+    const std::string& ticket_json,
+    const gfx::Size& page_size,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    const PrintCallback& callback) {
+  std::unique_ptr<base::DictionaryValue> job_settings =
+      base::DictionaryValue::From(base::JSONReader::Read(ticket_json));
+  if (!job_settings) {
+    callback.Run(false, base::Value("Invalid settings"));
+    return;
+  }
+  job_settings->SetBoolean(printing::kSettingHeaderFooterEnabled, false);
+  job_settings->SetInteger(printing::kSettingMarginsType, printing::NO_MARGINS);
+  scoped_refptr<printing::PrinterQuery> printer_query =
+      queue_->CreatePrinterQuery(
+          preview_web_contents_->GetMainFrame()->GetProcess()->GetID(),
+          preview_web_contents_->GetMainFrame()->GetRoutingID());
+  printer_query->SetSettings(
+      std::move(job_settings),
+      base::Bind(&LocalPrinterHandlerChromeos::OnPrintSettingsDone,
+                 weak_ptr_factory_.GetWeakPtr(), callback, printer_query,
+                 print_data));
+}
+
+void LocalPrinterHandlerChromeos::OnPrintSettingsDone(
+    const PrintCallback& callback,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const scoped_refptr<base::RefCountedBytes>& print_data) {
+  queue_->QueuePrinterQuery(printer_query.get());
+
+  // Post task so that the query has time to reset the callback before calling
+  // OnDidGetPrintedPagesCount.
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(&LocalPrinterHandlerChromeos::StartPrintJob,
+                 weak_ptr_factory_.GetWeakPtr(), callback, printer_query));
+}
+
+void LocalPrinterHandlerChromeos::StartPrintJob(
+    const PrintCallback& callback,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const scoped_refptr<base::RefCountedBytes>& print_data) {
+  const printing::PrintSettings& settings = printer_query->settings();
+  // Get page numbers
+  std::vector<int> page_nums = printing::PageRange::GetPages(settings.ranges());
+  if (page_nums.empty()) {  // Print the whole document.
+    PrintPreviewUI* print_preview_ui =
+        static_cast<PrintPreviewUI*>(preview_web_contents_->GetController());
+    for (int i = 0; i < print_preview_ui->GetAvailableDraftPageCount(); i++)
+      page_nums.push_back(i);
+  }
+
+  // Get print view manager.
+  printing::PrintPreviewDialogController* dialog_controller =
+      printing::PrintPreviewDialogController::GetInstance();
+  content::WebContents* initiator =
+      dialog_controller ? dialog_controller->GetInitiator(preview_web_contents_)
+                        : nullptr;
+  printing::PrintViewManager* print_view_manager =
+      printing::PrintViewManager::FromWebContents(initiator);
+  if (!print_view_manager) {
+    callback.Run(false, base::Value("Initiator closed"));
+    return;
+  }
+  print_view_manager->OnDidGetPrintedPagesCount(printer_query->cookie(),
+                                                page_nums.size());
+  // Print pages
+  for (int page_num : page_nums) {
+    PrintHostMsg_DidPrintPage_Params params;
+    if (page_num == page_nums[0]) {
+      // Copy the metafile data to a shared buffer.
+      std::unique_ptr<base::SharedMemory> shared_buf(new base::SharedMemory());
+      if (!shared_buf ||
+          !shared_buf->CreateAndMapAnonymous(print_data->size())) {
+        callback.Run(false, base::Value("Print failed"));
+        return;
+      }
+      memcpy(shared_buf->memory(), &(print_data->data()[0]),
+             print_data->size());
+      params.metafile_data_handle =
+          base::SharedMemory::DuplicateHandle(shared_buf->handle());
+    }
+    params.data_size = print_data->size();
+    params.page_number = page_num;
+    params.document_cookie = printer_query->cookie();
+    print_view_manager->OnDidPrintPage(params);
+  }
+  callback.Run(true, base::Value());
 }
