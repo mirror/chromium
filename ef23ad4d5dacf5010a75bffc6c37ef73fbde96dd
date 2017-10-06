@@ -46,6 +46,30 @@
       "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0145d5c_8e107dc6",
+        "filename": "chrome/android/java/res/drawable/ic_drive_document_24dp.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-10-06T01:06:30Z",
+      "side": 1,
+      "message": "Um.. After discussing with Theresa, we can\u0027t just use ScaleType.FIT_XY \"yet\" because the icon is centered in a image view with a large background (in download item view, the image view size is 36dp but we only need 24dp icon; in ntp download snippet, the image view size is 124dp and icon size is 36dp). We can make image view the size of the icon and have a framelayout wrapper. We agree that this can be a future CL.\n\nWe thought we could resize the drawable but the setBounds method from Drawable surprisingly doesn\u0027t work for VectorDrawable...",
+      "parentUuid": "f298b19e_89c8860a",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
