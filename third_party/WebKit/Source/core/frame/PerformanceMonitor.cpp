@@ -30,6 +30,9 @@ static const double kNetworkQuietWatchdogSeconds = 2;
 }  // namespace
 
 // static
+bool PerformanceMonitor::bypass_long_compile_threshold = false;
+
+// static
 double PerformanceMonitor::Threshold(ExecutionContext* context,
                                      Violation violation) {
   PerformanceMonitor* monitor =
@@ -241,8 +244,14 @@ void PerformanceMonitor::Did(const probe::V8Compile& probe) {
     return;
 
   double v8_compile_duration = probe.Duration();
-  if (v8_compile_duration <= kLongTaskSubTaskThresholdInSeconds)
-    return;
+
+  if (bypass_long_compile_threshold) {
+    bypass_long_compile_threshold = false;
+  } else {
+    if (v8_compile_duration <= kLongTaskSubTaskThresholdInSeconds)
+      return;
+  }
+
   std::unique_ptr<SubTaskAttribution> sub_task_attribution =
       SubTaskAttribution::Create(
           String("script-compile"),

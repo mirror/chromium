@@ -77,6 +77,10 @@ class CORE_EXPORT PerformanceMonitor final
                                      std::unique_ptr<SourceLocation>);
   static double Threshold(ExecutionContext*, Violation);
 
+  static void BypassLongCompileThresholdOnceForTesting() {
+    bypass_long_compile_threshold = true;
+  };
+
   // Instrumenting methods.
   void Will(const probe::RecalculateStyle&);
   void Did(const probe::RecalculateStyle&);
@@ -175,6 +179,8 @@ class CORE_EXPORT PerformanceMonitor final
   double network_0_quiet_ = 0;
   double network_2_quiet_ = 0;
   TaskRunnerTimer<PerformanceMonitor> network_quiet_timer_;
+
+  static bool bypass_long_compile_threshold;
 };
 
 }  // namespace blink
