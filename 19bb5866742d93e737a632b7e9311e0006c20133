@@ -34,6 +34,24 @@
       "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c466be0_12e3d1da",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:55:17Z",
+      "side": 1,
+      "message": "yeah, you definitely wouldn\u0027t return the d-bus response from GetLastSyncInfo -- the point of this client class is to hide d-bus implementation details from callers.\n\njust do something like this:\n\n  // in header\n  using GetLastSyncInfoCallback \u003d base::Callback\u003cvoid(bool synchronized)\u003e;\n\n  void GetLastSyncInfo(const GetLastSyncInfoCallback\u0026 callback) {\n    dbus::MethodCall method_call(system_clock::kSystemClockInterface,\n                                 system_clock::kSystemLastSyncInfo);\n    system_clock_proxy_-\u003eCallMethod(\n        \u0026method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,\n        base::BindOnce(\u0026SystemClockClientImpl::OnGotLastSyncInfo,\n                       weak_ptr_factory_.GetWeakPtr(), callback));    \n  }\n\n  // at top of .cc file\n  namespace {\n    // Handles replies to D-Bus calls made by GetLastSyncInfo.\n    void OnGotLastSyncInfo(const GetLastSyncInfoCallback\u0026 callback,\n                           dbus::Response* response) {\n      // handle errors and pop the arg\n      callback.Run(synchronized);\n    }\n  }  // namespace\n\nLastSyncInfo returns additional args (string \"source\" and sync time), so you may want to pass those to the callback as well.",
+      "parentUuid": "13019bf0_6e722dd8",
+      "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
