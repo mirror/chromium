@@ -277,10 +277,10 @@ bool UiElement::GetRayDistance(const gfx::Point3F& ray_origin,
                              distance);
 }
 
-void UiElement::NotifyClientFloatAnimated(float opacity,
+void UiElement::NotifyClientFloatAnimated(float value,
                                           int target_property_id,
                                           cc::Animation* animation) {
-  opacity_ = base::ClampToRange(opacity, 0.0f, 1.0f);
+  opacity_ = base::ClampToRange(value, 0.0f, 1.0f);
 }
 
 void UiElement::NotifyClientTransformOperationsAnimated(

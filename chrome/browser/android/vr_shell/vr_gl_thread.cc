@@ -98,6 +98,7 @@ void VrGLThread::ForceExitVr() {
 }
 
 void VrGLThread::ExitPresent() {
+  LOG(ERROR) << "aoeu: VrGLThread is exiting presentation";
   DCHECK(OnGlThread());
   main_thread_task_runner_->PostTask(
       FROM_HERE, base::Bind(&VrShell::ExitPresent, weak_vr_shell_));

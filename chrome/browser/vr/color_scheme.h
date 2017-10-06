@@ -83,6 +83,14 @@ struct ColorScheme {
   // Splash screen colors.
   SkColor splash_screen_background;
   SkColor splash_screen_text_color;
+
+  // WebVr timeout spinner colors.
+  SkColor spinner_background;
+  SkColor spinner_color;
+
+  // Timeout UI colors
+  SkColor timeout_message_background;
+  SkColor timeout_message_foreground;
 };
 
 }  // namespace vr
