@@ -70,7 +70,7 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
     // Copy any entries not already present into the node.
     for (auto& entry : dump.entries()) {
       // Check that there are not multiple entries with the same name.
-      DCHECK(node->entries().find(entry.name) == node->entries().end());
+      DCHECK(node->entries()->find(entry.name) == node->entries()->end());
       AddEntryToNode(node, entry);
     }
   }
@@ -118,7 +118,7 @@ void MarkWeakNodesRecursively(Node* node) {
 
   // Recursively mark nodes as weak then store whether all children are weak.
   bool all_children_weak = true;
-  for (auto& path_to_child : *node->children()) {
+  for (const auto& path_to_child : *node->children()) {
     MarkWeakNodesRecursively(path_to_child.second);
     all_children_weak = all_children_weak && path_to_child.second->is_weak();
   }
@@ -165,6 +165,56 @@ void AssignTracingOverhead(base::StringPiece allocator,
                                      0 /* importance */);
 }
 
+Node::Entry AggregateNumericsForNode(Node* node, std::string name) {
+  bool first = true;
+  Node::Entry::ScalarUnits units = Node::Entry::ScalarUnits::kObjects;
+  uint64_t aggregated = 0;
+  for (auto& path_to_child : *node->children()) {
+    auto name_to_entry_it = path_to_child.second->entries()->find(name);
+    if (name_to_entry_it != path_to_child.second->entries()->end()) {
+      DCHECK(first || units == name_to_entry_it->second.units);
+      units = name_to_entry_it->second.units;
+      aggregated += name_to_entry_it->second.value_uint64;
+      first = false;
+    }
+  }
+  return Node::Entry(units, aggregated);
+}
+
+void AggregateNumericsRecurseively(Node* node) {
+  std::set<std::string> numeric_names;
+
+  for (const auto& path_to_child : *node->children()) {
+    AggregateNumericsRecurseively(path_to_child.second);
+    for (const auto& name_to_entry : *path_to_child.second->entries()) {
+      if (name_to_entry.second.type == Node::Entry::Type::kUInt64) {
+        numeric_names.insert(name_to_entry.first);
+      }
+    }
+  }
+
+  for (auto& name : numeric_names) {
+    if (name != "size" && name != "effective_size" &&
+        node->entries()->find(name) == node->entries()->end()) {
+      node->entries()->emplace(name, AggregateNumericsForNode(node, name));
+    }
+  }
+}
+
+void PropagateNumericsAndDiagnosticsRecursively(Node* node) {
+  for (const auto& name_to_entry : *node->entries()) {
+    for (auto* edge : *node->owned_by_edges()) {
+      auto* entries = edge->source()->entries();
+      if (entries->find(name_to_entry.first) == entries->end()) {
+        entries->insert(name_to_entry);
+      }
+    }
+  }
+  for (const auto& path_to_child : *node->children()) {
+    PropagateNumericsAndDiagnosticsRecursively(path_to_child.second);
+  }
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
@@ -204,6 +254,14 @@ std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
                           pid_to_process.second.get());
     AssignTracingOverhead("winheap", global_graph.get(),
                           pid_to_process.second.get());
+  }
+
+  // Sixth pass: aggregate non-size related numerics.
+  AggregateNumericsRecurseively(global_graph->shared_memory_graph()->root());
+  PropagateNumericsAndDiagnosticsRecursively(
+      global_graph->shared_memory_graph()->root());
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    AggregateNumericsRecurseively(pid_to_process.second->root());
   }
 
   return global_graph;

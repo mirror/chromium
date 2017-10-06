@@ -47,9 +47,9 @@ TEST(GraphProcessorTest, ComputeMemoryGraph) {
   auto* direct = id_to_dump_it->second->FindNode("test1/test2/test3");
   ASSERT_EQ(third_child, direct);
 
-  ASSERT_EQ(third_child->entries().size(), 1ul);
+  ASSERT_EQ(third_child->entries()->size(), 1ul);
 
-  auto size = third_child->entries().find(MemoryAllocatorDump::kNameSize);
+  auto size = third_child->entries()->find(MemoryAllocatorDump::kNameSize);
   ASSERT_EQ(10ul, size->second.value_uint64);
 
   auto& edges = global_dump->edges();
