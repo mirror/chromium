@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdb4cf91_1d699eeb",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-10-06T13:50:29Z",
+      "side": 1,
+      "message": "I guess we should always pass |password_view_button_| that should be null of password_view_button_ \u003d\u003d true.",
+      "range": {
+        "startLine": 513,
+        "startChar": 6,
+        "endLine": 513,
+        "endChar": 73
+      },
+      "revId": "7a1ccc4fdd56fc115c4683cbf976824749627cf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
