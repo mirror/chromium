@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69dadfec_e80fa7f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T22:16:56Z",
+      "side": 1,
+      "message": "...notification to extensions code...",
+      "range": {
+        "startLine": 7,
+        "startChar": 33,
+        "endLine": 7,
+        "endChar": 34
+      },
+      "revId": "0e154f885b329d058bc62a0d5c5630379dfe6681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa75986_f0fd739c",
+        "filename": "components/safe_browsing/db/notification_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T22:16:56Z",
+      "side": 1,
+      "message": "nit: \"various types\" isn\u0027t true since it\u0027s jue one.\nMaybe this:\n\n// Lists of safe-browsing-related notifications, used with NotificationService.",
+      "revId": "0e154f885b329d058bc62a0d5c5630379dfe6681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "715c1cc2_9b599935",
+        "filename": "components/safe_browsing/db/notification_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-10-06T22:16:56Z",
+      "side": 1,
+      "message": "super nit: remove trailing comma so it\u0027s harder to accidentally append one.",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "0e154f885b329d058bc62a0d5c5630379dfe6681",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
