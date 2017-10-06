@@ -322,7 +322,8 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
 // CATransaction.  Use |transitionStyle| = StackTransitionStylePresenting for
 // presentation and |transitionStyle| = StackTransitionStyleDismissing for
 // dismissal.
-- (void)animateTransitionWithStyle:(StackTransitionStyle)transitionStyle;
+- (void)animateTransitionWithStyle:(StackTransitionStyle)transitionStyle
+                        completion:(ProceduralBlock)completion;
 // Updates the view hierarchy for the transition based on the current transition
 // style.  If the style is STACK_TRANSITION_STYLE_PRESENTING or
 // STACK_TRANSITION_STYLE_DISMISSING, the display views are added to the root
@@ -1481,8 +1482,9 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   return startingCardIndex;
 }
 
-- (void)showWithSelectedTabAnimation {
-  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_PRESENTING];
+- (void)showWithSelectedTabAnimation:(ProceduralBlock)completion {
+  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_PRESENTING
+                        completion:completion];
 
   [_testDelegate stackViewControllerShowWithSelectedTabAnimationDidStart];
 
@@ -1586,7 +1588,8 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   }
 }
 
-- (void)animateTransitionWithStyle:(StackTransitionStyle)transitionStyle {
+- (void)animateTransitionWithStyle:(StackTransitionStyle)transitionStyle
+                        completion:(ProceduralBlock)completion {
   // If the dummy toolbar background view is instantiated, reverse the current
   // transition animations.
   if (self.dummyToolbarBackgroundView) {
@@ -1611,9 +1614,13 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [self.dummyToolbarBackgroundView setClipsToBounds:YES];
 
   // Set the transition completion block.
+  NSLog(@"%f", [CATransaction animationDuration]);
   [CATransaction begin];
   [CATransaction setCompletionBlock:^{
     [self finishTransitionAnimation];
+    if (completion) {
+      completion();
+    }
   }];
 
   // Slide in/out the inactive card set.
@@ -1958,7 +1965,8 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   [_delegate tabSwitcher:self
       dismissTransitionWillStartWithActiveModel:_activeCardSet.tabModel];
 
-  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_DISMISSING];
+  [self animateTransitionWithStyle:STACK_TRANSITION_STYLE_DISMISSING
+                        completion:nil];
 }
 
 - (std::vector<LayoutRect>)cardTransitionLayouts {

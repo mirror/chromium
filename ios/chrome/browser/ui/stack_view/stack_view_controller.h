@@ -61,7 +61,7 @@ class GURL;
 // Performs an animation to zoom the selected tab from the full size of the
 // content area to its proper place in the stack. Should be called after the
 // view has been made visible.
-- (void)showWithSelectedTabAnimation;
+- (void)showWithSelectedTabAnimation:(ProceduralBlock)completion;
 
 // Performs an animation to zoom the selected tab to the full size of the
 // content area. When the animation completes, calls

@@ -362,7 +362,7 @@ enum class SnapshotViewOption {
                          otrTabModel:otrModel];
 }
 
-- (void)showWithSelectedTabAnimation {
+- (void)showWithSelectedTabAnimation:(ProceduralBlock)completion {
   [self updateWindowBackgroundColor];
   [self performTabSwitcherTransition:TransitionType::TRANSITION_PRESENT
                            withModel:_onLoadActiveModel

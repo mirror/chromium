@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
+#import "base/ios/block_types.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #include "ios/chrome/browser/ui/tab_switcher/tab_switcher_transition_context.h"
@@ -69,7 +70,7 @@
 // Performs an animation of the selected tab from its presented state to its
 // place in the tab switcher. Should be called after the tab switcher's view has
 // been presented.
-- (void)showWithSelectedTabAnimation;
+- (void)showWithSelectedTabAnimation:(ProceduralBlock)completion;
 
 // Performs an animation from the selected tab in the tab switcher to the
 // presented tab in the content area. When the animation completes, calls the
