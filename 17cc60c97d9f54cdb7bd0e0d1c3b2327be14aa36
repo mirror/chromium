@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22e99230_0f59d231",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T17:02:46Z",
+      "side": 1,
+      "message": "wrap at 80.",
+      "range": {
+        "startLine": 322,
+        "startChar": 76,
+        "endLine": 322,
+        "endChar": 80
+      },
+      "revId": "17cc60c97d9f54cdb7bd0e0d1c3b2327be14aa36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
