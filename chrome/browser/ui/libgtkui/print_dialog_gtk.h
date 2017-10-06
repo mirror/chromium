@@ -20,7 +20,6 @@
 #include "ui/aura/window_observer.h"
 
 namespace printing {
-class MetafilePlayer;
 class PrintSettings;
 }
 
@@ -44,7 +43,7 @@ class PrintDialogGtk2 : public printing::PrintDialogGtkInterface,
       gfx::NativeView parent_view,
       bool has_selection,
       const PrintingContextLinux::PrintSettingsCallback& callback) override;
-  void PrintDocument(const printing::MetafilePlayer& metafile,
+  void PrintDocument(const std::vector<char>& data,
                      const base::string16& document_name) override;
   void AddRefToDialog() override;
   void ReleaseDialog() override;

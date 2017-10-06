@@ -59,7 +59,12 @@ void DebugDumpPageTask(const base::string16& doc_name,
 #endif  // OS_WIN
   base::File file(file_path,
                   base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-  page->metafile()->SaveTo(&file);
+#if defined(OS_WIN)
+  page->data()->SaveTo(&file);
+#else   // OS_WIN
+  file.WriteAtCurrentPos(page->data()->data(),
+                         base::checked_cast<int>(page->data()->size()));
+#endif  // OS_WIN
 }
 
 void DebugDumpDataTask(const base::string16& doc_name,
@@ -114,7 +119,7 @@ PrintedDocument::~PrintedDocument() {
 }
 
 void PrintedDocument::SetPage(int page_number,
-                              std::unique_ptr<MetafilePlayer> metafile,
+                              std::unique_ptr<Storage> data,
 #if defined(OS_WIN)
                               float shrink,
 #endif  // OS_WIN
@@ -122,8 +127,8 @@ void PrintedDocument::SetPage(int page_number,
                               const gfx::Rect& page_rect) {
   // Notice the page_number + 1, the reason is that this is the value that will
   // be shown. Users dislike 0-based counting.
-  scoped_refptr<PrintedPage> page(new PrintedPage(
-      page_number + 1, std::move(metafile), paper_size, page_rect));
+  scoped_refptr<PrintedPage> page(
+      new PrintedPage(page_number + 1, std::move(data), paper_size, page_rect));
 #if defined(OS_WIN)
   page->set_shrink_factor(shrink);
 #endif  // OS_WIN
@@ -172,7 +177,7 @@ bool PrintedDocument::IsComplete() const {
     PrintedPages::const_iterator itr = mutable_.pages_.find(page.ToInt());
     if (itr == mutable_.pages_.end() || !itr->second.get())
       return false;
-    if (metafile_must_be_valid && !itr->second->metafile())
+    if (metafile_must_be_valid && !itr->second->data())
       return false;
   }
   return true;
