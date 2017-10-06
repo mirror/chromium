@@ -33,6 +33,24 @@
       "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea167351_71ee5000",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-10-06T02:14:02Z",
+      "side": 1,
+      "message": "changwan@ already decided in https://codereview.chromium.org/2874783004 that calling CommitText() with an empty string should delete the text. If we support that behavior, we need to update the whitespace properly.",
+      "parentUuid": "2848fadc_21241abc",
+      "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
