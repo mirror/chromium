@@ -16,6 +16,24 @@
       "revId": "84a36dc13bf57a3eb78ef63ef5d73137f87f9c8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f868862a_583559db",
+        "filename": "base/numerics/ranges.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-06T19:29:34Z",
+      "side": 1,
+      "message": "\u003e nit: functions should be verbs. IsApproximatelyEqual?\nDone.\n \n\u003e can this be constexpr?\nDo you mean the use of std::is_arithmetic\u003cT\u003e::value?\nNo need, it\u0027s wrapped in a static_assert, so it\u0027s a \ncompile-time check.\n\n\u003e static is not needed\nDone",
+      "parentUuid": "85e17fe0_8a94c1d9",
+      "revId": "84a36dc13bf57a3eb78ef63ef5d73137f87f9c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
