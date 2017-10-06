@@ -526,6 +526,9 @@ public class ChromeFullscreenManager
     private boolean shouldShowAndroidControls() {
         if (mBrowserControlsAndroidViewHidden) return false;
 
+        // If in overview mode, always show the browser controls.
+        if (getTab() != null && getTab().getActivity().isInOverviewMode()) return true;
+
         boolean showControls = !drawControlsAsTexture();
         ContentViewCore contentViewCore = getActiveContentViewCore();
         if (contentViewCore == null) return showControls;
