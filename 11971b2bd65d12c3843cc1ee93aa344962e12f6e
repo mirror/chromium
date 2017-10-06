@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "03270a55_6f450eca",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:32:05Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible to use URL object as in isSameOrigin https://cs.chromium.org/chromium/src/ios/web/web_state/js/resources/common.js?q\u003dremoveQueryAndReferenceFromURL\u0026sq\u003dpackage:chromium\u0026l\u003d709 ?",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 48
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "878741ef_5931ad3d",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 1
