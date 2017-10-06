@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb9eaa96_220622f2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppUiSkipPreloadTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:02:38Z",
+      "side": 1,
+      "message": "Is the order of apps non-deterministic?",
+      "revId": "4893cdc37646b9041be6075f4489157ae1bd0e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
