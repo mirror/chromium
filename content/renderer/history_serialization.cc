@@ -43,7 +43,6 @@ void GenerateFrameStateFromItem(const WebHistoryItem& item,
   state->url_string = WebString::ToOptionalString16(item.UrlString());
   state->referrer = WebString::ToOptionalString16(item.GetReferrer());
   state->referrer_policy = item.GetReferrerPolicy();
-  state->target = WebString::ToOptionalString16(item.Target());
   if (!item.StateObject().IsNull()) {
     state->state_object =
         WebString::ToOptionalString16(item.StateObject().ToString());
@@ -72,7 +71,6 @@ void RecursivelyGenerateHistoryItem(const ExplodedFrameState& state,
   item.Initialize();
   item.SetURLString(WebString::FromUTF16(state.url_string));
   item.SetReferrer(WebString::FromUTF16(state.referrer), state.referrer_policy);
-  item.SetTarget(WebString::FromUTF16(state.target));
   if (state.state_object) {
     item.SetStateObject(WebSerializedScriptValue::FromString(
         WebString::FromUTF16(*state.state_object)));
