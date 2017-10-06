@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f35e63c_8212d5e8",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-06T02:52:19Z",
+      "side": 1,
+      "message": "Per https://bugs.chromium.org/p/chromium/issues/detail?id\u003d770924#c11 : could you do the experiment mentioned there with DescheduleUntilFinishedCHROMIUM?\n\nAlso could you see if adding a well-placed Flush into the DrawingBuffer code addresses this issue?\n\nThe scheduling of the VRDisplay sounds a little brittle right now, and though I don\u0027t know this code at all, it seems to me we should be figuring out a more robust mechanism for getting the scheduling you want. It sounds like maybe the app is swamping the GPU due to lack of back-pressure, which is a problem we\u0027ve seen before, and which should probably be handled a little differently than this.\n\nThis is now basically exactly the same loop as just above, which seems wrong somehow.",
+      "revId": "4020a302f38b34e260820b1d8d585fa369609f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
