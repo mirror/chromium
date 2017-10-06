@@ -5,6 +5,7 @@
 #include "cc/scheduler/compositor_timing_history.h"
 
 #include "base/macros.h"
+#include "base/test/histogram_tester.h"
 #include "cc/debug/rendering_stats_instrumentation.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -17,7 +18,7 @@ class TestCompositorTimingHistory : public CompositorTimingHistory {
  public:
   TestCompositorTimingHistory(CompositorTimingHistoryTest* test,
                               RenderingStatsInstrumentation* rendering_stats)
-      : CompositorTimingHistory(false, NULL_UMA, rendering_stats),
+      : CompositorTimingHistory(false, RENDERER_UMA, rendering_stats),
         test_(test) {}
 
  protected:
@@ -41,6 +42,21 @@ class CompositorTimingHistoryTest : public testing::Test {
   void AdvanceNowBy(base::TimeDelta delta) { now_ += delta; }
 
   base::TimeTicks Now() { return now_; }
+
+  void PrepareForDrawInUMATests(int advanced_time, bool used_new_active_tree) {
+    timing_history_.WillBeginMainFrame(true, Now());
+    timing_history_.BeginMainFrameStarted(Now());
+    if (!used_new_active_tree)
+      timing_history_.BeginMainFrameAborted();
+    if (used_new_active_tree) {
+      timing_history_.DidCommit();
+      timing_history_.ReadyToActivate();
+    }
+    timing_history_.WillActivate();
+    timing_history_.DidActivate();
+    timing_history_.WillDraw();
+    AdvanceNowBy(base::TimeDelta::FromMicroseconds(advanced_time));
+  }
 
  protected:
   std::unique_ptr<RenderingStatsInstrumentation> rendering_stats_;
@@ -88,7 +104,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_Commit) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(true, true, Now());
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
 
   EXPECT_EQ(begin_main_frame_queue_duration,
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -138,7 +154,7 @@ TEST_F(CompositorTimingHistoryTest, AllSequential_BeginMainFrameAborted) {
   AdvanceNowBy(one_second);
   timing_history_.WillDraw();
   AdvanceNowBy(draw_duration);
-  timing_history_.DidDraw(false, false, Now());
+  timing_history_.DidDraw(false, false, Now(), 0, 0, 0);
 
   EXPECT_EQ(base::TimeDelta(),
             timing_history_.BeginMainFrameQueueDurationCriticalEstimate());
@@ -261,6 +277,135 @@ TEST_F(CompositorTimingHistoryTest, BeginMainFrames_NewCriticalSlower) {
 
   EXPECT_EQ(begin_main_frame_start_to_commit_duration,
             timing_history_.BeginMainFrameStartToCommitDurationEstimate());
+}
+
+void TestAnimationUMA(
+    const base::HistogramTester& histogram_tester,
+    base::HistogramBase::Count composited_animation_frames,
+    base::HistogramBase::Count main_thread_animation_frames,
+    base::HistogramBase::Count main_thread_compositable_animation_frames) {
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2",
+      composited_animation_frames);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2",
+      main_thread_animation_frames);
+  histogram_tester.ExpectTotalCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations2",
+      main_thread_compositable_animation_frames);
+}
+
+TEST_F(CompositorTimingHistoryTest, AnimationNotReported) {
+  base::HistogramTester histogram_tester;
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(456, true);
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 0);
+  // Previous frame had no animation, so won't report anything in this frame.
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(456, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, ConsecutiveFramesAnimationsReported) {
+  base::HistogramTester histogram_tester;
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(456, true);
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+
+  PrepareForDrawInUMATests(321, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+
+  PrepareForDrawInUMATests(654, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 1, 1, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2", 654, 1);
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 1, 1, 0);
+
+  PrepareForDrawInUMATests(456, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 1, 1, 1);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadCompositableAnimations2",
+      456, 1);
+}
+
+TEST_F(CompositorTimingHistoryTest, InterFrameAnimationsNotReported) {
+  base::HistogramTester histogram_tester;
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  // The previous frame had a main thread compositable animation, where the
+  // current one is main thread animation, we don't measure the timing from a
+  // different animation type.
+  PrepareForDrawInUMATests(456, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(321, true);
+  timing_history_.DidDraw(true, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(654, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 0, 1);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(123, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+}
+
+TEST_F(CompositorTimingHistoryTest, AnimationsWithNewActiveTreeNotUsed) {
+  base::HistogramTester histogram_tester;
+
+  PrepareForDrawInUMATests(123, false);
+  timing_history_.DidDraw(false, true, Now(), 1, 1, 0);
+  TestAnimationUMA(histogram_tester, 0, 0, 0);
+
+  PrepareForDrawInUMATests(456, false);
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 456, 1);
+
+  PrepareForDrawInUMATests(321, true);
+  timing_history_.DidDraw(true, true, Now(), 0, 1, 0);
+  TestAnimationUMA(histogram_tester, 1, 0, 0);
+
+  PrepareForDrawInUMATests(654, true);
+  timing_history_.DidDraw(true, true, Now(), 1, 1, 0);
+  TestAnimationUMA(histogram_tester, 1, 1, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithMainThreadAnimations2", 654, 1);
+
+  PrepareForDrawInUMATests(123, false);
+  timing_history_.DidDraw(false, true, Now(), 1, 0, 0);
+  TestAnimationUMA(histogram_tester, 2, 1, 0);
+  histogram_tester.ExpectBucketCount(
+      "Scheduling.Renderer.DrawIntervalWithCompositedAnimations2", 123, 1);
 }
 
 }  // namespace
