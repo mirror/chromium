@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b8adcd_6889e564",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T23:11:03Z",
+      "side": 1,
+      "message": "better just padding: 0 15px; ？",
+      "revId": "002974b5899f390245a599bdeaece62b6838b9a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
