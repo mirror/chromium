@@ -45,6 +45,29 @@
       "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e16209_9c0775bf",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLCanvasElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-06T18:30:09Z",
+      "side": 1,
+      "message": "AFAIU with this change you no longer call |element-\u003eGetExecutionContext()| but this. Does this call guarantee that context is not null? If yes, can you add a |DCHECK(context);| to make it clear. Reading the code path, I see there is still a path that returns nullptr below. Wouldn\u0027t the same null-deref issues happen then?\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/bindings/core/v8/V8BindingForCore.cpp?rcl\u003de0875b0964f567478c9e469dc962ed5d651b61ea\u0026l\u003d729",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
