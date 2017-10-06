@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d0b347_4bdf42c7",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "Move default implementation into header file - that\u0027s common pattern for Observers.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 70
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f0eaa2_1ca7b7f3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "This function doesn\u0027t notify anyone more. And it\u0027s called only from |SetOffHoursMode| - maybe just inline there?",
+      "range": {
+        "startLine": 255,
+        "startChar": 31,
+        "endLine": 255,
+        "endChar": 56
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18613edb_ca3700e8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "nit: Not clear comment - it doesn\u0027t tell that the value indicates current \"OffHours\" mode state.",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 77
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5590ef9f_7a9d7c75",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "Why this can\u0027t be const pointer anymore?",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 35
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d230be75_3a097bbf",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "nit: is null",
+      "range": {
+        "startLine": 608,
+        "startChar": 36,
+        "endLine": 608,
+        "endChar": 46
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dbcb416_bf6bd24c",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1162075
+      },
+      "writtenOn": "2017-10-06T12:47:03Z",
+      "side": 1,
+      "message": "nit: both features?",
+      "range": {
+        "startLine": 612,
+        "startChar": 7,
+        "endLine": 612,
+        "endChar": 18
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
