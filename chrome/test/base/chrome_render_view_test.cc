@@ -178,7 +178,7 @@ void ChromeRenderViewTest::InitChromeContentRendererClient(
           extension_dispatcher_delegate_.get()));
 #endif
 #if BUILDFLAG(ENABLE_SPELLCHECK)
-  client->SetSpellcheck(new SpellCheck());
+  client->SetSpellcheck(new SpellCheck(nullptr));
 #endif
 }
 
