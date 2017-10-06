@@ -22,6 +22,76 @@
       "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "909864dd_71610f55",
+        "filename": "chrome/browser/ui/blocked_content/popup_opener_tab_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T14:52:33Z",
+      "side": 1,
+      "message": "Well, from a code standpoint I agree, but to the best of my knowledge UX is actually moving away from infobars on desktop but not on Android, so I think the UI concepts are going to diverge in the future anyway.",
+      "parentUuid": "693bae86_eb8f30e5",
+      "range": {
+        "startLine": 316,
+        "startChar": 2,
+        "endLine": 316,
+        "endChar": 16
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2912b635_826039de",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T14:52:33Z",
+      "side": 1,
+      "message": "Would it make sense to put something here for the else case (even if just a NOTREACHED?)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8013ec87_3fd42236",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T14:52:33Z",
+      "side": 1,
+      "message": "Can this live in an anonymous namespace in the implementation file now?",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 23
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
