@@ -70,6 +70,8 @@ base::string16 GetApplicationNameForProtocol(const GURL& url);
 // checked. This allows callers to take specific action in case the current mode
 // (e.g., Chrome Dev) is not the default handler, but another of the brand's
 // modes (e.g., stable Chrome) is.
+// These values are persisted to logs. Entries should not be renumbered and
+// numeric values should never be reused.
 enum DefaultWebClientState {
   // No install mode for the brand is the default client.
   NOT_DEFAULT,
