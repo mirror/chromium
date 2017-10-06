@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b82d3ddb_747faa35",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-06T00:11:23Z",
+      "side": 1,
+      "message": "Unchanged in the new CL.",
+      "parentUuid": "f196b334_8308d786",
+      "revId": "d704603eba37abd5be26ae96cf1072accfcfe414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d1d191_cc45fbbb",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-03T15:14:05Z",
       "side": 1,
       "message": "Logically, this seems much more correct, but this is a behavior change from the old code (where this was dispatched as part of UntrackTerminatedExtension, called from AddExtension or UninstallExtension).  Is this change intentional/safe?",
+      "revId": "d704603eba37abd5be26ae96cf1072accfcfe414",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b477c18b_fe4a08c0",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-06T00:11:23Z",
+      "side": 1,
+      "message": "This isn\u0027t a behavior change. In the old code, this *was* dispatched when the extension was terminated. And also as part of UntrackTerminatedExtension (thus the comment I added in crrev.com/c/672003).\n\nTrackTerminatedExtension adds the extension to the terminated set, but doesn\u0027t remove it from the enabled set. It calls UnloadExtension, which does find the extension (since it\u0027s still in the enabled set). UnloadExtension removes it from the enabled set and sends this notification.\n\nhttps://chromium.googlesource.com/chromium/src/+/a2b3fc69e8aa7de0baa77af02ba631e6d3ce071a/chrome/browser/extensions/extension_service.cc#2052",
+      "parentUuid": "26d1d191_cc45fbbb",
       "revId": "d704603eba37abd5be26ae96cf1072accfcfe414",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
