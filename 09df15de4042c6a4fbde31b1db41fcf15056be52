@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff047087_e57a2e34",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T00:43:06Z",
+      "side": 1,
+      "message": "Can you document these functions and parameters, even if it\u0027s pointing to documentation elsewhere? We\u0027ve been bad about it in this file but let\u0027s not follow the pattern (in my opinion, in the new servicified world the Mojo interfaces should be focus of documentation).\n\nIt might also make sense to add empty lines separating the background fetch stuff from the other events.",
+      "revId": "09df15de4042c6a4fbde31b1db41fcf15056be52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
