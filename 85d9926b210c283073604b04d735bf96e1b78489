@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0d0220cb_8a25a1bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-06T20:53:45Z",
+      "side": 1,
+      "message": "no, I think this is better since we\u0027ll never want to show a notification with the empty string either.",
+      "parentUuid": "b02c8b8c_872222e3",
+      "range": {
+        "startLine": 633,
+        "startChar": 80,
+        "endLine": 633,
+        "endChar": 92
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa6bae3_0aae7463",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5bcd8bfa_91226322",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-06T20:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa6bae3_0aae7463",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 70
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e62103cb_811afa7f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "85d9926b210c283073604b04d735bf96e1b78489",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a202d2b_2f958d52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-06T20:53:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e62103cb_811afa7f",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
