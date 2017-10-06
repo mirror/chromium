@@ -1878,6 +1878,74 @@ TEST_F(PartialRasterTileManagerTest, CancelledTasksHaveNoContentId) {
   TakeHostImpl();
 }
 
+TEST_F(PartialRasterTileManagerTest, PartialImageDecode) {
+  const uint64_t kInvalidatedIds[] = {43, 44, 45, 46};
+
+  const gfx::Size layer_bounds(900, 900);
+
+  std::unique_ptr<FakeRecordingSource> recording_source =
+      FakeRecordingSource::CreateFilledRecordingSource(layer_bounds);
+  recording_source->set_fill_with_nonsolid_color(true);
+
+  int dimension = 450;
+  PaintImage image1 =
+      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  PaintImage image2 =
+      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  PaintImage image3 =
+      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  PaintImage image4 =
+      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  recording_source->add_draw_image(image1, gfx::Point(0, 0));
+  recording_source->add_draw_image(image2, gfx::Point(600, 0));
+  recording_source->add_draw_image(image3, gfx::Point(0, 600));
+  recording_source->add_draw_image(image4, gfx::Point(600, 600));
+
+  recording_source->Rerecord();
+  scoped_refptr<RasterSource> raster_source =
+      recording_source->CreateRasterSource();
+
+  gfx::Size tile_size(700, 700);
+  Region invalidation((gfx::Rect(layer_bounds)));
+  SetupPendingTree(raster_source, tile_size, invalidation);
+
+  PictureLayerTilingSet* tiling_set =
+      pending_layer()->picture_layer_tiling_set();
+  PictureLayerTiling* pending_tiling = tiling_set->tiling_at(0);
+  pending_tiling->set_resolution(HIGH_RESOLUTION);
+  pending_tiling->CreateAllTilesForTesting();
+  pending_tiling->SetTilePriorityRectsForTesting(
+      gfx::Rect(layer_bounds),   // Visible rect.
+      gfx::Rect(layer_bounds),   // Skewport rect.
+      gfx::Rect(layer_bounds),   // Soon rect.
+      gfx::Rect(layer_bounds));  // Eventually rect.
+
+  int i = 0;
+  for (auto* tile : pending_tiling->AllTilesForTesting())
+    tile->SetInvalidated(gfx::Rect(500, 500), kInvalidatedIds[i++]);
+
+  host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
+  EXPECT_TRUE(host_impl()->tile_manager()->HasScheduledTileTasksForTesting());
+
+  for (auto* tile : pending_tiling->AllTilesForTesting()) {
+    /* All tiles should have 1 dependent decode task if we decode images only
+     in the  invalidated rect. Otherwise for tile 1 we would have got 3
+     decode tasks, for tile 2 and tile 3, 2 each, and 1 for tile 4.
+    ===============
+    |      |      |
+    |  T1  |  T2  |
+    ===============
+    |      |      |
+    |  T3  |  T4  |
+    =============== */
+    EXPECT_EQ(host_impl()->tile_manager()->decode_tasks(tile->id()).size(), 1u);
+  }
+
+  // Free our host_impl_ before the tile_task_manager we passed it, as it
+  // will use that class in clean up.
+  TakeHostImpl();
+}
+
 // FakeRasterBufferProviderImpl that verifies the resource content ID of raster
 // tasks.
 class VerifyResourceContentIdRasterBufferProvider

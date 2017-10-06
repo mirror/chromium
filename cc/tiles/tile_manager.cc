@@ -884,11 +884,18 @@ void TileManager::PartitionImagesForCheckering(
     const gfx::ColorSpace& raster_color_space,
     std::vector<DrawImage>* sync_decoded_images,
     std::vector<PaintImage>* checkered_images,
+    bool partial_decode,
     base::flat_map<PaintImage::Id, size_t>* image_to_frame_index) {
   Tile* tile = prioritized_tile.tile();
   std::vector<const DrawImage*> images_in_tile;
-  prioritized_tile.raster_source()->GetDiscardableImagesInRect(
-      tile->enclosing_layer_rect(), &images_in_tile);
+  gfx::Rect enclosing_rect;
+  if (partial_decode)
+    enclosing_rect = ToEnclosingRect(tile->raster_transform().InverseMapRect(
+        gfx::RectF(tile->invalidated_content_rect())));
+  else
+    enclosing_rect = tile->enclosing_layer_rect();
+  prioritized_tile.raster_source()->GetDiscardableImagesInRect(enclosing_rect,
+                                                               &images_in_tile);
   WhichTree tree = tile->tiling()->tree();
 
   for (const auto* original_draw_image : images_in_tile) {
@@ -1011,7 +1018,8 @@ void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
     std::vector<DrawImage> sync_decoded_images;
     std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(prioritized_tile, raster_color_space,
-                                 &sync_decoded_images, &checkered_images);
+                                 &sync_decoded_images, &checkered_images,
+                                 false);
 
     // Add the sync decoded images to |new_locked_images| so they can be added
     // to the task graph.
@@ -1106,6 +1114,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "TileManager::CreateRasterTask", "Tile", tile->id());
 
+  bool partial_decode = false;
   // Get the resource.
   uint64_t resource_content_id = 0;
   Resource* resource = nullptr;
@@ -1114,6 +1123,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
     resource = resource_pool_->TryAcquireResourceForPartialRaster(
         tile->id(), tile->invalidated_content_rect(), tile->invalidated_id(),
         &invalidated_rect);
+    partial_decode = true;
   }
 
   if (resource) {
@@ -1143,9 +1153,9 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
   base::flat_map<PaintImage::Id, size_t> image_id_to_current_frame_index;
   if (!skip_images) {
     std::vector<PaintImage> checkered_images;
-    PartitionImagesForCheckering(prioritized_tile, color_space,
-                                 &sync_decoded_images, &checkered_images,
-                                 &image_id_to_current_frame_index);
+    PartitionImagesForCheckering(
+        prioritized_tile, color_space, &sync_decoded_images, &checkered_images,
+        partial_decode, &image_id_to_current_frame_index);
     for (const auto& image : checkered_images) {
       DCHECK(!image.ShouldAnimate());
 
