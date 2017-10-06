@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b84083bd_9ba08c16",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T08:56:56Z",
+      "side": 1,
+      "message": "nit: maybe have DCHECK_CURRENTLY_ON(IO) as the class-level comment clearly states that it should be called only on IO",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1442071_a354d8eb",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 34
@@ -30,6 +47,74 @@
       "writtenOn": "2017-10-05T06:00:17Z",
       "side": 1,
       "message": "Is this to suppress warnings about it being unused?",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ef77a06_3703f083",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T08:56:56Z",
+      "side": 1,
+      "message": "nit: the comment\u0027s unfinished",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8817fad_e218e5b9",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T08:56:56Z",
+      "side": 1,
+      "message": "nit: prefer having const for these",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45e6625d_06671db1",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T08:56:56Z",
+      "side": 1,
+      "message": "nit: not sure if this comment is very useful",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a503cddb_08176c3a",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T08:56:56Z",
+      "side": 1,
+      "message": "nit: no explicit needed",
       "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
