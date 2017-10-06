@@ -951,6 +951,16 @@ void DecodeGenericPolicies(const em::ChromeDeviceSettingsProto& policy,
                       policy.tpm_firmware_update_settings()),
                   nullptr);
   }
+
+  if (policy.has_allow_user_avatar_videos()) {
+    const em::AllowUserAvatarVideosProto& container(
+        policy.allow_user_avatar_videos());
+    policies->Set(
+        key::kAllowUserAvatarVideos, POLICY_LEVEL_MANDATORY,
+        POLICY_SCOPE_MACHINE, POLICY_SOURCE_CLOUD,
+        base::MakeUnique<base::Value>(container.allow_user_avatar_videos()),
+        nullptr);
+  }
 }
 }  // namespace
 

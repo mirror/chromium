@@ -143,7 +143,7 @@
 #   persistent IDs for all fields (but not for groups!) are needed. These are
 #   specified by the 'id' keys of each policy. NEVER CHANGE EXISTING IDs,
 #   because doing so would break the deployed wire format!
-#   For your editing convenience: highest ID currently used: 391
+#   For your editing convenience: highest ID currently used: 392
 #   And don't forget to also update the EnterprisePolicies enum of
 #   histograms.xml (run 'python tools/metrics/histograms/update_policies.py').
 #
@@ -9762,7 +9762,28 @@
 
       If the policy is not set, TPM firmware update functionality will not be available.''',
     },
+    {
+      'name': 'AllowUserAvatarVideos',
+      'type': 'main',
+      'schema': { 'type': 'boolean' },
+      'supported_on': ['chrome_os:63-'],
+      'features': {
+        'can_be_recommended': True,
+        'dynamic_refresh': True,
+        'per_profile': False,
+      },
+      'example_value': True,
+      'id': 392,
+      'caption': '''Allow user avatar videos''',
+      'tags': [],
+      'desc': '''Allow videos for avatar images.
 
+      If this policy is set to true, videos for avatar image is allowed.
+
+      If this policy is set to false, videos for avatar image is disallowed.
+
+      If this policy is left unset, videos for avatar image is allowed.''',
+    },
     {
       'name': 'QuickUnlock',
       'type': 'group',
