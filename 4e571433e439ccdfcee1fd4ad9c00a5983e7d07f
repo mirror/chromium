@@ -52,6 +52,24 @@
       "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8df2633_30b028de",
+        "filename": "third_party/win_build_output/.gitattributes",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-10-06T16:44:02Z",
+      "side": 1,
+      "message": "Maybe it would be better to just add a \"*.py text\" line then along with these scripts?",
+      "parentUuid": "78dfbd45_1caa86e4",
+      "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
