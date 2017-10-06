@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25bf036f_082f6301",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "Yes, we need this check because we\u0027ve posted this runnable and it could have been cleared.\n\nsetListeningForWebVrActivate shouldn\u0027t be a problem because the page should have focus looong before it\u0027s able to register a displayactivate handler.",
+      "parentUuid": "e1e66d7b_4235ed9a",
+      "range": {
+        "startLine": 761,
+        "startChar": 24,
+        "endLine": 761,
+        "endChar": 46
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fec1a306_5fb9b4c4",
         "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6a54c54_62fca508",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "We don\u0027t ever need to post when setting to true because starting listening isn\u0027t related to the Android lifecycle at all. Posting regardless would be worse because it\u0027ll mean a longer time between a page listening for activate and headset insertion working.\n\nSetting to false is only posted because it absolutely needs to be.",
+      "parentUuid": "fec1a306_5fb9b4c4",
+      "range": {
+        "startLine": 222,
+        "startChar": 4,
+        "endLine": 222,
+        "endChar": 27
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca1afded_50369f5a",
+        "filename": "chrome/browser/vr/service/vr_display_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "It\u0027s mostly not new. We previously did this check for a secure context in vr_shell_delegate for the http overlay. I\u0027m mostly just keeping this code alive here until we need it for WebVR 2.0 which will require secure contexts. For now this check will always pass because kAllowHTTPWebVRWithFlag is true.",
+      "parentUuid": "1a5c1eff_0dc6efc2",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2f39375_c10d9bae",
         "filename": "chrome/browser/vr/service/vr_service_impl.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569ef432_450f4bf0",
+        "filename": "chrome/browser/vr/service/vr_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2f39375_c10d9bae",
+      "range": {
+        "startLine": 102,
+        "startChar": 38,
+        "endLine": 102,
+        "endChar": 43
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "bd7e4138_6ae8e563",
+        "filename": "device/vr/android/gvr/gvr_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "Will clean this up in the followup CL that adds tests and does a bunch of refactoring.",
+      "parentUuid": "baaf9d6c_f1cbcd11",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 36
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5023aca_47af3304",
         "filename": "device/vr/vr_device.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b63be667_40ca0fe4",
+        "filename": "device/vr/vr_device.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-10-06T15:46:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5023aca_47af3304",
+      "range": {
+        "startLine": 68,
+        "startChar": 17,
+        "endLine": 68,
+        "endChar": 40
+      },
+      "revId": "b956b709dd3eb5e095554723c7c0664a798b87aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
