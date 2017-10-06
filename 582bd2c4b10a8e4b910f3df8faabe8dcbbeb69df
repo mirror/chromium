@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fce812bc_40243369",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "(optional) I slightly prefer breaking this up into two if statements, just seems easier to read for me.\n\nif (reason !\u003d Success) {\n  owner_-\u003eOnFinish(reason);\n  return;\n}\nif (MetaData() \u0026\u0026 Body()) {\n  owner_-\u003eOnFinish(Succes);\n}",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a241c159_472a5b44",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "unnecessary return",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d650a692_6d5e6e45",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "isn\u0027t there pending_scripts_.clear()?",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf82429_9a1445a7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "Why is the has_main_script_streamed_ needed?\n\nIs the to accoutn for a service worker named sw.js doing importScript(\u0027sw.js\u0027)? Can you add comments?",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f5cb040_ff13345c",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "Although it\u0027s not an explicit state, I think this documentation should explain the three phases and what \"streaming\" means (it seems to mean the first time the script are sent, without RequestInstalledScript(). i.e.,\n\nSender has three phases.\n\n1. All installed scripts are sent to the renderer. |pending_scripts_| is set to all the scripts and |state_| is kSendingScripts. This initial phase is called \"streaming\".\n\n2. |pending_scripts_| is empty and |state_| is kIdle. If the renderer calls RequestInstallScript(), the requested script is added to |pending_scripts_| and |state_| is kSendingScripts again.\n\n3. Whenever |pending_scripts_| empties, we return to 2.",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8844a46f_efd04639",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "Does finished_reason get updated every time we enter idle, or only the first time?\n\nIf it gets updated every time, the comment seems inaccurate talking about \"starting the worker\". A service worker that\u0027s already running can call importScripts().",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32213d3a_d64c0651",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "\"if the installed script stored in the disk cache is corrupted\" -\u003e something like \"if |reason| indicates failure to read the installed script from the disk cache (kNoHttpInfoError or kResponseReaderError), then |owner_|  is doomed via ServiceWorkerRegistration::DeleteVersion()\"",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd1d050_0a423baa",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "Can you document |has_main_script_streamed_|? \"streamed\" here means it\u0027s the first time the script is being sent?",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4dd88f_92e92110",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "A bit hard to read, sounds like the renderer is being requested to send installed scripts.\n\nFor consistency with below: Browser-side interface. The renderer uses this interface to request installed scripts from the browser process.",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f9999b_6871d82e",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:24:45Z",
+      "side": 1,
+      "message": "optional nit: may be nice to just set *out \u003d ScriptData()  for safety",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
