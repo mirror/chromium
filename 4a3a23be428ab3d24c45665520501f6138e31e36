@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98ea3c4_4c01c7a9",
+        "filename": "chrome/browser/banners/app_banner_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T04:57:24Z",
+      "side": 1,
+      "message": "Can this be placed in app_banner_metrics.cc with the other app banner UMA?",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 29
+      },
+      "revId": "4a3a23be428ab3d24c45665520501f6138e31e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2752a82_7351a3d7",
+        "filename": "chrome/browser/banners/app_banner_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T04:57:24Z",
+      "side": 1,
+      "message": "Instead of is_native, can this be is_webapp so that we don\u0027t need the !native_app_data.is_null () and the !is_native { do logging } ?",
+      "range": {
+        "startLine": 110,
+        "startChar": 22,
+        "endLine": 110,
+        "endChar": 31
+      },
+      "revId": "4a3a23be428ab3d24c45665520501f6138e31e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
