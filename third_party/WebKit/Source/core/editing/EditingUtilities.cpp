@@ -1022,9 +1022,11 @@ EUserSelect UsedValueOfUserSelect(const Node& node) {
 template <typename Strategy>
 TextDirection DirectionOfEnclosingBlockOfAlgorithm(
     const PositionTemplate<Strategy>& position) {
+  Node* const container_node = position.ComputeContainerNode();
   Element* enclosing_block_element = EnclosingBlock(
-      PositionTemplate<Strategy>::FirstPositionInOrBeforeNodeDeprecated(
-          position.ComputeContainerNode()),
+      container_node ? PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(
+                           *container_node)
+                     : PositionTemplate<Strategy>(),
       kCannotCrossEditingBoundary);
   if (!enclosing_block_element)
     return TextDirection::kLtr;
@@ -1120,8 +1122,8 @@ static HTMLElement* FirstInSpecialElement(const Position& pos) {
     if (IsSpecialHTMLElement(runner)) {
       HTMLElement* special_element = ToHTMLElement(&runner);
       VisiblePosition v_pos = CreateVisiblePosition(pos);
-      VisiblePosition first_in_element = CreateVisiblePosition(
-          FirstPositionInOrBeforeNodeDeprecated(special_element));
+      VisiblePosition first_in_element =
+          CreateVisiblePosition(FirstPositionInOrBeforeNode(*special_element));
       if (IsDisplayInsideTable(special_element) &&
           v_pos.DeepEquivalent() ==
               NextPositionOf(first_in_element).DeepEquivalent())
@@ -1142,8 +1144,8 @@ static HTMLElement* LastInSpecialElement(const Position& pos) {
     if (IsSpecialHTMLElement(runner)) {
       HTMLElement* special_element = ToHTMLElement(&runner);
       VisiblePosition v_pos = CreateVisiblePosition(pos);
-      VisiblePosition last_in_element = CreateVisiblePosition(
-          LastPositionInOrAfterNodeDeprecated(special_element));
+      VisiblePosition last_in_element =
+          CreateVisiblePosition(LastPositionInOrAfterNode(*special_element));
       if (IsDisplayInsideTable(special_element) &&
           v_pos.DeepEquivalent() ==
               PreviousPositionOf(last_in_element).DeepEquivalent())

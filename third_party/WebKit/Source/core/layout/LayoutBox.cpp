@@ -4829,7 +4829,7 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
   LayoutObject* first_child = SlowFirstChild();
   if (!first_child)
     return CreatePositionWithAffinity(
-        NonPseudoNode() ? FirstPositionInOrBeforeNodeDeprecated(NonPseudoNode())
+        NonPseudoNode() ? FirstPositionInOrBeforeNode(*NonPseudoNode())
                         : Position());
 
   if (IsTable() && NonPseudoNode()) {
@@ -4840,10 +4840,10 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
         point.Y() > bottom) {
       if (point.X() <= right / 2) {
         return CreatePositionWithAffinity(
-            FirstPositionInOrBeforeNodeDeprecated(NonPseudoNode()));
+            FirstPositionInOrBeforeNode(*NonPseudoNode()));
       }
       return CreatePositionWithAffinity(
-          LastPositionInOrAfterNodeDeprecated(NonPseudoNode()));
+          LastPositionInOrAfterNode(*NonPseudoNode()));
     }
   }
 
@@ -4921,7 +4921,8 @@ PositionWithAffinity LayoutBox::PositionForPoint(const LayoutPoint& point) {
     return closest_layout_object->PositionForPoint(
         adjusted_point - closest_layout_object->LocationOffset());
   return CreatePositionWithAffinity(
-      FirstPositionInOrBeforeNodeDeprecated(NonPseudoNode()));
+      NonPseudoNode() ? FirstPositionInOrBeforeNode(*NonPseudoNode())
+                      : Position());
 }
 
 DISABLE_CFI_PERF
