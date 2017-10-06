@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89cca598_43e95fac",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-06T13:25:02Z",
+      "side": 1,
+      "message": "Ah, I think we don\u0027t need to remove it.",
+      "parentUuid": "da39d744_3451a013",
+      "range": {
+        "startLine": 277,
+        "startChar": 18,
+        "endLine": 277,
+        "endChar": 35
+      },
+      "revId": "9ce075f4428eedc58bb006690e7e187efa949ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ceb13b3f_f4e2b985",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "9ce075f4428eedc58bb006690e7e187efa949ff5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ef8cd3_2bcb4751",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-06T13:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceb13b3f_f4e2b985",
+      "revId": "9ce075f4428eedc58bb006690e7e187efa949ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
