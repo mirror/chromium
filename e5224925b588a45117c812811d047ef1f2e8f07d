@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b7b8f9c_43b591e9",
+        "filename": "tools/cygprofile/empty_functions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-06T09:10:40Z",
+      "side": 1,
+      "message": "I\u0027d recommend adding some option parsing and help message explaining what the script is about.\nAlso maybe rename it to \"list_empty_functions.py\", which is a little more explicit about what it does?",
+      "revId": "e5224925b588a45117c812811d047ef1f2e8f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f02306_c8f3df29",
+        "filename": "tools/cygprofile/empty_functions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-06T09:10:40Z",
+      "side": 1,
+      "message": "try/catch to deal with invalid file path, or not loading an ELF binary?",
+      "revId": "e5224925b588a45117c812811d047ef1f2e8f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec287e1_044465ea",
+        "filename": "tools/cygprofile/empty_functions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-06T09:10:40Z",
+      "side": 1,
+      "message": "use .iteritems() instead of .items() to avoid creating a (potentially large) copy.",
+      "revId": "e5224925b588a45117c812811d047ef1f2e8f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400ccd2f_62d49354",
+        "filename": "tools/cygprofile/empty_functions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-06T09:10:40Z",
+      "side": 1,
+      "message": "This is correct, but it looks like you\u0027re doing a sort() operation (N.logN) only to get the maximum of a list (which can be done in N). Not sure how large these symbol lists are, but I\u0027d be probably better to do:\n\n  count, offset \u003d max([(len(v), k) for k, v in offset_to_symbols.iteritems()]",
+      "revId": "e5224925b588a45117c812811d047ef1f2e8f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d18608_af08e91a",
+        "filename": "tools/cygprofile/empty_functions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-10-06T09:10:40Z",
+      "side": 1,
+      "message": "This is only true for 32-bit ARM builds in Thumb-mode. You might want to check the file format first. Also provide the symbol name in the error message, just in case.",
+      "revId": "e5224925b588a45117c812811d047ef1f2e8f07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
