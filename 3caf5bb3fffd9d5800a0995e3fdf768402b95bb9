@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c9af4c_3b1b8b6c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Can\u0027t use ToShadowRootOrNull here?\nSee https://chromium-review.googlesource.com/c/chromium/src/+/690556.\nDisclaimer: I\u0027ve not verified it.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "827867c5_afdc07c5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Use \"ContainerNode\u0026\", instead of using DCHECK(node)",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d65c1a_37bc594e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Hashmap lookup happens twice here.\nPlease lookup only once.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd76633_9245672d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Remove empty line",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14096ec_d8b0267d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "node-\u003eparentNode().\nHTMLSlotElement can\u0027t be a shadow host.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3c3d93_bb1b09c8",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Use ContainerNode\u0026",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d5b3415_f4ab322d",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Use ToHTMLSlotElementOrNull",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98dcc8da_9a38a481",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "It is unclear to me that scoping_root_node.ContainingShadowRoot() is always non-null.\nThat can be null, I guess.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7af1344a_d1336a53",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "ShadowRoot has host(). You don\u0027t need to use ParentOrShadowHostElement() here.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6dc447_cb769b6c",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to DCHECK(navigation) in each member function.\n\nRather, add DCHECK(navigation) at the end of the constructor.\nGiven that navigation_ is never re-assigned in ScopedFocusNavigation\u0027s lifetime.",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4b8858_ae3b88e0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "DCHECK(CurrentElement())",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9213d2a6_a5b45446",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "DCHECK(CurrentElement())",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7333e39_33d8dae4",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-10-06T03:06:05Z",
+      "side": 1,
+      "message": "Can you fix this \"*\u0026\" too in this CL too?",
+      "revId": "3caf5bb3fffd9d5800a0995e3fdf768402b95bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
