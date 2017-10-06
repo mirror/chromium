@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download.items;
 import org.chromium.base.ThreadUtils;
 import org.chromium.chrome.browser.download.DownloadManagerService;
 import org.chromium.chrome.browser.download.DownloadNotifier;
+import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.components.offline_items_collection.OfflineContentProvider;
 
@@ -30,6 +31,7 @@ public class OfflineContentAggregatorNotificationBridgeUiFactory {
                     DownloadManagerService.getDownloadManagerService().getDownloadNotifier();
 
             sBridgeUi = new OfflineContentAggregatorNotificationBridgeUi(provider, ui);
+            OfflinePageDownloadBridge.getInstance();
         }
 
         return sBridgeUi;
