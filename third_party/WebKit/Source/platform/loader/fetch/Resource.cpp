@@ -649,13 +649,9 @@ static bool TypeNeedsSynchronousCacheHit(Resource::Type type) {
   // performance regression.
   // FIXME: Get to the point where we don't need to special-case sync/async
   // behavior for different resource types.
-  if (type == Resource::kImage)
-    return true;
   if (type == Resource::kCSSStyleSheet)
     return true;
   if (type == Resource::kScript)
-    return true;
-  if (type == Resource::kFont)
     return true;
   return false;
 }
