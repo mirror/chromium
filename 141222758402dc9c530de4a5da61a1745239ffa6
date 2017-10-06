@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905ff23c_eb59e0db",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T02:16:14Z",
+      "side": 1,
+      "message": "We won\u0027t need to call clear() in a destructor.",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a918b88_de39f0b8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T02:16:14Z",
+      "side": 1,
+      "message": "Add a thread check?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90cb8730_cc63682d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T02:16:14Z",
+      "side": 1,
+      "message": "Why can\u0027t we do this now?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f37a81_0544ceee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T02:16:14Z",
+      "side": 1,
+      "message": "Is there any reason we cannot use CrossThreadPersistent\u003c\u003e?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f256736a_af03604e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T02:16:14Z",
+      "side": 1,
+      "message": "// ActiveScriptWrappable",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
