@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2434d9e7_0380b153",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-10-06T18:01:35Z",
+      "side": 1,
+      "message": "nit: I would log ERROR/WARNING in case IsIsValid \u003d false.",
+      "revId": "41a96a7a640072cbf817371df178f2942f77114b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
