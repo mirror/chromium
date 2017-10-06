@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "a4261f24_eb7e1293",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T17:23:44Z",
+      "side": 1,
+      "message": "Done, thanks for the example.\n\nI\u0027m not getting compile or runtime errors though by simply compiling Chrome, is there a command to perform this type checking? Perhaps it\u0027s not correctly configured for type checking? I tried for example switching \"title\" to \"number\".",
+      "parentUuid": "95d355f2_29b86eca",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49cac16_653b1498",
         "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
         "patchSetId": 10
@@ -313,6 +331,24 @@
     },
     {
       "key": {
+        "uuid": "b1e0ecb9_6f333c80",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T17:23:44Z",
+      "side": 1,
+      "message": "Done, good idea.",
+      "parentUuid": "1e2f25a0_eccfb3ca",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d7f5a1_809cb8cf",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 10
@@ -363,6 +399,24 @@
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b15218_38b7a4ab",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T17:23:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b03d450_e896f675",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
