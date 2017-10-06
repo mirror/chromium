@@ -93,6 +93,29 @@
     },
     {
       "key": {
+        "uuid": "73ea1fb7_4ac19fc1",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "If this genuinely happens, remove the warning?",
+      "range": {
+        "startLine": 162,
+        "startChar": 20,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b51e5631_43c41110",
         "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
         "patchSetId": 3
@@ -110,6 +133,29 @@
     },
     {
       "key": {
+        "uuid": "af22c8af_5c7758eb",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "Is it? Isn\u0027t the referent at this point already garbage collected?",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 79
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e3a3f73_dac35512",
         "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
         "patchSetId": 3
@@ -121,6 +167,162 @@
       "writtenOn": "2017-10-06T20:22:54Z",
       "side": 1,
       "message": "This operation is inherently unsafe.\n\nSuppose one thread (A) calls getNativePtr, getting a non-null pointer.\nAnother thread then (B) cleans it up.\n(A) proceeds to use-after-free the pointer.\n\nLikely this should be either only @VisibleForTesting or there should be additional steps taken to ensure pointer is not destroyed while its used.",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282831ed_109d64a4",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "Do you need this class to be multithreaded anyway? It seems like it would be easier to just make it non-threadsafe and require clients to synchronize access to it externally. Most objects are going to be destroyed on a single thread anyway.",
+      "parentUuid": "2e3a3f73_dac35512",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96a62fd_e1ba68be",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "I don\u0027t think you want ScalableTimeout if this runs in a local JUnit test – this will attempt to read from /data/local/tmp/chrome_timeout_scale _on the host_ to get the scale factor :)",
+      "range": {
+        "startLine": 40,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fae6c3d_3a8d70f0",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "Add a comment that this is because the thread will be interrupted after stop() has been called, so we\u0027ll quit the loop on the next iteration?",
+      "range": {
+        "startLine": 63,
+        "startChar": 23,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6de22876_ce72c53e",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "`\u003c`?",
+      "range": {
+        "startLine": 127,
+        "startChar": 57,
+        "endLine": 127,
+        "endChar": 58
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee6fdbf_11ef4ae6",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "No \"m\" prefix.",
+      "range": {
+        "startLine": 155,
+        "startChar": 15,
+        "endLine": 155,
+        "endChar": 16
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7109fd39_6ce113e1",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "Why do you need to drain the looper on an additional background thread instead of the thread the test runs on?",
+      "range": {
+        "startLine": 158,
+        "startChar": 48,
+        "endLine": 158,
+        "endChar": 58
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4006b19_6ae9994c",
+        "filename": "base/android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T22:46:25Z",
+      "side": 1,
+      "message": "Clear the instance in teardown?",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 44
+      },
       "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
