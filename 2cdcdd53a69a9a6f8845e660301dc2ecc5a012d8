@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38b94b40_59a071a0",
+        "filename": "chrome/browser/ui/views/payments/cvc_unmask_view_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "add a getter to |state| which will be GetPrefService(). Its implementation will be payment_request_delegate_-\u003eGetPrefService();\n\nThis way it will be much easier to fake later on.",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17634cd_cb1262f6",
+        "filename": "components/autofill/core/browser/autofill_experiments.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "Why not ENABLED_BY_DEFAULT? It seems like a simple incremental improvement, and may not be worth going through the full launch process which adds overhead...",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b668def6_3c3620bf",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "can this be a regular member (why std::unique_ptr?)",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37da7a04_b47bb991",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "It appears that Set is deprecated in favor of SetPath, which can take a Value, so you\u0027ll be able to remove the usage of std::unique_ptr\n\nhttps://cs.chromium.org/chromium/src/base/values.h?rcl\u003d82959bdd37f937c21bf6a1b053c7e84f3ed35de5\u0026l\u003d261",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b15eb7_1531f1f9",
+        "filename": "components/autofill/core/browser/payments/payments_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "Move this to a constant in the anonymous namespace",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a725f4af_a06b4963",
+        "filename": "components/autofill/core/browser/payments/payments_client_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "is this used?",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ae5351_e8aee10e",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "GetPrefs will be null by default apparently. So better pass |nullptr| here then",
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9965283a_8f6ed4dd",
+        "filename": "components/payments/core/test_payment_request_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "Can you pass nullptr here? Seems like that\u0027s the default of GetPrefs if you haven\u0027t called SetPrefs.",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 50
+      },
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40bbe177_88bf416f",
+        "filename": "components/payments/core/test_payment_request_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-10-06T19:26:53Z",
+      "side": 1,
+      "message": "can you fix this typo, thanks :)",
+      "range": {
+        "startLine": 19,
+        "startChar": 24,
+        "endLine": 19,
+        "endChar": 39
+      },
+      "revId": "2cdcdd53a69a9a6f8845e660301dc2ecc5a012d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
