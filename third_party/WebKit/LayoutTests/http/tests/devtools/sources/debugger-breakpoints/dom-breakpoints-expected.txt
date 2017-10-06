@@ -8,7 +8,7 @@ Append childElement to rootElement.
 Script execution paused.
 Call stack:
     0) appendElement (dom-breakpoints.html:12)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#rootElementChild div#rootElement added
@@ -24,7 +24,7 @@ Test that DOM breakpoint is hit when re-enabled.
 Script execution paused.
 Call stack:
     0) modifyAttribute (dom-breakpoints.html:18)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on attribute modificationsdiv#rootElement
@@ -36,7 +36,7 @@ Append grandchildElement to childElement.
 Script execution paused.
 Call stack:
     0) appendElement (dom-breakpoints.html:12)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#rootElementDescendant div#childElement added
@@ -48,7 +48,7 @@ Remove grandchildElement.
 Script execution paused.
 Call stack:
     0) removeElement (dom-breakpoints.html:44)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#rootElementDescendant div#grandchildElement removed
@@ -60,7 +60,7 @@ Set childElement.innerHTML.
 Script execution paused.
 Call stack:
     0) setInnerHTML (dom-breakpoints.html:50)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#rootElementDescendant div#childElement added
@@ -69,7 +69,7 @@ Call breakDebugger, expect it to show up in next stack trace.
 Script execution paused.
 Call stack:
     0) breakDebugger (dom-breakpoints.html:55)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
 Script execution resumed.
 
 Running: testModifyAttribute
@@ -79,7 +79,7 @@ Modify rootElement data-test attribute.
 Script execution paused.
 Call stack:
     0) modifyAttribute (dom-breakpoints.html:18)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on attribute modificationsdiv#rootElement
@@ -92,7 +92,7 @@ Modify rootElement data-test attribute.
 Script execution paused.
 Call stack:
     0) modifyAttrNode (dom-breakpoints.html:24)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on attribute modificationsdiv#rootElement
@@ -105,7 +105,7 @@ Modify rootElement data-foo attribute.
 Script execution paused.
 Call stack:
     0) setAttrNode (dom-breakpoints.html:32)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on attribute modificationsdiv#rootElement
@@ -118,7 +118,7 @@ Modify rootElement style.color attribute.
 Script execution paused.
 Call stack:
     0) modifyStyleAttribute (dom-breakpoints.html:38)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on attribute modificationsdiv#rootElement
@@ -131,7 +131,7 @@ Remove elementToRemove.
 Script execution paused.
 Call stack:
     0) removeElement (dom-breakpoints.html:44)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on node removaldiv#elementToRemove
@@ -145,7 +145,7 @@ Append childElement to rootElement.
 Script execution paused.
 Call stack:
     0) appendElement (dom-breakpoints.html:12)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#rootElementChild div#rootElement added
@@ -158,7 +158,7 @@ Append childElement to author shadow root.
 Script execution paused.
 Call stack:
     0) appendElementToOpenShadowRoot (dom-breakpoints.html:79)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modifications#shadow-root (open)Child #shadow-root (open) added
@@ -172,7 +172,7 @@ Append childElement to outerElement.
 Script execution paused.
 Call stack:
     0) appendElementToAuthorShadowTree (dom-breakpoints.html:72)
-    1)  (:1)
+    1)  (dom-breakpoints.html:1)
     [setTimeout]
     0)  (:1)
 Paused on subtree modificationsdiv#outerElementChild div#outerElement added

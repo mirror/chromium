@@ -125,12 +125,12 @@ EvaluateScript Properties:
         columnNumber : <number>
         frame : <string>
         lineNumber : <number>
-        url : 
+        url : http://127.0.0.1:8000/devtools/tracing/timeline-time/timeline-timer.html
     }
     endTime : <number>
     frameId : <string>
     startTime : <number>
     type : "EvaluateScript"
 }
-Text details for EvaluateScript: undefined
+Text details for EvaluateScript: timeline-timer.html:1
 

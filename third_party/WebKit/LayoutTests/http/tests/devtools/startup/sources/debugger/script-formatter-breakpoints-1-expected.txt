@@ -10,8 +10,15 @@ script-formatter-breakpoints-1.html:12    var f=0;
 Script execution resumed.
 Script execution paused.
 Breakpoint sidebar pane while paused in pretty printed
-script-formatter-breakpoints-1.html:formatted:14                var f = 0;
+script-formatter-breakpoints-1.html:12    var f=0;
 Breakpoint sidebar pane while paused in raw
 script-formatter-breakpoints-1.html:12    var f=0;
+FAIL: Uncaught exception in promise: TypeError: Cannot read property 'remove' of undefined
+    at Object.InspectorTest.removeBreakpoint (evaluateInWebInspector0.js:1457:93)
+    at onBreakpointsUpdated (evaluateInWebInspector1.js:110:27)
+    at <anonymous> Error
+    at Promise.then (evaluateInWebInspector0.js:1064:77)
+    at pausedInF1Again (evaluateInWebInspector1.js:105:55)
+    at <anonymous>
 Script execution resumed.
 

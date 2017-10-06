@@ -158,8 +158,20 @@ void ScheduledAction::Execute(LocalFrame* frame) {
   } else {
     DVLOG(1) << "ScheduledAction::execute " << this
              << ": executing from source";
+    // Step 5.2.6 "Let script be the result of creating a classic script given
+    // script source, settings object, base URL, and the default classic script
+    // fetch options." [spec text]
+    // https://html.spec.whatwg.org/multipage/timers-and-user-prompts.html#timer-initialisation-steps
+    // "The default classic script fetch options are a script fetch options
+    // whose cryptographic nonce is the empty string, integrity metadata is
+    // the empty string, parser metadata is "not-parser-inserted", and
+    // credentials mode is "omit"." [spec text]
+    // https://html.spec.whatwg.org/multipage/webappapis.html#default-classic-script-fetch-options
+    const KURL& url = ExecutionContext::From(script_state_.Get())->Url();
+    const ParserDisposition parser_state = kNotParserInserted;
     frame->GetScriptController().ExecuteScriptAndReturnValue(
-        script_state_->GetContext(), ScriptSourceCode(code_));
+        script_state_->GetContext(),
+        ScriptSourceCode(code_, url, String() /* nonce */, parser_state));
   }
 
   // The frame might be invalid at this point because JavaScript could have
