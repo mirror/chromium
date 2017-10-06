@@ -59,12 +59,18 @@ FakeContentLayerClient::PaintContentsToDisplayList(
 
   for (ImageVector::const_iterator it = draw_images_.begin();
        it != draw_images_.end(); ++it) {
+    gfx::Rect image_rect(it->point,
+                         gfx::Size(it->image.width(), it->image.height()));
+    gfx::Rect visual_rect =
+        MathUtil::MapEnclosingClippedRect(it->transform, image_rect);
+    visual_rect.Intersect(PaintableRegion());
+
     if (!it->transform.IsIdentity()) {
       display_list->StartPaint();
       display_list->push<SaveOp>();
       display_list->push<ConcatOp>(
           static_cast<SkMatrix>(it->transform.matrix()));
-      display_list->EndPaintOfPairedBegin();
+      display_list->EndPaintOfPairedBegin(visual_rect);
     }
 
     display_list->StartPaint();
@@ -75,7 +81,7 @@ FakeContentLayerClient::PaintContentsToDisplayList(
         it->image, static_cast<float>(it->point.x()),
         static_cast<float>(it->point.y()), &it->flags);
     display_list->push<RestoreOp>();
-    display_list->EndPaintOfUnpaired(PaintableRegion());
+    display_list->EndPaintOfUnpaired(visual_rect);
 
     if (!it->transform.IsIdentity()) {
       display_list->StartPaint();

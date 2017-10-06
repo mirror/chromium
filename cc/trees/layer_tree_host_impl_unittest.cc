@@ -12915,17 +12915,10 @@ TEST_F(LayerTreeHostImplTest, CheckerImagingTileInvalidation) {
 
   std::unique_ptr<FakeRecordingSource> recording_source =
       FakeRecordingSource::CreateFilledRecordingSource(layer_size);
+  recording_source->set_fill_with_nonsolid_color(true);
   PaintImage checkerable_image =
       CreateDiscardablePaintImage(gfx::Size(500, 500));
   recording_source->add_draw_image(checkerable_image, gfx::Point(0, 0));
-
-  SkColor non_solid_color = SkColorSetARGB(128, 45, 56, 67);
-  PaintFlags non_solid_flags;
-  non_solid_flags.setColor(non_solid_color);
-  recording_source->add_draw_rect_with_flags(gfx::Rect(510, 0, 200, 600),
-                                             non_solid_flags);
-  recording_source->add_draw_rect_with_flags(gfx::Rect(0, 510, 200, 400),
-                                             non_solid_flags);
   recording_source->Rerecord();
   scoped_refptr<RasterSource> raster_source =
       recording_source->CreateRasterSource();
