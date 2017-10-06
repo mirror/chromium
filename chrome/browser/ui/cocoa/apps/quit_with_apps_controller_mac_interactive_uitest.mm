@@ -60,7 +60,7 @@ class QuitWithAppsControllerInteractiveTest
 IN_PROC_BROWSER_TEST_P(QuitWithAppsControllerInteractiveTest, QuitBehavior) {
   scoped_refptr<QuitWithAppsController> controller =
       new QuitWithAppsController();
-  const Notification* notification;
+  const message_center::Notification* notification;
   message_center::MessageCenter* message_center =
       message_center::MessageCenter::Get();
 

@@ -73,16 +73,15 @@ CupsPrintJobNotification::CupsPrintJobNotification(
       profile_(profile) {
   // Create a notification for the print job. The title, body, icon and buttons
   // of the notification will be updated in UpdateNotification().
-  notification_ = base::MakeUnique<Notification>(
+  notification_ = std::make_unique<message_center::Notification>(
       message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
       base::string16(),  // title
       base::string16(),  // body
       gfx::Image(),      // icon
-      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kCupsPrintJobNotificationId),
       l10n_util::GetStringUTF16(IDS_PRINT_JOB_NOTIFICATION_DISPLAY_SOURCE),
       GURL(kCupsPrintJobNotificationId),
-      notification_id_,  // tag
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 kCupsPrintJobNotificationId),
       message_center::RichNotificationData(),
       new CupsPrintJobNotificationDelegate(this));
   UpdateNotification();
