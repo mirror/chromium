@@ -133,6 +133,9 @@ viz_component("service") {
   ]
 
   defines = [ "VIZ_SERVICE_IMPLEMENTATION" ]
+  if (enable_vulkan) {
+    defines += [ "SK_VULKAN=1" ]
+  }
 
   configs = [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
@@ -200,8 +203,9 @@ viz_component("service") {
 
   if (enable_vulkan) {
     sources += [
-      "display/vulkan_renderer.cc",
-      "display/vulkan_renderer.h",
+      # Enabling Vulkan backend in SkiaRenderer.cc
+      #"display/vulkan_renderer.cc",
+      #"display/vulkan_renderer.h",
     ]
 
     deps += [ "//gpu/vulkan" ]

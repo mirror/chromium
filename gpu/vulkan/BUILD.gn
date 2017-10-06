@@ -53,7 +53,7 @@ if (enable_vulkan) {
       configs += [ "//build/config:precompiled_headers" ]
       defines = [ "VULKAN_IMPLEMENTATION" ]
 
-      all_dependent_configs = [ "//third_party/vulkan:vulkan_headers" ]
+      #all_dependent_configs = [ "//third_party/vulkan:vulkan_headers" ]
       libs = [ "vulkan" ]
 
       if (current_cpu == "x64") {
