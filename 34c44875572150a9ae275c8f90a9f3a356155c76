@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "30062897_6781cf69",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:38:59Z",
+      "side": 1,
+      "message": "What I meant is: If success is false, then you early out here, and never check below whether this was the last outstanding callback. So |callback| (the method parameter) will never be run.",
+      "parentUuid": "2840a40d_383b4975",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13a3189e_82e929cb",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
         "patchSetId": 3
@@ -296,6 +320,30 @@
       "side": 1,
       "message": "I think it\u0027s sufficient to unit-test your new provider only, without actual integration tests.\n\nYou could consider updating TopSitesImpl unit tests to *not* use the default provider and instead use some test double, but I don\u0027t think it\u0027s desirable.\n\nEither way, the fact that TopSitesImpl properly exercises providers already has test coverage, so more integration tests (for siteengagement) do not add value IMO.",
       "parentUuid": "7f697e12_56b4b58c",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244a01b1_8b11524b",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:38:59Z",
+      "side": 1,
+      "message": "Re aggregating or not: Without looking up how exactly the provider is used, I can\u0027t tell whether aggregating is okay, which is kind of the point: It\u0027s much harder to reason about things this way. Also (presumably) the default provider does not aggregate. So I vote for serving both requests.\nIf you are really sure that aggregating is fine, then please at least document that behavior clearly on the interface.\n\nAgreed that unit tests for the new provider are sufficient.",
+      "parentUuid": "7256767a_be29653b",
       "range": {
         "startLine": 91,
         "startChar": 34,
@@ -564,6 +612,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cee9cf_2a3f542c",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:38:59Z",
+      "side": 1,
+      "message": "SG, thanks! Resolved then.",
+      "parentUuid": "c0892975_86c0af87",
+      "range": {
+        "startLine": 18,
+        "startChar": 76,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
