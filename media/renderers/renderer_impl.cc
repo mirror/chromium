@@ -26,6 +26,9 @@
 #include "media/base/video_renderer.h"
 #include "media/base/wall_clock_time_source.h"
 
+#undef DVLOG
+#define DVLOG(level) LOG(ERROR)
+
 namespace media {
 
 // See |video_underflow_threshold_|.
@@ -236,6 +239,7 @@ void RendererImpl::StartPlayingFrom(base::TimeDelta time) {
 
 void RendererImpl::SetPlaybackRate(double playback_rate) {
   DVLOG(1) << __func__ << "(" << playback_rate << ")";
+  CHECK(playback_rate || !playback_rate_) << "MDW playback rate being changed from nonzero to zero";
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   // Playback rate changes are only carried out while playing.

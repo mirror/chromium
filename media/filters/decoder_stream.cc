@@ -30,7 +30,7 @@ template <DemuxerStream::Type StreamType>
 static const char* GetTraceString();
 
 #define FUNCTION_DVLOG(level) \
-  DVLOG(level) << __func__ << "<" << GetStreamTypeString() << ">"
+  LOG(ERROR) << __func__ << "<" << GetStreamTypeString() << "> -- state_" << state_
 
 template <>
 const char* GetTraceString<DemuxerStream::VIDEO>() {
@@ -90,7 +90,7 @@ DecoderStream<StreamType>::~DecoderStream() {
 }
 
 template <DemuxerStream::Type StreamType>
-std::string DecoderStream<StreamType>::GetStreamTypeString() {
+std::string DecoderStream<StreamType>::GetStreamTypeString() const {
   return DecoderStreamTraits<StreamType>::ToString();
 }
 
@@ -150,8 +150,11 @@ void DecoderStream<StreamType>::Read(const ReadCB& read_cb) {
     read_cb_ = read_cb;
   }
 
-  if (state_ == STATE_NORMAL && CanDecodeMore())
+  if (state_ == STATE_NORMAL && CanDecodeMore()) {
     ReadFromDemuxerStream();
+  } else {
+    FUNCTION_DVLOG(1) << "MDW Couldn't decode more";
+  }
 }
 
 template <DemuxerStream::Type StreamType>
@@ -239,6 +242,7 @@ bool DecoderStream<StreamType>::CanDecodeMore() const {
   // empty.
   int num_decodes =
       static_cast<int>(ready_outputs_.size()) + pending_decode_requests_;
+  FUNCTION_DVLOG(1) << "MDW num_decodes = " << num_decodes << ", buffers_left=" << buffers_left << ", GetMaxDecodeRequests()==" << GetMaxDecodeRequests();
   return buffers_left && num_decodes < GetMaxDecodeRequests();
 }
 
@@ -433,8 +437,10 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
 
   // Drop decoding result if Reset() was called during decoding.
   // The resetting process will be handled when the decoder is reset.
-  if (!reset_cb_.is_null())
+  if (!reset_cb_.is_null()) {
+    FUNCTION_DVLOG(3) << "RESET_CB was not null!!";
     return;
+  }
 
   switch (status) {
     case DecodeStatus::DECODE_ERROR:
@@ -465,6 +471,7 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
       return;
 
     case DecodeStatus::ABORTED:
+      FUNCTION_DVLOG(1) << "MDW ABORTED";
       // Decoder can return DecodeStatus::ABORTED during Reset() or during
       // destruction.
       return;
@@ -484,11 +491,15 @@ void DecoderStream<StreamType>::OnDecodeDone(int buffer_size,
 
         if (CanDecodeMore())
           ReadFromDemuxerStream();
+        else
+          FUNCTION_DVLOG(1) << "MDW COULD NOT DECODE MORE....";
         return;
       }
 
-      if (state_ == STATE_FLUSHING_DECODER && !pending_decode_requests_)
+      if (state_ == STATE_FLUSHING_DECODER && !pending_decode_requests_) {
+        FUNCTION_DVLOG(1) << "MDW reinitializing..";
         ReinitializeDecoder();
+      }
       return;
   }
 }
@@ -601,6 +612,7 @@ void DecoderStream<StreamType>::OnBufferReady(
         pending_buffers_.clear();
         break;
     }
+    FUNCTION_DVLOG(1) << "MDW: returning without requesting another read immediately";
     return;
   }
 
@@ -625,6 +637,7 @@ void DecoderStream<StreamType>::OnBufferReady(
       if (!decrypting_demuxer_stream_)
         Reset(base::ResetAndReturn(&reset_cb_));
     }
+    FUNCTION_DVLOG(1) << "MDW error state/...";
     return;
   }
 
@@ -682,6 +695,7 @@ void DecoderStream<StreamType>::OnBufferReady(
   }
 
   if (status == DemuxerStream::kAborted) {
+    FUNCTION_DVLOG(1) << "MDW kAborted";
     if (!read_cb_.is_null())
       SatisfyRead(DEMUXER_READ_ABORTED, NULL);
     return;
@@ -693,6 +707,8 @@ void DecoderStream<StreamType>::OnBufferReady(
   // Read more data if the decoder supports multiple parallel decoding requests.
   if (CanDecodeMore())
     ReadFromDemuxerStream();
+  else
+    FUNCTION_DVLOG(1) << "MDW could not decode more";
 }
 
 template <DemuxerStream::Type StreamType>
@@ -744,12 +760,15 @@ void DecoderStream<StreamType>::CompleteDecoderReinitialization(bool success) {
   state_ = success ? STATE_NORMAL : STATE_ERROR;
 
   if (!reset_cb_.is_null()) {
+    FUNCTION_DVLOG(1) << "reset cb wasn't null";
     base::ResetAndReturn(&reset_cb_).Run();
     return;
   }
 
-  if (read_cb_.is_null())
+  if (read_cb_.is_null()) {
+    FUNCTION_DVLOG(1) << "read cb was null";
     return;
+  }
 
   if (state_ == STATE_ERROR) {
     MEDIA_LOG(ERROR, media_log_) << GetStreamTypeString()

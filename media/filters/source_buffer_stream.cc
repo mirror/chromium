@@ -275,7 +275,7 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
   DCHECK(coded_frame_group_start_time_ != kNoDecodeTimestamp());
   DCHECK(!end_of_stream_);
 
-  DVLOG(1) << __func__ << " " << GetStreamTypeName() << ": buffers "
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName() << ": buffers "
            << BufferQueueToLogString<RangeClass>(buffers);
 
   // TODO(wolenetz): Make this DCHECK also applicable to ByPts once SAP-Type-2
@@ -442,7 +442,7 @@ bool SourceBufferStream<RangeClass>::Append(const BufferQueue& buffers) {
 
   SetSelectedRangeIfNeeded(next_buffer_timestamp);
 
-  DVLOG(1) << __func__ << " " << GetStreamTypeName()
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName()
            << ": done. ranges_=" << RangesToString<RangeClass>(ranges_);
   DCHECK(IsRangeListSorted(ranges_));
   DCHECK(OnlySelectedRangeIsSeeked());
@@ -797,6 +797,9 @@ template <typename RangeClass>
 bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
     DecodeTimestamp media_time,
     size_t newDataSize) {
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName()
+           << ": done. ranges_=" << RangesToString<RangeClass>(ranges_)
+           << ", media_time=" << media_time.InSecondsF();
   DCHECK(media_time != kNoDecodeTimestamp());
   // Garbage collection should only happen before/during appending new data,
   // which should not happen in end-of-stream state. Unless we also allow GC to
@@ -967,7 +970,7 @@ bool SourceBufferStream<RangeClass>::GarbageCollectIfNeeded(
     bytes_freed += back;
   }
 
-  DVLOG(2) << __func__ << " " << GetStreamTypeName()
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName()
            << ": After GC bytes_to_free=" << bytes_to_free
            << " bytes_freed=" << bytes_freed
            << " bytes_over_hard_memory_limit=" << bytes_over_hard_memory_limit
@@ -1523,12 +1526,12 @@ void SourceBufferStream<RangeClass>::OnSetDuration(base::TimeDelta duration) {
 template <typename RangeClass>
 SourceBufferStreamStatus SourceBufferStream<RangeClass>::GetNextBuffer(
     scoped_refptr<StreamParserBuffer>* out_buffer) {
-  DVLOG(2) << __func__ << " " << GetStreamTypeName();
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName();
   if (!pending_buffer_.get()) {
     const SourceBufferStreamStatus status = GetNextBufferInternal(out_buffer);
     if (status != SourceBufferStreamStatus::kSuccess ||
         !SetPendingBuffer(out_buffer)) {
-      DVLOG(2) << __func__ << " " << GetStreamTypeName()
+      LOG(ERROR) << __func__ << " " << GetStreamTypeName()
                << ": no pending buffer, returning status "
                << StatusToString(status);
       return status;
@@ -1539,7 +1542,7 @@ SourceBufferStreamStatus SourceBufferStream<RangeClass>::GetNextBuffer(
 
   const SourceBufferStreamStatus status =
       HandleNextBufferWithPreroll(out_buffer);
-  DVLOG(2) << __func__ << " " << GetStreamTypeName()
+  LOG(ERROR) << __func__ << " " << GetStreamTypeName()
            << ": handled next buffer with preroll, returning status "
            << StatusToString(status);
   return status;

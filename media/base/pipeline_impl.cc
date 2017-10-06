@@ -351,6 +351,7 @@ void PipelineImpl::RendererWrapper::Seek(base::TimeDelta time) {
 }
 
 void PipelineImpl::RendererWrapper::Suspend() {
+  LOG(ERROR) << "MDW SUSPEND";
   DCHECK(media_task_runner_->BelongsToCurrentThread());
 
   // Suppress suspending if we're not playing.
@@ -427,6 +428,7 @@ void PipelineImpl::RendererWrapper::Resume(std::unique_ptr<Renderer> renderer,
 
 void PipelineImpl::RendererWrapper::SetPlaybackRate(double playback_rate) {
   DCHECK(media_task_runner_->BelongsToCurrentThread());
+  LOG(ERROR) << __func__ << "MDW PI::RW::SPR(" << playback_rate << ")";
 
   playback_rate_ = playback_rate;
   if (state_ == kPlaying)
@@ -846,6 +848,7 @@ void PipelineImpl::RendererWrapper::CompleteSeek(base::TimeDelta seek_time,
   if (text_renderer_)
     text_renderer_->StartPlaying();
 
+  LOG(ERROR) << __func__ << "MDW about to ss.renderer->SPR(" << playback_rate_ << ")";
   shared_state_.renderer->SetPlaybackRate(playback_rate_);
   shared_state_.renderer->SetVolume(volume_);
 
@@ -1144,7 +1147,8 @@ double PipelineImpl::GetPlaybackRate() const {
 }
 
 void PipelineImpl::SetPlaybackRate(double playback_rate) {
-  DVLOG(2) << __func__ << "(" << playback_rate << ")";
+  LOG(ERROR) << __func__ << "(" << playback_rate << ")";
+  CHECK(playback_rate != 0) << "playback rate being set to 0";
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (playback_rate < 0.0)

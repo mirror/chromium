@@ -67,7 +67,7 @@ class MEDIA_EXPORT DecoderStream {
   virtual ~DecoderStream();
 
   // Returns the string representation of the StreamType for logging purpose.
-  std::string GetStreamTypeString();
+  std::string GetStreamTypeString() const;
 
   // Initializes the DecoderStream and returns the initialization result
   // through |init_cb|. Note that |init_cb| is always called asynchronously.
