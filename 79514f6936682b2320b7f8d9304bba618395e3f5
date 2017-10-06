@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d5af886_d4258d1b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T13:10:48Z",
+      "side": 1,
+      "message": "It would be more helpful if the one-liner is more specific. How about something like \"Stop extraction of form.method attribute\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 39
+      },
+      "revId": "79514f6936682b2320b7f8d9304bba618395e3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532a9379_cbfec6a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T13:10:48Z",
+      "side": 1,
+      "message": "Missing a word \"not\"?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 9
+      },
+      "revId": "79514f6936682b2320b7f8d9304bba618395e3f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
