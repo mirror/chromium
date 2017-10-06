@@ -3470,7 +3470,10 @@ split_static_library("ui") {
   }
 
   if (enable_basic_printing || enable_print_preview) {
-    deps += [ "//printing" ]
+    deps += [
+      "//components/printing/browser",
+      "//printing",
+    ]
     if (use_cups) {
       configs += [ "//printing:cups" ]
     }
