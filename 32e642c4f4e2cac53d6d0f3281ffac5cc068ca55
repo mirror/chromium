@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84bf7fe1_a5f70f5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/PictureInPictureController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-06T13:54:15Z",
+      "side": 0,
+      "message": "The reparenting and toggle fullscreen mode cases are caught by the hasEffectivelyFullscreenVideoChange so I can slim down the observer by getting rid of them.\n\nOn the other hand I think they will be triggered before hasEffectivelyFullscreenVideoChange (although I\u0027d need to test this), so I\u0027m tempted to keep them around to allow more fine-grained metrics.\n\nWDYT?",
+      "range": {
+        "startLine": 316,
+        "startChar": 20,
+        "endLine": 316,
+        "endChar": 41
+      },
+      "revId": "32e642c4f4e2cac53d6d0f3281ffac5cc068ca55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
