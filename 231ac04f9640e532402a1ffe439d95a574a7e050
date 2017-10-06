@@ -16,6 +16,24 @@
       "revId": "231ac04f9640e532402a1ffe439d95a574a7e050",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595b3b71_c0358d8c",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-06T23:09:38Z",
+      "side": 1,
+      "message": "No, this had no effect on fixing ASAN. I just noticed that when there are problems, we queue up requests indefinitely. That seemed unnecessary and this is a minor optimization for an unlikely edge-case.",
+      "parentUuid": "4627754c_356c5662",
+      "revId": "231ac04f9640e532402a1ffe439d95a574a7e050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
