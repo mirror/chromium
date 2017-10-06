@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c0bcda9_fe6fafbe",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:17:02Z",
+      "side": 1,
+      "message": "Nit: we don\u0027t use doxygen style comments, so just // please.",
+      "revId": "b6982c07a261c48e3076ca97dfb32d273cb9e433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

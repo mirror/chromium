@@ -496,6 +496,24 @@
     },
     {
       "key": {
+        "uuid": "0fd2a1e7_3b2ce82b",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:17:02Z",
+      "side": 1,
+      "message": "OK, followup is fine.",
+      "parentUuid": "4a6bfb7c_f1dede7a",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd73aceb_cd927cbc",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationReceiver.cpp",
         "patchSetId": 24
