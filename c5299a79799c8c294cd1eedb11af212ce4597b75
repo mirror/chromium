@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92fcf03a_d4f46524",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "efa63abf_fe926f93",
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c0f709b_3ed5b169",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 8
@@ -36,6 +54,98 @@
         "endLine": 518,
         "endChar": 74
       },
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a5d58b_4732aa0b",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c0f709b_3ed5b169",
+      "range": {
+        "startLine": 518,
+        "startChar": 63,
+        "endLine": 518,
+        "endChar": 74
+      },
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3160032a_1fa046a2",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "optional nit: combine nested if",
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603c29ca_9de3ee4f",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "nit: \u0027host again\u0027, no comma needed",
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd58eb8c_6afbab5e",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "ditto optional nit: combine nested if",
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89af9bf7_6d826729",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Talk about simple! Hope more will follow as we refine RTL url support.",
       "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

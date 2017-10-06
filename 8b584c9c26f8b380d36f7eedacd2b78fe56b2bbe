@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3bbf0756_8180561c",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Got it... the calls to AdjustParsed that trim trailing text pass in a 0 offset.",
+      "parentUuid": "831505df_fc0b4a05",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc97939a_cb6cf0c6",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -207,6 +225,24 @@
       "side": 1,
       "message": "I realized that ElideText() needs work too, as it uses GetStringWidthF().  So rather than the local custom measurement method we discussed, we probably have to augment GetStringWidthF and ElideText to accept an optional directionality mode (or similar), right?",
       "parentUuid": "b28148a5_5af95b39",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5bb0623_1cc48d7d",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Yeah, I suppose you\u0027re right, specify a default param if possible.",
+      "parentUuid": "08a32122_14af99a7",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -530,6 +566,24 @@
     },
     {
       "key": {
+        "uuid": "804a04f0_cb4ae055",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Sure, ElideUrlEnamel or ElideUrlSimple is less assertive about the security.",
+      "parentUuid": "47dd3967_031af48c",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2236a0_482225fe",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 7
@@ -714,6 +768,24 @@
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d114df9_3c476c13",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-06T22:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e377278_33567299",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
