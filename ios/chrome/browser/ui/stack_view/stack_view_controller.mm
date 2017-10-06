@@ -748,6 +748,10 @@ NSString* const kDummyToolbarBackgroundViewAnimationKey =
   toolbarFrame.origin.y = CGRectGetMinY([[_toolbarController view] frame]);
   toolbarFrame.size.height = CGRectGetHeight([[_toolbarController view] frame]);
   [[_toolbarController view] setFrame:toolbarFrame];
+  NSLog(
+      @"Stack view controller just created toolbar controller (%p) with "
+      @"toolbarview (%p)",
+      _toolbarController, [_toolbarController view]);
   [self.view addSubview:[_toolbarController view]];
   [self updateToolbarAppearanceWithAnimation:NO];
 

@@ -794,9 +794,10 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
       if (!IsIPadIdiom()) {
         // iPhone header also contains a toolbar since the normal toolbar is
         // hidden.
-        [_headerView
-            addToolbarWithReadingListModel:[self.dataSource readingListModel]
-                                dispatcher:self.dispatcher];
+        //        [_headerView
+        //            addToolbarWithReadingListModel:[self.dataSource
+        //            readingListModel]
+        //                                dispatcher:self.dispatcher];
         [_headerView setToolbarTabCount:self.tabCount];
         [_headerView setCanGoForward:self.canGoForward];
         [_headerView setCanGoBack:self.canGoBack];

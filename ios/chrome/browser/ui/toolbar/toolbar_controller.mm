@@ -38,6 +38,9 @@
 #error "This file requires ARC support."
 #endif
 
+const base::Feature kSafeAreaCompatibleToolbar{
+    "SafeAreaCompatibleToolbar", base::FEATURE_DISABLED_BY_DEFAULT};
+
 using base::UserMetricsAction;
 using ios::material::TimingFunction;
 
@@ -183,14 +186,30 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
 }
 
 - (void)setFrame:(CGRect)frame {
+  if (frame.size.width == 0) {
+  }
   CGRect oldFrame = self.frame;
   [super setFrame:frame];
   [delegate_ frameDidChangeFrame:frame fromFrame:oldFrame];
 }
 
+- (void)updateConstraints {
+  [super updateConstraints];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [delegate_ frameDidChangeFrame:self.frame fromFrame:CGRectZero];
+  }
+}
+
 - (void)didMoveToWindow {
   [super didMoveToWindow];
   [delegate_ windowDidChange];
+}
+
+- (void)willMoveToSuperview:(UIView*)newSuperview {
+  [super willMoveToSuperview:newSuperview];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [self removeConstraints:self.constraints];
+  }
 }
 
 - (id<CAAction>)actionForLayer:(CALayer*)layer forKey:(NSString*)event {
@@ -260,6 +279,23 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   }
 }
 
+- (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen {
+  DCHECK(base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar));
+  InterfaceIdiom idiom = IsIPadIdiom() ? IPAD_IDIOM : IPHONE_IDIOM;
+  CGRect frame = kToolbarFrame[idiom];
+  if (idiom == IPHONE_IDIOM) {
+    CGFloat statusBarOffset = [self statusBarOffset];
+    frame.size.height += statusBarOffset;
+  }
+  return frame.size.height;
+}
+
+- (CGRect)toolbarFrameInBVCOnIphoneNotFullscreen {
+  // TODO: DCHECK that we are on iphone.
+  return CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width,
+                    [self preferredToolbarHeightWhenAlignedToTopOfScreen]);
+}
+
 - (instancetype)initWithStyle:(ToolbarControllerStyle)style
                    dispatcher:
                        (id<ApplicationCommands, BrowserCommands>)dispatcher {
@@ -285,6 +321,18 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     }
 
     view_ = [[ToolbarView alloc] initWithFrame:viewFrame];
+    if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+      [view_ setTranslatesAutoresizingMaskIntoConstraints:NO];
+    }
+
+    UIViewAutoresizing autoresizingMask =
+        UIViewAutoresizingFlexibleLeadingMargin();
+    if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+      autoresizingMask |= UIViewAutoresizingFlexibleTopMargin;
+    } else {
+      autoresizingMask |= UIViewAutoresizingFlexibleBottomMargin;
+    }
+
     backgroundView_ = [[UIImageView alloc] initWithFrame:backgroundFrame];
     toolsMenuButton_ =
         [[ToolbarToolsMenuButton alloc] initWithFrame:toolsMenuButtonFrame
@@ -292,9 +340,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     [toolsMenuButton_ addTarget:self.dispatcher
                          action:@selector(showToolsMenu)
                forControlEvents:UIControlEventTouchUpInside];
-    [toolsMenuButton_
-        setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                            UIViewAutoresizingFlexibleBottomMargin];
+    [toolsMenuButton_ setAutoresizingMask:autoresizingMask];
 
     [view_ addSubview:backgroundView_];
     [view_ addSubview:toolsMenuButton_];
@@ -305,9 +351,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     if (idiom == IPAD_IDIOM) {
       CGRect shareButtonFrame = LayoutRectGetRect(kShareMenuButtonFrame);
       shareButton_ = [[UIButton alloc] initWithFrame:shareButtonFrame];
-      [shareButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+      [shareButton_ setAutoresizingMask:autoresizingMask];
       [self setUpButton:shareButton_
              withImageEnum:ToolbarButtonNameShare
            forInitialState:UIControlStateNormal
@@ -324,7 +368,8 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
     CGRect shadowFrame = kShadowViewFrame[idiom];
     shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
     shadowView_ = [[UIImageView alloc] initWithFrame:shadowFrame];
-    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [shadowView_ setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                                     UIViewAutoresizingFlexibleTopMargin];
     [shadowView_ setUserInteractionEnabled:NO];
     [view_ addSubview:shadowView_];
     [shadowView_ setImage:NativeImage(IDR_IOS_TOOLBAR_SHADOW)];
@@ -336,7 +381,8 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
       fullBleedShadowView_ =
           [[UIImageView alloc] initWithFrame:fullBleedShadowFrame];
       [fullBleedShadowView_
-          setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+          setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
+                              UIViewAutoresizingFlexibleTopMargin];
       [fullBleedShadowView_ setUserInteractionEnabled:NO];
       [fullBleedShadowView_ setAlpha:0];
       [view_ addSubview:fullBleedShadowView_];
@@ -369,9 +415,7 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
       [stackButton_ setTitleColor:highlightColor
                          forState:UIControlStateHighlighted];
 
-      [stackButton_
-          setAutoresizingMask:UIViewAutoresizingFlexibleLeadingMargin() |
-                              UIViewAutoresizingFlexibleBottomMargin];
+      [stackButton_ setAutoresizingMask:autoresizingMask];
 
       [self setUpButton:stackButton_
              withImageEnum:ToolbarButtonNameStack
@@ -440,8 +484,12 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   standardButtons_ = standardButtons;
 }
 
-- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection {
   [self updateStandardButtons];
+}
+
+- (void)fakeViewSafeAreaInsetsDidChange {
 }
 
 - (void)applicationDidEnterBackground:(NSNotification*)notify {
