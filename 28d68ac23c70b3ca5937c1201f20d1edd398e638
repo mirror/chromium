@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c31a7cf9_5d2064f3",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-06T20:58:09Z",
+      "side": 1,
+      "message": "I want to make sure that when the input is something like \u0027www.blah.foo\u0027, it checks \n\u0027http://www.blah.foo\u0027 before \u0027\u0027http://www.www.blah.foo\u0027. Note that given the current state I could easily iterate from .end() to .begin(), but I don\u0027t want this code to depend on this ad-hoc condition.",
+      "parentUuid": "e93bfaa2_67d60942",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "215e0f92_9ab44a49",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T20:20:48Z",
       "side": 1,
       "message": "I don\u0027t see a test here for only doing this on UNKNOWN and URL inputs.  Previously we only set (and thus used) the canonical URL for those input types, and for various other restrictions.\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/autocomplete_input.cc?l\u003d141-146\n\nIn effect by recomputing the canonicalized URL, you\u0027re removing those restrictions (which I think were likely added for a purpose).  Can you do something (refactor) so the same restrictions apply (assuming they make sense in this case)?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1437e6fc_48b26026",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-06T20:58:09Z",
+      "side": 1,
+      "message": "Interesting. What if instead of changing this code, I will do this check for all prefixes at the time when the canonical url is computed? That is, we should not canonicalize \"a.com\" to \"http://a.com/\" if there is clear evindence from history that it should be canonicalized to \"https://www.a.com/\". I am leaning towards this solution, but I think you have a better idea whether such an approach problematic or not.",
+      "parentUuid": "215e0f92_9ab44a49",
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "71ed460c_e9654926",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-06T20:58:09Z",
+      "side": 1,
+      "message": "see my comment above on canonicalization.",
+      "parentUuid": "248a83e5_ecbb5fd9",
+      "range": {
+        "startLine": 390,
+        "startChar": 69,
+        "endLine": 390,
+        "endChar": 71
+      },
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "357aba3d_4d288c2e",
         "filename": "components/omnibox/browser/history_url_provider.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-10-06T20:20:48Z",
       "side": 1,
       "message": "This looks up the hostname.  Should it be doing the same prepending tricks \"www.\", etc., as above in order to detect if this is (like a) typed host?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d6b92f_f91aff01",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-06T20:58:09Z",
+      "side": 1,
+      "message": "Good point. Just to confirm, are you proposing to change `schemes` (here  https://cs.chromium.org/chromium/src/components/history/core/browser/url_database.cc?type\u003dcs\u0026q\u003dschemes\u0026l\u003d298) to GetURLPrefixes()?",
+      "parentUuid": "357aba3d_4d288c2e",
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +208,24 @@
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27882f7_d978ee6f",
+        "filename": "components/omnibox/browser/url_prefix.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1183604
+      },
+      "writtenOn": "2017-10-06T20:58:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5892bef_2b833046",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
