@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c96bb92f_de979778",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Filed 772488",
+      "parentUuid": "97eaac31_3d42cf2f",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12e9a296_06162157",
         "filename": "chromecast/app/cast_main_delegate.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6611adb_14892421",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done. Note that the file is linux-specific, but it just uses breakpad, so it may be possible to reuse it on Fuchsia as well, once Breakpad works there.",
+      "parentUuid": "12e9a296_06162157",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e5eafce_e88f669d",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84d77d27_9b239008",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "755f70dc_4700c67c",
         "filename": "chromecast/app/cast_main_delegate.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9670821_84b1c3c4",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "755f70dc_4700c67c",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4a497298_89d997a6",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24d4ccf_2aec1f34",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0382904_6a26e0ab",
         "filename": "chromecast/app/cast_main_delegate.h",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23423b7_ef28d336",
+        "filename": "chromecast/app/cast_main_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0382904_6a26e0ab",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "c553b29f_4f4e1392",
+        "filename": "chromecast/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t know about that guidance. Reverting this change.",
+      "parentUuid": "9b61a050_0d4df149",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de297353_995ce4fd",
         "filename": "chromecast/browser/cast_content_window_fuchsia.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291c3d32_c27ed43e",
+        "filename": "chromecast/browser/cast_content_window_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de297353_995ce4fd",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1087a563_5377aa21",
+        "filename": "chromecast/browser/cast_content_window_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "I copied this code from cast_content_window_linux.h. It appears that this flag isn\u0027t used there either. In either case I think we can rename this class to CastContentWindowAura and use it on both platforms.",
+      "parentUuid": "13a060d6_8ad4baa1",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b3cec5a_db9a413b",
         "filename": "chromecast/renderer/cast_content_renderer_client.cc",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2017-10-06T18:51:09Z",
       "side": 1,
       "message": "nit: Although it\u0027s shorter to say !OS_FUCHSIA, it may be more readable to explicitly say \"if we\u0027re on Linux or Android, do crash logging\", FWIW.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bf27a6_c5983d0c",
+        "filename": "chromecast/renderer/cast_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T19:33:54Z",
+      "side": 1,
+      "message": "I think we want to have it enabled by default, i.e. if someone adds 4th platform then they will need to make explicit decision about disabling crash reporting.",
+      "parentUuid": "4b3cec5a_db9a413b",
       "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
