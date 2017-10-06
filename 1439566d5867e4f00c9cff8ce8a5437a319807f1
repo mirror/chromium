@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6cc10d_7db5f151",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-06T17:26:12Z",
+      "side": 1,
+      "message": "As an outsider, seems strange that this measures both photo picker or android file picker. Should it be 2 histograms?",
+      "revId": "1439566d5867e4f00c9cff8ce8a5437a319807f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
