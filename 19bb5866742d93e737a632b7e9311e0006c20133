@@ -70,6 +70,24 @@
       "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93625c64_4638813c",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T15:18:38Z",
+      "side": 1,
+      "message": "can you upload the version of the code that isn\u0027t compiling so i can take a look at it?\n\nand, sorry, in the code i wrote in my comment, i meant:\n\n    system_clock_proxy_-\u003eCallMethod(\n        \u0026method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,\n        base::BindOnce(OnGotLastSyncInfo, callback));\n\n(i.e. i was suggesting making OnGotLastSyncInfo be an independent function in the anon namespace)",
+      "parentUuid": "83bfd27d_15e31c23",
+      "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
