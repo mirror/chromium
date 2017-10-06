@@ -22,6 +22,30 @@
       "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f11a2c3_3529f772",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-10-06T21:24:18Z",
+      "side": 1,
+      "message": "Not really, this is impacting any headers phase transactions and not the writer transactions.",
+      "parentUuid": "c93d500a_b529e28a",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
