@@ -42,6 +42,7 @@ import mojom.fileutil as fileutil
 from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.generate.generator import AddComputedData
+from mojom.generate.generator import RemoveDisabledDefinitions
 from mojom.parse.parser import Parse
 
 
@@ -203,8 +204,16 @@ class MojomProcessor(object):
           map(ReadFileContents, args.scrambled_message_id_salt_paths))
       ScrambleMethodOrdinals(module.interfaces, salt)
 
+
     if self._should_generate(rel_filename.path):
       AddComputedData(module)
+
+      # Remove non-enabled fields, enumerator values, et cetera. Note that this
+      # isn't done until just before actual generation, to ensure that function
+      # ordinals, enumerator values, and other things of that nature will match
+      # even given a different set of EnableIf options.
+      RemoveDisabledDefinitions(module, args.enabled_flag)
+
       for language, generator_module in generator_modules.iteritems():
         generator = generator_module.Generator(
             module, args.output_dir, typemap=self._typemap.get(language, {}),
@@ -384,6 +393,12 @@ def main():
       help="Allows the [Native] attribute to be specified on structs within "
       "the mojom file. Must not be specified on internal bindings mojom or "
       "other dependencies thereof.", action="store_true")
+  generate_parser.add_argument(
+      "--enabled_flag",
+      help="Controls which definitions guarded by an EnabledIf attribute "
+      "should be enabled. If an EnabledIf attribute does not specify a value "
+      "that matches one of the enabled flag values, it will be disabled.",
+      action="append")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",
