@@ -11,7 +11,6 @@
 
 #include "content/common/media/media_stream_controls.h"
 #include "content/renderer/media/media_stream_constraints_util_sets.h"
-#include "content/renderer/media/media_stream_video_source.h"
 #include "media/base/limits.h"
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -28,8 +27,6 @@ static_assert(kMaxScreenCastDimension * kMaxScreenCastDimension <
 
 const int kDefaultScreenCastWidth = 2880;
 const int kDefaultScreenCastHeight = 1800;
-const double kDefaultScreenCastAspectRatio =
-    static_cast<double>(kDefaultScreenCastWidth) / kDefaultScreenCastHeight;
 static_assert(kDefaultScreenCastWidth <= kMaxScreenCastDimension,
               "Invalid kDefaultScreenCastWidth");
 static_assert(kDefaultScreenCastHeight <= kMaxScreenCastDimension,
@@ -111,6 +108,7 @@ class VideoContentCaptureCandidates {
   const BoolSet& noise_reduction_set() const { return noise_reduction_set_; }
   void set_resolution_set(const ResolutionSet& set) { resolution_set_ = set; }
   void set_frame_rate_set(const DoubleRangeSet& set) { frame_rate_set_ = set; }
+  void set_device_id_set(const StringSet& set) { device_id_set_ = set; }
 
  private:
   ResolutionSet resolution_set_;
@@ -260,7 +258,12 @@ int ClampToValidDimension(int value) {
 VideoCaptureSettings SelectResultFromCandidates(
     const VideoContentCaptureCandidates& candidates,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set,
-    const std::string& stream_source) {
+    const std::string& stream_source,
+    int default_width,
+    int default_height,
+    double default_frame_rate) {
+  double default_aspect_ratio =
+      static_cast<double>(default_width) / default_height;
   std::string device_id = SelectDeviceIDFromCandidates(
       candidates.device_id_set(), basic_constraint_set);
   // If a maximum width or height is explicitly given, use them as default.
@@ -268,20 +271,18 @@ VideoCaptureSettings SelectResultFromCandidates(
   // other default value.
   // TODO(guidou): Use native screen-capture resolution as default.
   // http://crbug.com/257097
-  int default_height = kDefaultScreenCastHeight;
-  int default_width = kDefaultScreenCastWidth;
   if (candidates.has_explicit_max_height() &&
       candidates.has_explicit_max_width()) {
     default_height = candidates.resolution_set().max_height();
     default_width = candidates.resolution_set().max_width();
   } else if (candidates.has_explicit_max_height()) {
     default_height = candidates.resolution_set().max_height();
-    default_width = static_cast<int>(
-        std::round(default_height * kDefaultScreenCastAspectRatio));
+    default_width =
+        static_cast<int>(std::round(default_height * default_aspect_ratio));
   } else if (candidates.has_explicit_max_width()) {
     default_width = candidates.resolution_set().max_width();
-    default_height = static_cast<int>(
-        std::round(default_width / kDefaultScreenCastAspectRatio));
+    default_height =
+        static_cast<int>(std::round(default_width / default_aspect_ratio));
   }
   // When the given maximum values are large, the computed values using default
   // aspect ratio may fall out of range. Ensure the defaults are in the valid
@@ -293,8 +294,8 @@ VideoCaptureSettings SelectResultFromCandidates(
   // better compatibility with the old constraints algorithm.
   // TODO(guidou): Use the actual default when applications migrate to the new
   // constraint syntax.  http://crbug.com/710800
-  double default_frame_rate =
-      candidates.frame_rate_set().Max().value_or(kDefaultScreenCastFrameRate);
+  if (candidates.frame_rate_set().Max())
+    default_frame_rate = *candidates.frame_rate_set().Max();
 
   // This default comes from the old algorithm.
   media::ResolutionChangePolicy default_resolution_policy =
@@ -344,9 +345,15 @@ VideoCaptureSettings UnsatisfiedConstraintsResult(
 
 VideoCaptureSettings SelectSettingsVideoContentCapture(
     const blink::WebMediaConstraints& constraints,
-    const std::string& stream_source) {
+    const std::string& stream_source,
+    int default_width,
+    int default_height,
+    double default_frame_rate,
+    const base::Optional<std::string>& device_id) {
   VideoContentCaptureCandidates candidates;
   candidates.set_resolution_set(ScreenCastResolutionCapabilities());
+  if (device_id)
+    candidates.set_device_id_set(StringSet({*device_id}));
 
   candidates = candidates.Intersection(
       VideoContentCaptureCandidates(constraints.Basic()));
@@ -363,7 +370,8 @@ VideoCaptureSettings SelectSettingsVideoContentCapture(
 
   DCHECK(!candidates.IsEmpty());
   return SelectResultFromCandidates(candidates, constraints.Basic(),
-                                    stream_source);
+                                    stream_source, default_width,
+                                    default_height, default_frame_rate);
 }
 
 }  // namespace content

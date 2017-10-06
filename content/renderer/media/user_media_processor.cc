@@ -457,7 +457,9 @@ void UserMediaProcessor::SetupVideoInput() {
         worker_task_runner_.get(), FROM_HERE,
         base::Bind(&SelectSettingsVideoContentCapture,
                    current_request_info_->web_request().VideoConstraints(),
-                   video_controls.stream_source),
+                   video_controls.stream_source, kDefaultScreenCastWidth,
+                   kDefaultScreenCastHeight, kDefaultScreenCastFrameRate,
+                   base::nullopt /* device_id */),
         base::Bind(&UserMediaProcessor::FinalizeSelectVideoContentSettings,
                    weak_factory_.GetWeakPtr(),
                    current_request_info_->web_request()));

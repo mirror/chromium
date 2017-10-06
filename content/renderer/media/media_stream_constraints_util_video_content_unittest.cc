@@ -17,6 +17,9 @@ namespace content {
 
 namespace {
 
+const double kDefaultScreenCastAspectRatio =
+    static_cast<double>(kDefaultScreenCastWidth) / kDefaultScreenCastHeight;
+
 void CheckNonResolutionDefaults(const VideoCaptureSettings& result) {
   EXPECT_EQ(kDefaultScreenCastFrameRate, result.FrameRate());
   EXPECT_EQ(base::Optional<double>(), result.min_frame_rate());
@@ -61,7 +64,18 @@ class MediaStreamConstraintsUtilVideoContentTest : public testing::Test {
           std::string(kMediaStreamSourceScreen)) {
     blink::WebMediaConstraints constraints =
         constraint_factory_.CreateWebMediaConstraints();
-    return SelectSettingsVideoContentCapture(constraints, stream_source);
+    return SelectSettingsVideoContentCapture(
+        constraints, stream_source, kDefaultScreenCastWidth,
+        kDefaultScreenCastHeight, kDefaultScreenCastFrameRate,
+        base::nullopt /* device_id*/);
+  }
+
+  VideoCaptureSettings SelectSettingsDeviceID(const std::string& device_id) {
+    blink::WebMediaConstraints constraints =
+        constraint_factory_.CreateWebMediaConstraints();
+    return SelectSettingsVideoContentCapture(
+        constraints, std::string(), kDefaultScreenCastWidth,
+        kDefaultScreenCastHeight, kDefaultScreenCastFrameRate, device_id);
   }
 
   MockConstraintFactory constraint_factory_;
@@ -2134,6 +2148,34 @@ TEST_F(MediaStreamConstraintsUtilVideoContentTest, ResolutionChangePolicy) {
     EXPECT_EQ(4000.0, result.track_adapter_settings().max_aspect_ratio);
     CheckTrackAdapterSettingsEqualsFormat(result);
   }
+}
+
+// This test verifies behavior when an explicit ID is provided as the only
+// acceptable device ID.
+TEST_F(MediaStreamConstraintsUtilVideoContentTest, ExplicitDeviceID) {
+  const std::string kDeviceID = "the device";
+  constraint_factory_.Reset();
+  constraint_factory_.basic().device_id.SetExact(
+      blink::WebString::FromASCII("some device"));
+  auto result = SelectSettingsDeviceID(kDeviceID);
+  EXPECT_FALSE(result.HasValue());
+  EXPECT_EQ(constraint_factory_.basic().device_id.GetName(),
+            result.failed_constraint_name());
+
+  constraint_factory_.Reset();
+  constraint_factory_.basic().device_id.SetIdeal(
+      blink::WebString::FromASCII("some device"));
+  result = SelectSettingsDeviceID(kDeviceID);
+  // Ideal value is ignored.
+  EXPECT_TRUE(result.HasValue());
+  EXPECT_EQ(result.device_id(), kDeviceID);
+
+  constraint_factory_.Reset();
+  constraint_factory_.basic().device_id.SetIdeal(
+      blink::WebString::FromASCII(kDeviceID));
+  result = SelectSettingsDeviceID(kDeviceID);
+  EXPECT_TRUE(result.HasValue());
+  EXPECT_EQ(result.device_id(), kDeviceID);
 }
 
 }  // namespace content
