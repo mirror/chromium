@@ -68,6 +68,29 @@
       "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37f0d04_48d036c7",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1119605
+      },
+      "writtenOn": "2017-10-06T08:27:04Z",
+      "side": 1,
+      "message": "What do you have in mind here? I guess we should finalize incremental marking in this case in one go.",
+      "range": {
+        "startLine": 591,
+        "startChar": 18,
+        "endLine": 591,
+        "endChar": 62
+      },
+      "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
