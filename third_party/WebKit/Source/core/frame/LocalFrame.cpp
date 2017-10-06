@@ -1138,10 +1138,15 @@ void LocalFrame::ForceSynchronousDocumentInstall(const AtomicString& mime_type,
 }
 
 void LocalFrame::NotifyUserActivation() {
-  bool had_gesture = HasReceivedUserGesture();
-  if (!had_gesture)
+  if (RuntimeEnabledFeatures::SimpleUserActivationEnabled()) {
     UpdateUserActivationInFrameTree();
-  Client()->SetHasReceivedUserGesture(had_gesture);
+    Client()->SetHasReceivedUserGesture(false);
+  } else {
+    bool had_gesture = HasReceivedUserGesture();
+    if (!had_gesture)
+      UpdateUserActivationInFrameTree();
+    Client()->SetHasReceivedUserGesture(had_gesture);
+  }
 }
 
 // static
@@ -1151,6 +1156,14 @@ std::unique_ptr<UserGestureIndicator> LocalFrame::CreateUserGesture(
   if (frame)
     frame->NotifyUserActivation();
   return WTF::MakeUnique<UserGestureIndicator>(status);
+}
+
+// static
+bool LocalFrame::HasTransientUserActivation(LocalFrame* frame) {
+  if (RuntimeEnabledFeatures::SimpleUserActivationEnabled()) {
+    return frame ? frame->HasTrainsientUserActivation() : false;
+  }
+  return UserGestureIndicator::ProcessingUserGesture();
 }
 
 }  // namespace blink
