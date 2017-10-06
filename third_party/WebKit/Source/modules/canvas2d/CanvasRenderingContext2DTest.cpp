@@ -30,6 +30,7 @@
 #include "platform/graphics/test/FakeGLES2Interface.h"
 #include "platform/graphics/test/FakeWebGraphicsContext3DProvider.h"
 #include "platform/loader/fetch/MemoryCache.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/scheduler/test/renderer_scheduler_test_support.h"
@@ -925,9 +926,7 @@ TEST_F(CanvasRenderingContext2DTest, ContextDisposedBeforeCanvas) {
 #endif
 
 TEST_F(CanvasRenderingContext2DTest, MAYBE_GetImageDataDisablesAcceleration) {
-  bool saved_fixed_rendering_mode =
-      RuntimeEnabledFeatures::Canvas2dFixedRenderingModeEnabled();
-  RuntimeEnabledFeatures::SetCanvas2dFixedRenderingModeEnabled(false);
+  ScopedCanvas2dFixedRenderingModeForTest canvas_2d_fixed_rendering_mode(false);
 
   CreateContext(kNonOpaque);
   IntSize size(300, 300);
@@ -965,16 +964,10 @@ TEST_F(CanvasRenderingContext2DTest, MAYBE_GetImageDataDisablesAcceleration) {
     EXPECT_EQ(1u, GetGlobalAcceleratedImageBufferCount());
     EXPECT_EQ(720000, GetGlobalGPUMemoryUsage());
   }
-
-  // Restore global state to prevent side-effects on other tests
-  RuntimeEnabledFeatures::SetCanvas2dFixedRenderingModeEnabled(
-      saved_fixed_rendering_mode);
 }
 
 TEST_F(CanvasRenderingContext2DTest, TextureUploadHeuristics) {
-  bool saved_fixed_rendering_mode =
-      RuntimeEnabledFeatures::Canvas2dFixedRenderingModeEnabled();
-  RuntimeEnabledFeatures::SetCanvas2dFixedRenderingModeEnabled(false);
+  ScopedCanvas2dFixedRenderingModeForTest canvas_2d_fixed_rendering_mode(false);
 
   enum TestVariants {
     kLargeTextureDisablesAcceleration = 0,
@@ -1027,9 +1020,6 @@ TEST_F(CanvasRenderingContext2DTest, TextureUploadHeuristics) {
       EXPECT_EQ(8 * dst_size * dst_size, GetGlobalGPUMemoryUsage());
     }
   }
-  // Restore global state to prevent side-effects on other tests
-  RuntimeEnabledFeatures::SetCanvas2dFixedRenderingModeEnabled(
-      saved_fixed_rendering_mode);
 }
 
 TEST_F(CanvasRenderingContext2DTest, DisableAcceleration) {
@@ -1081,10 +1071,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
   options.setColorSpaceConversion(
       kConversions[static_cast<uint8_t>(color_space_conversion)]);
 
-  // Set the runtime flags
-  RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
-
   return options;
 }
 
@@ -1123,6 +1109,10 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
           : SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;
   SkColorSpaceXform::ColorFormat color_format = color_format32;
   sk_sp<SkColorSpace> src_rgb_color_space = SkColorSpace::MakeSRGB();
+
+  // Set the runtime flags
+  ScopedExperimentalCanvasFeaturesForTest experimental_canvas_features(true);
+  ScopedColorCanvasExtensionsForTest color_canvas_extensions(true);
 
   for (uint8_t i =
            static_cast<uint8_t>(ColorSpaceConversion::DEFAULT_COLOR_CORRECTED);
