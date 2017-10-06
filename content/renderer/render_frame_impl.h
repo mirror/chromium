@@ -109,6 +109,7 @@ struct WebCursorInfo;
 struct WebFindOptions;
 class WebLayerTreeView;
 class WebRelatedAppsFetcher;
+struct WebRemoteScrollProperties;
 }  // namespace blink
 
 namespace gfx {
@@ -693,6 +694,9 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebURLRequest& request,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) override;
   void DraggableRegionsChanged() override;
+  void ScrollRectToVisibleInParentFrame(
+      const blink::WebRect& rect_to_scroll,
+      const blink::WebRemoteScrollProperties& properties) override;
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
