@@ -19,6 +19,144 @@
     },
     {
       "key": {
+        "uuid": "9d911f48_522e81f3",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Use the URL type\nhttps://cs.chromium.org/chromium/src/url/mojo/url.mojom",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 8
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6938c88_3a14a7c2",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Use mojo/common/time.mojom\nThere are many existing examples:\nhttps://cs.chromium.org/chromium/src/content/common/renderer.mojom?type\u003dcs\u0026q\u003df:mojom+import.*time\u0026l\u003d10",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 7
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee6653f_bf4f757e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "It might be useful to comment who calls the interface.\nIs it the renderer or the browser process?",
+      "range": {
+        "startLine": 37,
+        "startChar": 35,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4fe5ae_96b215eb",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom",
+        "patchSetId": 18
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "s/Push/Pushes/",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 9
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e207528_f2742cfb",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "DCHECK(logger_);",
+      "range": {
+        "startLine": 28,
+        "startChar": 59,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6796cc_a1de2bc1",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "This is not needed since if the |logger_| is null, then Chrome will anyways crash on the next line.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 18
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e0bc670_9b74e2ec",
         "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
         "patchSetId": 18
@@ -30,6 +168,29 @@
       "writtenOn": "2017-10-06T18:46:10Z",
       "side": 1,
       "message": "Can this be a const ref arg",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f59b376_760474a9",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Again, not needed since it is de-referenced in the next line.",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 16
+      },
       "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +231,52 @@
     },
     {
       "key": {
+        "uuid": "8cf45d6f_dcc62178",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "s/Notifying/Notify/",
+      "range": {
+        "startLine": 69,
+        "startChar": 5,
+        "endLine": 69,
+        "endChar": 14
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26116424_81e7afaf",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "s/LogMessage/MessageLog/",
+      "range": {
+        "startLine": 69,
+        "startChar": 39,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed7438bb_21d5920e",
         "filename": "components/previews/core/previews_logger.h",
         "patchSetId": 18
@@ -87,6 +294,29 @@
     },
     {
       "key": {
+        "uuid": "c01f80e2_6bdc9c68",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "s/Remove/Removes/",
+      "range": {
+        "startLine": 77,
+        "startChar": 5,
+        "endLine": 77,
+        "endChar": 11
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e81eeba5_02f27a96",
         "filename": "components/previews/core/previews_logger.h",
         "patchSetId": 18
@@ -98,6 +328,190 @@
       "writtenOn": "2017-10-06T18:46:10Z",
       "side": 1,
       "message": "Move this comment to AddAndNotifyObserver and change it to just \"Observers must remove themselves with RemoveObserver.\"",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598efb6b_e4197fe9",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Missing period at the end.",
+      "range": {
+        "startLine": 15,
+        "startChar": 58,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e4409c_b32546c2",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "s/LogMessage/MessageLog/\n?",
+      "range": {
+        "startLine": 15,
+        "startChar": 40,
+        "endLine": 15,
+        "endChar": 50
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3672ce22_0cc78991",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Add  DISALLOW_COPY_AND_ASSIGN in the private section.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 28
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a90fd1_6e862cdb",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "These two methods can be protected.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 38
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b70011_c22dc1fb",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "typo. Also, I would probably rewrite this as:\nNotifies this observer that |messages| has been added in PreviewsLogger.",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc16d2f_abf7e41a",
+        "filename": "components/previews/core/previews_logger_observer.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Pass as const ref?",
+      "range": {
+        "startLine": 22,
+        "startChar": 52,
+        "endLine": 22,
+        "endChar": 62
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7f39f54_3e532942",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Comment does not seem to match with the method.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b2bc34_8b564df2",
+        "filename": "components/previews/core/previews_ui_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T20:17:54Z",
+      "side": 1,
+      "message": "Where is this method being called?\nAlso, returning a raw pointer seems risky. Can we add method comments on the lifetime of the returned pointer? e.g., is it guaranteed to be non-null? When is it destroyed?",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 33
+      },
       "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
