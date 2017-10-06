@@ -45,6 +45,29 @@
       "revId": "c6e69795d1d05bbb9ac6d7a70a77c6cf923c15e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f826d36d_177cb078",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 88467,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:08:25Z",
+      "side": 1,
+      "message": "It\u0027s not quite clear to me from this description what exactly is being measured.  Is this being recorded per-function?  For some collection of functions?  If the latter, when exactly is this recorded / for what set of functions?  Please clarify the description.",
+      "range": {
+        "startLine": 88467,
+        "startChar": 11,
+        "endLine": 88467,
+        "endChar": 55
+      },
+      "revId": "c6e69795d1d05bbb9ac6d7a70a77c6cf923c15e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
