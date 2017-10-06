@@ -39,7 +39,7 @@ NSString* const kOriginServerHost = @"AlternateOriginServerHost";
 NSString* const kWhatsNewPromoStatus = @"WhatsNewPromoStatus";
 NSString* const kClearApplicationGroup = @"ClearApplicationGroup";
 const base::Feature kEnableSlimNavigationManager{
-    "EnableSlimNavigationManager", base::FEATURE_DISABLED_BY_DEFAULT};
+    "EnableSlimNavigationManager", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kEnableThirdPartyKeyboardWorkaround{
     "EnableThirdPartyKeyboardWorkaround", base::FEATURE_ENABLED_BY_DEFAULT};
 const base::Feature kIOSNTPSuggestions{"IOSNTPSuggestions",
