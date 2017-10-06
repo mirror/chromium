@@ -46,6 +46,30 @@
       "revId": "3460697872a4d2effbd4ebe7f9a634defeb92a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3896f3ee_c5a1fcf3",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 13569,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T01:06:52Z",
+      "side": 0,
+      "message": "If I\u0027m understanding correctly, the addition in your previous CL was incorrect, and resulted in the dashboard having incorrect labels; and the change in this current CL is a safe fix.  I\u0027m pretty sure this fix is safe, so LGTM.",
+      "parentUuid": "0e5bd828_f88abdf4",
+      "range": {
+        "startLine": 13569,
+        "startChar": 77,
+        "endLine": 13569,
+        "endChar": 0
+      },
+      "revId": "3460697872a4d2effbd4ebe7f9a634defeb92a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
