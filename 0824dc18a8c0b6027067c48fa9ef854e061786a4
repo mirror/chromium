@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f25edec_68005403",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-06T00:12:50Z",
+      "side": 1,
+      "message": "can you remove the expectations from the test this was copy-pasted from? No point in double-checking the same things, and this just clutters the test. \n\nBasically, keep the asserts but drop the expects.\n\nThanks!",
+      "revId": "0824dc18a8c0b6027067c48fa9ef854e061786a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
