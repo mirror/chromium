@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ff3303b_8b8f34ca",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T16:21:40Z",
+      "side": 1,
+      "message": "Indeed a better solution. Done.",
+      "parentUuid": "03270a55_6f450eca",
+      "range": {
+        "startLine": 509,
+        "startChar": 18,
+        "endLine": 509,
+        "endChar": 48
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "878741ef_5931ad3d",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0ce4fc_12ff8822",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T16:21:40Z",
+      "side": 1,
+      "message": "Ack, but moot. Using URL() now.",
+      "parentUuid": "878741ef_5931ad3d",
+      "range": {
+        "startLine": 511,
+        "startChar": 8,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d7526cfe_0c7e541b",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T16:21:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "104e02a6_d912a9e7",
+      "range": {
+        "startLine": 518,
+        "startChar": 11,
+        "endLine": 518,
+        "endChar": 19
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed2b58ba_e242b119",
         "filename": "ios/web/web_state/js/resources/common.js",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-06T13:26:17Z",
       "side": 1,
       "message": "The new logic is really neat :)",
+      "range": {
+        "startLine": 521,
+        "startChar": 14,
+        "endLine": 521,
+        "endChar": 24
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81e37119_ed62a468",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-10-06T16:21:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ed2b58ba_e242b119",
       "range": {
         "startLine": 521,
         "startChar": 14,
