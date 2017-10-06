@@ -11,11 +11,13 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_navigator.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/common/url_constants.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/signin/core/browser/signin_metrics.h"
+#include "components/signin/core/common/profile_management_switches.h"
 #include "ui/base/page_transition_types.h"
 
 WelcomeHandler::WelcomeHandler(content::WebUI* web_ui)
@@ -55,9 +57,13 @@ void WelcomeHandler::HandleActivateSignIn(const base::ListValue* args) {
     GoToNewTabPage();
   } else {
     Browser* browser = GetBrowser();
-    browser->signin_view_controller()->ShowModalSignin(
-        profiles::BubbleViewMode::BUBBLE_VIEW_MODE_GAIA_SIGNIN, browser,
-        signin_metrics::AccessPoint::ACCESS_POINT_START_PAGE);
+    if (signin::IsAccountConsistencyDiceEnabled()) {
+      chrome::ShowBrowserSigninForDice(browser);
+    } else {
+      browser->signin_view_controller()->ShowModalSignin(
+          profiles::BubbleViewMode::BUBBLE_VIEW_MODE_GAIA_SIGNIN, browser,
+          signin_metrics::AccessPoint::ACCESS_POINT_START_PAGE);
+    }
   }
 }
 
