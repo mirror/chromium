@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9bd6ff_cc9b4362",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-06T17:27:29Z",
+      "side": 1,
+      "message": "Does setPageZoomFactor work? That seems to be more clear as you set a value for the zoom factor and makes it easier to follow what the zoom factor of the page.",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5b176b_5ab6f8f8",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-06T17:27:29Z",
+      "side": 1,
+      "message": "I don\u0027t think we need these inside the step functions (similar to other places in this CL). I guess the pattern is to include all the asserts inside the step function so that it can handle the test output and what not.",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002786bd_993e8352",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-06T17:27:29Z",
+      "side": 1,
+      "message": "What is the third parameter, t3, here?",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87767863_b9d99712",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/resources/frame-pointerevent-forwarder.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-06T17:27:29Z",
+      "side": 1,
+      "message": "You can add the listener in the outer frame since they are from the same domain. Similar to this:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/pointerevents/pointerevent_attributes_hoverable_pointers-manual.html?l\u003d97",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
