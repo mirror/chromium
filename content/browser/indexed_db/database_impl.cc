@@ -683,6 +683,9 @@ void DatabaseImpl::IDBSequenceHelper::Put(
                              key.size_estimate() / 1024);
 
   uint64_t commit_size = mojo_value->bits.size() + key.size_estimate();
+  for (const auto& blob : blob_info) {
+    commit_size += blob.size();
+  }
   IndexedDBValue value;
   swap(value.bits, mojo_value->bits);
   swap(value.blob_info, blob_info);

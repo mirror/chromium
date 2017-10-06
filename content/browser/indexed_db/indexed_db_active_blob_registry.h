@@ -20,6 +20,7 @@ namespace content {
 
 class IndexedDBBackingStore;
 
+// See http://bit.ly/idb-blobs for design doc.
 class CONTENT_EXPORT IndexedDBActiveBlobRegistry {
  public:
   explicit IndexedDBActiveBlobRegistry(IndexedDBBackingStore* backing_store);
@@ -30,15 +31,23 @@ class CONTENT_EXPORT IndexedDBActiveBlobRegistry {
   // runner.  The exception is the closure returned by GetFinalReleaseCallback,
   // which just calls ReleaseBlobRefThreadSafe.
 
+  // Notifies that the given blob has been deleted from the database. Returns
+  // whether the blob is being used by a renderer.
   // Use DatabaseMetaDataKey::AllBlobsKey for "the whole database".
   bool MarkDeletedCheckIfUsed(int64_t database_id, int64_t blob_key);
 
+  // Used to report that a blob that had been sent to the renderer is no longer
+  // being used by the renderer.
   storage::ShareableFileReference::FinalReleaseCallback GetFinalReleaseCallback(
       int64_t database_id,
       int64_t blob_key);
+
+  // Callback is expected to be called when the given blob is being sent to the
+  // renderer. This registers the blob as being used.
   // This closure holds a raw pointer to the IndexedDBActiveBlobRegistry,
   // and may not be called after it is deleted.
   base::Closure GetAddBlobRefCallback(int64_t database_id, int64_t blob_key);
+
   // Call this to force the registry to drop its use counts, permitting the
   // factory to drop any blob-related refcount for the backing store.
   // This will also turn any outstanding callbacks into no-ops.
