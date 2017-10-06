@@ -52,7 +52,7 @@ Process::Process(GlobalDumpGraph* global_graph)
 }
 Process::~Process() {}
 
-Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
+Node* Process::CreateNode(base::Optional<MemoryAllocatorDumpGuid> guid,
                           base::StringPiece path,
                           bool weak) {
   DCHECK(!path.empty());
@@ -78,8 +78,10 @@ Node* Process::CreateNode(MemoryAllocatorDumpGuid guid,
   current->set_weak(weak);
   current->set_explicit(true);
 
-  // Add to the global guid map as well.
-  global_graph_->nodes_by_guid_.emplace(guid, current);
+  // Add to the global guid map as well if it exists.
+  if (guid.has_value())
+    global_graph_->nodes_by_guid_.emplace(*guid, current);
+
   return current;
 }
 

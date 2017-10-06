@@ -145,6 +145,26 @@ void RemoveWeakNodesRecursively(Node* parent) {
   }
 }
 
+void AssignTracingOverhead(base::StringPiece allocator,
+                           GlobalDumpGraph* global_graph,
+                           Process* process) {
+  Node* tracing_node = process->FindNode("tracing");
+  if (!tracing_node || tracing_node->owns_edge())
+    return;
+
+  Node* allocator_node = process->FindNode(allocator);
+  if (!allocator_node)
+    return;
+
+  std::string child_name =
+      allocator.as_string() + "/allocated_objects/tracing_overhead";
+  Node* child_node =
+      process->CreateNode(base::nullopt, child_name, false /* weak */);
+
+  global_graph->AddNodeOwnershipEdge(tracing_node, child_node,
+                                     0 /* importance */);
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
@@ -177,6 +197,14 @@ std::unique_ptr<GlobalDumpGraph> ComputeMemoryGraph(
     RemoveWeakNodesRecursively(pid_to_process.second->root());
   }
   RemoveWeakNodesRecursively(global_graph->shared_memory_graph()->root());
+
+  // Fifth pass: account for tracing overhead in system memory allocators.
+  for (auto& pid_to_process : global_graph->process_dump_graphs()) {
+    AssignTracingOverhead("malloc", global_graph.get(),
+                          pid_to_process.second.get());
+    AssignTracingOverhead("winheap", global_graph.get(),
+                          pid_to_process.second.get());
+  }
 
   return global_graph;
 }
