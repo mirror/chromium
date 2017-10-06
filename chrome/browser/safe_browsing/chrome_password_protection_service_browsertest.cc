@@ -18,16 +18,22 @@
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/features.h"
+#include "components/safe_browsing/password_protection/password_protection_request.h"
 #include "components/security_state/core/security_state.h"
 #include "components/signin/core/browser/account_info.h"
+#include "content/public/test/browser_test_utils.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/test_navigation_observer.h"
+#include "content/public/test/navigation_handle_observer.h"
+#include "net/url_request/test_url_fetcher_factory.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 namespace {
 
 const char kGaiaPasswordChangeHistogramName[] =
     "PasswordProtection.GaiaPasswordReusesBeforeGaiaPasswordChanged";
+
+const char kBadLoginPage[] ="/safe_browsing/bad_login.html";
 
 }  // namespace
 
@@ -82,6 +88,43 @@ class ChromePasswordProtectionServiceBrowserTest : public InProcessBrowserTest {
 
   void SetDefaultProfileEmail(ChromePasswordProtectionService* service) {
     service->account_info_->email = "foo@bar.com";
+  }
+
+  void SimulateRequestInflight(
+      ChromePasswordProtectionService* service,
+      const GURL& trigger_url, content::WebContents* web_contents,
+      bool will_trigger_warning) {
+    scoped_refptr<PasswordProtectionRequest>  request(
+      new PasswordProtectionRequest(
+          web_contents, trigger_url, GURL(),
+          trigger_url, true, {}, LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
+          true, service, 0));
+    request->set_is_modal_warning_showing(will_trigger_warning);
+    service->requests_.insert(std::move(request));
+  }
+
+  void SimulateReceiveVerdict(
+      ChromePasswordProtectionService* service,
+      const GURL& trigger_url,
+      LoginReputationClientResponse::VerdictType verdict_type) {
+    std::unique_ptr<LoginReputationClientResponse> response =
+       base::MakeUnique<LoginReputationClientResponse>();
+    response->set_verdict_type(verdict_type);
+    response->set_cache_duration_sec(0);
+    response->set_cache_expression(trigger_url.host());
+    response->set_verdict_token("unused_token");
+    for (auto request : service->requests_){
+      LOG(ERROR)<<"SimulateReceiveVerdict1";
+      service->RequestFinished(request.get(), /*already_cached=*/true, std::move(response));
+      LOG(ERROR)<<"SimulateReceiveVerdict2";
+      base::RunLoop().RunUntilIdle();
+      LOG(ERROR)<<"SimulateReceiveVerdict3";
+    }
+    LOG(ERROR)<<"SimulateReceiveVerdict4";
+  }
+
+  void SimulateDestructor(ChromePasswordProtectionService* service){
+   service->requests_.clear();
   }
 
  protected:
@@ -327,6 +370,103 @@ IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
           profile));
   EXPECT_FALSE(profile->GetPrefs()->GetBoolean(
       prefs::kSafeBrowsingChangePasswordInSettingsEnabled));
+}
+
+IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
+                       VerifyNavigationDeferedUntilSafeVerdictArrive) {
+  ChromePasswordProtectionService* service = GetService(/*is_incognito=*/false);
+  SetDefaultProfileEmail(service);
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Initialize and verify initial state.
+  GURL trigger_url = embedded_test_server()->GetURL(kBadLoginPage);
+  ui_test_utils::NavigateToURL(browser(), trigger_url);
+
+  LOG(ERROR)<<"Before Simulate request inflight";
+  SimulateRequestInflight(service, trigger_url, web_contents, false);
+  LOG(ERROR)<<"After Simulate request inflight";
+
+  // Shows modal dialog on current web_contents.
+ // service->ShowModalWarning(web_contents, "unused_token");
+ // base::RunLoop().RunUntilIdle();
+
+  //content::TestNavigationObserver navigation_observer(web_contents, 1);
+  LOG(ERROR)<<"About start navigation";
+  EXPECT_TRUE(content::ExecuteScript(web_contents, "window.location.href = '"+ embedded_test_server()->GetURL("/").spec() + "'"));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(trigger_url, web_contents->GetLastCommittedURL());
+
+  content::TestNavigationObserver navigation_observer(web_contents, 1, content::MessageLoopRunner::QuitMode::DEFERRED);
+  SimulateDestructor(service);
+  navigation_observer.Wait();
+  LOG(ERROR)<<"navigation done";
+
+  EXPECT_NE(trigger_url, web_contents->GetLastCommittedURL());
+  EXPECT_TRUE(navigation_observer.last_navigation_succeeded());
+}
+
+IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
+                       VerifyNavigationCanceledIfRequestResultsInWarning) {
+  ChromePasswordProtectionService* service = GetService(/*is_incognito=*/false);
+  SetDefaultProfileEmail(service);
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Initialize and verify initial state.
+  GURL trigger_url = embedded_test_server()->GetURL(kBadLoginPage);
+  ui_test_utils::NavigateToURL(browser(), trigger_url);
+
+  LOG(ERROR)<<"Before Simulate request inflight";
+  SimulateRequestInflight(service, trigger_url, web_contents, true);
+  LOG(ERROR)<<"After Simulate request inflight";
+
+  // Shows modal dialog on current web_contents.
+ // service->ShowModalWarning(web_contents, "unused_token");
+ // base::RunLoop().RunUntilIdle();
+
+  //content::TestNavigationObserver navigation_observer(web_contents, 1);
+  LOG(ERROR)<<"About start navigation";
+  GURL url = embedded_test_server()->GetURL("/");
+  content::NavigationHandleObserver observer(web_contents, url);
+  EXPECT_TRUE(content::ExecuteScript(web_contents, "window.location.href = '"+ url.spec() + "'"));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(observer.has_committed());
+  SimulateDestructor(service);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(GURL(), observer.last_committed_url());
+
+  EXPECT_EQ(trigger_url, web_contents->GetLastCommittedURL());
+}
+
+IN_PROC_BROWSER_TEST_F(ChromePasswordProtectionServiceBrowserTest,
+                       VerifyNavigationCanceledIfWarningIsShowing) {
+  ChromePasswordProtectionService* service = GetService(/*is_incognito=*/false);
+  SetDefaultProfileEmail(service);
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+
+  // Initialize and verify initial state.
+  GURL trigger_url = embedded_test_server()->GetURL(kBadLoginPage);
+  ui_test_utils::NavigateToURL(browser(), trigger_url);
+
+  SimulateRequestInflight(service, trigger_url, web_contents, true);
+
+  // Shows modal dialog on current web_contents.
+  service->ShowModalWarning(web_contents, "unused_token");
+  base::RunLoop().RunUntilIdle();
+
+  //content::TestNavigationObserver navigation_observer(web_contents, 1);
+  LOG(ERROR)<<"About start navigation";
+  GURL url = embedded_test_server()->GetURL("/");
+  content::NavigationHandleObserver observer(web_contents, url);
+  EXPECT_TRUE(content::ExecuteScript(web_contents, "window.location.href = '"+ url.spec() + "'"));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(observer.has_committed());
+  EXPECT_EQ(GURL(), observer.last_committed_url());
+
+  EXPECT_EQ(trigger_url, web_contents->GetLastCommittedURL());
+  LOG(ERROR)<<"End of test.";
 }
 
 // TODO(jialiul): Add more tests where multiple browser windows are involved.
