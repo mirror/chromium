@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f9d1b7fb_a3e8d05f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "The sample rate is checked by BaseAudioContext. I don\u0027t think we need a check here. DCHECK() should be okay though.",
+      "parentUuid": "19d5ec39_f3ce0d81",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b193ef1_c86ff6b2",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
         "patchSetId": 25
@@ -33,6 +51,24 @@
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420fbfad_4e108dba",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "2b193ef1_c86ff6b2",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a97530c7_3de09072",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b970ee1_89b1e62a",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c302dad4_f9e2567e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 25
@@ -67,6 +121,24 @@
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2496bb64_5236bd8d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "The spec PR is under the review, but this is WG\u0027s agreement:\nhttps://github.com/WebAudio/web-audio-api/pull/1386\n\n|outputChannelCount| is a variable-length array, so defaulting it properly with IDL syntax is not possible.",
+      "parentUuid": "c302dad4_f9e2567e",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b372e4f8_93ed2190",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "905ff23c_eb59e0db",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a918b88_de39f0b8",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 25
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ba6da3d0_e9bb348d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a918b88_de39f0b8",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90cb8730_cc63682d",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 25
@@ -115,6 +223,24 @@
       "writtenOn": "2017-10-06T02:16:14Z",
       "side": 1,
       "message": "Why can\u0027t we do this now?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49a54810_bbaab089",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done, but it needs more work. The accurate life cycle management will be in a follow-up CL.",
+      "parentUuid": "90cb8730_cc63682d",
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "491410f1_213b79eb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure which is better in this case. AudioWorkletProcessor instance is created in AudioWorkletGlobalScope (worklet thread) and also destroyed in the same scope/thread. The main thread simply references the object, and does not exercise any lifecycle management.\n\nIs CrossThreadPersistent better for this purpose?",
+      "parentUuid": "55f37a81_0544ceee",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f256736a_af03604e",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
         "patchSetId": 25
@@ -152,6 +296,24 @@
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51481494_c8182f6f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f256736a_af03604e",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "bea85c15_a2e04c91",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNodeOptions.idl",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Here: https://github.com/WebAudio/web-audio-api/pull/1386\n\nWG agreed on this, and the PR will be merged soon.",
+      "parentUuid": "ce9b7c64_fb0c6fee",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df02d091_e0bd33a1",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
         "patchSetId": 25
@@ -186,6 +366,24 @@
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b61679e_0ba54080",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df02d091_e0bd33a1",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +410,30 @@
     },
     {
       "key": {
+        "uuid": "d7da0e64_e6db526c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "74118aad_52e5c752",
+      "range": {
+        "startLine": 1036,
+        "startChar": 1,
+        "endLine": 1036,
+        "endChar": 2
+      },
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1901d832_262ddacd",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
         "patchSetId": 25
@@ -223,6 +445,24 @@
       "writtenOn": "2017-10-06T05:36:00Z",
       "side": 1,
       "message": "Why don\u0027t we use WorkletMessagingProxy() for the existence check?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca334172_5e86e8aa",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T18:21:42Z",
+      "side": 1,
+      "message": "I think it is more explicit that way. Also the getter can return nullptr (because AWMP is active only after .addModule() is called) and it\u0027s valid operation. AudioContext should work even without AWMP.\n\nSo having an explicit getter improves the meaning of the code and the state of the worklet function in WebAudio.",
+      "parentUuid": "1901d832_262ddacd",
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
