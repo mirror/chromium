@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ab2fefa_4b4ebbe4",
+        "filename": "ash/wm/overview/overview_window_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-06T00:27:27Z",
+      "side": 1,
+      "message": "I created a seperate bug for this. I agree it makes more sense your way (waiting for Omri confirmation) but I think we\u0027ll need to add a new test or two and expose some stuff (ie. kScreenEdgeInsetForDrag ?), so i think its a good idea to do this in a follow up cl.",
+      "parentUuid": "7dcfc01d_968a55a6",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20b3df07_234c5cee",
         "filename": "ash/wm/overview/window_selector_unittest.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I don\u0027t think it\u0027s needed either.",
       "parentUuid": "20b3df07_234c5cee",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6868dc9_03cc02a9",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-06T00:27:27Z",
+      "side": 1,
+      "message": "Verified. Done.",
+      "parentUuid": "bf7d797b_412f2833",
       "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "b6e8230b_5b95d02b",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-06T00:27:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0cb67f2_282ba668",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7389c9a_05f21764",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 3
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "de63e01b_76e0d06e",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-06T00:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7389c9a_05f21764",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed24aa78_f418fc39",
         "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
         "patchSetId": 3
@@ -120,6 +192,24 @@
       "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88c76fc_b45a66f0",
+        "filename": "ash/wm/splitview/split_view_overview_overlay.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-10-06T00:27:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed24aa78_f418fc39",
+      "revId": "6fe04da7358b12481484335dd509e515c29c4cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
