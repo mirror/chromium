@@ -22,6 +22,30 @@
       "revId": "aa5ab43f3be953fd669336335bf977e1235bcce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6936f37c_71ffc61a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 0,
+      "message": "Ok. Sorry for that.",
+      "parentUuid": "c4263993_d0104971",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "aa5ab43f3be953fd669336335bf977e1235bcce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

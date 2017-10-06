@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "96a218ff_0baf0a8a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4a5719_d0e94e9b",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a7c6c19_4b0da785",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 11
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4b580612_7f68a786",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a7c6c19_4b0da785",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 17
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59df47d5_6a4400e0",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 11
@@ -59,6 +107,30 @@
       "writtenOn": "2017-10-06T13:31:11Z",
       "side": 1,
       "message": "Why isn\u0027t this a const method? It doesn\u0027t modify this object?",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 63
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e64ba25_ad4c00a0",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 1,
+      "message": "According to this comment:\nhttps://chromium-review.googlesource.com/c/chromium/src/+/693095/8/chrome/browser/chromeos/settings/device_settings_service.h#139\n\nDocumentation says: https://msdn.microsoft.com/en-us/library/07x6b05d.aspx#Anchor_2\n\nI didn\u0027t find not proof of comment not contradiction",
+      "parentUuid": "59df47d5_6a4400e0",
       "range": {
         "startLine": 139,
         "startChar": 36,
@@ -105,6 +177,54 @@
       "writtenOn": "2017-10-06T13:31:11Z",
       "side": 1,
       "message": "nit:SessionLenght-\u003eSessionLength",
+      "range": {
+        "startLine": 143,
+        "startChar": 31,
+        "endLine": 143,
+        "endChar": 49
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9bb886f_b046b9a5",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac47f848_14e97083",
+      "range": {
+        "startLine": 143,
+        "startChar": 5,
+        "endLine": 143,
+        "endChar": 13
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "705d368c_732a82f5",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a12ac89_f96832b9",
       "range": {
         "startLine": 143,
         "startChar": 31,
