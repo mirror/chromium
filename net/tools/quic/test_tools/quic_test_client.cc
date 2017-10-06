@@ -358,9 +358,7 @@ ssize_t QuicTestClient::GetOrCreateStreamAndSendRequest(
   if (stream == nullptr) {
     return 0;
   }
-  if (client()->session()->save_data_before_consumption()) {
-    QuicStreamPeer::set_ack_listener(stream, ack_listener);
-  }
+  QuicStreamPeer::set_ack_listener(stream, ack_listener);
 
   ssize_t ret = 0;
   if (headers != nullptr) {

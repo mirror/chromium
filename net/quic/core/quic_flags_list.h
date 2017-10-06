@@ -124,11 +124,6 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_42, false)
 // STARTUP when in recovery and there has been no bandwidth increase for 1RTT.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss, true)
 
-// If true, application data is saved before consumption in QUIC.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2,
-          true)
-
 // If buffered data in QUIC stream is less than this threshold, buffers all
 // provided data or asks upper layer for more data.
 QUIC_FLAG(uint32_t, FLAGS_quic_buffered_data_threshold, 8192u)

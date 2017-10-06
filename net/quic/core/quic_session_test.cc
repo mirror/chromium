@@ -222,10 +222,8 @@ class TestSession : public QuicSpdySession {
     if (stream->id() != kCryptoStreamId) {
       this->connection()->SetDefaultEncryptionLevel(ENCRYPTION_FORWARD_SECURE);
     }
-    if (save_data_before_consumption()) {
-      QuicStreamPeer::SendBuffer(stream).SaveStreamData(
-          MakeIOVector("not empty", &iov), 0, 9);
-    }
+    QuicStreamPeer::SendBuffer(stream).SaveStreamData(
+        MakeIOVector("not empty", &iov), 0, 9);
     QuicConsumedData consumed = WritevData(
         stream, stream->id(), MakeIOVector("not empty", &iov), 0, FIN, nullptr);
     return consumed;

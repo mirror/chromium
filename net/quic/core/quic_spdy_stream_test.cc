@@ -901,7 +901,7 @@ TEST_P(QuicSpdyStreamTest, WritingTrailersClosesWriteSide) {
   // Write non-zero body data.
   const int kBodySize = 1 * 1024;  // 1 MB
   stream_->WriteOrBufferData(string(kBodySize, 'x'), false, nullptr);
-  EXPECT_EQ(0u, stream_->queued_data_bytes());
+  EXPECT_EQ(0u, stream_->BufferedDataBytes());
 
   // Headers and body have been fully written, there is no queued data. Writing
   // trailers marks the end of this stream, and thus the write side is closed.
@@ -927,7 +927,7 @@ TEST_P(QuicSpdyStreamTest, WritingTrailersWithQueuedBytes) {
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _, _))
       .WillOnce(Return(QuicConsumedData(kBodySize - 1, false)));
   stream_->WriteOrBufferData(string(kBodySize, 'x'), false, nullptr);
-  EXPECT_EQ(1u, stream_->queued_data_bytes());
+  EXPECT_EQ(1u, stream_->BufferedDataBytes());
 
   // Writing trailers will send a FIN, but not close the write side of the
   // stream as there are queued bytes.

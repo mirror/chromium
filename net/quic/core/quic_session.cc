@@ -54,17 +54,12 @@ QuicSession::QuicSession(QuicConnection* connection,
                        perspective() == Perspective::IS_SERVER,
                        nullptr),
       currently_writing_stream_id_(0),
-      save_data_before_consumption_(
-          FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2),
-      can_use_slices_(save_data_before_consumption_ &&
-                      FLAGS_quic_reloadable_flag_quic_use_mem_slices) {}
+      can_use_slices_(FLAGS_quic_reloadable_flag_quic_use_mem_slices) {}
 
 void QuicSession::Initialize() {
   connection_->set_visitor(this);
   connection_->SetStreamNotifier(this);
-  if (save_data_before_consumption_) {
-    connection_->SetDataProducer(this);
-  }
+  connection_->SetDataProducer(this);
   connection_->SetFromConfig(config_);
 
   DCHECK_EQ(kCryptoStreamId, GetMutableCryptoStream()->id());

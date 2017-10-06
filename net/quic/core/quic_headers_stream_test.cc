@@ -928,9 +928,6 @@ TEST_P(QuicHeadersStreamTest, AckSentData) {
 
 TEST_P(QuicHeadersStreamTest, FrameContainsMultipleHeaders) {
   // In this test, a stream frame can contain multiple headers.
-  if (!session_.save_data_before_consumption()) {
-    return;
-  }
   EXPECT_CALL(session_,
               WritevData(headers_stream_, kHeadersStreamId, _, _, NO_FIN, _))
       .WillRepeatedly(Invoke(MockQuicSession::ConsumeAllData));

@@ -115,9 +115,7 @@ class StatelessConnectionTerminator {
                  helper->GetStreamFrameBufferAllocator(),
                  &collector_),
         time_wait_list_manager_(time_wait_list_manager) {
-    if (FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2) {
-      framer_->set_data_producer(&collector_);
-    }
+    framer_->set_data_producer(&collector_);
   }
 
   ~StatelessConnectionTerminator() {
@@ -156,8 +154,6 @@ class StatelessConnectionTerminator {
     QuicIOVector iov(&iovec, 1, iovec.iov_len);
     QuicStreamOffset offset = 0;
     if (framer_->HasDataProducer()) {
-      QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_save_data_before_consumption2,
-                        4, 4);
       collector_.SaveStatelessRejectFrameData(iov, 0, reject.length());
     }
     while (offset < iovec.iov_len) {
