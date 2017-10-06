@@ -650,7 +650,8 @@ TEST_F(TileManagerTilePriorityQueueTest, ActivationComesBeforeSoon) {
       std::vector<Tile*>(all_tiles.begin(), all_tiles.end()));
 
   // Ensure we can activate.
-  EXPECT_TRUE(tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(tile_manager()->AreRasterQueueTilesReadyToDrawForTesting(
+      RasterTilePriorityQueue::Type::REQUIRED_FOR_ACTIVATION));
 }
 
 TEST_F(TileManagerTilePriorityQueueTest, EvictionTilePriorityQueue) {
@@ -1646,8 +1647,8 @@ TEST_F(TileManagerTest, ActivateAndDrawWhenOOM) {
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
   EXPECT_TRUE(host_impl()->notify_tile_state_changed_called());
 
   // Next PrepareTiles should skip NotifyTileStateChanged since all tiles
@@ -1981,12 +1982,10 @@ TEST_F(TileManagerTest, PartialRasterSuccessfullyDisabled) {
 class MockReadyToDrawRasterBufferProviderImpl
     : public FakeRasterBufferProviderImpl {
  public:
-  MOCK_CONST_METHOD1(IsResourceReadyToDraw, bool(viz::ResourceId resource_id));
-  MOCK_CONST_METHOD3(
-      SetReadyToDrawCallback,
-      uint64_t(const ResourceProvider::ResourceIdArray& resource_ids,
-               const base::Closure& callback,
-               uint64_t pending_callback_id));
+  MOCK_METHOD1(IsResourceReadyToDraw, bool(viz::ResourceId resource_id));
+  MOCK_METHOD2(NotifyResourceReadyToDraw,
+               void(const std::vector<viz::ResourceId>& resource_ids,
+                    const base::Closure& callback));
 
   std::unique_ptr<RasterBuffer> AcquireBufferForRaster(
       const Resource* resource,
@@ -2099,21 +2098,21 @@ TEST_F(TileManagerReadyToDrawTest, SmoothActivationWaitsOnCallback) {
                 IsResourceReadyToDraw(testing::_))
         .WillRepeatedly(Return(false));
 
-    EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(testing::Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+    EXPECT_CALL(*mock_raster_buffer_provider(), NotifyResourceReadyToDraw(_, _))
+        .WillOnce(testing::Invoke(
+            [&run_loop, &callback](
+                const ResourceProvider::ResourceIdArray& resource_ids,
+                const base::Closure& callback_in) {
+              callback = callback_in;
+              run_loop.Quit();
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 
   {
     base::RunLoop run_loop;
@@ -2126,8 +2125,8 @@ TEST_F(TileManagerReadyToDrawTest, SmoothActivationWaitsOnCallback) {
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 TEST_F(TileManagerReadyToDrawTest, NonSmoothActivationDoesNotWaitOnCallback) {
@@ -2143,8 +2142,8 @@ TEST_F(TileManagerReadyToDrawTest, NonSmoothActivationDoesNotWaitOnCallback) {
       .WillOnce(Invoke([&run_loop]() { run_loop.Quit(); }));
   run_loop.Run();
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 TEST_F(TileManagerReadyToDrawTest, SmoothDrawWaitsOnCallback) {
@@ -2161,21 +2160,21 @@ TEST_F(TileManagerReadyToDrawTest, SmoothDrawWaitsOnCallback) {
                 IsResourceReadyToDraw(testing::_))
         .WillRepeatedly(Return(false));
 
-    EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+    EXPECT_CALL(*mock_raster_buffer_provider(), NotifyResourceReadyToDraw(_, _))
+        .WillOnce(
+            Invoke([&run_loop, &callback](
+                       const ResourceProvider::ResourceIdArray& resource_ids,
+                       const base::Closure& callback_in) {
+              callback = callback_in;
+              run_loop.Quit();
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();
   }
 
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 
   {
     base::RunLoop run_loop;
@@ -2188,8 +2187,8 @@ TEST_F(TileManagerReadyToDrawTest, SmoothDrawWaitsOnCallback) {
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 TEST_F(TileManagerReadyToDrawTest, NonSmoothDrawDoesNotWaitOnCallback) {
@@ -2205,8 +2204,8 @@ TEST_F(TileManagerReadyToDrawTest, NonSmoothDrawDoesNotWaitOnCallback) {
       .WillOnce(Invoke([&run_loop]() { run_loop.Quit(); }));
   run_loop.Run();
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 TEST_F(TileManagerReadyToDrawTest, NoCallbackWhenAlreadyReadyToDraw) {
@@ -2222,8 +2221,8 @@ TEST_F(TileManagerReadyToDrawTest, NoCallbackWhenAlreadyReadyToDraw) {
       .WillRepeatedly(Return(true));
   run_loop.Run();
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 void UpdateVisibleRect(FakePictureLayerImpl* layer,
@@ -2257,8 +2256,8 @@ TEST_F(TileManagerReadyToDrawTest, ReadyToDrawRespectsRequirementChange) {
       .WillRepeatedly(Return(true));
   run_loop.Run();
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 
   // Move the viewport to (900, 900, 100, 100), so that we need a different set
   // of tilings.
@@ -2271,21 +2270,21 @@ TEST_F(TileManagerReadyToDrawTest, ReadyToDrawRespectsRequirementChange) {
   {
     base::RunLoop run_loop;
 
-    EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(testing::Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+    EXPECT_CALL(*mock_raster_buffer_provider(), NotifyResourceReadyToDraw(_, _))
+        .WillOnce(testing::Invoke(
+            [&run_loop, &callback](
+                const ResourceProvider::ResourceIdArray& resource_ids,
+                const base::Closure& callback_in) {
+              callback = callback_in;
+              run_loop.Quit();
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 
   // Now switch back to our original tiling. We should be immediately able to
   // activate, as we still have the original tile, and no longer need the
@@ -2301,8 +2300,8 @@ TEST_F(TileManagerReadyToDrawTest, ReadyToDrawRespectsRequirementChange) {
     run_loop.Run();
   }
 
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivate());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToActivateForTesting());
 }
 
 class CheckerImagingTileManagerTest : public TestLayerTreeHostBase {
@@ -2657,10 +2656,10 @@ TEST_F(CheckerImagingTileManagerTest,
   // Required for draw tiles block checker-imaged decodes.
   // Free all tile resources and perform another PrepareTiles.
   ActivateTree();
-  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDraw());
+  EXPECT_TRUE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
   host_impl()->tile_manager()->PrepareTiles(
       GlobalStateThatImpactsTilePriority());
-  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToDraw());
+  EXPECT_FALSE(host_impl()->tile_manager()->IsReadyToDrawForTesting());
 
   host_impl()->client()->reset_ready_to_draw();
   host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());

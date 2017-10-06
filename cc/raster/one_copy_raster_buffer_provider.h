@@ -42,11 +42,10 @@ class CC_EXPORT OneCopyRasterBufferProvider : public RasterBufferProvider {
   viz::ResourceFormat GetResourceFormat(bool must_support_alpha) const override;
   bool IsResourceSwizzleRequired(bool must_support_alpha) const override;
   bool CanPartialRasterIntoProvidedResource() const override;
-  bool IsResourceReadyToDraw(viz::ResourceId id) const override;
-  uint64_t SetReadyToDrawCallback(
-      const ResourceProvider::ResourceIdArray& resource_ids,
-      const base::Closure& callback,
-      uint64_t pending_callback_id) const override;
+  bool IsResourceReadyToDraw(viz::ResourceId id) override;
+  void NotifyResourceReadyToDraw(
+      const std::vector<viz::ResourceId>& resource_ids,
+      const base::Closure& callback) override;
   void Shutdown() override;
 
   // Playback raster source and copy result into |resource|.

@@ -41,15 +41,14 @@ bool FakeRasterBufferProviderImpl::CanPartialRasterIntoProvidedResource()
 }
 
 bool FakeRasterBufferProviderImpl::IsResourceReadyToDraw(
-    viz::ResourceId resource_id) const {
+    viz::ResourceId resource_id) {
   return true;
 }
 
-uint64_t FakeRasterBufferProviderImpl::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
-    const base::Callback<void()>& callback,
-    uint64_t pending_callback_id) const {
-  return 0;
+void FakeRasterBufferProviderImpl::NotifyResourceReadyToDraw(
+    const std::vector<viz::ResourceId>& resource_ids,
+    const base::Callback<void()>& callback) {
+  callback.Run();
 }
 
 void FakeRasterBufferProviderImpl::Shutdown() {}

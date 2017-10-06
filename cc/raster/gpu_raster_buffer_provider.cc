@@ -252,7 +252,7 @@ bool GpuRasterBufferProvider::CanPartialRasterIntoProvidedResource() const {
 }
 
 bool GpuRasterBufferProvider::IsResourceReadyToDraw(
-    viz::ResourceId resource_id) const {
+    viz::ResourceId resource_id) {
   if (!async_worker_context_enabled_)
     return true;
 
@@ -266,29 +266,15 @@ bool GpuRasterBufferProvider::IsResourceReadyToDraw(
       sync_token);
 }
 
-uint64_t GpuRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
-    const base::Closure& callback,
-    uint64_t pending_callback_id) const {
-  if (!async_worker_context_enabled_)
-    return 0;
-
+void GpuRasterBufferProvider::NotifyResourceReadyToDraw(
+    const std::vector<viz::ResourceId>& resource_ids,
+    const base::Closure& callback) {
   gpu::SyncToken sync_token =
       resource_provider_->GetSyncTokenForResources(resource_ids);
-  uint64_t callback_id = sync_token.release_count();
-  DCHECK_NE(callback_id, 0u);
-
-  // If the callback is different from the one the caller is already waiting on,
-  // pass the callback through to SignalSyncToken. Otherwise the request is
-  // redundant.
-  if (callback_id != pending_callback_id) {
-    // Use the compositor context because we want this callback on the impl
-    // thread.
-    compositor_context_provider_->ContextSupport()->SignalSyncToken(sync_token,
-                                                                    callback);
-  }
-
-  return callback_id;
+  // Use the compositor context because we want this callback on the impl
+  // thread.
+  compositor_context_provider_->ContextSupport()->SignalSyncToken(sync_token,
+                                                                  callback);
 }
 
 void GpuRasterBufferProvider::Shutdown() {
