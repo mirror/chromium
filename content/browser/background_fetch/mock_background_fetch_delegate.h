@@ -22,40 +22,33 @@ namespace content {
 
 class MockBackgroundFetchDelegate : public BackgroundFetchDelegate {
  public:
-  // Structure encapsulating the data for a injected response. Should only be
-  // created by the builder, which also defines the ownership semantics.
-  struct TestResponse {
-    TestResponse();
-    ~TestResponse();
+  // Structure encapsulating the data for a injected OnDownloadComplete
+  // response. Should be created directly.
+  struct TestCompletedResponse {
+    TestCompletedResponse(bool succeeded, const std::string& data);
 
-    bool succeeded_;
-    scoped_refptr<net::HttpResponseHeaders> headers;
+    bool succeeded;
     std::string data;
 
    private:
-    DISALLOW_COPY_AND_ASSIGN(TestResponse);
+    DISALLOW_COPY_AND_ASSIGN(TestCompletedResponse);
   };
 
-  // Builder for creating a TestResponse object with the given data.
-  // MockBackgroundFetchDelegate will respond to the corresponding request based
-  // on this.
-  class TestResponseBuilder {
+  // Builder for creating an injected OnDownloadStarted response.
+  class TestStartedResponseBuilder {
    public:
-    explicit TestResponseBuilder(int response_code);
-    ~TestResponseBuilder();
+    explicit TestStartedResponseBuilder(int response_code);
 
-    TestResponseBuilder& AddResponseHeader(const std::string& name,
-                                           const std::string& value);
-
-    TestResponseBuilder& SetResponseData(std::string data);
+    TestStartedResponseBuilder& AddResponseHeader(const std::string& name,
+                                                  const std::string& value);
 
     // Finalizes the builder and invalidates the underlying response.
-    std::unique_ptr<TestResponse> Build();
+    scoped_refptr<net::HttpResponseHeaders> Build();
 
    private:
-    std::unique_ptr<TestResponse> response_;
+    scoped_refptr<net::HttpResponseHeaders> headers_;
 
-    DISALLOW_COPY_AND_ASSIGN(TestResponseBuilder);
+    DISALLOW_COPY_AND_ASSIGN(TestStartedResponseBuilder);
   };
 
   MockBackgroundFetchDelegate();
@@ -68,12 +61,26 @@ class MockBackgroundFetchDelegate : public BackgroundFetchDelegate {
                    const net::NetworkTrafficAnnotationTag& traffic_annotation,
                    const net::HttpRequestHeaders& headers) override;
 
-  void RegisterResponse(const GURL& url,
-                        std::unique_ptr<TestResponse> response);
+  void RegisterStartedResponse(
+      const GURL& url,
+      scoped_refptr<net::HttpResponseHeaders> response_headers);
+
+  void RegisterCompletedResponse(
+      const GURL& url,
+      std::unique_ptr<TestCompletedResponse> response);
 
  private:
-  // Single-use responses registered for specific URLs.
-  std::map<const GURL, std::unique_ptr<TestResponse>> url_responses_;
+  // Single-use OnDownloadStarted responses registered for specific URLs.
+  std::map<GURL, scoped_refptr<net::HttpResponseHeaders>> started_responses_;
+
+  // Single-use OnDownloadComplete responses registered for specific URLs.
+  std::map<GURL, std::unique_ptr<TestCompletedResponse>> completed_responses_;
+
+  // Single-use download GUIDs of requests awaiting a started response.
+  std::map<GURL, std::string> requests_awaiting_start_;
+
+  // Single-use download GUIDs of requests awaiting a completed response.
+  std::map<GURL, std::string> requests_awaiting_complete_;
 
   // GUIDs that have been registered via DownloadUrl and thus cannot be reused.
   std::set<std::string> seen_guids_;
