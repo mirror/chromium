@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/task_runner_util.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/threading/thread.h"
@@ -277,7 +278,7 @@ class WebMediaPlayerImplTest : public testing::Test {
                        base::Unretained(this)),
             base::BindRepeating(&WebMediaPlayerImplTest::ProvideContext,
                                 base::Unretained(this)),
-            cc::TestContextProvider::Create()));
+            cc::TestContextProvider::Create(), nullptr));
 }
 
   ~WebMediaPlayerImplTest() override {
@@ -295,6 +296,11 @@ class WebMediaPlayerImplTest : public testing::Test {
 
   void ProvideContext(
       base::OnceCallback<void(viz::ContextProvider*)> callback) {
+    PostTaskAndReplyWithResult(
+        media_thread_.task_runner().get(), FROM_HERE,
+        base::BindOnce(&cc::TestContextProvider::BindToCurrentThread,
+                       base::Unretained(context_provider_.get())),
+        base::BindOnce([](bool bound) { EXPECT_TRUE(bound); }));
     media_thread_.task_runner()->PostTask(
         FROM_HERE, base::BindOnce(std::move(callback),
                                   base::Unretained(context_provider_.get())));

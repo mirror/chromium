@@ -241,7 +241,7 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
       gfx::Size uv_tex_size(u_width, u_height);
 
       if (frame_->HasTextures()) {
-        if (frame_->format() == media::PIXEL_FORMAT_NV12) {
+        if (frame_->format() == media::PIXEL_FORMAT_NV12) {\
           DCHECK_EQ(2u, frame_resources_.size());
         } else {
           DCHECK_EQ(media::PIXEL_FORMAT_I420, frame_->format());
@@ -262,117 +262,121 @@ void VideoLayerImpl::AppendQuads(viz::RenderPass* render_pass,
           static_cast<float>(ya_tex_size.width()) / uv_tex_size.width();
       float uv_subsampling_factor_y =
           static_cast<float>(ya_tex_size.height()) / uv_tex_size.height();
+
       gfx::RectF ya_tex_coord_rect(visible_rect);
       gfx::RectF uv_tex_coord_rect(
           visible_rect.x() / uv_subsampling_factor_x,
           visible_rect.y() / uv_subsampling_factor_y,
-          visible_rect.width() / uv_subsampling_factor_x,
-          visible_rect.height() / uv_subsampling_factor_y);
+      visible_rect.width() / uv_subsampling_factor_x,
+        visible_rect.height() / uv_subsampling_factor_y);
+
+      VLOG(0) << "frame_resource 0 id " << frame_resources_[0].id;
+      VLOG(0) << "frame_resource 1 id " << frame_resources_[1].id;
 
       auto* yuv_video_quad =
-          render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
-      yuv_video_quad->SetNew(
-          shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
-          ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size, uv_tex_size,
-          frame_resources_[0].id, frame_resources_[1].id,
-          frame_resources_.size() > 2 ? frame_resources_[2].id
-                                      : frame_resources_[1].id,
-          frame_resources_.size() > 3 ? frame_resources_[3].id : 0, color_space,
-          frame_->ColorSpace(), frame_resource_offset_,
-          frame_resource_multiplier_, frame_bits_per_channel_);
-      yuv_video_quad->require_overlay = frame_->metadata()->IsTrue(
-          media::VideoFrameMetadata::REQUIRE_OVERLAY);
-      ValidateQuadResources(yuv_video_quad);
-      break;
-    }
-    case VideoFrameExternalResources::RGBA_RESOURCE:
-    case VideoFrameExternalResources::RGBA_PREMULTIPLIED_RESOURCE:
-    case VideoFrameExternalResources::RGB_RESOURCE: {
-      DCHECK_EQ(frame_resources_.size(), 1u);
-      if (frame_resources_.size() < 1u)
-        break;
-      bool premultiplied_alpha =
-          frame_resource_type_ ==
-          VideoFrameExternalResources::RGBA_PREMULTIPLIED_RESOURCE;
-      gfx::PointF uv_top_left(0.f, 0.f);
-      gfx::PointF uv_bottom_right(tex_width_scale, tex_height_scale);
-      float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
-      bool flipped = false;
-      bool nearest_neighbor = false;
-      auto* texture_quad =
-          render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
-      texture_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
-                           needs_blending, frame_resources_[0].id,
-                           premultiplied_alpha, uv_top_left, uv_bottom_right,
-                           SK_ColorTRANSPARENT, opacity, flipped,
-                           nearest_neighbor, false);
-      texture_quad->set_resource_size_in_pixels(coded_size);
-      ValidateQuadResources(texture_quad);
-      break;
-    }
-    case VideoFrameExternalResources::STREAM_TEXTURE_RESOURCE: {
-      DCHECK_EQ(frame_resources_.size(), 1u);
-      if (frame_resources_.size() < 1u)
-        break;
-      gfx::Transform scale;
-      scale.Scale(tex_width_scale, tex_height_scale);
-      auto* stream_video_quad =
-          render_pass->CreateAndAppendDrawQuad<viz::StreamVideoDrawQuad>();
-      stream_video_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
-                                needs_blending, frame_resources_[0].id,
-                                frame_resources_[0].size_in_pixels, scale);
-      ValidateQuadResources(stream_video_quad);
-      break;
-    }
-    case VideoFrameExternalResources::NONE:
-      NOTIMPLEMENTED();
-      break;
+        render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
+    yuv_video_quad->SetNew(
+        shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
+        ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size, uv_tex_size,
+        frame_resources_[0].id, frame_resources_[1].id,
+        frame_resources_.size() > 2 ? frame_resources_[2].id
+                                    : frame_resources_[1].id,
+        frame_resources_.size() > 3 ? frame_resources_[3].id : 0, color_space,
+        frame_->ColorSpace(), frame_resource_offset_,
+        frame_resource_multiplier_, frame_bits_per_channel_);
+    yuv_video_quad->require_overlay = frame_->metadata()->IsTrue(
+        media::VideoFrameMetadata::REQUIRE_OVERLAY);
+    ValidateQuadResources(yuv_video_quad);
+    break;
   }
+  case VideoFrameExternalResources::RGBA_RESOURCE:
+  case VideoFrameExternalResources::RGBA_PREMULTIPLIED_RESOURCE:
+  case VideoFrameExternalResources::RGB_RESOURCE: {
+    DCHECK_EQ(frame_resources_.size(), 1u);
+    if (frame_resources_.size() < 1u)
+      break;
+    bool premultiplied_alpha =
+        frame_resource_type_ ==
+        VideoFrameExternalResources::RGBA_PREMULTIPLIED_RESOURCE;
+    gfx::PointF uv_top_left(0.f, 0.f);
+    gfx::PointF uv_bottom_right(tex_width_scale, tex_height_scale);
+    float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    bool flipped = false;
+    bool nearest_neighbor = false;
+    auto* texture_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
+    texture_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
+                         needs_blending, frame_resources_[0].id,
+                         premultiplied_alpha, uv_top_left, uv_bottom_right,
+                         SK_ColorTRANSPARENT, opacity, flipped,
+                         nearest_neighbor, false);
+    texture_quad->set_resource_size_in_pixels(coded_size);
+    ValidateQuadResources(texture_quad);
+    break;
+  }
+  case VideoFrameExternalResources::STREAM_TEXTURE_RESOURCE: {
+    DCHECK_EQ(frame_resources_.size(), 1u);
+    if (frame_resources_.size() < 1u)
+      break;
+    gfx::Transform scale;
+    scale.Scale(tex_width_scale, tex_height_scale);
+    auto* stream_video_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::StreamVideoDrawQuad>();
+    stream_video_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect,
+                              needs_blending, frame_resources_[0].id,
+                              frame_resources_[0].size_in_pixels, scale);
+    ValidateQuadResources(stream_video_quad);
+    break;
+  }
+  case VideoFrameExternalResources::NONE:
+    NOTIMPLEMENTED();
+    break;
+}
 }
 
 void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
-  LayerImpl::DidDraw(resource_provider);
+LayerImpl::DidDraw(resource_provider);
 
-  DCHECK(frame_.get());
+DCHECK(frame_.get());
 
-  if (frame_resource_type_ ==
-      VideoFrameExternalResources::SOFTWARE_RESOURCE) {
-    for (size_t i = 0; i < software_resources_.size(); ++i) {
-      software_release_callback_.Run(gpu::SyncToken(), false);
-    }
-
-    software_resources_.clear();
-    software_release_callback_.Reset();
-  } else {
-    for (size_t i = 0; i < frame_resources_.size(); ++i)
-      resource_provider->DeleteResource(frame_resources_[i].id);
-    frame_resources_.clear();
+if (frame_resource_type_ ==
+    VideoFrameExternalResources::SOFTWARE_RESOURCE) {
+  for (size_t i = 0; i < software_resources_.size(); ++i) {
+    software_release_callback_.Run(gpu::SyncToken(), false);
   }
 
-  provider_client_impl_->PutCurrentFrame();
-  frame_ = nullptr;
+  software_resources_.clear();
+  software_release_callback_.Reset();
+} else {
+  for (size_t i = 0; i < frame_resources_.size(); ++i)
+    resource_provider->DeleteResource(frame_resources_[i].id);
+  frame_resources_.clear();
+}
 
-  provider_client_impl_->ReleaseLock();
+provider_client_impl_->PutCurrentFrame();
+frame_ = nullptr;
+
+provider_client_impl_->ReleaseLock();
 }
 
 SimpleEnclosedRegion VideoLayerImpl::VisibleOpaqueRegion() const {
-  // If we don't have a frame yet, then we don't have an opaque region.
-  if (!provider_client_impl_->HasCurrentFrame())
-    return SimpleEnclosedRegion();
-  return LayerImpl::VisibleOpaqueRegion();
+// If we don't have a frame yet, then we don't have an opaque region.
+if (!provider_client_impl_->HasCurrentFrame())
+  return SimpleEnclosedRegion();
+return LayerImpl::VisibleOpaqueRegion();
 }
 
 void VideoLayerImpl::ReleaseResources() {
-  updater_ = nullptr;
+updater_ = nullptr;
 }
 
 void VideoLayerImpl::SetNeedsRedraw() {
-  SetUpdateRect(gfx::UnionRects(update_rect(), gfx::Rect(bounds())));
-  layer_tree_impl()->SetNeedsRedraw();
+SetUpdateRect(gfx::UnionRects(update_rect(), gfx::Rect(bounds())));
+layer_tree_impl()->SetNeedsRedraw();
 }
 
 const char* VideoLayerImpl::LayerTypeAsString() const {
-  return "cc::VideoLayerImpl";
+return "cc::VideoLayerImpl";
 }
 
 }  // namespace cc
