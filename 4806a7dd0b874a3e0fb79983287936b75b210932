@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cfef3af8_602ba935",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-10-06T07:30:49Z",
+      "side": 1,
+      "message": "Nope. This is just a metric value. The ukm.xml file refers to this enum, it does not list the values.",
+      "parentUuid": "55d99b04_a93e97eb",
+      "range": {
+        "startLine": 164,
+        "startChar": 35,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "4806a7dd0b874a3e0fb79983287936b75b210932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4698af4a_acc27868",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
