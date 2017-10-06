@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "07a679e6_774accca",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:11:09Z",
+      "side": 1,
+      "message": "I want to get rid of the content/network/throttling dependency, so we don\u0027t add more roadblocks to separating out the network service.  GetNetworkService only works when the network service is enabled.  I want a single codepath here that works in both cases - i.e., no \"base::FeatureList::IsEnabled(features::kNetworkService)\" check.",
+      "parentUuid": "5fa196dc_31c65620",
+      "range": {
+        "startLine": 1173,
+        "startChar": 49,
+        "endLine": 1173,
+        "endChar": 53
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a162f5b_618c793f",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:11:09Z",
+      "side": 1,
+      "message": "You need to update this, if you\u0027re going to depend on content/network (But I don\u0027t think we need to, or should, introduce that dependency).",
+      "range": {
+        "startLine": 387,
+        "startChar": 22,
+        "endLine": 387,
+        "endChar": 42
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50153789_7682989f",
         "filename": "content/network/throttling/throttling_controller.h",
         "patchSetId": 3
