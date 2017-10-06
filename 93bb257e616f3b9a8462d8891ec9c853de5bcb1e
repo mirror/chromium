@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75888cee_643bb285",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-06T18:45:49Z",
+      "side": 1,
+      "message": "Need to remove this part, at the very end decided to keep a controller per each browser so this was unnecessary",
+      "range": {
+        "startLine": 16,
+        "startChar": 67,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "93bb257e616f3b9a8462d8891ec9c853de5bcb1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
