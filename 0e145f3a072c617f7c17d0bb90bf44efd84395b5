@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71d894ff_77318aff",
+        "filename": "chrome/browser/component_updater/recovery_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056bee82_b3019e55",
+      "range": {
+        "startLine": 406,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 26
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed614330_1e61f1ac",
         "filename": "components/component_updater/component_installer.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf2cf13_1b4f7eaf",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed614330_1e61f1ac",
+      "range": {
+        "startLine": 119,
+        "startChar": 50,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "314b65f8_77527547",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5962d276_ee55d3fa",
+      "range": {
+        "startLine": 141,
+        "startChar": 3,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d0763e_3826e5bb",
         "filename": "components/component_updater/component_installer.cc",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-06T14:35:33Z",
       "side": 1,
       "message": "The recovery component installer uses PostTaskWithTraits to post the callback - should this be consistent across installers? (Same with the PostTask on :182 for the successful case).",
+      "range": {
+        "startLine": 165,
+        "startChar": 73,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abe72624_85d7e5af",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Fixed the other callsite.",
+      "parentUuid": "41d0763e_3826e5bb",
       "range": {
         "startLine": 165,
         "startChar": 73,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4142fb47_db946370",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Seems ok as is.",
+      "parentUuid": "257a5533_72bfaca8",
+      "range": {
+        "startLine": 166,
+        "startChar": 11,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "360ea1ec_7030b789",
         "filename": "components/component_updater/component_installer.cc",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "088c0aea_b96e3b21",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "360ea1ec_7030b789",
+      "range": {
+        "startLine": 175,
+        "startChar": 42,
+        "endLine": 175,
+        "endChar": 43
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac7f119_84306858",
         "filename": "components/update_client/component.cc",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13757e7e_ac389734",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T19:43:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac7f119_84306858",
+      "range": {
+        "startLine": 70,
+        "startChar": 53,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
