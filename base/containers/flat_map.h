@@ -60,11 +60,15 @@ struct GetKeyFromValuePairFirst {
 //
 // Constructors (inputs need not be sorted):
 //   flat_map(InputIterator first, InputIterator last,
-//            FlatContainerDupes, const Compare& compare = Compare());
+//            FlatContainerDupes = KEEP_FIRST_OF_DUPES,
+//            const Compare& compare = Compare());
 //   flat_map(const flat_map&);
 //   flat_map(flat_map&&);
-//   flat_map(std::vector<value_type>, FlatContainerDupes);  // Re-use storage.
+//   flat_map(std::vector<value_type>,
+//            FlatContainerDupes == KEEP_FIRST_OF_DUPES,
+//            const Compare& compare = Compare()); // Re-use storage.
 //   flat_map(std::initializer_list<value_type> ilist,
+//            FlatContainerDupes == KEEP_FIRST_OF_DUPES
 //            const Compare& comp = Compare());
 //
 // Assignment functions:
@@ -145,9 +149,6 @@ struct GetKeyFromValuePairFirst {
 //   bool operator<=(const flat_map&, const flat_map);
 //
 template <class Key, class Mapped, class Compare = std::less<>>
-// Meets the requirements of Container, AssociativeContainer,
-// ReversibleContainer.
-// Requires: Key is Movable, Compare is a StrictWeakOrdering on Key.
 class flat_map : public ::base::internal::flat_tree<
                      Key,
                      std::pair<Key, Mapped>,
@@ -170,44 +171,16 @@ class flat_map : public ::base::internal::flat_tree<
   // --------------------------------------------------------------------------
   // Lifetime.
   //
-  // Constructors that take range guarantee O(N * log(N)) + O(N) complexity
-  // (N is a range length). Thr range constructors are NOT stable. If there are
-  // duplicates an arbitrary one will be chosen.
-  //
-  // Assume that move constructors invalidate iterators and references.
-  //
-  // The constructors that take ranges, lists, and vectors do not require that
-  // the input be sorted.
+  // See the list of constructors in flat_tree or refer to documentation prior
+  // to this class.
 
-  flat_map();
-  explicit flat_map(const Compare& comp);
-
-  template <class InputIterator>
-  flat_map(InputIterator first,
-           InputIterator last,
-           FlatContainerDupes dupe_handling,
-           const Compare& comp = Compare());
-
-  flat_map(const flat_map&);
-  flat_map(flat_map&&);
-
-  flat_map(std::vector<value_type> items,
-           FlatContainerDupes dupe_handling,
-           const Compare& comp = Compare());
-
-  flat_map(std::initializer_list<value_type> ilist,
-           FlatContainerDupes dupe_handling,
-           const Compare& comp = Compare());
-
-  ~flat_map();
+  using tree::tree;
 
   // --------------------------------------------------------------------------
   // Assignments.
   //
   // Assume that move assignment invalidates iterators and references.
 
-  flat_map& operator=(const flat_map&);
-  flat_map& operator=(flat_map&&);
   // Takes the first if there are duplicates in the initializer list.
   flat_map& operator=(std::initializer_list<value_type> ilist);
 
@@ -247,54 +220,7 @@ class flat_map : public ::base::internal::flat_tree<
 };
 
 // ----------------------------------------------------------------------------
-// Lifetime.
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map() = default;
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map(const Compare& comp) : tree(comp) {}
-
-template <class Key, class Mapped, class Compare>
-template <class InputIterator>
-flat_map<Key, Mapped, Compare>::flat_map(InputIterator first,
-                                         InputIterator last,
-                                         FlatContainerDupes dupe_handling,
-                                         const Compare& comp)
-    : tree(first, last, dupe_handling, comp) {}
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map(const flat_map&) = default;
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map(flat_map&&) = default;
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map(std::vector<value_type> items,
-                                         FlatContainerDupes dupe_handling,
-                                         const Compare& comp)
-    : tree(std::move(items), dupe_handling, comp) {}
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::flat_map(
-    std::initializer_list<value_type> ilist,
-    FlatContainerDupes dupe_handling,
-    const Compare& comp)
-    : flat_map(std::begin(ilist), std::end(ilist), dupe_handling, comp) {}
-
-template <class Key, class Mapped, class Compare>
-flat_map<Key, Mapped, Compare>::~flat_map() = default;
-
-// ----------------------------------------------------------------------------
 // Assignments.
-
-template <class Key, class Mapped, class Compare>
-auto flat_map<Key, Mapped, Compare>::operator=(const flat_map&)
-    -> flat_map& = default;
-
-template <class Key, class Mapped, class Compare>
-auto flat_map<Key, Mapped, Compare>::operator=(flat_map &&)
-    -> flat_map& = default;
 
 template <class Key, class Mapped, class Compare>
 auto flat_map<Key, Mapped, Compare>::operator=(
