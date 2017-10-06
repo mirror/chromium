@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "dee446ec_9b00c2b3",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-06T14:15:47Z",
+      "side": 1,
+      "message": "Most styling can be applied before an element is attached, right?\n\nI think we probably want to support unattached elements.",
+      "parentUuid": "5ff0542a_72433745",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed59553_96a273a5",
+        "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
+        "patchSetId": 32
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-06T14:15:47Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 76
+      },
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66d02251_9f532646",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 32
@@ -30,6 +71,24 @@
       "writtenOn": "2017-10-05T22:13:24Z",
       "side": 1,
       "message": "Does it make sense to customize scroll for an element without a box?",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a04f964_3dc856a0",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 32
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-10-06T14:15:47Z",
+      "side": 1,
+      "message": "I think so, in the same way as it makes sense to set a style for an object that isn\u0027t attached yet.",
+      "parentUuid": "66d02251_9f532646",
       "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
