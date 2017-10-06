@@ -128,6 +128,15 @@ class CONTENT_EXPORT SimpleURLLoader {
       const base::FilePath& file_path,
       int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
 
+  // Same as DownloadToFile, but creates a temporary file instead of taking a
+  // FilePath.
+  virtual void DownloadToTempFile(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      DownloadToFileCompleteCallback download_to_file_complete_callback,
+      int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
+
   // Sets whether partially received results are allowed. Defaults to false.
   // When true, if an error is received after reading the body starts or the max
   // allowed body size exceeded, the partial response body that was received
