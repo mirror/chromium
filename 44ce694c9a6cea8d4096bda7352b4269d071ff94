@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06da0dd6_4adcc658",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T02:54:30Z",
+      "side": 1,
+      "message": "This will cause PrintSettingsFromJobSettings() in printing/print_settings_conversion.cc to always read out |kSettingPreviewModifiable| as false. So the code there can no longer determine if the original printing source is HTML or PDF.\n\nI will try applying both CLs and see if I can give you suggestions on what to do here.",
+      "revId": "44ce694c9a6cea8d4096bda7352b4269d071ff94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

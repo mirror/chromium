@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9342ad0_258be828",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1817,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T02:54:30Z",
+      "side": 1,
+      "message": "I took the original code and added the following snippet of code right after the MergeDictionary() call. Then I tried many of the printing scenarios I can think of, and neither CHECK() calls ever failed.\n\n----\nbool mod;\nCHECK(modified_job_settings.GetBoolean(kSettingPreviewModifiable, \u0026mod));\nCHECK(mod \u003d\u003d source_is_html);\n----\n\nThen I applied the chrome/browser/ui/webui/print_preview/print_preview_handler.cc change from patchset 5 in this CL and tried again. Still no CHECK() failures. So what I\u0027m observing is:\n\n- The |kSettingPreviewModifiable| key always exists.\n- It\u0027s already set to the same value as |source_is_html|.\n\nSo I don\u0027t understand why it needs to be set here. Did I miss something?",
+      "parentUuid": "0e9c705a_facd8dea",
+      "revId": "1fb3320622591a3e4cc6bdbfc1a9dd9b9725a4e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97c48c1b_16f85e8d",
         "filename": "printing/print_settings_conversion.cc",
         "patchSetId": 3
