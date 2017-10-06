@@ -101,8 +101,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
       QuicIOVector iov,
       QuicStreamOffset offset,
       StreamSendingState state,
-      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener,
-      bool flag_run_fast_path);
+      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
   // Sends as many data only packets as allowed by the send algorithm and the
   // available iov.

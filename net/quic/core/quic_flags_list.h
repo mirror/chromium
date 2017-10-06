@@ -151,9 +151,6 @@ QUIC_FLAG(bool, FLAGS_quic_supports_tls_handshake, false)
 // or 1/8 RTT.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_ack_decimation, false)
 
-// Enables using the ConsumeDataFastPath more often for large transfers.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_consuming_data_faster, true)
-
 // If true, in QUIC, set dispatcher framer\'s version to client packet's
 // version in QuicDispatcher::OnStatelessRejectorProcessDone.
 QUIC_FLAG(

@@ -1100,19 +1100,8 @@ QuicConsumedData QuicConnection::SendStreamData(
   // SHLO from the server, leading to two different decrypters at the server.)
   ScopedRetransmissionScheduler alarm_delayer(this);
   ScopedPacketBundler ack_bundler(this, SEND_ACK_IF_PENDING);
-  // The optimized path may be used for data only packets which fit into a
-  // standard buffer and don't need padding.
-  const bool flag_run_fast_path =
-      FLAGS_quic_reloadable_flag_quic_consuming_data_faster;
-  if (!flag_run_fast_path && id != kCryptoStreamId &&
-      !packet_generator_.HasQueuedFrames() &&
-      iov.total_length > kMaxPacketSize && state != FIN_AND_PADDING) {
-    // Use the fast path to send full data packets.
-    return packet_generator_.ConsumeDataFastPath(
-        id, iov, offset, state != NO_FIN, 0, ack_listener);
-  }
-  return packet_generator_.ConsumeData(
-      id, iov, offset, state, std::move(ack_listener), flag_run_fast_path);
+  return packet_generator_.ConsumeData(id, iov, offset, state,
+                                       std::move(ack_listener));
 }
 
 void QuicConnection::SendRstStream(QuicStreamId id,

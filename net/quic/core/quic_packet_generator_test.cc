@@ -149,9 +149,8 @@ class TestPacketGenerator : public QuicPacketGenerator {
         producer_->SaveStreamData(id, iov, 0, offset, iov.total_length);
       }
     }
-    return QuicPacketGenerator::ConsumeData(
-        id, iov, offset, state, std::move(ack_listener),
-        FLAGS_quic_reloadable_flag_quic_consuming_data_faster);
+    return QuicPacketGenerator::ConsumeData(id, iov, offset, state,
+                                            std::move(ack_listener));
   }
 
   SimpleDataProducer* producer_;
