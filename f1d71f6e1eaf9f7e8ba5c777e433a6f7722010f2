@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c37a6149_85b752df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-06T16:51:48Z",
+      "side": 1,
+      "message": "change getActivity() to include the getWindowAndroid() !\u003d null check.  This should only need to get \"getActivity() \u003d\u003d null\"",
+      "range": {
+        "startLine": 515,
+        "startChar": 23,
+        "endLine": 515,
+        "endChar": 39
+      },
+      "revId": "f1d71f6e1eaf9f7e8ba5c777e433a6f7722010f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
