@@ -16,6 +16,24 @@
       "revId": "556baa6c7a1cda2044c1cf0efc8168f06802488f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38aac50a_07874500",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-10-06T14:29:01Z",
+      "side": 1,
+      "message": "Yes.  Beforehand, the check for duplicate URL was read-only.  Now I\u0027m trying to insert and use the return value to detect duplicate URLs.  If I did the request method check afterwards and that failed, then I would need to erase the freshly inserted entry from |unclaimed_pushed_streams_|.  Checking the request method before makes it simpler.",
+      "parentUuid": "5b077f2a_5bb36122",
+      "revId": "556baa6c7a1cda2044c1cf0efc8168f06802488f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
