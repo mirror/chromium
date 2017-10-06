@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62596bf2_90734526",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "This function name is misleading. A better name would indicate that it sets up the show/hide behavior of the show-all button. e.g. setupShowAllButton.\n\nHowever, I wonder if we can embed this behavior into the object_fieldset.js component entirely? Can we avoid doing the ID lookup at all? The button could perhaps sit to the right of the last field in the fieldset?",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cf74cb_8b0f87bc",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "I\u0027m concerned about the ID here. I think that it is only unique to a single characteristic, but it is possible to have two services that both have the same characteristic ID. e.g. IDs of:\n /hci0/devC/service0000/char0000\n /hci0/devC/service0000/char0001\n /hci0/devC/service0001/char0000\n /hci0/devC/service0001/char0001\n\nIs there a reason not to just use \"show-all-properties\u0027 + this.info.id?\n\nUse a helper method to generate this ID string if it is more than just a \"string\" + this.info.id.",
+      "range": {
+        "startLine": 71,
+        "startChar": 31,
+        "endLine": 73,
+        "endChar": 70
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd48be1_1dbdfa39",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "(related to commend on object_fieldset.js)\nchange to:\nbuttonparent.setShowAll(true);",
+      "range": {
+        "startLine": 81,
+        "startChar": 10,
+        "endLine": 81,
+        "endChar": 49
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bf06f8_a3ad8781",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "Please try not to add extra blank lines or make other unrelated-to-patch-logic changes.  If these were added by \"git cl format\" then please disregard this comment.",
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f729a221_63dfb3bc",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "This is being used as a unique ID, not as a class type (a trait that multiple elements have). So, use \"propertiesBtn.id \u003d \" instead.",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 29
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243992ba_7b0407e1",
+        "filename": "chrome/browser/resources/bluetooth_internals/characteristic_list.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "The button is crowded too close after the header label \u0027Properties\u0027.  Can we space it out some?\nhttps://pasteboard.co/GNJcWKN.png",
+      "range": {
+        "startLine": 193,
+        "startChar": 6,
+        "endLine": 193,
+        "endChar": 50
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e65844_2c5eae9d",
+        "filename": "chrome/browser/resources/bluetooth_internals/object_fieldset.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-10-06T21:23:18Z",
+      "side": 1,
+      "message": "I think it would be cleaner for showAll to be an attribute of object_fieldset and the redraw method not take a parameter.\n\nsetObject() would not need a 2nd parameter then. As is, it\u0027s hard to understand the call site of e.g.\n  setObject({foo: \"bar\"}, false)\n  // what does \u0027false\u0027 mean?  Oh, it controls element drawing.\n  // Why is it on \u0027setObject\u0027?  Oh, because setObject has a side-effect.\n\nToggling the value would then need\nsetShowAll(false)\nredraw()  // or redraw could be implicit when calling setShowAll.",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 35
+      },
+      "revId": "8d6d4ccc4a0956c60e3044934f38d27ed26b7fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
