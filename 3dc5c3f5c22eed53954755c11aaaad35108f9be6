@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "451e5e28_deecbab3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T17:06:53Z",
+      "side": 1,
+      "message": "consider adding a WeakPtrFactory and using it to pass a weak pointer instead of a raw pointer",
+      "revId": "3dc5c3f5c22eed53954755c11aaaad35108f9be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a48612da_e9adc9d9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T17:06:53Z",
+      "side": 1,
+      "message": "you can get better testing here if you do the following:\n\n- add a NotifyObserversSystemClockUpdated() method to the fake that just calls all observers\u0027 SystemClockUpdated methods\n- add a set_network_synchronized(bool synchronized) method to the fake that sets a bool network_synchronized_ member that gets posted with the callback by the fake\u0027s GetLastSyncInfo method\n\nthen your tests will verify that this class registers itself as an observer correctly and that it correctly calls GetLastSyncInfo and handles the result.",
+      "revId": "3dc5c3f5c22eed53954755c11aaaad35108f9be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de879bd_563ec68d",
+        "filename": "chromeos/dbus/system_clock_client.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T17:06:53Z",
+      "side": 1,
+      "message": "nit: i\u0027d just use something like this; caller doesn\u0027t need to know the implementation details:\n\n  // Runs |callback| asynchronously with the system time\u0027s current\n  // synchronization state with network time.",
+      "revId": "3dc5c3f5c22eed53954755c11aaaad35108f9be6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
