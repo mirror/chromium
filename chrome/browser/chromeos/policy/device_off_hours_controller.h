@@ -15,6 +15,7 @@
 #include "chrome/browser/chromeos/policy/off_hours/off_hours_interval.h"
 #include "chrome/browser/chromeos/policy/proto/chrome_device_policy.pb.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "chromeos/dbus/system_clock_client.h"
 
 namespace policy {
 
@@ -53,7 +54,11 @@ ApplyOffHoursPolicyToProto(
 // policies in PrefValueMap and PolicyMap. The system will revert to the default
 // behavior for the removed policies. And behavior of policies is handled during
 // decoding process from proto to PolicyMap.
-class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
+//
+// "OffHours" mode is never on until device time is synchronized with
+// network time because in this case device time could be incorrect.
+class DeviceOffHoursController : public chromeos::SystemClockClient::Observer,
+                                 public chromeos::PowerManagerClient::Observer {
  public:
   // Creates a device off hours controller instance.
   DeviceOffHoursController();
@@ -70,6 +75,10 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
 
   // chromeos::PowerManagerClient::Observer:
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
+
+  // Information about time synchronization with network comes from
+  // SystemClockClient observer, but FakesystemClientObserver does nothing.
+  void SetNetworkSynchronizedForTesting(bool network_synchronized);
 
  private:
   // Call when "OffHours" mode is changed and ask DeviceSettingsService to
@@ -88,11 +97,18 @@ class DeviceOffHoursController : public chromeos::PowerManagerClient::Observer {
   void StartOffHoursTimer(base::TimeDelta delay);
   void StopOffHoursTimer();
 
+  // chromeos::SystemClockClient::Observer:
+  void SystemClockUpdated() override;
+  void NetworkSynchronizationUpdated(bool network_synchronized) override;
+
   // Timer for updating device settings at the begin of next “OffHours” interval
   // or at the end of current "OffHours" interval.
   base::OneShotTimer timer_;
 
   bool off_hours_mode_ = false;
+
+  // Value is false until the system time is synchronized with network time.
+  bool network_synchronized_ = false;
 
   // Current "OffHours" time intervals.
   std::vector<off_hours::OffHoursInterval> off_hours_intervals_;
