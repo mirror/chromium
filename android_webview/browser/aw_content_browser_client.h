@@ -156,7 +156,7 @@ class AwContentBrowserClient : public content::ContentBrowserClient {
                                 bool has_user_gesture,
                                 bool is_redirect,
                                 bool is_main_frame,
-                                ui::PageTransition transition) override;
+                                ui::PageTransition transition);
 
  private:
   safe_browsing::UrlCheckerDelegate* GetSafeBrowsingUrlCheckerDelegate();

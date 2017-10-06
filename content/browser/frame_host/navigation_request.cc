@@ -427,20 +427,6 @@ void NavigationRequest::BeginNavigation() {
 
   state_ = STARTED;
 
-#if defined(OS_ANDROID)
-  if (GetContentClient()->browser()->ShouldOverrideUrlLoading(
-          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
-          request_params_.original_url, request_params_.original_method,
-          request_params_.has_user_gesture, false,
-          frame_tree_node_->IsMainFrame(), common_params_.transition)) {
-    // Don't create a NavigationHandle here to simulate what happened with the
-    // old navigation code path (i.e. doesn't fire onPageFinished notification
-    // for aborted loads).
-    OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
-    return;
-  }
-#endif
-
   // Check Content Security Policy before the NavigationThrottles run. This
   // gives CSP a chance to modify requests that NavigationThrottles would
   // otherwise block. Similarly, the NavigationHandle is created afterwards, so
@@ -674,21 +660,7 @@ void NavigationRequest::OnRequestRedirected(
       response->head.connection_info, expected_process,
       base::Bind(&NavigationRequest::OnRedirectChecksComplete,
                  base::Unretained(this)));
-// |this| may be deleted.
-
-#if defined(OS_ANDROID)
-  if (this_ptr &&
-      GetContentClient()->browser()->ShouldOverrideUrlLoading(
-          frame_tree_node_->frame_tree_node_id(), browser_initiated_,
-          redirect_info.new_url, redirect_info.new_method,
-          // Redirects are always not counted as from user gesture.
-          false, true, frame_tree_node_->IsMainFrame(),
-          common_params_.transition)) {
-    navigation_handle_->set_net_error_code(net::ERR_ABORTED);
-    frame_tree_node_->ResetNavigationRequest(false, true);
-    return;
-  }
-#endif
+  // |this| may be deleted.
 }
 
 void NavigationRequest::OnResponseStarted(

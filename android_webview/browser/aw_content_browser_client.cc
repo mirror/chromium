@@ -13,6 +13,7 @@
 #include "android_webview/browser/aw_contents_io_thread_client.h"
 #include "android_webview/browser/aw_cookie_access_policy.h"
 #include "android_webview/browser/aw_devtools_manager_delegate.h"
+#include "android_webview/browser/aw_navigation_throttle.h"
 #include "android_webview/browser/aw_printing_message_filter.h"
 #include "android_webview/browser/aw_quota_permission_context.h"
 #include "android_webview/browser/aw_settings.h"
@@ -55,6 +56,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_names.mojom.h"
@@ -519,6 +521,13 @@ std::vector<std::unique_ptr<content::NavigationThrottle>>
 AwContentBrowserClient::CreateThrottlesForNavigation(
     content::NavigationHandle* navigation_handle) {
   std::vector<std::unique_ptr<content::NavigationThrottle>> throttles;
+
+  if (content::IsBrowserSideNavigationEnabled()) {
+    // This throttle must be placed before the InterceptNavigationThrottle.
+    throttles.push_back(
+        AwNavigationThrottle::CreateThrottleFor(navigation_handle, this));
+  }
+
   // We allow intercepting only navigations within main frames. This
   // is used to post onPageStarted. We handle shouldOverrideUrlLoading
   // via a sync IPC.

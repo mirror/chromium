@@ -58,6 +58,10 @@ class CONTENT_EXPORT NavigationHandle {
   // virtual URL is prefixed with "view-source:".
   virtual const GURL& GetURL() = 0;
 
+  // The HTTP method used. This may change during the navigation when
+  // encountering a server redirect.
+  virtual const std::string& GetMethod() = 0;
+
   // Returns the SiteInstance that started the request.
   // If a frame in SiteInstance A navigates a frame in SiteInstance B to a URL
   // in SiteInstance C, then this returns B.
@@ -238,6 +242,9 @@ class CONTENT_EXPORT NavigationHandle {
   // made. The transferred request's ID will not be tracked by the
   // NavigationHandle.
   virtual const GlobalRequestID& GetGlobalRequestID() = 0;
+
+  virtual void SetIsIgnoredByWebView();
+  virtual bool IsIgnoredByWebView() const;
 
   // Testing methods ----------------------------------------------------------
   //
