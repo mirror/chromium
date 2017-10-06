@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a67b2b44_db121515",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T23:13:46Z",
+      "side": 1,
+      "message": "Since you could do it up there, could you do it down here too? :-)",
+      "range": {
+        "startLine": 715,
+        "startChar": 66,
+        "endLine": 715,
+        "endChar": 94
+      },
+      "revId": "446129deb5716ee9bf784e89ebb3fae085bacad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
