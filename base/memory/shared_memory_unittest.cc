@@ -15,6 +15,7 @@
 #include "base/process/kill.h"
 #include "base/rand_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/strings/string_util.h"
 #include "base/sys_info.h"
 #include "base/test/multiprocess_test.h"
 #include "base/threading/platform_thread.h"
@@ -452,6 +453,51 @@ TEST(SharedMemoryTest, ShareToSelf) {
 
   ASSERT_TRUE(readonly.Map(contents.size()));
   EXPECT_EQ(contents,
+            StringPiece(static_cast<const char*>(readonly.memory()),
+                        contents.size()));
+}
+
+TEST(SharedMemoryTest, ShareWithMultipleInstances) {
+  StringPiece contents = "Hello World";
+
+  SharedMemory shmem;
+  ASSERT_TRUE(shmem.CreateAndMapAnonymous(contents.size()));
+  // We do not need to unmap |shmem| to let |shared| map.
+
+  SharedMemoryHandle shared_handle = shmem.handle().Duplicate();
+  ASSERT_TRUE(shared_handle.IsValid());
+  SharedMemory shared(shared_handle, /*readonly=*/false);
+  ASSERT_TRUE(shared.Map(contents.size()));
+
+  shared_handle = shmem.handle().Duplicate();
+  ASSERT_TRUE(shared_handle.IsValid());
+  ASSERT_TRUE(shared_handle.OwnershipPassesToIPC());
+  SharedMemory readonly(shared_handle, /*readonly=*/true);
+  ASSERT_TRUE(readonly.Map(contents.size()));
+
+  // |shmem| should be able to update the content.
+  memcpy(shmem.memory(), contents.data(), contents.size());
+
+  ASSERT_EQ(contents,
+            StringPiece(static_cast<const char*>(shmem.memory()),
+                        contents.size()));
+  ASSERT_EQ(contents,
+            StringPiece(static_cast<const char*>(shared.memory()),
+                        contents.size()));
+  ASSERT_EQ(contents,
+            StringPiece(static_cast<const char*>(readonly.memory()),
+                        contents.size()));
+
+  // |shared| should also be able to update the content.
+  memcpy(shared.memory(), ToLowerASCII(contents).c_str(), contents.size());
+
+  ASSERT_EQ(StringPiece(ToLowerASCII(contents)),
+            StringPiece(static_cast<const char*>(shmem.memory()),
+                        contents.size()));
+  ASSERT_EQ(StringPiece(ToLowerASCII(contents)),
+            StringPiece(static_cast<const char*>(shared.memory()),
+                        contents.size()));
+  ASSERT_EQ(StringPiece(ToLowerASCII(contents)),
             StringPiece(static_cast<const char*>(readonly.memory()),
                         contents.size()));
 }
