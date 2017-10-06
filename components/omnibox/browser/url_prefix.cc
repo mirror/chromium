@@ -71,6 +71,14 @@ const URLPrefix* URLPrefix::BestURLPrefix(const base::string16& text,
 }
 
 // static
+bool URLPrefix::HasLessComponents(const URLPrefix& prefix1,
+                                  const URLPrefix& prefix2) {
+  return (prefix1.num_components == prefix2.num_components)
+             ? prefix1.prefix < prefix2.prefix
+             : prefix1.num_components < prefix2.num_components;
+}
+
+// static
 size_t URLPrefix::GetInlineAutocompleteOffset(
     const base::string16& input,
     const base::string16& fixed_up_input,

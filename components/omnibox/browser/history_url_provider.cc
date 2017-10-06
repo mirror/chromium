@@ -381,9 +381,17 @@ HistoryURLProvider::VisitClassifier::VisitClassifier(
        !input.parts().path.is_nonempty()))
     return;
 
-  if (db_->GetRowForURL(url, &url_row_)) {
-    type_ = VISITED;
-    return;
+  URLPrefixes url_prefixes = URLPrefix::GetURLPrefixes();
+  std::sort(url_prefixes.begin(), url_prefixes.end(),
+            URLPrefix::HasLessComponents);
+  for (const URLPrefix& url_prefix : url_prefixes) {
+    if (db_->GetRowForURL(
+            url_formatter::FixupURL(
+                base::UTF16ToUTF8(url_prefix.prefix + input.text()), ""),
+            &url_row_)) {
+      type_ = VISITED;
+      return;
+    }
   }
 
   if (provider_->CanFindIntranetURL(db_, input)) {
@@ -882,6 +890,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
     const VisitClassifier& classifier,
     HistoryURLProviderParams* params) const {
   MatchType type = INLINE_AUTOCOMPLETE;
+
   switch (classifier.type()) {
     case VisitClassifier::INVALID:
       return false;
@@ -893,6 +902,7 @@ bool HistoryURLProvider::FixupExactSuggestion(
       // We have data for this match, use it.
       params->what_you_typed_match.deletable = true;
       params->what_you_typed_match.description = classifier.url_row().title();
+      params->what_you_typed_match.destination_url = classifier.url_row().url();
       RecordAdditionalInfoFromUrlRow(classifier.url_row(),
                                      &params->what_you_typed_match);
       params->what_you_typed_match.description_class = ClassifyDescription(
