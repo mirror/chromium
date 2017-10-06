@@ -10,7 +10,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
-class PaymentRequestCountrySelectionCoordinatorTest : public PlatformTest {};
+using PaymentRequestCountrySelectionCoordinatorTest = PlatformTest;
 
 // Tests that invoking start and stop on the coordinator presents and dismisses
 // the payment request picker view controller, respectively.

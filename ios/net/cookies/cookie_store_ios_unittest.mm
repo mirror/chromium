@@ -21,6 +21,7 @@
 #import "net/base/mac/url_conversions.h"
 #include "net/cookies/cookie_store_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "testing/platform_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -231,7 +232,7 @@ TEST_F(CookieStoreIOSTest, SameValueDoesNotCallHook) {
   EXPECT_EQ(1U, cookies_changed_.size());
 }
 
-TEST(CookieStoreIOS, GetAllCookiesForURLAsync) {
+TEST_F(CookieStoreIOSTest, GetAllCookiesForURLAsync) {
   base::MessageLoop loop;
   const GURL kTestCookieURLFooBar("http://foo.google.com/bar");
   ScopedTestingCookieStoreIOSClient scoped_cookie_store_ios_client(

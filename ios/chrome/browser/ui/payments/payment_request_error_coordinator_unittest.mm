@@ -14,7 +14,7 @@
 #include "third_party/ocmock/OCMock/OCMock.h"
 #include "third_party/ocmock/gtest_support.h"
 
-class PaymentRequestErrorCoordinatorTest : public PlatformTest {};
+using PaymentRequestErrorCoordinatorTest = PlatformTest;
 
 // Tests that invoking start and stop on the coordinator presents and dismisses
 // the payment request error view controller, respectively.
