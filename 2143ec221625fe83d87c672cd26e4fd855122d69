@@ -295,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "51657653_bfcb2e09",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T22:01:54Z",
+      "side": 1,
+      "message": "I remember this wasn\u0027t just for fun. This breaks on clang since friends are special:\n\nerror: unqualified friend declaration referring to type outside of the nearest enclosing namespace is a Microsoft extension; add a nested name specifier [-Werror,-Wmicrosoft-unqualified-friend]",
+      "parentUuid": "72fc3016_0e2986a3",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e47821c_6820191d",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 2
