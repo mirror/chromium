@@ -16,6 +16,24 @@
       "revId": "44ce694c9a6cea8d4096bda7352b4269d071ff94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5a3895_923160cc",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-06T16:47:24Z",
+      "side": 1,
+      "message": "Correct me if I am wrong. Since this is in PrintPreviewHandler class, when \u0027print\u0027 is called,\nthe pdf file is already generated and displayed in print preview dialog. So the printed doc\nwould be pdf for sure. This is regardless whether the original file is html or pdf.",
+      "parentUuid": "06da0dd6_4adcc658",
+      "revId": "44ce694c9a6cea8d4096bda7352b4269d071ff94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
