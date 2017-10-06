@@ -2449,4 +2449,6 @@ bool QuicFramer::StartsWithChlo(QuicStreamId id,
          0;
 }
 
+#undef ENDPOINT
+
 }  // namespace net

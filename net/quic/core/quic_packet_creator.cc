@@ -614,6 +614,7 @@ bool QuicPacketCreator::IncludeNonceInPublicHeader() {
 void QuicPacketCreator::AddPendingPadding(QuicByteCount size) {
   pending_padding_bytes_ += size;
 }
+#undef ENDPOINT
 
 bool QuicPacketCreator::StreamFrameStartsWithChlo(
     QuicIOVector iov,

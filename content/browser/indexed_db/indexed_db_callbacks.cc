@@ -38,7 +38,7 @@
 #include "storage/browser/blob/shareable_file_reference.h"
 #include "storage/browser/quota/quota_manager.h"
 
-using indexed_db::mojom::CallbacksAssociatedPtrInfo;
+using ::indexed_db::mojom::CallbacksAssociatedPtrInfo;
 using std::swap;
 using storage::ShareableFileReference;
 

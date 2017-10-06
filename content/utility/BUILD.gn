@@ -3,8 +3,9 @@
 # found in the LICENSE file.
 
 import("//media/media_options.gni")
+import("//content/content.gni")
 
-source_set("utility") {
+content_source_set("utility") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones other than test) should depend on the public one.
   visibility = [
