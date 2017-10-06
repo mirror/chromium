@@ -982,7 +982,8 @@ class CONTENT_EXPORT RenderFrameImpl
   void OnFailedNavigation(const CommonNavigationParams& common_params,
                           const RequestNavigationParams& request_params,
                           bool has_stale_copy_in_cache,
-                          int error_code);
+                          int error_code,
+                          base::Optional<std::string> error_page_content);
   void OnReportContentSecurityPolicyViolation(
       const content::CSPViolationParams& violation_params);
   void OnGetSavableResourceLinks();
@@ -1072,10 +1073,12 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Loads the appropriate error page for the specified failure into the frame.
   // |entry| is only used by PlzNavigate when navigating to a history item.
-  void LoadNavigationErrorPage(const blink::WebURLRequest& failed_request,
-                               const blink::WebURLError& error,
-                               bool replace,
-                               HistoryEntry* entry);
+  void LoadNavigationErrorPage(
+      const blink::WebURLRequest& failed_request,
+      const blink::WebURLError& error,
+      bool replace,
+      HistoryEntry* entry,
+      const base::Optional<std::string>& error_page_content);
   void LoadNavigationErrorPageForHttpStatusError(
       const blink::WebURLRequest& failed_request,
       const GURL& unreachable_url,
@@ -1089,6 +1092,12 @@ class CONTENT_EXPORT RenderFrameImpl
       bool replace,
       blink::WebFrameLoadType frame_load_type,
       const blink::WebHistoryItem& history_item);
+
+  // Like DidFailProvisionalLoad, but allows passing in an |error_page_url|.
+  void DidFailProvisionalLoadInternal(
+      const blink::WebURLError& error,
+      blink::WebHistoryCommitType commit_type,
+      const base::Optional<std::string>& error_page_content);
 
   void HandleJavascriptExecutionResult(const base::string16& javascript,
                                        int id,

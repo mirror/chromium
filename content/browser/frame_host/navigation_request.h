@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "content/browser/frame_host/navigation_entry_impl.h"
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/common/content_export.h"
@@ -215,12 +216,26 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
                        bool should_ssl_errors_be_fatal) override;
   void OnRequestStarted(base::TimeTicks timestamp) override;
 
+  // A version of OnRequestFailed() that allows skipping throttles, to be used
+  // when a request failed due to a throttle result itself.
+  void OnRequestFailedInternal(bool has_stale_copy_in_cache,
+                               int net_error,
+                               const base::Optional<net::SSLInfo>& ssl_info,
+                               bool should_ssl_errors_be_fatal,
+                               bool skip_throttles);
+
   // Called when the NavigationThrottles have been checked by the
   // NavigationHandle.
   void OnStartChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnRedirectChecksComplete(NavigationThrottle::ThrottleCheckResult result);
+  void OnFailureChecksComplete(NavigationThrottle::ThrottleCheckResult result);
   void OnWillProcessResponseChecksComplete(
       NavigationThrottle::ThrottleCheckResult result);
+
+  // Called either by OnFailureChecksComplete() or OnRequestFailed() directly.
+  // |error_page_content| contains the content of the error page (i.e. flattened
+  // HTML, JS, CSS).
+  void CommitErrorPage(base::Optional<std::string> error_page_content);
 
   // Have a RenderFrameHost commit the navigation. The NavigationRequest will
   // be destroyed after this call.
@@ -318,6 +333,11 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   mojo::ScopedDataPipeConsumerHandle handle_;
   SSLStatus ssl_status_;
   bool is_download_;
+
+  // Holds information for the navigation while the WillFailRequest
+  // checks are performed by the NavigationHandle.
+  bool has_stale_copy_in_cache_;
+  int net_error_;
 
   base::Closure on_start_checks_complete_closure_;
 
