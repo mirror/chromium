@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_AUTHENTICATION_SIGNIN_INTERACTION_CONTROLLER_H_
-#define IOS_CHROME_BROWSER_UI_AUTHENTICATION_SIGNIN_INTERACTION_CONTROLLER_H_
+#ifndef IOS_CHROME_BROWSER_UI_SIGNIN_INTERACTION_SIGNIN_INTERACTION_CONTROLLER_H_
+#define IOS_CHROME_BROWSER_UI_SIGNIN_INTERACTION_SIGNIN_INTERACTION_CONTROLLER_H_
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 #import "base/ios/block_types.h"
 #include "components/signin/core/browser/signin_metrics.h"
@@ -16,18 +16,21 @@ namespace ios {
 class ChromeBrowserState;
 }
 @class ChromeIdentity;
+@protocol SigninInteractionPresenting;
 
 // Interaction controller for sign-in related operations. This class is mainly a
 // proxy for |ChromeSigninViewController|, calling directly
 // |ChromeIdentityInteractionManager| for the no-accounts case.
 @interface SigninInteractionController : NSObject
 
+// All method comments need to be updated.
+
 // Designated initializer.
 // * |browserState| is the current browser state
 // * |presentingViewController| is the top presented view controller.
 // * |accessPoint| represents the access point that initiated the sign-in.
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-            presentingViewController:(UIViewController*)presentingViewController
+                presentationProvider:(id<SigninInteractionPresenting>)presenter
                          accessPoint:(signin_metrics::AccessPoint)accessPoint
                          promoAction:(signin_metrics::PromoAction)promoAction
                           dispatcher:(id<ApplicationCommands>)dispatcher;
@@ -58,4 +61,4 @@ class ChromeBrowserState;
 
 @end
 
-#endif  // IOS_CHROME_BROWSER_UI_AUTHENTICATION_SIGNIN_INTERACTION_CONTROLLER_H_
+#endif  // IOS_CHROME_BROWSER_UI_SIGNIN_INTERACTION_SIGNIN_INTERACTION_CONTROLLER_H_
