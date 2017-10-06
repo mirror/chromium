@@ -101,6 +101,30 @@
     },
     {
       "key": {
+        "uuid": "59b5ed88_58cfe577",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T18:22:55Z",
+      "side": 1,
+      "message": "zmo is landing a CL that does this.",
+      "parentUuid": "48d823a4_9d5b6052",
+      "range": {
+        "startLine": 976,
+        "startChar": 6,
+        "endLine": 976,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7fc5c9_0b6d32c9",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 5
@@ -218,6 +242,30 @@
     },
     {
       "key": {
+        "uuid": "4e35d2f0_24ec6e74",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T18:22:55Z",
+      "side": 1,
+      "message": "Right, but are there cases where the compositor gives up on gpu-acceleration while and it is still possible to set-up a gpu context?",
+      "parentUuid": "8d71a819_86caebe1",
+      "range": {
+        "startLine": 929,
+        "startChar": 37,
+        "endLine": 929,
+        "endChar": 48
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc8c56e0_e1dcddfd",
         "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
         "patchSetId": 5
@@ -253,6 +301,30 @@
       "side": 1,
       "message": "Ok, I\u0027d like to explain why, is this correct?\n\n  // Software compositing isn\u0027t relevant here, this isn\u0027t a compositor input.",
       "parentUuid": "bc8c56e0_e1dcddfd",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb61afc_a776e782",
+        "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T18:22:55Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9de87907_6a56bd46",
       "range": {
         "startLine": 27,
         "startChar": 31,
