@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0b8127ad_e0d53ced",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18221,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-06T22:06:27Z",
+      "side": 1,
+      "message": "I thought that since these histograms are call IsXXX, True/False was more appropriate. No?\n\nI can\u0027t think of anything else. Do you have suggestions?",
+      "parentUuid": "eb615aed_9578a75b",
+      "range": {
+        "startLine": 18221,
+        "startChar": 55,
+        "endLine": 18221,
+        "endChar": 62
+      },
+      "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26f81514_cf6d3bc0",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -134,6 +158,24 @@
       "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a699f19b_7af2b108",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18225,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-06T22:06:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f81514_cf6d3bc0",
+      "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
