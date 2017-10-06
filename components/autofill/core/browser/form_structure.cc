@@ -711,6 +711,7 @@ void FormStructure::LogQualityMetrics(
     AutofillMetrics::FormInteractionsUkmLogger* form_interactions_ukm_logger,
     bool did_show_suggestions,
     bool observed_submission) const {
+  DLOG(WARNING) << "3fengLog: in LogQualityMetrics";
   // Use the same timestamp on UKM Metrics generated within this method's scope.
   AutofillMetrics::UkmTimestampPin timestamp_pin(form_interactions_ukm_logger);
 
@@ -748,11 +749,19 @@ void FormStructure::LogQualityMetrics(
 
     const ServerFieldTypeSet& field_types = field->possible_types();
     DCHECK(!field_types.empty());
+    DLOG(WARNING) << "3FENGLOG:" << field->label << ", " << field->name << ", "
+                  << field->value;
+    for (auto type : field_types) {
+      DLOG(WARNING) << "3FENGlOG: field_types" << type;
+    }
+    // DLOG(WARNING) << "3FENGlOG: " <<field_types;
     if (field_types.count(EMPTY_TYPE) || field_types.count(UNKNOWN_TYPE)) {
       DCHECK_EQ(field_types.size(), 1u);
+      DLOG(WARNING) << "3fengLog: empty or UNKNOWN_TYPE";
       continue;
     }
 
+    DLOG(WARNING) << "3fengLog: NOT empty or UNKNOWN_TYPE";
     ++num_detected_field_types;
     if (field->is_autofilled)
       did_autofill_some_possible_fields = true;
@@ -765,9 +774,14 @@ void FormStructure::LogQualityMetrics(
 
   // We log "submission" and duration metrics if we are here after observing a
   // submission event.
+  DLOG(WARNING) << "3fengLog: in LogQualityMetrics2";
   if (observed_submission) {
+    DLOG(WARNING) << "3fengLog: in observed_submission, "
+                  << num_detected_field_types << "<"
+                  << kRequiredFieldsForPredictionRoutines;
     AutofillMetrics::AutofillFormSubmittedState state;
     if (num_detected_field_types < kRequiredFieldsForPredictionRoutines) {
+      DLOG(WARNING) << "3fengLog: in NON_FILLABLE_FORM_OR_NEW_DATA";
       state = AutofillMetrics::NON_FILLABLE_FORM_OR_NEW_DATA;
     } else {
       if (did_autofill_all_possible_fields) {
@@ -787,9 +801,10 @@ void FormStructure::LogQualityMetrics(
       DCHECK(!submission_time.is_null());
 
       // The |load_time| might be unset, in the case that the form was
-      // dynamically
-      // added to the DOM.
+      // dynamically added to the DOM.
+      DLOG(WARNING) << "3fengLog: trying to check load time.";
       if (!load_time.is_null()) {
+        DLOG(WARNING) << "3fengLog: load time is not null.";
         // Submission should always chronologically follow form load.
         DCHECK(submission_time > load_time);
         base::TimeDelta elapsed = submission_time - load_time;
@@ -805,13 +820,8 @@ void FormStructure::LogQualityMetrics(
         // Submission should always chronologically follow interaction.
         DCHECK(submission_time > interaction_time);
         base::TimeDelta elapsed = submission_time - interaction_time;
-        if (did_autofill_some_possible_fields) {
-          AutofillMetrics::LogFormFillDurationFromInteractionWithAutofill(
-              elapsed);
-        } else {
-          AutofillMetrics::LogFormFillDurationFromInteractionWithoutAutofill(
-              elapsed);
-        }
+        AutofillMetrics::LogFormFillDurationFromInteraction(
+            GetFormTypes(), did_autofill_some_possible_fields, elapsed);
       }
     }
     if (form_interactions_ukm_logger->url() != source_url())
@@ -1434,7 +1444,7 @@ base::string16 FormStructure::FindLongestCommonPrefix(
   return filtered_strings[0];
 }
 
-std::set<FormType> FormStructure::GetFormTypes() {
+std::set<FormType> FormStructure::GetFormTypes() const {
   std::set<FormType> form_types;
   for (const auto& field : fields_) {
     form_types.insert(

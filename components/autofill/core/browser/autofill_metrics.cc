@@ -764,21 +764,39 @@ void AutofillMetrics::LogFormFillDurationFromLoadWithoutAutofill(
 }
 
 // static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithAutofill(
+void AutofillMetrics::LogFormFillDurationFromInteraction(
+    const std::set<FormType>& form_types,
+    bool used_autofill,
     const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
-}
-
-// static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithoutAutofill(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithoutAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
+  std::string parent_metric;
+  if (used_autofill) {
+    parent_metric = "Autofill.FillDuration.FromInteraction.WithAutofill";
+  } else {
+    parent_metric = "Autofill.FillDuration.FromInteraction.WithoutAutofill";
+  }
+  UMA_HISTOGRAM_CUSTOM_TIMES(parent_metric, duration,
+                             base::TimeDelta::FromMilliseconds(100),
+                             base::TimeDelta::FromMinutes(10), 50);
+  if (base::ContainsKey(form_types, CREDIT_CARD_FORM)) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(parent_metric + ".CreditCard", duration,
+                               base::TimeDelta::FromMilliseconds(100),
+                               base::TimeDelta::FromMinutes(10), 50);
+  }
+  if (base::ContainsKey(form_types, ADDRESS_FORM)) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(parent_metric + ".Address", duration,
+                               base::TimeDelta::FromMilliseconds(100),
+                               base::TimeDelta::FromMinutes(10), 50);
+  }
+  if (base::ContainsKey(form_types, PASSWORD_FORM)) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(parent_metric + ".Password", duration,
+                               base::TimeDelta::FromMilliseconds(100),
+                               base::TimeDelta::FromMinutes(10), 50);
+  }
+  if (base::ContainsKey(form_types, UNKNOWN_FORM_TYPE)) {
+    UMA_HISTOGRAM_CUSTOM_TIMES(parent_metric + ".UnknownFormType", duration,
+                               base::TimeDelta::FromMilliseconds(100),
+                               base::TimeDelta::FromMinutes(10), 50);
+  }
 }
 
 // static
