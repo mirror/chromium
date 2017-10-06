@@ -14,6 +14,7 @@
 #include "base/single_thread_task_runner.h"
 #include "components/domain_reliability/clear_mode.h"
 #include "components/domain_reliability/config.h"
+#include "components/domain_reliability/context.h"
 #include "components/domain_reliability/domain_reliability_export.h"
 #include "components/keyed_service/core/keyed_service.h"
 
@@ -51,7 +52,9 @@ class DOMAIN_RELIABILITY_EXPORT DomainReliabilityService
   // called. The caller is responsible for destroying the Monitor on the given
   // task runner when it is no longer needed.
   virtual std::unique_ptr<DomainReliabilityMonitor> CreateMonitor(
-      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner) = 0;
+      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner,
+      const DomainReliabilityContext::UploadAllowedCallback&
+          upload_allowed_callback) = 0;
 
   // Clears browsing data on the associated Monitor. |Init()| must have been
   // called first.
