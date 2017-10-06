@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da39d744_3451a013",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:54:27Z",
+      "side": 1,
+      "message": "btw why was this removed? would it still make sense to respond with net::ERR_ABORTED?",
+      "range": {
+        "startLine": 277,
+        "startChar": 18,
+        "endLine": 277,
+        "endChar": 35
+      },
+      "revId": "9ce075f4428eedc58bb006690e7e187efa949ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb13b3f_f4e2b985",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:54:27Z",
+      "side": 1,
+      "message": "Clears -\u003e Clear",
+      "revId": "9ce075f4428eedc58bb006690e7e187efa949ff5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
