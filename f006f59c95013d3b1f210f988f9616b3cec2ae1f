@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3164dc76_bfac3b40",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-06T21:36:29Z",
+      "side": 1,
+      "message": "This should return a TimeDelta rather than converting.",
+      "revId": "f006f59c95013d3b1f210f988f9616b3cec2ae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46beab4_8b3e71f9",
+        "filename": "ui/gfx/animation/slide_animation.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-06T21:36:29Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. The code on 81 used to use value_current_ as the factor rather than its inverse.",
+      "revId": "f006f59c95013d3b1f210f988f9616b3cec2ae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c8839f_0570e779",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-06T21:36:29Z",
+      "side": 1,
+      "message": "This is no longer necessary since a dampening value of 1 is no dampening.",
+      "revId": "f006f59c95013d3b1f210f988f9616b3cec2ae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebb63cac_9e9394da",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-06T21:36:29Z",
+      "side": 1,
+      "message": "Maybe?\nDampens the reduction in duration for an animation which starts partway. The default value of 1 has no effect. I.e. greater values mean animations will be closer to the original slide duration.",
+      "revId": "f006f59c95013d3b1f210f988f9616b3cec2ae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4445c681_7ef10082",
+        "filename": "ui/gfx/animation/slide_animation.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-10-06T21:36:29Z",
+      "side": 1,
+      "message": "This should be a double to allow greater flexibility.",
+      "revId": "f006f59c95013d3b1f210f988f9616b3cec2ae1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
