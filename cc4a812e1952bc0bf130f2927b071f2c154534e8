@@ -237,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "4c4e39a9_c573de58",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-06T23:45:21Z",
+      "side": 1,
+      "message": "Unfortunately putting it in OnDestruct() didn\u0027t work for two reasons:\n1) the window.onunload event has already happened by the time OnDestruct() is called. Presentation API spec requires terminate event to be fired before the onunload event.\n2) OnDestruct() is invoked after PresentationReceiver::contextDestroyed() so it has already detached itself from PresentationDispatcher.",
+      "parentUuid": "efd07c31_38d261d5",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b938e6d_afd67750",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
