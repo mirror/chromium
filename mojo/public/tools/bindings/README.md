@@ -395,6 +395,11 @@ interesting attributes supported today.
     field, enum value, interface method, or method parameter was introduced.
     See [Versioning](#Versioning) for more details.
 
+**`[EnabledIf=FeatureFlag]`**
+:   The `EnabledIf` attribute is used to conditionally disable definitions at
+    interface generation time. This can be used to specify mojom definitions
+    that should only be used on one platform.
+
 ## Generated Code For Target Languages
 
 When the bindings generator successfully processes an input Mojom file, it emits
