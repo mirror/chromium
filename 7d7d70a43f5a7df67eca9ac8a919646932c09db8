@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b9ff47e_3fb24237",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-10-06T02:29:38Z",
+      "side": 1,
+      "message": "plz add todo to remove this",
+      "revId": "7d7d70a43f5a7df67eca9ac8a919646932c09db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
