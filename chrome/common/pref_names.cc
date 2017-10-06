@@ -894,6 +894,9 @@ const char kCastReceiverEnabled[] = "cast_receiver.enabled";
 // If the string is empty or blank the system name will be used.
 const char kCastReceiverName[] = "cast_receiver.name";
 
+// Boolean pref indicating whether videos for user avatar are allowed.
+const char kAllowUserAvatarVideos[] = "allow_user_avatar_videos";
+
 #endif  // defined(OS_CHROMEOS)
 
 // A boolean pref set to true if a Home button to open the Home pages should be

@@ -14,6 +14,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/accessibility/accessibility_manager.h"
 #include "chrome/browser/chromeos/camera_presence_notifier.h"
@@ -26,6 +27,7 @@
 #include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/generated_resources.h"
@@ -122,11 +124,19 @@ void ChangePictureHandler::RegisterMessages() {
 void ChangePictureHandler::OnJavascriptAllowed() {
   user_manager_observer_.Add(user_manager::UserManager::Get());
   camera_observer_.Add(CameraPresenceNotifier::GetInstance());
+
+  // The avatar videos policy can force video mode on or off.
+  local_state_pref_change_registrar_.Init(g_browser_process->local_state());
+  local_state_pref_change_registrar_.Add(
+      prefs::kAllowUserAvatarVideos,
+      base::Bind(&ChangePictureHandler::NotifyAllowVideoModeChanged,
+                 base::Unretained(this)));
 }
 
 void ChangePictureHandler::OnJavascriptDisallowed() {
   user_manager_observer_.Remove(user_manager::UserManager::Get());
   camera_observer_.Remove(CameraPresenceNotifier::GetInstance());
+  local_state_pref_change_registrar_.RemoveAll();
 }
 
 void ChangePictureHandler::SendDefaultImages() {
@@ -198,6 +208,7 @@ void ChangePictureHandler::HandlePageInitialized(const base::ListValue* args) {
   SendDefaultImages();
   SendSelectedImage();
   UpdateProfileImage();
+  NotifyAllowVideoModeChanged();
 }
 
 void ChangePictureHandler::SendSelectedImage() {
@@ -424,6 +435,12 @@ const user_manager::User* ChangePictureHandler::GetUser() const {
   if (!user)
     return user_manager::UserManager::Get()->GetActiveUser();
   return user;
+}
+
+void ChangePictureHandler::NotifyAllowVideoModeChanged() {
+  FireWebUIListener("allow-video-mode-changed",
+                    base::Value(g_browser_process->local_state()->GetBoolean(
+                        prefs::kAllowUserAvatarVideos)));
 }
 
 }  // namespace settings
