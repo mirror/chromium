@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d9cc22_5db0fb12",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T01:32:41Z",
+      "side": 1,
+      "message": "What questions are we trying to answer or what product direction might be influenced by knowing how long the infobar is visible before the user clicks the close button?",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a4d932_f0bb94bb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8710,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T01:32:41Z",
+      "side": 1,
+      "message": "Let\u0027s use a consistent prefix e.g. Android.ChromeHome.Survey.\n\nThat would give us:\nAndroid.ChromeHome.Survey.InfoBarLifetime (if we keep it)\nAndroid.ChromeHome.Survey.DownloadResponseCode\nAndroid.ChromeHome.Survey.ShowSurveySuccess",
+      "range": {
+        "startLine": 8710,
+        "startChar": 17,
+        "endLine": 8710,
+        "endChar": 54
+      },
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
