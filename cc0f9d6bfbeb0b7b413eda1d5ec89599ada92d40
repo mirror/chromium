@@ -93,6 +93,30 @@
       "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "745911e7_2cbe5645",
+        "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-06T20:23:47Z",
+      "side": 1,
+      "message": "I\u0027m not convinced we should preserve destruction of the object.\n\nRight now, the object destructor may block if there are pending profiling tasks. However, this is just to ensure that when those tasks run, the sampling profiler object is still around.\n\nI think it would be better to just leak the sampling profiler object when in the context of being the global one for the browser process. (For unit tests, the blocking logic still makes sense.)\n\nThe advantage of leaking is there\u0027s no extra code to run at destruction and no blocking needed. Yes, it would be a behavior change from what we have currently, but I think it would be worthwhile to do this while you\u0027re changing this already.\n\nHaving said that, I think having the object be static is not correct to achieve that - since I think that still introduces an static destructor call at exit - which I don\u0027t think is needed. Instead, you can make the static var be a pointer and allocate a new instance (with a comment saying it\u0027s intentionally leaked).",
+      "parentUuid": "09ef0f9c_d4d71732",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
