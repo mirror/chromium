@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4cfbdc69_e324b542",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-06T17:32:55Z",
+      "side": 1,
+      "message": "Agree :)",
+      "parentUuid": "8ad3e5a2_7c757082",
+      "revId": "e99ae6887b57e26e361fa0b7cf0b1d3c6bb7b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d545a3e_6703af64",
         "filename": "content/test/data/media/getusermedia.html",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T14:22:56Z",
       "side": 1,
       "message": "What are valid resolutions for the canvas and why?",
+      "revId": "e99ae6887b57e26e361fa0b7cf0b1d3c6bb7b864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7aa700_7490e099",
+        "filename": "content/test/data/media/getusermedia.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-06T17:32:55Z",
+      "side": 1,
+      "message": "Your comment made me realize an error with the original patchset.\nThe valid resolutions for the canvas are any resolutions equal to or less than the canvas original size.\nThis means that non-device tracks that have a format available are no different from device tracks, except that we don\u0027t have to worry about restarting camera, etc.\nThe new patchset is simpler and better.\nFor tracks that don\u0027t have a format available, minimum constraints cannot be enforced because we don\u0027t know the actual supported resolutions, so we should not support applyConstraints for those. At the moment, this only affects remote tracks. Added a test to verify that applyConstraints fails for remote tracks.",
+      "parentUuid": "0d545a3e_6703af64",
       "revId": "e99ae6887b57e26e361fa0b7cf0b1d3c6bb7b864",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
