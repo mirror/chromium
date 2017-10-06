@@ -1151,6 +1151,79 @@ TEST_P(ScrollbarAppearanceTest, HugeScrollingThumbPosition) {
 }
 #endif
 
+// A body with width just under the window width should not have scrollbars.
+TEST_F(ScrollbarsTest, WideBodyShouldNotHaveScrollbars) {
+  DCHECK(RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 10px;"
+      "  width: 799px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
+// A body with height just under the window height should not have scrollbars.
+TEST_F(ScrollbarsTest, TallBodyShouldNotHaveScrollbars) {
+  DCHECK(RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 599px;"
+      "  width: 10px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
+// A body with dimensions just barely inside the window dimensions should not
+// have scrollbars.
+TEST_F(ScrollbarsTest, TallAndWideBodyShouldNotHaveScrollbars) {
+  DCHECK(RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // This test requires that scrollbars take up space.
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
+
+  WebView().Resize(WebSize(800, 600));
+  SimRequest request("https://example.com/test.html", "text/html");
+  LoadURL("https://example.com/test.html");
+  request.Complete(
+      "<!DOCTYPE html>"
+      "<style>"
+      "body {"
+      "  margin: 0;"
+      "  background: blue;"
+      "  height: 599px;"
+      "  width: 799px;"
+      "}");
+  Compositor().BeginFrame();
+  auto* layout_viewport = GetDocument().View()->LayoutViewportScrollableArea();
+  ASSERT_FALSE(layout_viewport->VerticalScrollbar());
+  ASSERT_FALSE(layout_viewport->HorizontalScrollbar());
+}
+
 }  // namespace
 
 }  // namespace blink
