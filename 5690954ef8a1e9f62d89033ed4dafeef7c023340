@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bf97b73_8fbde115",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T20:37:47Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need to do this since the handle is always visible",
+      "range": {
+        "startLine": 902,
+        "startChar": 8,
+        "endLine": 902,
+        "endChar": 55
+      },
+      "revId": "5690954ef8a1e9f62d89033ed4dafeef7c023340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4279968_ce5893f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T20:37:47Z",
+      "side": 1,
+      "message": "We shouldn\u0027t have to do this either, since the top margin is the same regardless of whether the expand button is showing.",
+      "range": {
+        "startLine": 905,
+        "startChar": 8,
+        "endLine": 905,
+        "endChar": 30
+      },
+      "revId": "5690954ef8a1e9f62d89033ed4dafeef7c023340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

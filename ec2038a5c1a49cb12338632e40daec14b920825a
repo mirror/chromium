@@ -49,6 +49,29 @@
     },
     {
       "key": {
+        "uuid": "7d123af1_78bee32e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T20:37:47Z",
+      "side": 0,
+      "message": "We still want this to anchor to the expand button if it\u0027s visible, since the bubble will say \" Double tap the expand button to find your files and pages in downloads\".\n\nWe also want to show/hide the highlight in the two methods below.",
+      "range": {
+        "startLine": 824,
+        "startChar": 19,
+        "endLine": 826,
+        "endChar": 22
+      },
+      "revId": "ec2038a5c1a49cb12338632e40daec14b920825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21a12cbf_68c03b45",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
