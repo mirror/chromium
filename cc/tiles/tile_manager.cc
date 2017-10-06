@@ -884,11 +884,18 @@ void TileManager::PartitionImagesForCheckering(
     const gfx::ColorSpace& raster_color_space,
     std::vector<DrawImage>* sync_decoded_images,
     std::vector<PaintImage>* checkered_images,
+    gfx::Rect* invalidated_rect,
     base::flat_map<PaintImage::Id, size_t>* image_to_frame_index) {
   Tile* tile = prioritized_tile.tile();
   std::vector<const DrawImage*> images_in_tile;
-  prioritized_tile.raster_source()->GetDiscardableImagesInRect(
-      tile->enclosing_layer_rect(), &images_in_tile);
+  gfx::Rect enclosing_rect;
+  if (invalidated_rect)
+    enclosing_rect = ToEnclosingRect(
+        tile->raster_transform().InverseMapRect(gfx::RectF(*invalidated_rect)));
+  else
+    enclosing_rect = tile->enclosing_layer_rect();
+  prioritized_tile.raster_source()->GetDiscardableImagesInRect(enclosing_rect,
+                                                               &images_in_tile);
   WhichTree tree = tile->tiling()->tree();
 
   for (const auto* original_draw_image : images_in_tile) {
@@ -1011,7 +1018,8 @@ void TileManager::ScheduleTasks(PrioritizedWorkToSchedule work_to_schedule) {
     std::vector<DrawImage> sync_decoded_images;
     std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(prioritized_tile, raster_color_space,
-                                 &sync_decoded_images, &checkered_images);
+                                 &sync_decoded_images, &checkered_images,
+                                 nullptr);
 
     // Add the sync decoded images to |new_locked_images| so they can be added
     // to the task graph.
@@ -1115,7 +1123,6 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
         tile->id(), tile->invalidated_content_rect(), tile->invalidated_id(),
         &invalidated_rect);
   }
-
   if (resource) {
     resource_content_id = tile->invalidated_id();
     DCHECK_EQ(DetermineResourceFormat(tile), resource->format());
@@ -1145,6 +1152,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
     std::vector<PaintImage> checkered_images;
     PartitionImagesForCheckering(prioritized_tile, color_space,
                                  &sync_decoded_images, &checkered_images,
+                                 resource ? &invalidated_rect : nullptr,
                                  &image_id_to_current_frame_index);
     for (const auto& image : checkered_images) {
       DCHECK(!image.ShouldAnimate());
