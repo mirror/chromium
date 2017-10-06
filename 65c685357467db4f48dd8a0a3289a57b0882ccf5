@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38782311_12968443",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-06T10:05:30Z",
+      "side": 1,
+      "message": "Is this intentional? :)\n\nIn other cases, I thought we\u0027d tried to avoid recording multiple impressions for the first and second version of the same thing, even if the second is what the user really sees.",
+      "revId": "65c685357467db4f48dd8a0a3289a57b0882ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174da5dd_2ac0a283",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-10-06T10:05:30Z",
+      "side": 1,
+      "message": "Is LogoClick just for CTA -\u003e animated/interactive? If not, might want to check histograms for clicking on static, or a second time on animated.",
+      "revId": "65c685357467db4f48dd8a0a3289a57b0882ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
