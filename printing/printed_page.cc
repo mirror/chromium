@@ -9,11 +9,11 @@
 namespace printing {
 
 PrintedPage::PrintedPage(int page_number,
-                         std::unique_ptr<MetafilePlayer> metafile,
+                         std::unique_ptr<PrintedDocument::Storage> data,
                          const gfx::Size& page_size,
                          const gfx::Rect& page_content_rect)
     : page_number_(page_number),
-      metafile_(std::move(metafile)),
+      data_(std::move(data)),
 #if defined(OS_WIN)
       shrink_factor_(0.0f),
 #endif  // OS_WIN
@@ -24,8 +24,8 @@ PrintedPage::PrintedPage(int page_number,
 PrintedPage::~PrintedPage() {
 }
 
-const MetafilePlayer* PrintedPage::metafile() const {
-  return metafile_.get();
+const PrintedDocument::Storage* PrintedPage::data() const {
+  return data_.get();
 }
 
 void PrintedPage::GetCenteredPageContentRect(
