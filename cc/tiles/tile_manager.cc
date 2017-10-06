@@ -886,8 +886,14 @@ void TileManager::PartitionImagesForCheckering(
     std::vector<PaintImage>* checkered_images) {
   Tile* tile = prioritized_tile.tile();
   std::vector<const DrawImage*> images_in_tile;
-  prioritized_tile.raster_source()->GetDiscardableImagesInRect(
-      tile->enclosing_layer_rect(), &images_in_tile);
+  gfx::Rect enclosing_rect;
+  if (UsePartialRaster() && tile->invalidated_id())
+    enclosing_rect = ToEnclosingRect(tile->raster_transform().InverseMapRect(
+        gfx::RectF(tile->invalidated_content_rect())));
+  else
+    enclosing_rect = tile->enclosing_layer_rect();
+  prioritized_tile.raster_source()->GetDiscardableImagesInRect(enclosing_rect,
+                                                               &images_in_tile);
   WhichTree tree = tile->tiling()->tree();
 
   for (const auto* original_draw_image : images_in_tile) {
