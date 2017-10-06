@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83d31c42_5d85cbaf",
+        "filename": "services/data_decoder/public/cpp/json_sanitizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-06T19:46:57Z",
+      "side": 1,
+      "message": "nit: I realize this is just copying what the component had, but I would sort of prefer we didn\u0027t bother with the class-as-namespace thing here and instead just had a data_decoder::SanitizeJson call in the client library. (and data_decoer::ParseJsonSafe or somesuch, etc)\n\nIf there\u0027s a compelling reason to keep things this way, or if we just want to punt on this issue, I\u0027m fine with leaving it as-is.",
+      "revId": "d67918c6a052add722dd7b5cd0534457f0b5640b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
