@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cd7c325_c4280317",
+        "filename": "content/renderer/media/apply_constraints_processor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-10-06T17:39:43Z",
+      "side": 1,
+      "message": "This is a more general way to get the device ID.\nThe original worked only with sources that explicitly set a DeviceInfo object.",
+      "range": {
+        "startLine": 244,
+        "startChar": 6,
+        "endLine": 244,
+        "endChar": 22
+      },
+      "revId": "d81aaa1f0b7eb6d8bc5f8231ba79ccb7860caa8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
