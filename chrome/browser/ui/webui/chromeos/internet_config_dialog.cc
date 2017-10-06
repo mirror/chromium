@@ -16,6 +16,7 @@
 #include "chromeos/network/network_state_handler.h"
 #include "chromeos/network/network_util.h"
 #include "components/strings/grit/components_strings.h"
+#include "components/user_manager/user_manager.h"
 #include "content/public/browser/web_ui.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -45,6 +46,11 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
   };
   for (const auto& entry : localized_strings)
     html_source->AddLocalizedString(entry.name, entry.id);
+  html_source->AddBoolean(
+      "isGuest",
+      !user_manager::UserManager::Get()->IsUserLoggedIn() ||
+          user_manager::UserManager::Get()->IsLoggedInAsGuest() ||
+          user_manager::UserManager::Get()->IsLoggedInAsPublicAccount());
 }
 
 }  // namespace

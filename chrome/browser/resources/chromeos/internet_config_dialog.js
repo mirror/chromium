@@ -23,6 +23,14 @@ Polymer({
       value: chrome.networkingPrivate,
     },
 
+    /** @private */
+    isGuest_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('isGuest');
+      }
+    },
+
     /**
      * The network GUID to configure, or empty when configuring a new network.
      * @private
