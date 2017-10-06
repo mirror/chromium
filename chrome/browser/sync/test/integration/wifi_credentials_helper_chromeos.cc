@@ -53,23 +53,24 @@ std::string ShillProfilePathForBrowserContext(
 
 ::chromeos::ShillProfileClient::TestInterface*
 GetShillProfileClientTestInterface() {
-  DCHECK(::chromeos::DBusThreadManager::Get()->GetShillProfileClient());
-  DCHECK(::chromeos::DBusThreadManager::Get()->GetShillProfileClient()
-         ->GetTestInterface());
+  EXPECT_TRUE(::chromeos::DBusThreadManager::Get()->GetShillProfileClient());
+  EXPECT_TRUE(::chromeos::DBusThreadManager::Get()
+                  ->GetShillProfileClient()
+                  ->GetTestInterface());
   return ::chromeos::DBusThreadManager::Get()->GetShillProfileClient()
       ->GetTestInterface();
 }
 
 ::chromeos::ManagedNetworkConfigurationHandler*
 GetManagedNetworkConfigurationHandler() {
-  DCHECK(::chromeos::NetworkHandler::Get()
-         ->managed_network_configuration_handler());
+  EXPECT_TRUE(::chromeos::NetworkHandler::Get()
+                  ->managed_network_configuration_handler());
   return ::chromeos::NetworkHandler::Get()
       ->managed_network_configuration_handler();
 }
 
 ::chromeos::NetworkStateHandler* GetNetworkStateHandler() {
-  DCHECK(::chromeos::NetworkHandler::Get()->network_state_handler());
+  EXPECT_TRUE(::chromeos::NetworkHandler::Get()->network_state_handler());
   return ::chromeos::NetworkHandler::Get()->network_state_handler();
 }
 
@@ -84,7 +85,7 @@ void SetUpChromeOs() {
 
 void SetupClientForProfileChromeOs(
     const content::BrowserContext* browser_context) {
-  DCHECK(browser_context);
+  ASSERT_TRUE(browser_context);
   GetShillProfileClientTestInterface()
       ->AddProfile(ShillProfilePathForBrowserContext(*browser_context),
                    ChromeOsUserHashForBrowserContext(*browser_context));
@@ -101,11 +102,11 @@ void SetupClientForProfileChromeOs(
 void AddWifiCredentialToProfileChromeOs(
     const content::BrowserContext* browser_context,
     const WifiCredential& credential) {
-  DCHECK(browser_context);
+  ASSERT_TRUE(browser_context);
   std::unique_ptr<base::DictionaryValue> onc_properties =
       credential.ToOncProperties();
-  CHECK(onc_properties) << "Failed to generate ONC properties for "
-                        << credential.ToString();
+  ASSERT_TRUE(onc_properties)
+      << "Failed to generate ONC properties for " << credential.ToString();
   GetManagedNetworkConfigurationHandler()->CreateConfiguration(
       ChromeOsUserHashForBrowserContext(*browser_context), *onc_properties,
       ::chromeos::network_handler::ServiceResultCallback(),
@@ -117,7 +118,7 @@ void AddWifiCredentialToProfileChromeOs(
 
 WifiCredentialSet GetWifiCredentialsForProfileChromeOs(
     const content::BrowserContext* browser_context) {
-  DCHECK(browser_context);
+  EXPECT_TRUE(browser_context);
   return sync_wifi::GetWifiCredentialsForShillProfile(
       GetNetworkStateHandler(),
       ShillProfilePathForBrowserContext(*browser_context));
