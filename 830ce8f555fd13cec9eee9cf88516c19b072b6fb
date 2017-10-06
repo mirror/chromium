@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "93d4a343_6796a420",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T16:38:24Z",
+      "side": 1,
+      "message": "done. I created enum class ButtonType in PowerButtonController.",
+      "parentUuid": "a7bf02ec_f7771193",
+      "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69a6c3aa_b9a7be1c",
         "filename": "ash/system/power/power_button_test_base.h",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-06T05:22:11Z",
       "side": 1,
       "message": "nit: SetTabletModeEnabled? (since this also disables if false is passed)",
+      "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f002a741_6c03449c",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T16:38:24Z",
+      "side": 1,
+      "message": "It makes sense to me, however the method body is: Shell::Get()-\u003etablet_mode_controller()-\u003eEnableTabletModeWindowManager(enable), and in code base unit tests, EnableTabletMode(bool enable) has been extensively used...\n\nIf we want to have a change, we would better to rename them all. I can do it now or separately.",
+      "parentUuid": "69a6c3aa_b9a7be1c",
       "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
