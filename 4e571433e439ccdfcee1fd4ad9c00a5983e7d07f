@@ -88,6 +88,24 @@
       "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae746c7f_912114b8",
+        "filename": "third_party/win_build_output/.gitattributes",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-10-06T17:48:10Z",
+      "side": 1,
+      "message": "Ok, done. And .bin and .tlb are not affected, so the minimal needed list is rather small actually.",
+      "parentUuid": "e2e27c1a_1bbf0eb6",
+      "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
