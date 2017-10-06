@@ -831,12 +831,10 @@ TEST_F(QuicStreamTest, CancelStream) {
   EXPECT_CALL(*session_,
               SendRstStream(stream_->id(), QUIC_STREAM_CANCELLED, 9));
   stream_->Reset(QUIC_STREAM_CANCELLED);
-  if (session_->use_stream_notifier()) {
-    stream_->OnStreamFrameDiscarded(frame);
-    // Stream stops waiting for acks as data is not going to be retransmitted.
-    EXPECT_FALSE(stream_->IsWaitingForAcks());
-    EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
-  }
+  stream_->OnStreamFrameDiscarded(frame);
+  // Stream stops waiting for acks as data is not going to be retransmitted.
+  EXPECT_FALSE(stream_->IsWaitingForAcks());
+  EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
 }
 
 TEST_F(QuicStreamTest, RstFrameReceivedStreamNotFinishSending) {
@@ -860,13 +858,11 @@ TEST_F(QuicStreamTest, RstFrameReceivedStreamNotFinishSending) {
   EXPECT_CALL(*session_,
               SendRstStream(stream_->id(), QUIC_RST_ACKNOWLEDGEMENT, 9));
   stream_->OnStreamReset(rst_frame);
-  if (session_->use_stream_notifier()) {
-    stream_->OnStreamFrameDiscarded(frame);
-    // Stream stops waiting for acks as it does not finish sending and rst is
-    // sent.
-    EXPECT_FALSE(stream_->IsWaitingForAcks());
-    EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
-  }
+  stream_->OnStreamFrameDiscarded(frame);
+  // Stream stops waiting for acks as it does not finish sending and rst is
+  // sent.
+  EXPECT_FALSE(stream_->IsWaitingForAcks());
+  EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
 }
 
 TEST_F(QuicStreamTest, RstFrameReceivedStreamFinishSending) {
@@ -907,12 +903,10 @@ TEST_F(QuicStreamTest, ConnectionClosed) {
               SendRstStream(stream_->id(), QUIC_RST_ACKNOWLEDGEMENT, 9));
   stream_->OnConnectionClosed(QUIC_INTERNAL_ERROR,
                               ConnectionCloseSource::FROM_SELF);
-  if (session_->use_stream_notifier()) {
-    stream_->OnStreamFrameDiscarded(frame);
-    // Stream stops waiting for acks as connection is going to close.
-    EXPECT_FALSE(stream_->IsWaitingForAcks());
-    EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
-  }
+  stream_->OnStreamFrameDiscarded(frame);
+  // Stream stops waiting for acks as connection is going to close.
+  EXPECT_FALSE(stream_->IsWaitingForAcks());
+  EXPECT_EQ(0u, QuicStreamPeer::SendBuffer(stream_).size());
 }
 
 TEST_F(QuicStreamTest, WriteBufferedData) {

@@ -54,19 +54,14 @@ QuicSession::QuicSession(QuicConnection* connection,
                        perspective() == Perspective::IS_SERVER,
                        nullptr),
       currently_writing_stream_id_(0),
-      use_stream_notifier_(
-          FLAGS_quic_reloadable_flag_quic_use_stream_notifier2),
       save_data_before_consumption_(
-          use_stream_notifier_ &&
           FLAGS_quic_reloadable_flag_quic_save_data_before_consumption2),
       can_use_slices_(save_data_before_consumption_ &&
                       FLAGS_quic_reloadable_flag_quic_use_mem_slices) {}
 
 void QuicSession::Initialize() {
   connection_->set_visitor(this);
-  if (use_stream_notifier_) {
-    connection_->SetStreamNotifier(this);
-  }
+  connection_->SetStreamNotifier(this);
   if (save_data_before_consumption_) {
     connection_->SetDataProducer(this);
   }
@@ -398,7 +393,7 @@ void QuicSession::CloseStreamInner(QuicStreamId stream_id, bool locally_reset) {
     stream->set_rst_sent(true);
   }
 
-  if (use_stream_notifier_ && stream->IsWaitingForAcks()) {
+  if (stream->IsWaitingForAcks()) {
     zombie_streams_[stream->id()] = std::move(it->second);
   } else {
     closed_streams_.push_back(std::move(it->second));
@@ -963,7 +958,6 @@ void QuicSession::OnStreamFrameDiscarded(const QuicStreamFrame& frame) {
         ConnectionCloseBehavior::SEND_CONNECTION_CLOSE_PACKET);
     return;
   }
-  QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_stream_notifier2, 3, 3);
   stream->OnStreamFrameDiscarded(frame);
 }
 

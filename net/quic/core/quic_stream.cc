@@ -88,8 +88,7 @@ QuicStream::QuicStream(QuicStreamId id, QuicSession* session)
 }
 
 QuicStream::~QuicStream() {
-  if (session_ != nullptr && session_->use_stream_notifier() &&
-      IsWaitingForAcks()) {
+  if (session_ != nullptr && IsWaitingForAcks()) {
     QUIC_DVLOG(1)
         << ENDPOINT << "Stream " << id_
         << " gets destroyed while waiting for acks. stream_bytes_outstanding = "
@@ -633,14 +632,12 @@ void QuicStream::OnStreamFrameAcked(const QuicStreamFrame& frame,
                                     QuicTime::Delta ack_delay_time) {
   OnStreamFrameDiscarded(frame);
   if (ack_listener_ != nullptr) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_stream_notifier2, 1, 3);
     ack_listener_->OnPacketAcked(frame.data_length, ack_delay_time);
   }
 }
 
 void QuicStream::OnStreamFrameRetransmitted(const QuicStreamFrame& frame) {
   if (ack_listener_ != nullptr) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_stream_notifier2, 2, 3);
     ack_listener_->OnPacketRetransmitted(frame.data_length);
   }
 }

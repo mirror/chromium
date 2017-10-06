@@ -62,8 +62,7 @@ QuicConsumedData QuicHeadersStream::WritevDataInner(
     QuicStreamOffset offset,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
-  if (!session()->use_stream_notifier() ||
-      session()->save_data_before_consumption()) {
+  if (session()->save_data_before_consumption()) {
     // If data is saved before consumption, unacked_headers has been populated.
     return QuicStream::WritevDataInner(iov, offset, fin,
                                        std::move(ack_listener));

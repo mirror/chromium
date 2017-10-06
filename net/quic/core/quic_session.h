@@ -274,8 +274,6 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // Returns true if this stream should yield writes to another blocked stream.
   bool ShouldYield(QuicStreamId stream_id);
 
-  bool use_stream_notifier() const { return use_stream_notifier_; }
-
   bool save_data_before_consumption() const {
     return save_data_before_consumption_;
   }
@@ -492,9 +490,6 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   // The stream id which was last popped in OnCanWrite, or 0, if not under the
   // call stack of OnCanWrite.
   QuicStreamId currently_writing_stream_id_;
-
-  // This session is notified on every ack or loss.
-  const bool use_stream_notifier_;
 
   // Application data is saved before it is actually consumed.
   const bool save_data_before_consumption_;
