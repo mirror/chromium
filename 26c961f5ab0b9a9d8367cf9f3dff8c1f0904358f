@@ -156,6 +156,30 @@
     },
     {
       "key": {
+        "uuid": "234bca9a_435cdfd7",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T23:02:07Z",
+      "side": 1,
+      "message": "With OpenJDK, Phantom References weren\u0027t automatically cleared as they are enqueued (prior to version 9).\n\nThis could lead to strange behavior where it was possible to resurrect an object by getting its underlying referent via reflection (Reference#getReferent()) and then re-rooting it.\n\n---\nAs for Android, in ART we do clear the objects from the phantom references (I checked our code) when they are enqueued, I\u0027m just not sure if older versions (e.g. Dalvik) have the same behavior.\n\nRegardless, it\u0027s likely an academic question since unless the object is actually resurrected after it\u0027s enqueued (which it\u0027s not here), I don\u0027t believe there\u0027s a behavioral distinction.",
+      "parentUuid": "af22c8af_5c7758eb",
+      "range": {
+        "startLine": 175,
+        "startChar": 15,
+        "endLine": 175,
+        "endChar": 79
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e3a3f73_dac35512",
         "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
         "patchSetId": 3
