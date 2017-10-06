@@ -744,17 +744,6 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
       return false;
     }
   } else {
-#if !defined(OS_CHROMEOS)
-    // Guest profiles should not be reopened on startup. This can happen if
-    // the last used profile was a Guest, but other profiles were also open
-    // when Chrome was closed. In this case, pick a different open profile
-    // to be the active one, since the Guest profile is never added to the list
-    // of open profiles.
-    if (last_used_profile->IsGuestSession()) {
-      DCHECK(!last_opened_profiles[0]->IsGuestSession());
-      last_used_profile = last_opened_profiles[0];
-    }
-#endif
     // Launch the last used profile with the full command line, and the other
     // opened profiles without the URLs to launch.
     base::CommandLine command_line_without_urls(command_line.GetProgram());
@@ -796,6 +785,22 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
          it != last_opened_profiles.end(); ++it, ++DEBUG_loop_counter) {
       DEBUG_num_profiles_at_loop_start = last_opened_profiles.size();
       DCHECK(!(*it)->IsGuestSession());
+
+#if !defined(OS_CHROMEOS)
+      // Skip any locked profile.
+      if (!ProfileCanBeAutoOpened(*it))
+        continue;
+
+      // Guest profiles should not be reopened on startup. This can happen if
+      // the last used profile was a Guest, but other profiles were also open
+      // when Chrome was closed. In this case, pick a different open profile
+      // to be the active one, since the Guest profile is never added to the
+      // list of open profiles.
+      if (last_used_profile->IsGuestSession()) {
+        last_used_profile = *it;
+      }
+#endif
+
       // Don't launch additional profiles which would only open a new tab
       // page. When restarting after an update, all profiles will reopen last
       // open pages.
@@ -812,9 +817,18 @@ bool StartupBrowserCreator::ProcessCmdLineImpl(
       // We've launched at least one browser.
       is_process_startup = chrome::startup::IS_NOT_PROCESS_STARTUP;
     }
-    // This must be done after all profiles have been launched so the observer
-    // knows about all profiles to wait for before activating this one.
-    profile_launch_observer.Get().set_profile_to_activate(last_used_profile);
+
+// Show UserManager if there is no profile can be opened, otherwise set the
+// |last_used_profile| to activate.
+// Note that setting profile to activate must be done after all profiles
+// have been launched so the observer knows about all profiles to wait
+// before activation this one.
+#if !defined(OS_CHROMEOS)
+    if (is_process_startup == chrome::startup::IS_PROCESS_STARTUP)
+      ShowUserManagerOnStartupIfNeeded(last_used_profile, command_line);
+    else
+#endif
+      profile_launch_observer.Get().set_profile_to_activate(last_used_profile);
   }
   return true;
 }
