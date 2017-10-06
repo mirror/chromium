@@ -141,6 +141,11 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 // Returns whether the omnibox popup is currently displayed.
 - (BOOL)showingOmniboxPopup;
 
+// Should be called whenever a UIController's traitCollectionDidChange is
+// called.
+- (void)fakeTraitCollectionDidChange:
+    (UITraitCollection*)previousTraitCollection;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_WEB_TOOLBAR_CONTROLLER_H_
