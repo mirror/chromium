@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05da2d9e_f547b80e",
+        "filename": "chrome/android/chrome_public_apk_tmpl.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-06T13:06:49Z",
+      "side": 1,
+      "message": "Fortunately it inherits from these variables, line 252 in clank/java/BUILD.gn.\n\nSo this means that any chrome target should work with use_order_profiling now.",
+      "parentUuid": "a8e51e37_0ba3b3bc",
+      "revId": "628c66200d8ac4d59eaef453c4affcf010862122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2da5c9a3_4ccf43bf",
         "filename": "chrome/android/java/AndroidManifest.xml",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T12:39:18Z",
       "side": 1,
       "message": "Can we add a comment explaining why we do that?\nAlso, this wouldn\u0027t break the downstream bot, right?",
+      "revId": "628c66200d8ac4d59eaef453c4affcf010862122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebb13d6_9da46b1e",
+        "filename": "chrome/android/java/AndroidManifest.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-10-06T13:06:49Z",
+      "side": 1,
+      "message": "Done.\n\nThis doesn\u0027t break the downstream bot for the following sort of silly reason: the downstream both checks that there are one or two replacements of isolatedProcess\u003dtrue. But, a couple hundred lines above there is a photo_picker.DecoderService that also sets isolatedProcess\u003dtrue, and which the orderfile_generator patches as well. We probably don\u0027t actually want to patch that, I imagine?",
+      "parentUuid": "2da5c9a3_4ccf43bf",
       "revId": "628c66200d8ac4d59eaef453c4affcf010862122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
