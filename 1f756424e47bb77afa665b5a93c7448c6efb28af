@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9e5adcf_a9a9e281",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insertparagraph-seperator-on-non-selectable-node.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:12:22Z",
+      "side": 1,
+      "message": "Please add a comment that the html must be set in this way, because otherwise the HTML parser moves \u003ch1\u003e outside \u003ctable\u003e.",
+      "revId": "1f756424e47bb77afa665b5a93c7448c6efb28af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9066f485_ff1bda08",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:12:22Z",
+      "side": 1,
+      "message": "There\u0027s a macro doing the same job:\n\nABORT_EDITING_COMMAND_IF(visible_insertion_position.IsNull());",
+      "revId": "1f756424e47bb77afa665b5a93c7448c6efb28af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
