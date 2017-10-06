@@ -30,13 +30,7 @@ void PrintedDocument::RenderPrintedPage(const PrintedPage& page,
   {
     base::AutoLock lock(lock_);
     if (page.page_number() - 1 == mutable_.first_page) {
-      std::vector<char> buffer;
-
-      if (page.metafile()->GetDataAsVector(&buffer)) {
-        static_cast<PrintingContextChromeos*>(context)->StreamData(buffer);
-      } else {
-        LOG(WARNING) << "Failed to read data from metafile";
-      }
+      static_cast<PrintingContextChromeos*>(context)->StreamData(*page.data());
     }
   }
 #else

@@ -9,6 +9,7 @@
 
 #include "base/logging.h"
 #include "printing/page_number.h"
+#include "printing/pdf_metafile_skia.h"
 #include "printing/printed_page.h"
 
 namespace printing {
@@ -30,12 +31,14 @@ void PrintedDocument::RenderPrintedPage(
   gfx::Rect content_area;
   page.GetCenteredPageContentRect(page_setup.physical_size(), &content_area);
 
-  const MetafilePlayer* metafile = page.metafile();
+  PdfMetafileSkia metafile(SkiaDocumentType::PDF);
+  metafile.InitFromData(page.data());
   // Each Metafile is a one-page PDF, and pages use 1-based indexing.
   const int page_number = 1;
   struct Metafile::MacRenderPageParams params;
   params.autorotate = true;
-  metafile->RenderPage(page_number, context, content_area.ToCGRect(), params);
+  // TODO RenderPage should be inlined and removed from Metafile API.
+  metafile.RenderPage(page_number, context, content_area.ToCGRect(), params);
 }
 
 }  // namespace printing

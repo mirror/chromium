@@ -66,7 +66,7 @@ void PrintedDocument::RenderPrintedPage(
         page.shrink_factor());
 
     ::StartPage(context);
-    if (!page.metafile()->SafePlayback(context)) {
+    if (!page.data()->SafePlayback(context)) {
       NOTREACHED();
     }
     ::EndPage(context);

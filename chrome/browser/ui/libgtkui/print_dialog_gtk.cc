@@ -21,7 +21,6 @@
 #include "base/values.h"
 #include "chrome/browser/ui/libgtkui/gtk_util.h"
 #include "chrome/browser/ui/libgtkui/printing_gtk_util.h"
-#include "printing/metafile.h"
 #include "printing/print_job_constants.h"
 #include "printing/print_settings.h"
 #include "ui/aura/window.h"
@@ -372,7 +371,7 @@ void PrintDialogGtk2::ShowDialog(
       GTK_WINDOW(dialog_), ui::X11EventSource::GetInstance()->GetTimestamp());
 }
 
-void PrintDialogGtk2::PrintDocument(const printing::MetafilePlayer& metafile,
+void PrintDialogGtk2::PrintDocument(const std::vector<char>& data,
                                     const base::string16& document_name) {
   // This runs on the print worker thread, does not block the UI thread.
   DCHECK(!BrowserThread::CurrentlyOn(BrowserThread::UI));
@@ -387,9 +386,10 @@ void PrintDialogGtk2::PrintDocument(const printing::MetafilePlayer& metafile,
     base::File file;
     file.Initialize(path_to_pdf_,
                     base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
-    success = metafile.SaveTo(&file);
+    auto res = file.WriteAtCurrentPos(data.data(),
+                                      base::checked_cast<int>(data.size()));
     file.Close();
-    if (!success)
+    if (res < 0)
       base::DeleteFile(path_to_pdf_, false);
   }
 
