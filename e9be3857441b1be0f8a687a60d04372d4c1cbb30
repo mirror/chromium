@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4e40b33e_0cbee63a",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-06T19:44:17Z",
+      "side": 1,
+      "message": "This code path won\u0027t be executed if initial_seed is non-zero.",
+      "parentUuid": "91f9652b_3db23be9",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2560c8_0b3bd426",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e224ce27_8a636ded",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-06T19:44:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dd2560c8_0b3bd426",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "956e98b1_05abfce8",
         "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-06T01:42:35Z",
       "side": 1,
       "message": "Since 0 is the safe value, I think we need\n\n  if (OFFICIAL_BUILD) {\n    CHECK_EQ(0, initial_seed);\n  }\n\nWe need to make sure to never be predictable in real production use.",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5bc530_e012f3b8",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-10-06T19:44:17Z",
+      "side": 1,
+      "message": "Good idea. I have to verify that non-branded builds would be sufficient for CF and other purposes.",
+      "parentUuid": "956e98b1_05abfce8",
       "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
