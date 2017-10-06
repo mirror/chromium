@@ -21,12 +21,6 @@ INSTANTIATE_TEST_CASE_P(All,
                         PaintControllerPaintTest,
                         ::testing::ValuesIn(kDefaultPaintTestConfigurations));
 
-using PaintControllerPaintTestForSlimmingPaintV2 = PaintControllerPaintTest;
-INSTANTIATE_TEST_CASE_P(
-    All,
-    PaintControllerPaintTestForSlimmingPaintV2,
-    ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
-
 TEST_P(PaintControllerPaintTest, FullDocumentPaintingWithCaret) {
   SetBodyInnerHTML(
       "<div id='div' contentEditable='true' style='outline:none'>XYZ</div>");
@@ -100,6 +94,14 @@ TEST_P(PaintControllerPaintTest, InlineRelayout) {
       TestDisplayItem(new_first_text_box, kForegroundType),
       TestDisplayItem(second_text_box, kForegroundType));
 }
+
+// The following tests test SPv2 specific features, e.g. compositing,
+// ScrollHitTest layer, etc.
+using PaintControllerPaintTestForSlimmingPaintV2 = PaintControllerPaintTest;
+INSTANTIATE_TEST_CASE_P(
+    All,
+    PaintControllerPaintTestForSlimmingPaintV2,
+    ::testing::ValuesIn(kSlimmingPaintV2TestConfigurations));
 
 TEST_P(PaintControllerPaintTestForSlimmingPaintV2, ChunkIdClientCacheFlag) {
   SetBodyInnerHTML(
