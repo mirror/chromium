@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "d6fb01ea_3d7db44b",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T21:30:59Z",
+      "side": 1,
+      "message": "No need for |this| since we are using an arrow function.",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "8f014f2841ac786c50b8f9c7af8681fbb19c1011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7609a7_8ebecfb8",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T21:30:59Z",
+      "side": 1,
+      "message": "Can we add an assertion here (and elsewhere) instead of manually throwing errors?\n\nlet method \u003d this.resolverMap_.get(methodName);\nassert(!!method, `TestBrowserProxy#methodCalled could not find `${methodName}`);\nmethod.resolve(opt_arg);",
+      "revId": "8f014f2841ac786c50b8f9c7af8681fbb19c1011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b3a193_f27e33bd",
         "filename": "chrome/test/data/webui/test_browser_proxy.js",
         "patchSetId": 1
