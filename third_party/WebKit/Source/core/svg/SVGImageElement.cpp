@@ -52,7 +52,8 @@ inline SVGImageElement::SVGImageElement(Document& document)
       preserve_aspect_ratio_(SVGAnimatedPreserveAspectRatio::Create(
           this,
           SVGNames::preserveAspectRatioAttr)),
-      image_loader_(SVGImageLoader::Create(this)) {
+      image_loader_(SVGImageLoader::Create(this)),
+      decoding_mode_(Image::kUnspecifiedDecode) {
   AddToPropertyMap(x_);
   AddToPropertyMap(y_);
   AddToPropertyMap(width_);
@@ -139,6 +140,18 @@ void SVGImageElement::SvgAttributeChanged(const QualifiedName& attr_name) {
     // See http://crbug.com/466200.
     MarkForLayoutAndParentResourceInvalidation(object);
     return;
+  }
+
+  if (attr_name == SVGNames::asyncAttr) {
+    const AtomicString& async_attr = FastGetAttribute(SVGNames::asyncAttr);
+    if (async_attr.IsNull())
+      decoding_mode_ = Image::kUnspecifiedDecode;
+    else if (async_attr.LowerASCII() == "sync")
+      decoding_mode_ = Image::kSyncDecode;
+    else if (async_attr == "" || async_attr.LowerASCII() == "async")
+      decoding_mode_ = Image::kAsyncDecode;
+    else
+      decoding_mode_ = Image::kUnspecifiedDecode;
   }
 
   if (SVGURIReference::IsKnownAttribute(attr_name)) {

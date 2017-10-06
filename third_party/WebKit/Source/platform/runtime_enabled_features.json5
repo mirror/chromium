@@ -477,6 +477,10 @@
       status: "test",
     },
     {
+      name: "ImageAsyncAttribute",
+      status: "test",
+    },
+    {
       name: "ImageOrientation",
       status: "test",
     },

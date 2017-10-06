@@ -958,7 +958,8 @@ String AXLayoutObject::ImageDataUrl(const IntSize& max_size) const {
   if (!bitmap_image)
     return String();
 
-  sk_sp<SkImage> image = bitmap_image->PaintImageForCurrentFrame().GetSkImage();
+  sk_sp<SkImage> image =
+      bitmap_image->PaintImageForCurrentFrame(Image::kSyncDecode).GetSkImage();
   if (!image || image->width() <= 0 || image->height() <= 0)
     return String();
 
