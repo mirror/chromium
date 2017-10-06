@@ -22,7 +22,8 @@ Aes128Gcm12Decrypter::Aes128Gcm12Decrypter()
     : AeadBaseDecrypter(EVP_aead_aes_128_gcm(),
                         kKeySize,
                         kAuthTagSize,
-                        kNoncePrefixSize) {
+                        kNoncePrefixSize,
+                        /* use_ietf_nonce_construction */ false) {
   static_assert(kKeySize <= kMaxKeySize, "key size too big");
   static_assert(kNoncePrefixSize <= kMaxNoncePrefixSize,
                 "nonce prefix size too big");

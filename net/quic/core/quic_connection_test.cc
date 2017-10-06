@@ -91,6 +91,8 @@ class TaggingEncrypter : public QuicEncrypter {
 
   bool SetNoncePrefix(QuicStringPiece nonce_prefix) override { return true; }
 
+  bool SetIV(QuicStringPiece iv) override { return true; }
+
   bool EncryptPacket(QuicVersion /*version*/,
                      QuicPacketNumber packet_number,
                      QuicStringPiece associated_data,
@@ -145,6 +147,8 @@ class TaggingDecrypter : public QuicDecrypter {
   bool SetKey(QuicStringPiece key) override { return true; }
 
   bool SetNoncePrefix(QuicStringPiece nonce_prefix) override { return true; }
+
+  bool SetIV(QuicStringPiece iv) override { return true; }
 
   bool SetPreliminaryKey(QuicStringPiece key) override {
     QUIC_BUG << "should not be called";

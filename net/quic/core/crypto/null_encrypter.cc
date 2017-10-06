@@ -24,6 +24,10 @@ bool NullEncrypter::SetNoncePrefix(QuicStringPiece nonce_prefix) {
   return nonce_prefix.empty();
 }
 
+bool NullEncrypter::SetIV(QuicStringPiece iv) {
+  return iv.empty();
+}
+
 bool NullEncrypter::EncryptPacket(QuicVersion version,
                                   QuicPacketNumber /*packet_number*/,
                                   QuicStringPiece associated_data,

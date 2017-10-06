@@ -26,6 +26,10 @@ bool NullDecrypter::SetNoncePrefix(QuicStringPiece nonce_prefix) {
   return nonce_prefix.empty();
 }
 
+bool NullDecrypter::SetIV(QuicStringPiece iv) {
+  return iv.empty();
+}
+
 bool NullDecrypter::SetPreliminaryKey(QuicStringPiece key) {
   QUIC_BUG << "Should not be called";
   return false;

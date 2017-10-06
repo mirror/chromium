@@ -31,6 +31,7 @@ class QUIC_EXPORT_PRIVATE NullDecrypter : public QuicDecrypter {
   // QuicDecrypter implementation
   bool SetKey(QuicStringPiece key) override;
   bool SetNoncePrefix(QuicStringPiece nonce_prefix) override;
+  bool SetIV(QuicStringPiece iv) override;
   bool SetPreliminaryKey(QuicStringPiece key) override;
   bool SetDiversificationNonce(const DiversificationNonce& nonce) override;
   bool DecryptPacket(QuicVersion version,
