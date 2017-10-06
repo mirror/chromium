@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1fbd339_993997d2",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:48:01Z",
+      "side": 1,
+      "message": "Same comment about no (c).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6be2f3_c6d150a4",
+        "filename": "ui/base/win/tablet.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:48:01Z",
+      "side": 1,
+      "message": "I\u0027m assuming all this is a straight move and rubber stamping it.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 26
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa31b3c_19272e65",
+        "filename": "ui/base/win/tablet.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:48:01Z",
+      "side": 1,
+      "message": "no (c) (see style guide).",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8100d94_696f3b87",
+        "filename": "ui/base/win/tablet.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:48:01Z",
+      "side": 1,
+      "message": "I don\u0027t think you need these includes here (or the vector and string16 includes).",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "2384a5933a93524778a22c3b26eef121c28f864d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
