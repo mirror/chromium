@@ -157,7 +157,7 @@ public class PrefetchedPagesNotifier {
         runWhenChromeLoadsNative(() -> recordNotificationAction(action));
     }
 
-    private static void recordNotificationAction(int action) {
+    static void recordNotificationAction(int action) {
         RecordHistogram.recordEnumeratedHistogram(
                 "OfflinePages.Prefetching.NotificationAction", action, NOTIFICATION_ACTION_COUNT);
     }
