@@ -22,6 +22,30 @@
       "revId": "f6da1574e04bd7d06b26ce8f18d85d891bc54dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a663696_cfeae4a2",
+        "filename": "headless/lib/browser/headless_network_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1245991
+      },
+      "writtenOn": "2017-10-06T07:16:29Z",
+      "side": 0,
+      "message": "What would be the use-case for making the Transaction Factory configurable? We would want to make DevToolsNetworkTransactionFactory the default, to enable network emulation.",
+      "parentUuid": "01339abf_50b3b295",
+      "range": {
+        "startLine": 41,
+        "startChar": 37,
+        "endLine": 41,
+        "endChar": 78
+      },
+      "revId": "f6da1574e04bd7d06b26ce8f18d85d891bc54dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
