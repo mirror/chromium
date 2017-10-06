@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e55638b_11104ad9",
+        "filename": "android_webview/browser/aw_navigation_throttle.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T17:36:46Z",
+      "side": 1,
+      "message": "Please add a comment on what this class is about.",
+      "revId": "2dc613fefac85fa6638aa424955543c87875ec0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d65b310_dde1c772",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T17:36:46Z",
+      "side": 1,
+      "message": "Ugh, this is very bad layering violation and exposing this through the content/public API doesn\u0027t seem a good idea to me.",
+      "revId": "2dc613fefac85fa6638aa424955543c87875ec0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
