@@ -22,6 +22,9 @@ class InterventionsInternalsUI
   void BindUIHandler(
       mojom::InterventionsInternalsPageHandlerRequest request) override;
 
+  // The PreviewsLogger that this handler is listening to.
+  previews::PreviewsLogger* logger_;
+
   std::unique_ptr<InterventionsInternalsPageHandler> page_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(InterventionsInternalsUI);
