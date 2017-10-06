@@ -1439,7 +1439,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
   std::unique_ptr<PasswordForm> password_form =
       LoadHTMLAndConvertForm(html, nullptr, false);
   ASSERT_TRUE(password_form);
-  EXPECT_FALSE(password_form->passwords_has_autofilled_value);
+  EXPECT_FALSE(password_form->form_has_autofilled_value);
 
   // Make sure we have all possible passwords along with the username info.
   EXPECT_EQ(base::ASCIIToUTF16("username1"), password_form->username_element);
@@ -1485,7 +1485,7 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
     std::unique_ptr<PasswordForm> password_form(
         CreatePasswordFormFromWebForm(form, &user_input, nullptr));
     ASSERT_TRUE(password_form);
-    EXPECT_TRUE(password_form->passwords_has_autofilled_value);
+    EXPECT_TRUE(password_form->form_has_autofilled_value);
   }
 }
 
