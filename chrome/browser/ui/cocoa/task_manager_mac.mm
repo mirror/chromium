@@ -50,7 +50,6 @@ bool ShouldUseViewsTaskManager() {
 - (void)setUpTableHeaderContextMenu;
 - (void)toggleColumn:(id)sender;
 - (void)adjustSelectionAndEndProcessButton;
-- (void)deselectRows;
 @end
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -120,39 +119,23 @@ bool ShouldUseViewsTaskManager() {
 }
 
 - (void)reloadData {
-  [self reloadDataWithRows:0 addedAtIndex:0];
+  [self reloadDataAndSetSelection:[self getCurrentSelection]];
 }
 
-- (void)reloadDataWithRows:(int)addedRows addedAtIndex:(int)addedRowIndex {
-  // Store old view indices, and the model indices they map to.
+- (ui::ListSelectionModel)getCurrentSelection {
+  // Convert the currently selected view indices to model indices.
   NSIndexSet* viewSelection = [tableView_ selectedRowIndexes];
-  std::vector<int> modelSelection;
+  ui::ListSelectionModel modelSelection;
   for (NSUInteger i = [viewSelection lastIndex];
        i != NSNotFound;
        i = [viewSelection indexLessThanIndex:i]) {
-    modelSelection.push_back(viewToModelMap_[i]);
+    modelSelection.AddIndexToSelection(viewToModelMap_[i]);
   }
+  return modelSelection;
+}
 
-  // Adjust for any added or removed rows.
-  if (addedRows != 0) {
-    for (int& selectedItem : modelSelection) {
-      if (addedRowIndex > selectedItem) {
-        // Nothing to do; added/removed items are beyond the selected item.
-        continue;
-      }
-
-      if (addedRows > 0) {
-        selectedItem += addedRows;
-      } else {
-        int removedRows = -addedRows;
-        if (addedRowIndex + removedRows <= selectedItem)
-          selectedItem -= removedRows;
-        else
-          selectedItem = -1;  // The item was removed.
-      }
-    }
-  }
-
+- (void)reloadDataAndSetSelection:
+    (const ui::ListSelectionModel&)modelSelection {
   // Sort.
   [self sortShuffleArray];
 
@@ -161,9 +144,8 @@ bool ShouldUseViewsTaskManager() {
 
   // Reload the selection.
   NSMutableIndexSet* indexSet = [NSMutableIndexSet indexSet];
-  for (auto selectedItem : modelSelection) {
-    if (selectedItem != -1)
-      [indexSet addIndex:modelToViewMap_[selectedItem]];
+  for (int modelIndex : modelSelection.selected_indices()) {
+    [indexSet addIndex:modelToViewMap_[modelIndex]];
   }
   [tableView_ selectRowIndexes:indexSet byExtendingSelection:NO];
 
@@ -403,10 +385,6 @@ bool ShouldUseViewsTaskManager() {
   [endProcessButton_ setEnabled:enabled];
 }
 
-- (void)deselectRows {
-  [tableView_ deselectAll:self];
-}
-
 // Table view delegate methods.
 
 // The selection is being changed by mouse (drag/click).
@@ -564,8 +542,8 @@ TaskManagerMac::~TaskManagerMac() {
 // ui::TableModelObserver implementation:
 
 void TaskManagerMac::OnModelChanged() {
-  [window_controller_ deselectRows];
-  [window_controller_ reloadData];
+  ui::ListSelectionModel empty_selection;  // Will deselect all rows.
+  [window_controller_ reloadDataAndSetSelection:empty_selection];
 }
 
 void TaskManagerMac::OnItemsChanged(int start, int length) {
@@ -573,11 +551,23 @@ void TaskManagerMac::OnItemsChanged(int start, int length) {
 }
 
 void TaskManagerMac::OnItemsAdded(int start, int length) {
-  [window_controller_ reloadDataWithRows:length addedAtIndex:start];
+  ui::ListSelectionModel selection = [window_controller_ getCurrentSelection];
+  for (int i = 0; i < length; i++)
+    selection.IncrementFrom(start);
+  [window_controller_ reloadDataAndSetSelection:selection];
 }
 
 void TaskManagerMac::OnItemsRemoved(int start, int length) {
-  [window_controller_ reloadDataWithRows:-length addedAtIndex:start];
+  ui::ListSelectionModel selection = [window_controller_ getCurrentSelection];
+  for (int i = 0; i < length; i++)
+    selection.DecrementFrom(start);
+  [window_controller_ reloadDataAndSetSelection:selection];
+}
+
+void TaskManagerMac::OnItemsMoved(int old_start, int length, int new_start) {
+  ui::ListSelectionModel selection = [window_controller_ getCurrentSelection];
+  selection.Move(old_start, new_start, length);
+  [window_controller_ reloadDataAndSetSelection:selection];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
