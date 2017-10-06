@@ -96,6 +96,54 @@
     },
     {
       "key": {
+        "uuid": "c9f769ee_9dbba21f",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-06T20:36:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9b76ca4d_46defd49",
+      "range": {
+        "startLine": 747,
+        "startChar": 29,
+        "endLine": 747,
+        "endChar": 33
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee731049_ec35cc9d",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-06T20:36:04Z",
+      "side": 1,
+      "message": "Put WithAutofill/WithoutAutofill first because they are existing histograms.\nPut Address, CreditCard, Password, UnknownFormType behind because they are existing suffixes.\nRemove the string array because it harms readability. I think current implementation is more readable.",
+      "parentUuid": "c2b80791_378ffb7f",
+      "range": {
+        "startLine": 747,
+        "startChar": 45,
+        "endLine": 747,
+        "endChar": 60
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "722b5e6d_60cf37f4",
         "filename": "components/autofill/core/browser/autofill_metrics.cc",
         "patchSetId": 5
@@ -110,6 +158,24 @@
       "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674ded7e_201c6cc6",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-06T20:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "722b5e6d_60cf37f4",
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "be9a1552_43092906",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-06T20:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33a6eecc_0fe3ea75",
+      "range": {
+        "startLine": 724,
+        "startChar": 39,
+        "endLine": 724,
+        "endChar": 43
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bcd2492_7a59970c",
         "filename": "components/autofill/core/browser/autofill_metrics.h",
         "patchSetId": 5
@@ -156,6 +246,30 @@
       "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6bf833_7e9563ce",
+        "filename": "components/autofill/core/browser/autofill_metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1176357
+      },
+      "writtenOn": "2017-10-06T20:36:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bcd2492_7a59970c",
+      "range": {
+        "startLine": 726,
+        "startChar": 65,
+        "endLine": 726,
+        "endChar": 66
+      },
+      "revId": "546c8f92292a9e696d5de16b2b6272cec36c254b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
