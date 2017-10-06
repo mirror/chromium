@@ -22,6 +22,30 @@
       "revId": "803eee4b8808356d481aa30431e2234aced8b16e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f143fcd_a8a59653",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:20:29Z",
+      "side": 0,
+      "message": "Yeah they should pass regardless there is \"method\" attribute or not, that\u0027s why I left in one place (line 202) and remove in others in order to decrease clutter.\nHard to say which is more often, in the upstream Password Manager doesn\u0027t use method attribute (and I\u0027m not sure whether it was ever used).",
+      "parentUuid": "e8bb2224_448b6835",
+      "range": {
+        "startLine": 42,
+        "startChar": 29,
+        "endLine": 42,
+        "endChar": 44
+      },
+      "revId": "803eee4b8808356d481aa30431e2234aced8b16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
