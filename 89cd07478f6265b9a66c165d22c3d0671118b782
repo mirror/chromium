@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077ba073_8af1e766",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T23:49:42Z",
+      "side": 1,
+      "message": "Instead of passing around mResult over thread, could you always create a new final clone?",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "89cd07478f6265b9a66c165d22c3d0671118b782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7742ed9c_b2dcf2f2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T23:49:42Z",
+      "side": 1,
+      "message": "I think you need assertion instead.",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "89cd07478f6265b9a66c165d22c3d0671118b782",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
