@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c376f3c2_d158fce5",
+        "filename": "chrome/browser/resources/md_extensions/code_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-06T17:38:12Z",
+      "side": 1,
+      "message": "yeah, #main is flexing the line numbers and the source code, and #scroll-container is for main to scroll within.",
+      "parentUuid": "3d37729f_1c3096a8",
+      "revId": "a35d7cf82a3d25a6f000303c1868e74d0aa91158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20e7103a_6cc4ee4c",
         "filename": "chrome/browser/resources/md_extensions/code_section.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T23:25:14Z",
       "side": 1,
       "message": "Would scrollIntoViewIfNeeded(this.$.highlight) make things easier here?\n\nhttps://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoViewIfNeeded",
+      "revId": "a35d7cf82a3d25a6f000303c1868e74d0aa91158",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b19aa2_76a9fb8b",
+        "filename": "chrome/browser/resources/md_extensions/code_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-06T17:38:12Z",
+      "side": 1,
+      "message": "That was what I tried first, but the problem is if you\u0027re in a small view-port, and you\u0027re looking at errors further down the page, it gets really annoying whenever you click on an error it scrolls the entire window back up to the code-section to show you the highlight.\n\nSo I don\u0027t actually want to scroll the whole window back to see the highlight, I only want it to scroll into the view of the code-section container so the user can see it IF they want to scroll back to look at the code section.",
+      "parentUuid": "20e7103a_6cc4ee4c",
       "revId": "a35d7cf82a3d25a6f000303c1868e74d0aa91158",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
