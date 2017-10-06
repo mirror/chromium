@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2220e33e_455cfa12",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-10-06T08:14:22Z",
+      "side": 1,
+      "message": "Do not need this DCHECK.",
+      "revId": "651d13b56a59312e935ce2cc0cdbeb3f3e4f1179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
