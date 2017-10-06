@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca217fcb_86f88c27",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-06T19:28:00Z",
+      "side": 0,
+      "message": "Now the client can keep pushing new downloads to database, but all downloads will be started/resumed on the first ControllerImpl::OnDeviceStatusChanged call.\n\nBefore that, the functions above may call UpdateDriverState, but the device status is disconnected and not charging, so they won\u0027t do anything.",
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
