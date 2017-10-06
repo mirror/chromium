@@ -219,6 +219,24 @@
     },
     {
       "key": {
+        "uuid": "efd07c31_38d261d5",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-06T19:49:52Z",
+      "side": 1,
+      "message": "The original motivation for this was to signal the browser in the event the offscreen tab is closed (e.g. with window.close()). I can move this call to OnDestruct() since it will also work for subframes. After this patch it would be cleaner for PresentationReceiver to observe this signal directly rather than going through PresentationDispatcher.",
+      "parentUuid": "5cf649cc_95e93567",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b938e6d_afd67750",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -354,6 +372,24 @@
     },
     {
       "key": {
+        "uuid": "3c254958_05e037f2",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-06T19:49:52Z",
+      "side": 1,
+      "message": "One case of having multiple connections is presenting content to multiple screens. In this case, each PresentationConnection represents a connection to the content being presented.",
+      "parentUuid": "5cae5bfb_1987a002",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e92c32b1_9c0a4a09",
         "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
         "patchSetId": 24
@@ -439,6 +475,24 @@
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a6bfb7c_f1dede7a",
+        "filename": "third_party/WebKit/Source/modules/presentation/PresentationConnection.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-06T19:49:52Z",
+      "side": 1,
+      "message": "In BrowserPresentationConnectionProxy, we forward the callback to MediaRouter, which is then forwarded to the extension. I do agree that we should remove the return value from it, but feel it would be better done in a separate patch.",
+      "parentUuid": "6fefd2e7_f0920f9b",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -594,6 +648,24 @@
       "side": 1,
       "message": "Probably worth adding this to a class-level comment. Followup is OK.",
       "parentUuid": "6c141561_acb33355",
+      "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eec00a3_8e6e2411",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-10-06T19:49:52Z",
+      "side": 1,
+      "message": "I added some comments here, though owners of this class should feel free to revise :)",
+      "parentUuid": "e1f9ab61_e8440340",
       "revId": "cc4a812e1952bc0bf130f2927b071f2c154534e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
