@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "654522a0_c5cab121",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-06T00:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e137fa0_4cd56cef",
+      "revId": "64beb6713e54383a222babe73e515db8e2fa959d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20315e9_080796b4",
         "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
         "patchSetId": 3
