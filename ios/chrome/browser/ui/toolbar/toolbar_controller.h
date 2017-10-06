@@ -11,6 +11,7 @@
 
 #include <map>
 
+#include "base/feature_list.h"
 #import "base/mac/scoped_nsobject.h"
 #import "ios/chrome/browser/ui/activity_services/requirements/activity_service_positioner.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h"
@@ -215,6 +216,9 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // Update share button visibility and |standardButtons_| array.
 - (void)updateStandardButtons;
 
+// Update the view's layout to take into account the new safe area insets.
+- (void)safeAreaInsetsDidChange;
+
 @end
 
 @interface ToolbarController (ProtectedMethods)
@@ -294,6 +298,8 @@ extern const CGRect kToolbarFrame[INTERFACE_IDIOM_COUNT];
 // Triggers an animation on the tools menu button to draw the user's
 // attention.
 - (void)triggerToolsMenuButtonAnimation;
+
+- (CGFloat)preferredToolbarHeightWhenAlignedToTopOfScreen;
 
 @end
 
