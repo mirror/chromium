@@ -14,6 +14,8 @@
 
 namespace chromeos {
 
+using GetLastSyncInfoCallback = base::Callback<void(bool synchronized)>;
+
 // SystemClockClient is used to communicate with the system clock.
 class CHROMEOS_EXPORT SystemClockClient : public DBusClient {
  public:
@@ -43,6 +45,10 @@ class CHROMEOS_EXPORT SystemClockClient : public DBusClient {
 
   // Checks if the system time can be set.
   virtual bool CanSetTime() = 0;
+
+  // Runs |callback| asynchronously with the system time's current
+  // synchronization state with network time.
+  virtual void GetLastSyncInfo(const GetLastSyncInfoCallback& callback) = 0;
 
   // Creates the instance.
   static SystemClockClient* Create();
