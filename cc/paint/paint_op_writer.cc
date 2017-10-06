@@ -8,6 +8,8 @@
 #include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
+#include "third_party/skia/include/gpu/GrTexture.h"
+#include "third_party/skia/include/gpu/gl/GrGLTypes.h"
 
 namespace cc {
 
@@ -96,8 +98,48 @@ void PaintOpWriter::Write(const PaintFlags& flags) {
   Write(flags.shader_.get());
 }
 
-void PaintOpWriter::Write(const PaintImage& image, ImageDecodeCache* cache) {
-  // TODO(enne): implement PaintImage serialization: http://crbug.com/737629
+void PaintOpWriter::Write(const PaintImage& image,
+                          PaintOp::SerializeOptions* options) {
+  fprintf(stderr, "enne: *** PAINTIMAGE write ***\n");
+  if (!options->provider) {
+    fprintf(stderr, "enne:    missing provider\n");
+    WriteSimple(false);
+    return;
+  }
+
+  // TODO(enne): this ctm and filter quality should be real.  Probably this
+  // should be obtained from the rtree and stored in options rather than
+  // rastering everything into its own canvas.
+  SkMatrix matrix;
+  SkFilterQuality filter_quality = SkFilterQuality::kMedium_SkFilterQuality;
+
+  // TODO(enne): why does GetDecodedDrawImage take a rect that's the PaintImage
+  // rect?
+  SkRect src_rect = SkRect::MakeIWH(image.width(), image.height());
+  options->serialized_images.push_back(options->provider->GetDecodedDrawImage(
+      image, src_rect, filter_quality, matrix));
+
+  auto& decoded = options->serialized_images.back().decoded_image();
+  auto& skimage = decoded.image();
+  GrTexture* texture = nullptr;
+  if (skimage && skimage->isTextureBacked())
+    texture = skimage->getTexture();
+  fprintf(stderr, "enne:    texture backed: %d, skimage: %d\n", !!texture,
+          !!skimage);
+
+  bool is_texture_backed = !!texture;
+  WriteSimple(is_texture_backed);
+  if (is_texture_backed) {
+    // TODO(enne): should this helper be shared with GpuImageDecodeCache?
+    const auto* info = reinterpret_cast<const GrGLTextureInfo*>(
+        skimage->getTextureHandle(true));
+    WriteSimple(info->fID);
+    WriteSimple(texture->config());
+    // TODO(enne): colorspace
+    fprintf(stderr, "enne:    written: %d\n", info->fID);
+  } else {
+    // TODO(enne): write shared memory info for the non-uploaded discardable.
+  }
 }
 
 void PaintOpWriter::Write(const sk_sp<SkData>& data) {

@@ -3093,6 +3093,17 @@ TEST_F(GLES2ImplementationTest, BeginRasterCHROMIUM) {
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
 
+TEST_F(GLES2ImplementationTest, RasterCHROMIUM) {
+  struct Cmds {
+    cmds::RasterCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(1, 2, 3);
+
+  gl_->RasterCHROMIUM(nullptr, nullptr, 3, 4, 5, 6);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
 TEST_F(GLES2ImplementationTest, EndRasterCHROMIUM) {
   struct Cmds {
     cmds::EndRasterCHROMIUM cmd;

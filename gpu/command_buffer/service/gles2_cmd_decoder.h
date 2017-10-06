@@ -23,6 +23,8 @@
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/service/common_decoder.h"
 #include "gpu/gpu_export.h"
+#include "third_party/skia/include/core/SkRefCnt.h"
+#include "third_party/skia/include/gpu/GrTypes.h"
 
 namespace gl {
 class GLContext;
@@ -33,6 +35,8 @@ class GLImage;
 namespace gfx {
 class Size;
 }
+
+class SkImage;
 
 namespace gpu {
 

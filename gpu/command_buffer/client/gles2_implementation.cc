@@ -7137,6 +7137,7 @@ void GLES2Implementation::Viewport(GLint x,
 }
 
 void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                         cc::ImageProvider* provider,
                                          GLint x,
                                          GLint y,
                                          GLint w,
@@ -7162,6 +7163,7 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
   size_t free_bytes = buffer.size();
 
   cc::PaintOp::SerializeOptions options;
+  options.provider = provider;
 
   // TODO(enne): need to implement alpha folding optimization from POB.
   // TODO(enne): don't access private members of DisplayItemList.
@@ -7171,22 +7173,38 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
                                                   &indices);
        iter; ++iter) {
     const cc::PaintOp* op = *iter;
-    size_t size = op->Serialize(memory + written_bytes, free_bytes, options);
+    size_t size = op->Serialize(memory + written_bytes, free_bytes, &options);
     if (!size) {
       buffer.Shrink(written_bytes);
-      helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), x, y, w, h,
-                              written_bytes);
+      helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), written_bytes);
       buffer.Reset(kBlockAlloc);
       memory = static_cast<char*>(buffer.address());
       written_bytes = 0;
       free_bytes = buffer.size();
 
-      size = op->Serialize(memory + written_bytes, free_bytes, options);
+      size = op->Serialize(memory + written_bytes, free_bytes, &options);
     }
     DCHECK_GE(size, 4u);
     DCHECK_EQ(size % cc::PaintOpBuffer::PaintOpAlign, 0u);
     DCHECK_LE(size, free_bytes);
     DCHECK_EQ(free_bytes + written_bytes, buffer.size());
+
+    if (options.serialized_images.size() > 0) {
+      // TODO(enne): encapsulate this next block somehow as this is a dupe
+      // of the above.
+      {
+        buffer.Shrink(written_bytes);
+        helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(),
+                                written_bytes);
+        buffer.Reset(kBlockAlloc);
+        memory = static_cast<char*>(buffer.address());
+        written_bytes = 0;
+        free_bytes = buffer.size();
+      }
+
+      // Run all the destructors to unref these images.
+      options.serialized_images.clear();
+    }
 
     written_bytes += size;
     free_bytes -= size;
@@ -7196,8 +7214,7 @@ void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
 
   if (!written_bytes)
     return;
-  helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), x, y, w, h,
-                          buffer.size());
+  helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), buffer.size());
 
   CheckGLError();
 #endif
