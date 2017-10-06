@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2f2d2276_ccf264d5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T16:37:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b1a137bd_a0c98f9a",
+      "range": {
+        "startLine": 3195,
+        "startChar": 0,
+        "endLine": 3195,
+        "endChar": 69
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ce67b50_b2e69fd6",
         "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
         "patchSetId": 14
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "We need it for std::make_unique in line 55. Also the linter pointed it out :)",
       "parentUuid": "6ce67b50_b2e69fd6",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87a54ed6_5f79a2cb",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T16:37:08Z",
+      "side": 1,
+      "message": "Ack, I would have thought the .h file\u0027s inclusion of this header would have taken care of that.",
+      "parentUuid": "aaff28eb_2777dea8",
       "range": {
         "startLine": 7,
         "startChar": 0,
