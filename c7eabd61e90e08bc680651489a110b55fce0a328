@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6925c28_fffbb6ef",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:13:00Z",
+      "side": 1,
+      "message": "i don\u0027t understand why a second fake is defined here. can you put this in the existing fake instead?",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a862f2_6a30bd58",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:13:00Z",
+      "side": 1,
+      "message": "post callback to message loop instead of calling it directly so that this behaves similarly to the real implementation",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310db2dd_33387f94",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:13:00Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024bad21_de3a998f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:13:00Z",
+      "side": 1,
+      "message": "nit: document who owns this memory in a comment",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96b42523_fd2b0ba4",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:13:00Z",
+      "side": 1,
+      "message": "pass std::unique_ptr\u003cpolicy::DeviceOffHoursController\u003e instead so ownership transfer is clear and use std::move in assignment",
+      "revId": "c7eabd61e90e08bc680651489a110b55fce0a328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
