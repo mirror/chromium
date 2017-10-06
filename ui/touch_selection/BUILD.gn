@@ -72,6 +72,8 @@ static_library("test_support") {
 
 test("ui_touch_selection_unittests") {
   sources = [
+    "//content/browser/renderer_host/input/stylus_text_selector.cc",
+    "//content/browser/renderer_host/input/stylus_text_selector.h",
     "longpress_drag_selector_unittest.cc",
     "touch_handle_unittest.cc",
     "touch_selection_controller_unittest.cc",

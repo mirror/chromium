@@ -8,6 +8,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+// #include "content/browser/renderer_host/input/stylus_text_selector.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/test/motion_event_test_utils.h"
@@ -50,7 +51,8 @@ class MockTouchHandleDrawable : public TouchHandleDrawable {
 }  // namespace
 
 class TouchSelectionControllerTest : public testing::Test,
-                                     public TouchSelectionControllerClient {
+                                     public TouchSelectionControllerClient,
+                                     public content::StylusTextSelectorClient {
  public:
   TouchSelectionControllerTest()
       : caret_moved_(false),
@@ -66,9 +68,13 @@ class TouchSelectionControllerTest : public testing::Test,
 
   void SetUp() override {
     controller_.reset(new TouchSelectionController(this, DefaultConfig()));
+    stylus_text_selector_.reset(new content::StylusTextSelector(this));
   }
 
-  void TearDown() override { controller_.reset(); }
+  void TearDown() override {
+    controller_.reset();
+    stylus_text_selector_.reset();
+  }
 
   // TouchSelectionControllerClient implementation.
 
@@ -107,6 +113,14 @@ class TouchSelectionControllerTest : public testing::Test,
   }
 
   void DidScroll() override {}
+
+  void OnStylusSelectBegin(float x0, float y0, float x1, float y1) override {}
+
+  void OnStylusSelectUpdate(float x, float y) override {}
+
+  void OnStylusSelectEnd(float x, float y) override {}
+
+  void OnStylusSelectTap(base::TimeTicks time, float x, float y) override {}
 
   void EnableLongPressDragSelection() {
     TouchSelectionController::Config config = DefaultConfig();
@@ -210,6 +224,10 @@ class TouchSelectionControllerTest : public testing::Test,
 
   TouchSelectionController& controller() { return *controller_; }
 
+  content::StylusTextSelector& StylusSelector() {
+    return *stylus_text_selector_;
+  }
+
  private:
   TouchSelectionController::Config DefaultConfig() {
     // |enable_longpress_drag_selection| is set to false by default, and should
@@ -236,6 +254,7 @@ class TouchSelectionControllerTest : public testing::Test,
   bool animation_enabled_;
   bool dragging_enabled_;
   std::unique_ptr<TouchSelectionController> controller_;
+  std::unique_ptr<content::StylusTextSelector> stylus_text_selector_;
 
   DISALLOW_COPY_AND_ASSIGN(TouchSelectionControllerTest);
 };
@@ -1094,6 +1113,54 @@ TEST_F(TouchSelectionControllerTest, NoLongPressDragIfDisabled) {
 
   EXPECT_EQ(1.f, test_controller.GetStartAlpha());
   EXPECT_EQ(1.f, test_controller.GetEndAlpha());
+}
+
+TEST_F(TouchSelectionControllerTest, StylusSelectionBasic) {
+  const float x1 = 50.0f;
+  const float y1 = 30.0f;
+  const float x2 = 100.0f;
+  const float y2 = 90.0f;
+  const float x3 = 150.0f;
+  const float y3 = 150.0f;
+  base::TimeTicks event_time = base::TimeTicks::Now();
+  TouchSelectionControllerTestApi test_controller(&controller());
+  // 1. ACTION_DOWN with stylus secondary button
+  MockMotionEvent action_down_event(MotionEvent::ACTION_DOWN, event_time, x1,
+                                    y1);
+  action_down_event.SetToolType(0, MotionEvent::TOOL_TYPE_STYLUS);
+  action_down_event.set_button_state(MotionEvent::BUTTON_STYLUS_PRIMARY);
+  EXPECT_TRUE(StylusSelector().OnTouchEvent(action_down_event));
+  EXPECT_FALSE(test_controller.GetStartVisible());
+  EXPECT_FALSE(test_controller.GetEndVisible());
+
+  // 2. ACTION_MOVE with stylus secondary button
+  event_time += base::TimeDelta::FromMilliseconds(10);
+  MockMotionEvent action_move_event(MotionEvent::ACTION_MOVE, event_time, x2,
+                                    y2);
+  action_move_event.SetToolType(0, MotionEvent::TOOL_TYPE_STYLUS);
+  action_move_event.set_button_state(MotionEvent::BUTTON_STYLUS_PRIMARY);
+  EXPECT_TRUE(StylusSelector().OnTouchEvent(action_move_event));
+  EXPECT_FALSE(test_controller.GetStartVisible());
+  EXPECT_FALSE(test_controller.GetEndVisible());
+
+  // 3. One more ACTION_MOVE with stylus secondary button
+  event_time += base::TimeDelta::FromMilliseconds(10);
+  action_move_event =
+      MockMotionEvent(MotionEvent::ACTION_MOVE, event_time, x3, y3);
+  action_move_event.SetToolType(0, MotionEvent::TOOL_TYPE_STYLUS);
+  action_move_event.set_button_state(MotionEvent::BUTTON_STYLUS_PRIMARY);
+  EXPECT_TRUE(StylusSelector().OnTouchEvent(action_move_event));
+  EXPECT_FALSE(test_controller.GetStartVisible());
+  EXPECT_FALSE(test_controller.GetEndVisible());
+
+  // 3. ACTION_UP with stylus secondary button
+  event_time += base::TimeDelta::FromMilliseconds(10);
+  MockMotionEvent action_up_event(MotionEvent::ACTION_UP, event_time, x3, y3);
+  action_up_event.SetToolType(0, MotionEvent::TOOL_TYPE_STYLUS);
+  action_up_event.set_button_state(MotionEvent::BUTTON_STYLUS_PRIMARY);
+  EXPECT_TRUE(StylusSelector().OnTouchEvent(action_up_event));
+  EXPECT_TRUE(test_controller.GetStartVisible());
+  EXPECT_TRUE(test_controller.GetEndVisible());
 }
 
 TEST_F(TouchSelectionControllerTest, RectBetweenBounds) {
