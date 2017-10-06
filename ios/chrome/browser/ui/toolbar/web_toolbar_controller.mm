@@ -683,14 +683,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return self;
 }
 
-- (void)browserStateDestroyed {
-  // The location bar has a browser state reference, so must be destroyed at
-  // this point. The popup has to be destroyed before the location bar.
-  _popupView.reset();
-  _locationBar.reset();
-  _browserState = nullptr;
-}
-
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -712,6 +704,14 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
 
 #pragma mark -
 #pragma mark Public methods.
+
+- (void)browserStateDestroyed {
+  // The location bar has a browser state reference, so must be destroyed at
+  // this point. The popup has to be destroyed before the location bar.
+  _popupView.reset();
+  _locationBar.reset();
+  _browserState = nullptr;
+}
 
 - (void)updateToolbarState {
   ToolbarModelIOS* toolbarModelIOS = [self.delegate toolbarModelIOS];
@@ -798,16 +798,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                            }];
 }
 
-- (void)setControlsHidden:(BOOL)hidden {
-  [self setStandardControlsVisible:!hidden];
-  [_webToolbar setHidden:hidden];
-}
-
-- (void)setControlsAlpha:(CGFloat)alpha {
-  [self setStandardControlsAlpha:alpha];
-  [_webToolbar setAlpha:alpha];
-}
-
 - (void)currentPageLoadStarted {
   [self startProgressBar];
 }
@@ -824,14 +814,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return CGRectInset(frame, -kBackgroundImageVisibleRectOffset, 0);
 }
 
-- (UIImage*)snapshotWithWidth:(CGFloat)width {
-  if (IsIPadIdiom())
-    return nil;
-  // Below call will be no-op if cached snapshot is valid.
-  [self updateSnapshotWithWidth:width forced:YES];
-  return _snapshot;
-}
-
 - (BOOL)isOmniboxFirstResponder {
   return [_omniBox isFirstResponder];
 }
@@ -842,31 +824,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return omniboxViewIOS->IsPopupOpen();
 }
 
-- (void)updateToolbarButtons {
-  [super updateStandardButtons];
-  _lastKnownTraitCollection = [UITraitCollection
-      traitCollectionWithTraitsFromCollections:@[ self.view.traitCollection ]];
-  if (IsIPadIdiom()) {
-    // Update toolbar accessory views.
-    BOOL isCompactTabletView = IsCompactTablet(self.view);
-    [_voiceSearchButton setHidden:isCompactTabletView];
-    [_starButton setHidden:isCompactTabletView];
-    [_reloadButton setHidden:isCompactTabletView];
-    [_stopButton setHidden:isCompactTabletView];
-    [self updateToolbarState];
-
-    if ([_omniBox isFirstResponder]) {
-      [_omniBox reloadInputViews];
-    }
-
-    // Re-layout toolbar and omnibox.
-    [_webToolbar setFrame:[self specificControlsArea]];
-    [self layoutOmnibox];
-  }
-}
-
 #pragma mark -
-#pragma mark Overridden superclass methods.
+#pragma mark Overridden public superclass methods.
 
 - (void)setUpButton:(UIButton*)button
        withImageEnum:(int)imageEnum
@@ -898,29 +857,6 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   }
 }
 
-- (void)standardButtonPressed:(UIButton*)sender {
-  [super standardButtonPressed:sender];
-  [self cancelOmniboxEdit];
-}
-
-- (IBAction)recordUserMetrics:(id)sender {
-  if (sender == _backButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarBack"));
-  } else if (sender == _forwardButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarForward"));
-  } else if (sender == _reloadButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarReload"));
-  } else if (sender == _stopButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarStop"));
-  } else if (sender == _voiceSearchButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarVoiceSearch"));
-  } else if (sender == _starButton) {
-    base::RecordAction(UserMetricsAction("MobileToolbarToggleBookmark"));
-  } else {
-    [super recordUserMetrics:sender];
-  }
-}
-
 - (BOOL)imageShouldFlipForRightToLeftLayoutDirection:(int)imageEnum {
   DCHECK(imageEnum < NumberOfWebToolbarButtonNames);
   if (imageEnum < NumberOfToolbarButtonNames)
@@ -934,70 +870,15 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return NO;
 }
 
-- (int)imageEnumForButton:(UIButton*)button {
-  if (button == _voiceSearchButton)
-    return _isTTSPlaying ? WebToolbarButtonNameTTS : WebToolbarButtonNameVoice;
-  if (button == _starButton)
-    return WebToolbarButtonNameStar;
-  if (button == _stopButton)
-    return WebToolbarButtonNameStop;
-  if (button == _reloadButton)
-    return WebToolbarButtonNameReload;
-  if (button == _backButton)
-    return WebToolbarButtonNameBack;
-  if (button == _forwardButton)
-    return WebToolbarButtonNameForward;
-  return [super imageEnumForButton:button];
-}
-
-- (int)imageIdForImageEnum:(int)index
-                     style:(ToolbarControllerStyle)style
-                  forState:(ToolbarButtonUIState)state {
-  DCHECK(style < ToolbarControllerStyleMaxStyles);
-  DCHECK(state < NumberOfToolbarButtonUIStates);
-  // Additional checking.  These three buttons should only ever be used on iPad.
-  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameStar);
-  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameTTS);
-  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameVoice);
-
-  if (index >= NumberOfWebToolbarButtonNames)
-    NOTREACHED();
-  if (index < NumberOfToolbarButtonNames)
-    return [super imageIdForImageEnum:index style:style forState:state];
-
-  // Incognito mode gets dark buttons.
-  if (style == ToolbarControllerStyleIncognitoMode)
-    style = ToolbarControllerStyleDarkMode;
-
-  // Some images can be overridden by the branded image provider.
-  if (index == WebToolbarButtonNameVoice) {
-    int image_id;
-    if (ios::GetChromeBrowserProvider()
-            ->GetBrandedImageProvider()
-            ->GetToolbarVoiceSearchButtonImageId(&image_id)) {
-      return image_id;
-    }
-    // Otherwise fall through to the default voice search button images below.
+- (void)hideViewsForNewTabPage:(BOOL)hide {
+  [super hideViewsForNewTabPage:hide];
+  if (_incognito) {
+    CGFloat alpha = hide ? 0 : 1;
+    [self.backgroundView setAlpha:alpha];
   }
-
-  // Rebase |index| so that it properly indexes into the array below.
-  index -= NumberOfToolbarButtonNames;
-  const int numberOfAddedNames =
-      NumberOfWebToolbarButtonNames - NumberOfToolbarButtonNames;
-  // Name, style [light, dark], UIControlState [normal, pressed, disabled]
-  static int buttonImageIds[numberOfAddedNames][2]
-                           [NumberOfToolbarButtonUIStates] = {
-                               TOOLBAR_IDR_THREE_STATE(BACK),
-                               TOOLBAR_IDR_LIGHT_ONLY_TWO_STATE(CALLINGAPP),
-                               TOOLBAR_IDR_THREE_STATE(FORWARD),
-                               TOOLBAR_IDR_THREE_STATE(RELOAD),
-                               TOOLBAR_IDR_TWO_STATE(STAR),
-                               TOOLBAR_IDR_THREE_STATE(STOP),
-                               TOOLBAR_IDR_TWO_STATE(TTS),
-                               TOOLBAR_IDR_TWO_STATE(VOICE),
-                           };
-  return buttonImageIds[index][style][state];
 }
+
+#pragma mark Animations.
 
 - (void)animateTransitionWithBeginFrame:(CGRect)beginFrame
                                endFrame:(CGRect)endFrame
@@ -1176,12 +1057,95 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   [_omniBox cleanUpFadeAnimations];
 }
 
-- (void)hideViewsForNewTabPage:(BOOL)hide {
-  [super hideViewsForNewTabPage:hide];
-  if (_incognito) {
-    CGFloat alpha = hide ? 0 : 1;
-    [self.backgroundView setAlpha:alpha];
+#pragma mark -
+#pragma mark Overridden protected superclass methods.
+
+- (void)standardButtonPressed:(UIButton*)sender {
+  [super standardButtonPressed:sender];
+  [self cancelOmniboxEdit];
+}
+
+- (IBAction)recordUserMetrics:(id)sender {
+  if (sender == _backButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarBack"));
+  } else if (sender == _forwardButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarForward"));
+  } else if (sender == _reloadButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarReload"));
+  } else if (sender == _stopButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarStop"));
+  } else if (sender == _voiceSearchButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarVoiceSearch"));
+  } else if (sender == _starButton) {
+    base::RecordAction(UserMetricsAction("MobileToolbarToggleBookmark"));
+  } else {
+    [super recordUserMetrics:sender];
   }
+}
+
+- (int)imageEnumForButton:(UIButton*)button {
+  if (button == _voiceSearchButton)
+    return _isTTSPlaying ? WebToolbarButtonNameTTS : WebToolbarButtonNameVoice;
+  if (button == _starButton)
+    return WebToolbarButtonNameStar;
+  if (button == _stopButton)
+    return WebToolbarButtonNameStop;
+  if (button == _reloadButton)
+    return WebToolbarButtonNameReload;
+  if (button == _backButton)
+    return WebToolbarButtonNameBack;
+  if (button == _forwardButton)
+    return WebToolbarButtonNameForward;
+  return [super imageEnumForButton:button];
+}
+
+- (int)imageIdForImageEnum:(int)index
+                     style:(ToolbarControllerStyle)style
+                  forState:(ToolbarButtonUIState)state {
+  DCHECK(style < ToolbarControllerStyleMaxStyles);
+  DCHECK(state < NumberOfToolbarButtonUIStates);
+  // Additional checking.  These three buttons should only ever be used on iPad.
+  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameStar);
+  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameTTS);
+  DCHECK(IsIPadIdiom() || index != WebToolbarButtonNameVoice);
+
+  if (index >= NumberOfWebToolbarButtonNames)
+    NOTREACHED();
+  if (index < NumberOfToolbarButtonNames)
+    return [super imageIdForImageEnum:index style:style forState:state];
+
+  // Incognito mode gets dark buttons.
+  if (style == ToolbarControllerStyleIncognitoMode)
+    style = ToolbarControllerStyleDarkMode;
+
+  // Some images can be overridden by the branded image provider.
+  if (index == WebToolbarButtonNameVoice) {
+    int image_id;
+    if (ios::GetChromeBrowserProvider()
+            ->GetBrandedImageProvider()
+            ->GetToolbarVoiceSearchButtonImageId(&image_id)) {
+      return image_id;
+    }
+    // Otherwise fall through to the default voice search button images below.
+  }
+
+  // Rebase |index| so that it properly indexes into the array below.
+  index -= NumberOfToolbarButtonNames;
+  const int numberOfAddedNames =
+      NumberOfWebToolbarButtonNames - NumberOfToolbarButtonNames;
+  // Name, style [light, dark], UIControlState [normal, pressed, disabled]
+  static int buttonImageIds[numberOfAddedNames][2]
+                           [NumberOfToolbarButtonUIStates] = {
+                               TOOLBAR_IDR_THREE_STATE(BACK),
+                               TOOLBAR_IDR_LIGHT_ONLY_TWO_STATE(CALLINGAPP),
+                               TOOLBAR_IDR_THREE_STATE(FORWARD),
+                               TOOLBAR_IDR_THREE_STATE(RELOAD),
+                               TOOLBAR_IDR_TWO_STATE(STAR),
+                               TOOLBAR_IDR_THREE_STATE(STOP),
+                               TOOLBAR_IDR_TWO_STATE(TTS),
+                               TOOLBAR_IDR_TWO_STATE(VOICE),
+                           };
+  return buttonImageIds[index][style][state];
 }
 
 #pragma mark -
@@ -2414,6 +2378,29 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
       return [kDotComTLD substringFromIndex:1];
   }
   return text;
+}
+
+- (void)updateToolbarButtons {
+  [super updateStandardButtons];
+  _lastKnownTraitCollection = [UITraitCollection
+      traitCollectionWithTraitsFromCollections:@[ self.view.traitCollection ]];
+  if (IsIPadIdiom()) {
+    // Update toolbar accessory views.
+    BOOL isCompactTabletView = IsCompactTablet(self.view);
+    [_voiceSearchButton setHidden:isCompactTabletView];
+    [_starButton setHidden:isCompactTabletView];
+    [_reloadButton setHidden:isCompactTabletView];
+    [_stopButton setHidden:isCompactTabletView];
+    [self updateToolbarState];
+
+    if ([_omniBox isFirstResponder]) {
+      [_omniBox reloadInputViews];
+    }
+
+    // Re-layout toolbar and omnibox.
+    [_webToolbar setFrame:[self specificControlsArea]];
+    [self layoutOmnibox];
+  }
 }
 
 @end
