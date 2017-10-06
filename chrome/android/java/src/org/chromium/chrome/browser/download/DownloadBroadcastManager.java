@@ -36,6 +36,8 @@ import org.chromium.chrome.browser.download.items.OfflineContentAggregatorNotifi
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.init.EmptyBrowserParts;
+import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
@@ -185,6 +187,10 @@ public class DownloadBroadcastManager extends Service {
     void propagateInteraction(Intent intent) {
         String action = intent.getAction();
         final ContentId id = getContentIdFromIntent(intent);
+
+        if (id.namespace.equals(LegacyHelpers.LEGACY_OFFLINE_PAGE_NAMESPACE)) {
+            new OfflinePageDownloadBridge(Profile.getLastUsedProfile().getOriginalProfile());
+        }
 
         // Handle actions that do not require a specific entry or service delegate.
         switch (action) {
