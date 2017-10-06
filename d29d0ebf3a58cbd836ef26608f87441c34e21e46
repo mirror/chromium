@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8389f908_c83668b4",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "https://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e520d7f0_113cd74a",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -34,6 +51,24 @@
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178d3140_92587f72",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "It\u0027s safe to assume the framework path.",
+      "parentUuid": "6ed6ba6a_3506436f",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "f89df200_24c138ac",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "The name really should be in the style Tommi mentioned.",
+      "parentUuid": "b2f8edb5_25fc5d28",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d81f425_93e1ffdb",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -136,6 +189,40 @@
       "side": 1,
       "message": "Sounds reasonable. I\u0027ll rename it.",
       "parentUuid": "2d81f425_93e1ffdb",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c6e363_d1c8c0ab",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this always be true, since the interpose func is only operating one a single image?",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a635487_fc0d8710",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "Can you resolve the caller addresses at initialization time instead, to avoid the use of atomics?",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -194,6 +281,23 @@
     },
     {
       "key": {
+        "uuid": "2c7685f5_91bea097",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to go through dlsym. If you forward declare dyld_dynamic_interpose, you can then just test:\n\nif (\u0026dyld_dynamic_interpose !\u003d nullptr)\n\nOr just use base::mac:: IsAtLeastOS10_10().",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9478a85_acb37ae1",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -205,6 +309,23 @@
       "writtenOn": "2017-10-06T14:22:44Z",
       "side": 1,
       "message": "TODO(ossu):",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6109c411_08baf6c8",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "Do you need to register an image func? Is it not possible to know when CoreAudio is loaded, or to do it deterministically?",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -287,6 +408,40 @@
         "endLine": 9,
         "endChar": 43
       },
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073024cf_f1b3620a",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "\" // namespace media\"",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde1086c_08a1bab1",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T16:45:11Z",
+      "side": 1,
+      "message": "Use // style comment.",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
