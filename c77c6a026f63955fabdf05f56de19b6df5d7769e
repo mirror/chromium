@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d64dad1_57f8aa17",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-10-06T18:49:05Z",
+      "side": 1,
+      "message": "I\u0027m having hard time thinking how this histogram will be used. It\u0027ll have a spike at 0 and then some distribution up to probably 10 or so. Not suggesting to remove it, but trying to understand the reason to have it.",
+      "revId": "c77c6a026f63955fabdf05f56de19b6df5d7769e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
