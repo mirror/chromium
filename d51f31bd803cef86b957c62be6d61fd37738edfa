@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93d500a_b529e28a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T13:04:27Z",
+      "side": 1,
+      "message": "Does this rely on the invariant that we\u0027ll only ever have one writer (the rest will be readers) for a given active entry? That\u0027s no longer the case with this CL right?",
+      "range": {
+        "startLine": 885,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 21
+      },
+      "revId": "d51f31bd803cef86b957c62be6d61fd37738edfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
