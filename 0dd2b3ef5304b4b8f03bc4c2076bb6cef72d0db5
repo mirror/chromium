@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22202361_8ee6680d",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "optional: inline this in the header.",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 61
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8909a43_be4f084e",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "For consistency could this call HandleDialogInteration? I would add another enum type as well.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 32
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a0a6f97_0eadc8bd",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "It looks like you only use browser_ in this function. Do you really need it as a member?",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 53
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eff591_e59a711b",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "I\u0027m surprised you\u0027re using a constrained window for this vs a top level. Is there a reason for that?",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 15
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfe4ce1_20db0bea",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "Generally we use |\u0027s to refer to members/variables, not names.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 41
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb23876f_53fb9e2f",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6bafff_cf06b202",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_reboot_dialog_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:44:10Z",
+      "side": 1,
+      "message": "Why do we need this window to be modal?",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 28
+      },
+      "revId": "0dd2b3ef5304b4b8f03bc4c2076bb6cef72d0db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
