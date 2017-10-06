@@ -54,6 +54,7 @@ class ShillThirdPartyVpnDriverClient;
 class SystemClockClient;
 class UpdateEngineClient;
 class UpstartClient;
+class HuddlyMonitorClient;
 
 // DBusThreadManager manages the D-Bus thread, the thread dedicated to
 // handling asynchronous D-Bus operations.
@@ -147,6 +148,7 @@ class CHROMEOS_EXPORT DBusThreadManager {
   SystemClockClient* GetSystemClockClient();
   UpdateEngineClient* GetUpdateEngineClient();
   UpstartClient* GetUpstartClient();
+  HuddlyMonitorClient* GetHuddlyMonitorClient();
 
  private:
   friend class DBusThreadManagerSetter;
@@ -202,6 +204,7 @@ class CHROMEOS_EXPORT DBusThreadManagerSetter {
   void SetSessionManagerClient(std::unique_ptr<SessionManagerClient> client);
   void SetUpdateEngineClient(std::unique_ptr<UpdateEngineClient> client);
   void SetUpstartClient(std::unique_ptr<UpstartClient> client);
+  void SetHuddlyMonitorClient(std::unique_ptr<HuddlyMonitorClient> client);
 
  private:
   friend class DBusThreadManager;

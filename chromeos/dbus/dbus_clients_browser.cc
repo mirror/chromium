@@ -26,6 +26,7 @@
 #include "chromeos/dbus/lorgnette_manager_client.h"
 #include "chromeos/dbus/media_analytics_client.h"
 #include "chromeos/dbus/upstart_client.h"
+#include "chromeos/dbus/huddly_monitor_client.h"
 
 namespace chromeos {
 
@@ -78,6 +79,8 @@ DBusClientsBrowser::DBusClientsBrowser(bool use_real_clients) {
     upstart_client_.reset(UpstartClient::Create());
   else
     upstart_client_.reset(new FakeUpstartClient);
+
+  huddly_monitor_client_.reset(HuddlyMonitorClient::Create());
 }
 
 DBusClientsBrowser::~DBusClientsBrowser() {}
@@ -95,6 +98,7 @@ void DBusClientsBrowser::Initialize(dbus::Bus* system_bus) {
   lorgnette_manager_client_->Init(system_bus);
   media_analytics_client_->Init(system_bus);
   upstart_client_->Init(system_bus);
+  huddly_monitor_client_->Init(system_bus);
 }
 
 }  // namespace chromeos
