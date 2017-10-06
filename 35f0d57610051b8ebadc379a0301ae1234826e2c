@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc2c0ea5_cc04a2e5",
+        "filename": "ios/chrome/browser/web/navigation_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-06T13:31:46Z",
+      "side": 1,
+      "message": "Maybe worth using @available(iOS 11, *) in the future CLs",
+      "range": {
+        "startLine": 517,
+        "startChar": 34,
+        "endLine": 517,
+        "endChar": 57
+      },
+      "revId": "35f0d57610051b8ebadc379a0301ae1234826e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
