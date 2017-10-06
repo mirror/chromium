@@ -70,6 +70,24 @@
       "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f39bf73_d169c87f",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-06T13:48:36Z",
+      "side": 1,
+      "message": "Using indices will be tricky, as the backend could diverge (say we open the tool twice).\n\nWe already have a IsValidSessionName function that insures that the session name doesn\u0027t contain a relative path. We are using it when creating a session.\n\nLet\u0027s use it as well before deleting, as sanity check. I think that\u0027s sufficient but having a security reviewer SGTM.\n\nAny suggestion on whom to add?",
+      "parentUuid": "0f317809_3858fe89",
+      "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
