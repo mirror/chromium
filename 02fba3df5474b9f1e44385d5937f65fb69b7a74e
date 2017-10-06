@@ -22,6 +22,30 @@
       "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b342f9_634d57c9",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-06T18:11:05Z",
+      "side": 1,
+      "message": "This would then be done for network service code path only, wouldn\u0027t it? We still need this with legacy path as well (i.e. ResourceLoader).",
+      "parentUuid": "1eb668b8_55c8274d",
+      "range": {
+        "startLine": 222,
+        "startChar": 10,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "02fba3df5474b9f1e44385d5937f65fb69b7a74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
