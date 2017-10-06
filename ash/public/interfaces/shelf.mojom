@@ -79,6 +79,7 @@ interface ShelfController {
   // not exceeding the item count. Bails if |id| is unknown or for the AppList.
   MoveShelfItem(ShelfID id, int32 target_index);
   // Updates |item| via ShelfID. Bails if the id is unknown or for the AppList.
+  // Clients may pass null images to signal no change and avoid transport costs.
   UpdateShelfItem(ShelfItem item);
   // Sets the |delegate| for the item with |id|.
   SetShelfItemDelegate(ShelfID id, ShelfItemDelegate delegate);
@@ -93,6 +94,7 @@ interface ShelfObserver {
   // Called when the item with |id| has been moved to |index|.
   OnShelfItemMoved(ShelfID id, int32 index);
   // Called when the |item| with matching ShelfID has been updated.
+  // This passes null images to avoid transport costs; clients don't use images.
   OnShelfItemUpdated(ShelfItem item);
   // Called when |delegate| for the item with |id| has been changed.
   OnShelfItemDelegateChanged(ShelfID id, ShelfItemDelegate delegate);
