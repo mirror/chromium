@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "afbed59e_856f0ad7",
+        "filename": "components/safe_browsing/db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:21:10Z",
+      "side": 1,
+      "message": "This code is desktop-only and has different input than the android code (which uses a parsed Json base::DictionaryValue).",
+      "parentUuid": "d89cb626_24594160",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cca886e4_d24f315b",
         "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8720ae15_97e7f4c3",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:21:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cca886e4_d24f315b",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51251c0_e785f169",
         "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T20:34:07Z",
       "side": 1,
       "message": "nit: \"it\" can be renamed to sf_type.",
+      "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60b5fdd0_cd7f47fe",
+        "filename": "components/subresource_filter/content/browser/content_activation_list_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:21:10Z",
+      "side": 1,
+      "message": "Changed it to \"match\"",
+      "parentUuid": "d51251c0_e785f169",
       "revId": "419a8536b5d50e94aa81c14bd0a2ca98d1a58b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
