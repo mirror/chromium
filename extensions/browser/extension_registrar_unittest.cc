@@ -350,4 +350,61 @@ TEST_F(ExtensionRegistrarTest, AddBlocked) {
   ExpectInSet(ExtensionRegistry::BLOCKED);
 }
 
+// Tests terminating an extension.
+TEST_F(ExtensionRegistrarTest, TerminateExtension) {
+  ExtensionRegistry* extension_registry =
+      ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(browser_context(), delegate());
+
+  registrar.AddExtension(extension());
+  TestExtensionRegistryObserver(extension_registry).WaitForExtensionReady();
+
+  // Terminate the extension.
+  registrar.TerminateExtension(extension()->id());
+  ExpectInSet(ExtensionRegistry::TERMINATED);
+
+  // Remove the extension.
+  registrar.RemoveExtension(extension()->id(),
+                            UnloadedExtensionReason::UNINSTALL);
+}
+
+// Tests disabling a terminated extension.
+TEST_F(ExtensionRegistrarTest, DisableTerminatedExtension) {
+  ExtensionRegistry* extension_registry =
+      ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(browser_context(), delegate());
+
+  registrar.AddExtension(extension());
+  TestExtensionRegistryObserver(extension_registry).WaitForExtensionReady();
+
+  // Terminate the extension.
+  registrar.TerminateExtension(extension()->id());
+  ExpectInSet(ExtensionRegistry::TERMINATED);
+
+  // Disable the terminated extension.
+  registrar.DisableExtension(extension()->id(),
+                             disable_reason::DISABLE_USER_ACTION);
+  ExpectInSet(ExtensionRegistry::DISABLED);
+}
+
+// Tests re-adding a terminated extension.
+TEST_F(ExtensionRegistrarTest, ReloadTerminatedExtension) {
+  ExtensionRegistry* extension_registry =
+      ExtensionRegistry::Get(browser_context());
+  ExtensionRegistrar registrar(browser_context(), delegate());
+
+  registrar.AddExtension(extension());
+  TestExtensionRegistryObserver(extension_registry).WaitForExtensionReady();
+
+  // Terminate the extension.
+  registrar.TerminateExtension(extension()->id());
+  ExpectInSet(ExtensionRegistry::TERMINATED);
+
+  // Enable the terminated extension.
+  registrar.UntrackTerminatedExtension(extension()->id());
+  registrar.AddExtension(extension());
+  ExpectInSet(ExtensionRegistry::ENABLED);
+  TestExtensionRegistryObserver(extension_registry).WaitForExtensionReady();
+}
+
 }  // namespace extensions
