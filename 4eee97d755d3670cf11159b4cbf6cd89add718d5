@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5dd7581_7cfc2d2f",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "Looking more closely, I think this map is not useful.  You seem to be doing\n\n1) Scan through the entire vector to create a map from effective_make_and_model to (manufacturer, model)\n2) Look up exactly one entry in the map. \n3) Throw away the map.\n\nI think you can just search the vector directly for the one thing you\u0027re looking for?",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878ff181_6f3d89cf",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "This construct is not needed; I would bet the compiler is smart enough to elide the extra work, but technically what you\u0027re asking for is to construct reverse_indexed_printers as a copy of a default-constructed anonymous ReverseIndexMap.\n\nIn other words, just say\n\nReverseIndexMap reverse_indexed_printers;",
+      "range": {
+        "startLine": 785,
+        "startChar": 43,
+        "endLine": 785,
+        "endChar": 64
+      },
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e1ff3a_f4a94a9d",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "const reference?  (I\u0027m not sure this variable is useful in the first place.)",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26783ace_bb37b739",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t there be an else here that posts a failure response?",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "b5ed85d0_5ba33e5c",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "BTW, not sure if you\u0027ve noticed that, when replying, comments can be marked \"resolved\" or not.  Most of the time if you\u0027re doing what the reviewer asked, marking them resolved is the right thing, only leave them unresolved if you have a followup question or want to do something different.",
+      "parentUuid": "2f7844fc_96708d99",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cb53128_015aa5cf",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -274,6 +292,24 @@
       "writtenOn": "2017-10-04T22:58:20Z",
       "side": 1,
       "message": "Generally DCHECK\u0027ing on the contents received from an external server is a bad idea.  Badly formatted external input should be handled gracefully.",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f343f1_980dc895",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-10-06T17:39:56Z",
+      "side": 1,
+      "message": "This still isn\u0027t quite right.  I think you just want to add the size check to the conditional at 1078, in other words:\n\nif (list.size() \u003c 3 || !list[0].is_string() || !list[1]...) {\n}",
+      "parentUuid": "e5ff9a51_20eea78a",
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
