@@ -32,16 +32,20 @@ class HTMLCanvasPainterTestForSPv2 : public PaintControllerPaintTest {
 
  protected:
   void SetUp() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting([this] {
-      gl_.SetIsContextLost(false);
-      return std::unique_ptr<WebGraphicsContext3DProvider>(
-          new FakeWebGraphicsContext3DProvider(&gl_));
-    });
+    auto factory = [](FakeGLES2Interface* gl, bool* using_software_compositing)
+        -> std::unique_ptr<WebGraphicsContext3DProvider> {
+      *using_software_compositing = false;
+      gl->SetIsContextLost(false);
+      return std::make_unique<FakeWebGraphicsContext3DProvider>(gl);
+    };
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Bind(factory, WTF::Unretained(&gl_)));
     PaintControllerPaintTest::SetUp();
   }
 
   void TearDown() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Function<std::unique_ptr<WebGraphicsContext3DProvider>(bool*)>());
     PaintControllerPaintTest::TearDown();
   }
 
