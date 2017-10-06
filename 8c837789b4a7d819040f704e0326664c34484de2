@@ -52,6 +52,24 @@
       "revId": "8c837789b4a7d819040f704e0326664c34484de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f91eaf_8898a9f0",
+        "filename": "components/viz/common/frame_sinks/copy_output_result.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-06T18:42:20Z",
+      "side": 0,
+      "message": "Oh! I should have explained: In the old code, we were creating our SkBitmap like so:\n\n  SkBitmap bitmap;\n  bitmap.allocN32Pixels(width, height);\n  ...copy from mapped buffer WITH byte-order swizzling...\n  SendResult(CopyOutputSkBitmapResult(bitmap));\n\n...so then the code at copy_output_result.cc:64-65 would be able to return the bitmap without any byte-order conversion. Thus, the client was able to get a SkBitmap with mutable pixels: It would be exactly the one GLRenderer made, and did not set as immutable.\n\nIn the new GLRendererCopier code, we don\u0027t bother with the byte swizzling. Instead, we allocate the SkBitmap with the kRGBA_8888_SkColorType instead of N32 and do straight memcpy()\u0027s from the GL pixel buffer. Then, the code at copy_output_result.cc:64-65 would see a format mismatch and make the byte-swizzled replacement on-demand (and was setting it as immutable).\n\nI\u0027m beginning to doubt that we should do this auto-conversion at all here (in copy_output_result.cc). Meaning, just leave the pixels in RGBA order, and let clients convert if they need to. However, that would require examining all client call sites for compatibility with this decision, to ensure they aren\u0027t blindly assuming the byte swizzle is BGRA.",
+      "parentUuid": "d58413fb_99eb88b1",
+      "revId": "8c837789b4a7d819040f704e0326664c34484de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

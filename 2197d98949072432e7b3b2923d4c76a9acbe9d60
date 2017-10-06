@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "cd348051_fc65c1d1",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-06T18:42:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7db1099c_ff491430",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "339281d8_54113b3d",
         "filename": "components/viz/service/display/gl_renderer_copier.cc",
         "patchSetId": 2
@@ -522,6 +540,24 @@
       "side": 1,
       "message": "But the code will still be here right? I\u0027d still like a TODO to say this is something that could be done if needed, but not needed atm.",
       "parentUuid": "3fca4e66_9517754b",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0cb840e_1f8d7ccb",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-06T18:42:20Z",
+      "side": 1,
+      "message": "To be clear, we don\u0027t want this to ever be needed. :) Instead of encouraging people to roll their own video capture solution, they should use the [soon upcoming] FrameSinkVideoCapturer, which will provide appropriate pooling. In other words, all CopyOutputRequests coming in to the VIZ service from external code points should be for one-off snapshot requests.\n\nI\u0027ve put a comment in the code to explain this for the benefit of future readers.",
+      "parentUuid": "62ccffe3_94c3d770",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -966,6 +1002,24 @@
     },
     {
       "key": {
+        "uuid": "4e46ab8f_cbe9db74",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-06T18:42:20Z",
+      "side": 1,
+      "message": "Done.\n\nI agree it\u0027s not a problem to write the move ctors. I suppose the LL is only very marginally superior. I made this a flat_map.",
+      "parentUuid": "4c893107_2c00c749",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8281e38b_0fd78d90",
         "filename": "components/viz/service/display/gl_renderer_copier.h",
         "patchSetId": 2
@@ -1013,6 +1067,24 @@
       "side": 1,
       "message": "If the context is lost it\u0027s okay to not delete it, so it\u0027s okay to leak if the callback is never called fwiw.",
       "parentUuid": "065b6d5c_d2396d8d",
+      "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd095a5c_cdcbcaaa",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-10-06T18:42:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3401d8f4_ef3cf8bb",
       "revId": "2197d98949072432e7b3b2923d4c76a9acbe9d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
