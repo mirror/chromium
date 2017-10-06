@@ -13,6 +13,7 @@
       <part file="dom_distiller_resources.grdp" />
       <part file="flags_ui_resources.grdp" />
       <part file="gcm_driver_resources.grdp" />
+      <part file="heap_dump_resources.grdp" />
       <part file="net_log_resources.grdp" />
       <part file="neterror_resources.grdp" />
       <part file="ntp_tiles_resources.grdp" />

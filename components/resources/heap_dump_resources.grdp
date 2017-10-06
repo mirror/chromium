@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<grit-part>
+  <include name="IDR_HEAP_DUMP_INDEX_HTML" file="../heap_dump/resources/index.html" flattenhtml="true" allowexternalscript="true" type="BINDATA" />
+  <include name="IDR_HEAP_DUMP_HEAP_DUMP_JS" file="../heap_dump/resources/heap_dump.js" type="BINDATA" />
+</grit-part>

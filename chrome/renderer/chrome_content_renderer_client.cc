@@ -79,6 +79,7 @@
 #include "components/dom_distiller/core/url_constants.h"
 #include "components/error_page/common/error.h"
 #include "components/error_page/common/localized_error.h"
+#include "components/heap_dump/heap_dump_impl.h"
 #include "components/network_hints/renderer/prescient_networking_dispatcher.h"
 #include "components/password_manager/content/renderer/credential_manager_client.h"
 #include "components/pdf/renderer/pepper_pdf_host.h"
@@ -430,6 +431,8 @@ void ChromeContentRendererClient::RenderThreadStarted() {
                             base::ConstRef(module_event_sink_)));
   }
 #endif
+
+  heap_dump::HeapDumpImpl::RegisterInterface();
 
   chrome_observer_.reset(new ChromeRenderThreadObserver());
   web_cache_impl_.reset(new web_cache::WebCacheImpl());

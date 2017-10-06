@@ -34,6 +34,7 @@
 #include "chrome/browser/ui/webui/flags_ui.h"
 #include "chrome/browser/ui/webui/flash_ui.h"
 #include "chrome/browser/ui/webui/gcm_internals_ui.h"
+#include "chrome/browser/ui/webui/heap_dump_ui.h"
 #include "chrome/browser/ui/webui/identity_internals_ui.h"
 #include "chrome/browser/ui/webui/instant_ui.h"
 #include "chrome/browser/ui/webui/interstitials/interstitial_ui.h"
@@ -309,6 +310,10 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
       !url.SchemeIs(content::kChromeUIScheme)) {
     return NULL;
   }
+
+  // DO NOT SUBMIT
+  if (url.host_piece() == "heap-dump")
+    return &NewWebUI<HeapDumpUI>;
 
   /****************************************************************************
    * Please keep this in alphabetical order. If #ifs or special logics are

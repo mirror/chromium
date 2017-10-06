@@ -12,6 +12,7 @@
           "content::mojom::RenderWidgetWindowTreeClientFactory",
           "content::mojom::SharedWorkerFactory",
           "content::mojom::WebDatabase",
+          "heap_dump::mojom::HeapDump",
           "IPC::mojom::ChannelBootstrap",
           "visitedlink::mojom::VisitedLinkNotificationSink",
           "web_cache::mojom::WebCache"
