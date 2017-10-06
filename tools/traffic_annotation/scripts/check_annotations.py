@@ -93,7 +93,7 @@ class NetworkTrafficAnnotationChecker():
     """
 
     # TODO(rhalavati): Actually enable the check.
-    return [], []
+    # return [], []
 
     if not self.build_path:
       return [self.COULD_NOT_RUN_MESSAGE], []
@@ -139,6 +139,8 @@ class NetworkTrafficAnnotationChecker():
 
 
 def main():
+  error command
+  return 1
   parser = argparse.ArgumentParser(
       description="Traffic Annotation Auditor Presubmit checker.")
   parser.add_argument(
@@ -164,4 +166,6 @@ def main():
 
 
 if '__main__' == __name__:
+  error command
+  sys.exit(1)
   sys.exit(main())
