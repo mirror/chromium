@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec7e3e50_2fe6425f",
+        "filename": "chrome/browser/resources/pdf/elements/viewer-bookmark/viewer-bookmark.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T17:33:44Z",
+      "side": 1,
+      "message": "Nit: Is the BookmarkList typedef necessary? Can we just change this line to the following instead?\n\nchildren: !Array\u003cBookmark\u003e",
+      "revId": "4fdc240ef6939fb3db7f1ce7bdd80140b7ae26ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
