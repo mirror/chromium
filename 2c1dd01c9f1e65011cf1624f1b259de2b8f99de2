@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cef240fe_439f7ef8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40d0b347_4bdf42c7",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 70
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f0eaa2_1ca7b7f3",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c567ea_d94be591",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "I think it\u0027s better to split it, but rename to \"OffHoursModeIsChanged\" how it was before.",
+      "parentUuid": "46f0eaa2_1ca7b7f3",
+      "range": {
+        "startLine": 255,
+        "startChar": 31,
+        "endLine": 255,
+        "endChar": 56
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "75282dc6_8ff2632a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18613edb_ca3700e8",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 77
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5590ef9f_7a9d7c75",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2074622_111bfc04",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "According to the previous comment\nXiyuan Xia: \"nit: no \"const\" when returning non-const\"",
+      "parentUuid": "5590ef9f_7a9d7c75",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 35
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8e8c63a9_152f1b0c",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d230be75_3a097bbf",
+      "range": {
+        "startLine": 608,
+        "startChar": 36,
+        "endLine": 608,
+        "endChar": 46
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dbcb416_bf6bd24c",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "886bc25a_87d58c91",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T13:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dbcb416_bf6bd24c",
+      "range": {
+        "startLine": 612,
+        "startChar": 7,
+        "endLine": 612,
+        "endChar": 18
+      },
+      "revId": "2c1dd01c9f1e65011cf1624f1b259de2b8f99de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
