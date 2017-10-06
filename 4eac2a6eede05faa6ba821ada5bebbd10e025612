@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c84c8aaf_2381634e",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-06T22:59:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448b429e_2d13c468",
+      "revId": "4eac2a6eede05faa6ba821ada5bebbd10e025612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7077dacd_33f4b6e4",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3149d2aa_2448b07f",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-06T22:59:14Z",
+      "side": 1,
+      "message": "I have a screenshot attached in the commit message.",
+      "parentUuid": "7077dacd_33f4b6e4",
+      "revId": "4eac2a6eede05faa6ba821ada5bebbd10e025612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5518d302_7d1dddae",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-06T21:24:33Z",
       "side": 1,
       "message": "Is there a left class you could use instead?",
+      "range": {
+        "startLine": 100,
+        "startChar": 11,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "4eac2a6eede05faa6ba821ada5bebbd10e025612",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89656a0d_a71e27c2",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-10-06T22:59:14Z",
+      "side": 1,
+      "message": "There isn\u0027t a left class in this inline stylesheet. But I don\u0027t think we want a left class here anyways.\n\nIn this instance we are using the center class to center the text part of the message within the the actual div for the toast.",
+      "parentUuid": "5518d302_7d1dddae",
       "range": {
         "startLine": 100,
         "startChar": 11,
