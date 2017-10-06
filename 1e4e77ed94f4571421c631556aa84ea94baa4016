@@ -16,6 +16,23 @@
       "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2848fadc_21241abc",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-06T01:47:48Z",
+      "side": 1,
+      "message": "Should we really need to change U+0020 to U+00A0 for empty composition\ncommitting?\n\nI think empty composition should do nothing.",
+      "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
