@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00072454_6b60c8c6",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "done.\nNot sure what you mean by the hint... Is it returning true while there\u0027s nothing to delete? If so, I don\u0027t really see a problem with it... Or is it the DELETE of sqlite?",
+      "parentUuid": "f01bfb98_b837eb98",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 20
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3fb4085_e6bdf80a",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03bce1e_10c5bbcd",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3fb4085_e6bdf80a",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 21
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a6f1277_b7417c0a",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "05b921a9_e4c03fff",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 102,
+        "endChar": 45
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d03e4c56_f70bc75e",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55fe3a5_5359b74a",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d03e4c56_f70bc75e",
+      "range": {
+        "startLine": 130,
+        "startChar": 11,
+        "endLine": 130,
+        "endChar": 34
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "950d1bce_0c128a3f",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bfba59d_74f8a7c8",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9ce60d_72d224d7",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd9ccf29_dd6151cb",
+        "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T00:43:55Z",
+      "side": 1,
+      "message": "added a DVLOG for now, and added a TODO saying if there\u0027s a need for uma collection of how this task fails, add enums.",
+      "parentUuid": "9a9ce60d_72d224d7",
+      "range": {
+        "startLine": 177,
+        "startChar": 64,
+        "endLine": 177,
+        "endChar": 75
+      },
+      "revId": "937a5ce63290260cbc84ee95d431b7e3cd98440d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
