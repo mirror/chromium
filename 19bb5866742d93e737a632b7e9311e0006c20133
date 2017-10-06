@@ -16,6 +16,24 @@
       "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13019bf0_6e722dd8",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T10:02:04Z",
+      "side": 1,
+      "message": "I agree with you idea and already remove this logic.\nBut I faced one problem:\nI think it\u0027s not so good implementation to parse dbus response on controller side. \nIt\u0027s better if controller side take only bool value (synchronized or not) from system_clock_client.\nI can\u0027t pass callback to OnGotLastSyncInfo(dbus::Response* response) because CallMethod asks  ResponseCallback.\n\nSo I think it\u0027s better to add NetworkSynchronizationUpdated method to return result.\n\nWhat do you think?\nThank you for patience!",
+      "parentUuid": "b80158b9_2cb5f2ed",
+      "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
