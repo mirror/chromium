@@ -76,6 +76,11 @@ public class ContentViewCoreSelectionTest {
 
         @Override
         public boolean requestSelectionPopupUpdates(boolean shouldSuggest) {
+            if (!shouldSuggest) {
+                mResult = new SelectionClient.Result();
+                mResult.startAdjust = 0;
+                mResult.endAdjust = 0;
+            }
             ThreadUtils.postOnUiThread(() -> mResultCallback.onClassified(mResult));
             return true;
         }
@@ -340,10 +345,54 @@ public class ContentViewCoreSelectionTest {
         DOMUtils.longPressNode(mContentViewCore, "smart_selection");
         waitForSelectActionBarVisible(true);
 
+        Assert.assertEquals(
+                "1600 Amphitheatre Parkway", mSelectionPopupController.getSelectedText());
+
         SelectionClient.Result returnResult = mSelectionPopupController.getClassificationResult();
         Assert.assertEquals(-5, returnResult.startAdjust);
         Assert.assertEquals(8, returnResult.endAdjust);
         Assert.assertEquals("Maps", returnResult.label);
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"TextInput", "SmartSelection"})
+    public void testSmartSelectionReset() throws Throwable {
+        SelectionClient.Result result = new SelectionClient.Result();
+        result.startAdjust = -5;
+        result.endAdjust = 8;
+        result.label = "Maps";
+
+        TestSelectionClient client = new TestSelectionClient();
+        client.setResult(result);
+        client.setResultCallback(mSelectionPopupController.getResultCallback());
+
+        mSelectionPopupController.setSelectionClient(client);
+
+        DOMUtils.longPressNode(mContentViewCore, "smart_selection");
+        waitForSelectActionBarVisible(true);
+
+        Assert.assertEquals(
+                "1600 Amphitheatre Parkway", mSelectionPopupController.getSelectedText());
+
+        SelectionClient.Result returnResult = mSelectionPopupController.getClassificationResult();
+        Assert.assertEquals(-5, returnResult.startAdjust);
+        Assert.assertEquals(8, returnResult.endAdjust);
+        Assert.assertEquals("Maps", returnResult.label);
+
+        DOMUtils.clickNode(mContentViewCore, "smart_selection");
+
+        CriteriaHelper.pollUiThread(Criteria.equals("Amphitheatre", new Callable<String>() {
+            @Override
+            public String call() {
+                return mSelectionPopupController.getSelectedText();
+            }
+        }));
+
+        returnResult = mSelectionPopupController.getClassificationResult();
+        Assert.assertEquals("Amphitheatre", mSelectionPopupController.getSelectedText());
+        Assert.assertEquals(0, returnResult.startAdjust);
+        Assert.assertEquals(0, returnResult.endAdjust);
     }
 
     @Test
