@@ -11,7 +11,6 @@
 
 namespace printing {
 
-class MetafilePlayer;
 class PrintSettings;
 
 // An interface for GTK printing dialogs. Classes that live outside of
@@ -33,10 +32,10 @@ class PrintDialogGtkInterface {
       bool has_selection,
       const PrintingContextLinux::PrintSettingsCallback& callback) = 0;
 
-  // Prints the document named |document_name| contained in |metafile|.
+  // Prints the document named |document_name| contained in |data|.
   // Called from the print worker thread. Once called, the
   // PrintDialogGtkInterface instance should not be reused.
-  virtual void PrintDocument(const MetafilePlayer& metafile,
+  virtual void PrintDocument(const std::vector<char>& data,
                              const base::string16& document_name) = 0;
 
   // Same as AddRef/Release, but with different names since

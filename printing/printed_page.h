@@ -6,10 +6,12 @@
 #define PRINTING_PRINTED_PAGE_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "printing/metafile.h"
+#include "printing/printed_document.h"
+#include "printing/printing_export.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -25,13 +27,13 @@ class PRINTING_EXPORT PrintedPage
     : public base::RefCountedThreadSafe<PrintedPage> {
  public:
   PrintedPage(int page_number,
-              std::unique_ptr<MetafilePlayer> metafile,
+              std::unique_ptr<PrintedDocument::Storage> data,
               const gfx::Size& page_size,
               const gfx::Rect& page_content_rect);
 
   // Getters
   int page_number() const { return page_number_; }
-  const MetafilePlayer* metafile() const;
+  const PrintedDocument::Storage* data() const;
   const gfx::Size& page_size() const { return page_size_; }
   const gfx::Rect& page_content_rect() const { return page_content_rect_; }
 #if defined(OS_WIN)
@@ -55,7 +57,7 @@ class PRINTING_EXPORT PrintedPage
   const int page_number_;
 
   // Actual paint data.
-  const std::unique_ptr<MetafilePlayer> metafile_;
+  const std::unique_ptr<PrintedDocument::Storage> data_;
 
 #if defined(OS_WIN)
   // Shrink done in comparison to desired_dpi.

@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "base/synchronization/lock.h"
+#include "build/build_config.h"
 #include "printing/native_drawing_context.h"
 #include "printing/print_settings.h"
 
@@ -22,9 +23,12 @@ class RefCountedMemory;
 
 namespace printing {
 
-class MetafilePlayer;
 class PrintedPage;
 class PrintingContext;
+
+#if defined(OS_WIN)
+class MetafilePlayer;
+#endif  // OS_WIN
 
 // A collection of rendered pages. The settings are immutable. If the print
 // settings are changed, a new PrintedDocument must be created.
@@ -35,6 +39,12 @@ class PrintingContext;
 class PRINTING_EXPORT PrintedDocument
     : public base::RefCountedThreadSafe<PrintedDocument> {
  public:
+#if defined(OS_WIN)
+  using Storage = MetafilePlayer;
+#else
+  using Storage = std::vector<char>;
+#endif
+
   // The cookie shall be unique and has a specific relationship with its
   // originating source and settings.
   PrintedDocument(const PrintSettings& settings,
@@ -44,7 +54,7 @@ class PRINTING_EXPORT PrintedDocument
   // Sets a page's data. 0-based. Takes metafile ownership.
   // Note: locks for a short amount of time.
   void SetPage(int page_number,
-               std::unique_ptr<MetafilePlayer> metafile,
+               std::unique_ptr<Storage> data,
 #if defined(OS_WIN)
                float shrink,
 #endif  // OS_WIN

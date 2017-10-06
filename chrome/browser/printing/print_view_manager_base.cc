@@ -37,7 +37,6 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "printing/features/features.h"
-#include "printing/pdf_metafile_skia.h"
 #include "printing/printed_document.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -170,16 +169,6 @@ void PrintViewManagerBase::OnDidPrintPage(
     }
   }
 
-  std::unique_ptr<PdfMetafileSkia> metafile(
-      new PdfMetafileSkia(SkiaDocumentType::PDF));
-  if (metafile_must_be_valid) {
-    if (!metafile->InitFromData(shared_buf->memory(), params.data_size)) {
-      NOTREACHED() << "Invalid metafile header";
-      web_contents()->Stop();
-      return;
-    }
-  }
-
 #if defined(OS_WIN)
   print_job_->AppendPrintedPage(params.page_number);
   if (metafile_must_be_valid) {
@@ -213,13 +202,11 @@ void PrintViewManagerBase::OnDidPrintPage(
   }
 #else
   // Update the rendered document. It will send notifications to the listener.
-  document->SetPage(params.page_number,
-                    std::move(metafile),
-#if defined(OS_WIN)
-                    0.0f /* dummy shrink_factor */,
-#endif
-                    params.page_size,
-                    params.content_area);
+  char* first = static_cast<char*>(shared_buf->memory());
+  document->SetPage(
+      params.page_number,
+      std::make_unique<std::vector<char>>(first, first + params.data_size),
+      params.page_size, params.content_area);
 
   ShouldQuitFromInnerMessageLoop();
 #endif
