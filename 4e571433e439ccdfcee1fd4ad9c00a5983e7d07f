@@ -16,6 +16,24 @@
       "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c6584a_bde3adc4",
+        "filename": "third_party/win_build_output/.gitattributes",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-10-06T16:28:52Z",
+      "side": 1,
+      "message": "Why would you want this? I think it will just require adding new patterns whenever a new file type are added (and this step can easily be missed).\nI don\u0027t see a reason why we may need git to manage line endings in the future for some files that do not exist now. Probably it\u0027s better to revisit the decision when we do have these files and know these reasons.",
+      "parentUuid": "cb946a61_7d06bfa0",
+      "revId": "4e571433e439ccdfcee1fd4ad9c00a5983e7d07f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
