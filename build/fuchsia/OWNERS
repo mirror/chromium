@@ -1,9 +1,4 @@
-jamesr@chromium.org
-kmarshall@chromium.org
-scottmg@chromium.org
-sergeyu@chromium.org
-thakis@chromium.org
-wez@chromium.org
+file://build/fuchsia/OWNERS
 
 # TEAM: cr-fuchsia@chromium.org
 # COMPONENT: Internals>PlatformIntegration
