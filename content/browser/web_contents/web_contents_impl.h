@@ -427,8 +427,6 @@ class CONTENT_EXPORT WebContentsImpl : public WebContents,
   void UserGestureDone() override;
   void SetClosedByUserGesture(bool value) override;
   bool GetClosedByUserGesture() const override;
-  void ViewSource() override;
-  void ViewFrameSource(const GURL& url, const PageState& page_state) override;
   int GetMinimumZoomPercent() const override;
   int GetMaximumZoomPercent() const override;
   void SetPageScale(float page_scale_factor) override;
