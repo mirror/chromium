@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6608020d_82e594fb",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:33:27Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be zero, I\u0027d expect this is causing DVLOG to be emitted by https://codesearch.chromium.org/chromium/src/base/metrics/histogram.cc?gsn\u003dInspectConstructionArguments\u0026l\u003d407",
+      "range": {
+        "startLine": 43,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "f9ccdddfd7f1e9a9874d2f17634612431979474c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b37c541_d096fbef",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:33:27Z",
+      "side": 1,
+      "message": "We tend to recommend not having more than 100 buckets. Do you actually need 1s granularity over the entire range?",
+      "revId": "f9ccdddfd7f1e9a9874d2f17634612431979474c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73020d0d_4ff1ac9e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlOverflowMenuListElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:33:27Z",
+      "side": 1,
+      "message": "It seems strange to get the max value from minutes, but have the bucket count be a literal.",
+      "range": {
+        "startLine": 44,
+        "startChar": 68,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "f9ccdddfd7f1e9a9874d2f17634612431979474c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d184dd8c_a9ab9f0f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 31600,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:33:27Z",
+      "side": 1,
+      "message": "time?",
+      "range": {
+        "startLine": 31600,
+        "startChar": 25,
+        "endLine": 31600,
+        "endChar": 26
+      },
+      "revId": "f9ccdddfd7f1e9a9874d2f17634612431979474c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
