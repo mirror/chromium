@@ -34,6 +34,24 @@
       "revId": "44ce694c9a6cea8d4096bda7352b4269d071ff94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b439cc94_aaeffc34",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-06T19:04:18Z",
+      "side": 1,
+      "message": "I think I finally got what is going on. is_modifiable is used for gdi text print,\nso it tries to track whether the original file is html vs pdf. So I should not \nset it here, so removed it and used another approach (see new patch in the other CL).",
+      "parentUuid": "df5a3895_923160cc",
+      "revId": "44ce694c9a6cea8d4096bda7352b4269d071ff94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
