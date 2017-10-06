@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11c14dd8_b27cae7f",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-06T20:27:12Z",
+      "side": 1,
+      "message": "nit: include order",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79184165_88e2bd2b",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-06T20:27:12Z",
+      "side": 1,
+      "message": "I wonder if it makes sense to use a base::RunLoop in the no-arg case.\n\nI guess the advantages of using the Waiter are that it\u0027s consistent with other N\u003e0 arg cases, and you can reuse the same single Waiter across the scope.\n\nIt\u0027s just a little weird to have the \"Capture\" verb when nothing is being captured.",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b30cc7_502c1299",
+        "filename": "chrome/browser/ui/ash/system_tray_client_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-06T20:27:12Z",
+      "side": 1,
+      "message": "nit: I kind of like \"CaptureNext\" because it more clearly conveys that the capture applies to a single future operation.",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
