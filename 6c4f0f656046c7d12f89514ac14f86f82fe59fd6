@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0baf0305_e9912aec",
+        "filename": "components/offline_pages/core/offline_page_model_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T23:21:30Z",
+      "side": 1,
+      "message": "Needs updating to new path.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 74
+      },
+      "revId": "6c4f0f656046c7d12f89514ac14f86f82fe59fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11471a79_8c143d28",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T23:21:30Z",
+      "side": 1,
+      "message": "Having \"Windows\" here is important as different systems have different epochs.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 13
+      },
+      "revId": "6c4f0f656046c7d12f89514ac14f86f82fe59fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09558680_e2d98dc7",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T23:21:30Z",
+      "side": 1,
+      "message": "nit: \"a path\" or \"paths\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 19
+      },
+      "revId": "6c4f0f656046c7d12f89514ac14f86f82fe59fd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
