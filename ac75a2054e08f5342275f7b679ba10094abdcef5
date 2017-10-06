@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ecde63b_c0f9ac88",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/video-in-scrollable-iframe-has-full-panel.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-06T13:57:38Z",
+      "side": 1,
+      "message": "Nit: If you are using ES6 declarations (const/let) you should use them throughout the whole file. var can be replaced with let.",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "ac75a2054e08f5342275f7b679ba10094abdcef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd92b2da_e7afe2c8",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/video-in-scrollable-iframe-has-full-panel.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-10-06T13:57:38Z",
+      "side": 1,
+      "message": "Is this needed? It\u0027s not used anywhere.",
+      "revId": "ac75a2054e08f5342275f7b679ba10094abdcef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
