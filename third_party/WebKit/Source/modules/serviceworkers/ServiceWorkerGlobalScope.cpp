@@ -147,11 +147,6 @@ void ServiceWorkerGlobalScope::EvaluateClassicScript(
     InstalledScriptsManager::ScriptStatus status =
         installed_scripts_manager->GetScriptData(script_url, &script_data);
     switch (status) {
-      case InstalledScriptsManager::ScriptStatus::kTaken:
-        // kTaken should not be returned since requesting the main script should
-        // be the first and no script has been taken until here.
-        NOTREACHED();
-        return;
       case InstalledScriptsManager::ScriptStatus::kFailed:
         // This eventually terminates the worker thread.
         ReportingProxy().DidEvaluateWorkerScript(false);
