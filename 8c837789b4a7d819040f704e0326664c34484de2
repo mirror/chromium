@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab60d9d_21a93da4",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-06T05:54:51Z",
+      "side": 0,
+      "message": "All callers of this overload passed `false` for |select|, so I just folded this into SetCursorPosition()",
+      "revId": "8c837789b4a7d819040f704e0326664c34484de2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

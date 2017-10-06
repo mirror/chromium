@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34389743_4be35179",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-06T05:54:51Z",
+      "side": 1,
+      "message": "note this is basically the old `MoveCursorTo(const SelectionModel\u0026)` overload, but with an added |directed| argument.",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
