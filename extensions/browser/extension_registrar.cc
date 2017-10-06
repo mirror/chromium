@@ -34,6 +34,8 @@ ExtensionRegistrar::~ExtensionRegistrar() = default;
 void ExtensionRegistrar::AddExtension(
     scoped_refptr<const Extension> extension) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_EQ(nullptr, registry_->GetExtensionById(
+                         extension->id(), ExtensionRegistry::EVERYTHING));
 
   if (extension_prefs_->IsExtensionBlacklisted(extension->id())) {
     // Only prefs is checked for the blacklist. We rely on callers to check the
@@ -217,6 +219,47 @@ bool ExtensionRegistrar::ReplaceReloadedExtension(
   ActivateExtension(extension.get(), false);
 
   return true;
+}
+
+void ExtensionRegistrar::TerminateExtension(const ExtensionId& extension_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  scoped_refptr<const Extension> extension =
+      registry_->enabled_extensions().GetByID(extension_id);
+  if (!extension)
+    return;
+
+  registry_->AddTerminated(extension);
+  registry_->RemoveEnabled(extension_id);
+  DeactivateExtension(extension.get(), UnloadedExtensionReason::TERMINATE);
+
+  // TODO(michaelpg): It's unclear why this notification is sent now. It isn't
+  // needed when an extension is disabled, for example. Furthermore, it will be
+  // sent again if this extension is (actually) removed. See crbug.com/708230.
+  content::NotificationService::current()->Notify(
+      extensions::NOTIFICATION_EXTENSION_REMOVED,
+      content::Source<content::BrowserContext>(browser_context_),
+      content::Details<const Extension>(extension.get()));
+}
+
+void ExtensionRegistrar::UntrackTerminatedExtension(
+    const ExtensionId& extension_id) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  scoped_refptr<const Extension> extension =
+      registry_->terminated_extensions().GetByID(extension_id);
+  if (!extension)
+    return;
+
+  registry_->RemoveTerminated(extension_id);
+
+  // TODO(michaelpg): This notification was already sent when the extension was
+  // unloaded as part of being terminated. But we send it again as observers
+  // may be tracking the terminated extension. See crbug.com/708230.
+  content::NotificationService::current()->Notify(
+      extensions::NOTIFICATION_EXTENSION_REMOVED,
+      content::Source<content::BrowserContext>(browser_context_),
+      content::Details<const Extension>(extension.get()));
 }
 
 bool ExtensionRegistrar::IsExtensionEnabled(
