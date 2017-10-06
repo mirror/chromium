@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d5325e8_1b47c17f",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-10-06T20:45:09Z",
+      "side": 1,
+      "message": "s/RRNotify/hotplug notification/\n\nRRNotify is an X11 property, and we don\u0027t even use X11 at this point. Let\u0027s switch to more generic language.",
+      "revId": "16b6336cf2cea362badc3d01e094b3b44034cec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
