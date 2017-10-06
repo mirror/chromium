@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "edcc7174_06e31465",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T01:32:18Z",
+      "side": 1,
+      "message": "Yes. Please add the check for size.",
+      "parentUuid": "4beaad8d_3257579e",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ff84f3_158c5ed4",
         "filename": "services/device/hid/hid_manager_unittest.cc",
         "patchSetId": 16
