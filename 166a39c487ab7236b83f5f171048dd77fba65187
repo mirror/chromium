@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c33a9c9f_2caa96b2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 13171,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:04:03Z",
+      "side": 1,
+      "message": "Please document the C++ enum.  There\u0027s no need to list this in the histograms.xml file – it\u0027s true for every enumerated histogram.  The point of documenting the C++ enum is so that someone is less likely to accidentally change the out the underlying definition without realizing that they are affecting metrics recording.",
+      "range": {
+        "startLine": 13169,
+        "startChar": 72,
+        "endLine": 13171,
+        "endChar": 15
+      },
+      "revId": "166a39c487ab7236b83f5f171048dd77fba65187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
