@@ -69,8 +69,11 @@ DownloadProtectionService::DownloadProtectionService(
               {base::MayBlock(), base::TaskPriority::BACKGROUND})
               .get())),
       whitelist_sample_rate_(kWhitelistDownloadSampleRate) {
+  VLOG(1) << __FUNCTION__ << ": sb_service: " << sb_service;
   if (sb_service) {
     ui_manager_ = sb_service->ui_manager();
+    VLOG(1) << __FUNCTION__
+            << ": database_manager(): " << sb_service->database_manager();
     database_manager_ = sb_service->database_manager();
     navigation_observer_manager_ = sb_service->navigation_observer_manager();
     ParseManualBlacklistFlag();
@@ -121,9 +124,12 @@ bool DownloadProtectionService::IsHashManuallyBlacklisted(
 void DownloadProtectionService::CheckClientDownload(
     content::DownloadItem* item,
     const CheckDownloadCallback& callback) {
+  VLOG(1) << __FUNCTION__ << ": item: " << item;
+  VLOG(1) << __FUNCTION__ << ": database_manager_: " << database_manager_;
   scoped_refptr<CheckClientDownloadRequest> request(
       new CheckClientDownloadRequest(item, callback, this, database_manager_,
                                      binary_feature_extractor_.get()));
+  VLOG(1) << __FUNCTION__ << ": request: " << request;
   download_requests_.insert(request);
   request->Start();
 }
