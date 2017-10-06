@@ -95,7 +95,8 @@ void InsertParagraphSeparatorCommand::CalculateStyleBeforeInsertion(
   // boundaries of a paragraph. Otherwise, content that is moved as part of the
   // work of the command will lend their styles to the new paragraph without any
   // extra work needed.
-  VisiblePosition visible_pos = CreateVisiblePosition(pos, VP_DEFAULT_AFFINITY);
+  VisiblePosition visible_pos =
+      CreateVisiblePosition(pos, TextAffinity::kDefault);
   if (!IsStartOfParagraph(visible_pos) && !IsEndOfParagraph(visible_pos))
     return;
 
@@ -477,7 +478,7 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   // FIXME: We need the affinity for pos, but mostForwardCaretPosition does not
   // give it
   Position leading_whitespace =
-      LeadingWhitespacePosition(insertion_position, VP_DEFAULT_AFFINITY);
+      LeadingWhitespacePosition(insertion_position, TextAffinity::kDefault);
   // FIXME: leadingWhitespacePosition is returning the position before preserved
   // newlines for positions after the preserved newline, causing the newline to
   // be turned into a nbsp.
