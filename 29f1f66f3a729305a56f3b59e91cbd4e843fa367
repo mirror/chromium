@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea531afa_abcb47cd",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1996,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-06T15:38:59Z",
+      "side": 1,
+      "message": "You are correct. Fixed.",
+      "parentUuid": "67ded2e1_7114c36c",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5105084b_d8169df7",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-04T11:50:22Z",
       "side": 1,
       "message": "Why are these \"fake\" methods?",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99aa7c29_91fe39e0",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-06T15:38:59Z",
+      "side": 1,
+      "message": "The presence of |traitCollectionDidChange| misled me into thinking that the class was a UIViewController, and that |ViewSafeAreaInsetsDidChange| would be called automatically.\n\nChanged.",
+      "parentUuid": "5105084b_d8169df7",
       "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5657864b_68dd9682",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-06T15:38:59Z",
+      "side": 1,
+      "message": "Doh!\nDone :-)",
+      "parentUuid": "ab0b40f8_d39edfb0",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6ed1999_f27a3b24",
         "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2c42c1e6_29d27d64",
+        "filename": "ios/chrome/browser/ui/toolbar/toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-06T15:38:59Z",
+      "side": 1,
+      "message": "The vertical autoresizing mask does not matter when the experiment is turned off. Just wanted my CL to be a no-op if the experiment was off.",
+      "parentUuid": "b6ed1999_f27a3b24",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f832ead_818cc31b",
         "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
         "patchSetId": 8
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-04T11:50:22Z",
       "side": 1,
       "message": "Please add a comment explaining why the behavior is different for the experiment.",
+      "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb17388_c8ab725d",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-10-06T15:38:59Z",
+      "side": 1,
+      "message": "The vertical autoresizing mask does not matter when the experiment is turned off. Just wanted my CL to be a no-op if the experiment was off.\n\nRemoving the \"if\".",
+      "parentUuid": "5f832ead_818cc31b",
       "revId": "29f1f66f3a729305a56f3b59e91cbd4e843fa367",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
