@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b5cf8c1d_88b6ab7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 26
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "Yep, you\u0027re saying the Tab#initialize takes a WebContents... and ends up calling setContentViewCore which will notify our tab helper.  Thanks for checking!",
+      "parentUuid": "701e2b00_dc9fdcff",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "574dce04a04826a220206e15ec6d002d9cfac647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a9fdf7_bad40fce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 26

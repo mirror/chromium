@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62543e77_c629fba8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "Done: Good idea.  We can make the API package-private now.",
+      "parentUuid": "c54d9e98_c935e852",
+      "range": {
+        "startLine": 5,
+        "startChar": 28,
+        "endLine": 5,
+        "endChar": 35
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35189f98_80bc967d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
         "patchSetId": 28
@@ -48,6 +72,53 @@
     },
     {
       "key": {
+        "uuid": "755793d8_ed85d78c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/SelectionClientManager.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "Oops, dropped that in the last patch.  Thanks for catching this!\nFixed by calling this whenever the cvc changes in ContextualSearchTabHelper.",
+      "parentUuid": "35189f98_80bc967d",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55e2f1b8_bfc975b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "I noticed this method has a bug in it by not calling removeContextualSearchHooks on the old mBaseContentViewCore before setting up the new one.  This will leave the mGestureStateListener non-null, and since we use that to key whether we need to add gesture listening or not, we\u0027ll stop responding to tap on this new cvc.  This probably explains the occasional cs-not-working problems we see once in a long while.",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 35
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9317b73_aeb4ec4d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
         "patchSetId": 28
@@ -59,6 +130,30 @@
       "writtenOn": "2017-10-05T22:56:13Z",
       "side": 1,
       "message": "what happens when the cvc changes?  Will this one be holding onto the wrong thing?  If we don\u0027t need to recreate this, I would suggest having a separate method on it called setContentViewCore that you could do regardless of this being newly created or updating the CVC.",
+      "range": {
+        "startLine": 196,
+        "startChar": 12,
+        "endLine": 196,
+        "endChar": 35
+      },
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea0d8ef_67326231",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchTabHelper.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "You\u0027re quite right.  We do need to track when the cvc changes, and we do need to recreate this so the new cvc has Smart Selection even if it doesn\u0027t have ContextualSearch currently.  Having said that, I don\u0027t see the cvc change very often, not on normal navigation.  Maybe you can give me some hints on that so I can manually test and verify.",
+      "parentUuid": "f9317b73_aeb4ec4d",
       "range": {
         "startLine": 196,
         "startChar": 12,
@@ -103,6 +198,24 @@
       "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f1cfef8_4744d157",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 28
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T05:34:43Z",
+      "side": 1,
+      "message": "Done.  I\u0027ll try to look for those myself next time.",
+      "parentUuid": "18250c8e_f691587e",
+      "revId": "19ad2e7d2b22c63f13e4c05bde0c2ae4dcbd596b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
