@@ -70,6 +70,24 @@
       "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "722c9528_6d25c2c5",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 15
+      },
+      "lineNbr": 3936,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-10-06T07:52:45Z",
+      "side": 1,
+      "message": "An alternative name for this domain might be \"Rendering\"?",
+      "parentUuid": "a9caff56_598d02ab",
+      "revId": "29a30facb1f491f64b1ea3a75cd1b523301550af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
