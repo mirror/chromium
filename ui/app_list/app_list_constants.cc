@@ -177,9 +177,7 @@ const int kPeekingAppListHeight = 320;
 const int kShelfSize = 48;
 
 // Max items allowed in a folder.
-const size_t kMaxFolderItems = 16;
-// Max items allowed in a folder for fullscreen app list folder v1.
-const size_t kMaxFolderItemsFullscreen = 20;
+const size_t kMaxFolderItems = 20;
 
 // Number of the top items in a folder, which are shown inside the folder icon
 // and animated when opening and closing a folder.

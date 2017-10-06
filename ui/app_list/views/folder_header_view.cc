@@ -36,9 +36,7 @@ constexpr int kMaxFolderNameWidthFullScreen = 236;
 
 class FolderHeaderView::FolderNameView : public views::Textfield {
  public:
-  FolderNameView() {
-    SetBorder(views::CreateEmptyBorder(1, 1, 1, 1));
-  }
+  FolderNameView() { SetBorder(views::CreateEmptyBorder(1, 1, 1, 1)); }
 
   ~FolderNameView() override {}
 
@@ -198,8 +196,8 @@ void FolderHeaderView::Layout() {
   text_width = std::min(text_width, GetMaxFolderNameWidth());
   text_bounds.set_x(rect.x() + (rect.width() - text_width) / 2);
   text_bounds.set_width(text_width);
-  text_bounds.ClampToCenteredSize(gfx::Size(text_bounds.width(),
-      folder_name_view_->GetPreferredSize().height()));
+  text_bounds.ClampToCenteredSize(gfx::Size(
+      text_bounds.width(), folder_name_view_->GetPreferredSize().height()));
   folder_name_view_->SetBoundsRect(text_bounds);
 }
 
@@ -218,11 +216,9 @@ void FolderHeaderView::OnPaint(gfx::Canvas* canvas) {
     return;
 
   // Draw bottom separator line.
-  rect.Inset(is_fullscreen_app_list_enabled_
-                 ? kAppsGridLeftRightPaddingFullscreen +
-                       (-AppsGridView::GetTilePadding().left()) +
-                       kBottomSeparatorLeftRightPaddingFullScreen
-                 : kAppsGridPadding,
+  rect.Inset(kAppsGridLeftRightPaddingFullscreen +
+                 (-AppsGridView::GetTilePadding().left()) +
+                 kBottomSeparatorLeftRightPaddingFullScreen,
              0);
   int extra_bottom_padding = is_fullscreen_app_list_enabled_
                                  ? kBottomSeparatorBottomPaddingFullScreen +

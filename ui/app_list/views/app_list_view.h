@@ -119,8 +119,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   void SetBubbleArrow(views::BubbleBorder::Arrow arrow);
 
-  void MaybeSetAnchorPoint(const gfx::Point& anchor_point);
-
   // If |drag_and_drop_host| is not NULL it will be called upon drag and drop
   // operations outside the application list. This has to be called after
   // Initialize was called since the app list object needs to exist so that
@@ -134,8 +132,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Dismisses the UI, cleans up and sets the state to CLOSED.
   void Dismiss();
-
-  void UpdateBounds();
 
   // Enables/disables a semi-transparent overlay over the app list (good for
   // hiding the app list when a modal dialog is being shown).
@@ -306,10 +302,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool WidgetHasHitTestMask() const override;
   void GetWidgetHitTestMask(gfx::Path* mask) const override;
 
-  // Overridden from views::WidgetObserver:
-  void OnWidgetDestroying(views::Widget* widget) override;
-  void OnWidgetVisibilityChanged(views::Widget* widget, bool visible) override;
-
   // Overridden from SpeechUIModelObserver:
   void OnSpeechRecognitionStateChanged(
       SpeechRecognitionState new_state) override;
@@ -368,8 +360,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // The velocity of the gesture event.
   float last_fling_velocity_ = 0;
-  // Whether the fullscreen app list feature is enabled.
-  const bool is_fullscreen_app_list_enabled_;
   // Whether the background blur is enabled.
   const bool is_background_blur_enabled_;
   // Whether the app list focus is enabled.
