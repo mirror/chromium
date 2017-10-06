@@ -460,6 +460,10 @@
       status: "stable",
     },
     {
+      name: "HeapIncrementalMarking",
+      status: "experimental",
+    },
+    {
       name: "HideNonceContentAttribute",
       status: "stable",
     },
