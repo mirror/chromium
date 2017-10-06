@@ -13,14 +13,14 @@
 #include "components/toolbar/toolbar_model.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_provider.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_view_suggestions_delegate.h"
-#import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_text_field.h"
 
 struct AutocompleteMatch;
 class AutocompleteResult;
 @class AutocompleteTextFieldDelegate;
 class GURL;
-@class OmniboxTextFieldIOS;
-@class OmniboxTextFieldPasteDelegate;
+@class OmniboxTextfield;
+@class OmniboxTextfieldPasteDelegate;
 class WebOmniboxEditController;
 
 namespace ios {
@@ -33,7 +33,7 @@ class OmniboxViewIOS : public OmniboxView,
                        public OmniboxPopupViewSuggestionsDelegate {
  public:
   // Retains |field|.
-  OmniboxViewIOS(OmniboxTextFieldIOS* field,
+  OmniboxViewIOS(OmniboxTextfield* field,
                  WebOmniboxEditController* controller,
                  ios::ChromeBrowserState* browser_state);
   ~OmniboxViewIOS() override;
@@ -169,8 +169,8 @@ class OmniboxViewIOS : public OmniboxView,
 
   ios::ChromeBrowserState* browser_state_;
 
-  base::scoped_nsobject<OmniboxTextFieldIOS> field_;
-  base::scoped_nsobject<OmniboxTextFieldPasteDelegate> paste_delegate_;
+  base::scoped_nsobject<OmniboxTextfield> field_;
+  base::scoped_nsobject<OmniboxTextfieldPasteDelegate> paste_delegate_;
   WebOmniboxEditController* controller_;  // weak, owns us
 
   State state_before_change_;

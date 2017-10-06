@@ -10,13 +10,13 @@
 #error "This file requires ARC support."
 #endif
 
-@interface OmniboxTextFieldPasteDelegate ()
+@interface OmniboxTextfieldPasteDelegate ()
 
 @property(nonatomic, strong) NSURL* URL;
 
 @end
 
-@implementation OmniboxTextFieldPasteDelegate
+@implementation OmniboxTextfieldPasteDelegate
 @synthesize URL = _URL;
 
 - (void)textPasteConfigurationSupporting:

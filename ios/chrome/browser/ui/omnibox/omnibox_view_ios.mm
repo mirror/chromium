@@ -69,7 +69,7 @@ UIColor* IncognitoSecureTextColor() {
 
 // Simple Obj-C object to forward UITextFieldDelegate method calls back to the
 // OmniboxViewIOS.
-@interface AutocompleteTextFieldDelegate : NSObject<OmniboxTextFieldDelegate> {
+@interface AutocompleteTextFieldDelegate : NSObject<OmniboxTextfieldDelegate> {
  @private
   OmniboxViewIOS* editView_;  // weak, owns us
 
@@ -158,7 +158,7 @@ UIColor* IncognitoSecureTextColor() {
 
 @end
 
-OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
+OmniboxViewIOS::OmniboxViewIOS(OmniboxTextfield* field,
                                WebOmniboxEditController* controller,
                                ios::ChromeBrowserState* browser_state)
     : OmniboxView(
@@ -175,7 +175,7 @@ OmniboxViewIOS::OmniboxViewIOS(OmniboxTextFieldIOS* field,
       [[AutocompleteTextFieldDelegate alloc] initWithEditView:this]);
 
   if (@available(iOS 11.0, *)) {
-    paste_delegate_.reset([[OmniboxTextFieldPasteDelegate alloc] init]);
+    paste_delegate_.reset([[OmniboxTextfieldPasteDelegate alloc] init]);
     [field_ setPasteDelegate:paste_delegate_];
   }
 
@@ -359,7 +359,7 @@ void OmniboxViewIOS::OnDidBeginEditing() {
   OnBeforePossibleChange();
   // In the case where the user taps the fakebox on the Google landing page,
   // the WebToolbarController invokes OnSetFocus before calling
-  // becomeFirstResponder on OmniboxTextFieldIOS (which leads to this method
+  // becomeFirstResponder on OmniboxTextfield (which leads to this method
   // beting invoked) so there is no need to call OnSetFocus again. In fact,
   // calling OnSetFocus again here would reset the caret visibility to true and
   // it would be impossible to tell that the omnibox was focused by a tap in the

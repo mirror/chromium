@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_IOS_H_
-#define IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_IOS_H_
+#ifndef IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_H_
+#define IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_H_
 
 #import <UIKit/UIKit.h>
 
@@ -15,10 +15,29 @@
 typedef enum {
   OMNIBOX_TEXT_FIELD_FADE_STYLE_IN,
   OMNIBOX_TEXT_FIELD_FADE_STYLE_OUT
-} OmniboxTextFieldFadeStyle;
+} OmniboxTextfieldFadeStyle;
+
+@class OmniboxTextfield;
+
+@interface LocationBarView : UIView
+
+// Initialize the location bar with the given frame, font, text color, and tint
+// color for omnibox.
+- (instancetype)initWithFrame:(CGRect)frame
+                         font:(UIFont*)font
+                    textColor:(UIColor*)textColor
+                    tintColor:(UIColor*)tintColor NS_DESIGNATED_INITIALIZER;
+
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+
+@property(nonatomic, strong) OmniboxTextfield* textField;
+
+@end
 
 // UITextField subclass to allow for adjusting borders.
-@interface OmniboxTextFieldIOS : UITextField
+@interface OmniboxTextfield : UITextField
 
 // Initialize the omnibox with the given frame, font, text color, and tint
 // color.
@@ -29,10 +48,10 @@ typedef enum {
 
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 
-// Delegate getter and setter.  Overridden to use OmniboxTextFieldDelegate
+// Delegate getter and setter.  Overridden to use OmniboxTextfieldDelegate
 // instead of UITextFieldDelegate.
-- (id<OmniboxTextFieldDelegate>)delegate;
-- (void)setDelegate:(id<OmniboxTextFieldDelegate>)delegate;
+- (id<OmniboxTextfieldDelegate>)delegate;
+- (void)setDelegate:(id<OmniboxTextfieldDelegate>)delegate;
 
 // Sets the field's text to |text|.  If |userTextLength| is less than the length
 // of |text|, the excess is displayed as inline autocompleted text.  When the
@@ -106,15 +125,15 @@ typedef enum {
 - (UIColor*)displayedTextColor;
 
 // Fade in/out the text and auxiliary views depending on |style|.
-- (void)animateFadeWithStyle:(OmniboxTextFieldFadeStyle)style;
+- (void)animateFadeWithStyle:(OmniboxTextfieldFadeStyle)style;
 // Reverses animations added by |-animateFadeWithStyle:|.
 - (void)reverseFadeAnimations;
 // Called when animations added by |-animateFadeWithStyle:| can be removed.
 - (void)cleanUpFadeAnimations;
 
 // Redeclare the delegate property to be the more specific
-// OmniboxTextFieldDelegate.
-@property(nonatomic, weak) id<OmniboxTextFieldDelegate> delegate;
+// OmniboxTextfieldDelegate.
+@property(nonatomic, weak) id<OmniboxTextfieldDelegate> delegate;
 
 @property(nonatomic, strong) NSString* preEditText;
 @property(nonatomic) BOOL clearingPreEditText;
@@ -125,8 +144,8 @@ typedef enum {
 @end
 
 // A category for defining new methods that access private ivars.
-@interface OmniboxTextFieldIOS (TestingUtilities)
+@interface OmniboxTextfield (TestingUtilities)
 - (UILabel*)preEditStaticLabel;
 @end
 
-#endif  // IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_IOS_H_
+#endif  // IOS_CHROME_BROWSER_UI_OMNIBOX_OMNIBOX_TEXT_FIELD_H_

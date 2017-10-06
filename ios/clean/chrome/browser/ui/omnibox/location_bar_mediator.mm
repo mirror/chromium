@@ -39,7 +39,7 @@
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
 
   // The LocationBarController that wraps OmniboxViewIOS and
-  // OmniboxTextFieldIOS.  This mediator updates the UI through |_locationBar|
+  // OmniboxTextfield.  This mediator updates the UI through |_locationBar|
   // rather than through a consumer.
   std::unique_ptr<LocationBarController> _locationBar;
 

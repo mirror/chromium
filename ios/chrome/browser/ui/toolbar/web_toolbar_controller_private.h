@@ -11,7 +11,7 @@
 
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 
-@class OmniboxTextFieldIOS;
+@class OmniboxTextfield;
 
 // Private methods for unit tests.
 @interface WebToolbarController (Testing)
@@ -23,7 +23,7 @@
 - (std::string)getLocationText;
 - (BOOL)isLoading;
 - (BOOL)isPrerenderAnimationRunning;
-- (OmniboxTextFieldIOS*)omnibox;
+- (OmniboxTextfield*)omnibox;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_WEB_TOOLBAR_CONTROLLER_PRIVATE_H_

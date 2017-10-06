@@ -8,10 +8,10 @@
 #import <UIKit/UIKit.h>
 
 // Implements UITextPasteDelegate to workaround http://crbug.com/755620.
-@interface OmniboxTextFieldPasteDelegate : NSObject
+@interface OmniboxTextfieldPasteDelegate : NSObject
 @end
 
-@interface OmniboxTextFieldPasteDelegate (
+@interface OmniboxTextfieldPasteDelegate (
     UITextPasteDelegate)<UITextPasteDelegate>
 @end
 

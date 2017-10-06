@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_text_field.h"
 
 #import <CoreText/CoreText.h>
 
@@ -51,7 +51,6 @@ const CGFloat kClearButtonRightMarginIpad = 12;
 // omnibox border.
 const CGFloat kTextAreaLeadingOffset = -2;
 
-// TODO(rohitrao): Should this be pulled from somewhere else?
 const CGFloat kStarButtonWidth = 36;
 const CGFloat kVoiceSearchButtonWidth = 36.0;
 
@@ -64,7 +63,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 }  // namespace
 
-@interface OmniboxTextFieldIOS ()
+@interface OmniboxTextfield ()
 
 // Current image id used in left view.
 @property(nonatomic, assign) NSUInteger leftViewImageId;
@@ -92,10 +91,39 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 @end
 
-#pragma mark -
-#pragma mark OmniboxTextFieldIOS
+#pragma mark - LocationBarView
 
-@implementation OmniboxTextFieldIOS {
+@implementation LocationBarView
+@synthesize textField = _textField;
+
+- (instancetype)initWithFrame:(CGRect)frame
+                         font:(UIFont*)font
+                    textColor:(UIColor*)textColor
+                    tintColor:(UIColor*)tintColor {
+  self = [super initWithFrame:frame];
+  if (self) {
+    frame.origin.x = 0;
+    frame.origin.y = 0;
+    _textField = [[OmniboxTextfield alloc] initWithFrame:frame
+                                                    font:font
+                                               textColor:textColor
+                                               tintColor:tintColor];
+    [self addSubview:_textField];
+  }
+  return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  self.textField.frame = self.bounds;
+}
+
+@end
+
+#pragma mark -
+#pragma mark OmniboxTextfield
+
+@implementation OmniboxTextfield {
   UILabel* _selection;
   UILabel* _preEditStaticLabel;
   UIFont* _font;
@@ -165,17 +193,17 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   return nil;
 }
 
-// Enforces that the delegate is an OmniboxTextFieldDelegate.
-- (id<OmniboxTextFieldDelegate>)delegate {
+// Enforces that the delegate is an OmniboxTextfieldDelegate.
+- (id<OmniboxTextfieldDelegate>)delegate {
   id delegate = [super delegate];
   DCHECK(delegate == nil ||
          [[delegate class]
-             conformsToProtocol:@protocol(OmniboxTextFieldDelegate)]);
+             conformsToProtocol:@protocol(OmniboxTextfieldDelegate)]);
   return delegate;
 }
 
-// Overridden to require an OmniboxTextFieldDelegate.
-- (void)setDelegate:(id<OmniboxTextFieldDelegate>)delegate {
+// Overridden to require an OmniboxTextfieldDelegate.
+- (void)setDelegate:(id<OmniboxTextfieldDelegate>)delegate {
   [super setDelegate:delegate];
 }
 
@@ -502,8 +530,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // attributed string to -systemFontOfSize fixes part of the problem, but the
   // baseline changes so text is out of alignment.
   [self setFont:_font];
-  // TODO(justincohen): Find a better place to put this, and consolidate it with
-  // the same call in omniboxViewIOS.
   [self updateTextDirection];
 }
 
@@ -731,6 +757,12 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // First find how much (if any) of the scheme/host needs to be clipped so that
   // the end of the TLD fits in |rect|. Note that if the omnibox is currently
   // displaying a search query the prefix is not clipped.
+
+  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
+    // -[UITextField drawTextInRect:] ignores the argument.
+    return rect;
+  }
+
   CGFloat widthOfClippedPrefix = 0;
   url::Component scheme, host;
   AutocompleteInput::ParseForEmphasizeComponents(
@@ -783,13 +815,6 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 
 // Enumerate url components (host, path) and draw each one in different rect.
 - (void)drawTextInRect:(CGRect)rect {
-  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
-    // -[UITextField drawTextInRect:] ignores the argument, so we can't do
-    // anything on 11.1 and up.
-    [super drawTextInRect:rect];
-    return;
-  }
-
   // Save and restore the graphics state because rectForDrawTextInRect may
   // apply an image mask to fade out beginning and/or end of the URL.
   gfx::ScopedCGContextSaveGState saver(UIGraphicsGetCurrentContext());
@@ -797,7 +822,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 }
 
 - (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent*)event {
-  // Anything in the narrow bar above OmniboxTextFieldIOS view
+  // Anything in the narrow bar above OmniboxTextfield view
   // will also activate the text field.
   if (point.y < 0)
     point.y = 0;
@@ -872,7 +897,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   return CGRectZero;
 }
 
-- (void)animateFadeWithStyle:(OmniboxTextFieldFadeStyle)style {
+- (void)animateFadeWithStyle:(OmniboxTextfieldFadeStyle)style {
   // Animation values
   BOOL isFadingIn = (style == OMNIBOX_TEXT_FIELD_FADE_STYLE_IN);
   CGFloat beginOpacity = isFadingIn ? 0.0 : 1.0;
@@ -940,7 +965,7 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
 // Overridden to allow for custom omnibox copy behavior.  This includes
 // preprending http:// to the copied URL if needed.
 - (void)copy:(id)sender {
-  id<OmniboxTextFieldDelegate> delegate = [self delegate];
+  id<OmniboxTextfieldDelegate> delegate = [self delegate];
   BOOL handled = NO;
 
   // Must test for the onCopy method, since it's optional.

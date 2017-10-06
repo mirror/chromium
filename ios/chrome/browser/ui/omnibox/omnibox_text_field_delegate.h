@@ -7,19 +7,19 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol OmniboxTextFieldDelegate<UITextFieldDelegate>
+@protocol OmniboxTextfieldDelegate<UITextFieldDelegate>
 
 @optional
-// Called when the OmniboxTextField performs a copy operation.  Returns YES if
+// Called when the OmniboxTextfield performs a copy operation.  Returns YES if
 // the delegate handled the copy operation itself.  If the delegate returns NO,
 // the field must perform the copy.  Some platforms (iOS 4) do not expose an API
 // that allows the delegate to handle the copy.
 - (BOOL)onCopy;
 
-// Called before the OmniboxTextField performs a paste operation.
+// Called before the OmniboxTextfield performs a paste operation.
 - (void)willPaste;
 
-// Called when the backspace button is tapped in the OmniboxTextField.
+// Called when the backspace button is tapped in the OmniboxTextfield.
 - (void)onDeleteBackward;
 @end
 

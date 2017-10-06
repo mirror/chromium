@@ -4,44 +4,45 @@
 
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_view_controller.h"
 
-#import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_text_field.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
 @interface LocationBarViewController ()
-@property(nonatomic, readwrite, strong) OmniboxTextFieldIOS* omnibox;
+@property(nonatomic, readwrite, strong) LocationBarView* locationBarView;
 @end
 
 @implementation LocationBarViewController
 
-@synthesize omnibox = _omnibox;
+@synthesize locationBarView = _locationBarView;
 @synthesize omniboxFrame = _omniboxFrame;
 
 - (instancetype)init {
   if ((self = [super init])) {
     UIColor* textColor = [UIColor blackColor];
     UIColor* tintColor = nil;
-    _omnibox =
-        [[OmniboxTextFieldIOS alloc] initWithFrame:CGRectZero
-                                              font:[UIFont systemFontOfSize:14]
-                                         textColor:textColor
-                                         tintColor:tintColor];
+    _locationBarView =
+        [[LocationBarView alloc] initWithFrame:CGRectZero
+                                          font:[UIFont systemFontOfSize:14]
+                                     textColor:textColor
+                                     tintColor:tintColor];
   }
   return self;
 }
 
 - (void)viewDidLoad {
-  self.omnibox.autoresizingMask =
+  self.locationBarView.autoresizingMask =
       UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-  self.omnibox.frame = self.view.bounds;
-  [self.view addSubview:self.omnibox];
+  self.locationBarView.frame = self.view.bounds;
+  [self.view addSubview:self.locationBarView];
 }
 
 // After layout, update the omnibox's frame so that it can be broadcast.
 - (void)viewDidLayoutSubviews {
-  self.omniboxFrame = [self.view convertRect:self.omnibox.frame toView:nil];
+  self.omniboxFrame =
+      [self.view convertRect:self.locationBarView.frame toView:nil];
 }
 
 @end
