@@ -23,7 +23,6 @@
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
-#include "ash/wm/splitview/split_view_overview_overlay.h"
 #include "ash/wm/switchable_windows.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -499,11 +498,12 @@ void WindowSelector::SetBoundsForWindowGridsInScreenIgnoringWindow(
     grid->SetBoundsAndUpdatePositionsIgnoringWindow(bounds, ignored_item);
 }
 
-void WindowSelector::SetSplitViewOverviewOverlayVisible(
-    bool visible,
+void WindowSelector::SetSplitViewOverviewOverlayIndicatorType(
+    SplitViewOverviewOverlay::IndicatorType indicator_type,
     const gfx::Point& event_location) {
   DCHECK(split_view_overview_overlay_);
-  split_view_overview_overlay_->SetVisible(visible, event_location);
+  split_view_overview_overlay_->SetIndicatorType(indicator_type,
+                                                 event_location);
 }
 
 WindowGrid* WindowSelector::GetGridWithRootWindow(aura::Window* root_window) {
