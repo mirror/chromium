@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8da59ac1_459226c8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-06T18:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1b5995_23046eb8",
+      "revId": "a87c88861d814ef58099575c2395efd23fb24dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d908921_8867e90a",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a87c88861d814ef58099575c2395efd23fb24dcf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3235f1_0c7bee57",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-06T18:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d908921_8867e90a",
+      "revId": "a87c88861d814ef58099575c2395efd23fb24dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
