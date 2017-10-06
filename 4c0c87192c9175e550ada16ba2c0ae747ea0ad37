@@ -34,6 +34,24 @@
       "revId": "4c0c87192c9175e550ada16ba2c0ae747ea0ad37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3129d19_4a8ce126",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 3857,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-10-06T18:18:21Z",
+      "side": 1,
+      "message": "the reset complete destroys the personal data manager, instantiating a new one and reloading from disk, simulating startup which should trigger the flow to initialize sync.\n\nThe refresh does an in-place refresh, simulating the usual \"a change was made autofill data\".",
+      "parentUuid": "1e2e779f_35c8a7c9",
+      "revId": "4c0c87192c9175e550ada16ba2c0ae747ea0ad37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
