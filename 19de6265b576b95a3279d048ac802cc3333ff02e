@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5319fc46_e5ceaf06",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:11:40Z",
+      "side": 1,
+      "message": "Any particular reason for using escape sequences rather than regular chars?\nAlso, why the +es?",
+      "range": {
+        "startLine": 75,
+        "startChar": 76,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "19de6265b576b95a3279d048ac802cc3333ff02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab57407a_f72831fc",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:11:40Z",
+      "side": 1,
+      "message": "optional: This block might be worth a helper function, something like SetupLogoService(cached_logo, fresh_logo). WDYT?",
+      "range": {
+        "startLine": 986,
+        "startChar": 76,
+        "endLine": 986,
+        "endChar": 0
+      },
+      "revId": "19de6265b576b95a3279d048ac802cc3333ff02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
