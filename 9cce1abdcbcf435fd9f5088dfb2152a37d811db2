@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95712075_4f377435",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T23:34:48Z",
+      "side": 1,
+      "message": "nit: switch all of these to constexpr? ditto below",
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a789e1d2_bedf811c",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T23:34:48Z",
+      "side": 1,
+      "message": "nit: \"Too\" (i think log messages are typically capitalized)",
+      "range": {
+        "startLine": 350,
+        "startChar": 19,
+        "endLine": 350,
+        "endChar": 22
+      },
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea424be5_6a3c2966",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T23:34:48Z",
+      "side": 1,
+      "message": "size_t",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 15
+      },
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bc2641_bdb235de",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T23:34:48Z",
+      "side": 1,
+      "message": "can this overrun the array above? you only have 7 values there, but the index here looks like it\u0027s [0, 7] inclusive.",
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
