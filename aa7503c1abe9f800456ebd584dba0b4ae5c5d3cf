@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "835fe90a_3f85f9aa",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a56699e_5ed437c5",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2371ab5_4277caa8",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "febe1093_8e99c9cb",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2371ab5_4277caa8",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8ad7ac4_f89e4b9b",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
         "patchSetId": 12
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-05T00:52:55Z",
       "side": 1,
       "message": "Can we end up setting an empty list here?",
+      "range": {
+        "startLine": 271,
+        "startChar": 26,
+        "endLine": 271,
+        "endChar": 41
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c5a3e9_30f5394e",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "No, because we check in advance that the filtered list isn\u0027t empty - see line 163 - because if all we have are empty lists we don\u0027t want to set the vendor capability key at all.",
+      "parentUuid": "a8ad7ac4_f89e4b9b",
       "range": {
         "startLine": 271,
         "startChar": 26,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7731205a_b6cfcb11",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25cb20b8_c80bfa1f",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 19
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1de64672_af7a3fed",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 12
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "dd97a5cc_495d032c",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de64672_af7a3fed",
+      "range": {
+        "startLine": 111,
+        "startChar": 34,
+        "endLine": 111,
+        "endChar": 44
+      },
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa3283e3_020b8c62",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 12
@@ -119,6 +227,24 @@
       "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e301455_9208a895",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa3283e3_020b8c62",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "3bfd0e3f_cab82b07",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85631255_a66a4237",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5074568_c26c6d04",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 12
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "670b87fb_371d1ad6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5074568_c26c6d04",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f6605f_2b3af9c9",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 12
@@ -167,6 +329,24 @@
       "writtenOn": "2017-10-05T00:52:55Z",
       "side": 1,
       "message": "How do we know this won\u0027t be a nullptr?",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3610fbc6_f5d94cfb",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "We don\u0027t, but this is accounted for in HasValidEntry.",
+      "parentUuid": "84f6605f_2b3af9c9",
       "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "88778e16_124e20f6",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc933596_194de0f6",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8562a709_04444fe3",
         "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
         "patchSetId": 12
@@ -204,6 +402,24 @@
       "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8f4b86_9f495fd2",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_capabilities_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T21:57:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8562a709_04444fe3",
+      "revId": "aa7503c1abe9f800456ebd584dba0b4ae5c5d3cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
