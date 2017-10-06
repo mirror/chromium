@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e75f684_b2d75b84",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1242,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-06T01:10:30Z",
+      "side": 1,
+      "message": "what happens if we don\u0027t early return here? I see that we call updateTabLoadingState(which should be a noop about navigation and security buttons), but all others conditionals should also end up only calling finishLoadProgress(false) down below.\n\nSo does the updateTabLoadingState do more than it should?",
+      "range": {
+        "startLine": 1242,
+        "startChar": 17,
+        "endLine": 1242,
+        "endChar": 18
+      },
+      "revId": "0420fd852ba19135f4d44db681656e95c0b5b03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
