@@ -64,6 +64,7 @@
     "tools/gn",
     "tools/grit",
     "tools/idl_parser",
+    "tools/luci-go",
     "tools/mb",
     "tools/md_browser",
     "tools/memory",
