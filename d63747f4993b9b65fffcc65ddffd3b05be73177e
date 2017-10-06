@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "37c7e885_83a35faa",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T19:34:50Z",
+      "side": 1,
+      "message": "Good point about tracing shutdown. I forgot about that. But note that shutdown tracing is only about chrome trace events. Shutdown trace file is created here:\n\nhttps://cs.chromium.org/chromium/src/content/browser/browser_shutdown_profile_dumper.cc?l\u003d40\n\nIt shortcuts the tracing controller and just talks to the local TraceLog in the browser process (TraceLog is the thing that collects chrome trace events in a singleton buffer). So, there will be no ARC, ETW, or BattOr traces in the shutdown trace.",
+      "parentUuid": "af858625_62342e5b",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92682c34_bb5330ea",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
         "patchSetId": 52
