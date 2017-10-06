@@ -62,6 +62,11 @@ class CORE_EXPORT DedicatedWorkerObjectProxy : public ThreadedObjectProxyBase {
       ParentFrameTaskRunners*);
   ~DedicatedWorkerObjectProxy() override;
 
+  void StartGlobalScope(const KURL& script_url,
+                        String source_code,
+                        std::unique_ptr<Vector<char>> cached_meta_data,
+                        V8CacheOptions);
+
   void PostMessageToWorkerObject(RefPtr<SerializedScriptValue>,
                                  Vector<MessagePortChannel>);
   void ProcessUnhandledException(int exception_id, WorkerThread*);

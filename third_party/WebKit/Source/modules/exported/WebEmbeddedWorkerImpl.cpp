@@ -384,6 +384,10 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params;
   // |main_script_loader_| isn't created if the InstalledScriptsManager had the
   // script.
+  String source_code;
+  std::unique_ptr<Vector<char>> cached_meta_data;
+  V8CacheOptions v8_cache_options =
+      static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options);
   if (main_script_loader_) {
     // We need to set the CSP to both the shadow page's document and the
     // ServiceWorkerGlobalScope.
@@ -392,13 +396,13 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
         main_script_loader_->GetReferrerPolicy());
     global_scope_creation_params = WTF::MakeUnique<GlobalScopeCreationParams>(
         worker_start_data_.script_url, worker_start_data_.user_agent,
-        main_script_loader_->SourceText(),
-        main_script_loader_->ReleaseCachedMetadata(), start_mode,
-        document->GetContentSecurityPolicy()->Headers().get(),
+        start_mode, document->GetContentSecurityPolicy()->Headers().get(),
         main_script_loader_->GetReferrerPolicy(), starter_origin,
         worker_clients, main_script_loader_->ResponseAddressSpace(),
         main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
         static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options));
+    source_code = main_script_loader_->SourceText();
+    cached_meta_data = main_script_loader_->ReleaseCachedMetadata();
     main_script_loader_ = nullptr;
   } else {
     // ContentSecurityPolicy and ReferrerPolicy are applied to |document| at
@@ -406,8 +410,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
     // script.
     global_scope_creation_params = WTF::MakeUnique<GlobalScopeCreationParams>(
         worker_start_data_.script_url, worker_start_data_.user_agent,
-        "" /* SourceText */, nullptr /* CachedMetadata */, start_mode,
-        nullptr /* ContentSecurityPolicy */, "" /* ReferrerPolicy */,
+        start_mode, nullptr /* ContentSecurityPolicy */, "" /* ReferrerPolicy */,
         starter_origin, worker_clients, worker_start_data_.address_space,
         nullptr /* OriginTrialTokens */, std::move(worker_settings),
         static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options));
@@ -427,6 +430,8 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
 
   worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
                                                worker_start_data_.script_url);
+
+  // TODO(nhiroki): Post a task to evaluate classic scripts.
 }
 
 }  // namespace blink

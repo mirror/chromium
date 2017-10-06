@@ -35,16 +35,6 @@ WorkletGlobalScope::WorkletGlobalScope(const KURL& url,
 
 WorkletGlobalScope::~WorkletGlobalScope() = default;
 
-void WorkletGlobalScope::EvaluateClassicScript(
-    const KURL& script_url,
-    String source_code,
-    std::unique_ptr<Vector<char>> cached_meta_data,
-    V8CacheOptions v8_cache_options) {
-  // Worklet should evaluate a script as a module script (as opposed to a
-  // classic script).
-  NOTREACHED();
-}
-
 v8::Local<v8::Object> WorkletGlobalScope::Wrap(
     v8::Isolate*,
     v8::Local<v8::Object> creation_context) {

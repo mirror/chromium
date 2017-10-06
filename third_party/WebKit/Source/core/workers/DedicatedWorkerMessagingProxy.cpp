@@ -75,6 +75,14 @@ void DedicatedWorkerMessagingProxy::StartWorkerGlobalScope(
   InitializeWorkerThread(std::move(global_scope_creation_params),
                          CreateBackingThreadStartupData(ToIsolate(document)),
                          script_url);
+
+  TaskRunnerHelper::Get(TaskType::kDOMManipulation, GetWorkerThread())
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(
+                     &DedicatedWorkerObjectProxy::StartGlobalScope,
+                     CrossThreadUnretained(worker_object_proxy_.get()),
+                     script_url, source_code, nullptr /* cached_meta_data */,
+                     kV8CacheOptionsDefault));
 }
 
 void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
@@ -98,6 +106,7 @@ void DedicatedWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
   }
 }
 
+// TODO(nhiroki): Move this to Evaluated.
 void DedicatedWorkerMessagingProxy::WorkerThreadCreated() {
   DCHECK(IsParentContextThread());
   ThreadedMessagingProxyBase::WorkerThreadCreated();

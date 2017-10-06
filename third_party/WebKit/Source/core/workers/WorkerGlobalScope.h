@@ -79,11 +79,16 @@ class CORE_EXPORT WorkerGlobalScope
 
   KURL CompleteURL(const String&) const;
 
+  // Evaluates the given main script as a classic script (as opposed to a module
+  // script).
+  // https://html.spec.whatwg.org/multipage/webappapis.html#classic-script
+  virtual void EvaluateClassicScript(
+      const KURL& script_url,
+      String source_code,
+      std::unique_ptr<Vector<char>> cached_meta_data,
+      V8CacheOptions);
+
   // WorkerOrWorkletGlobalScope
-  void EvaluateClassicScript(const KURL& script_url,
-                             String source_code,
-                             std::unique_ptr<Vector<char>> cached_meta_data,
-                             V8CacheOptions) override;
   bool IsClosing() const final { return closing_; }
   virtual void Dispose();
   WorkerThread* GetThread() const final { return thread_; }

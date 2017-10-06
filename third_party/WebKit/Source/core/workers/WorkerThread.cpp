@@ -407,12 +407,6 @@ void WorkerThread::InitializeOnWorkerThread(
   V8CacheOptions v8_cache_options =
       global_scope_creation_params->v8_cache_options;
 
-  // TODO(nhiroki): Separate these fields from GlobalScopeCreationParams because
-  // these are used not for creating a global scope but for evaluating a script.
-  String source_code = std::move(global_scope_creation_params->source_code);
-  std::unique_ptr<Vector<char>> cached_meta_data =
-      std::move(global_scope_creation_params->cached_meta_data);
-
   {
     MutexLocker lock(thread_state_mutex_);
 
@@ -454,15 +448,6 @@ void WorkerThread::InitializeOnWorkerThread(
     PrepareForShutdownOnWorkerThread();
     return;
   }
-
-  // Worklet will evaluate the script later via Worklet.addModule().
-  // TODO(nhiroki): Start module loading for workers here.
-  // (https://crbug.com/680046)
-  if (GlobalScope()->IsWorkletGlobalScope())
-    return;
-  GlobalScope()->EvaluateClassicScript(script_url, std::move(source_code),
-                                       std::move(cached_meta_data),
-                                       v8_cache_options);
 }
 
 void WorkerThread::PrepareForShutdownOnWorkerThread() {

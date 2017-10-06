@@ -34,15 +34,6 @@ class CORE_EXPORT WorkerOrWorkletGlobalScope : public ExecutionContext {
 
   virtual ScriptWrappable* GetScriptWrappable() const = 0;
 
-  // Evaluates the given main script as a classic script (as opposed to a module
-  // script).
-  // https://html.spec.whatwg.org/multipage/webappapis.html#classic-script
-  virtual void EvaluateClassicScript(
-      const KURL& script_url,
-      String source_code,
-      std::unique_ptr<Vector<char>> cached_meta_data,
-      V8CacheOptions) = 0;
-
   // Returns true when the WorkerOrWorkletGlobalScope is closing (e.g. via
   // WorkerGlobalScope#close() method). If this returns true, the worker is
   // going to be shutdown after the current task execution. Globals that

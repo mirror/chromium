@@ -60,6 +60,18 @@ std::unique_ptr<DedicatedWorkerObjectProxy> DedicatedWorkerObjectProxy::Create(
 
 DedicatedWorkerObjectProxy::~DedicatedWorkerObjectProxy() {}
 
+void DedicatedWorkerObjectProxy::StartGlobalScope(
+    const KURL& script_url,
+    String source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data,
+    V8CacheOptions v8_cache_options) {
+  DCHECK(worker_global_scope_);
+  DCHECK(worker_global_scope_->IsContextThread());
+  worker_global_scope_->EvaluateClassicScript(
+      script_url, std::move(source_code), std::move(cached_meta_data),
+      v8_cache_options);
+}
+
 void DedicatedWorkerObjectProxy::PostMessageToWorkerObject(
     RefPtr<SerializedScriptValue> message,
     Vector<MessagePortChannel> channels) {
