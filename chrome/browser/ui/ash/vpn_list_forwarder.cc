@@ -3,9 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/ui/ash/vpn_list_forwarder.h"
-
 #include "ash/public/interfaces/constants.mojom.h"
-#include "ash/public/interfaces/vpn_list.mojom.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/logging.h"
@@ -32,6 +30,45 @@ bool IsVPNProvider(const extensions::Extension* extension) {
       extensions::APIPermission::kVpnProvider);
 }
 
+// Checks if a package is an ArcVPNProvider.
+bool IsPackageArcVPNProvider(const std::string& package_name,
+                             const ArcAppListPrefs* arc_app_list_prefs) {
+  auto package_info = arc_app_list_prefs->GetPackage(package_name);
+  return package_info && package_info->vpn_provider;
+}
+
+ash::mojom::ArcVpnProviderPtr CreateArcVPNProviderFromApp(
+    const std::string& app_id,
+    const ArcAppListPrefs* arc_app_list_prefs) {
+  auto app_info = arc_app_list_prefs->GetApp(app_id);
+  if (!app_info ||
+      !IsPackageArcVPNProvider(app_info->package_name, arc_app_list_prefs))
+    return nullptr;
+
+  auto arc_vpn_provider = ash::mojom::ArcVpnProvider::New();
+  arc_vpn_provider->package_name = app_info->package_name;
+  arc_vpn_provider->app_name = app_info->name;
+  arc_vpn_provider->app_id = app_id;
+  arc_vpn_provider->last_launch_time = app_info->last_launch_time.is_null()
+                                           ? app_info->install_time
+                                           : app_info->last_launch_time;
+
+  return arc_vpn_provider;
+}
+
+ash::mojom::ArcVpnProviderPtr CreateArcVPNProviderFromPackage(
+    const std::string& package_name,
+    const ArcAppListPrefs* arc_app_list_prefs) {
+  auto package_apps = arc_app_list_prefs->GetAppsForPackage(package_name);
+  if (package_apps.size() < 1)
+    return nullptr;
+  // Use first launchable of the package.
+  // Todo(lgcheng@) If we observe VPN package has multiple launchables, use
+  // latest used launchable here.
+  std::string app_id = *package_apps.begin();
+  return CreateArcVPNProviderFromApp(app_id, arc_app_list_prefs);
+}
+
 Profile* GetProfileForPrimaryUser() {
   const user_manager::User* const primary_user =
       user_manager::UserManager::Get()->GetPrimaryUser();
@@ -56,7 +93,7 @@ VpnListForwarder::VpnListForwarder() : weak_factory_(this) {
   if (user_manager::UserManager::Get()->GetPrimaryUser()) {
     // If a user is logged in, start observing the primary user's extension
     // registry immediately.
-    AttachToPrimaryUserExtensionRegistry();
+    AttachToPrimaryUserProfile();
   } else {
     // If no user is logged in, wait until the first user logs in (thus becoming
     // the primary user) and a profile is created for that user.
@@ -68,6 +105,55 @@ VpnListForwarder::VpnListForwarder() : weak_factory_(this) {
 VpnListForwarder::~VpnListForwarder() {
   if (extension_registry_)
     extension_registry_->RemoveObserver(this);
+  if (arc_app_list_prefs_)
+    arc_app_list_prefs_->RemoveObserver(this);
+  vpn_list_ = nullptr;
+}
+
+void VpnListForwarder::OnAppNameUpdated(const std::string& id,
+                                        const std::string& name) {
+  if (!arc_app_list_prefs_->package_list_initial_refreshed())
+    return;
+
+  auto arc_vpn_provider = CreateArcVPNProviderFromApp(id, arc_app_list_prefs_);
+  if (arc_vpn_provider)
+    vpn_list_->AddOrUpdateArcVPNProvider(std::move(arc_vpn_provider));
+}
+
+void VpnListForwarder::OnLastLaunchTimeUpdated(const std::string& app_id) {
+  if (!arc_app_list_prefs_->package_list_initial_refreshed())
+    return;
+
+  auto arc_vpn_provider =
+      CreateArcVPNProviderFromApp(app_id, arc_app_list_prefs_);
+  if (arc_vpn_provider)
+    vpn_list_->AddOrUpdateArcVPNProvider(std::move(arc_vpn_provider));
+}
+
+void VpnListForwarder::OnPackageInstalled(
+    const arc::mojom::ArcPackageInfo& package_info) {
+  if (!arc_app_list_prefs_->package_list_initial_refreshed())
+    return;
+
+  auto arc_vpn_provider = CreateArcVPNProviderFromPackage(
+      package_info.package_name, arc_app_list_prefs_);
+  if (arc_vpn_provider)
+    vpn_list_->AddOrUpdateArcVPNProvider(std::move(arc_vpn_provider));
+}
+
+// Package information is not gurranted to be available at this moment. Forward
+// event to ash to see if uninstalled package matches any of the cached
+// providers.
+void VpnListForwarder::OnPackageRemoved(const std::string& package_name,
+                                        bool uninstalled) {
+  if (!arc_app_list_prefs_->package_list_initial_refreshed())
+    return;
+
+  vpn_list_->RemoveArcVPNProvider(package_name);
+}
+
+void VpnListForwarder::OnPackageListInitialRefreshed() {
+  UpdateArcVPNProviders();
 }
 
 void VpnListForwarder::OnExtensionLoaded(
@@ -109,9 +195,8 @@ void VpnListForwarder::Observe(int type,
   // the profile, then start observing the primary user's extension registry.
   registrar_.RemoveAll();
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::BindOnce(&VpnListForwarder::AttachToPrimaryUserExtensionRegistry,
-                     weak_factory_.GetWeakPtr()));
+      FROM_HERE, base::BindOnce(&VpnListForwarder::AttachToPrimaryUserProfile,
+                                weak_factory_.GetWeakPtr()));
 }
 
 void VpnListForwarder::UpdateVPNProviders() {
@@ -135,12 +220,33 @@ void VpnListForwarder::UpdateVPNProviders() {
   if (!sent_providers_ && third_party_providers.empty())
     return;
 
-  // It's rare to install or uninstall VPN provider extensions, so don't bother
-  // caching the interface pointer between calls to this function.
-  ash::mojom::VpnListPtr vpn_list = ConnectToVpnList();
-  vpn_list->SetThirdPartyVpnProviders(std::move(third_party_providers));
+  vpn_list_->SetThirdPartyVpnProviders(std::move(third_party_providers));
 
   sent_providers_ = true;
+}
+
+void VpnListForwarder::UpdateArcVPNProviders() {
+  std::vector<ash::mojom::ArcVpnProviderPtr> arc_vpn_providers;
+  std::vector<std::string> packge_names =
+      arc_app_list_prefs_->GetPackagesFromPrefs();
+  for (auto package_name : packge_names) {
+    if (!IsPackageArcVPNProvider(package_name, arc_app_list_prefs_))
+      continue;
+    auto arc_vpn_provider =
+        CreateArcVPNProviderFromPackage(package_name, arc_app_list_prefs_);
+    if (arc_vpn_provider) {
+      arc_vpn_providers.push_back(std::move(arc_vpn_provider));
+    }
+  }
+  vpn_list_->SetArcVpnProviders(std::move(arc_vpn_providers));
+}
+
+void VpnListForwarder::AttachToPrimaryUserProfile() {
+  DCHECK(!vpn_list_);
+  vpn_list_ = ConnectToVpnList();
+  DCHECK(vpn_list_);
+  AttachToPrimaryUserExtensionRegistry();
+  AttachToPrimaryUserArcAppListPrefs();
 }
 
 void VpnListForwarder::AttachToPrimaryUserExtensionRegistry() {
@@ -150,4 +256,12 @@ void VpnListForwarder::AttachToPrimaryUserExtensionRegistry() {
   extension_registry_->AddObserver(this);
 
   UpdateVPNProviders();
+}
+
+void VpnListForwarder::AttachToPrimaryUserArcAppListPrefs() {
+  DCHECK(arc_app_list_prefs_);
+  arc_app_list_prefs_ = ArcAppListPrefs::Get(GetProfileForPrimaryUser());
+  if (arc_app_list_prefs_) {
+    arc_app_list_prefs_->AddObserver(this);
+  }
 }
