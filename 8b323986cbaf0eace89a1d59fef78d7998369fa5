@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee0e510e_dbb6bbcd",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T01:20:58Z",
+      "side": 1,
+      "message": "Thank you. This is an interesting observation. I will keep it in mind and discuss it in a future change list. I am almost certain we don\u0027t have a unit test for this execution path either.",
+      "parentUuid": "7e330d20_488862c9",
+      "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3248df8_15456ab0",
         "filename": "components/component_updater/component_installer.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8a9e7655_49075739",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T01:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3248df8_15456ab0",
+      "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12947610_5a2597b9",
         "filename": "components/component_updater/component_installer.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T12:10:26Z",
       "side": 1,
       "message": "I\u0027ve see that all implementation of that method basically do the following:\n\n  base::PostTaskWithTraits(\n      FROM_HERE,\n      {base::TaskPriority::BACKGROUND, base::MayBlock()},\n      base::Bind(callback, result));\n\nHowever, this mean pushing the fact of selecting the correct traits to the code implementing \"Install\" method. However, said code does not know what the callback does and cannot select the correct traits without at least documentation to say \"the callback should be invoked on a background sequence and allowed to block\".\n\nOr maybe better, since the method is only invoked from a single location in code in production in components/update_client/component.cc AFAICT (there are calls in unit tests but this is not a problem), just pass a callback that post the task with the correct traits, doing something like this:\n\n  installer-\u003eInstall(\n      std::move(manifest), unpack_path,\n      base::Bind(\n          \u0026base::PostTaskWithTraits,\n          FROM_HERE, base::TaskTraits{base::TaskPriority::BACKGROUND, base::MayBlock()},\n          base::Bind(\u0026InstallComplete, main_task_runner, callback, unpack_path)));",
+      "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d606e7b7_dd3a3ae9",
+        "filename": "components/component_updater/component_installer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T01:20:58Z",
+      "side": 1,
+      "message": "Thank you. The fix is slightly different but removes the threading question requirements from the caller\u0027s side.",
+      "parentUuid": "12947610_5a2597b9",
       "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +127,30 @@
       "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617c40f7_a7c1420e",
+        "filename": "ios/chrome/browser/net/crl_set_fetcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-10-06T01:20:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "399b08bd_f74e39c9",
+      "range": {
+        "startLine": 174,
+        "startChar": 2,
+        "endLine": 174,
+        "endChar": 9
+      },
+      "revId": "8b323986cbaf0eace89a1d59fef78d7998369fa5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
