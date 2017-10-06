@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "724a5be8_7e44431a",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-06T00:42:49Z",
+      "side": 1,
+      "message": "typo: use -\u003e used",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
