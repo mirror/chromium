@@ -52,6 +52,24 @@
       "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fe4752_ec1a7e99",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2535,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-06T03:58:01Z",
+      "side": 0,
+      "message": "I\u0027m in favor of removing this code. It sounds like it\u0027s just there\nfor legacy reasons.",
+      "parentUuid": "1bd00990_6f45ec54",
+      "revId": "680c0735a12108841ee0b5a762e9ae41b88b2b4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
