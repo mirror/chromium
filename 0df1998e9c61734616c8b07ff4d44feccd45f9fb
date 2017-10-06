@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68dd4cc3_16f27210",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-06T07:09:19Z",
+      "side": 0,
+      "message": "we would prefer not using default in switch.",
+      "range": {
+        "startLine": 481,
+        "startChar": 4,
+        "endLine": 481,
+        "endChar": 11
+      },
+      "revId": "0df1998e9c61734616c8b07ff4d44feccd45f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e813e954_86b32a7e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderOptions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-10-06T07:09:19Z",
+      "side": 0,
+      "message": "now this is not bool but enum",
+      "range": {
+        "startLine": 102,
+        "startChar": 17,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "0df1998e9c61734616c8b07ff4d44feccd45f9fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
