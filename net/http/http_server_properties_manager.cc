@@ -268,7 +268,7 @@ bool HttpServerPropertiesManager::SetQuicAlternativeService(
     const url::SchemeHostPort& origin,
     const AlternativeService& alternative_service,
     base::Time expiration,
-    const QuicVersionVector& advertised_versions) {
+    const QuicTransportVersionVector& advertised_versions) {
   DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
   const bool changed = http_server_properties_impl_->SetQuicAlternativeService(
       origin, alternative_service, expiration, advertised_versions);
@@ -832,7 +832,7 @@ bool HttpServerPropertiesManager::ParseAlternativeServiceInfoDictOfServer(
                << "server: " << server_str;
       return false;
     }
-    QuicVersionVector advertised_versions;
+    QuicTransportVersionVector advertised_versions;
     for (const auto& value : *versions_list) {
       int version;
       if (!value.GetAsInteger(&version)) {
@@ -840,7 +840,7 @@ bool HttpServerPropertiesManager::ParseAlternativeServiceInfoDictOfServer(
                  << server_str;
         return false;
       }
-      advertised_versions.push_back(QuicVersion(version));
+      advertised_versions.push_back(QuicTransportVersion(version));
     }
     alternative_service_info->set_advertised_versions(advertised_versions);
   }

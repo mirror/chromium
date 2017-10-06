@@ -55,9 +55,9 @@ class TestStream : public QuicSpdyStream {
     data_ += string(buffer, bytes_read);
   }
 
-  using QuicStream::WriteOrBufferData;
-  using QuicStream::CloseWriteSide;
   using QuicSpdyStream::set_ack_listener;
+  using QuicStream::CloseWriteSide;
+  using QuicStream::WriteOrBufferData;
 
   const string& data() const { return data_; }
 
@@ -66,7 +66,7 @@ class TestStream : public QuicSpdyStream {
   string data_;
 };
 
-class QuicSpdyStreamTest : public QuicTestWithParam<QuicVersion> {
+class QuicSpdyStreamTest : public QuicTestWithParam<QuicTransportVersion> {
  public:
   QuicSpdyStreamTest() {
     headers_[":host"] = "www.google.com";
@@ -101,7 +101,7 @@ class QuicSpdyStreamTest : public QuicTestWithParam<QuicVersion> {
   void Initialize(bool stream_should_process_data) {
     connection_ = new testing::StrictMock<MockQuicConnection>(
         &helper_, &alarm_factory_, Perspective::IS_SERVER,
-        SupportedVersions(GetParam()));
+        SupportedTransportVersions(GetParam()));
     session_.reset(new testing::StrictMock<MockQuicSpdySession>(connection_));
     stream_ = new TestStream(GetNthClientInitiatedId(0), session_.get(),
                              stream_should_process_data);
@@ -136,7 +136,7 @@ class QuicSpdyStreamTest : public QuicTestWithParam<QuicVersion> {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSpdyStreamTest,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSpdyStreamTest, ProcessHeaderList) {
   Initialize(kShouldProcessData);

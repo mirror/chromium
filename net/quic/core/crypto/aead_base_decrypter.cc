@@ -132,7 +132,7 @@ bool AeadBaseDecrypter::SetDiversificationNonce(
   return true;
 }
 
-bool AeadBaseDecrypter::DecryptPacket(QuicVersion /*version*/,
+bool AeadBaseDecrypter::DecryptPacket(QuicTransportVersion /*version*/,
                                       QuicPacketNumber packet_number,
                                       QuicStringPiece associated_data,
                                       QuicStringPiece ciphertext,

@@ -399,8 +399,8 @@ bool QuicStream::HasBufferedData() const {
   return send_buffer_.stream_offset() > stream_bytes_written_;
 }
 
-QuicVersion QuicStream::version() const {
-  return session_->connection()->version();
+QuicTransportVersion QuicStream::transport_version() const {
+  return session_->connection()->transport_version();
 }
 
 void QuicStream::StopReading() {

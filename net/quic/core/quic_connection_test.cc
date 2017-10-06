@@ -93,7 +93,7 @@ class TaggingEncrypter : public QuicEncrypter {
 
   bool SetIV(QuicStringPiece iv) override { return true; }
 
-  bool EncryptPacket(QuicVersion /*version*/,
+  bool EncryptPacket(QuicTransportVersion /*version*/,
                      QuicPacketNumber packet_number,
                      QuicStringPiece associated_data,
                      QuicStringPiece plaintext,
@@ -159,7 +159,7 @@ class TaggingDecrypter : public QuicDecrypter {
     return true;
   }
 
-  bool DecryptPacket(QuicVersion /*version*/,
+  bool DecryptPacket(QuicTransportVersion /*version*/,
                      QuicPacketNumber packet_number,
                      QuicStringPiece associated_data,
                      QuicStringPiece ciphertext,
@@ -278,9 +278,9 @@ class TestAlarmFactory : public QuicAlarmFactory {
 
 class TestPacketWriter : public QuicPacketWriter {
  public:
-  TestPacketWriter(QuicVersion version, MockClock* clock)
+  TestPacketWriter(QuicTransportVersion version, MockClock* clock)
       : version_(version),
-        framer_(SupportedVersions(version_), Perspective::IS_SERVER),
+        framer_(SupportedTransportVersions(version_), Perspective::IS_SERVER),
         last_packet_size_(0),
         write_blocked_(false),
         write_should_fail_(false),
@@ -441,8 +441,9 @@ class TestPacketWriter : public QuicPacketWriter {
 
   void Reset() { framer_.Reset(); }
 
-  void SetSupportedVersions(const QuicVersionVector& versions) {
-    framer_.SetSupportedVersions(versions);
+  void SetSupportedTransportVersions(
+      const QuicTransportVersionVector& versions) {
+    framer_.SetSupportedTransportVersions(versions);
   }
 
   void set_max_packet_size(QuicByteCount max_packet_size) {
@@ -450,7 +451,7 @@ class TestPacketWriter : public QuicPacketWriter {
   }
 
  private:
-  QuicVersion version_;
+  QuicTransportVersion version_;
   SimpleQuicFramer framer_;
   size_t last_packet_size_;
   bool write_blocked_;
@@ -480,7 +481,7 @@ class TestConnection : public QuicConnection {
                  TestAlarmFactory* alarm_factory,
                  TestPacketWriter* writer,
                  Perspective perspective,
-                 QuicVersion version)
+                 QuicTransportVersion version)
       : QuicConnection(connection_id,
                        address,
                        helper,
@@ -488,7 +489,7 @@ class TestConnection : public QuicConnection {
                        writer,
                        /* owns_writer= */ false,
                        perspective,
-                       SupportedVersions(version)) {
+                       SupportedTransportVersions(version)) {
     writer->set_perspective(perspective);
     SetEncrypter(ENCRYPTION_FORWARD_SECURE, new NullEncrypter(perspective));
   }
@@ -565,13 +566,15 @@ class TestConnection : public QuicConnection {
                                     nullptr);
   }
 
-  void set_version(QuicVersion version) {
+  void set_version(QuicTransportVersion version) {
     QuicConnectionPeer::GetFramer(this)->set_version(version);
   }
 
-  void SetSupportedVersions(const QuicVersionVector& versions) {
-    QuicConnectionPeer::GetFramer(this)->SetSupportedVersions(versions);
-    writer()->SetSupportedVersions(versions);
+  void SetSupportedTransportVersions(
+      const QuicTransportVersionVector& versions) {
+    QuicConnectionPeer::GetFramer(this)->SetSupportedTransportVersions(
+        versions);
+    writer()->SetSupportedTransportVersions(versions);
   }
 
   void set_perspective(Perspective perspective) {
@@ -656,9 +659,9 @@ class TestConnection : public QuicConnection {
 
 enum class AckResponse { kDefer, kImmediate };
 
-// Run tests with combinations of {QuicVersion, AckResponse}.
+// Run tests with combinations of {QuicTransportVersion, AckResponse}.
 struct TestParams {
-  TestParams(QuicVersion version,
+  TestParams(QuicTransportVersion version,
              AckResponse ack_response,
              bool no_stop_waiting)
       : version(version),
@@ -673,7 +676,7 @@ struct TestParams {
     return os;
   }
 
-  QuicVersion version;
+  QuicTransportVersion version;
   AckResponse ack_response;
   bool no_stop_waiting;
 };
@@ -681,7 +684,8 @@ struct TestParams {
 // Constructs various test permutations.
 std::vector<TestParams> GetTestParams() {
   std::vector<TestParams> params;
-  QuicVersionVector all_supported_versions = AllSupportedVersions();
+  QuicTransportVersionVector all_supported_versions =
+      AllSupportedTransportVersions();
   for (size_t i = 0; i < all_supported_versions.size(); ++i) {
     for (AckResponse ack_response :
          {AckResponse::kDefer, AckResponse::kImmediate}) {
@@ -698,28 +702,28 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
  protected:
   QuicConnectionTest()
       : connection_id_(42),
-        framer_(SupportedVersions(version()),
+        framer_(SupportedTransportVersions(transport_version()),
                 QuicTime::Zero(),
                 Perspective::IS_CLIENT),
         send_algorithm_(new StrictMock<MockSendAlgorithm>),
         loss_algorithm_(new MockLossAlgorithm()),
         helper_(new TestConnectionHelper(&clock_, &random_generator_)),
         alarm_factory_(new TestAlarmFactory()),
-        peer_framer_(SupportedVersions(version()),
+        peer_framer_(SupportedTransportVersions(transport_version()),
                      QuicTime::Zero(),
                      Perspective::IS_SERVER),
         peer_creator_(connection_id_,
                       &peer_framer_,
                       &buffer_allocator_,
                       /*delegate=*/nullptr),
-        writer_(new TestPacketWriter(version(), &clock_)),
+        writer_(new TestPacketWriter(transport_version(), &clock_)),
         connection_(connection_id_,
                     kPeerAddress,
                     helper_.get(),
                     alarm_factory_.get(),
                     writer_.get(),
                     Perspective::IS_CLIENT,
-                    version()),
+                    transport_version()),
         creator_(QuicConnectionPeer::GetPacketCreator(&connection_)),
         generator_(QuicConnectionPeer::GetPacketGenerator(&connection_)),
         manager_(QuicConnectionPeer::GetSentPacketManager(&connection_)),
@@ -763,7 +767,7 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
         .Times(AnyNumber());
   }
 
-  QuicVersion version() { return GetParam().version; }
+  QuicTransportVersion transport_version() { return GetParam().version; }
 
   QuicAckFrame* outgoing_ack() {
     QuicFrame ack_frame = QuicConnectionPeer::GetUpdatedAckFrame(&connection_);
@@ -834,8 +838,8 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
 
     const size_t encrypted_length = peer_framer_.EncryptInPlace(
         ENCRYPTION_NONE, header.packet_number,
-        GetStartOfEncryptedData(peer_framer_.version(), header), length,
-        kMaxPacketSize, encrypted_buffer);
+        GetStartOfEncryptedData(peer_framer_.transport_version(), header),
+        length, kMaxPacketSize, encrypted_buffer);
     DCHECK_GT(encrypted_length, 0u);
 
     connection_.ProcessUdpPacket(
@@ -1255,7 +1259,7 @@ TEST_P(QuicConnectionTest, SmallerServerMaxPacketSize) {
   QuicConnectionId connection_id = 42;
   TestConnection connection(connection_id, kPeerAddress, helper_.get(),
                             alarm_factory_.get(), writer_.get(),
-                            Perspective::IS_SERVER, version());
+                            Perspective::IS_SERVER, transport_version());
   EXPECT_EQ(Perspective::IS_SERVER, connection.perspective());
   EXPECT_EQ(1000u, connection.max_packet_length());
 }
@@ -1281,7 +1285,7 @@ TEST_P(QuicConnectionTest, IncreaseServerMaxPacketSize) {
       ENCRYPTION_NONE, 12, *packet, buffer, kMaxPacketSize);
   EXPECT_EQ(kMaxPacketSize, encrypted_length);
 
-  framer_.set_version(version());
+  framer_.set_version(transport_version());
   EXPECT_CALL(visitor_, OnStreamFrame(_)).Times(1);
   connection_.ProcessUdpPacket(
       kSelfAddress, kPeerAddress,
@@ -1314,7 +1318,7 @@ TEST_P(QuicConnectionTest, IncreaseServerMaxPacketSizeWhileWriterLimited) {
       ENCRYPTION_NONE, 12, *packet, buffer, kMaxPacketSize);
   EXPECT_EQ(kMaxPacketSize, encrypted_length);
 
-  framer_.set_version(version());
+  framer_.set_version(transport_version());
   EXPECT_CALL(visitor_, OnStreamFrame(_)).Times(1);
   connection_.ProcessUdpPacket(
       kSelfAddress, kPeerAddress,
@@ -1342,7 +1346,7 @@ TEST_P(QuicConnectionTest, LimitMaxPacketSizeByWriterForNewConnection) {
   writer_->set_max_packet_size(lower_max_packet_size);
   TestConnection connection(connection_id, kPeerAddress, helper_.get(),
                             alarm_factory_.get(), writer_.get(),
-                            Perspective::IS_CLIENT, version());
+                            Perspective::IS_CLIENT, transport_version());
   EXPECT_EQ(Perspective::IS_CLIENT, connection.perspective());
   EXPECT_EQ(lower_max_packet_size, connection.max_packet_length());
 }
@@ -1557,7 +1561,7 @@ TEST_P(QuicConnectionTest, AckReceiptCausesAckSend) {
 }
 
 TEST_P(QuicConnectionTest, 20AcksCausesAckSend) {
-  if (connection_.version() > QUIC_VERSION_38) {
+  if (connection_.transport_version() > QUIC_VERSION_38) {
     return;
   }
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
@@ -1579,7 +1583,7 @@ TEST_P(QuicConnectionTest, 20AcksCausesAckSend) {
 }
 
 TEST_P(QuicConnectionTest, AckNeedsRetransmittableFrames) {
-  if (connection_.version() <= QUIC_VERSION_38) {
+  if (connection_.transport_version() <= QUIC_VERSION_38) {
     return;
   }
 
@@ -3728,8 +3732,9 @@ TEST_P(QuicConnectionTest, TestQueueLimitsOnSendStreamData) {
   // All packets carry version info till version is negotiated.
   size_t payload_length;
   size_t length = GetPacketLengthForOneStream(
-      connection_.version(), kIncludeVersion, !kIncludeDiversificationNonce,
-      PACKET_8BYTE_CONNECTION_ID, PACKET_1BYTE_PACKET_NUMBER, &payload_length);
+      connection_.transport_version(), kIncludeVersion,
+      !kIncludeDiversificationNonce, PACKET_8BYTE_CONNECTION_ID,
+      PACKET_1BYTE_PACKET_NUMBER, &payload_length);
   connection_.SetMaxPacketLength(length);
 
   // Queue the first packet.
@@ -3751,7 +3756,7 @@ TEST_P(QuicConnectionTest, LoopThroughSendingPackets) {
   // stream frames with non-zero offets will fit within the packet length.
   size_t length =
       2 + GetPacketLengthForOneStream(
-              connection_.version(), kIncludeVersion,
+              connection_.transport_version(), kIncludeVersion,
               !kIncludeDiversificationNonce, PACKET_8BYTE_CONNECTION_ID,
               PACKET_1BYTE_PACKET_NUMBER, &payload_length);
   connection_.SetMaxPacketLength(length);
@@ -4597,7 +4602,7 @@ TEST_P(QuicConnectionTest, MissingPacketsBeforeLeastUnacked) {
 }
 
 TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacket) {
-  connection_.SetSupportedVersions(AllSupportedVersions());
+  connection_.SetSupportedTransportVersions(AllSupportedTransportVersions());
   set_perspective(Perspective::IS_SERVER);
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
@@ -4613,26 +4618,26 @@ TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacket) {
   size_t encrypted_length = framer_.EncryptPayload(ENCRYPTION_NONE, 12, *packet,
                                                    buffer, kMaxPacketSize);
 
-  framer_.set_version(version());
+  framer_.set_version(transport_version());
   connection_.ProcessUdpPacket(
       kSelfAddress, kPeerAddress,
       QuicReceivedPacket(buffer, encrypted_length, QuicTime::Zero(), false));
   EXPECT_TRUE(writer_->version_negotiation_packet() != nullptr);
 
-  size_t num_versions = arraysize(kSupportedQuicVersions);
+  size_t num_versions = arraysize(kSupportedTransportVersions);
   ASSERT_EQ(num_versions,
             writer_->version_negotiation_packet()->versions.size());
 
-  // We expect all versions in kSupportedQuicVersions to be
+  // We expect all versions in kSupportedTransportVersions to be
   // included in the packet.
   for (size_t i = 0; i < num_versions; ++i) {
-    EXPECT_EQ(kSupportedQuicVersions[i],
+    EXPECT_EQ(kSupportedTransportVersions[i],
               writer_->version_negotiation_packet()->versions[i]);
   }
 }
 
 TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacketSocketBlocked) {
-  connection_.SetSupportedVersions(AllSupportedVersions());
+  connection_.SetSupportedTransportVersions(AllSupportedTransportVersions());
   set_perspective(Perspective::IS_SERVER);
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
@@ -4648,7 +4653,7 @@ TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacketSocketBlocked) {
   size_t encrypted_length = framer_.EncryptPayload(ENCRYPTION_NONE, 12, *packet,
                                                    buffer, kMaxPacketSize);
 
-  framer_.set_version(version());
+  framer_.set_version(transport_version());
   BlockOnNextWrite();
   connection_.ProcessUdpPacket(
       kSelfAddress, kPeerAddress,
@@ -4660,21 +4665,21 @@ TEST_P(QuicConnectionTest, ServerSendsVersionNegotiationPacketSocketBlocked) {
   connection_.OnCanWrite();
   EXPECT_TRUE(writer_->version_negotiation_packet() != nullptr);
 
-  size_t num_versions = arraysize(kSupportedQuicVersions);
+  size_t num_versions = arraysize(kSupportedTransportVersions);
   ASSERT_EQ(num_versions,
             writer_->version_negotiation_packet()->versions.size());
 
-  // We expect all versions in kSupportedQuicVersions to be
+  // We expect all versions in kSupportedTransportVersions to be
   // included in the packet.
   for (size_t i = 0; i < num_versions; ++i) {
-    EXPECT_EQ(kSupportedQuicVersions[i],
+    EXPECT_EQ(kSupportedTransportVersions[i],
               writer_->version_negotiation_packet()->versions[i]);
   }
 }
 
 TEST_P(QuicConnectionTest,
        ServerSendsVersionNegotiationPacketSocketBlockedDataBuffered) {
-  connection_.SetSupportedVersions(AllSupportedVersions());
+  connection_.SetSupportedTransportVersions(AllSupportedTransportVersions());
   set_perspective(Perspective::IS_SERVER);
   peer_framer_.set_version_for_tests(QUIC_VERSION_UNSUPPORTED);
 
@@ -4690,7 +4695,7 @@ TEST_P(QuicConnectionTest,
   size_t encryped_length = framer_.EncryptPayload(ENCRYPTION_NONE, 12, *packet,
                                                   buffer, kMaxPacketSize);
 
-  framer_.set_version(version());
+  framer_.set_version(transport_version());
   set_perspective(Perspective::IS_SERVER);
   BlockOnNextWrite();
   writer_->set_is_write_blocked_data_buffered(true);
@@ -4708,8 +4713,8 @@ TEST_P(QuicConnectionTest, ClientHandlesVersionNegotiation) {
 
   // Send a version negotiation packet.
   std::unique_ptr<QuicEncryptedPacket> encrypted(
-      peer_framer_.BuildVersionNegotiationPacket(connection_id_,
-                                                 AllSupportedVersions()));
+      peer_framer_.BuildVersionNegotiationPacket(
+          connection_id_, AllSupportedTransportVersions()));
   std::unique_ptr<QuicReceivedPacket> received(
       ConstructReceivedPacket(*encrypted, QuicTime::Zero()));
   connection_.ProcessUdpPacket(kSelfAddress, kPeerAddress, *received);
@@ -4744,7 +4749,7 @@ TEST_P(QuicConnectionTest, BadVersionNegotiation) {
                                  ConnectionCloseSource::FROM_SELF));
   std::unique_ptr<QuicEncryptedPacket> encrypted(
       framer_.BuildVersionNegotiationPacket(connection_id_,
-                                            AllSupportedVersions()));
+                                            AllSupportedTransportVersions()));
   std::unique_ptr<QuicReceivedPacket> received(
       ConstructReceivedPacket(*encrypted, QuicTime::Zero()));
   connection_.ProcessUdpPacket(kSelfAddress, kPeerAddress, *received);
@@ -4829,31 +4834,31 @@ TEST_P(QuicConnectionTest, ProcessFramesIfPacketClosedConnection) {
 }
 
 TEST_P(QuicConnectionTest, SelectMutualVersion) {
-  connection_.SetSupportedVersions(AllSupportedVersions());
+  connection_.SetSupportedTransportVersions(AllSupportedTransportVersions());
   // Set the connection to speak the lowest quic version.
   connection_.set_version(QuicVersionMin());
-  EXPECT_EQ(QuicVersionMin(), connection_.version());
+  EXPECT_EQ(QuicVersionMin(), connection_.transport_version());
 
   // Pass in available versions which includes a higher mutually supported
   // version.  The higher mutually supported version should be selected.
-  QuicVersionVector supported_versions;
-  for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
-    supported_versions.push_back(kSupportedQuicVersions[i]);
+  QuicTransportVersionVector supported_versions;
+  for (size_t i = 0; i < arraysize(kSupportedTransportVersions); ++i) {
+    supported_versions.push_back(kSupportedTransportVersions[i]);
   }
   EXPECT_TRUE(connection_.SelectMutualVersion(supported_versions));
-  EXPECT_EQ(QuicVersionMax(), connection_.version());
+  EXPECT_EQ(QuicVersionMax(), connection_.transport_version());
 
   // Expect that the lowest version is selected.
   // Ensure the lowest supported version is less than the max, unless they're
   // the same.
   EXPECT_LE(QuicVersionMin(), QuicVersionMax());
-  QuicVersionVector lowest_version_vector;
+  QuicTransportVersionVector lowest_version_vector;
   lowest_version_vector.push_back(QuicVersionMin());
   EXPECT_TRUE(connection_.SelectMutualVersion(lowest_version_vector));
-  EXPECT_EQ(QuicVersionMin(), connection_.version());
+  EXPECT_EQ(QuicVersionMin(), connection_.transport_version());
 
   // Shouldn't be able to find a mutually supported version.
-  QuicVersionVector unsupported_version;
+  QuicTransportVersionVector unsupported_version;
   unsupported_version.push_back(QUIC_VERSION_UNSUPPORTED);
   EXPECT_FALSE(connection_.SelectMutualVersion(unsupported_version));
 }
@@ -5059,10 +5064,10 @@ TEST_P(QuicConnectionTest, OnPacketHeaderDebugVisitor) {
 TEST_P(QuicConnectionTest, Pacing) {
   TestConnection server(connection_id_, kSelfAddress, helper_.get(),
                         alarm_factory_.get(), writer_.get(),
-                        Perspective::IS_SERVER, version());
+                        Perspective::IS_SERVER, transport_version());
   TestConnection client(connection_id_, kPeerAddress, helper_.get(),
                         alarm_factory_.get(), writer_.get(),
-                        Perspective::IS_CLIENT, version());
+                        Perspective::IS_CLIENT, transport_version());
   EXPECT_FALSE(QuicSentPacketManagerPeer::UsingPacing(
       static_cast<const QuicSentPacketManager*>(
           &client.sent_packet_manager())));

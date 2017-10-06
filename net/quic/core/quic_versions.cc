@@ -29,9 +29,9 @@ QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
   return MakeQuicTag(d, c, b, a);
 }
 
-// Constructs a QuicVersionLabel from the provided QuicVersion and
+// Constructs a QuicVersionLabel from the provided QuicTransportVersion and
 // HandshakeProtocol.
-QuicVersionLabel LabelFromVersionAndProtocol(QuicVersion version,
+QuicVersionLabel LabelFromVersionAndProtocol(QuicTransportVersion version,
                                              HandshakeProtocol handshake) {
   char proto = 0;
   switch (handshake) {
@@ -63,19 +63,19 @@ QuicVersionLabel LabelFromVersionAndProtocol(QuicVersion version,
       return MakeVersionLabel(proto, '0', '4', '2');
     default:
       // This shold be an ERROR because we should never attempt to convert an
-      // invalid QuicVersion to be written to the wire.
-      QUIC_LOG(ERROR) << "Unsupported QuicVersion: " << version;
+      // invalid QuicTransportVersion to be written to the wire.
+      QUIC_LOG(ERROR) << "Unsupported QuicTransportVersion: " << version;
       return 0;
   }
 }
 
-std::pair<QuicVersion, HandshakeProtocol> VersionAndProtocolFromLabel(
+std::pair<QuicTransportVersion, HandshakeProtocol> VersionAndProtocolFromLabel(
     QuicVersionLabel version_label) {
   std::vector<HandshakeProtocol> protocols = {PROTOCOL_QUIC_CRYPTO};
   if (FLAGS_quic_supports_tls_handshake) {
     protocols.push_back(PROTOCOL_TLS1_3);
   }
-  for (QuicVersion version : kSupportedQuicVersions) {
+  for (QuicTransportVersion version : kSupportedTransportVersions) {
     for (HandshakeProtocol handshake : protocols) {
       if (version_label == LabelFromVersionAndProtocol(version, handshake)) {
         return std::make_pair(version, handshake);
@@ -90,22 +90,23 @@ std::pair<QuicVersion, HandshakeProtocol> VersionAndProtocolFromLabel(
 
 }  // namespace
 
-QuicVersionVector AllSupportedVersions() {
-  QuicVersionVector supported_versions;
-  for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
-    supported_versions.push_back(kSupportedQuicVersions[i]);
+QuicTransportVersionVector AllSupportedTransportVersions() {
+  QuicTransportVersionVector supported_versions;
+  for (size_t i = 0; i < arraysize(kSupportedTransportVersions); ++i) {
+    supported_versions.push_back(kSupportedTransportVersions[i]);
   }
   return supported_versions;
 }
 
-QuicVersionVector CurrentSupportedVersions() {
-  return FilterSupportedVersions(AllSupportedVersions());
+QuicTransportVersionVector CurrentSupportedTransportVersions() {
+  return FilterSupportedTransportVersions(AllSupportedTransportVersions());
 }
 
-QuicVersionVector FilterSupportedVersions(QuicVersionVector versions) {
-  QuicVersionVector filtered_versions(versions.size());
+QuicTransportVersionVector FilterSupportedTransportVersions(
+    QuicTransportVersionVector versions) {
+  QuicTransportVersionVector filtered_versions(versions.size());
   filtered_versions.clear();  // Guaranteed by spec not to change capacity.
-  for (QuicVersion version : versions) {
+  for (QuicTransportVersion version : versions) {
     if (version == QUIC_VERSION_42) {
       if (GetQuicFlag(FLAGS_quic_enable_version_42) &&
           FLAGS_quic_reloadable_flag_quic_enable_version_41 &&
@@ -135,8 +136,10 @@ QuicVersionVector FilterSupportedVersions(QuicVersionVector versions) {
   return filtered_versions;
 }
 
-QuicVersionVector VersionOfIndex(const QuicVersionVector& versions, int index) {
-  QuicVersionVector version;
+QuicTransportVersionVector VersionOfIndex(
+    const QuicTransportVersionVector& versions,
+    int index) {
+  QuicTransportVersionVector version;
   int version_count = versions.size();
   if (index >= 0 && index < version_count) {
     version.push_back(versions[index]);
@@ -146,7 +149,8 @@ QuicVersionVector VersionOfIndex(const QuicVersionVector& versions, int index) {
   return version;
 }
 
-QuicVersionLabel QuicVersionToQuicVersionLabel(const QuicVersion version) {
+QuicVersionLabel QuicVersionToQuicVersionLabel(
+    const QuicTransportVersion version) {
   return LabelFromVersionAndProtocol(version, PROTOCOL_QUIC_CRYPTO);
 }
 
@@ -159,7 +163,8 @@ string QuicVersionLabelToString(QuicVersionLabel version_label) {
   return QuicTagToString(QuicEndian::HostToNet32(version_label));
 }
 
-QuicVersion QuicVersionLabelToQuicVersion(QuicVersionLabel version_label) {
+QuicTransportVersion QuicVersionLabelToQuicVersion(
+    QuicVersionLabel version_label) {
   return VersionAndProtocolFromLabel(version_label).first;
 }
 
@@ -172,7 +177,7 @@ HandshakeProtocol QuicVersionLabelToHandshakeProtocol(
   case x:                        \
     return #x
 
-string QuicVersionToString(const QuicVersion version) {
+string QuicVersionToString(const QuicTransportVersion version) {
   switch (version) {
     RETURN_STRING_LITERAL(QUIC_VERSION_35);
     RETURN_STRING_LITERAL(QUIC_VERSION_37);
@@ -185,7 +190,8 @@ string QuicVersionToString(const QuicVersion version) {
   }
 }
 
-string QuicVersionVectorToString(const QuicVersionVector& versions) {
+string QuicTransportVersionVectorToString(
+    const QuicTransportVersionVector& versions) {
   string result = "";
   for (size_t i = 0; i < versions.size(); ++i) {
     if (i != 0) {

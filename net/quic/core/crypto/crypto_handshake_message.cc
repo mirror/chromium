@@ -71,10 +71,11 @@ void CryptoHandshakeMessage::MarkDirty() {
   serialized_.reset();
 }
 
-void CryptoHandshakeMessage::SetVersionVector(QuicTag tag,
-                                              QuicVersionVector versions) {
+void CryptoHandshakeMessage::SetVersionVector(
+    QuicTag tag,
+    QuicTransportVersionVector versions) {
   QuicVersionLabelVector version_labels;
-  for (QuicVersion version : versions) {
+  for (QuicTransportVersion version : versions) {
     if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
       version_labels.push_back(QuicVersionToQuicVersionLabel(version));
     } else {
@@ -87,7 +88,8 @@ void CryptoHandshakeMessage::SetVersionVector(QuicTag tag,
   SetVector(tag, version_labels);
 }
 
-void CryptoHandshakeMessage::SetVersion(QuicTag tag, QuicVersion version) {
+void CryptoHandshakeMessage::SetVersion(QuicTag tag,
+                                        QuicTransportVersion version) {
   if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
     SetValue(tag, QuicVersionToQuicVersionLabel(version));
   } else {

@@ -76,7 +76,7 @@ class QUIC_EXPORT_PRIVATE QuicEncrypter {
   // SetNoncePrefix() to form the nonce. |output| must not overlap with
   // |associated_data|. If |output| overlaps with |plaintext| then
   // |plaintext| must be <= |output|.
-  virtual bool EncryptPacket(QuicVersion version,
+  virtual bool EncryptPacket(QuicTransportVersion version,
                              QuicPacketNumber packet_number,
                              QuicStringPiece associated_data,
                              QuicStringPiece plaintext,

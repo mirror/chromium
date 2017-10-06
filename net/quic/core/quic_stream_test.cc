@@ -28,9 +28,9 @@ using std::string;
 using testing::AnyNumber;
 using testing::AtLeast;
 using testing::CreateFunctor;
+using testing::DoAll;
 using testing::InSequence;
 using testing::Invoke;
-using testing::DoAll;
 using testing::Return;
 using testing::StrictMock;
 using testing::WithArgs;
@@ -56,11 +56,11 @@ class TestStream : public QuicStream {
   MOCK_METHOD0(OnCanWriteNewData, void());
 
   using QuicStream::CanWriteNewData;
-  using QuicStream::WriteOrBufferData;
-  using QuicStream::WriteMemSlices;
-  using QuicStream::WritevData;
   using QuicStream::CloseWriteSide;
   using QuicStream::OnClose;
+  using QuicStream::WriteMemSlices;
+  using QuicStream::WriteOrBufferData;
+  using QuicStream::WritevData;
   using QuicStream::fin_buffered;
 
  private:
@@ -72,7 +72,7 @@ class QuicStreamTest : public QuicTestWithParam<bool> {
   QuicStreamTest()
       : initial_flow_control_window_bytes_(kMaxPacketSize),
         zero_(QuicTime::Delta::Zero()),
-        supported_versions_(AllSupportedVersions()) {
+        supported_versions_(AllSupportedTransportVersions()) {
     headers_[":host"] = "www.google.com";
     headers_[":path"] = "/index.hml";
     headers_[":scheme"] = "https";
@@ -158,17 +158,18 @@ class QuicStreamTest : public QuicTestWithParam<bool> {
   QuicWriteBlockedList* write_blocked_list_;
   uint32_t initial_flow_control_window_bytes_;
   QuicTime::Delta zero_;
-  QuicVersionVector supported_versions_;
+  QuicTransportVersionVector supported_versions_;
   const QuicStreamId kTestStreamId = 5u;
 };
 
 TEST_F(QuicStreamTest, WriteAllData) {
   Initialize(kShouldProcessData);
 
-  size_t length = 1 + QuicPacketCreator::StreamFramePacketOverhead(
-                          connection_->version(), PACKET_8BYTE_CONNECTION_ID,
-                          !kIncludeVersion, !kIncludeDiversificationNonce,
-                          PACKET_6BYTE_PACKET_NUMBER, 0u);
+  size_t length =
+      1 + QuicPacketCreator::StreamFramePacketOverhead(
+              connection_->transport_version(), PACKET_8BYTE_CONNECTION_ID,
+              !kIncludeVersion, !kIncludeDiversificationNonce,
+              PACKET_6BYTE_PACKET_NUMBER, 0u);
   connection_->SetMaxPacketLength(length);
 
   EXPECT_CALL(*session_, WritevData(stream_, kTestStreamId, _, _, _, _))
@@ -239,10 +240,11 @@ TEST_F(QuicStreamTest, WriteOrBufferData) {
   Initialize(kShouldProcessData);
 
   EXPECT_FALSE(HasWriteBlockedStreams());
-  size_t length = 1 + QuicPacketCreator::StreamFramePacketOverhead(
-                          connection_->version(), PACKET_8BYTE_CONNECTION_ID,
-                          !kIncludeVersion, !kIncludeDiversificationNonce,
-                          PACKET_6BYTE_PACKET_NUMBER, 0u);
+  size_t length =
+      1 + QuicPacketCreator::StreamFramePacketOverhead(
+              connection_->transport_version(), PACKET_8BYTE_CONNECTION_ID,
+              !kIncludeVersion, !kIncludeDiversificationNonce,
+              PACKET_6BYTE_PACKET_NUMBER, 0u);
   connection_->SetMaxPacketLength(length);
 
   EXPECT_CALL(*session_, WritevData(_, _, _, _, _, _))

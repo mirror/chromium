@@ -167,7 +167,7 @@ class QUIC_EXPORT_PRIVATE QuicStream : public StreamNotifierInterface {
   bool HasBufferedData() const;
 
   // Returns the version of QUIC being used for this stream.
-  QuicVersion version() const;
+  QuicTransportVersion transport_version() const;
 
   bool fin_received() const { return fin_received_; }
 

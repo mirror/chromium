@@ -147,7 +147,7 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
 
   // Creates a version negotiation packet which supports |supported_versions|.
   std::unique_ptr<QuicEncryptedPacket> SerializeVersionNegotiationPacket(
-      const QuicVersionVector& supported_versions);
+      const QuicTransportVersionVector& supported_versions);
 
   // Re-serializes frames with the original packet's packet number length.
   // Used for retransmitting packets to ensure they aren't too long.

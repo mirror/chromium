@@ -97,7 +97,8 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
                           const std::string& error_details,
                           ConnectionCloseSource source) override;
   void OnWriteBlocked() override;
-  void OnSuccessfulVersionNegotiation(const QuicVersion& version) override;
+  void OnSuccessfulVersionNegotiation(
+      const QuicTransportVersion& version) override;
   void OnCanWrite() override;
   void OnCongestionWindowChange(QuicTime /*now*/) override {}
   void OnConnectionMigration(PeerAddressChangeType type) override {}

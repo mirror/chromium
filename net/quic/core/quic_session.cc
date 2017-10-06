@@ -161,7 +161,7 @@ void QuicSession::OnWriteBlocked() {
 }
 
 void QuicSession::OnSuccessfulVersionNegotiation(
-    const QuicVersion& /*version*/) {}
+    const QuicTransportVersion& /*version*/) {}
 
 void QuicSession::OnPathDegrading() {}
 

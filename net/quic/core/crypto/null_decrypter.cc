@@ -40,7 +40,7 @@ bool NullDecrypter::SetDiversificationNonce(const DiversificationNonce& nonce) {
   return true;
 }
 
-bool NullDecrypter::DecryptPacket(QuicVersion version,
+bool NullDecrypter::DecryptPacket(QuicTransportVersion version,
                                   QuicPacketNumber /*packet_number*/,
                                   QuicStringPiece associated_data,
                                   QuicStringPiece ciphertext,
@@ -91,7 +91,7 @@ bool NullDecrypter::ReadHash(QuicDataReader* reader, uint128* hash) {
   return true;
 }
 
-uint128 NullDecrypter::ComputeHash(QuicVersion version,
+uint128 NullDecrypter::ComputeHash(QuicTransportVersion version,
                                    const QuicStringPiece data1,
                                    const QuicStringPiece data2) const {
   uint128 correct_hash;

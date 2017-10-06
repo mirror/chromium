@@ -260,7 +260,7 @@ class HttpServerPropertiesManagerTest : public testing::TestWithParam<int> {
   std::unique_ptr<TestingHttpServerPropertiesManager>
       http_server_props_manager_;
   base::Time one_day_from_now_;
-  QuicVersionVector advertised_versions_;
+  QuicTransportVersionVector advertised_versions_;
 
   // Overrides the main thread's message loop with a mock tick clock. Making the
   // main thread the |pref_test_task_runner_| matches expectations better than
@@ -1680,7 +1680,8 @@ TEST_P(HttpServerPropertiesManagerTest, PersistAdvertisedVersionsToPref) {
   AlternativeService quic_alternative_service1(kProtoQUIC, "", 443);
   base::Time expiration1;
   ASSERT_TRUE(base::Time::FromUTCString("2036-12-01 10:00:00", &expiration1));
-  QuicVersionVector advertised_versions = {QUIC_VERSION_37, QUIC_VERSION_35};
+  QuicTransportVersionVector advertised_versions = {QUIC_VERSION_37,
+                                                    QUIC_VERSION_35};
   alternative_service_info_vector.push_back(
       AlternativeServiceInfo::CreateQuicAlternativeServiceInfo(
           quic_alternative_service1, expiration1, advertised_versions));
@@ -1790,7 +1791,7 @@ TEST_P(HttpServerPropertiesManagerTest, ReadAdvertisedVersionsFromPref) {
   EXPECT_EQ(123, alternative_service_info_vector[1].alternative_service().port);
   EXPECT_EQ(base::Time::Max(), alternative_service_info_vector[1].expiration());
   // Verify advertised versions.
-  const QuicVersionVector loaded_advertised_versions =
+  const QuicTransportVersionVector loaded_advertised_versions =
       alternative_service_info_vector[1].advertised_versions();
   EXPECT_EQ(2u, loaded_advertised_versions.size());
   EXPECT_EQ(QUIC_VERSION_35, loaded_advertised_versions[0]);
@@ -1856,7 +1857,8 @@ TEST_P(HttpServerPropertiesManagerTest,
   // AlternativeService.
   AlternativeServiceInfoVector alternative_service_info_vector_2;
   // Quic alternative service set with two advertised QUIC versions.
-  QuicVersionVector advertised_versions = {QUIC_VERSION_37, QUIC_VERSION_35};
+  QuicTransportVersionVector advertised_versions = {QUIC_VERSION_37,
+                                                    QUIC_VERSION_35};
   alternative_service_info_vector_2.push_back(
       AlternativeServiceInfo::CreateQuicAlternativeServiceInfo(
           quic_alternative_service1, expiration1, advertised_versions));
@@ -1889,7 +1891,8 @@ TEST_P(HttpServerPropertiesManagerTest,
   // #3: Set AlternativeService with same advertised_versions.
   AlternativeServiceInfoVector alternative_service_info_vector_3;
   // A same set of QUIC versions but listed in a different order.
-  QuicVersionVector advertised_versions_2 = {QUIC_VERSION_35, QUIC_VERSION_37};
+  QuicTransportVersionVector advertised_versions_2 = {QUIC_VERSION_35,
+                                                      QUIC_VERSION_37};
   alternative_service_info_vector_3.push_back(
       AlternativeServiceInfo::CreateQuicAlternativeServiceInfo(
           quic_alternative_service1, expiration1, advertised_versions_2));

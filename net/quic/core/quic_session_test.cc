@@ -248,14 +248,14 @@ class TestSession : public QuicSpdySession {
   bool writev_consumes_all_data_;
 };
 
-class QuicSessionTestBase : public QuicTestWithParam<QuicVersion> {
+class QuicSessionTestBase : public QuicTestWithParam<QuicTransportVersion> {
  protected:
   explicit QuicSessionTestBase(Perspective perspective)
-      : connection_(
-            new StrictMock<MockQuicConnection>(&helper_,
-                                               &alarm_factory_,
-                                               perspective,
-                                               SupportedVersions(GetParam()))),
+      : connection_(new StrictMock<MockQuicConnection>(
+            &helper_,
+            &alarm_factory_,
+            perspective,
+            SupportedTransportVersions(GetParam()))),
         session_(connection_) {
     session_.config()->SetInitialStreamFlowControlWindowToSend(
         kInitialStreamFlowControlWindowForTest);
@@ -307,7 +307,9 @@ class QuicSessionTestBase : public QuicTestWithParam<QuicVersion> {
     closed_streams_.insert(id);
   }
 
-  QuicVersion version() const { return connection_->version(); }
+  QuicTransportVersion transport_version() const {
+    return connection_->transport_version();
+  }
 
   QuicStreamId GetNthClientInitiatedId(int n) {
     return QuicSpdySessionPeer::GetNthClientInitiatedStreamId(session_, n);
@@ -334,7 +336,7 @@ class QuicSessionTestServer : public QuicSessionTestBase {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSessionTestServer,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSessionTestServer, PeerAddress) {
   EXPECT_EQ(QuicSocketAddress(QuicIpAddress::Loopback4(), kTestPort),
@@ -1263,7 +1265,7 @@ class QuicSessionTestClient : public QuicSessionTestBase {
 
 INSTANTIATE_TEST_CASE_P(Tests,
                         QuicSessionTestClient,
-                        ::testing::ValuesIn(AllSupportedVersions()));
+                        ::testing::ValuesIn(AllSupportedTransportVersions()));
 
 TEST_P(QuicSessionTestClient, AvailableStreamsClient) {
   ASSERT_TRUE(session_.GetOrCreateDynamicStream(6) != nullptr);

@@ -319,7 +319,7 @@ void QuicPacketGenerator::SetMaxPacketLength(QuicByteCount length) {
 
 std::unique_ptr<QuicEncryptedPacket>
 QuicPacketGenerator::SerializeVersionNegotiationPacket(
-    const QuicVersionVector& supported_versions) {
+    const QuicTransportVersionVector& supported_versions) {
   return packet_creator_.SerializeVersionNegotiationPacket(supported_versions);
 }
 
