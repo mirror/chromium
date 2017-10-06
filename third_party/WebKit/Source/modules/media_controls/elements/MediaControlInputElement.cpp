@@ -187,6 +187,12 @@ void MediaControlInputElement::SetClass(const AtomicString& class_name,
     classList().Remove(class_name);
 }
 
+void MediaControlInputElement::SetDisplayType(MediaControlElementType type) {
+  MediaControlElementBase::SetDisplayType(type);
+  if (overflow_element_)
+    overflow_element_->UpdateDisplayType();
+}
+
 DEFINE_TRACE(MediaControlInputElement) {
   HTMLInputElement::Trace(visitor);
   MediaControlElementBase::Trace(visitor);
