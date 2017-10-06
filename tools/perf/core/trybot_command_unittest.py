@@ -551,7 +551,7 @@ class TrybotCommandTest(unittest.TestCase):
     self._AssertTryBotExceptions(
         ('PLEASE NOTE: The workflow for Perf Try jobs is changed. '
          'In order to run the perf try job, you must first upload your '
-         'changes to rietveld.'),
+         'changes for review.'),
         command._GetChangeList)
 
   def testGetChangeListWithIssue(self):
@@ -609,7 +609,7 @@ class TrybotCommandTest(unittest.TestCase):
           '-b',
           'linux_perf_bisect'], (0, '', None)),))
     command._RunTryJob('linux', arguments, None)
-    self.assertEquals('Perf Try job sent to rietveld for linux platform.',
+    self.assertEquals('Perf Try job started for linux platform.',
                       sys.stdout.getvalue().strip())
 
   def testNoUpstream(self):
@@ -716,7 +716,7 @@ class TrybotCommandTest(unittest.TestCase):
               '\tRepo Name: src\n'
               '\tPath: %s\n'
               '\tBranch: br\n'
-              'Perf Try job sent to rietveld for linux platform.') % (
+              'Perf Try job started for linux platform.') % (
                   options.repo_path)
     self.assertEquals(output, sys.stdout.getvalue().strip())
 
@@ -766,11 +766,11 @@ class TrybotCommandTest(unittest.TestCase):
               '\tRepo Name: src\n'
               '\tPath: %s\n'
               '\tBranch: br\n'
-              'Perf Try job sent to rietveld for win platform.\n'
-              'Perf Try job sent to rietveld for android platform.\n'
-              'Perf Try job sent to rietveld for win-x64 platform.\n'
-              'Perf Try job sent to rietveld for mac platform.\n'
-              'Perf Try job sent to rietveld for linux platform.') % (
+              'Perf Try job started for win platform.\n'
+              'Perf Try job started for android platform.\n'
+              'Perf Try job started for win-x64 platform.\n'
+              'Perf Try job started for mac platform.\n'
+              'Perf Try job started for linux platform.') % (
                   options.repo_path)
     self.assertEquals(output, sys.stdout.getvalue().strip())
 
@@ -814,7 +814,7 @@ class TrybotCommandTest(unittest.TestCase):
               '\tRepo Name: v8\n'
               '\tPath: root/path_to/repo/v8\n'
               '\tBranch: br\n'
-              'Perf Try job sent to rietveld for linux platform.')
+              'Perf Try job started for linux platform.')
     self.assertEquals(output, sys.stdout.getvalue().strip())
 
   @mock.patch('core.trybot_command.os.chdir', mock.MagicMock())
@@ -870,9 +870,9 @@ class TrybotCommandTest(unittest.TestCase):
               '\tRepo Name: v8\n'
               '\tPath: root/path_to/repo/v8\n'
               '\tBranch: br\n'
-              'Perf Try job sent to rietveld for android platform.\n'
-              'Perf Try job sent to rietveld for win-x64 platform.\n'
-              'Perf Try job sent to rietveld for linux platform.')
+              'Perf Try job started for android platform.\n'
+              'Perf Try job started for win-x64 platform.\n'
+              'Perf Try job started for linux platform.')
     self.assertEquals(output, sys.stdout.getvalue().strip())
 
   @mock.patch('core.trybot_command.os.chdir', mock.MagicMock())
@@ -907,7 +907,7 @@ class TrybotCommandTest(unittest.TestCase):
               '\tRepo Name: v8\n'
               '\tPath: root/path_to/repo/v8\n'
               '\tBranch: br\n'
-              'Perf Try job sent to rietveld for linux platform.')
+              'Perf Try job started for linux platform.')
     self.assertEquals(output, sys.stdout.getvalue().strip())
 
 
