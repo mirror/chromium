@@ -40,7 +40,7 @@ class CC_PAINT_EXPORT PaintOpReader {
 
   void Read(SkPath* path);
   void Read(PaintFlags* flags);
-  void Read(PaintImage* image);
+  void Read(PaintImage* image, PaintOp::DeserializeOptions* options);
   void Read(sk_sp<SkData>* data);
   void Read(sk_sp<SkTextBlob>* blob);
   void Read(sk_sp<PaintShader>* shader);
@@ -72,6 +72,8 @@ class CC_PAINT_EXPORT PaintOpReader {
 
   template <typename T>
   void ReadFlattenable(sk_sp<T>* val);
+
+  inline void SetInvalid() { valid_ = false; }
 
   // Attempts to align the memory to the given alignment. Returns false if there
   // is unsufficient bytes remaining to do this padding.

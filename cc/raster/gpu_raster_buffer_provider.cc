@@ -79,11 +79,13 @@ static void RasterizeSourceOOP(
                           msaa_sample_count, playback_settings.use_lcd_text,
                           use_distance_field_text,
                           resource_lock->PixelConfig());
-  gl->RasterCHROMIUM(setup_list.get(), playback_rect.x(), playback_rect.y(),
-                     playback_rect.width(), playback_rect.height());
-  gl->RasterCHROMIUM(raster_source->display_list(), playback_rect.x(),
+  ImageProvider* image_provider = playback_settings.image_provider;
+  gl->RasterCHROMIUM(setup_list.get(), image_provider, playback_rect.x(),
                      playback_rect.y(), playback_rect.width(),
                      playback_rect.height());
+  gl->RasterCHROMIUM(raster_source->display_list(), image_provider,
+                     playback_rect.x(), playback_rect.y(),
+                     playback_rect.width(), playback_rect.height());
   gl->EndRasterCHROMIUM();
 
   gl->DeleteTextures(1, &texture_id);

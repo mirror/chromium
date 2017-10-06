@@ -2598,12 +2598,13 @@ void GLES2TraceImplementation::BeginRasterCHROMIUM(
 }
 
 void GLES2TraceImplementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                              cc::ImageProvider* provider,
                                               GLint x,
                                               GLint y,
                                               GLint w,
                                               GLint h) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "GLES2Trace::RasterCHROMIUM");
-  gl_->RasterCHROMIUM(list, x, y, w, h);
+  gl_->RasterCHROMIUM(list, provider, x, y, w, h);
 }
 
 void GLES2TraceImplementation::EndRasterCHROMIUM() {

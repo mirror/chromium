@@ -10,11 +10,13 @@
 #include <string>
 #include <type_traits>
 
+#include "base/bind.h"
 #include "base/debug/alias.h"
 #include "base/logging.h"
 #include "base/memory/aligned_memory.h"
 #include "base/optional.h"
 #include "cc/base/math_util.h"
+#include "cc/paint/image_provider.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_flags.h"
@@ -27,9 +29,9 @@
 // PaintOpBuffer is a reimplementation of SkLiteDL.
 // See: third_party/skia/src/core/SkLiteDL.h.
 
+class GrContext;
+
 namespace cc {
-class ImageDecodeCache;
-class ImageProvider;
 
 class CC_PAINT_EXPORT ThreadsafeMatrix : public SkMatrix {
  public:
@@ -51,9 +53,10 @@ class CC_PAINT_EXPORT ThreadsafePath : public SkPath {
 // data they will need to write.  PaintOp::Serialize itself must update it.
 #define HAS_SERIALIZATION_FUNCTIONS()                                        \
   static size_t Serialize(const PaintOp* op, void* memory, size_t size,      \
-                          const SerializeOptions& options);                  \
+                          SerializeOptions* options);                        \
   static PaintOp* Deserialize(const volatile void* input, size_t input_size, \
-                              void* output, size_t output_size);
+                              void* output, size_t output_size,              \
+                              DeserializeOptions* options);
 
 enum class PaintOpType : uint8_t {
   Annotate,
@@ -109,16 +112,30 @@ class CC_PAINT_EXPORT PaintOp {
   bool IsPaintOpWithFlags() const;
   bool IsValid() const;
 
+  // TODO(enne): Should this be a SerializationContext since values are
+  // returned in |serialized_images|?
   struct SerializeOptions {
-    ImageDecodeCache* decode_cache = nullptr;
+    SerializeOptions();
+    ~SerializeOptions();
+    ImageProvider* provider = nullptr;
+    std::vector<ImageProvider::ScopedDecodedDrawImage> serialized_images;
+  };
+
+  struct DeserializeOptions {
+    DeserializeOptions();
+    ~DeserializeOptions();
+
+    // |texture_creation_func| must be defined or PaintImages will not be
+    // deserialized.
+    base::Callback<sk_sp<SkImage>(unsigned int client_texture_id,
+                                  GrPixelConfig pixel_config)>
+        texture_creation_func;
   };
 
   // Subclasses should provide a static Serialize() method called from here.
   // If the op can be serialized to |memory| in no more than |size| bytes,
   // then return the number of bytes written.  If it won't fit, return 0.
-  size_t Serialize(void* memory,
-                   size_t size,
-                   const SerializeOptions& options) const;
+  size_t Serialize(void* memory, size_t size, SerializeOptions* options) const;
 
   // Deserializes a PaintOp of this type from a given buffer |input| of
   // at most |input_size| bytes.  Returns null on any errors.
@@ -131,6 +148,7 @@ class CC_PAINT_EXPORT PaintOp {
                               size_t input_size,
                               void* output,
                               size_t output_size,
+                              DeserializeOptions* options,
                               size_t* read_bytes);
 
   // For draw ops, returns true if a conservative bounding rect can be provided
