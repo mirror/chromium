@@ -38960,6 +38960,10 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="0" label="VAAPI_ERROR"/>
 </enum>
 
+<enum name="VAJEAEncoderFailure">
+  <int value="0" label="VAAPI_ERROR"/>
+</enum>
+
 <enum name="ValidateMenuItemSelectorType">
   <int value="0"
       label="The menu items' associated action is an unknown selector."/>
