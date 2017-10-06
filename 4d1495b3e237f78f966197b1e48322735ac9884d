@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "039e2e5f_72d59d7b",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-10-06T15:49:52Z",
+      "side": 1,
+      "message": "Chromium has an appendix to the guide. Check out \"Use const correctly\" in https://www.chromium.org/developers/coding-style/cpp-dos-and-donts. While the tl;dr version says the same thing as the style guide, it has an example that an non-const member returned from a const method can be used to change the original object.\n\nAlthough it should be okay to use const in our case here since I could not find a way for DeviceOffHoursController to change DeviceSettingService, I still prefer to make it a non-const method just to make the rule simple to remember. It is a nit in my original comment. :)",
+      "parentUuid": "d1a1ccb7_0aeeaeda",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 63
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac47f848_14e97083",
         "filename": "chrome/browser/ui/ash/session_controller_client.h",
         "patchSetId": 11
