@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7678477_69682a59",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-06T05:49:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e01e40a_21dee936",
+      "revId": "9627e792bb40c1031864f19496966022247d368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a122dd8c_91eed98a",
         "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
         "patchSetId": 3
@@ -69,6 +87,24 @@
       "revId": "9627e792bb40c1031864f19496966022247d368c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83c827d_799e06d7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-10-06T05:49:05Z",
+      "side": 1,
+      "message": "Done\n\nBy the way..., deleted AfterRead() which is not used.",
+      "parentUuid": "f290604f_7312e36f",
+      "revId": "9627e792bb40c1031864f19496966022247d368c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
