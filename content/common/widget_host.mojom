@@ -1,0 +1,14 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+// Interface exposed by the browser for Widgets.
+interface WidgetHost {
+  // Used to tell the browser whether the loaded page is "mobile optimized" so
+  // we can disable desktop workarounds.  This is generally determined from the
+  // top-level Frame's viewport <meta> tag. Consequently, it should only be
+  // called from the main frame's widget.
+  SetIsMobileOptimizedDocument(bool is_mobile);
+};

@@ -52,7 +52,6 @@
 #include "content/browser/media/android/media_web_contents_observer_android.h"
 #include "content/browser/renderer_host/compositor_impl_android.h"
 #include "content/browser/renderer_host/dip_util.h"
-#include "content/browser/renderer_host/frame_metadata_util.h"
 #include "content/browser/renderer_host/input/input_router.h"
 #include "content/browser/renderer_host/input/synthetic_gesture_target_android.h"
 #include "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.h"
@@ -471,6 +470,7 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       prev_top_shown_pix_(0.f),
       prev_bottom_shown_pix_(0.f),
       mouse_wheel_phase_handler_(widget_host, this),
+      is_mobile_optimized_document_(false),
       weak_ptr_factory_(this) {
   // Set the layer which will hold the content layer for this view. The content
   // layer is managed by the DelegatedFrameHost.
@@ -952,6 +952,11 @@ bool RenderWidgetHostViewAndroid::TransformPointToCoordSpaceForView(
                                                       transformed_point);
 }
 
+void RenderWidgetHostViewAndroid::SetIsMobileOptimizedDocument(bool is_mobile) {
+  is_mobile_optimized_document_ = is_mobile;
+  gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile);
+}
+
 base::WeakPtr<RenderWidgetHostViewAndroid>
 RenderWidgetHostViewAndroid::GetWeakPtrAndroid() {
   return weak_ptr_factory_.GetWeakPtr();
@@ -1325,13 +1330,6 @@ void RenderWidgetHostViewAndroid::SynchronousFrameMetadata(
   if (!content_view_core_)
     return;
 
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
-
-  if (host_ && host_->input_router()) {
-    host_->input_router()->NotifySiteIsMobileOptimized(
-        is_mobile_optimized);
-  }
-
   if (host_ && frame_metadata.frame_token)
     host_->DidProcessFrame(frame_metadata.frame_token);
 
@@ -1477,9 +1475,6 @@ RenderWidgetHostViewAndroid::GetWebContentsAccessibilityAndroid() const {
 void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
     const viz::CompositorFrameMetadata& frame_metadata,
     bool is_transparent) {
-  bool is_mobile_optimized = IsMobileOptimizedFrame(frame_metadata);
-  gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
-
   float dip_scale = IsUseZoomForDSFEnabled() ? 1.f : view_.GetDipScale();
   float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
   float top_content_offset = frame_metadata.top_controls_height *
@@ -1541,12 +1536,16 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   }
 
   // All offsets and sizes are in CSS pixels.
+  // TODO(bokan): The is_mobile_optimized_document_ argument really shouldn't
+  // be part of the frame update. It's only use in ContentViewCore is to report
+  // metrics so there's really no reason to go all the way to CVC to do that.
   content_view_core_->UpdateFrameInfo(
       frame_metadata.root_scroll_offset, frame_metadata.page_scale_factor,
       gfx::Vector2dF(frame_metadata.min_page_scale_factor,
                      frame_metadata.max_page_scale_factor),
       frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
-      top_content_offset, top_shown_pix, top_changed, is_mobile_optimized);
+      top_content_offset, top_shown_pix, top_changed,
+      is_mobile_optimized_document_);
 
   EvictFrameIfNecessary();
 }

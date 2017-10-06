@@ -236,6 +236,11 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // when the value has changed.  Views must initially default to false.
   virtual void SetNeedsBeginFrames(bool needs_begin_frames) = 0;
 
+  // Notifies the widget that the Document being displayed is optimized for
+  // mobile pages so we can disable desktop page workarounds like the
+  // double-tap delay.
+  virtual void SetIsMobileOptimizedDocument(bool is_mobile) = 0;
+
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the
   // content of the view in GetNativeView. This may be null.

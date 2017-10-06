@@ -327,6 +327,11 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // Returns true if the current view is in virtual reality mode.
   virtual bool IsInVR() const;
 
+  // Notifies the widget that the Document being displayed is optimized for
+  // mobile pages so we can disable desktop page workarounds like the
+  // double-tap delay.
+  void SetIsMobileOptimizedDocument(bool is_mobile) override {}
+
   //----------------------------------------------------------------------------
   // The following methods are related to IME.
   // TODO(ekaramad): Most of the IME methods should not stay virtual after IME

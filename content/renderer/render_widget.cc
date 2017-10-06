@@ -552,6 +552,8 @@ void RenderWidget::Init(const ShowCallback& show_callback,
                            : nullptr);
   }
 
+  widget_host_request_ = mojo::MakeRequest(&widget_host_ptr_);
+
   show_callback_ = show_callback;
 
   webwidget_internal_ = web_widget;
@@ -1104,6 +1106,15 @@ void RenderWidget::OnDidOverscroll(const ui::DidOverscrollParams& params) {
   } else {
     Send(new InputHostMsg_DidOverscroll(routing_id_, params));
   }
+}
+
+void RenderWidget::IsMobileOptimizedDocumentChanged(bool is_mobile_optimized) {
+  DCHECK(widget_host_ptr_);
+
+  // This method should only be called from the main frame's Widget.
+  DCHECK(popup_type_ == blink::kWebPopupTypeNone);
+
+  widget_host_ptr_->SetIsMobileOptimizedDocument(is_mobile_optimized);
 }
 
 void RenderWidget::SetInputHandler(RenderWidgetInputHandler* input_handler) {
@@ -2473,6 +2484,10 @@ void RenderWidget::SetupWidgetInputHandler(
     mojom::WidgetInputHandlerHostPtr host) {
   widget_input_handler_manager_->AddInterface(std::move(request));
   widget_input_handler_manager_->SetWidgetInputHandlerHost(std::move(host));
+}
+
+void RenderWidget::BindWidgetHost(BindWidgetHostCallback callback) {
+  std::move(callback).Run(std::move(widget_host_request_));
 }
 
 void RenderWidget::SetWidgetBinding(mojom::WidgetRequest request) {

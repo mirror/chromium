@@ -30,6 +30,7 @@
 #include "content/common/edit_command.h"
 #include "content/common/features.h"
 #include "content/common/widget.mojom.h"
+#include "content/common/widget_host.mojom.h"
 #include "content/public/common/drop_data.h"
 #include "content/public/common/screen_info.h"
 #include "content/renderer/devtools/render_widget_screen_metrics_emulator_delegate.h"
@@ -305,6 +306,7 @@ class CONTENT_EXPORT RenderWidget
                      const blink::WebFloatPoint& position,
                      const blink::WebFloatSize& velocity,
                      const blink::WebScrollBoundaryBehavior& behavior) override;
+  void IsMobileOptimizedDocumentChanged(bool is_mobile_optimized) override;
   void ShowVirtualKeyboardOnElementFocus() override;
   void ConvertViewportToWindow(blink::WebRect* rect) override;
   void ConvertWindowToViewport(blink::WebFloatRect* rect) override;
@@ -418,6 +420,7 @@ class CONTENT_EXPORT RenderWidget
 
   void SetupWidgetInputHandler(mojom::WidgetInputHandlerRequest request,
                                mojom::WidgetInputHandlerHostPtr host) override;
+  void BindWidgetHost(BindWidgetHostCallback callback) override;
 
   scoped_refptr<MainThreadEventQueue> GetInputEventQueue();
 
@@ -910,6 +913,9 @@ class CONTENT_EXPORT RenderWidget
   scoped_refptr<MainThreadEventQueue> input_event_queue_;
 
   mojo::Binding<mojom::Widget> widget_binding_;
+
+  mojom::WidgetHostPtr widget_host_ptr_;
+  mojom::WidgetHostRequest widget_host_request_;
 
   base::WeakPtrFactory<RenderWidget> weak_ptr_factory_;
 
