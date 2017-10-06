@@ -68,7 +68,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
         _keychainData = nil;
       }
     } else {
-      NSLog(@"Serious error.");
+      LOG(ERROR) << "Serious error: " << keychainErr;
       if (outDictionary) {
         CFRelease(outDictionary);
         _keychainData = nil;
@@ -184,7 +184,8 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
     if (errorcode == errSecItemNotFound) {
       // this is ok.
     } else if (errorcode != noErr) {
-      NSLog(@"Problem deleting current keychain item.");
+      LOG(ERROR) << "Problem deleting current keychain item. errorcode: "
+                 << errorcode;
     }
   }
 
@@ -241,13 +242,13 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
              encoding:NSUTF8StringEncoding];
     [returnDictionary setObject:password forKey:(__bridge id)kSecValueData];
   } else if (keychainError == errSecItemNotFound) {
-    NSLog(@"Nothing was found in the keychain.");
+    LOG(WARNING) << "Nothing was found in the keychain.";
     if (passwordData) {
       CFRelease(passwordData);
       passwordData = nil;
     }
   } else {
-    NSLog(@"Serious error.\n");
+    LOG(ERROR) << "Serious error: " << keychainError;
     if (passwordData) {
       CFRelease(passwordData);
       passwordData = nil;
@@ -275,7 +276,8 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
     OSStatus errorcode = SecItemUpdate((__bridge CFDictionaryRef)updateItem,
                                        (__bridge CFDictionaryRef)tempCheck);
     if (errorcode != noErr) {
-      NSLog(@"Couldn't update the Keychain Item. %d", (int)errorcode);
+      LOG(ERROR) << "Couldn't update the Keychain Item. errorcode: "
+                 << errorcode;
     }
   } else {
     OSStatus errorcode =
@@ -283,7 +285,7 @@ NSString* const kKeychainPairingSecret = @"kKeychainPairingSecret";
                        [self dictionaryToSecItemFormat:_keychainData],
                    NULL);
     if (errorcode != noErr) {
-      NSLog(@"Couldn't add the Keychain Item. %d", (int)errorcode);
+      LOG(ERROR) << "Couldn't add the Keychain Item. errorcode: " << errorcode;
     }
     if (attributes) {
       CFRelease(attributes);
