@@ -33,6 +33,7 @@ GeoNotifier::GeoNotifier(Geolocation* geolocation,
                       ("Geolocation.Timeout", 0,
                        1000 * 60 * 10 /* 10 minute max */, 20 /* buckets */));
   timeout_histogram.Count(options_.timeout());
+  UpdateRequestTime();
 }
 
 DEFINE_TRACE(GeoNotifier) {
@@ -107,6 +108,18 @@ void GeoNotifier::TimerFired(TimerBase*) {
   timeout_expired_histogram.Count(options_.timeout());
 
   geolocation_->RequestTimedOut(this);
+}
+
+void GeoNotifier::UpdateRequestTime() {
+  request_time_ = ConvertSecondsToDOMTimeStamp(CurrentTime());
+}
+
+bool GeoNotifier::CheckPositionAge(const Geoposition& position) {
+  DOMTimeStamp position_age = 0;
+  if (position.timestamp() < request_time_)
+    position_age = request_time_ - position.timestamp();
+
+  return position_age <= options_.maximumAge();
 }
 
 }  // namespace blink
