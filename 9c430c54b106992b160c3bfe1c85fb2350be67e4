@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d4b649_8f584643",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "I\u0027m not fond of this function also needing to reset form_data_importer_ (see CL-level comment).  Suggestions welcome.",
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a15bedd_94215eb6",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "I have no idea why this was resetting the entire payments_client, especially without updating test_payments_client_ to match.  Since that makes the form_data_importer_ lose track of its original credit_card_manager_, continuing this would get ugly.",
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "684202b1_6d46904f",
+        "filename": "components/autofill/core/browser/autofill_merge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "Also wish this nullptr wasn\u0027t necessary; it feels hacky.",
+      "range": {
+        "startLine": 208,
+        "startChar": 37,
+        "endLine": 208,
+        "endChar": 70
+      },
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ca5eb10_95cd1904",
+        "filename": "components/autofill/core/browser/credit_card_save_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "Note that I essentially merged AutofillManager\u0027s and PersonalDataManager\u0027s #includes in the new files in order to get them working quickly.  I intend to remove the unused includes before ever submitting any of this.",
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4749eac0_35402ab5",
+        "filename": "components/autofill/core/browser/form_data_importer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "If the below if-else block is migrated back to AutofillManager, the only remaining reason FormDataImporter needs a CreditCardSaveManager is for the IsCreditCardUploadEnabled call on line 153.",
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2bb3070_7be5fc17",
+        "filename": "components/autofill/core/browser/form_data_importer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-10-06T23:44:46Z",
+      "side": 1,
+      "message": "Chromium presubmits threw an error and marked this as a banned function (I bypassed them just to get this review out).  Does anyone have experience with this?  Error details below:\n\n/form_data_importer_unittest.cc:106: - Banned function\n    Please migrate away from RunLoop::QuitCurrent*() methods.\n    Use member methods of a specific RunLoop instance instead.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "9c430c54b106992b160c3bfe1c85fb2350be67e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
