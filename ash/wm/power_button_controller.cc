@@ -21,9 +21,7 @@
 #include "base/time/default_tick_clock.h"
 #include "chromeos/audio/cras_audio_handler.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
-#include "ui/aura/window_event_dispatcher.h"
 #include "ui/display/types/display_snapshot.h"
-#include "ui/wm/core/compound_event_filter.h"
 
 namespace ash {
 namespace {
