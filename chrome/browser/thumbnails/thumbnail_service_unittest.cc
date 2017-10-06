@@ -30,7 +30,8 @@ class MockTopSites : public history::TopSitesImpl {
  public:
   explicit MockTopSites(Profile* profile)
       : history::TopSitesImpl(profile->GetPrefs(),
-                              nullptr,
+                              /*history_service=*/nullptr,
+                              /*provider=*/nullptr,
                               history::PrepopulatedPageList(),
                               base::Bind(CanAddURLToHistory)),
         capacity_(1) {}

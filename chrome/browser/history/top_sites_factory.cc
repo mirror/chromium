@@ -6,20 +6,28 @@
 
 #include <stddef.h>
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "build/build_config.h"
+#include "chrome/browser/engagement/site_engagement_service_factory.h"
+#include "chrome/browser/engagement/site_engagement_top_sites_provider.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/history/history_utils.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/locale_settings.h"
 #include "chrome/grit/theme_resources.h"
+#include "components/history/core/browser/default_top_sites_provider.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/top_sites_impl.h"
+#include "components/history/core/browser/top_sites_provider.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "content/public/browser/browser_thread.h"
@@ -78,6 +86,14 @@ void InitializePrepopulatedPageList(
 #endif
 }
 
+std::unique_ptr<history::TopSitesProvider> CreateMostVisitedProvider(
+    Profile* profile) {
+  if (base::FeatureList::IsEnabled(features::kTopSitesFromSiteEngagement))
+    return std::make_unique<SiteEngagementTopSitesProvider>(profile);
+
+  return std::make_unique<history::DefaultTopSitesProvider>();
+}
+
 }  // namespace
 
 // static
@@ -99,10 +115,13 @@ scoped_refptr<history::TopSites> TopSitesFactory::BuildTopSites(
     content::BrowserContext* context,
     const std::vector<history::PrepopulatedPage>& prepopulated_page_list) {
   Profile* profile = Profile::FromBrowserContext(context);
+
   scoped_refptr<history::TopSitesImpl> top_sites(new history::TopSitesImpl(
-      profile->GetPrefs(), HistoryServiceFactory::GetForProfile(
-                               profile, ServiceAccessType::EXPLICIT_ACCESS),
-      prepopulated_page_list, base::Bind(CanAddURLToHistory)));
+      profile->GetPrefs(),
+      HistoryServiceFactory::GetForProfile(profile,
+                                           ServiceAccessType::EXPLICIT_ACCESS),
+      CreateMostVisitedProvider(profile), prepopulated_page_list,
+      base::Bind(CanAddURLToHistory)));
   top_sites->Init(context->GetPath().Append(history::kTopSitesFilename));
   return top_sites;
 }
@@ -112,6 +131,7 @@ TopSitesFactory::TopSitesFactory()
           "TopSites",
           BrowserContextDependencyManager::GetInstance()) {
   DependsOn(HistoryServiceFactory::GetInstance());
+  DependsOn(SiteEngagementServiceFactory::GetInstance());
 }
 
 TopSitesFactory::~TopSitesFactory() {
