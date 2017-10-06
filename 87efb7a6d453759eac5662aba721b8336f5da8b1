@@ -2,6 +2,142 @@
   "comments": [
     {
       "key": {
+        "uuid": "f511bbdc_6643e6fd",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "nit: No need to start on a new line, combine with the previous one.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16465f54_e88dcdce",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "Let\u0027s change that to just return if IsBrowserSideNavigation is false. It will skip running this test on the bots that run without PlzNavigate instead of getting us double coverage.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310ef80d_e301ba7d",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of checking expectations before the test even navigated?",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4aedd66_c0e9a19e",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "Same as above, make the test conditional on PlzNavigate.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10eb3c18_88450a7d",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "The test server initialization is the same between the two nested scopes, extract it at the beginning of the test case and do it once only.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b50ddf_1651a47b",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "nit: Maybe add that the cancel for the fail event is a no-op, since there is no failure in successful case.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bd003a_d743a971",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "Same as above, make the test conditional on PlzNavigate.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09cc521_6ee7509b",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "Comment mismatches what we are waiting for.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "443e36a6_73e9e5d6",
         "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
         "patchSetId": 51
@@ -13,6 +149,40 @@
       "writtenOn": "2017-10-06T19:03:52Z",
       "side": 1,
       "message": "I can get rid of this `if` and also test `EXPECT_FALSE(was_callback_called());` without PlzNavigate, if you think that\u0027s a good idea.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f6e5ef_37976c4c",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "This DCHECK isn\u0027t very useful as if render_frame_host is nullptr, it will crash a few lines later when it is dereferenced.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95eebc15_58d19246",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 1,
+      "message": "Why not pass the render_frame_host to CommitErrorPage as a parameter? This will be purely refactoring of the code. Setting it on the NavigationHandle has semantic changes which weren\u0027t present before.",
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

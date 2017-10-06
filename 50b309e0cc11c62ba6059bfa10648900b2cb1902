@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1da6df_9c6a29e6",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T22:58:12Z",
+      "side": 0,
+      "message": "I think we should modify this one, not remove it. One should not be able to get the RenderFrameHost before navigation has started or during redirects since we have no idea which RFH will be used for this navigation.",
+      "revId": "50b309e0cc11c62ba6059bfa10648900b2cb1902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
