@@ -4,6 +4,7 @@
 
 module url.mojom;
 
+[EnableIf=foo]
 struct Url {
   string url;
 };
