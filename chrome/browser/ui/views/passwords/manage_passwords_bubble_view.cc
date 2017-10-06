@@ -508,8 +508,9 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   views::GridLayout* layout = views::GridLayout::CreateAndInstall(this);
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
 
-  BuildCredentialRows(layout, username_field_, password_field_.get(),
-                      password_view_button_);
+  BuildCredentialRows(
+      layout, username_field_, password_field_.get(),
+      parent_->model()->hide_eye_icon() ? nullptr : password_view_button_);
   layout->AddPaddingRow(
       0, ChromeLayoutProvider::Get()->GetDistanceMetric(
              views::DISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL));
