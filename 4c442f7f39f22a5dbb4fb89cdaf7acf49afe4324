@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7831728_b2ace268",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Sure. The test fixture generally tries to do it itself, but no reason to not be more thorough.",
+      "parentUuid": "2bf45902_f309c026",
+      "range": {
+        "startLine": 15,
+        "startChar": 41,
+        "endLine": 15,
+        "endChar": 42
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f059043_d43d64bb",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -45,6 +69,30 @@
       "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f593d1_a6ed0d32",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f059043_d43d64bb",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d5ae37e_f1a70be3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b1fe85d_5a903bc6",
+      "range": {
+        "startLine": 23,
+        "startChar": 45,
+        "endLine": 23,
+        "endChar": 59
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df0a576b_8073aacd",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cfa1bf03_269ec269",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df0a576b_8073aacd",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 9
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2577ba3e_edbe78c9",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-05T16:33:56Z",
       "side": 1,
       "message": "Perhaps add a comment about why it\u0027s okay to look up a file that hasn\u0027t yet been registered.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "223d486e_46392aa1",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "It\u0027s not really OK though; the path to here has a DCHECK-failure; this is bug-tolerance stuff.",
+      "parentUuid": "2577ba3e_edbe78c9",
       "range": {
         "startLine": 57,
         "startChar": 0,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "41962c8b_6dd275c0",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb781a56_261271b1",
+      "range": {
+        "startLine": 66,
+        "startChar": 38,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44a400f5_9c4a31be",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -160,6 +304,30 @@
       "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43538068_ecd9e451",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44a400f5_9c4a31be",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 11
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "af1741f9_10072b99",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48bc93af_d71d0e1a",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 11
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e3e8953_7f719839",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -197,6 +389,30 @@
       "writtenOn": "2017-10-05T16:33:56Z",
       "side": 1,
       "message": "\u003d default ?",
+      "range": {
+        "startLine": 179,
+        "startChar": 62,
+        "endLine": 179,
+        "endChar": 63
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13293f55_ca2e5c0f",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Would that do the nulling of other (see the comment below)",
+      "parentUuid": "7e3e8953_7f719839",
       "range": {
         "startLine": 179,
         "startChar": 62,
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "21539c85_ec96a2e1",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "I don\u0027t think that would set some of the fields in other to null?",
+      "parentUuid": "641158ba_b525d339",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a334160_cdf5bfe5",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 34
@@ -252,6 +492,54 @@
       "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4518e2_0fbd748e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Would require an explicit out-of-line destructor for TrackedFiles. Shall I?",
+      "parentUuid": "4a334160_cdf5bfe5",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c75423_a035968b",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a334160_cdf5bfe5",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "a3c20b64_a1991be7",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee6f251_10efc96c",
+      "range": {
+        "startLine": 38,
+        "startChar": 10,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7797190b_44687b93",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 34
@@ -289,6 +601,30 @@
       "writtenOn": "2017-10-05T16:33:56Z",
       "side": 1,
       "message": "Can we remove this until the CL where we use it?",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154cba26_9cbf16e2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "I would prefer to keep it because of the DCHECKs of it.",
+      "parentUuid": "7797190b_44687b93",
       "range": {
         "startLine": 83,
         "startChar": 4,
@@ -324,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "ab7a8795_5982a913",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Indeed. Done.",
+      "parentUuid": "703836ac_6a40d3a3",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 13
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bcf5e429_66aa8ea5",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 34
@@ -344,6 +704,30 @@
       "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9969ffce_b72e60ef",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-10-06T14:16:24Z",
+      "side": 1,
+      "message": "Done, at call sites as well (which makes them more readable).",
+      "parentUuid": "bcf5e429_66aa8ea5",
+      "range": {
+        "startLine": 166,
+        "startChar": 49,
+        "endLine": 166,
+        "endChar": 51
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
