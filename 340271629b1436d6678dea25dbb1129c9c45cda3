@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4192e694_2b57c3b8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 87719,
+      "author": {
+        "id": 1224119
+      },
+      "writtenOn": "2017-10-06T14:30:47Z",
+      "side": 1,
+      "message": "This is already handled by V8.WasmModuleSizeBytes.asm histogram?",
+      "revId": "340271629b1436d6678dea25dbb1129c9c45cda3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
