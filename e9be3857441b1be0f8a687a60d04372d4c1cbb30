@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91f9652b_3db23be9",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T01:42:35Z",
+      "side": 1,
+      "message": "Due to the PID and the time, this function always be non-deterministic. Doesn\u0027t that defeat your purpose?",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd2560c8_0b3bd426",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T01:42:35Z",
+      "side": 1,
+      "message": "I\u0027d suggest removing this redundant comment, since it\u0027s also (and with full details) in the .h file.",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "956e98b1_05abfce8",
+        "filename": "base/allocator/partition_allocator/address_space_randomization.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T01:42:35Z",
+      "side": 1,
+      "message": "Since 0 is the safe value, I think we need\n\n  if (OFFICIAL_BUILD) {\n    CHECK_EQ(0, initial_seed);\n  }\n\nWe need to make sure to never be predictable in real production use.",
+      "revId": "e9be3857441b1be0f8a687a60d04372d4c1cbb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
