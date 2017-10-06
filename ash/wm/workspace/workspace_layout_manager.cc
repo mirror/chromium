@@ -137,10 +137,8 @@ void WorkspaceLayoutManager::OnKeyboardBoundsChanging(
   // If new window behavior is disable or the keyboard is in sticky mode, change
   // the work area.
   const bool change_work_area =
-      (base::CommandLine::ForCurrentProcess()->HasSwitch(
-           ::switches::kDisableNewVirtualKeyboardBehavior) ||
-       (keyboard::KeyboardController::GetInstance() &&
-        keyboard::KeyboardController::GetInstance()->keyboard_locked()));
+      (keyboard::KeyboardController::GetInstance() &&
+       keyboard::KeyboardController::GetInstance()->keyboard_locked());
   if (!change_work_area)
     return;
 
