@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc98144a_52d43677",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-06T19:37:20Z",
+      "side": 1,
+      "message": "0u",
+      "range": {
+        "startLine": 179,
+        "startChar": 41,
+        "endLine": 179,
+        "endChar": 50
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0d8870_72851ead",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-06T19:37:20Z",
+      "side": 1,
+      "message": "explaination for what this is doing, and why would be good.",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 5
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f15970_6d355a48",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-06T19:37:20Z",
+      "side": 1,
+      "message": "DCHECK(child_fragment-\u003eGetLayoutObject()-\u003eIsBox());\nLayoutBox* child_descendant \u003d ToLayoutBox(child_fragment-\u003eGetLayoutObject());\n\nis probably sufficient here?\n\ns/child/descendant ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 67
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aae1f3f_bff1140e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-06T19:37:20Z",
+      "side": 1,
+      "message": "is this still ok?\n\n(should there also be a DCHECK_EQ(this, child_fragment.GetLayoutObject())?",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 75
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0971b426_825710ba",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-10-06T19:37:20Z",
+      "side": 1,
+      "message": "explaination for what this is doing?",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
