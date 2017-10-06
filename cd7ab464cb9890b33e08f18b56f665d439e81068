@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b401ba8_76cc9ec4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_operation_response_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T20:21:33Z",
+      "side": 1,
+      "message": "nit: Returns the operation_name expected for this type",
+      "range": {
+        "startLine": 175,
+        "startChar": 5,
+        "endLine": 175,
+        "endChar": 64
+      },
+      "revId": "cd7ab464cb9890b33e08f18b56f665d439e81068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
