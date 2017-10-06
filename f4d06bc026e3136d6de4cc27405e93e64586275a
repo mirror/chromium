@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "166f37bc_39be166f",
+        "filename": "net/cookies/cookie_monster_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1750,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-10-06T04:05:36Z",
+      "side": 1,
+      "message": "nit: EXPECT_LT perhaps?",
+      "range": {
+        "startLine": 1750,
+        "startChar": 2,
+        "endLine": 1750,
+        "endChar": 11
+      },
+      "revId": "f4d06bc026e3136d6de4cc27405e93e64586275a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
