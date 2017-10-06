@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "443e36a6_73e9e5d6",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-06T19:03:52Z",
+      "side": 1,
+      "message": "I can get rid of this `if` and also test `EXPECT_FALSE(was_callback_called());` without PlzNavigate, if you think that\u0027s a good idea.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

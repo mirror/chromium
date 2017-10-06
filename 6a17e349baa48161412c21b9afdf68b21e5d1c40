@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37923718_77d825bf",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 46
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-06T19:03:52Z",
+      "side": 1,
+      "message": "I meant to leave this comment on NavigationThrottle::WillFailRequest().\n\nI believe NavigationThrottle::WillFailRequest() needs to stay public for the CL to work.\nAdded a link to the bug and CL.",
+      "parentUuid": "06ee71a2_9a5a11d6",
+      "revId": "6a17e349baa48161412c21b9afdf68b21e5d1c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a610052_de70e54c",
         "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
         "patchSetId": 46
@@ -33,6 +51,24 @@
       "revId": "6a17e349baa48161412c21b9afdf68b21e5d1c40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878fea71_6b16aa68",
+        "filename": "content/browser/frame_host/navigation_handle_impl_unittest.cc",
+        "patchSetId": 46
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-06T19:03:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a610052_de70e54c",
+      "revId": "6a17e349baa48161412c21b9afdf68b21e5d1c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
