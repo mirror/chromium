@@ -48,7 +48,8 @@
     this._testRunner.completeTest();
   }
 
-  async startInterceptionTest(requestInterceptedDict, numConsoleLogsToWaitFor) {
+  async startInterceptionTest(requestInterceptedDict, numConsoleLogsToWaitFor,
+                              interceptedResourceTypes) {
     if (typeof numConsoleLogsToWaitFor === 'undefined')
       numConsoleLogsToWaitFor = 0;
     var frameStoppedLoading = false;
@@ -133,7 +134,11 @@
     await this._session.protocol.Network.setCacheDisabled({cacheDisabled: true});
     this._session.protocol.Network.enable();
     this._testRunner.log('Network agent enabled');
-    await this._session.protocol.Network.setRequestInterceptionEnabled({enabled: true});
+    var interceptionParams = {enabled: true};
+    if (interceptedResourceTypes) {
+      interceptionParams.resourceTypes = interceptedResourceTypes;
+    }
+    await this._session.protocol.Network.setRequestInterceptionEnabled(interceptionParams);
     this._testRunner.log('Request interception enabled');
     await this._session.protocol.Page.enable();
     this._testRunner.log('Page agent enabled');
