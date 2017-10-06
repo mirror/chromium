@@ -19,7 +19,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this.contentElement.appendChild(this._list.element);
 
     this._allFilter =
-        new Console.ConsoleFilter(Common.UIString('All'), [], Console.ConsoleFilter.allLevelsFilterValue());
+        new Console.ConsoleFilter(Common.UIString('All'), [], null, Console.ConsoleFilter.allLevelsFilterValue());
     this._filters.replaceAll([this._allFilter]);
     this._list.selectItem(this._filters.at(0));
 
@@ -58,7 +58,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
       var filter = this._contextFilters.get(context);
       if (!filter) {
         var parsedFilter = {key: Console.ConsoleFilter.FilterType.Context, text: context, negative: false};
-        filter = new Console.ConsoleFilter(context, [parsedFilter]);
+        filter = new Console.ConsoleFilter(context, [parsedFilter], null);
         this._contextFilters.set(context, filter);
         this._pendingFiltersToAdd.add(filter);
       } else {
