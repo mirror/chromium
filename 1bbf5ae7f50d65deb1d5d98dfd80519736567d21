@@ -39,6 +39,24 @@
       "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7855c798_9e77bb12",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T09:58:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure if ES6 features are supported on iOS, where this page is also shown...",
+      "parentUuid": "f3ef6296_72039b1f",
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
