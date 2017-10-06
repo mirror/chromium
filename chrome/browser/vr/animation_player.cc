@@ -6,15 +6,13 @@
 
 #include <algorithm>
 
+#include "base/numerics/ranges.h"
 #include "base/stl_util.h"
 #include "cc/animation/animation_curve.h"
 #include "cc/animation/animation_target.h"
 #include "cc/animation/animation_ticker.h"
 #include "cc/animation/keyframed_animation_curve.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element.h"
-
-using cc::MathUtil;
 
 namespace vr {
 
@@ -91,17 +89,17 @@ base::TimeDelta GetEndTime(cc::Animation* animation) {
 }
 
 bool SufficientlyEqual(float lhs, float rhs) {
-  return MathUtil::ApproximatelyEqual(lhs, rhs, kTolerance);
+  return base::IsApproximatelyEqual(lhs, rhs, kTolerance);
 }
 
 bool SufficientlyEqual(const cc::TransformOperations& lhs,
                        const cc::TransformOperations& rhs) {
-  return lhs.ApproximatelyEqual(rhs, kTolerance);
+  return lhs.IsApproximatelyEqual(rhs, kTolerance);
 }
 
 bool SufficientlyEqual(const gfx::SizeF& lhs, const gfx::SizeF& rhs) {
-  return MathUtil::ApproximatelyEqual(lhs.width(), rhs.width(), kTolerance) &&
-         MathUtil::ApproximatelyEqual(lhs.height(), rhs.height(), kTolerance);
+  return base::IsApproximatelyEqual(lhs.width(), rhs.width(), kTolerance) &&
+         base::IsApproximatelyEqual(lhs.height(), rhs.height(), kTolerance);
 }
 
 bool SufficientlyEqual(SkColor lhs, SkColor rhs) {
