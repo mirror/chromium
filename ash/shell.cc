@@ -470,9 +470,15 @@ void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
       ->SetLargeCursorSizeInDip(large_cursor_size_in_dip);
 }
 
-void Shell::SetCursorCompositingEnabled(bool enabled) {
+void Shell::UpdateCursorCompositingEnabled(PrefService* prefs) {
   if (GetAshConfig() != Config::MASH) {
     // TODO: needs to work in mash. http://crbug.com/705592.
+
+    if (!prefs)
+      prefs = session_controller_->GetActivePrefService();
+    DCHECK(prefs);
+
+    bool enabled = ShouldEnableCursorCompositing(prefs);
     window_tree_host_manager_->cursor_window_controller()
         ->SetCursorCompositingEnabled(enabled);
     native_cursor_manager_->SetNativeCursorEnabled(!enabled);
@@ -1184,6 +1190,11 @@ void Shell::CloseAllRootWindowChildWindows() {
       }
     }
   }
+}
+
+bool Shell::ShouldEnableCursorCompositing(PrefService* prefs) {
+  return AccessibilityController::RequiresCursorCompositing(prefs) ||
+         night_light_controller_->GetEnabled();
 }
 
 bool Shell::CanWindowReceiveEvents(aura::Window* window) {
