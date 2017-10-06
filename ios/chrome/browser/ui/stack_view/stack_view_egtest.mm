@@ -12,11 +12,10 @@
 #include "ios/chrome/browser/pref_names.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
-#import "ios/chrome/browser/ui/browser_view_controller.h"
 #import "ios/chrome/browser/ui/stack_view/card_view.h"
-#import "ios/chrome/browser/ui/stack_view/stack_view_controller.h"
 #import "ios/chrome/browser/ui/stack_view/stack_view_controller_private.h"
 #include "ios/chrome/browser/ui/tools_menu/tools_menu_constants.h"
+#include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/test/app/chrome_test_util.h"
 #import "ios/chrome/test/app/stack_view_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
@@ -93,10 +92,7 @@ void OpenStackView() {
   if (chrome_test_util::IsTabSwitcherActive())
     return;
   // Tap on the toolbar's tab switcher button.
-  id<GREYMatcher> stackButtonMatcher =
-      grey_allOf(grey_accessibilityID(kToolbarStackButtonIdentifier),
-                 grey_sufficientlyVisible(), nil);
-  [[EarlGrey selectElementWithMatcher:stackButtonMatcher]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::ShowTabsButton()]
       performAction:grey_tap()];
   // Verify that a StackViewController was presented.
   WaitForStackViewActive(true);
