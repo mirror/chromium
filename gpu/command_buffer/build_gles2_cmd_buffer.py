@@ -4605,6 +4605,7 @@ _FUNCTION_INFO = {
     'impl_func': False,
     'immediate': False,
     'data_transfer_methods': ['shm'],
+    'cmd_args': 'uint32_t list_shm_id, uint32_t list_shm_offset',
     'needs_size': True,
     'extension': 'CHROMIUM_raster_transport',
     'extension_flag': 'chromium_raster_transport',

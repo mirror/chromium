@@ -11,6 +11,7 @@
 
 namespace cc {
 class DisplayItemList;
+class ImageProvider;
 }
 
 extern "C" typedef struct _ClientBuffer* ClientBuffer;

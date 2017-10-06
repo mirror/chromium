@@ -1788,11 +1788,12 @@ void GL_APIENTRY GLES2BeginRasterCHROMIUM(GLuint texture_id,
       use_distance_field_text, pixel_config);
 }
 void GL_APIENTRY GLES2RasterCHROMIUM(const cc::DisplayItemList* list,
+                                     cc::ImageProvider* provider,
                                      GLint x,
                                      GLint y,
                                      GLint w,
                                      GLint h) {
-  gles2::GetGLContext()->RasterCHROMIUM(list, x, y, w, h);
+  gles2::GetGLContext()->RasterCHROMIUM(list, provider, x, y, w, h);
 }
 void GL_APIENTRY GLES2EndRasterCHROMIUM() {
   gles2::GetGLContext()->EndRasterCHROMIUM();

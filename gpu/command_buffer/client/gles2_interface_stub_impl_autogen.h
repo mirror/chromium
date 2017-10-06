@@ -1215,6 +1215,7 @@ void GLES2InterfaceStub::BeginRasterCHROMIUM(
     GLboolean /* use_distance_field_text */,
     GLint /* pixel_config */) {}
 void GLES2InterfaceStub::RasterCHROMIUM(const cc::DisplayItemList* /* list */,
+                                        cc::ImageProvider* /* provider */,
                                         GLint /* x */,
                                         GLint /* y */,
                                         GLint /* w */,

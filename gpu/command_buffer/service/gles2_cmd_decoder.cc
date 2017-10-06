@@ -2255,6 +2255,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void UnbindTexture(TextureRef* texture_ref,
                      bool supports_separate_framebuffer_binds);
 
+  sk_sp<SkImage> CreateSkImage(unsigned int client_texture_id,
+                               GrPixelConfig config) const;
+
   // Generate a member function prototype for each command in an automated and
   // typesafe way.
 #define GLES2_CMD_OP(name) \
@@ -20155,6 +20158,10 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   if (!buffer)
     return error::kOutOfBounds;
 
+  cc::PaintOp::DeserializeOptions options;
+  options.texture_creation_func =
+      base::Bind(&GLES2DecoderImpl::CreateSkImage, base::Unretained(this));
+
   SkCanvas* canvas = sk_surface_->getCanvas();
   SkMatrix original_ctm;
   cc::PlaybackParams playback_params(nullptr, original_ctm);
@@ -20163,7 +20170,7 @@ error::Error GLES2DecoderImpl::HandleRasterCHROMIUM(
   while (size > 4) {
     size_t skip = 0;
     cc::PaintOp* deserialized_op = cc::PaintOp::Deserialize(
-        buffer, size, &data[0], sizeof(cc::LargestPaintOp), &skip);
+        buffer, size, &data[0], sizeof(cc::LargestPaintOp), &options, &skip);
     if (!deserialized_op) {
       LOG(ERROR) << "RasterCHROMIUM: bad op: " << op_idx;
       return error::kInvalidArguments;
@@ -20191,6 +20198,41 @@ void GLES2DecoderImpl::DoEndRasterCHROMIUM() {
   sk_surface_.reset();
 
   RestoreState(nullptr);
+}
+
+sk_sp<SkImage> GLES2DecoderImpl::CreateSkImage(unsigned int client_texture_id,
+                                               GrPixelConfig config) const {
+  auto* texture_ref = GetTexture(client_texture_id);
+  if (!texture_ref) {
+    fprintf(stderr, "enne: failure to find client id: %d\n", client_texture_id);
+    return nullptr;
+  }
+
+  auto* texture = texture_ref->texture();
+  int width;
+  int height;
+  int depth;
+  if (!texture->GetLevelSize(texture->target(), 0, &width, &height, &depth)) {
+    fprintf(stderr, "enne: failure to get level\n");
+    return nullptr;
+  }
+  GLenum type;
+  GLenum internal_format;
+  if (!texture->GetLevelType(texture->target(), 0, &type, &internal_format)) {
+    fprintf(stderr, "enne: failure to get level type\n");
+    return nullptr;
+  }
+
+  // TODO(enne): verify target and config are valid
+  GrGLTextureInfo texture_info;
+  texture_info.fID = texture_ref->service_id();
+  texture_info.fTarget = texture->target();
+
+  GrBackendTexture gr_texture(width, height, config, texture_info);
+
+  return SkImage::MakeFromTexture(gr_context_.get(), gr_texture,
+                                  kBottomLeft_GrSurfaceOrigin,
+                                  kPremul_SkAlphaType, nullptr);
 }
 
 // Include the auto-generated part of this file. We split this because it means

@@ -157,6 +157,7 @@ bool DrawAndScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
 
 // Returns the GL texture ID backing the given SkImage.
 GrGLuint GlIdFromSkImage(SkImage* image) {
+  DCHECK(image);
   DCHECK(image->isTextureBacked());
   const GrGLTextureInfo* info = skia::GrBackendObjectToGrGLTextureInfo(
       image->getTextureHandle(true /* flushPendingGrContextIO */));
