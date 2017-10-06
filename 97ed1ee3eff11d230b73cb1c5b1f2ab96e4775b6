@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81c325b7_46cf1443",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T22:41:41Z",
+      "side": 1,
+      "message": "hmm, does it still make sense to keep this in FileLockMap? We can use CdmStorageImpl::FileLockKey directly in the GetFileNameFromKey() function.\n\nThe reason is that if you do this, in theory someone can s/FileLockKey/Key throughout this file, which will probably make the code less readable.",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5094ef52_b802c0f3",
+        "filename": "media/cdm/cdm_paths.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T22:41:41Z",
+      "side": 1,
+      "message": "nit: put this in the .cc file where the string is actually defined.",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d1b061_f59cbdcf",
+        "filename": "third_party/widevine/cdm/widevine_cdm_common.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T22:41:41Z",
+      "side": 1,
+      "message": "nit: move this to before the \"so modifying.... inaccessible\" part.",
+      "range": {
+        "startLine": 39,
+        "startChar": 72,
+        "endLine": 41,
+        "endChar": 43
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
