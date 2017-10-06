@@ -112,6 +112,7 @@ import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabModelObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.browser.tabmodel.TabModelUtils;
 import org.chromium.chrome.browser.tabmodel.TabWindowManager;
+import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
@@ -793,7 +794,7 @@ public class ChromeTabbedActivity
         int accessibilityStringId = R.string.iph_download_home_accessibility_text;
         if (FeatureUtilities.isChromeHomeEnabled()) {
             accessibilityStringId = R.string.iph_download_home_accessibility_text_chrome_home;
-            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
+            if (((BottomToolbarPhone) getToolbarManager().getToolbar()).isUsingExpandButton()) {
                 accessibilityStringId =
                         R.string.iph_download_home_accessibility_text_chrome_home_expand;
             }
@@ -810,8 +811,10 @@ public class ChromeTabbedActivity
 
         turnOnHighlightForDownloadHomeTextBubble();
 
+        // If Chrome Home is enabled, we can assume the toolbar is the {@link BottomToolbarPhone}.
         boolean isChromeHomeExpandButtonEnabled = FeatureUtilities.isChromeHomeEnabled()
-                && FeatureUtilities.isChromeHomeExpandButtonEnabled();
+                && ((BottomToolbarPhone) getToolbarManager().getToolbar()).isUsingExpandButton();
+
         int yInsetPx =
                 getResources().getDimensionPixelOffset(R.dimen.text_bubble_menu_anchor_y_inset);
         textBubble.setInsetPx(0, isChromeHomeExpandButtonEnabled ? yInsetPx : 0, 0,
@@ -821,9 +824,7 @@ public class ChromeTabbedActivity
 
     private View getToolbarAnchorViewForDownloadHomeTextBubble() {
         if (FeatureUtilities.isChromeHomeEnabled()) {
-            return FeatureUtilities.isChromeHomeExpandButtonEnabled()
-                    ? mControlContainer.findViewById(R.id.expand_sheet_button)
-                    : mControlContainer.findViewById(R.id.toolbar_handle);
+            return mControlContainer.findViewById(R.id.toolbar_handle);
         } else {
             return getToolbarManager().getMenuButton();
         }
@@ -832,9 +833,6 @@ public class ChromeTabbedActivity
     private void turnOnHighlightForDownloadHomeTextBubble() {
         if (FeatureUtilities.isChromeHomeEnabled()) {
             getBottomSheetContentController().setHighlightItemId(R.id.action_downloads);
-            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
-                ViewHighlighter.turnOnHighlight(findViewById(R.id.expand_sheet_button), true);
-            }
         } else {
             getAppMenuHandler().setMenuHighlight(R.id.downloads_menu_id);
         }
@@ -844,9 +842,6 @@ public class ChromeTabbedActivity
         if (FeatureUtilities.isChromeHomeEnabled()) {
             if (getBottomSheetContentController() == null) return;
             getBottomSheetContentController().setHighlightItemId(null);
-            if (FeatureUtilities.isChromeHomeExpandButtonEnabled()) {
-                ViewHighlighter.turnOffHighlight(findViewById(R.id.expand_sheet_button));
-            }
         } else {
             getAppMenuHandler().setMenuHighlight(null);
         }
