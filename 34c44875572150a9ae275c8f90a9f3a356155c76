@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38e5418e_36be54ce",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3560,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0da80922_acf8c2d1",
+      "range": {
+        "startLine": 3560,
+        "startChar": 63,
+        "endLine": 3560,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ecbc299_48e4d124",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ba5e65_b73eed59",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "std::sort is probably okay since it\u0027s rare we\u0027ll sort anything more than 50 origins here.",
+      "parentUuid": "4ecbc299_48e4d124",
+      "range": {
+        "startLine": 33,
+        "startChar": 43,
+        "endLine": 33,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a0de37cb_7a3a0f42",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7808b4_244e7bcd",
+      "range": {
+        "startLine": 60,
+        "startChar": 7,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20cd5731_442a3417",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "If the last query happens to fail, the callback will never be run?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2840a40d_383b4975",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "I was under the impression that the |success| variable would be false if a query failed, but this callback would still be run.",
+      "parentUuid": "20cd5731_442a3417",
       "range": {
         "startLine": 88,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "215454c3_75b52a0f",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a3189e_82e929cb",
+      "range": {
+        "startLine": 89,
+        "startChar": 37,
+        "endLine": 89,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd6151e9_b8b44757",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
         "patchSetId": 3
@@ -128,6 +248,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "I think this won\u0027t work if a second QueryMostVisitedURLs call is started before the previous one completes: Then this will only go to zero for the second query, and the callback for the first one will never get run.\n\nMaybe there should be a \"Request\" class that handles getting the info from HistoryService for a single QueryMostVisitedURLs call? I think that\u0027d make things easier to follow. That class could also hold some data such as |urls| and |callback|, so not everything has to be bound to callbacks.\nMight also be good to get some tests for this.",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f697e12_56b4b58c",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "This behaviour was intentional. If we initiated a second call, I wanted to aggregate them into one so that only the second would finish (my understanding is that it would override the first anyone). Can I do this, or should both overlapping requests actually succeed?\n\nI\u0027m currently thinking about the best way to structure tests. We can\u0027t directly test the implementation in the existing TopSitesImplUnittest because that\u0027s in components. Either I\u0027ll need to write a totally separate set of unit tests for TopSitesImpl in //chrome, or I\u0027ll just add a SiteEngagementTopSitesProviderUnittest and sanity check it in a variety of scenarios in isolation from TopSitesImpl. I\u0027m leaning towards the latter option since it should be sufficient - thoughts?",
+      "parentUuid": "cd6151e9_b8b44757",
       "range": {
         "startLine": 91,
         "startChar": 34,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6474401b_ae75b411",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "It seemed a bit wasteful to have a HistoryService pointer on the owning TopSitesImpl as well as in here, which was why I passed it in.",
+      "parentUuid": "c78754ce_145ebdb8",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6509e388_db2f9215",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
         "patchSetId": 3
@@ -183,6 +351,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684fdd17_f207359e",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6509e388_db2f9215",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "24116e40_9c7cc161",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af53aa6a_0f247acd",
+      "range": {
+        "startLine": 111,
+        "startChar": 6,
+        "endLine": 111,
+        "endChar": 13
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817ceedb_4a84f36b",
         "filename": "chrome/browser/history/top_sites_factory.cc",
         "patchSetId": 3
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "08e6c967_21936566",
+        "filename": "chrome/browser/history/top_sites_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "817ceedb_4a84f36b",
+      "range": {
+        "startLine": 119,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "476fa929_b3cb4ee2",
         "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
         "patchSetId": 3
@@ -243,6 +483,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "nit: not required",
+      "range": {
+        "startLine": 18,
+        "startChar": 76,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0892975_86c0af87",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Without this, compilation fails with the following issue:\n\nerror: invalid application of \u0027sizeof\u0027 to an incomplete type \u0027history::TopSitesProvider\u0027\n\nThis is because TopSitesProvider is only forward-declared in top_sites_impl.h (std::unique_ptr\u003cX\u003e can be used as a member with just a forward declaration of X). I removed the forward declaration in top_sites_impl.h and included this there to get around the problem.",
+      "parentUuid": "476fa929_b3cb4ee2",
       "range": {
         "startLine": 18,
         "startChar": 76,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "6f13beca_9232a51e",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efb9cedf_2ae260ed",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb2b2a4a_43b5309e",
         "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
         "patchSetId": 3
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "17ed059c_1574ae48",
+        "filename": "chrome/browser/thumbnails/thumbnail_service_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb2b2a4a_43b5309e",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7f6777d_8d2a513d",
         "filename": "components/history/core/browser/top_sites_impl.cc",
         "patchSetId": 3
@@ -312,6 +624,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "Why?",
+      "range": {
+        "startLine": 420,
+        "startChar": 54,
+        "endLine": 420,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33ec567_0260a30c",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Hmmm, good point. Gone.",
+      "parentUuid": "f7f6777d_8d2a513d",
       "range": {
         "startLine": 420,
         "startChar": 54,
@@ -352,6 +688,30 @@
       "writtenOn": "2017-10-05T08:47:05Z",
       "side": 1,
       "message": "nit: remove \";\" (it messes up the auto-formatting)",
+      "range": {
+        "startLine": 17,
+        "startChar": 43,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d3b9d6_dab01d2c",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Ack, that\u0027s why this looked broken.",
+      "parentUuid": "073c2d0a_36fc881b",
       "range": {
         "startLine": 17,
         "startChar": 43,
@@ -456,6 +816,30 @@
       "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add3fa5f_ecc3715a",
+        "filename": "components/history/core/browser/top_sites_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T05:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "660d2f95_f99578d7",
+      "range": {
+        "startLine": 28,
+        "startChar": 79,
+        "endLine": 28,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
