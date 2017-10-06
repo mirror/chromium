@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff5434c_b8b8b72b",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-06T19:10:25Z",
+      "side": 0,
+      "message": "don\u0027t need this because its parent is already absolute.",
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

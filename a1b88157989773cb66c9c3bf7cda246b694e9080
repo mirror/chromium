@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd12368_341f3f52",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-06T19:10:25Z",
+      "side": 1,
+      "message": "To anchor the absolutely positioned source-icon.",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
