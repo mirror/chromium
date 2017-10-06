@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ab5f46_87e0c7cf",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T21:06:38Z",
+      "side": 1,
+      "message": "Should this also be based on prefs::kObservedSessionTime? Same in OnSessionStarted.\nAnd if so, maybe extract a method for initializing it?\n\nOtherwise, if prefs::kObservedSessionTime contains a non-0 value and I check GetActiveSessionElapsedTime(), then add an observer and check it again, I would\u0027ve gone back in time?\n\nPre-requisite: prefs::kObservedSessionTime contains value \u003e 0.\n\n  base::TimeDelta delta1 \u003d GetActiveSessionElapsedTime();\n  AddObserver(...);\n  ...\n  base::TimeDelta delta2 \u003d GetActiveSessionElapsedTime();\n  DCHECK(delta1 \u003c delta2);  // Could this fail?",
+      "revId": "135e9633d4216e9c11345ff008e85acc13c52d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc51295f_0f644ffd",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T21:06:38Z",
+      "side": 1,
+      "message": "I don\u0027t think a caller of this would necessarily be familiar with the pref name or value. Could you instead describe this using terms new readers might more easily understand? As in maybe mentioning across browser restarts, etc.? I mean \"total amount of observed action session time\" might or might not include across restarts.",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "135e9633d4216e9c11345ff008e85acc13c52d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
