@@ -10,11 +10,19 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
-import android.test.ServiceTestCase;
+import android.support.test.rule.ServiceTestRule;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.AdvancedMockContext;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -32,8 +40,8 @@ import java.util.UUID;
 /**
  * Tests of {@link DownloadNotificationService}.
  */
-public class DownloadNotificationServiceTest
-        extends ServiceTestCase<MockDownloadNotificationService> {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class DownloadNotificationServiceTest {
     private static class MockDownloadManagerService extends DownloadManagerService {
         final List<DownloadItem> mDownloads = new ArrayList<DownloadItem>();
 
@@ -86,40 +94,41 @@ public class DownloadNotificationServiceTest
                 UUID.randomUUID().toString(), notificationId, fileName, metered, autoResume);
     }
 
-    public DownloadNotificationServiceTest() {
-        super(MockDownloadNotificationService.class);
+    @Rule
+    public final ServiceTestRule mServiceTestRule = new ServiceTestRule();
+
+    private MockDownloadNotificationService mService;
+
+    @Before
+    public void setUp() {
+        mService = ((DownloadNotificationService.LocalBinder) mServiceTestRule.bindService(
+                    .getService();
     }
 
-    @Override
-    protected void setupService() {
-        super.setupService();
-    }
-
-    @Override
-    protected void shutdownService() {
+    private void shutdownService() {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                DownloadNotificationServiceTest.super.shutdownService();
+                mService.stopSelf();
+                mService.onDestroy();
             }
         });
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         SharedPreferences sharedPrefs = ContextUtils.getAppSharedPreferences();
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.remove(DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS);
         editor.apply();
-        super.tearDown();
     }
 
     private void startNotificationService() {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
-                startService(intent);
+                Intent intent = new Intent(Instrumenation, MockDownloadNotificationService.class);
+                mServiceTestRule.startService(intent);
             }
         });
     }
@@ -149,6 +158,7 @@ public class DownloadNotificationServiceTest
      * Tests that creating the service without launching chrome will do nothing if there is no
      * ongoing download.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testPausingWithoutOngoingDownloads() {
@@ -168,6 +178,7 @@ public class DownloadNotificationServiceTest
      * Tests that download resumption task is scheduled when notification service is started
      * without any download action.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testResumptionScheduledWithoutDownloadOperationIntent() throws Exception {
@@ -191,6 +202,7 @@ public class DownloadNotificationServiceTest
      * Tests that download resumption task is not scheduled when notification service is started
      * with a download action.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testResumptionNotScheduledWithDownloadOperationIntent() {
@@ -203,7 +215,7 @@ public class DownloadNotificationServiceTest
             public void run() {
                 Intent intent = new Intent(getService(), MockDownloadNotificationService.class);
                 intent.setAction(DownloadNotificationService.ACTION_DOWNLOAD_RESUME_ALL);
-                startService(intent);
+                mServiceTestRule.startService(intent);
             }
         });
         assertFalse(scheduler.mScheduled);
@@ -213,6 +225,7 @@ public class DownloadNotificationServiceTest
      * Tests that download resumption task is not scheduled when there is no auto resumable
      * download in SharedPreferences.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testResumptionNotScheduledWithoutAutoResumableDownload() throws Exception {
@@ -234,6 +247,7 @@ public class DownloadNotificationServiceTest
     /**
      * Tests that creating the service without launching chrome will pause all ongoing downloads.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testPausingWithOngoingDownloads() {
@@ -266,6 +280,7 @@ public class DownloadNotificationServiceTest
     /**
      * Tests adding and cancelling notifications.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testAddingAndCancelingNotifications() {
@@ -334,6 +349,7 @@ public class DownloadNotificationServiceTest
     /**
      * Tests that notification is updated if download success comes without any prior progress.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
@@ -350,6 +366,7 @@ public class DownloadNotificationServiceTest
     /**
      * Tests resume all pending downloads. Only auto resumable downloads can resume.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
@@ -398,6 +415,7 @@ public class DownloadNotificationServiceTest
     /**
      * Tests incognito download fails when browser gets killed.
      */
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testIncognitoDownloadCanceledOnServiceShutdown() throws Exception {
@@ -426,6 +444,7 @@ public class DownloadNotificationServiceTest
                 DownloadSharedPreferenceHelper.KEY_PENDING_DOWNLOAD_NOTIFICATIONS));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
@@ -446,6 +465,7 @@ public class DownloadNotificationServiceTest
         assertTrue(service.hideSummaryNotificationIfNecessary(-1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
@@ -465,6 +485,7 @@ public class DownloadNotificationServiceTest
         assertTrue(service.hideSummaryNotificationIfNecessary(-1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
@@ -484,6 +505,7 @@ public class DownloadNotificationServiceTest
         assertTrue(service.hideSummaryNotificationIfNecessary(-1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testServiceWillNotStopOnInterruptedDownload() throws Exception {
@@ -502,6 +524,7 @@ public class DownloadNotificationServiceTest
         assertFalse(service.hideSummaryNotificationIfNecessary(-1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     public void testServiceWillNotStopOnPausedDownload() throws Exception {
@@ -520,6 +543,7 @@ public class DownloadNotificationServiceTest
         assertFalse(service.hideSummaryNotificationIfNecessary(-1));
     }
 
+    @Test
     @SmallTest
     @Feature({"Download"})
     @RetryOnFailure
