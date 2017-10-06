@@ -298,6 +298,13 @@ class TestAutofillManager : public AutofillManager {
   void AddSeenForm(const FormData& form,
                    const std::vector<ServerFieldType>& heuristic_types,
                    const std::vector<ServerFieldType>& server_types) {
+    AddSeenForm(form, heuristic_types, server_types, TimeTicks::Now());
+  }
+
+  void AddSeenForm(const FormData& form,
+                   const std::vector<ServerFieldType>& heuristic_types,
+                   const std::vector<ServerFieldType>& server_types,
+                   const TimeTicks& timestamp) {
     FormData empty_form = form;
     for (size_t i = 0; i < empty_form.fields.size(); ++i) {
       empty_form.fields[i].value = base::string16();
@@ -306,7 +313,7 @@ class TestAutofillManager : public AutofillManager {
     std::unique_ptr<TestFormStructure> form_structure =
         base::MakeUnique<TestFormStructure>(empty_form);
     form_structure->SetFieldTypes(heuristic_types, server_types);
-    form_structure->set_form_parsed_timestamp(TimeTicks::Now());
+    form_structure->set_form_parsed_timestamp(timestamp);
     form_structures()->push_back(std::move(form_structure));
 
     form_interactions_ukm_logger()->OnFormsParsed(form.origin);
@@ -5439,8 +5446,191 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction_AddressForm) {
         {UkmSuggestionFilledType::kMillisecondsSinceFormParsedName, 0}}});
 }
 
-// Verify that we correctly log metrics tracking the duration of form fill.
-TEST_F(AutofillMetricsTest, FormFillDuration) {
+// Expect only form load metrics to be logged if the form is submitted without
+// user interaction.
+TEST_F(AutofillMetricsTest, AddressFormFillDuration_SubmitWithoutInteraction) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect metric to be logged if the user manually edited a form field.
+TEST_F(AutofillMetricsTest, AddressFormFillDuration_SubmitAfterManuallyEdit) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 14, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect metric to be logged if the user autofilled the form
+TEST_F(AutofillMetricsTest, AddressFormFillDuration_SubmitAfterAutofill) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 12, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect metric to be logged if the user both manually filled some fields
+// and autofilled others.  Messages can arrive out of order, so make sure they
+// take precedence appropriately.
+TEST_F(AutofillMetricsTest,
+       AddressFormFillDuration_SubmitAfterAutofillAndManuallyEdit) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Make sure that loading another form doesn't affect metrics from the first
+// form.
+TEST_F(AutofillMetricsTest,
+       AddressFormFillDuration_SubmitAfterLoadAnotherForm) {
   // Load a fillable form.
   FormData form;
   form.name = ASCIIToUTF16("TestForm");
@@ -5475,153 +5665,877 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
   second_form.fields[2].value = ASCIIToUTF16("12345678901");
   second_form.fields[3].value = ASCIIToUTF16("51512345678");
 
-  // Expect only form load metrics to be logged if the form is submitted without
-  // user interaction.
-  {
-    base::HistogramTester histogram_tester;
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
-
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 0);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 0);
-
-    autofill_manager_->Reset();
-  }
-
-  // Expect metric to be logged if the user manually edited a form field.
-  {
-    base::HistogramTester histogram_tester;
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
-                                            TimeTicks::FromInternalValue(3));
-    autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
-
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 14, 1);
-
-    // We expected an upload to be triggered when the manager is reset.
-    autofill_manager_->ResetRunLoop();
-    autofill_manager_->Reset();
-    autofill_manager_->RunRunLoop();
-  }
-
-  // Expect metric to be logged if the user autofilled the form.
   form.fields[0].is_autofilled = true;
-  {
-    base::HistogramTester histogram_tester;
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->OnDidFillAutofillFormData(
-        form, TimeTicks::FromInternalValue(5));
-    autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
 
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 12, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 0);
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnFormsSeen(second_forms, TimeTicks::FromInternalValue(3));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
 
-    // We expected an upload to be triggered when the manager is reset.
-    autofill_manager_->ResetRunLoop();
-    autofill_manager_->Reset();
-    autofill_manager_->RunRunLoop();
-  }
-
-  // Expect metric to be logged if the user both manually filled some fields
-  // and autofilled others.  Messages can arrive out of order, so make sure they
-  // take precedence appropriately.
-  {
-    base::HistogramTester histogram_tester;
-
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->OnDidFillAutofillFormData(
-        form, TimeTicks::FromInternalValue(5));
-    autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
-                                            TimeTicks::FromInternalValue(3));
-    autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
-
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 14, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 0);
-
-    // We expected an upload to be triggered when the manager is reset.
-    autofill_manager_->ResetRunLoop();
-    autofill_manager_->Reset();
-    autofill_manager_->RunRunLoop();
-  }
-
-  // Make sure that loading another form doesn't affect metrics from the first
-  // form.
-  {
-    base::HistogramTester histogram_tester;
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->OnFormsSeen(second_forms,
-                                   TimeTicks::FromInternalValue(3));
-    autofill_manager_->OnDidFillAutofillFormData(
-        form, TimeTicks::FromInternalValue(5));
-    autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
-                                            TimeTicks::FromInternalValue(3));
-    autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
-
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 14, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 0);
-
-    // We expected an upload to be triggered when the manager is reset.
-    autofill_manager_->ResetRunLoop();
-    autofill_manager_->Reset();
-    autofill_manager_->RunRunLoop();
-  }
-
-  // Make sure that submitting a form that was loaded later will report the
-  // later loading time.
-  {
-    base::HistogramTester histogram_tester;
-    autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
-    autofill_manager_->OnFormsSeen(second_forms,
-                                   TimeTicks::FromInternalValue(5));
-    autofill_manager_->SubmitForm(second_form,
-                                  TimeTicks::FromInternalValue(17));
-
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromLoad.WithAutofill", 0);
-    histogram_tester.ExpectUniqueSample(
-        "Autofill.FillDuration.FromLoad.WithoutAutofill", 12, 1);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithAutofill", 0);
-    histogram_tester.ExpectTotalCount(
-        "Autofill.FillDuration.FromInteraction.WithoutAutofill", 0);
-
-    autofill_manager_->Reset();
-  }
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
 }
+
+// Make sure that submitting a form that was loaded later will report the
+// later loading time.
+TEST_F(AutofillMetricsTest, AddressFormFillDuration_SubmitSecondForm) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill additional form.
+  FormData second_form = form;
+  test::CreateTestFormField("Second Phone", "second_phone", "", "text", &field);
+  second_form.fields.push_back(field);
+
+  std::vector<FormData> second_forms(1, second_form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  // Fill the field values for form submission.
+  second_form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  second_form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  second_form.fields[2].value = ASCIIToUTF16("12345678901");
+  second_form.fields[3].value = ASCIIToUTF16("51512345678");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnFormsSeen(second_forms, TimeTicks::FromInternalValue(5));
+  autofill_manager_->SubmitForm(second_form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 12, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect only form load metrics to be logged if the credit card form is
+// submitted without user interaction.
+TEST_F(AutofillMetricsTest,
+       CreditCardFormFillDuration_SubmitWithoutInteraction) {
+  EnableWalletSync();
+  personal_data_->RecreateCreditCards(
+      true /* include_local_credit_card */,
+      false /* include_masked_server_credit_card */,
+      false /* include_full_server_credit_card */);
+
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  std::vector<ServerFieldType> field_types;
+  test::CreateTestFormField("Name on card", "name-cc", "Elvis Aaron Presley",
+                            "text", &field);
+  form.fields.push_back(field);
+  field_types.push_back(CREDIT_CARD_NAME_FULL);
+  test::CreateTestFormField("Credit card number", "CCNo", "4111111111111111",
+                            "text", &field);
+  form.fields.push_back(field);
+  field_types.push_back(CREDIT_CARD_NUMBER);
+  test::CreateTestFormField("Expiry Date", "CCExpiresMonth", "12", "text",
+                            &field);
+  form.fields.push_back(field);
+  field_types.push_back(CREDIT_CARD_EXP_MONTH);
+  test::CreateTestFormField("Year", "CCExpiresYear", "2024", "text", &field);
+  form.fields.push_back(field);
+  field_types.push_back(CREDIT_CARD_EXP_4_DIGIT_YEAR);
+
+  autofill_manager_->AddSeenForm(form, field_types, field_types,
+                                 TimeTicks::FromInternalValue(1));
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect metric to be logged if the user manually edited a form field.
+TEST_F(AutofillMetricsTest,
+       CreditCardFormFillDuration_SubmitAfterManuallyEdit) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 14,
+      1);
+}
+
+// Expect metric to be logged if the user autofilled the form
+TEST_F(AutofillMetricsTest, CreditCardFormFillDuration_SubmitAfterAutofill) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 12, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Expect metric to be logged if the user both manually filled some fields
+// and autofilled others.  Messages can arrive out of order, so make sure they
+// take precedence appropriately.
+TEST_F(AutofillMetricsTest,
+       CreditCardFormFillDuration_SubmitAfterAutofillAndManuallyEdit) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 14, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Make sure that loading another form doesn't affect metrics from the first
+// form.
+TEST_F(AutofillMetricsTest,
+       CreditCardFormFillDuration_SubmitAfterLoadAnotherForm) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill additional form.
+  FormData second_form = form;
+  test::CreateTestFormField("Second Phone", "second_phone", "", "text", &field);
+  second_form.fields.push_back(field);
+
+  std::vector<FormData> second_forms(1, second_form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  // Fill the field values for form submission.
+  second_form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  second_form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  second_form.fields[2].value = ASCIIToUTF16("12345678901");
+  second_form.fields[3].value = ASCIIToUTF16("51512345678");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnFormsSeen(second_forms, TimeTicks::FromInternalValue(3));
+  autofill_manager_->OnDidFillAutofillFormData(form,
+                                               TimeTicks::FromInternalValue(5));
+  autofill_manager_->OnTextFieldDidChange(
+      form, form.fields.front(), gfx::RectF(), TimeTicks::FromInternalValue(3));
+  autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 14, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// Make sure that submitting a form that was loaded later will report the
+// later loading time.
+TEST_F(AutofillMetricsTest, CreditCardFormFillDuration_SubmitSecondForm) {
+  // Load a fillable form.
+  FormData form;
+  form.name = ASCIIToUTF16("TestForm");
+  form.origin = GURL("http://example.com/form.html");
+  form.action = GURL("http://example.com/submit.html");
+
+  FormFieldData field;
+  test::CreateTestFormField("Name", "name", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Email", "email", "", "text", &field);
+  form.fields.push_back(field);
+  test::CreateTestFormField("Phone", "phone", "", "text", &field);
+  form.fields.push_back(field);
+
+  const std::vector<FormData> forms(1, form);
+
+  // Fill additional form.
+  FormData second_form = form;
+  test::CreateTestFormField("Second Phone", "second_phone", "", "text", &field);
+  second_form.fields.push_back(field);
+
+  std::vector<FormData> second_forms(1, second_form);
+
+  // Fill the field values for form submission.
+  form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  form.fields[2].value = ASCIIToUTF16("12345678901");
+
+  // Fill the field values for form submission.
+  second_form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+  second_form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+  second_form.fields[2].value = ASCIIToUTF16("12345678901");
+  second_form.fields[3].value = ASCIIToUTF16("51512345678");
+
+  form.fields[0].is_autofilled = true;
+
+  base::HistogramTester histogram_tester;
+  autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+  autofill_manager_->OnFormsSeen(second_forms, TimeTicks::FromInternalValue(5));
+  autofill_manager_->SubmitForm(second_form, TimeTicks::FromInternalValue(17));
+
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+  histogram_tester.ExpectUniqueSample(
+      "Autofill.FillDuration.FromLoad.WithoutAutofill", 12, 1);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+  histogram_tester.ExpectTotalCount(
+      "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+}
+
+// // Expect fill duration from load without autofill metrics to be logged if
+// the
+// // form is seen and submitted.
+// TEST_F(AutofillMetricsTest,
+// FormFillDuration_ShouldLogFromLoadWithoutAutofill) {
+//   // Load a fillable form.
+//   FormData form;
+//   form.name = ASCIIToUTF16("TestForm");
+//   form.origin = GURL("http://example.com/form.html");
+//   form.action = GURL("http://example.com/submit.html");
+
+//   FormFieldData field;
+//   test::CreateTestFormField("Name", "name", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Email", "email", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Phone", "phone", "", "text", &field);
+//   form.fields.push_back(field);
+
+//   const std::vector<FormData> forms(1, form);
+
+//   // Fill the field values for form submission.
+//   form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   form.fields[2].value = ASCIIToUTF16("12345678901");
+
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+// }
+
+// // Expect fill duration from load with autofill metrics to be logged if the
+// form
+// // is seen, autofilled and submitted.
+// TEST_F(AutofillMetricsTest, FormFillDuration_ShouldLogFromLoadWithAutofill) {
+//   // Load a fillable form.
+//   FormData form;
+//   form.name = ASCIIToUTF16("TestForm");
+//   form.origin = GURL("http://example.com/form.html");
+//   form.action = GURL("http://example.com/submit.html");
+
+//   FormFieldData field;
+//   test::CreateTestFormField("Name", "name", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Email", "email", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Phone", "phone", "", "text", &field);
+//   form.fields.push_back(field);
+//   form.fields[0].is_autofilled = true;
+
+//   const std::vector<FormData> forms(1, form);
+
+//   // Fill the field values for form submission.
+//   form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   form.fields[2].value = ASCIIToUTF16("12345678901");
+
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnDidFillAutofillFormData(form,
+//   TimeTicks::FromInternalValue(5)); autofill_manager_->SubmitForm(form,
+//   TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+// }
+
+// // Expect fill duration from interation without autofill metrics to be logged
+// if
+// // the address form is seen, editted and submitted.
+// TEST_F(AutofillMetricsTest,
+// FormFillDuration_ShouldLogFromInteractionWithoutAutofill) {
+//   // Load a fillable form.
+//   FormData form;
+//   form.name = ASCIIToUTF16("TestForm");
+//   form.origin = GURL("http://example.com/form.html");
+//   form.action = GURL("http://example.com/submit.html");
+
+//   FormFieldData field;
+//   test::CreateTestFormField("Name", "name", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Email", "email", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Phone", "phone", "", "text", &field);
+//   form.fields.push_back(field);
+
+//   const std::vector<FormData> forms(1, form);
+
+//   // Fill the field values for form submission.
+//   form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   form.fields[2].value = ASCIIToUTF16("12345678901");
+
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                           gfx::RectF(),
+//                                           TimeTicks::FromInternalValue(3));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 14,
+//         1);
+// }
+
+// // Expect fill duration from interation without autofill metrics to be logged
+// if
+// // the address form is seen, autofilled and submitted.
+// TEST_F(AutofillMetricsTest,
+// FormFillDuration_ShouldLogFromInteractionWithoutAutofill) {
+//   // Load a fillable form.
+//   FormData form;
+//   form.name = ASCIIToUTF16("TestForm");
+//   form.origin = GURL("http://example.com/form.html");
+//   form.action = GURL("http://example.com/submit.html");
+
+//   FormFieldData field;
+//   test::CreateTestFormField("Name", "name", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Email", "email", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Phone", "phone", "", "text", &field);
+//   form.fields.push_back(field);
+
+//   const std::vector<FormData> forms(1, form);
+
+//   // Fill the field values for form submission.
+//   form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   form.fields[2].value = ASCIIToUTF16("12345678901");
+
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                           gfx::RectF(),
+//                                           TimeTicks::FromInternalValue(3));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 14,
+//         1);
+// }
+
+// // Verify that we correctly log metrics tracking the duration of form fill.
+// TEST_F(AutofillMetricsTest, FormFillDuration) {
+//   // Load a fillable form.
+//   FormData form;
+//   form.name = ASCIIToUTF16("TestForm");
+//   form.origin = GURL("http://example.com/form.html");
+//   form.action = GURL("http://example.com/submit.html");
+
+//   FormFieldData field;
+//   test::CreateTestFormField("Name", "name", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Email", "email", "", "text", &field);
+//   form.fields.push_back(field);
+//   test::CreateTestFormField("Phone", "phone", "", "text", &field);
+//   form.fields.push_back(field);
+
+//   const std::vector<FormData> forms(1, form);
+
+//   // Fill additional form.
+//   FormData second_form = form;
+//   test::CreateTestFormField("Second Phone", "second_phone", "", "text",
+//   &field); second_form.fields.push_back(field);
+
+//   std::vector<FormData> second_forms(1, second_form);
+
+//   // Fill the field values for form submission.
+//   form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   form.fields[2].value = ASCIIToUTF16("12345678901");
+
+//   // Fill the field values for form submission.
+//   second_form.fields[0].value = ASCIIToUTF16("Elvis Aaron Presley");
+//   second_form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
+//   second_form.fields[2].value = ASCIIToUTF16("12345678901");
+//   second_form.fields[3].value = ASCIIToUTF16("51512345678");
+
+//   // Expect only form load metrics to be logged if the form is submitted
+//   without
+//   // user interaction.
+//   {
+//     base::HistogramTester histogram_tester;
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+
+//     // We expected an upload to be triggered when the manager is reset.
+//     autofill_manager_->Reset();
+//   }
+
+// DLOG(WARNING) <<"3fenglog: A";
+//   // Expect metric to be logged if the user manually edited a form field.
+//   {
+//     base::HistogramTester histogram_tester;
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                             gfx::RectF(),
+//                                             TimeTicks::FromInternalValue(3));
+//     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 14,
+//         1);
+
+//     // We expected an upload to be triggered when the manager is reset.
+//     autofill_manager_->ResetRunLoop();
+//     autofill_manager_->Reset();
+//     autofill_manager_->RunRunLoop();
+//   }
+
+// DLOG(WARNING) <<"3fenglog: C";
+//   // Expect metric to be logged if the user autofilled the form.
+//   form.fields[0].is_autofilled = true;
+//   {
+//     base::HistogramTester histogram_tester;
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->OnDidFillAutofillFormData(
+//         form, TimeTicks::FromInternalValue(5));
+//     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 12, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+
+//     // We expected an upload to be triggered when the manager is reset.
+//     autofill_manager_->ResetRunLoop();
+//     autofill_manager_->Reset();
+//     autofill_manager_->RunRunLoop();
+//   }
+// DLOG(WARNING) <<"3fenglog: D";
+//   // Expect metric to be logged if the user both manually filled some fields
+//   // and autofilled others.  Messages can arrive out of order, so make sure
+//   they
+//   // take precedence appropriately.
+//   {
+//     base::HistogramTester histogram_tester;
+
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->OnDidFillAutofillFormData(
+//         form, TimeTicks::FromInternalValue(5));
+//     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                             gfx::RectF(),
+//                                             TimeTicks::FromInternalValue(3));
+//     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+
+//     // We expected an upload to be triggered when the manager is reset.
+//     autofill_manager_->ResetRunLoop();
+//     autofill_manager_->Reset();
+//     autofill_manager_->RunRunLoop();
+//   }
+
+// DLOG(WARNING) <<"3fenglog: E";
+//   // Make sure that loading another form doesn't affect metrics from the
+//   first
+//   // form.
+//   {
+//     base::HistogramTester histogram_tester;
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->OnFormsSeen(second_forms,
+//                                    TimeTicks::FromInternalValue(3));
+//     autofill_manager_->OnDidFillAutofillFormData(
+//         form, TimeTicks::FromInternalValue(5));
+//     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                             gfx::RectF(),
+//                                             TimeTicks::FromInternalValue(3));
+//     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+
+//     // We expected an upload to be triggered when the manager is reset.
+//     autofill_manager_->ResetRunLoop();
+//     autofill_manager_->Reset();
+//     autofill_manager_->RunRunLoop();
+//   }
+
+//   // Make sure that submitting a form that was loaded later will report the
+//   // later loading time.
+//   {
+//     base::HistogramTester histogram_tester;
+//     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//     autofill_manager_->OnFormsSeen(second_forms,
+//                                    TimeTicks::FromInternalValue(5));
+//     autofill_manager_->SubmitForm(second_form,
+//                                   TimeTicks::FromInternalValue(17));
+
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//     histogram_tester.ExpectUniqueSample(
+//         "Autofill.FillDuration.FromLoad.WithoutAutofill", 12, 1);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//     histogram_tester.ExpectTotalCount(
+//         "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+
+//     autofill_manager_->Reset();
+//   }
+// }
+
+// Expect form interaction without autofill metric to be logged if the user
+// manually edited a form field.
+// {
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                           gfx::RectF(),
+//                                           TimeTicks::FromInternalValue(3));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 16, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 14,
+//       1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+//   // We expected an upload to be triggered when the manager is reset.
+//   autofill_manager_->ResetRunLoop();
+//   autofill_manager_->Reset();
+//   autofill_manager_->RunRunLoop();
+// }
+
+// // Expect metric to be logged if the user autofilled the form.
+// form.fields[0].is_autofilled = true;
+// {
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnDidFillAutofillFormData(
+//       form, TimeTicks::FromInternalValue(5));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 12, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+
+//   // We expected an upload to be triggered when the manager is reset.
+//   autofill_manager_->ResetRunLoop();
+//   autofill_manager_->Reset();
+//   autofill_manager_->RunRunLoop();
+// }
+
+// // Expect metric to be logged if the user both manually filled some fields
+// // and autofilled others.  Messages can arrive out of order, so make sure
+// they
+// // take precedence appropriately.
+// {
+//   base::HistogramTester histogram_tester;
+
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnDidFillAutofillFormData(
+//       form, TimeTicks::FromInternalValue(5));
+//   autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                           gfx::RectF(),
+//                                           TimeTicks::FromInternalValue(3));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+
+//   // We expected an upload to be triggered when the manager is reset.
+//   autofill_manager_->ResetRunLoop();
+//   autofill_manager_->Reset();
+//   autofill_manager_->RunRunLoop();
+// }
+
+// // Make sure that loading another form doesn't affect metrics from the first
+// // form.
+// {
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnFormsSeen(second_forms,
+//                                  TimeTicks::FromInternalValue(3));
+//   autofill_manager_->OnDidFillAutofillFormData(
+//       form, TimeTicks::FromInternalValue(5));
+//   autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
+//                                           gfx::RectF(),
+//                                           TimeTicks::FromInternalValue(3));
+//   autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 16, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 14, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+
+//   // We expected an upload to be triggered when the manager is reset.
+//   autofill_manager_->ResetRunLoop();
+//   autofill_manager_->Reset();
+//   autofill_manager_->RunRunLoop();
+// }
+
+// // Make sure that submitting a form that was loaded later will report the
+// // later loading time.
+// {
+//   base::HistogramTester histogram_tester;
+//   autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
+//   autofill_manager_->OnFormsSeen(second_forms,
+//                                  TimeTicks::FromInternalValue(5));
+//   autofill_manager_->SubmitForm(second_form,
+//                                 TimeTicks::FromInternalValue(17));
+
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromLoad.WithAutofill", 0);
+//   histogram_tester.ExpectUniqueSample(
+//       "Autofill.FillDuration.FromLoad.WithoutAutofill", 12, 1);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.Address", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.Address", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithAutofill.CreditCard", 0);
+//   histogram_tester.ExpectTotalCount(
+//       "Autofill.FillDuration.FromInteraction.WithoutAutofill.CreditCard", 0);
+
+//   autofill_manager_->Reset();
+// }
+// }
 
 // Verify that we correctly log metrics for profile action on form submission.
 TEST_F(AutofillMetricsTest, ProfileActionOnFormSubmitted) {

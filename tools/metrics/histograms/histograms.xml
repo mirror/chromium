@@ -94761,6 +94761,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="AutofillFormType" separator=".">
+  <affected-histogram
+      name="Autofill.FillDuration.FromInteraction.WithAutofill"/>
+  <affected-histogram
+      name="Autofill.FillDuration.FromInteraction.WithoutAutofill"/>
   <suffix name="Address" label="Address form"/>
   <suffix name="CreditCard" label="Credit card form"/>
   <suffix name="Password" label="Password form"/>
