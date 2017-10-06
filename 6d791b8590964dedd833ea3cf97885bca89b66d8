@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6047e198_5c028f71",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanelContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-06T01:32:55Z",
+      "side": 1,
+      "message": "Previously we relied on the CVC, which uses control container height. On tablets, that height includes the tab strip. I tested on my Nexus 9 and using the bar height vs the control container didn\u0027t appear to make a difference. Conceptually I think using the bar height here makes sense, but if it doesn\u0027t, this could use the control container height, e.g.\n\nint controlContainerHeight \u003d mActivity.getResources().getDimensionPixelSize(mActivity.getControlContainerHeightResource());",
+      "range": {
+        "startLine": 353,
+        "startChar": 46,
+        "endLine": 353,
+        "endChar": 58
+      },
+      "revId": "6d791b8590964dedd833ea3cf97885bca89b66d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
