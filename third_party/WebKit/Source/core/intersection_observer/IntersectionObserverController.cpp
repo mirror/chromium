@@ -26,10 +26,16 @@ IntersectionObserverController::IntersectionObserverController(
 IntersectionObserverController::~IntersectionObserverController() {}
 
 void IntersectionObserverController::PostTaskToDeliverObservations() {
+  ExecutionContext* context = GetExecutionContext();
+  if (!context) {
+    pending_intersection_observers_.clear();
+    return;
+  }
+
   // TODO(ojan): These tasks decide whether to throttle a subframe, so they
   // need to be unthrottled, but we should throttle all the other tasks
   // (e.g. ones coming from the web page).
-  TaskRunnerHelper::Get(TaskType::kUnthrottled, GetExecutionContext())
+  TaskRunnerHelper::Get(TaskType::kUnthrottled, context)
       ->PostTask(
           BLINK_FROM_HERE,
           WTF::Bind(
