@@ -25,6 +25,10 @@
   NewTabPageToolbarController* _toolbarController;
   UIImageView* _searchBoxBorder;
   UIImageView* _shadow;
+
+  // Constraint specifying the height of the toolbar. Used to update the height
+  // of the toolbar if the safe area changes.
+  __weak NSLayoutConstraint* toolbarHeightConstraint_;
 }
 
 @end
@@ -53,8 +57,34 @@
   return relinquishedToolbarController;
 }
 
+- (void)addConstraintsToToolbar {
+  toolbarHeightConstraint_ = [NSLayoutConstraint
+      constraintWithItem:[_toolbarController view]
+               attribute:NSLayoutAttributeHeight
+               relatedBy:NSLayoutRelationEqual
+                  toItem:nil
+               attribute:NSLayoutAttributeNotAnAttribute
+              multiplier:0.0
+                constant:[_toolbarController
+                             preferredToolbarHeightWhenAlignedToTopOfScreen]];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [[_toolbarController view].leadingAnchor
+        constraintEqualToAnchor:self.leadingAnchor],
+    [[_toolbarController view].topAnchor
+        constraintEqualToAnchor:self.topAnchor],
+    [[_toolbarController view].trailingAnchor
+        constraintEqualToAnchor:self.trailingAnchor],
+    toolbarHeightConstraint_
+  ]];
+}
+
 - (void)reparentToolbarController {
+  DCHECK(![[_toolbarController view] isDescendantOfView:self]);
   [self addSubview:[_toolbarController view]];
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [self addConstraintsToToolbar];
+  }
 }
 
 - (void)addToolbarWithReadingListModel:(ReadingListModel*)readingListModel
@@ -67,12 +97,17 @@
   _toolbarController.readingListModel = readingListModel;
 
   UIView* toolbarView = [_toolbarController view];
-  CGRect toolbarFrame = self.bounds;
-  toolbarFrame.size.height = ntp_header::kToolbarHeight;
-  toolbarView.frame = toolbarFrame;
-  [toolbarView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
   [self addSubview:[_toolbarController view]];
+
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    [self addConstraintsToToolbar];
+  } else {
+    CGRect toolbarFrame = self.bounds;
+    toolbarFrame.size.height = ntp_header::kToolbarHeight;
+    toolbarView.frame = toolbarFrame;
+    [toolbarView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+  }
 }
 
 - (void)setCanGoForward:(BOOL)canGoForward {
@@ -166,6 +201,13 @@
       constraint.constant = constantDiff + ntp_header::kHintLabelSidePadding;
     else
       constraint.constant = -constantDiff;
+  }
+}
+
+- (void)safeAreaInsetsDidChange {
+  if (base::FeatureList::IsEnabled(kSafeAreaCompatibleToolbar)) {
+    toolbarHeightConstraint_.constant =
+        [_toolbarController preferredToolbarHeightWhenAlignedToTopOfScreen];
   }
 }
 
