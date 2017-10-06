@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01779aa4_83ede825",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-06T14:44:06Z",
+      "side": 1,
+      "message": "This doesn\u0027t really belong here. This type of workaround should probably be handled by a gpu_driver_bug_list.json entry or in gpu/command_buffer/service/feature_info.cc. I looked at ANDROID_get_native_client_buffer but no mention of it implying native_fence_sync so please find out why this extension does not need to be listed in Android O so we can setup the proper workaround for it.",
+      "range": {
+        "startLine": 1940,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 71
+      },
+      "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
