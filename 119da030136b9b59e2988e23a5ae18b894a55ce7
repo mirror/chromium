@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c8d22f7_66122024",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-10-06T16:46:46Z",
+      "side": 1,
+      "message": "please update the javadoc. It is not very clear why detachNotification has higher priority than killNotification is both are true.",
+      "revId": "119da030136b9b59e2988e23a5ae18b894a55ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
