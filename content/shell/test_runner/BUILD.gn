@@ -3,12 +3,13 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 if (is_android) {
   import("//build/config/android/config.gni")
 }
 
-component("test_runner") {
+jumbo_component("test_runner") {
   testonly = true
 
   defines = [ "TEST_RUNNER_IMPLEMENTATION" ]
@@ -101,6 +102,19 @@ component("test_runner") {
     "web_widget_test_client.h",
     "web_widget_test_proxy.cc",
     "web_widget_test_proxy.h",
+  ]
+
+  jumbo_excluded_sources = [
+    # Using namespace blink
+    "mock_webrtc_data_channel_handler.cc",
+    "mock_webrtc_dtmf_sender_handler.cc",
+    "mock_webrtc_peer_connection_handler.cc",
+    "test_runner.cc",
+    "test_runner_for_specific_view.cc",
+    "web_test_interfaces.cc",
+
+    # Symbols
+    "web_frame_test_client.cc",
   ]
 
   # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.

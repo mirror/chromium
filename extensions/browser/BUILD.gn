@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//extensions/features/features.gni")
 
 assert(enable_extensions)
@@ -35,7 +36,7 @@ source_set("browser_context_keyed_service_factories") {
   ]
 }
 
-source_set("browser_sources") {
+source_set("browser_sources") { # Need to fix IPC headers before jumbo
   visibility = [ "./*" ]
 
   sources = [
@@ -336,6 +337,10 @@ source_set("browser_sources") {
     "web_ui_user_script_loader.cc",
     "web_ui_user_script_loader.h",
   ]
+
+#  jumbo_excluded_sources = [
+    #
+#  ]
 
   deps = [
     "//base:i18n",

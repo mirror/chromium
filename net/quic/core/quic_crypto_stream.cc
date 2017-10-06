@@ -92,4 +92,5 @@ bool QuicCryptoStream::ExportTokenBindingKeyingMaterial(string* result) const {
       /* context= */ "", 32, result);
 }
 
+#undef ENDPOINT
 }  // namespace net

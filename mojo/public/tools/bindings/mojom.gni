@@ -2,6 +2,26 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/jumbo.gni")  # Seemed to save 33 CPU minutes when doing:
+
+# bratell@bratell-linux:~/src/chromium/src/out/Default/gen$ find . -name '*mojom*' | xargs rm -rf
+# bratell@bratell-linux:~/src/chromium/src/out/Default/gen$ time ninja -k 0 -C /home/bratell/src/chromium/src/out/Default chrome blink_tests content_shell net_unittests v8/test:gn_all
+# ninja: Entering directory `/home/bratell/src/chromium/src/out/Default'
+# [6755/6755] STAMP obj/blink_tests.stamp
+#
+# real	29m10.671s
+# user	223m25.764s
+# sys	6m17.516s
+# bratell@bratell-linux:~/src/chromium/src/out/Default/gen$ find . -name '*mojom*' | xargs rm -rf
+# bratell@bratell-linux:~/src/chromium/src/out/Default/gen$ time ninja -k 0 -C /home/bratell/src/chromium/src/out/Default chrome blink_tests content_shell net_unittests v8/test:gn_all
+# ninja: Entering directory `/home/bratell/src/chromium/src/out/Default'
+# [1/1] Regenerating ninja files
+# [5930/5930] STAMP obj/blink_tests.stamp
+#
+# real	25m0.214s
+# user	190m59.620s
+# sys	5m24.076s
+
 # TODO(rockot): Maybe we can factor these dependencies out of //mojo. They're
 # used to conditionally enable message ID scrambling in a way which is
 # consistent across toolchains and which is affected by branded vs non-branded
@@ -21,6 +41,8 @@ declare_args() {
   # with typemapping disabled, so it is never valid to set this to |false| in
   # any Chromium build configuration.
   enable_mojom_typemapping = true
+
+  use_jumbo_in_mojo = true
 }
 
 # NOTE: We would like to avoid scrambling message IDs where it doesn't add
@@ -511,7 +533,11 @@ template("mojom") {
   }
 
   shared_cpp_sources_target_name = "${target_name}_shared_cpp_sources"
-  source_set(shared_cpp_sources_target_name) {
+  target_type = "source_set"
+  if (use_jumbo_in_mojo) {
+    target_type = "jumbo_" + target_type
+  }
+  target(target_type, shared_cpp_sources_target_name) {
     if (defined(invoker.testonly)) {
       testonly = invoker.testonly
     }
@@ -826,6 +852,10 @@ template("mojom") {
       output_target_type = "component"
     } else {
       output_target_type = "source_set"
+    }
+
+    if (use_jumbo_in_mojo) {
+      output_target_type = "jumbo_" + output_target_type
     }
 
     target(output_target_type, "${target_name}${variant_suffix}") {

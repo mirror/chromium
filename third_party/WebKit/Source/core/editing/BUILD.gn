@@ -316,7 +316,7 @@ blink_core_sources("editing") {
   ]
 }
 
-source_set("unit_tests") {
+jumbo_source_set("editing_unit_tests") {
   testonly = true
   sources = [
     "EditingCommandTest.cpp",
@@ -397,6 +397,16 @@ source_set("unit_tests") {
     "testing/SelectionSample.cpp",
     "testing/SelectionSample.h",
     "testing/SelectionSampleTest.cpp",
+  ]
+
+  jumbo_excluded_sources = [
+    # These copy a lot of code between each other and files with
+    # similar names.
+    # Clone of
+    # "state_machines/BackwardGraphemeBoundaryStateMachineTest.cpp"
+    "state_machines/ForwardGraphemeBoundaryStateMachineTest.cpp",
+    "state_machines/BackwardCodePointStateMachineTest.cpp",
+    "state_machines/BackspaceStateMachineTest.cpp",
   ]
 
   configs += [

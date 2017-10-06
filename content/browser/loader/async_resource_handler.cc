@@ -40,25 +40,25 @@ namespace content {
 namespace {
 
 static int kBufferSize = 1024 * 512;
-static int kMinAllocationSize = 1024 * 4;
+static int kBufferMinAllocationSize = 1024 * 4;
 static int kMaxAllocationSize = 1024 * 32;
 
-void GetNumericArg(const std::string& name, int* result) {
+void GetNumericCommandLineArg(const std::string& name, int* result) {
   const std::string& value =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(name);
   if (!value.empty())
     base::StringToInt(value, result);
 }
 
-void InitializeResourceBufferConstants() {
+void InitializeResourceBufferConstantsFoo() {
   static bool did_init = false;
   if (did_init)
     return;
   did_init = true;
 
-  GetNumericArg("resource-buffer-size", &kBufferSize);
-  GetNumericArg("resource-buffer-min-allocation-size", &kMinAllocationSize);
-  GetNumericArg("resource-buffer-max-allocation-size", &kMaxAllocationSize);
+  GetNumericCommandLineArg("resource-buffer-size", &kBufferSize);
+  GetNumericCommandLineArg("resource-buffer-min-allocation-size", &kBufferMinAllocationSize);
+  GetNumericCommandLineArg("resource-buffer-max-allocation-size", &kMaxAllocationSize);
 }
 
 // This enum is used for logging a histogram and should not be reordered.
@@ -74,14 +74,14 @@ enum ExpectedContentSizeResult {
 
 }  // namespace
 
-class DependentIOBuffer : public net::WrappedIOBuffer {
+class DependentIOBufferFoo : public net::WrappedIOBuffer {
  public:
-  DependentIOBuffer(ResourceBuffer* backing, char* memory)
+  DependentIOBufferFoo(ResourceBuffer* backing, char* memory)
       : net::WrappedIOBuffer(memory),
         backing_(backing) {
   }
  private:
-  ~DependentIOBuffer() override {}
+  ~DependentIOBufferFoo() override {}
   scoped_refptr<ResourceBuffer> backing_;
 };
 
@@ -98,7 +98,7 @@ AsyncResourceHandler::AsyncResourceHandler(net::URLRequest* request,
       sent_data_buffer_msg_(false),
       reported_transfer_size_(0) {
   DCHECK(GetRequestInfo()->requester_info()->IsRenderer());
-  InitializeResourceBufferConstants();
+  InitializeResourceBufferConstantsFoo();
 }
 
 AsyncResourceHandler::~AsyncResourceHandler() {
@@ -260,7 +260,7 @@ void AsyncResourceHandler::OnWillRead(
   char* memory = buffer_->Allocate(&allocation_size_);
   CHECK(memory);
 
-  *buf = new DependentIOBuffer(buffer_.get(), memory);
+  *buf = new DependentIOBufferFoo(buffer_.get(), memory);
   *buf_size = allocation_size_;
 
   controller->Resume();
@@ -388,7 +388,7 @@ bool AsyncResourceHandler::EnsureResourceBufferIsInitialized() {
 
   buffer_ = new ResourceBuffer();
   return buffer_->Initialize(kBufferSize,
-                             kMinAllocationSize,
+                             kBufferMinAllocationSize,
                              kMaxAllocationSize);
 }
 

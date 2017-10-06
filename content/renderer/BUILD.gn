@@ -12,14 +12,9 @@ import("//ppapi/features/features.gni")
 import("//printing/features/features.gni")
 import("//third_party/webrtc/webrtc.gni")
 import("//tools/ipc_fuzzer/ipc_fuzzer.gni")
+import("//content/content.gni")
 
-if (is_component_build) {
-  link_target_type = "source_set"
-} else {
-  link_target_type = "split_static_library"
-}
-
-target(link_target_type, "renderer") {
+content_component("renderer") {
   # Only the public target should depend on this. All other targets (even
   # internal content ones) should depend on the public one.
   visibility = [
@@ -158,6 +153,7 @@ target(link_target_type, "renderer") {
     "input/frame_input_handler_impl.cc",
     "input/frame_input_handler_impl.h",
     "input/input_event_filter.cc",
+    "input/input_event_filter_ipc_names.cc",
     "input/input_event_filter.h",
     "input/input_handler_manager.cc",
     "input/input_handler_manager.h",
@@ -409,6 +405,20 @@ target(link_target_type, "renderer") {
     "webscrollbarbehavior_impl_aura.h",
     "webscrollbarbehavior_impl_mac.h",
     "webscrollbarbehavior_impl_mac.mm",
+  ]
+
+  jumbo_excluded_sources = [
+    # IPC
+    "input/input_event_filter_ipc_names.cc",
+
+    # Too many IsRunningInMash.
+    "gpu/render_widget_compositor.cc",
+
+    # Too many InputEventDispositionToAck.
+    "input/widget_input_handler_manager.cc",
+
+    # Too many WebScrollbarBehavior
+    "webscrollbarbehavior_impl_aura.cc",
   ]
 
   if (!is_component_build) {

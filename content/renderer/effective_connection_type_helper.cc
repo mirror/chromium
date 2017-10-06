@@ -3,12 +3,9 @@
 // found in the LICENSE file.
 
 #include "content/renderer/effective_connection_type_helper.h"
+#include "third_party/WebKit/Source/platform/wtf/Assertions.h"
 
 namespace content {
-
-#define STATIC_ASSERT_ENUM(a, b)                            \
-  static_assert(static_cast<int>(a) == static_cast<int>(b), \
-                "mismatching enums: " #a)
 
 STATIC_ASSERT_ENUM(net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN,
                    blink::WebEffectiveConnectionType::kTypeUnknown);
