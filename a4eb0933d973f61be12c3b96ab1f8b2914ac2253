@@ -16,6 +16,24 @@
       "revId": "a4eb0933d973f61be12c3b96ab1f8b2914ac2253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec8fc5f_afa8e366",
+        "filename": "chromecast/browser/cast_content_window_aura.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T22:26:45Z",
+      "side": 0,
+      "message": "Yes, I noticed that it\u0027s unused. Will remove it in a separate CL.",
+      "parentUuid": "012e0772_0f46c3b0",
+      "revId": "a4eb0933d973f61be12c3b96ab1f8b2914ac2253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fcdba44_cd32a21e",
+        "filename": "chromecast/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T22:26:45Z",
+      "side": 1,
+      "message": "Moved them back there.",
+      "parentUuid": "a301b8b5_287698e0",
+      "revId": "1e4a34a4cd54d60bf8dda2f18ff945c34162e1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3477ef5a_5f9224c3",
         "filename": "chromecast/browser/cast_browser_main_parts.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1e4a34a4cd54d60bf8dda2f18ff945c34162e1b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc7d659_1451ea03",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T22:26:45Z",
+      "side": 1,
+      "message": "this should be defined(OS_LINUX). Thanks for catching it.",
+      "parentUuid": "3477ef5a_5f9224c3",
+      "revId": "1e4a34a4cd54d60bf8dda2f18ff945c34162e1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
