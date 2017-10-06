@@ -300,7 +300,7 @@ void FastInkView::UpdateSurface() {
 
   // Create new resource if needed.
   if (!resource)
-    resource = base::MakeUnique<Resource>();
+    resource = std::make_unique<Resource>();
 
   // Acquire context provider for resource if needed.
   // Note: We make no attempts to recover if the context provider is later

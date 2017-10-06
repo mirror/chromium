@@ -4,6 +4,8 @@
 
 #include "ash/system/supervised/tray_supervised_user.h"
 
+#include <memory>
+
 #include "ash/login_status.h"
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"

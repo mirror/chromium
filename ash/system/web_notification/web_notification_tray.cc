@@ -538,7 +538,7 @@ void WebNotificationTray::UpdateTrayContent() {
     if (visible_small_icons_.count(notification->id()) != 0)
       continue;
 
-    auto item = base::MakeUnique<WebNotificationImage>(
+    auto item = std::make_unique<WebNotificationImage>(
         image.AsImageSkia(), animation_container_.get(), this);
     tray_container()->AddChildViewAt(item.get(), 0);
     item->SetVisible(true);

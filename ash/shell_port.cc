@@ -4,6 +4,7 @@
 
 #include "ash/shell_port.h"
 
+#include <memory>
 #include <utility>
 
 #include "ash/accelerators/accelerator_controller.h"
@@ -17,7 +18,6 @@
 #include "ash/wm/system_modal_container_layout_manager.h"
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
 #include "ui/display/display.h"

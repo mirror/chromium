@@ -193,7 +193,7 @@ class NoteActionLaunchButton::ActionButton : public views::ImageButton,
     EnableCanvasFlippingForRTLUI(true);
     SetPreferredSize(gfx::Size(kLargeBubbleRadiusDp, kLargeBubbleRadiusDp));
     SetEventTargeter(
-        base::MakeUnique<views::ViewTargeter>(&event_targeter_delegate_));
+        std::make_unique<views::ViewTargeter>(&event_targeter_delegate_));
 
     // Paint to layer because the background is painted to layer - if the button
     // was not painted to layer as well, the background would be painted over

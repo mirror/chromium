@@ -140,7 +140,7 @@ void OverviewWindowDragController::UpdatePhantomWindowAndWindowGrid(
 
   if (!phantom_window_controller_) {
     phantom_window_controller_ =
-        base::MakeUnique<PhantomWindowController>(target_window);
+        std::make_unique<PhantomWindowController>(target_window);
   }
   phantom_window_controller_->Show(phantom_bounds_in_screen);
 }

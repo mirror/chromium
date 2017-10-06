@@ -115,7 +115,7 @@ void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
 
 void AccessibilityController::ObservePrefs(PrefService* prefs) {
   // Watch for pref updates from webui settings and policy.
-  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
   pref_change_registrar_->Init(prefs);
   pref_change_registrar_->Add(
       prefs::kAccessibilityLargeCursorEnabled,

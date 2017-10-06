@@ -49,7 +49,7 @@ WorkspaceLayoutManager::WorkspaceLayoutManager(aura::Window* window)
   root_window_->AddObserver(this);
   display::Screen::GetScreen()->AddObserver(this);
   DCHECK(window->GetProperty(kSnapChildrenToPixelBoundary));
-  backdrop_controller_ = base::MakeUnique<BackdropController>(window_);
+  backdrop_controller_ = std::make_unique<BackdropController>(window_);
 }
 
 WorkspaceLayoutManager::~WorkspaceLayoutManager() {

@@ -4,6 +4,8 @@
 
 #include "ash/system/network/network_icon.h"
 
+#include <memory>
+
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/network/network_icon_animation.h"

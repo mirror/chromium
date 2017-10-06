@@ -4,6 +4,8 @@
 
 #include "ash/shelf/shelf_widget.h"
 
+#include <memory>
+
 #include "ash/animation/animation_change_type.h"
 #include "ash/focus_cycler.h"
 #include "ash/public/cpp/window_properties.h"
@@ -20,7 +22,6 @@
 #include "ash/system/status_area_layout_manager.h"
 #include "ash/system/status_area_widget.h"
 #include "base/command_line.h"
-#include "base/memory/ptr_util.h"
 #include "chromeos/chromeos_switches.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"

@@ -54,7 +54,7 @@ class LoginBubbleTest : public LoginTestBase {
     container_->AddChildView(other_view_);
     SetWidget(CreateWidgetWithContent(container_));
 
-    bubble_ = base::MakeUnique<LoginBubble>();
+    bubble_ = std::make_unique<LoginBubble>();
   }
 
   void TearDown() override {

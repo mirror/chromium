@@ -4,6 +4,8 @@
 
 #include "ash/system/screen_security/screen_tray_item.h"
 
+#include <memory>
+
 #include "ash/shell.h"
 #include "ash/system/screen_security/screen_capture_tray_item.h"
 #include "ash/system/screen_security/screen_share_tray_item.h"

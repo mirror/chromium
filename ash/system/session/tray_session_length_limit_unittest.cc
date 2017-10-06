@@ -4,13 +4,14 @@
 
 #include "ash/system/session/tray_session_length_limit.h"
 
+#include <memory>
+
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
 #include "ash/system/tray/label_tray_view.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_test_api.h"
 #include "ash/test/ash_test_base.h"
-#include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification.h"

@@ -4,6 +4,8 @@
 
 #include "ash/system/tray/tray_details_view.h"
 
+#include <memory>
+
 #include "ash/ash_view_ids.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/hover_highlight_view.h"
@@ -15,7 +17,6 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/system/tray/tri_view.h"
 #include "base/containers/adapters.h"
-#include "base/memory/ptr_util.h"
 #include "third_party/skia/include/core/SkDrawLooper.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"

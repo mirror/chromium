@@ -63,7 +63,7 @@ void CacheProminentColors(const std::vector<SkColor>& colors,
   }
   DictionaryPrefUpdate wallpaper_colors_update(
       Shell::Get()->GetLocalStatePrefService(), prefs::kWallpaperColors);
-  auto wallpaper_colors = base::MakeUnique<base::ListValue>();
+  auto wallpaper_colors = std::make_unique<base::ListValue>();
   for (SkColor color : colors)
     wallpaper_colors->AppendDouble(static_cast<double>(color));
   wallpaper_colors_update->SetWithoutPathExpansion(current_location,
@@ -519,7 +519,7 @@ void WallpaperController::CalculateWallpaperColors() {
     return;
   }
 
-  color_calculator_ = base::MakeUnique<wallpaper::WallpaperColorCalculator>(
+  color_calculator_ = std::make_unique<wallpaper::WallpaperColorCalculator>(
       GetWallpaper(), color_profiles_, sequenced_task_runner_);
   color_calculator_->AddObserver(this);
   if (!color_calculator_->StartCalculation()) {

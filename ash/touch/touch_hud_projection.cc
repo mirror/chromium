@@ -4,10 +4,11 @@
 
 #include "ash/touch/touch_hud_projection.h"
 
+#include <memory>
+
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
 #include "ash/touch_hud/touch_hud_renderer.h"
-#include "base/memory/ptr_util.h"
 #include "ui/events/event.h"
 #include "ui/views/widget/widget.h"
 

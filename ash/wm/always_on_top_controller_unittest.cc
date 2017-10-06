@@ -4,6 +4,8 @@
 
 #include "ash/wm/always_on_top_controller.h"
 
+#include <memory>
+
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"

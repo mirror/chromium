@@ -56,9 +56,9 @@ class TrayInfoLabelTest : public AshTestBase {
 
   void CreateLabel(bool use_delegate, int message_id) {
     if (use_delegate)
-      delegate_ = base::MakeUnique<TestDelegate>();
+      delegate_ = std::make_unique<TestDelegate>();
 
-    label_ = base::MakeUnique<TrayInfoLabel>(delegate_.get(), message_id);
+    label_ = std::make_unique<TrayInfoLabel>(delegate_.get(), message_id);
   }
 
   void ClickOnLabel(bool expect_click_was_handled) {

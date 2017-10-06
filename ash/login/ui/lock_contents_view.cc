@@ -172,7 +172,7 @@ LockContentsView::LockContentsView(
   display_observer_.Add(display::Screen::GetScreen());
   Shell::Get()->lock_screen_controller()->AddLockScreenAppsFocusObserver(this);
   Shell::Get()->system_tray_notifier()->AddSystemTrayFocusObserver(this);
-  error_bubble_ = base::MakeUnique<LoginBubble>();
+  error_bubble_ = std::make_unique<LoginBubble>();
 
   // We reuse the focusable state on this view as a signal that focus should
   // switch to the system tray. LockContentsView should otherwise not be
