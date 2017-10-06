@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "086631da_10c0d15b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-06T01:33:33Z",
+      "side": 1,
+      "message": "nit: This is not required inside the namespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 14,
+        "endChar": 40
+      },
+      "revId": "b8210a0c8ce3d7f247992ec5a1d5f3ec65453786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
