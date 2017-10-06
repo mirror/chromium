@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878741ef_5931ad3d",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-06T13:26:17Z",
+      "side": 1,
+      "message": "Optional nit: Would it be better to name this variable referenceIndex to be consistent with the terms?",
+      "range": {
+        "startLine": 511,
+        "startChar": 8,
+        "endLine": 511,
+        "endChar": 17
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104e02a6_d912a9e7",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-06T13:26:17Z",
+      "side": 1,
+      "message": "Optional nit: s/fragment/reference",
+      "range": {
+        "startLine": 518,
+        "startChar": 11,
+        "endLine": 518,
+        "endChar": 19
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2b58ba_e242b119",
+        "filename": "ios/web/web_state/js/resources/common.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-10-06T13:26:17Z",
+      "side": 1,
+      "message": "The new logic is really neat :)",
+      "range": {
+        "startLine": 521,
+        "startChar": 14,
+        "endLine": 521,
+        "endChar": 24
+      },
+      "revId": "11971b2bd65d12c3843cc1ee93aa344962e12f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
