@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97eaac31_3d42cf2f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: Let\u0027s file a dedicated bug for bringing up cast_shell rather than re-using the full chrome one, since it\u0027s an interim goal.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e9a296_06162157",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: defined(OS_LINUX) here, since this is clearly Linux-specific :)",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d77d27_9b239008",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: Interesting that this is !defined(OS_ANDROID), given the cast_crash_reporter_client_android header included above.\n\nAs elsewhere, let\u0027s make this defined(OS_LINUX), for clarity.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "755f70dc_4700c67c",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: As above, suggest OS_LINUX here, and perhaps move the TODO to sit just before the #if block.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24d4ccf_2aec1f34",
+        "filename": "chromecast/app/cast_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: OS_LINUX",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0382904_6a26e0ab",
+        "filename": "chromecast/app/cast_main_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: Should just just be if defined(OS_LINUX)? Do we do Zygote forking on any other platform Cast runs on?",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b61a050_0d4df149",
+        "filename": "chromecast/browser/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "Why are we moving these here?\n\nAlthough we do have the filename based platform-specific source filters, current guidance is to move away from those, to explicit OS-specific source +\u003d entries in GN files, in the hope that one day we can remove the special filters, FWIW.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de297353_995ce4fd",
+        "filename": "chromecast/browser/cast_content_window_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: This comment seems redundant;)",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a060d6_8ad4baa1",
+        "filename": "chromecast/browser/cast_content_window_fuchsia.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "We don\u0027t appear to use this at all; can we remove it and have SetTransparent() be a no-op?",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b3cec5a_db9a413b",
+        "filename": "chromecast/renderer/cast_content_renderer_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-10-06T18:51:09Z",
+      "side": 1,
+      "message": "nit: Although it\u0027s shorter to say !OS_FUCHSIA, it may be more readable to explicitly say \"if we\u0027re on Linux or Android, do crash logging\", FWIW.",
+      "revId": "b8ab453745cd5c450ef77179c63666287abb118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
