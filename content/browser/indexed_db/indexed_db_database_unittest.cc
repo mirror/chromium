@@ -16,6 +16,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "content/browser/indexed_db/fake_indexed_db_metadata_factory.h"
 #include "content/browser/indexed_db/indexed_db.h"
 #include "content/browser/indexed_db/indexed_db_backing_store.h"
 #include "content/browser/indexed_db/indexed_db_callbacks.h"
@@ -29,9 +30,14 @@
 #include "content/browser/indexed_db/mock_indexed_db_database_callbacks.h"
 #include "content/browser/indexed_db/mock_indexed_db_factory.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::ASCIIToUTF16;
+using leveldb::Status;
+using testing::_;
+using testing::Return;
+using testing::StrictMock;
 
 namespace {
 const int kFakeChildProcessId = 0;
@@ -44,11 +50,15 @@ class IndexedDBDatabaseTest : public ::testing::Test {
   void SetUp() override {
     backing_store_ = new IndexedDBFakeBackingStore();
     factory_ = new MockIndexedDBFactory();
+    std::unique_ptr<FakeIndexedDBMetadataFactory> metadata_factory =
+        base::MakeUnique<FakeIndexedDBMetadataFactory>();
+    metadata_factory_ = metadata_factory.get();
     EXPECT_TRUE(backing_store_->HasOneRef());
     leveldb::Status s;
+
     std::tie(db_, s) = IndexedDBDatabase::Create(
         ASCIIToUTF16("db"), backing_store_.get(), factory_.get(),
-        IndexedDBDatabase::Identifier());
+        std::move(metadata_factory), IndexedDBDatabase::Identifier());
     ASSERT_TRUE(s.ok());
     EXPECT_FALSE(backing_store_->HasOneRef());  // local and db
   }
@@ -57,6 +67,7 @@ class IndexedDBDatabaseTest : public ::testing::Test {
   scoped_refptr<IndexedDBFakeBackingStore> backing_store_;
   scoped_refptr<MockIndexedDBFactory> factory_;
   scoped_refptr<IndexedDBDatabase> db_;
+  FakeIndexedDBMetadataFactory* metadata_factory_;
 
  private:
   TestBrowserThreadBundle thread_bundle_;
@@ -308,10 +319,13 @@ class IndexedDBDatabaseOperationTest : public testing::Test {
 
   void SetUp() override {
     backing_store_ = new IndexedDBFakeBackingStore();
+    std::unique_ptr<FakeIndexedDBMetadataFactory> metadata_factory =
+        base::MakeUnique<FakeIndexedDBMetadataFactory>();
+    metadata_factory_ = metadata_factory.get();
     leveldb::Status s;
     std::tie(db_, s) = IndexedDBDatabase::Create(
         ASCIIToUTF16("db"), backing_store_.get(), factory_.get(),
-        IndexedDBDatabase::Identifier());
+        std::move(metadata_factory), IndexedDBDatabase::Identifier());
     ASSERT_TRUE(s.ok());
 
     request_ = new MockIndexedDBCallbacks();
@@ -347,6 +361,7 @@ private:
  protected:
   scoped_refptr<IndexedDBFakeBackingStore> backing_store_;
   scoped_refptr<IndexedDBDatabase> db_;
+  FakeIndexedDBMetadataFactory* metadata_factory_;
   scoped_refptr<MockIndexedDBCallbacks> request_;
   scoped_refptr<MockIndexedDBDatabaseCallbacks> callbacks_;
   IndexedDBTransaction* transaction_;
