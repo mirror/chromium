@@ -175,11 +175,8 @@ struct GlobalMemoryDump {
 // allows a process to contribute to memory-infra dumps. There should be at
 // most one instance of this per hosting process.
 interface ClientProcess {
-  // When |success| == true the dump is appended in the process-local trace
-  // buffer of the target process and an ACK. A summary of the dump is also
-  // returned in case of success.
   RequestChromeMemoryDump(RequestArgs args) =>
-      (bool success, uint64 dump_id, RawProcessMemoryDump? raw_process_memory_dump);
+      (uint64 dump_id, RawProcessMemoryDump? raw_process_memory_dump);
 
   // Requests an OSMemDump for each pid in |pids|.
   // The Memory-infra service deals with two kinds of information:
@@ -195,7 +192,7 @@ interface ClientProcess {
   // the pids for all processes.
   // See crbug.com/461788
   RequestOSMemoryDump(bool want_mmaps, array<mojo.common.mojom.ProcessId> pids) =>
-      (bool success, map<mojo.common.mojom.ProcessId, RawOSMemDump> dumps);
+      (map<mojo.common.mojom.ProcessId, RawOSMemDump> dumps);
 };
 
 // The memory-infra service implements this interface. There is one instance for

@@ -254,7 +254,6 @@ void CoordinatorImpl::UnregisterClientProcess(
       if (current->client != client_process)
         continue;
       RemovePendingResponse(client_process, current->type);
-      request->failed_memory_dump_count++;
     }
     FinalizeGlobalMemoryDumpIfAllManagersReplied();
   }
@@ -282,8 +281,6 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
       "level_of_detail",
       base::trace_event::MemoryDumpLevelOfDetailToString(
           request->args.level_of_detail));
-
-  request->failed_memory_dump_count = 0;
 
   // Note: the service process itself is registered as a ClientProcess and
   // will be treated like any other process for the sake of memory dumps.
@@ -365,7 +362,6 @@ CoordinatorImpl::QueuedMemoryDumpRequest* CoordinatorImpl::GetCurrentRequest() {
 
 void CoordinatorImpl::OnChromeMemoryDumpResponse(
     mojom::ClientProcess* client,
-    bool success,
     uint64_t dump_guid,
     std::unique_ptr<base::trace_event::ProcessMemoryDump> chrome_memory_dump) {
   using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
@@ -385,16 +381,10 @@ void CoordinatorImpl::OnChromeMemoryDumpResponse(
 
   request->responses[client].chrome_dump = std::move(chrome_memory_dump);
 
-  if (!success) {
-    request->failed_memory_dump_count++;
-    VLOG(1) << "RequestGlobalMemoryDump() FAIL: NACK from client process";
-  }
-
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
 }
 
 void CoordinatorImpl::OnOSMemoryDumpResponse(mojom::ClientProcess* client,
-                                             bool success,
                                              OSMemDumpMap os_dumps) {
   using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -412,11 +402,6 @@ void CoordinatorImpl::OnOSMemoryDumpResponse(mojom::ClientProcess* client,
   }
 
   request->responses[client].os_dumps = std::move(os_dumps);
-
-  if (!success) {
-    request->failed_memory_dump_count++;
-    VLOG(1) << "RequestGlobalMemoryDump() FAIL: NACK from client process";
-  }
 
   FinalizeGlobalMemoryDumpIfAllManagersReplied();
 }
@@ -502,6 +487,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
 #endif
   }  // for (response : request->responses)
 
+  int missing_dumps = 0;
   // Build up the global dump by iterating on the |valid| process dumps.
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
   global_dump->process_dumps.reserve(pid_to_results.size());
@@ -513,13 +499,24 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     DCHECK(!raw_dumps.raw_os_dump ||
            raw_dumps.raw_os_dump->platform_private_footprint);
 
+    const bool has_os_dump = raw_dumps.raw_os_dump;
+    const bool has_chrome_dump_if_needed =
+        !request->wants_chrome_dumps() || raw_dumps.raw_chrome_dump;
+    const bool has_mmaps_if_needed =
+        !request->wants_mmaps() ||
+        (raw_dumps.raw_os_dump && !raw_dumps.raw_os_dump->memory_maps.empty());
+
+    // Keep count of what we're missing so we can report via UMA.
+    if (!has_os_dump)
+      missing_dumps++;
+    if (!has_chrome_dump_if_needed)
+      missing_dumps++;
+    if (!has_mmaps_if_needed)
+      missing_dumps++;
+
     // Ignore incomplete results (can happen if the client crashes/disconnects).
     const bool valid =
-        raw_dumps.raw_os_dump &&
-        (!request->wants_chrome_dumps() || raw_dumps.raw_chrome_dump) &&
-        (!request->wants_mmaps() ||
-         (raw_dumps.raw_os_dump &&
-          !raw_dumps.raw_os_dump->memory_maps.empty()));
+        has_os_dump && has_chrome_dump_if_needed && has_mmaps_if_needed;
     if (!valid)
       continue;
 
@@ -549,13 +546,13 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   }
 
   const auto& callback = request->callback;
-  const bool global_success = request->failed_memory_dump_count == 0;
+  const bool global_success = missing_dumps == 0;
   callback.Run(global_success, request->args.dump_guid, std::move(global_dump));
   UMA_HISTOGRAM_MEDIUM_TIMES("Memory.Experimental.Debug.GlobalDumpDuration",
                              base::Time::Now() - request->start_time);
   UMA_HISTOGRAM_COUNTS_1000(
       "Memory.Experimental.Debug.FailedProcessDumpsPerGlobalDump",
-      request->failed_memory_dump_count);
+      missing_dumps);
 
   char guid_str[20];
   sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);
