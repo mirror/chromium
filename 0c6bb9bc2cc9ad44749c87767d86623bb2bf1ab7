@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd35ce7_e1f31720",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T14:45:54Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this anymore. And I suspect you don\u0027t need the data section on 327 either.",
+      "range": {
+        "startLine": 330,
+        "startChar": 26,
+        "endLine": 330,
+        "endChar": 46
+      },
+      "revId": "0c6bb9bc2cc9ad44749c87767d86623bb2bf1ab7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
