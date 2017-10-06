@@ -1,0 +1,17 @@
+import("//mojo/public/tools/bindings/mojom.gni")
+
+mojom("interfaces") {
+  sources = [
+    "cronet.mojom",
+  ]
+}
+
+source_set("cronet_c_impl") {
+  sources = [
+    "cronet.mojom_c.h",
+    "cronet.mojom_impl_interface.cc",
+    "cronet.mojom_impl_interface.h",
+    "cronet.mojom_impl_struct.cc",
+    "cronet.mojom_impl_struct.h",
+  ]
+}
