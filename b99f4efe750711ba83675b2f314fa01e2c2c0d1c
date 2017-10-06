@@ -70,6 +70,30 @@
       "revId": "b99f4efe750711ba83675b2f314fa01e2c2c0d1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50f1345_25cf44e1",
+        "filename": "components/data_reduction_proxy/core/browser/warmup_url_fetcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-10-06T16:48:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3086938b_93b8e3d6",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 35
+      },
+      "revId": "b99f4efe750711ba83675b2f314fa01e2c2c0d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
