@@ -176,6 +176,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   std::unique_ptr<ProcessMap> process_map_;
   uint64_t next_dump_id_;
   std::unique_ptr<TracingObserver> tracing_observer_;
+  bool compute_memory_graph_ = false;
 
   THREAD_CHECKER(thread_checker_);
   DISALLOW_COPY_AND_ASSIGN(CoordinatorImpl);

@@ -21,6 +21,8 @@
 #include "base/trace_event/memory_dump_request_args.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "services/resource_coordinator/memory_instrumentation/graph.h"
+#include "services/resource_coordinator/memory_instrumentation/graph_processor.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/constants.mojom.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
@@ -556,6 +558,18 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
   UMA_HISTOGRAM_COUNTS_1000(
       "Memory.Experimental.Debug.FailedProcessDumpsPerGlobalDump",
       request->failed_memory_dump_count);
+
+  if (global_success && compute_memory_graph_) {
+    std::map<base::ProcessId, base::trace_event::ProcessMemoryDump> pid_to_pmd;
+    for (auto& response : request->responses) {
+      const base::ProcessId& pid = response.second.process_id;
+      base::trace_event::ProcessMemoryDump pmd =
+          std::move(*response.second.chrome_dump);
+      pid_to_pmd.emplace(pid, std::move(pmd));
+    }
+
+    ComputeMemoryGraph(pid_to_pmd);
+  }
 
   char guid_str[20];
   sprintf(guid_str, "0x%" PRIx64, request->args.dump_guid);
