@@ -657,7 +657,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
                 compositor->frame_sink_id(), GetHostFrameSinkManager(),
                 GetFrameSinkManager(), data->display.get(),
                 static_cast<scoped_refptr<viz::VulkanContextProvider>>(
-                    vulkan_context_provider))
+                    vulkan_context_provider),
+                viz::ServerSharedBitmapManager::current())
           : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
                 compositor->frame_sink_id(), GetHostFrameSinkManager(),
                 GetFrameSinkManager(), data->display.get(), context_provider,
