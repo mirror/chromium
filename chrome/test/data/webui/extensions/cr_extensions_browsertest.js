@@ -47,6 +47,11 @@ var CrExtensionsBrowserTest = class extends PolymerTest {
   get typedefCppFixture() {
     return 'ExtensionSettingsUIBrowserTest';
   }
+
+  /** @override */
+  get runAccessibilityChecks() {
+    return false;
+  }
 };
 
 /**

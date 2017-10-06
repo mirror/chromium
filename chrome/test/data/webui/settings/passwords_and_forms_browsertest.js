@@ -36,6 +36,9 @@ PasswordsAndFormsBrowserTest.prototype = {
   ]),
 
   /** @override */
+  runAccessibilityChecks: false,
+
+  /** @override */
   setUp: function() {
     PolymerTest.prototype.setUp.call(this);
 
