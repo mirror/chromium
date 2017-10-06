@@ -717,7 +717,7 @@ TEST_P(ParameterizedScrollbarsTest, MouseOverScrollbarAndIFrame) {
 // Makes sure that mouse hover over a scrollbar also hover the element owns the
 // scrollbar.
 TEST_P(ParameterizedScrollbarsTest, MouseOverScrollbarAndParentElement) {
-  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
   WebView().Resize(WebSize(200, 200));
 
   SimRequest request("https://example.com/test.html", "text/html");
@@ -803,7 +803,7 @@ TEST_P(ParameterizedScrollbarsTest, MouseOverScrollbarAndParentElement) {
 
 // Makes sure that mouse over a root scrollbar also hover the html element.
 TEST_P(ParameterizedScrollbarsTest, MouseOverRootScrollbar) {
-  RuntimeEnabledFeatures::SetOverlayScrollbarsEnabled(false);
+  ScopedOverlayScrollbarsForTest overlay_scrollbars(false);
 
   WebView().Resize(WebSize(200, 200));
 
