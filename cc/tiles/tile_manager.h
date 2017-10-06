@@ -272,6 +272,10 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
     return checker_image_tracker_;
   }
 
+  std::unordered_map<Tile::Id, std::vector<DrawImage>> scheduled_draw_images() {
+    return scheduled_draw_images_;
+  }
+
  protected:
   friend class Tile;
   // Must be called by tile during destruction.
@@ -365,6 +369,7 @@ class CC_EXPORT TileManager : CheckerImageTrackerClient {
       const gfx::ColorSpace& raster_color_space,
       std::vector<DrawImage>* sync_decoded_images,
       std::vector<PaintImage>* checkered_images,
+      bool partial_decode,
       base::flat_map<PaintImage::Id, size_t>* image_to_frame_index = nullptr);
   void AddCheckeredImagesToDecodeQueue(
       const PrioritizedTile& prioritized_tile,
