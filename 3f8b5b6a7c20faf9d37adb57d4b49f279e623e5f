@@ -16,6 +16,24 @@
       "revId": "3f8b5b6a7c20faf9d37adb57d4b49f279e623e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f12c915_58caa048",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "My gut feeling is that this is an appropriate place for now at least.  Would this be put behind an experiment flag?",
+      "parentUuid": "7c08d1fa_b896c385",
+      "revId": "3f8b5b6a7c20faf9d37adb57d4b49f279e623e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

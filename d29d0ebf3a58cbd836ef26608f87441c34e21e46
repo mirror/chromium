@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e520d7f0_113cd74a",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "Just checking - is there some documentation we can point to or lean on to guarantee the correctness of this path in every case? (perhaps it\u0027s simply always like this on Mac)",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0717835_bf2836ff",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "DyldInterposeTuple\n(or are you perhaps following some other convention that I\u0027m not seeing?)",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "203b0924_6eb05a47",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "DyldDynamicInterposeFunction",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d81f425_93e1ffdb",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "CallerIsPauseOrResume\nShould it perhaps be AddressIsPauseOrResume? (since whether or not the address represents a caller, doesn\u0027t technically matter to this function)",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ccd828b_3ec8bf2e",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "GetGlobalQueueOverride - although in this case, since we\u0027re copying a known API, I can see why it would make sense to keep the name close to what it\u0027s overriding.",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16b905c_8a5a57ab",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "same style comment here and below",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9478a85_acb37ae1",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "TODO(ossu):",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96020e6d_5eefa07f",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "TODO(ossu):\n\nalthough... aren\u0027t we already doing sufficient logging? Perhaps promote to ERROR even?",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634ea170_6f426de7",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-10-06T14:22:44Z",
+      "side": 1,
+      "message": "InitializeCoreAudioDispatchOverride();",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
