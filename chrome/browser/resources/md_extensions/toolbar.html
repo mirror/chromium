@@ -64,9 +64,9 @@
     <cr-toolbar page-name="$i18n{toolbarTitle}"
         search-prompt="$i18n{search}"
         clear-label="$i18n{clearSearch}"
-        role="banner"
-        show-menu>
-      <div class="more-actions">
+        role="banner" show-search="[[!isGuest]]"
+        show-menu="[[!isGuest]]">
+      <div class="more-actions" hidden$="[[isGuest]]">
         <span>$i18n{toolbarDevMode}</span>
         <cr-toggle id="dev-mode" on-change="onDevModeChange_"
             checked="[[inDevMode]]">
