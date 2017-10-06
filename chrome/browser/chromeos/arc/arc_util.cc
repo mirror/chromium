@@ -30,6 +30,7 @@
 #include "components/user_manager/known_user.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "google_apis/google_api_keys.h"
 
 namespace arc {
 
@@ -37,6 +38,9 @@ namespace {
 
 constexpr char kLsbReleaseArcVersionKey[] = "CHROMEOS_ARC_ANDROID_SDK_VERSION";
 constexpr char kAndroidMSdkVersion[] = "23";
+
+// Used as client id on bot tests.
+constexpr char kDummyClientId[] = "dummytoken";
 
 // Contains set of profiles for which decline reson was already reported.
 base::LazyInstance<std::set<base::FilePath>>::DestructorAtExit
@@ -217,6 +221,16 @@ bool IsArcAllowedForProfile(const Profile* profile) {
   if (!user_flow || !user_flow->CanStartArc()) {
     VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
         << "ARC is not allowed in the current user flow.";
+    return false;
+  }
+
+  if (!google_apis::IsGoogleChromeAPIKeyUsed() &&
+      google_apis::GetOAuth2ClientID(google_apis::CLIENT_MAIN) !=
+          kDummyClientId) {
+    LOG(ERROR) << "#### NOT A GOOGLE CLIENT "
+               << google_apis::GetOAuth2ClientID(google_apis::CLIENT_MAIN);
+    VLOG_IF(1, IsReportingFirstTimeForProfile(profile))
+        << "ARC is not supported for non-google client.";
     return false;
   }
 
