@@ -425,11 +425,6 @@ void WorkerThread::InitializeOnWorkerThread(
     // of the global scope since PrepareForShutdownOnWorkerThread() assumes the
     // global scope has already been initialized.
     switch (status) {
-      case InstalledScriptsManager::ScriptStatus::kTaken:
-        // InstalledScriptsManager::ScriptStatus::kTaken should not be returned
-        // since requesting the main script should be the first and no script
-        // has been taken until here.
-        NOTREACHED();
       case InstalledScriptsManager::ScriptStatus::kFailed:
         should_terminate = true;
         break;
