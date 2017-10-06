@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef77fe2f_5767a79d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/canvas/captureStream-on-detached-canvas.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T20:56:14Z",
+      "side": 1,
+      "message": "IIUC, this looks for a property |i| on window, which will check, among other things, document.getElementById. See https://chromium.googlesource.com/chromium/src/+/290a5804ff49342452f677890b489a60086d38b8/third_party/WebKit/Source/bindings/core/v8/custom/V8WindowCustom.cpp#367",
+      "parentUuid": "b0167958_c2662c44",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 6
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd4faed4_87255986",
         "filename": "third_party/WebKit/LayoutTests/http/tests/canvas/captureStream-on-detached-canvas.html",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bb8e29_c317a6e9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/canvas/captureStream-on-detached-canvas.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T20:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd4faed4_87255986",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +154,30 @@
       "writtenOn": "2017-10-06T20:52:11Z",
       "side": 1,
       "message": "Thanks. DCHECK sgtm.",
+      "parentUuid": "55d48d90_003d798b",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd423430_e2a41d15",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLCanvasElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T20:56:14Z",
+      "side": 1,
+      "message": "DCHECK added.",
       "parentUuid": "55d48d90_003d798b",
       "range": {
         "startLine": 75,
