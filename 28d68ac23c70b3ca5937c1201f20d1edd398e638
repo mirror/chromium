@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "e93bfaa2_67d60942",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "Why is sorting necessary / useful?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "215e0f92_9ab44a49",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "I don\u0027t see a test here for only doing this on UNKNOWN and URL inputs.  Previously we only set (and thus used) the canonical URL for those input types, and for various other restrictions.\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/autocomplete_input.cc?l\u003d141-146\n\nIn effect by recomputing the canonicalized URL, you\u0027re removing those restrictions (which I think were likely added for a purpose).  Can you do something (refactor) so the same restrictions apply (assuming they make sense in this case)?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248a83e5_ecbb5fd9",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "In this case, you\u0027re doing Fixup with an empty desired TLD.  Can this code be reached at a time when the user has a desired TLD?  (I see that the code that sets canonicalized_url uses a TLD passed in, which may not be empty.)  This might be checking a different URL that we would\u0027ve checked before.",
+      "range": {
+        "startLine": 390,
+        "startChar": 69,
+        "endLine": 390,
+        "endChar": 71
+      },
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "357aba3d_4d288c2e",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "This looks up the hostname.  Should it be doing the same prepending tricks \"www.\", etc., as above in order to detect if this is (like a) typed host?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8df2761_769ddb50",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 905,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "This is clever.  I thought it\u0027d be harder to pass the necessary information back.  Apparently not. :-)",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f3bbe8_61cf5b13",
         "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
         "patchSetId": 5
@@ -22,6 +113,23 @@
       "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c5892bef_2b833046",
+        "filename": "components/omnibox/browser/url_prefix.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-10-06T20:20:48Z",
+      "side": 1,
+      "message": "Comment.\n\nAlso, I think you mean something like \"HasFewerCompoments\"?",
+      "revId": "28d68ac23c70b3ca5937c1201f20d1edd398e638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
