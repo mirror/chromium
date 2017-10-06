@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "31385c97_57e4c4a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchFieldTrial.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "OK, I agree that it would be good to have one switch.  Filed crbug.com/772467 to address this, but I think it\u0027s fine to do this in a separate CL.  \n\nNote that the current code has one place where the decision is made about Smart Selection being available for any of our builds (see comment in SmartSelectionClient).  If the SmartSelectionClient decides to return null from create() then we won\u0027t have smart selection enabled for either Chrome or WebView.  \n\nI just added a separate disable switch for Chrome that is finch-controlled.",
+      "parentUuid": "caf91ed2_deb63233",
+      "range": {
+        "startLine": 80,
+        "startChar": 32,
+        "endLine": 80,
+        "endChar": 68
+      },
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba2e2706_d8afdf5b",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
         "patchSetId": 20
@@ -80,6 +104,30 @@
       "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305e4649_52654e64",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManagerTest.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "Yes, I\u0027m pretty sure I can add instrumentation tests that will manipulate CS to think that Smart Selection is enabled and verify the behavior of the Bar not showing.  That will be done in a separate CL.",
+      "parentUuid": "ba2e2706_d8afdf5b",
+      "range": {
+        "startLine": 113,
+        "startChar": 13,
+        "endLine": 113,
+        "endChar": 40
+      },
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +195,29 @@
       "side": 1,
       "message": "Done -- I think.",
       "parentUuid": "6f004f67_e4dd8477",
+      "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ad30ce4_8bd0f259",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SmartSelectionClient.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "Here\u0027s where the system decides if Smart Selection should be enabled or not, for both Chrome and WebView.",
+      "range": {
+        "startLine": 55,
+        "startChar": 26,
+        "endLine": 55,
+        "endChar": 33
+      },
       "revId": "8ad58dc09debfa27bb403b9180af965a83220aca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

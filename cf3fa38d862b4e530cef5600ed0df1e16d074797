@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1c0621df_4d2568e2",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "This might be the place to add a WebView-only disable... let\u0027s consider that in a separate CL (see issue 772467).",
+      "range": {
+        "startLine": 837,
+        "startChar": 24,
+        "endLine": 837,
+        "endChar": 42
+      },
+      "revId": "cf3fa38d862b4e530cef5600ed0df1e16d074797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5056eb1a_fc5d758b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
         "patchSetId": 29
@@ -22,6 +45,53 @@
       "revId": "cf3fa38d862b4e530cef5600ed0df1e16d074797",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9728b3_9e1956a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5056eb1a_fc5d758b",
+      "range": {
+        "startLine": 1622,
+        "startChar": 24,
+        "endLine": 1622,
+        "endChar": 67
+      },
+      "revId": "cf3fa38d862b4e530cef5600ed0df1e16d074797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "558925e7_a56bcea5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/SelectionClientManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-06T19:06:45Z",
+      "side": 1,
+      "message": "The latest patch has Finch-control for the master shut-off switch for Smart Selection in Chrome.",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 61
+      },
+      "revId": "cf3fa38d862b4e530cef5600ed0df1e16d074797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
