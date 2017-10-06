@@ -38,6 +38,8 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
     return children_;
   }
 
+  void PopulateDescendants();
+
   // TODO(layout-dev): Implement when we have oveflow support.
   bool HasOverflowClip() const { return false; }
   LayoutRect VisualRect() const { return visual_rect_; }
@@ -57,8 +59,7 @@ class NGPaintFragment : public DisplayItemClient, public ImageResourceObserver {
 
  private:
   void SetVisualRect(const LayoutRect& rect) { visual_rect_ = rect; }
-
-  void PopulateDescendants();
+  void UpdateVisualRect();
 
   RefPtr<const NGPhysicalFragment> physical_fragment_;
   LayoutRect visual_rect_;
