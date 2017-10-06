@@ -7,7 +7,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/memory_dump_request_args.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/metrics/renderer_uptime_tracker.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
@@ -33,7 +32,8 @@ namespace {
 
 void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                               ukm::SourceId ukm_source_id,
-                              ukm::UkmRecorder* ukm_recorder) {
+                              ukm::UkmRecorder* ukm_recorder,
+                              const base::Optional<base::TimeDelta>& uptime) {
   ukm::builders::Memory_Experimental builder(ukm_source_id);
   builder.SetProcessType(static_cast<int64_t>(
       memory_instrumentation::mojom::ProcessType::BROWSER));
@@ -52,6 +52,8 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Browser.PrivateMemoryFootprint",
                                 pmd->os_dump->private_footprint_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
+  if (uptime)
+    builder.SetUptime(uptime.value().InSeconds());
   builder.Record(ukm_recorder);
 }
 
@@ -78,7 +80,8 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
 void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                                ukm::SourceId ukm_source_id,
                                ukm::UkmRecorder* ukm_recorder,
-                               int number_of_extensions) {
+                               int number_of_extensions,
+                               const base::Optional<base::TimeDelta>& uptime) {
   // UMA
   if (number_of_extensions == 0) {
     RENDERER_MEMORY_UMA_HISTOGRAMS("Renderer");
@@ -96,17 +99,16 @@ void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   builder.SetBlinkGC(pmd->chrome_dump->blink_gc_total_kb / 1024);
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
   builder.SetNumberOfExtensions(number_of_extensions);
-
-  base::TimeDelta uptime =
-      metrics::RendererUptimeTracker::Get()->GetProcessUptime(pmd->pid);
-  builder.SetUptime(uptime.InSeconds());
+  if (uptime)
+    builder.SetUptime(uptime.value().InSeconds());
 
   builder.Record(ukm_recorder);
 }
 
 void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                           ukm::SourceId ukm_source_id,
-                          ukm::UkmRecorder* ukm_recorder) {
+                          ukm::UkmRecorder* ukm_recorder,
+                          const base::Optional<base::TimeDelta>& uptime) {
   ukm::builders::Memory_Experimental builder(ukm_source_id);
   builder.SetProcessType(
       static_cast<int64_t>(memory_instrumentation::mojom::ProcessType::GPU));
@@ -130,6 +132,8 @@ void EmitGpuMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   UMA_HISTOGRAM_MEMORY_LARGE_MB("Memory.Gpu.PrivateMemoryFootprint",
                                 pmd->os_dump->private_footprint_kb / 1024);
   builder.SetPrivateMemoryFootprint(pmd->os_dump->private_footprint_kb / 1024);
+  if (uptime)
+    builder.SetUptime(uptime.value().InSeconds());
   builder.Record(ukm_recorder);
 }
 
@@ -243,6 +247,17 @@ int ProcessMemoryMetricsEmitter::GetNumberOfExtensions(base::ProcessId pid) {
   return number_of_extensions;
 }
 
+base::Optional<base::TimeDelta> ProcessMemoryMetricsEmitter::GetProcessUptime(
+    const base::Time& now,
+    base::ProcessId pid) {
+  auto process_info = process_infos_.find(pid);
+  if (process_info != process_infos_.end()) {
+    if (process_info->second->launch_time)
+      return now - process_info->second->launch_time.value();
+  }
+  return base::Optional<base::TimeDelta>();
+}
+
 void ProcessMemoryMetricsEmitter::CollateResults() {
   if (memory_dump_in_progress_ || get_process_urls_in_progress_)
     return;
@@ -250,12 +265,14 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
     return;
 
   uint32_t private_footprint_total_kb = 0;
+  base::Time now = base::Time::Now();
   for (const ProcessMemoryDumpPtr& pmd : global_dump_->process_dumps) {
     private_footprint_total_kb += pmd->os_dump->private_footprint_kb;
     switch (pmd->process_type) {
       case memory_instrumentation::mojom::ProcessType::BROWSER: {
         EmitBrowserMemoryMetrics(pmd, ukm::UkmRecorder::GetNewSourceID(),
-                                 GetUkmRecorder());
+                                 GetUkmRecorder(),
+                                 GetProcessUptime(now, pmd->pid));
         break;
       }
       case memory_instrumentation::mojom::ProcessType::RENDERER: {
@@ -272,12 +289,13 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
         }
         int number_of_extensions = GetNumberOfExtensions(pmd->pid);
         EmitRendererMemoryMetrics(pmd, ukm_source_id, GetUkmRecorder(),
-                                  number_of_extensions);
+                                  number_of_extensions,
+                                  GetProcessUptime(now, pmd->pid));
         break;
       }
       case memory_instrumentation::mojom::ProcessType::GPU: {
         EmitGpuMemoryMetrics(pmd, ukm::UkmRecorder::GetNewSourceID(),
-                             GetUkmRecorder());
+                             GetUkmRecorder(), GetProcessUptime(now, pmd->pid));
         break;
       }
       case memory_instrumentation::mojom::ProcessType::UTILITY:

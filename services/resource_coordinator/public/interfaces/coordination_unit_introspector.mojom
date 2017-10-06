@@ -6,9 +6,11 @@ module resource_coordinator.mojom;
 
 import "coordination_unit.mojom";
 import "mojo/common/process_id.mojom";
+import "mojo/common/time.mojom";
 
 struct ProcessInfo {
   mojo.common.mojom.ProcessId pid;
+  mojo.common.mojom.Time? launch_time;
   array<int64> ukm_source_ids;
 };
 

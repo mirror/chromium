@@ -47,6 +47,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/service_manager/embedder/switches.h"
 
 #if defined(OS_MACOSX)
@@ -288,6 +289,21 @@ BrowserChildProcessHostImpl::TakeInProcessServiceRequest() {
   return service_manager::mojom::ServiceRequest(
       invitation->ExtractInProcessMessagePipe(
           child_connection_->service_token()));
+}
+
+resource_coordinator::ResourceCoordinatorInterface*
+BrowserChildProcessHostImpl::GetProcessResourceCoordinator() {
+  if (process_resource_coordinator_)
+    return process_resource_coordinator_.get();
+  DCHECK(resource_coordinator::IsResourceCoordinatorEnabled());
+
+  auto* connection = ServiceManagerConnection::GetForProcess();
+  process_resource_coordinator_ =
+      base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
+          connection ? connection->GetConnector() : nullptr,
+          resource_coordinator::CoordinationUnitType::kProcess);
+
+  return process_resource_coordinator_.get();
 }
 
 void BrowserChildProcessHostImpl::ForceShutdown() {
@@ -562,6 +578,15 @@ void BrowserChildProcessHostImpl::OnProcessLaunched() {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NotifyProcessLaunchedAndConnected, data_));
+  }
+
+  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
+    GetProcessResourceCoordinator()->SetProperty(
+        resource_coordinator::mojom::PropertyType::kPID, process.Pid());
+
+    GetProcessResourceCoordinator()->SetProperty(
+        resource_coordinator::mojom::PropertyType::kLaunchTime,
+        base::Time::Now().ToTimeT());
   }
 }
 
