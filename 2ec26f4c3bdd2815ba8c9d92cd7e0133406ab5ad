@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "5228af08_69503671",
+        "filename": "net/disk_cache/simple/simple_synchronous_entry.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1258,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T18:34:55Z",
+      "side": 1,
+      "message": "Let\u0027s make a new one then, so we at least can point to a line of code.",
+      "parentUuid": "2a105eee_1b420487",
+      "range": {
+        "startLine": 1258,
+        "startChar": 4,
+        "endLine": 1258,
+        "endChar": 26
+      },
+      "revId": "2ec26f4c3bdd2815ba8c9d92cd7e0133406ab5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5266a8c_9cf09d0b",
         "filename": "net/disk_cache/simple/simple_util.cc",
         "patchSetId": 33

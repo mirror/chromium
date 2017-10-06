@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ec92526b_721c5e17",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T18:34:55Z",
+      "side": 1,
+      "message": "Where is the DCHECK failure on the path to here?\n\nWhy can\u0027t we just DCHECK here? Why tolerate the bug?",
+      "parentUuid": "223d486e_46392aa1",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb781a56_261271b1",
         "filename": "net/disk_cache/simple/simple_file_tracker.cc",
         "patchSetId": 34
@@ -472,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "2dcfe4fe_23704220",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T18:34:55Z",
+      "side": 1,
+      "message": "I don\u0027t believe it does. So it\u0027s a tradeoff between safety and maintainability. I\u0027m more worried about forgetting to add future members to the move constructor than I am about reusing a moved object. But I\u0027ll leave it up to you.",
+      "parentUuid": "21539c85_ec96a2e1",
+      "range": {
+        "startLine": 189,
+        "startChar": 24,
+        "endLine": 189,
+        "endChar": 25
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a334160_cdf5bfe5",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 34
@@ -625,6 +673,30 @@
       "side": 1,
       "message": "I would prefer to keep it because of the DCHECKs of it.",
       "parentUuid": "7797190b_44687b93",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 29
+      },
+      "revId": "4c442f7f39f22a5dbb4fb89cdaf7acf49afe4324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b766d0_bbe2c339",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T18:34:55Z",
+      "side": 1,
+      "message": "But all of the DCHECKS are verifying that\u0027s it\u0027s 0 and there is no code that can increment it so what\u0027s the purpose?",
+      "parentUuid": "154cba26_9cbf16e2",
       "range": {
         "startLine": 83,
         "startChar": 4,
