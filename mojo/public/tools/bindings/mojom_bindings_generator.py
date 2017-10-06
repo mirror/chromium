@@ -42,6 +42,7 @@ import mojom.fileutil as fileutil
 from mojom.generate import translate
 from mojom.generate import template_expander
 from mojom.generate.generator import AddComputedData
+from mojom.generate.generator import RemoveDisabledDefinitions
 from mojom.parse.parser import Parse
 
 
@@ -205,6 +206,21 @@ class MojomProcessor(object):
 
     if self._should_generate(rel_filename.path):
       AddComputedData(module)
+
+      # Note that this doesn't happen until just before code generation.
+      # Removing it any earlier is problematic, because the generator doesn't
+      # currently have any way of persisting a preprocessed AST fragment. If the
+      # AST pruning happened earlier, it results in the following problem:
+      # 1. a.mojom uses EnabledIf.
+      # 2. b.mojom imports a.mojom.
+      # 3. But now, b.mojom must specify the same set of EnabledIf flags as the
+      #    target for a.mojom. Otherwise, it won't be able to see definitions
+      #    guarded by EnabledIf conditions, since they'll be dropped when
+      #    processing b.mojom's imports.
+      # TODO(dcheng): It would be nice to persist the AST after processing
+      # EnabledIf attributes...
+      RemoveDisabledDefinitions(module, args.enabled_flag)
+
       for language, generator_module in generator_modules.iteritems():
         generator = generator_module.Generator(
             module, args.output_dir, typemap=self._typemap.get(language, {}),
@@ -384,6 +400,12 @@ def main():
       help="Allows the [Native] attribute to be specified on structs within "
       "the mojom file. Must not be specified on internal bindings mojom or "
       "other dependencies thereof.", action="store_true")
+  generate_parser.add_argument(
+      "--enabled_flag",
+      help="Controls which definitions guarded by an EnabledIf attribute "
+      "should be enabled. If an EnabledIf attribute does not specify a value "
+      "that matches one of the enabled flag values, it will be disabled.",
+      action="append")
   generate_parser.set_defaults(func=_Generate)
 
   precompile_parser = subparsers.add_parser("precompile",
