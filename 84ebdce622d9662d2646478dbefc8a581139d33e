@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb5bac5e_3e84dfe0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-06T14:23:34Z",
+      "side": 1,
+      "message": "It\u0027s technically \"Black Nib\" - it doesn\u0027t look amazing on the terminal or here (monospace fonts...) but it nicer in the title of Gerrit.",
+      "parentUuid": "1d4ebe62_2b89c172",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 2
+      },
+      "revId": "84ebdce622d9662d2646478dbefc8a581139d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae993b07_b2240a9d",
         "filename": "ui/android/java/src/org/chromium/ui/widget/TextViewWithLeading.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "84ebdce622d9662d2646478dbefc8a581139d33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8f2a06_1d9671f5",
+        "filename": "ui/android/java/src/org/chromium/ui/widget/TextViewWithLeading.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-10-06T14:23:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae993b07_b2240a9d",
+      "range": {
+        "startLine": 23,
+        "startChar": 93,
+        "endLine": 24,
+        "endChar": 49
+      },
+      "revId": "84ebdce622d9662d2646478dbefc8a581139d33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
