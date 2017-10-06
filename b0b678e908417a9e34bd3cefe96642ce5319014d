@@ -94,6 +94,46 @@
       "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb615aed_9578a75b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18221,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:38:44Z",
+      "side": 1,
+      "message": "Can you define a more specialized enum for these? We tend to prefer using ones with more meaningful value labels.",
+      "range": {
+        "startLine": 18221,
+        "startChar": 55,
+        "endLine": 18221,
+        "endChar": 62
+      },
+      "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f81514_cf6d3bc0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18225,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-10-06T20:38:44Z",
+      "side": 1,
+      "message": "Mention when these histograms are logged.",
+      "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
