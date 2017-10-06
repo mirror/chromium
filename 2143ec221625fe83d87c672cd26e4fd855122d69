@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff0c5abb_3191bc73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ee7e6b_086cd76f",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4834264_f23f264e",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cfd01f_11409c6f",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "This technically isn\u0027t a getter as it doesn\u0027t return the number of tasks either.",
+      "parentUuid": "a4834264_f23f264e",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "02392972_b7a5fc46",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "message_pump_perftest.cc:PostTaskTest needs this.",
+      "parentUuid": "258fca89_48e6f5c0",
+      "range": {
+        "startLine": 192,
+        "startChar": 47,
+        "endLine": 192,
+        "endChar": 71
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "122dd34b_1eed1d87",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d8147c_7164d5bb",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Added a TODO since this CL is attempting to avoid behavior changes where possible.",
+      "parentUuid": "122dd34b_1eed1d87",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "849a129e_f438ff23",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Well, it was originally RemoveOnlyQueue, but the Peek() kind of makes that incorrect.\n\nThe crux here is that you can\u0027t add to this queue, but you can do everything else you would expect.",
+      "parentUuid": "11730fb0_d617d813",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c52c2c_cce00e4d",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d1c8cd_3f66e8ce",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6c52c2c_cce00e4d",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "72fc3016_0e2986a3",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b85cbba3_e0ab41d8",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e47821c_6820191d",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 2
@@ -165,6 +315,30 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5c046c_50a7cf06",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e47821c_6820191d",
+      "range": {
+        "startLine": 113,
+        "startChar": 69,
+        "endLine": 114,
+        "endChar": 29
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "667d6345_ec81c8bd",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "820002c0_2673fa88",
+      "range": {
+        "startLine": 136,
+        "startChar": 76,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f81ccc87_c6564824",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 2
@@ -211,6 +409,30 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef145b6_63ef4aba",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f81ccc87_c6564824",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -260,6 +482,54 @@
     },
     {
       "key": {
+        "uuid": "1cfd9745_42d997cc",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "I just moved this wholesale from ML. Done.",
+      "parentUuid": "0431515d_663135d0",
+      "range": {
+        "startLine": 202,
+        "startChar": 37,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "147d4944_b1b15c23",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b23245f_bd08215c",
+      "range": {
+        "startLine": 202,
+        "startChar": 59,
+        "endLine": 202,
+        "endChar": 74
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ace635f_d68e7d82",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 2
@@ -280,6 +550,30 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ea64e6_a4c8fc08",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "Also moved wholesale. Updated.",
+      "parentUuid": "2ace635f_d68e7d82",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 45
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +600,30 @@
     },
     {
       "key": {
+        "uuid": "b491a69b_27e285b5",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "We shouldn\u0027t inline every simple method that\u0027s only called once. This function keeps the code reasonably self-documenting.",
+      "parentUuid": "269925d7_377f2c42",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a9e6c9c_5e514994",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 2
@@ -320,6 +638,24 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c1ed523_a16ec2cb",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "It might not be, but that\u0027s not the job of this CL to assess at the moment. This CL is replicating any old behavior and we can reassess if this behavior still makes sense after the refactor.",
+      "parentUuid": "6a9e6c9c_5e514994",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -343,6 +679,30 @@
       "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bdfeb4_f790bad6",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T20:57:30Z",
+      "side": 1,
+      "message": "This is a behavior change. We attempt to run at least one task. If the first task is delayed, we simply put it in the separate queue and look at the next one.\n\nReturning false at this point would result in no further tasks being checked.",
+      "parentUuid": "0474f735_c54c682c",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 7
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
