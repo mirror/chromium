@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b8f54a_a44efdec",
+        "filename": "media/filters/blocking_url_protocol.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-10-06T13:27:48Z",
+      "side": 0,
+      "message": "WaitableEvent::WaitMany instantiates its own base::ScopedBlockingCall, so this isn\u0027t required.",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 67,
+        "endChar": 39
+      },
+      "revId": "4780ccc827fe95f1853e398f7ae24560c3fee34b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
