@@ -33,7 +33,6 @@
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSPrimitiveValueMappings.h"
-#include "core/css/CSSProperty.h"
 #include "core/css/CSSRuleList.h"
 #include "core/css/CSSStyleRule.h"
 #include "core/css/CSSValueList.h"
@@ -96,7 +95,7 @@ enum EditingPropertiesType {
 static const Vector<CSSPropertyID>& AllEditingProperties() {
   DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
-    CSSProperty::FilterEnabledCSSPropertiesIntoVector(
+    CSSPropertyAPI::FilterEnabledCSSPropertiesIntoVector(
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
     properties.EraseAt(properties.Find(CSSPropertyTextDecoration));
@@ -107,7 +106,7 @@ static const Vector<CSSPropertyID>& AllEditingProperties() {
 static const Vector<CSSPropertyID>& InheritableEditingProperties() {
   DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty()) {
-    CSSProperty::FilterEnabledCSSPropertiesIntoVector(
+    CSSPropertyAPI::FilterEnabledCSSPropertiesIntoVector(
         kStaticEditingProperties, WTF_ARRAY_LENGTH(kStaticEditingProperties),
         properties);
     for (size_t index = 0; index < properties.size();) {
@@ -664,7 +663,7 @@ static const CSSPropertyID kStaticBlockProperties[] = {
 static const Vector<CSSPropertyID>& BlockPropertiesVector() {
   DEFINE_STATIC_LOCAL(Vector<CSSPropertyID>, properties, ());
   if (properties.IsEmpty())
-    CSSProperty::FilterEnabledCSSPropertiesIntoVector(
+    CSSPropertyAPI::FilterEnabledCSSPropertiesIntoVector(
         kStaticBlockProperties, WTF_ARRAY_LENGTH(kStaticBlockProperties),
         properties);
   return properties;
