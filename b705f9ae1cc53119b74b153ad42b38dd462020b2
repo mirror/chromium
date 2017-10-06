@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "1dbf4fde_e26205f5",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-06T20:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa23cb03_edb4ca8c",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "302b3e0e_aad856f6",
         "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "35d884c4_fc84f3ec",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-06T20:52:36Z",
+      "side": 1,
+      "message": "This was an artifact of the previous code. I can probably remove this now actually.",
+      "parentUuid": "302b3e0e_aad856f6",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "916f4c71_ad513415",
         "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
         "patchSetId": 2
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-06T20:35:50Z",
       "side": 1,
       "message": "What does \"AndWrite\" mean?",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1aba5b_34052009",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-06T20:52:36Z",
+      "side": 1,
+      "message": "Writes the metadata to disk. What naming would you expect here?",
+      "parentUuid": "916f4c71_ad513415",
       "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +209,24 @@
     },
     {
       "key": {
+        "uuid": "6712b727_873d4b09",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-06T20:52:36Z",
+      "side": 1,
+      "message": "It was hard to come up with a name - we create metadatas in here, but we also put modification operations.\n\nThe reason we cannot add stuff to the metadata classes is because they are in common/ and used by both browser and renderer (used in mojo transportation). There needs to be more cleanup before we can move logic into those classes.",
+      "parentUuid": "008f1b60_4581cb6c",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fa78646_c64457e4",
         "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
         "patchSetId": 2
@@ -166,6 +238,24 @@
       "writtenOn": "2017-10-06T20:35:50Z",
       "side": 1,
       "message": "Given that this CL is just a move, it should not address the issue, so noting it for the future -- it\u0027s a bit unclear how this method works. I\u0027m guessing that it uses the transaction to update the metadata, and also updates an in-memory version pointed by IndexedDBDatabaseMetadata*, but it\u0027d be nice if it stated that.\n\nAt the very least, the method docs should say that the change is only persisted if the transaction commits.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33905c29_456b0ebe",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-10-06T20:52:36Z",
+      "side": 1,
+      "message": "That\u0027s the case for all of these methods that take a transaction - do you have the same feedback for all of those?\n\nI feel like it\u0027s obvious that we would be using the transaction for doing modification - but maybe I can comment that on the class comment?",
+      "parentUuid": "3fa78646_c64457e4",
       "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
