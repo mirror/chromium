@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95f23145_bdd47a25",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/buildbot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "Switched to boolean and added docstring.",
+      "parentUuid": "3a9d1239_644cff6f",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7cb9b30c_5755dddd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_expectations.py",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9791271c_e4f58284",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_expectations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb9b30c_5755dddd",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1771122_156da81f",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-06T02:03:18Z",
       "side": 1,
       "message": "(1) win_chromium_rel_ng now has to be updated to win7_chromium_rel_ng, which now runs layout tests after https://chromium-review.googlesource.com/c/chromium/tools/build/+/704188.\n\n(2) it seems like this should be stored in: https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/config/builders.json\n-- We\u0027re already keeping a hard-coded list of builder names and their build types and platforms there.\n\nI\u0027m not sure whether we want to add CQ bots to that list immediately though; we might need to adjust rebaseline-cl to make it not use these for rebaselining.\n\n(3) We could also consider using the *_blink_rel bots which are already there.",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7401791b_7f27373d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "I wanted a simplified configuration for the time being, that only starts three bots and doesn\u0027t deal with version specifiers (Mac10.10 vs Mac10.11 etc), so going through builder_list.py seemed like overkill.\n\nAre there any meaningful differences between *_chromium_rel_ng and *_blink_rel?  I picked the former because they are in the CQ.",
+      "parentUuid": "b1771122_156da81f",
       "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5e75b868_fd6f3973",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b17ef470_b75696cf",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "395832a4_60ecdf07",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0c4e8b_a7f6acc6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "395832a4_60ecdf07",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "ae350693_99905c7b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "I\u0027d rather keep the construction of Host, GitCL, etc in this file though.",
+      "parentUuid": "582c7cd9_ff392ed4",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21fda03b_4f7d7ac6",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f6d4dc_65ed1557",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-10-06T21:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21fda03b_4f7d7ac6",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
