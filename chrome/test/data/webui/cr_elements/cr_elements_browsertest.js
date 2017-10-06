@@ -106,6 +106,9 @@ CrElementsToolbarSearchFieldTest.prototype = {
   extraLibraries: CrElementsBrowserTest.prototype.extraLibraries.concat([
     'cr_toolbar_search_field_tests.js',
   ]),
+
+  /** @override */
+  runAccessibilityChecks: true,
 };
 
 TEST_F('CrElementsToolbarSearchFieldTest', 'All', function() {
