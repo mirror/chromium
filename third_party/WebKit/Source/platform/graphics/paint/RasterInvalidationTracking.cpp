@@ -105,6 +105,8 @@ void RasterInvalidationTracking::CheckUnderInvalidations(
     const String& layer_debug_name,
     sk_sp<PaintRecord> new_record,
     const IntRect& new_interest_rect) {
+  if (true)
+    return;
   auto old_interest_rect = last_interest_rect;
   auto invalidation_region = invalidation_region_since_last_paint;
   auto old_record = std::move(last_painted_record);

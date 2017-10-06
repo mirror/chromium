@@ -477,7 +477,8 @@ void LayoutBoxModelObject::InvalidateStickyConstraints() {
 
 void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
   DCHECK(!HasLayer() && !Layer());
-  EnsureRarePaintData().SetLayer(WTF::MakeUnique<PaintLayer>(*this));
+  GetMutableForPainting().FirstFragment().EnsureRarePaintData().SetLayer(
+      WTF::MakeUnique<PaintLayer>(*this));
   SetHasLayer(true);
   Layer()->InsertOnlyThisLayerAfterStyleChange();
 }
@@ -485,7 +486,7 @@ void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
 void LayoutBoxModelObject::DestroyLayer() {
   DCHECK(HasLayer() && Layer());
   SetHasLayer(false);
-  GetRarePaintData()->SetLayer(nullptr);
+  FirstFragment().GetRarePaintData()->SetLayer(nullptr);
 }
 
 bool LayoutBoxModelObject::HasSelfPaintingLayer() const {

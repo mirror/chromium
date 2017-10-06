@@ -22,7 +22,7 @@ PaintInvalidationReason TablePaintInvalidator::InvalidatePaint() {
   // col background paints into section's background display item.
   bool has_col_changed_background = false;
   if (table_.HasColElements()) {
-    bool visual_rect_changed = context_.old_visual_rect != table_.VisualRect();
+    bool visual_rect_changed = context_.old_visual_rect != context_.visual_rect;
     for (LayoutTableCol* col = table_.FirstColumn(); col;
          col = col->NextColumn()) {
       // LayoutTableCol uses the table's localVisualRect(). Should check column

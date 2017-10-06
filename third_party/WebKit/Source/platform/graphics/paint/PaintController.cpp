@@ -19,6 +19,8 @@
 namespace blink {
 
 void PaintController::SetTracksRasterInvalidations(bool value) {
+  if (true)
+    return;
   if (value) {
     raster_invalidation_tracking_info_ =
         std::make_unique<RasterInvalidationTrackingInfo>();
@@ -39,7 +41,8 @@ void PaintController::SetTracksRasterInvalidations(bool value) {
 }
 
 void PaintController::SetupRasterUnderInvalidationChecking() {
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
+  if (false &&
+      RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
       !raster_invalidation_tracking_info_) {
     raster_invalidation_tracking_info_ =
         std::make_unique<RasterInvalidationTrackingInfo>();
