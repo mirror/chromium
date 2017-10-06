@@ -58,6 +58,17 @@ Polymer({
       notify: true,
     },
 
+    /**
+     * True if the user configuring the network is a guest, or no user is
+     * logged in.
+     */
+    isGuest: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.getBoolean('isGuest');
+      }
+    },
+
     /** @private */
     enableConnect: {
       type: String,
@@ -233,15 +244,11 @@ Polymer({
     /**
      * Array of values for the EAP Method (Outer) dropdown.
      * @private {!Array<string>}
-     * @const
      */
     eapOuterItems_: {
       type: Array,
       readOnly: true,
-      value: [
-        CrOnc.EAPType.LEAP, CrOnc.EAPType.PEAP, CrOnc.EAPType.EAP_TLS,
-        CrOnc.EAPType.EAP_TTLS
-      ],
+      computed: 'computeEapOuterItems_(isGuest)',
     },
 
     /**
@@ -367,7 +374,7 @@ Polymer({
       this.set('serverCaCerts_', caCerts);
 
       var userCerts = certificateLists.userCertificates.slice();
-      if (userCerts.empty) {
+      if (!userCerts.length) {
         userCerts = [this.getDefaultCert_(
             this.i18n('networkCertificateNoneInstalled'), '')];
       }
@@ -403,8 +410,8 @@ Polymer({
 
     // Set the current shareNetwork_ value when porperties are received.
     var source = properties.Source;
-    this.shareNetwork_ =
-        source == CrOnc.Source.DEVICE || source == CrOnc.Source.DEVICE_POLICY;
+    this.shareNetwork_ = this.isGuest || source == CrOnc.Source.DEVICE ||
+        source == CrOnc.Source.DEVICE_POLICY;
 
     if (properties.Type == CrOnc.Type.VPN) {
       this.vpnSaveCredentials_ =
@@ -810,6 +817,22 @@ Polymer({
   },
 
   /**
+   * @return {!Array<string>}
+   * @private
+   */
+  computeEapOuterItems_: function() {
+    if (this.isGuest) {
+      // Hide the TLS option when not logged in since user certs are not
+      // available and are required for TLS.
+      return [CrOnc.EAPType.LEAP, CrOnc.EAPType.PEAP, CrOnc.EAPType.EAP_TTLS];
+    }
+    return [
+      CrOnc.EAPType.LEAP, CrOnc.EAPType.PEAP, CrOnc.EAPType.EAP_TLS,
+      CrOnc.EAPType.EAP_TTLS
+    ];
+  },
+
+  /**
    * @return {boolean}
    * @private
    */
@@ -839,12 +862,12 @@ Polymer({
    * @private
    */
   shareIsEnabled_: function() {
-    if (this.networkProperties &&
-            this.networkProperties.Source == CrOnc.Source.DEVICE ||
-        this.networkProperties.Source == CrOnc.Source.DEVICE_POLICY) {
+    if (this.isGuest ||
+        (this.networkProperties &&
+             this.networkProperties.Source == CrOnc.Source.DEVICE ||
+         this.networkProperties.Source == CrOnc.Source.DEVICE_POLICY)) {
       return false;
     }
-    // TODO(stevenjb): Check login state.
 
     if (this.security_ == CrOnc.Security.WPA_EAP) {
       var eap = this.getEap_(this.configProperties_);
