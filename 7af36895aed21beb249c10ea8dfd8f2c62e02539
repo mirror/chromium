@@ -63,6 +63,24 @@
       "revId": "7af36895aed21beb249c10ea8dfd8f2c62e02539",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab7021c_2b8e8dfd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2479,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-06T12:10:03Z",
+      "side": 0,
+      "message": "This test is testing that renderer can be paused only when backgrounded, which is not true (anymore). The rest of it tests the same things as the test above.",
+      "parentUuid": "ce2a5a84_6f38d2e0",
+      "revId": "7af36895aed21beb249c10ea8dfd8f2c62e02539",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
