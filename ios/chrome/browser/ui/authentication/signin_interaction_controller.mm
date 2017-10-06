@@ -391,7 +391,7 @@ using signin_ui::CompletionCallback;
   }
   strongSelf = nil;
   if (showAccountsSettings) {
-    [self.dispatcher showAccountsSettings];
+    [self.dispatcher showAccountsSettings:presentingViewController_];
   }
 }
 
