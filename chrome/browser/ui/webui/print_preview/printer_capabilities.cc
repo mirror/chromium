@@ -8,18 +8,31 @@
 #include <string>
 #include <utility>
 
+#include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/memory/ref_counted_memory.h"
 #include "base/stl_util.h"
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/printing/print_job_manager.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
+#include "chrome/browser/printing/print_view_manager.h"
+#include "chrome/browser/printing/printer_query.h"
+#include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chrome/common/cloud_print/cloud_print_cdd_conversion.h"
 #include "chrome/common/crash_keys.h"
+#include "components/printing/common/print_messages.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "content/public/browser/render_process_host.h"
 #include "printing/backend/print_backend.h"
 #include "printing/backend/print_backend_consts.h"
+#include "printing/page_range.h"
+#include "printing/print_settings.h"
 
 #if defined(OS_WIN)
 #include "base/strings/string_split.h"
@@ -118,6 +131,86 @@ void PrintersToValues(const printing::PrinterList& printer_list,
   }
 }
 
+void StartLocalPrintJob(const PrinterHandler::PrintCallback& callback,
+                        scoped_refptr<printing::PrinterQuery> printer_query,
+                        const scoped_refptr<base::RefCountedBytes>& print_data,
+                        content::WebContents* preview_web_contents) {
+  const printing::PrintSettings& settings = printer_query->settings();
+
+  // Get page numbers
+  std::vector<int> page_nums = printing::PageRange::GetPages(settings.ranges());
+  if (page_nums.empty()) {  // Print the whole document.
+    PrintPreviewUI* print_preview_ui = static_cast<PrintPreviewUI*>(
+        preview_web_contents->GetWebUI()->GetController());
+    for (int i = 0; i < print_preview_ui->GetAvailableDraftPageCount(); i++)
+      page_nums.push_back(i);
+  }
+
+  // Get print view manager.
+  printing::PrintPreviewDialogController* dialog_controller =
+      printing::PrintPreviewDialogController::GetInstance();
+  content::WebContents* initiator =
+      dialog_controller ? dialog_controller->GetInitiator(preview_web_contents)
+                        : nullptr;
+  printing::PrintViewManager* print_view_manager =
+      printing::PrintViewManager::FromWebContents(initiator);
+  if (!print_view_manager) {
+    callback.Run(false, base::Value("Initiator closed"));
+    return;
+  }
+  print_view_manager->OnDidGetPrintedPagesCount(printer_query->cookie(),
+                                                page_nums.size());
+
+  // Copy the metafile data to a shared buffer.
+  std::unique_ptr<base::SharedMemory> shared_buf(new base::SharedMemory());
+  if (!shared_buf || !shared_buf->CreateAndMapAnonymous(print_data->size())) {
+    callback.Run(false, base::Value("Print failed"));
+    return;
+  }
+  memcpy(shared_buf->memory(), &(print_data->data()[0]), print_data->size());
+
+  // Setup default parameters.
+  PrintHostMsg_DidPrintPage_Params params;
+  params.data_size = print_data->size();
+  params.document_cookie = printer_query->cookie();
+#if defined(OS_WIN)
+  params.page_size = settings.page_setup_device_units().physical_size();
+  params.content_area =
+      gfx::Rect(0, 0, params.page_size.width(), params.page_size.height());
+  params.physical_offsets =
+      gfx::Point(settings.page_setup_device_units().content_area().x(),
+                 settings.page_setup_device_units().content_area().y());
+#endif
+
+  // Print pages
+  for (int page_num : page_nums) {
+    PrintHostMsg_DidPrintPage_Params page_params = params;
+    if (page_num == page_nums[0]) {
+      page_params.metafile_data_handle =
+          base::SharedMemory::DuplicateHandle(shared_buf->handle());
+    }
+    page_params.page_number = page_num;
+    print_view_manager->OnDidPrintPage(page_params);
+  }
+  callback.Run(true, base::Value());
+}
+
+void OnPrintSettingsDone(
+    const PrinterHandler::PrintCallback& callback,
+    scoped_refptr<printing::PrinterQuery> printer_query,
+    const scoped_refptr<base::RefCountedBytes>& print_data,
+    content::WebContents* preview_web_contents,
+    const scoped_refptr<printing::PrintQueriesQueue> queue) {
+  queue->QueuePrinterQuery(printer_query.get());
+
+  // Post task so that the query has time to reset the callback before calling
+  // OnDidGetPrintedPagesCount.
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::Bind(&StartLocalPrintJob, callback, printer_query, print_data,
+                 preview_web_contents));
+}
+
 }  // namespace
 
 std::pair<std::string, std::string> GetPrinterNameAndDescription(
@@ -180,5 +273,28 @@ void ConvertPrinterListForCallback(
   if (!printers.empty())
     callback.Run(printers);
   done_callback.Run();
+}
+
+void StartLocalPrint(const PrinterHandler::PrintCallback& callback,
+                     const std::string& ticket_json,
+                     const scoped_refptr<base::RefCountedBytes>& print_data,
+                     content::WebContents* preview_web_contents,
+                     const scoped_refptr<printing::PrintQueriesQueue> queue) {
+  std::unique_ptr<base::DictionaryValue> job_settings =
+      base::DictionaryValue::From(base::JSONReader::Read(ticket_json));
+  if (!job_settings) {
+    callback.Run(false, base::Value("Invalid settings"));
+    return;
+  }
+  job_settings->SetBoolean(printing::kSettingHeaderFooterEnabled, false);
+  job_settings->SetInteger(printing::kSettingMarginsType, printing::NO_MARGINS);
+  scoped_refptr<printing::PrinterQuery> printer_query =
+      queue->CreatePrinterQuery(
+          preview_web_contents->GetMainFrame()->GetProcess()->GetID(),
+          preview_web_contents->GetMainFrame()->GetRoutingID());
+  printer_query->SetSettings(
+      std::move(job_settings),
+      base::Bind(&OnPrintSettingsDone, callback, printer_query, print_data,
+                 preview_web_contents, queue));
 }
 }  // namespace printing

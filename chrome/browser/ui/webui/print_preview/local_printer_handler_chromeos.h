@@ -17,11 +17,20 @@
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chromeos/printing/printer_configuration.h"
 
+namespace content {
+class WebContents;
+}
+
+namespace printing {
+class PrintQueriesQueue;
+}  // namespace printing
+
 class Profile;
 
 class LocalPrinterHandlerChromeos : public PrinterHandler {
  public:
-  explicit LocalPrinterHandlerChromeos(Profile* profile);
+  LocalPrinterHandlerChromeos(Profile* profile,
+                              content::WebContents* preview_web_contents);
   ~LocalPrinterHandlerChromeos() override;
 
   // PrinterHandler implementation
@@ -44,6 +53,9 @@ class LocalPrinterHandlerChromeos : public PrinterHandler {
   void HandlePrinterSetup(std::unique_ptr<chromeos::Printer> printer,
                           const GetCapabilityCallback& cb,
                           chromeos::PrinterSetupResult result);
+
+  content::WebContents* preview_web_contents_;
+  scoped_refptr<printing::PrintQueriesQueue> queue_;
   std::unique_ptr<chromeos::CupsPrintersManager> printers_manager_;
   scoped_refptr<chromeos::PpdProvider> ppd_provider_;
   std::unique_ptr<chromeos::PrinterConfigurer> printer_configurer_;

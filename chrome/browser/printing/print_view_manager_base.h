@@ -57,6 +57,9 @@ class PrintViewManagerBase : public content::NotificationObserver,
   // PrintedPagesSource implementation.
   base::string16 RenderSourceName() override;
 
+  void OnDidGetPrintedPagesCount(int cookie, int number_pages) override;
+  void OnDidPrintPage(const PrintHostMsg_DidPrintPage_Params& params);
+
  protected:
   explicit PrintViewManagerBase(content::WebContents* web_contents);
 
@@ -84,8 +87,6 @@ class PrintViewManagerBase : public content::NotificationObserver,
   void NavigationStopped() override;
 
   // IPC Message handlers.
-  void OnDidGetPrintedPagesCount(int cookie, int number_pages) override;
-  void OnDidPrintPage(const PrintHostMsg_DidPrintPage_Params& params);
   void OnPrintingFailed(int cookie) override;
   void OnShowInvalidPrinterSettingsError();
 
