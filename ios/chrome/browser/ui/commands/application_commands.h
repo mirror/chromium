@@ -11,11 +11,11 @@
 @class OpenUrlCommand;
 @class ShowSigninCommand;
 @class StartVoiceSearchCommand;
+@class UIViewController;
 
 // This protocol groups commands that are part of ApplicationCommands, but
 // may also be forwarded directly to a settings navigation controller.
 @protocol ApplicationSettingsCommands
-
 // Shows the accounts settings.
 - (void)showAccountsSettings;
 
@@ -25,6 +25,9 @@
 // Shows the sync encryption passphrase UI.
 - (void)showSyncPassphraseSettings;
 
+@optional
+// Shows the accounts settings UI, presenting from |presentingViewController|.
+- (void)showAccountsSettings:(UIViewController*)presentingViewController;
 @end
 
 // Protocol for commands that will generally be handled by the application,
