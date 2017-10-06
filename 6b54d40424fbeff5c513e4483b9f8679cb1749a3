@@ -71,6 +71,74 @@
     },
     {
       "key": {
+        "uuid": "90f49748_466a742a",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-06T13:13:41Z",
+      "side": 1,
+      "message": "Not used, please remove.",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62faff6_45d35a78",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-06T13:13:41Z",
+      "side": 1,
+      "message": "optional: What do you think about making this an explicit interface for more readability? Say, wrap these 3 callbacks into a U2fDiscovery[::](Client|Observer|Delegate), and derive U2fRequest from it.",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24328bf5_6fc822cb",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-06T13:13:41Z",
+      "side": 1,
+      "message": "I\u0027d prefer some reference to where this constant comes from, or at least a named constant. Can you ask piperc@ or leave a TODO for him?",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54f369ed_72f972e3",
+        "filename": "device/u2f/u2f_hid_discovery.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-06T13:13:41Z",
+      "side": 1,
+      "message": "nit: I am a bit concerned that we need to create a device from scratch in order to remove it. Maybe it would be better to use its ID for this purpose, but such an approach doesn\u0027t go well with the current callback API. Can you leave a TODO to think about this later?",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d188ac7f_56bc3c86",
         "filename": "device/u2f/u2f_hid_discovery_unittest.cc",
         "patchSetId": 3
@@ -128,6 +196,23 @@
         "endLine": 30,
         "endChar": 44
       },
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95500bae_c0f0af18",
+        "filename": "device/u2f/u2f_request.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-06T13:13:41Z",
+      "side": 1,
+      "message": "nit: Can you please hide as much as possible here?",
       "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
