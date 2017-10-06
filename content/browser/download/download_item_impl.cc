@@ -372,7 +372,7 @@ void DownloadItemImpl::RemoveObserver(Observer* observer) {
 
 void DownloadItemImpl::UpdateObservers() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DVLOG(20) << __func__ << "()";
+  LOG(ERROR) << __func__ << "(), " << DebugString(true);
 
   // Nested updates should not be allowed.
   DCHECK(!is_updating_observers_);

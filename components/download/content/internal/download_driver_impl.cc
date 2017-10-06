@@ -141,6 +141,7 @@ void DownloadDriverImpl::Start(
     const std::string& guid,
     const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
+  LOG(ERROR) << "@@@ " << __func__ << " , guid= " << guid;
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
   if (!download_manager_)
@@ -171,6 +172,7 @@ void DownloadDriverImpl::Start(
 }
 
 void DownloadDriverImpl::Remove(const std::string& guid) {
+  LOG(ERROR) << "@@@ " << __func__ << " , guid= " << guid;
   guid_to_remove_.emplace(guid);
 
   // DownloadItem::Remove will cause the item object removed from memory, post
@@ -191,6 +193,7 @@ void DownloadDriverImpl::DoRemoveDownload(const std::string& guid) {
 }
 
 void DownloadDriverImpl::Pause(const std::string& guid) {
+  LOG(ERROR) << "@@@ " << __func__ << " , guid= " << guid;
   if (!download_manager_)
     return;
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
@@ -199,6 +202,7 @@ void DownloadDriverImpl::Pause(const std::string& guid) {
 }
 
 void DownloadDriverImpl::Resume(const std::string& guid) {
+  LOG(ERROR) << "@@@ " << __func__ << " , guid= " << guid;
   if (!download_manager_)
     return;
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);

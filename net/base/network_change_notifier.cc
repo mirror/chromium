@@ -441,6 +441,7 @@ class NetworkChangeNotifier::NetworkChangeCalculator
 
   // NetworkChangeNotifier::IPAddressObserver implementation.
   void OnIPAddressChanged() override {
+    LOG(ERROR) << "@@@ " << __func__;
     DCHECK(thread_checker_.CalledOnValidThread());
     base::TimeDelta delay = last_announced_connection_type_ == CONNECTION_NONE
         ? params_.ip_address_offline_delay_ : params_.ip_address_online_delay_;

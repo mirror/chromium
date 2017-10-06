@@ -52,7 +52,6 @@ DeviceStatusListener::~DeviceStatusListener() {
 }
 
 const DeviceStatus& DeviceStatusListener::CurrentDeviceStatus() const {
-  DCHECK(listening_) << "Call Start() before querying the status.";
   return status_;
 }
 
@@ -63,23 +62,40 @@ void DeviceStatusListener::Start(DeviceStatusListener::Observer* observer) {
   DCHECK(observer);
   observer_ = observer;
 
+  timer_.Start(FROM_HERE, delay_,
+               base::Bind(&DeviceStatusListener::StartAfterDelay,
+                          base::Unretained(this)));
+}
+
+void DeviceStatusListener::StartAfterDelay() {
+  LOG(ERROR) << "@@@ " << __func__;
   // Listen to battery status changes.
   base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
   DCHECK(power_monitor);
   power_monitor->AddObserver(this);
 
-  // Listen to network status changes.
+  // Listen to network change.
   BuildNetworkStatusListener();
   network_listener_->Start(this);
 
-  status_.battery_status =
-      ToBatteryStatus(base::PowerMonitor::Get()->IsOnBatteryPower());
   status_.network_status =
       ToNetworkStatus(network_listener_->GetConnectionType());
+  status_.battery_status =
+      ToBatteryStatus(base::PowerMonitor::Get()->IsOnBatteryPower());
   listening_ = true;
+
+  LOG(ERROR) << "@@@ n = " << static_cast<int>(status_.network_status);
+  LOG(ERROR) << "@@@ b = " << static_cast<int>(status_.battery_status);
+
+  // Notify the current status if we are online or charging.
+  if (status_ != DeviceStatus())
+    NotifyStatusChange();
 }
 
 void DeviceStatusListener::Stop() {
+  LOG(ERROR) << "@@@ " << __func__;
+  timer_.Stop();
+
   if (!listening_)
     return;
 
@@ -104,15 +120,12 @@ void DeviceStatusListener::OnNetworkChanged(
       (new_network_status != NetworkStatus::DISCONNECTED);
 
   // It's unreliable to send requests immediately after the network becomes
-  // online. Notify network change to the observer after a delay.
-  // (With crbug.com/754695, the online signal comes after the network has
-  // been established, so the above statement might not be true and the delay
-  // might not be necessary.)
+  // online. Notify network change to the observer after a delay. Android
+  // network change listener still need this delay.
   if (change_to_online) {
-    timer_.Start(
-        FROM_HERE, delay_,
-        base::Bind(&DeviceStatusListener::NotifyNetworkChangeAfterDelay,
-                   base::Unretained(this), new_network_status));
+    timer_.Start(FROM_HERE, delay_,
+                 base::Bind(&DeviceStatusListener::NotifyNetworkChange,
+                            base::Unretained(this), new_network_status));
   } else {
     status_.network_status = new_network_status;
     timer_.Stop();
@@ -121,16 +134,19 @@ void DeviceStatusListener::OnNetworkChanged(
 }
 
 void DeviceStatusListener::OnPowerStateChange(bool on_battery_power) {
+  LOG(ERROR) << "@@@ on_battery_power =  " << on_battery_power;
   status_.battery_status = ToBatteryStatus(on_battery_power);
   NotifyStatusChange();
 }
 
 void DeviceStatusListener::NotifyStatusChange() {
+  DCHECK(observer_);
   observer_->OnDeviceStatusChanged(status_);
 }
 
-void DeviceStatusListener::NotifyNetworkChangeAfterDelay(
-    NetworkStatus network_status) {
+void DeviceStatusListener::NotifyNetworkChange(NetworkStatus network_status) {
+  LOG(ERROR) << "@@@" << __func__
+             << " network_status =  " << static_cast<int>(network_status);
   status_.network_status = network_status;
   NotifyStatusChange();
 }

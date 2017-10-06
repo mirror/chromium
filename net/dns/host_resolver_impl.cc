@@ -2430,6 +2430,7 @@ void HostResolverImpl::OnIPAddressChanged() {
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_ANDROID)
   RunLoopbackProbeJob();
 #endif
+  LOG(ERROR) << "@@@ " << __func__;
   AbortAllInProgressJobs();
   // |this| may be deleted inside AbortAllInProgressJobs().
 }
@@ -2489,6 +2490,8 @@ void HostResolverImpl::UpdateDNSConfig(bool config_changed) {
 
     // Life check to bail once |this| is deleted.
     base::WeakPtr<HostResolverImpl> self = weak_ptr_factory_.GetWeakPtr();
+
+    LOG(ERROR) << "@@@ " << __func__;
 
     // Existing jobs will have been sent to the original server so they need to
     // be aborted.
