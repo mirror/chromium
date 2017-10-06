@@ -50,6 +50,23 @@
       "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85254499_89bd2c0f",
+        "filename": "mojo/public/cpp/test_support/waiter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-10-06T21:50:08Z",
+      "side": 1,
+      "message": "Found an alternative strategy that doesn\u0027t run into a clang bug:\n\nnamespace internal {\n\ntemplate \u003ctypename CallbackType, typename OutArgTuple\u003e\nstruct WaiterHelper;\n\ntemplate \u003ctypename... InArgs, typename... OutArgs\u003e\nstruct WaiterHelper\u003cbase::OnceCallback\u003cvoid(InArgs...)\u003e,\n                    std::tuple\u003cOutArgs...\u003e\u003e {\n  static void MoveOrCopyInputs(base::OnceClosure continuation,\n                               OutArgs*... outputs,\n                               InArgs... inputs) {\n    int ignored[] \u003d {0, MoveOrCopy(std::forward\u003cInArgs\u003e(inputs), outputs)...};\n    ALLOW_UNUSED_LOCAL(ignored);\n    std::move(continuation).Run();\n  }\n\n private:\n  using \u003ctypename InputType\u003e\n  template InputTypeToOutputType \u003d typename std::remove_const\u003c\n      typename std::remove_reference\u003cInputType\u003e::type\u003e::type;\n\n  template \u003ctypename InputType\u003e\n  static int MoveOrCopy(InputType\u0026\u0026 input,\n                        InputTypeToOutputType\u003cInputType\u003e* output) {\n    *output \u003d std::move(input);\n    return 0;\n  }\n};\n\n}  // namespace internal\n\n// the AsyncWaiter::Capture method becomes :\n\n  template \u003ctypename CallbackType, typename... OutArgs\u003e\n  CallbackType Capture(OutArgs*... outputs) {\n    DCHECK(!lop_ || !loop_-\u003erunning());\n    loop_ \u003d std::make_unique\u003cbase::RunLoop\u003e();\n    using Helper \u003d\n        internal::WaiterHelper\u003cCallbackType, std::tuple\u003cOutArgs...\u003e\u003e;\n    return base::BindOnce(\u0026Helper::MoveOrCopyInputs, loop_-\u003eQuitClosure(),\n                          outputs...);\n  }\n\n\n\n// and finally callers have to look like:\n\n  Waiter waiter;\n  interface_ptr-\u003eDoBar(waiter.Capture\u003cInterface::DoBarCallback\u003e(\u0026i, \u0026b));\n\n\nHaving to qualify the callback name ends up making this feel noisier than I\u0027d like.\n\nAlternatives would require us to infer from a T* output arg whether the input type should be T or const T\u0026. This is easy for common types but unlikely to be 100% accurate across all types\u0026typemaps.",
+      "revId": "f26a99200297cb90b57c7995e479120ed729dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
