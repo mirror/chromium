@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ab094f6_f2b1b621",
+        "filename": "content/common/service_worker/service_worker_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T00:33:31Z",
+      "side": 1,
+      "message": "Makes sense to use the common pattern. Done.",
+      "parentUuid": "2409ff71_52a34ff0",
+      "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a0a7c0_2d369e0a",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T21:45:13Z",
       "side": 1,
       "message": "Same comment about wrapping this in TypeConverter as well.",
+      "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38772368_120ae8e5",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T00:33:31Z",
+      "side": 1,
+      "message": "My next patch deletes this type (https://chromium-review.googlesource.com/c/chromium/src/+/702083), so I\u0027ll just leave this alone.",
+      "parentUuid": "c3a0a7c0_2d369e0a",
       "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50fbd795_e1bcc5b1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T00:33:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dc44e882_2edf736a",
+      "revId": "d416b1d07afbf0e9e21990e7722aea8741e20299",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
