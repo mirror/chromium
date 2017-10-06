@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73961d40_21d82c4c",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-10-06T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b3696b9_c7ed4e53",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3a22ca2_bf6778df",
         "filename": "third_party/WebKit/Source/core/html/media/MediaCustomControlsFullscreenDetectorTest.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650c7cb6_14f25cff",
+        "filename": "third_party/WebKit/Source/core/html/media/MediaCustomControlsFullscreenDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-10-06T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3a22ca2_bf6778df",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "6b21b632_eb04b164",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmapTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-10-06T02:28:54Z",
+      "side": 1,
+      "message": "You are right, I thought it\u0027s a test case.\nI revert these two lines as before, to be simple function calls.",
+      "parentUuid": "282c95ac_020f5a08",
+      "range": {
+        "startLine": 252,
+        "startChar": 2,
+        "endLine": 252,
+        "endChar": 36
+      },
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6571e24a_82eea183",
         "filename": "third_party/WebKit/Source/core/layout/ScrollAnchorTest.cpp",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "a5242a36_97c98729",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollAnchorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-10-06T02:28:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6571e24a_82eea183",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0556396_bc889d68",
         "filename": "third_party/WebKit/Source/platform/testing/RuntimeEnabledFeaturesTestHelpers.h",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-03T15:48:59Z",
       "side": 1,
       "message": "For a future patch, not this one. What do you think about using a template to reduce this boilerplate? I genuinely don\u0027t know if it would be better so I\u0027m curious what you think.",
+      "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7af841_23fab9ca",
+        "filename": "third_party/WebKit/Source/platform/testing/RuntimeEnabledFeaturesTestHelpers.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1245983
+      },
+      "writtenOn": "2017-10-06T02:28:54Z",
+      "side": 1,
+      "message": "Not sure if I get your question right. But I think having all these typedefs (which simplified ScopedRuntimeEnabledFeatureForTest\u003cG,S\u003e) in this header, make it like a reference, so everyone can lookup and use these typedefs instead of creating their own typedef/alias or using the verbose version (though this does not affect compile time, we are going to generate code per feature either way).",
+      "parentUuid": "d0556396_bc889d68",
       "revId": "a23020d206cf30c947bfe2875e32730cd664dae1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
