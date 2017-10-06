@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c08d1fa_b896c385",
+        "filename": "media/audio/mac/audio_manager_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 895,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:02:55Z",
+      "side": 1,
+      "message": "This is possibly too early still.\n\nAdding the dyld filter function will cause it to be immediately called once for each currently loaded library. There are a fair few of those and if this is supposed to be thread-safe, chances are there\u0027s some lock taken that will stall the dynamic loader from loading anything else while this is going on. It\u0027s really pretty quick, though, so it might not be an issue.",
+      "revId": "3f8b5b6a7c20faf9d37adb57d4b49f279e623e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
