@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "400a5ed7_e42402f5",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T06:58:09Z",
+      "side": 1,
+      "message": "Nit: constexpr const StringPiece kContents \u003d \"Hello World\";",
+      "revId": "6cf01e2e271e591f1c1d9687ec343bc70c04f823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7322e31d_e5203839",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T06:58:09Z",
+      "side": 1,
+      "message": "Nit: just do:\n\nStringPiece actual(static_cast\u003cconst char*\u003e(shmem.memory()), contents.size());\n\nand then use it in the comparisons below",
+      "revId": "6cf01e2e271e591f1c1d9687ec343bc70c04f823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
