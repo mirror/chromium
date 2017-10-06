@@ -169,6 +169,8 @@ policy.Policy.prototype.setStatus_ = function(value) {
     status = loadTimeData.getString('unset');
   } else if (value.error) {
     status = value.error;
+  } else if (!value.valid) {
+    status = loadTimeData.getString('errorInvalidType');
   } else {
     status = loadTimeData.getString('ok');
   }
@@ -182,7 +184,7 @@ policy.Policy.prototype.setStatus_ = function(value) {
  */
 policy.Policy.prototype.setValue_ = function(value) {
   this.value = value;
-  if (!value) {
+  if (value == undefined) {
     value = '';
   } else if (typeof value != 'string') {
     value = JSON.stringify(value);
