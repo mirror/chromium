@@ -312,6 +312,8 @@ component("base") {
     "win/scoped_ole_initializer.h",
     "win/shell.cc",
     "win/shell.h",
+    "win/tablet.cc",
+    "win/tablet.h",
     "win/touch_input.cc",
     "win/touch_input.h",
     "win/window_event_target.cc",
@@ -536,6 +538,8 @@ component("base") {
       "d2d1.lib",
       "dwmapi.lib",
       "oleacc.lib",
+      "powrprof.lib",
+      "setupapi.lib",
     ]
   } else {
     if (!use_aura) {

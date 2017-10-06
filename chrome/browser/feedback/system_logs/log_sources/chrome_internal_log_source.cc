@@ -37,6 +37,7 @@
 
 #if defined(OS_WIN)
 #include "base/win/win_util.h"
+#include "ui/base/win/tablet.h"
 #endif
 
 namespace system_logs {
@@ -282,7 +283,7 @@ void ChromeInternalLogSource::PopulateLocalStateSettings(
 void ChromeInternalLogSource::PopulateUsbKeyboardDetected(
     SystemLogsResponse* response) {
   std::string reason;
-  bool result = base::win::IsKeyboardPresentOnSlate(&reason);
+  bool result = ui::IsKeyboardPresentOnSlate(&reason);
   reason.insert(0, result ? "Keyboard Detected:\n" : "No Keyboard:\n");
   response->emplace(kUsbKeyboardDetected, reason);
 }
