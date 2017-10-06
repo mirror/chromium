@@ -41,6 +41,10 @@ cr.define('extensions', function() {
       // </if>
     },
 
+    hostAttributes: {
+      role: 'banner',
+    },
+
     /** @private */
     onDevModeChange_: function() {
       this.delegate.setProfileInDevMode(this.$['dev-mode'].checked);
