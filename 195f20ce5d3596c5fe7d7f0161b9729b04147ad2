@@ -52,6 +52,24 @@
       "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f317809_3858fe89",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-10-06T06:52:19Z",
+      "side": 1,
+      "message": "Anton, I think you can avoid to worry about this issue if you modify your code so that the session list is stored in the code and only indices inside this list are sent back to the code. That way a malicious actor can only ever clear all entries in the list but can never exploit this interface to delete arbitrary files on disk.",
+      "parentUuid": "3e0360b6_257bbedf",
+      "revId": "195f20ce5d3596c5fe7d7f0161b9729b04147ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
