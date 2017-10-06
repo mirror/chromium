@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c14eea70_3d482c0f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T01:06:11Z",
+      "side": 1,
+      "message": "Can we add a very good comment here so that people hit this CHECK because of the supplement problem can understand what\u0027s going on?\n\nA better option is to somehow change the verification to a compile-time static_assert, but I don\u0027t have any good idea.\n\n(Overall, given the complexity of the work to extend the wrapper tracing in the past 2 months, I really want to explore an option to eliminating the wrapper tracing by replacing it with the unified GC.)",
+      "revId": "cbd4a6acefbf1972006067e0b07daf14961e25d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
