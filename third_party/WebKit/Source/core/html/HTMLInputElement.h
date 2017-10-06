@@ -144,8 +144,7 @@ class CORE_EXPORT HTMLInputElement
 
   String LocalizeValue(const String&) const;
 
-  const String& SuggestedValue() const;
-  void SetSuggestedValue(const String&);
+  void SetSuggestedValue(const String& value) override;
 
   void SetEditingValue(const String&);
 
@@ -293,10 +292,14 @@ class CORE_EXPORT HTMLInputElement
 
   unsigned SizeOfRadioGroup() const;
 
+  String GetPlaceholderValue() const final;
+
  protected:
   HTMLInputElement(Document&, bool created_by_parser);
 
   void DefaultEventHandler(Event*) override;
+
+  bool IsPasswordType() override;
 
  private:
   enum AutoCompleteSetting { kUninitialized, kOn, kOff };
@@ -367,9 +370,6 @@ class CORE_EXPORT HTMLInputElement
   bool SupportsPlaceholder() const final;
   void UpdatePlaceholderText() final;
   bool IsEmptyValue() const final { return InnerEditorValue().IsEmpty(); }
-  bool IsEmptySuggestedValue() const final {
-    return SuggestedValue().IsEmpty();
-  }
   void HandleFocusEvent(Element* old_focused_element, WebFocusType) final;
   void HandleBlurEvent() final;
   void DispatchFocusInEvent(const AtomicString& event_type,
@@ -404,7 +404,6 @@ class CORE_EXPORT HTMLInputElement
   AtomicString name_;
   // The value string in |value| value mode.
   String non_attribute_value_;
-  String suggested_value_;
   int size_;
   // https://html.spec.whatwg.org/multipage/forms.html#concept-input-value-dirty-flag
   unsigned has_dirty_value_ : 1;
