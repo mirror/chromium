@@ -26,11 +26,13 @@
         const exist = longtask.attribution.find(function(it) {
           return it.name === 'script-run' &&
               it.duration >= 51 &&
-              it.startTime === 0 &&
+              it.startTime > 0 &&
               it.entryType === 'taskattribution' &&
+              it.containerType === 'iframe' &&
               it.containerId === '' &&
               it.containerName === '' &&
-              it.containerSrc === '';
+              it.containerSrc === '' &&
+              it.scriptURL;
         });
         assert_false(!exist);
         observer.disconnect();
