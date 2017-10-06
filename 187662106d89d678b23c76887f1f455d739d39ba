@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a4ecea_941507bc",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T20:58:30Z",
+      "side": 1,
+      "message": "It seems you still query InputServiceProxy twice (once here and once in line 526 in this patch). Can\u0027t you just query InputServiceProxy once and add HIDDetectionScreen as an observer of InputServiceProxy in HIDDetectionScreen\u0027s constructor and remove itself as an observer in the destructor?",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a45a11_cde3344b",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T20:58:30Z",
+      "side": 1,
+      "message": "nit: It seems |showing_| was not used before your change. We probably should check the value of |showing_| and early return if it\u0027s already true.",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32ebc9e_6ccc365d",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T20:58:30Z",
+      "side": 1,
+      "message": "nit: ditto. Early return if |showing_| is already false.",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e357d36_e8d80dcc",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-10-06T20:58:30Z",
+      "side": 1,
+      "message": "I didn\u0027t see where you removed the observer?",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
