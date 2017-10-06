@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af724c83_494d60ac",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T21:15:55Z",
+      "side": 1,
+      "message": "Maybe a better way is to leave the calculation to the code. Updated.",
+      "parentUuid": "1eabc638_a7af6fc5",
+      "range": {
+        "startLine": 122,
+        "startChar": 47,
+        "endLine": 122,
+        "endChar": 49
+      },
+      "revId": "f4fa3d8e0bc0d6584b6dcf2c980bedab52493217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d75d43b0_1490939b",
         "filename": "ui/app_list/views/apps_grid_view.cc",
         "patchSetId": 2
