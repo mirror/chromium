@@ -34,12 +34,13 @@ class MODULES_EXPORT BackgroundFetchedEvent final
   static BackgroundFetchedEvent* Create(
       const AtomicString& type,
       const BackgroundFetchedEventInit& initializer,
+      const String& unique_id,
       const WebVector<WebBackgroundFetchSettledFetch>& fetches,
       ScriptState* script_state,
       WaitUntilObserver* observer,
       ServiceWorkerRegistration* registration) {
-    return new BackgroundFetchedEvent(type, initializer, fetches, script_state,
-                                      observer, registration);
+    return new BackgroundFetchedEvent(type, initializer, unique_id, fetches,
+                                      script_state, observer, registration);
   }
 
   ~BackgroundFetchedEvent() override;
@@ -61,6 +62,7 @@ class MODULES_EXPORT BackgroundFetchedEvent final
   BackgroundFetchedEvent(
       const AtomicString& type,
       const BackgroundFetchedEventInit&,
+      const String& unique_id,
       const WebVector<WebBackgroundFetchSettledFetch>& fetches,
       ScriptState*,
       WaitUntilObserver*,
@@ -68,6 +70,7 @@ class MODULES_EXPORT BackgroundFetchedEvent final
 
   void DidUpdateUI(ScriptPromiseResolver*, mojom::blink::BackgroundFetchError);
 
+  String unique_id_;
   HeapVector<Member<BackgroundFetchSettledFetch>> fetches_;
   Member<ServiceWorkerRegistration> registration_;
 };

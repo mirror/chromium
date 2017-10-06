@@ -52,7 +52,8 @@ struct CONTENT_EXPORT BackgroundFetchRegistration {
   BackgroundFetchRegistration(const BackgroundFetchRegistration& other);
   ~BackgroundFetchRegistration();
 
-  std::string id;
+  std::string developer_id;  // Corresonds to IDL 'id' attribute.
+  std::string unique_id;     // Not exposed to JavaScript.
   uint64_t upload_total = 0;
   uint64_t uploaded = 0;
   uint64_t download_total = 0;

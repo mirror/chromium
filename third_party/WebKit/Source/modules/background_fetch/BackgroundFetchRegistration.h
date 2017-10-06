@@ -26,7 +26,8 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  BackgroundFetchRegistration(String id,
+  BackgroundFetchRegistration(String developer_id,
+                              String unique_id,
                               unsigned long long upload_total,
                               unsigned long long uploaded,
                               unsigned long long download_total,
@@ -64,7 +65,8 @@ class BackgroundFetchRegistration final : public EventTargetWithInlineData {
 
   Member<ServiceWorkerRegistration> registration_;
 
-  String id_;
+  String developer_id_;  // Corresonds to IDL 'id' attribute.
+  String unique_id_;     // Not exposed to JavaScript.
   unsigned long long upload_total_;
   unsigned long long uploaded_;
   unsigned long long download_total_;

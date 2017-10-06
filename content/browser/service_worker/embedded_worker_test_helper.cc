@@ -176,38 +176,42 @@ class EmbeddedWorkerTestHelper::MockServiceWorkerEventDispatcher
   }
 
   void DispatchBackgroundFetchAbortEvent(
-      const std::string& tag,
+      const std::string& developer_id,
       DispatchBackgroundFetchAbortEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnBackgroundFetchAbortEventStub(tag, std::move(callback));
+    helper_->OnBackgroundFetchAbortEventStub(developer_id, std::move(callback));
   }
 
   void DispatchBackgroundFetchClickEvent(
-      const std::string& tag,
+      const std::string& developer_id,
       mojom::BackgroundFetchState state,
       DispatchBackgroundFetchClickEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnBackgroundFetchClickEventStub(tag, state, std::move(callback));
+    helper_->OnBackgroundFetchClickEventStub(developer_id, state,
+                                             std::move(callback));
   }
 
   void DispatchBackgroundFetchFailEvent(
-      const std::string& tag,
+      const std::string& developer_id,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       DispatchBackgroundFetchFailEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnBackgroundFetchFailEventStub(tag, fetches, std::move(callback));
+    helper_->OnBackgroundFetchFailEventStub(developer_id, fetches,
+                                            std::move(callback));
   }
 
   void DispatchBackgroundFetchedEvent(
-      const std::string& tag,
+      const std::string& developer_id,
+      const std::string& unique_id,
       const std::vector<BackgroundFetchSettledFetch>& fetches,
       DispatchBackgroundFetchedEventCallback callback) override {
     if (!helper_)
       return;
-    helper_->OnBackgroundFetchedEventStub(tag, fetches, std::move(callback));
+    helper_->OnBackgroundFetchedEventStub(developer_id, unique_id, fetches,
+                                          std::move(callback));
   }
 
   void DispatchFetchEvent(
@@ -541,14 +545,14 @@ void EmbeddedWorkerTestHelper::OnActivateEvent(
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent(
-    const std::string& tag,
+    const std::string& developer_id,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchAbortEventCallback callback) {
   std::move(callback).Run(SERVICE_WORKER_OK, base::Time::Now());
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
-    const std::string& tag,
+    const std::string& developer_id,
     mojom::BackgroundFetchState state,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchClickEventCallback callback) {
@@ -556,7 +560,7 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent(
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
-    const std::string& tag,
+    const std::string& developer_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchFailEventCallback callback) {
@@ -564,7 +568,8 @@ void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent(
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent(
-    const std::string& tag,
+    const std::string& developer_id,
+    const std::string& unique_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
@@ -808,46 +813,50 @@ void EmbeddedWorkerTestHelper::OnActivateEventStub(
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchAbortEventStub(
-    const std::string& tag,
+    const std::string& developer_id,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchAbortEventCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnBackgroundFetchAbortEvent,
-                     AsWeakPtr(), tag, base::Passed(&callback)));
+                     AsWeakPtr(), developer_id, base::Passed(&callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchClickEventStub(
-    const std::string& tag,
+    const std::string& developer_id,
     mojom::BackgroundFetchState state,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchClickEventCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnBackgroundFetchClickEvent,
-                     AsWeakPtr(), tag, state, base::Passed(&callback)));
+                     AsWeakPtr(), developer_id, state,
+                     base::Passed(&callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchFailEventStub(
-    const std::string& tag,
+    const std::string& developer_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::
         DispatchBackgroundFetchFailEventCallback callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnBackgroundFetchFailEvent,
-                     AsWeakPtr(), tag, fetches, base::Passed(&callback)));
+                     AsWeakPtr(), developer_id, fetches,
+                     base::Passed(&callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnBackgroundFetchedEventStub(
-    const std::string& tag,
+    const std::string& developer_id,
+    const std::string& unique_id,
     const std::vector<BackgroundFetchSettledFetch>& fetches,
     mojom::ServiceWorkerEventDispatcher::DispatchBackgroundFetchedEventCallback
         callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::BindOnce(&EmbeddedWorkerTestHelper::OnBackgroundFetchedEvent,
-                     AsWeakPtr(), tag, fetches, base::Passed(&callback)));
+                     AsWeakPtr(), developer_id, unique_id, fetches,
+                     base::Passed(&callback)));
 }
 
 void EmbeddedWorkerTestHelper::OnExtendableMessageEventStub(
