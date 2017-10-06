@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc55f70d_e05cd7cc",
+        "filename": "build/android/gyp/jar.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-06T16:23:45Z",
+      "side": 1,
+      "message": "Q: Why is this necessary? I think in practice everything occurs in a temp dir so might not matter, but if the path already exists, wouldn\u0027t we still want to copy it in or else risk a stale file?",
+      "revId": "7d6a73d802376a55ea66203e5985621422f0dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3807d188_42f89c31",
+        "filename": "build/cipd/cipd_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-06T16:23:45Z",
+      "side": 1,
+      "message": "nit: Please add pydoc or a usage to argparse that says what this script does.",
+      "revId": "7d6a73d802376a55ea66203e5985621422f0dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61169c9f_1b533dc4",
+        "filename": "build/cipd/cipd_wrapper.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-06T16:23:45Z",
+      "side": 1,
+      "message": "I notice cipd supports --install-mode\u003dcopy. Would it be better to use that than to worry about symlink issues?",
+      "revId": "7d6a73d802376a55ea66203e5985621422f0dce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

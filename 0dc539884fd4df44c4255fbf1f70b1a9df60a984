@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9704aab1_024568a1",
+        "filename": "third_party/accessibility_test_framework/version.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-10-06T16:23:45Z",
+      "side": 0,
+      "message": "Are these version.txt files required by cipd? Seems like version would make more sense in the .yaml file.",
+      "revId": "0dc539884fd4df44c4255fbf1f70b1a9df60a984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
