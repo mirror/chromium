@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9bd0171_4b1ec5f6",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-06T21:27:00Z",
+      "side": 1,
+      "message": "This change looks unnecessary -- is it just a preference change?",
+      "revId": "d571d1c264494a56377fc40aa7d6d4ea4e94c2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
