@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "012e0772_0f46c3b0",
+        "filename": "chromecast/browser/cast_content_window_aura.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-06T22:00:04Z",
+      "side": 0,
+      "message": "I actually think SetTransparent can be removed as well from this class hierarchy.  It seems to be a historical artifact of some refactoring.",
+      "revId": "a4eb0933d973f61be12c3b96ab1f8b2914ac2253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a301b8b5_287698e0",
+        "filename": "chromecast/browser/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-06T22:00:04Z",
+      "side": 1,
+      "message": "why aren\u0027t these inside if (android)?",
+      "revId": "1e4a34a4cd54d60bf8dda2f18ff945c34162e1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3477ef5a_5f9224c3",
+        "filename": "chromecast/browser/cast_browser_main_parts.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-10-06T22:00:04Z",
+      "side": 1,
+      "message": "shouldn\u0027t this still be !OS_ANDROID?",
+      "revId": "1e4a34a4cd54d60bf8dda2f18ff945c34162e1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
