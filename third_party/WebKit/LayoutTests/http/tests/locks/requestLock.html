@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<title>Web Locks API: requestLock method</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestLock());
+  await promise_rejects(t, new TypeError(), requestLock('s'));
+}, 'requestLock requires a scope and a callback');
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestLock('s', lock => {}, {mode: 'foo'}));
+  await promise_rejects(t, new TypeError(), requestLock('s', lock => {}, {mode: null }));
+}, 'mode must be "shared" or "exclusive"');
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestLock('s', undefined));
+  await promise_rejects(t, new TypeError(), requestLock('s', null));
+  await promise_rejects(t, new TypeError(), requestLock('s', 123));
+  await promise_rejects(t, new TypeError(), requestLock('s', 'abc'));
+  await promise_rejects(t, new TypeError(), requestLock('s', []));
+  await promise_rejects(t, new TypeError(), requestLock('s', {}));
+}, 'callback must be a function');
+
+promise_test(async t => {
+  let release;
+  const promise = new Promise(r => { release = r; });
+
+  let returned = requestLock('s', lock => { return promise; });
+
+  const order = [];
+
+  returned.then(() => { order.push('returned'); });
+  promise.then(() => { order.push('holding'); });
+
+  release();
+
+  await Promise.all([returned, promise]);
+
+  assert_array_equals(order, ['holding', 'returned']);
+
+}, 'requestLock\'s returned promise resolves after lock is released');
+
+</script>
