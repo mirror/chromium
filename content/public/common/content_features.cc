@@ -287,6 +287,12 @@ const base::Feature kSharedArrayBuffer{"SharedArrayBuffer",
 const base::Feature kSignInProcessIsolation{"sign-in-process-isolation",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
+// An experimental simple user-activation model where the user gesture state is
+// tracked through a frame-based state instead of the gesture tokens we use
+// today.
+const base::Feature kSimpleUserActivation{"SimpleUserActivation",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Alternative to switches::kSitePerProcess, for turning on full site isolation.
 // Launch bug: https://crbug.com/739418.
 const base::Feature kSitePerProcess{"site-per-process",
