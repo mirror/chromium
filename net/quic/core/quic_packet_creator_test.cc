@@ -279,7 +279,7 @@ TEST_P(QuicPacketCreatorTest, SerializeFrames) {
   for (int i = ENCRYPTION_NONE; i < NUM_ENCRYPTION_LEVELS; ++i) {
     EncryptionLevel level = static_cast<EncryptionLevel>(i);
     creator_.set_encryption_level(level);
-    frames_.push_back(QuicFrame(new QuicAckFrame(MakeAckFrame(0u))));
+    frames_.push_back(QuicFrame(new QuicAckFrame()));
     frames_.push_back(QuicFrame(
         new QuicStreamFrame(kCryptoStreamId, false, 0u, QuicStringPiece())));
     frames_.push_back(QuicFrame(
@@ -839,7 +839,7 @@ TEST_P(QuicPacketCreatorTest, AddFrameAndFlush) {
             creator_.BytesFree());
 
   // Add a variety of frame types and then a padding frame.
-  QuicAckFrame ack_frame(MakeAckFrame(10u));
+  QuicAckFrame ack_frame(InitAckFrame(10u));
   EXPECT_TRUE(creator_.AddSavedFrame(QuicFrame(&ack_frame)));
   EXPECT_TRUE(creator_.HasPendingFrames());
 

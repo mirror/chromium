@@ -15,6 +15,15 @@
 
 namespace net {
 namespace test {
+namespace {
+
+QuicAckFrame MakeAckFrame(QuicPacketNumber largest_observed) {
+  QuicAckFrame ack;
+  ack.largest_observed = largest_observed;
+  return ack;
+}
+
+}  // namespace
 
 QuicTestPacketMaker::QuicTestPacketMaker(QuicVersion version,
                                          QuicConnectionId connection_id,

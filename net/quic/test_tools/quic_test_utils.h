@@ -154,9 +154,24 @@ QuicConfig DefaultQuicConfigStatelessRejects();
 // Returns a version vector consisting of |version|.
 QuicVersionVector SupportedVersions(QuicVersion version);
 
-// Testing convenience method to construct a QuicAckFrame with largest_observed
-// from peer set to |largest_observed|.
-QuicAckFrame MakeAckFrame(QuicPacketNumber largest_observed);
+struct QuicAckBlock {
+  QuicPacketNumber start;  // Included
+  QuicPacketNumber limit;  // Excluded
+};
+
+// Testing convenience method to construct a QuicAckFrame with arbitrary ack
+// blocks. Each block is given by a (closed-open) range of packet numbers. e.g.:
+// InitAckFrame({{1, 10}})
+//   => 1 ack block acking packet numbers 1 to 9.
+//
+// InitAckFrame({{1, 2}, {3, 4}})
+//   => 2 ack blocks acking packet 1 and 3. Packet 2 is missing.
+QuicAckFrame InitAckFrame(const std::vector<QuicAckBlock>& ack_blocks);
+
+// Testing convenience method to construct a QuicAckFrame with 1 ack block which
+// covers packet number range [1, |largest_acked| + 1).
+// Equivalent to InitAckFrame({{1, largest_acked + 1}})
+QuicAckFrame InitAckFrame(QuicPacketNumber largest_acked);
 
 // Testing convenience method to construct a QuicAckFrame with |num_ack_blocks|
 // ack blocks of width 1 packet, starting from |least_unacked| + 2.

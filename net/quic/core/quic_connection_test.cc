@@ -990,15 +990,6 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     return QuicTime::Delta::FromMilliseconds(kMaxDelayedAckTimeMs);
   }
 
-  // Initialize a frame acknowledging all packets up to largest_observed.
-  const QuicAckFrame InitAckFrame(QuicPacketNumber largest_observed) {
-    QuicAckFrame frame(MakeAckFrame(largest_observed));
-    if (largest_observed > 0) {
-      frame.packets.AddRange(1, largest_observed + 1);
-    }
-    return frame;
-  }
-
   const QuicStopWaitingFrame InitStopWaitingFrame(
       QuicPacketNumber least_unacked) {
     QuicStopWaitingFrame frame;
@@ -1006,21 +997,15 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     return frame;
   }
 
-  // Construct ack_frame containing up to two ranges
-  // [1, missing) and (missing, end_range]
+  // Construct a ack_frame that acks all packet numbers between 1 and
+  // |largest_acked|, except |missing|.
+  // REQUIRES: 1 <= |missing| < |largest_acked|
   QuicAckFrame ConstructAckFrame(QuicPacketNumber largest_acked,
                                  QuicPacketNumber missing) {
-    QuicAckFrame ack_frame;
-    if (largest_acked > missing) {
-      ack_frame.packets.AddRange(1, missing);
-      ack_frame.packets.AddRange(missing + 1, largest_acked + 1);
-      ack_frame.largest_observed = largest_acked;
+    if (missing == 1) {
+      return InitAckFrame({{missing + 1, largest_acked + 1}});
     }
-    if (largest_acked == missing) {
-      ack_frame.packets.AddRange(1, missing);
-      ack_frame.largest_observed = largest_acked;
-    }
-    return ack_frame;
+    return InitAckFrame({{1, missing}, {missing + 1, largest_acked + 1}});
   }
 
   // Undo nacking a packet within the frame.
@@ -1511,15 +1496,16 @@ TEST_P(QuicConnectionTest, OutOfOrderAckReceiptCausesNoAck) {
 
 TEST_P(QuicConnectionTest, AckReceiptCausesAckSend) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
-  QuicPacketNumber original;
-  QuicByteCount packet_size;
-  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _))
-      .WillOnce(DoAll(SaveArg<2>(&original), SaveArg<3>(&packet_size)));
-  connection_.SendStreamDataWithString(3, "foo", 0, NO_FIN, nullptr);
-  QuicAckFrame frame = ConstructAckFrame(original, original);
+  QuicPacketNumber original, second;
+
+  QuicByteCount packet_size =
+      SendStreamDataToPeer(3, "foo", 0, NO_FIN, &original);  // 1st packet.
+  SendStreamDataToPeer(3, "bar", 0, NO_FIN, &second);        // 2nd packet.
+
+  QuicAckFrame frame = InitAckFrame({{second, second + 1}});
   // First nack triggers early retransmit.
   LostPacketVector lost_packets;
-  lost_packets.push_back(LostPacket(1, kMaxPacketSize));
+  lost_packets.push_back(LostPacket(original, kMaxPacketSize));
   EXPECT_CALL(*loss_algorithm_, DetectLosses(_, _, _, _, _))
       .WillOnce(SetArgPointee<4>(lost_packets));
   EXPECT_CALL(*send_algorithm_, OnCongestionEvent(true, _, _, _, _));
@@ -1725,7 +1711,7 @@ TEST_P(QuicConnectionTest, AckUnsentData) {
                                            ConnectionCloseSource::FROM_SELF));
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
   EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _));
-  QuicAckFrame frame(MakeAckFrame(1));
+  QuicAckFrame frame = InitAckFrame(1);
   EXPECT_CALL(visitor_, OnCanWrite()).Times(0);
   ProcessAckPacket(&frame);
 }
@@ -1735,7 +1721,7 @@ TEST_P(QuicConnectionTest, AckAll) {
   ProcessPacket(1);
 
   QuicPacketCreatorPeer::SetPacketNumber(&peer_creator_, 1);
-  QuicAckFrame frame1 = InitAckFrame(0);
+  QuicAckFrame frame1;
   ProcessAckPacket(&frame1);
 }
 
@@ -1939,7 +1925,7 @@ TEST_P(QuicConnectionTest, FramePackingAckResponse) {
   EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _)).Times(1);
 
   // Process an ack to cause the visitor's OnCanWrite to be invoked.
-  QuicAckFrame ack_one = InitAckFrame(0);
+  QuicAckFrame ack_one;
   ProcessAckPacket(3, &ack_one);
 
   EXPECT_EQ(0u, connection_.NumQueuedPackets());
@@ -2363,16 +2349,16 @@ TEST_P(QuicConnectionTest, RetransmitAckedPacket) {
 
 TEST_P(QuicConnectionTest, RetransmitNackedLargestObserved) {
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
-  QuicPacketNumber largest_observed;
-  QuicByteCount packet_size;
-  EXPECT_CALL(*send_algorithm_, OnPacketSent(_, _, _, _, _))
-      .WillOnce(DoAll(SaveArg<2>(&largest_observed), SaveArg<3>(&packet_size)));
-  connection_.SendStreamDataWithString(3, "foo", 0, NO_FIN, nullptr);
+  QuicPacketNumber original, second;
 
-  QuicAckFrame frame = ConstructAckFrame(1, largest_observed);
+  QuicByteCount packet_size =
+      SendStreamDataToPeer(3, "foo", 0, NO_FIN, &original);  // 1st packet.
+  SendStreamDataToPeer(3, "bar", 0, NO_FIN, &second);        // 2nd packet.
+
+  QuicAckFrame frame = InitAckFrame({{second, second + 1}});
   // The first nack should retransmit the largest observed packet.
   LostPacketVector lost_packets;
-  lost_packets.push_back(LostPacket(1, kMaxPacketSize));
+  lost_packets.push_back(LostPacket(original, kMaxPacketSize));
   EXPECT_CALL(*loss_algorithm_, DetectLosses(_, _, _, _, _))
       .WillOnce(SetArgPointee<4>(lost_packets));
   EXPECT_CALL(*send_algorithm_, OnCongestionEvent(true, _, _, _, _));
