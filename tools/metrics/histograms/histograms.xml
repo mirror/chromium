@@ -31301,6 +31301,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.AudioOutputResampler.OpenLowLatencyStream"
+    enum="AudioOutputResamplerLowLatencyOpenStreamResult">
+  <owner>olka@chromium.org</owner>
+  When opening the first low latency stream to be renderer through the
+  resampler: success, fallback to high latency stream, fallback to fake stream,
+  failure. After that (if not failure) all the subsequent streams are created
+  using the same format (original or fallback) used for creation of the first
+  stream. When opening subsequent low latency streams: success/failure,
+  including information on which fallback type (if any) is used. If there are no
+  active streams, resampler will be reset to its original state upon a timeout,
+  and the next stream creation will be considered as &quot;first&quot;.
+  <summary>
+
+  </summary>
+</histogram>
+
 <histogram name="Media.AudioRendererAudioGlitches" enum="AudioGlitchResult">
   <owner>henrika@chromium.org</owner>
   <summary>
