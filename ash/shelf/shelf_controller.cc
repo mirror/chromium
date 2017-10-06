@@ -152,7 +152,7 @@ void ShelfController::AddObserver(
     // Synchronize two ShelfModel instances, one each owned by Ash and Chrome.
     // Notify Chrome of existing ShelfModel items and delegates created by Ash.
     for (int i = 0; i < model_.item_count(); ++i) {
-      const ShelfItem& item = model_.items()[i];
+      ShelfItem item = model_.items()[i];
       ShelfItemDelegate* delegate = model_.GetShelfItemDelegate(item.id);
       // Notify observers of the delegate before the items themselves; Chrome
       // creates default delegates if none exist, breaking ShelfWindowWatcher.
@@ -160,6 +160,8 @@ void ShelfController::AddObserver(
         observer_ptr->OnShelfItemDelegateChanged(
             item.id, delegate->CreateInterfacePtrAndBind());
       }
+      // Pass null images to avoid transport costs; clients don't use images.
+      item.image = gfx::ImageSkia();
       observer_ptr->OnShelfItemAdded(i, item);
     }
   }
@@ -218,7 +220,12 @@ void ShelfController::UpdateShelfItem(const ShelfItem& item) {
   if (index < 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
-  model_.Set(index, item);
+
+  // Keep any existing image if the item was sent without one for efficiency.
+  ash::ShelfItem new_item = item;
+  if (item.image.isNull())
+    new_item.image = model_.items()[index].image;
+  model_.Set(index, new_item);
 }
 
 void ShelfController::SetShelfItemDelegate(
@@ -238,7 +245,9 @@ void ShelfController::ShelfItemAdded(int index) {
   if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
     return;
 
-  const ShelfItem& item = model_.items()[index];
+  // Pass null images to avoid transport costs; clients don't use images.
+  ShelfItem item = model_.items()[index];
+  item.image = gfx::ImageSkia();
   observers_.ForAllPtrs([index, item](mojom::ShelfObserver* observer) {
     observer->OnShelfItemAdded(index, item);
   });
@@ -267,7 +276,9 @@ void ShelfController::ShelfItemChanged(int index, const ShelfItem& old_item) {
   if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
     return;
 
-  const ShelfItem& item = model_.items()[index];
+  // Pass null images to avoid transport costs; clients don't use images.
+  ShelfItem item = model_.items()[index];
+  item.image = gfx::ImageSkia();
   observers_.ForAllPtrs([item](mojom::ShelfObserver* observer) {
     observer->OnShelfItemUpdated(item);
   });
