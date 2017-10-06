@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "510d315c_c2235790",
+        "filename": "components/arc/ime/arc_ime_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-10-06T13:56:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb46bed3_efba16d2",
+      "revId": "c195ac04a82ea7cc9c477e500d09c28b2521240d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10fb78f1_5091237c",
         "filename": "components/arc/ime/arc_ime_service_unittest.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T16:42:31Z",
       "side": 1,
       "message": "Any practical case to switch the root window from the one to another which does not share the IME?\nIf so could you add the test scenario for that case, too?",
+      "revId": "c195ac04a82ea7cc9c477e500d09c28b2521240d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec867b1a_26cccd72",
+        "filename": "components/arc/ime/arc_ime_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-10-06T13:56:10Z",
+      "side": 1,
+      "message": "Fortunately or unfortunately, no.\nCurrent Chrome OS / Ash defines the IME object as a singleton,\nso practically there\u0027s no case that IME instance changes as of now.",
+      "parentUuid": "10fb78f1_5091237c",
       "revId": "c195ac04a82ea7cc9c477e500d09c28b2521240d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
