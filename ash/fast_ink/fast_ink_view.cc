@@ -82,6 +82,10 @@ class ExportedTextureDeleter : public ui::CompositorObserver {
 struct FastInkView::Resource {
   Resource() {}
   ~Resource() {
+    // context_provider might be null in unit tests
+    // TODO(kaznacheev) find a cleaner solution
+    if (!context_provider)
+      return;
     gpu::gles2::GLES2Interface* gles2 = context_provider->ContextGL();
     if (texture) {
       // We shouldn't delete exported textures.
