@@ -203,6 +203,10 @@ void QuartcSession::ResetStream(QuicStreamId stream_id,
   }
 }
 
+bool QuartcSession::IsOpenStream(QuicStreamId stream_id) {
+  return QuicSession::IsOpenStream(stream_id);
+}
+
 QuartcSessionStats QuartcSession::GetStats() {
   QuartcSessionStats stats;
   const QuicConnectionStats& connection_stats = connection_->GetStats();
