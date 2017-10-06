@@ -304,7 +304,9 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
           base::BindRepeating(
               &PostMediaContextProviderToCallback,
               RenderThreadImpl::current()->GetCompositorMainThreadTaskRunner()),
-          RenderThreadImpl::current()->SharedMainThreadContextProvider()));
+          RenderThreadImpl::current()->SharedMainThreadContextProvider(),
+          RenderThreadImpl::current()->GetSharedBitmapManager(),
+          RenderThreadImpl::current()->GetGpuMemoryBufferManager()));
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),

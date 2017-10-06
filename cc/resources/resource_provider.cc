@@ -652,6 +652,7 @@ viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
     DCHECK(mailbox.IsSharedMemory());
     viz::SharedBitmap* shared_bitmap = mailbox.shared_bitmap();
     uint8_t* pixels = shared_bitmap->pixels();
+    VLOG(0) << "pixels " << pixels;
     DCHECK(pixels);
     resource = InsertResource(
         id, Resource(pixels, shared_bitmap, mailbox.size_in_pixels(),
