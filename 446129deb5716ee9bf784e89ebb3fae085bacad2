@@ -22,6 +22,30 @@
       "revId": "446129deb5716ee9bf784e89ebb3fae085bacad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee5696ca_685b9bdf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1244576
+      },
+      "writtenOn": "2017-10-06T23:22:11Z",
+      "side": 1,
+      "message": "Oops, didn\u0027t see this one. Done!",
+      "parentUuid": "a67b2b44_db121515",
+      "range": {
+        "startLine": 715,
+        "startChar": 66,
+        "endLine": 715,
+        "endChar": 94
+      },
+      "revId": "446129deb5716ee9bf784e89ebb3fae085bacad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
