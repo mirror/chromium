@@ -16,6 +16,24 @@
       "revId": "45d9705993c5fc2dd5479ae2b13e72c35fb38d0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63dd52dd_cae1bc30",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T21:55:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee5f98e5_1f01bb3b",
+      "revId": "45d9705993c5fc2dd5479ae2b13e72c35fb38d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
