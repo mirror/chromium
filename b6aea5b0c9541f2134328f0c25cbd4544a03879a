@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5727c24d_6e3e4be2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-06T23:00:26Z",
+      "side": 1,
+      "message": "camelcase in javaland systemOrForced",
+      "range": {
+        "startLine": 48,
+        "startChar": 16,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "b6aea5b0c9541f2134328f0c25cbd4544a03879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f286c98e_7303be58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnercustomizations/PartnerBrowserCustomizations.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-06T23:00:26Z",
+      "side": 1,
+      "message": "same naming nit",
+      "revId": "b6aea5b0c9541f2134328f0c25cbd4544a03879a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
