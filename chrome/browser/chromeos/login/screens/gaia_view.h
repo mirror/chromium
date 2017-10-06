@@ -25,6 +25,11 @@ class GaiaView {
   // pre-loads it.
   virtual void MaybePreloadAuthExtension() = 0;
 
+  virtual void Login(const std::string& username,
+                     const std::string& password,
+                     const std::string& gaia_id,
+                     bool using_saml) = 0;
+
   virtual void DisableRestrictiveProxyCheckForTest() = 0;
 
  private:
