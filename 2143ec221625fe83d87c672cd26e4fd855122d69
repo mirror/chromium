@@ -1,0 +1,348 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15ee7e6b_086cd76f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "er",
+      "range": {
+        "startLine": 11,
+        "startChar": 32,
+        "endLine": 11,
+        "endChar": 33
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4834264_f23f264e",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "Can move as simple inline getter (DCHECKs don\u0027t count towards \"multiple lines of code\" rule in my book)",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258fca89_48e6f5c0",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "This is the only caller of ReloadWorkQueue(), should we make that method more specific to IncomingTaskQueue::InitialQueue? Or even inline it here?",
+      "range": {
+        "startLine": 192,
+        "startChar": 47,
+        "endLine": 192,
+        "endChar": 71
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122dd34b_1eed1d87",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "Actually, by decoupling concerns, this CL enables an improvement here :). It\u0027s true that we have been keeping a count for hi-res tasks that had been deferred but that was incorrect as they are no longer depending on the timer to execute. As such they should no longer count in the hi-res count the moment they are popped from the delayed_tasks.\n\nThis CL being big enough it\u0027s perhaps better to just add a TODO here for now but it sure shouldn\u0027t go unmentioned (TODO either in your name or stanisc@ who\u0027s working on reducing hi-res timer usage).\n\nI think this is also true for InitialQueue (i.e. until pushed to the delayed_tasks, it\u0027s not relevant that they are pending hi-res tasks as the timer for them hasn\u0027t been scheduled yet).\n\nIn other words, the count only matters for tasks in delayed_tasks (or more precisely for tasks relying on MessagePump::ScheduleDelayedWork to execute).",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11730fb0_d617d813",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "That sounds weird to me, read-only \u003d\u003d\u003d can\u0027t do non-const ops \u003d\u003d\u003d can\u0027t remove.\n\nSo it\u0027s a remove-only queue?",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c52c2c_cce00e4d",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "Peek/Pop impls seem to assume !empty() (or HasTasks()?), add requirement here",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85cbba3_e0ab41d8",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "rm base::",
+      "range": {
+        "startLine": 102,
+        "startChar": 15,
+        "endLine": 102,
+        "endChar": 21
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e47821c_6820191d",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "s/^/by expected run time/ ?\n\ni.e. it\u0027s not from least to most delayed as a very delayed task can be sorted a head of a short delay if it was posted a long time ago and should run sooner overall.",
+      "range": {
+        "startLine": 113,
+        "startChar": 69,
+        "endLine": 114,
+        "endChar": 29
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820002c0_2673fa88",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "I\u0027d remove this last bit, it\u0027s implicit IMO (and added confusion to my initial read)",
+      "range": {
+        "startLine": 136,
+        "startChar": 76,
+        "endLine": 137,
+        "endChar": 17
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f81ccc87_c6564824",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "ReloadFromIncomingQueueIfEmpty() sounds more natural?",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0431515d_663135d0",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "Above you refer to the \"sequence\" and here to the \"loop\", let\u0027s be consistent.",
+      "range": {
+        "startLine": 202,
+        "startChar": 37,
+        "endLine": 202,
+        "endChar": 45
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b23245f_bd08215c",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "number of new tasks or overall? let\u0027s be specific",
+      "range": {
+        "startLine": 202,
+        "startChar": 59,
+        "endLine": 202,
+        "endChar": 74
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ace635f_d68e7d82",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "the task executed\n         ^^^^^^^^",
+      "range": {
+        "startLine": 226,
+        "startChar": 37,
+        "endLine": 226,
+        "endChar": 45
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "269925d7_377f2c42",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "This is the only caller and that method is now quite simple, inline it here.",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 25
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9e6c9c_5e514994",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "I don\u0027t understand this comment, was it even still relevant in current world? It definitely looks like it isn\u0027t now?",
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0474f735_c54c682c",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-10-06T17:33:21Z",
+      "side": 1,
+      "message": "return false; here\n\nand then\n\nreturn DeferOrRunPendingTask(...);\n\nwithout an else block below",
+      "range": {
+        "startLine": 451,
+        "startChar": 6,
+        "endLine": 451,
+        "endChar": 7
+      },
+      "revId": "2143ec221625fe83d87c672cd26e4fd855122d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
