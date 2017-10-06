@@ -351,7 +351,7 @@ class FakeGetAuthTokenFunction : public IdentityGetAuthTokenFunction {
 #endif
 
   void ShowLoginPopup() override {
-    EXPECT_FALSE(login_ui_shown_);
+    EXPECT_TRUE(login_ui_shown_);
     login_ui_shown_ = true;
     if (login_ui_result_) {
       ::identity::AccountState account_state;
