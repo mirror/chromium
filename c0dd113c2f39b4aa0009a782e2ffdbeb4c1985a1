@@ -45,6 +45,23 @@
       "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451905d5_00bbe65a",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8716,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-10-06T12:57:06Z",
+      "side": 1,
+      "message": "nit, I\u0027d probably call it ShowSurvey and have it be a BooleanSuccess. Up to you though.",
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
