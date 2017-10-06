@@ -70,6 +70,30 @@
       "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369f5903_c16b86b2",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-06T18:55:21Z",
+      "side": 1,
+      "message": "Thanks for looking into this. The presence of a symbol should not imply that the extension is supported. Lack of symbol but presence of extension is a driver bug.\n\nI\u0027d prefer if we had gpu_driver_bug_list.json entries that forced this to be available even when ANDROID_native_fence_sync is missing instead of relying on an involved run-time check. The run-time check might do the right thing on the devices we\u0027re aware of but hard to know that it\u0027s never causing issues.\n\nSo Android devices that are missing this extension but we know for sure that they support it can be added to gpu_driver_bug_list.json. If ANDROID_native_fence_sync is present then of course we always support it. Would it be OK to handle it that way?\n\nFYI, ChromeOS devices that support it will explicitly list the extension both inside the Android container and on ChromeOS side. That was the use-case I was testing my changes with and why it worked without any workarounds.",
+      "parentUuid": "9fc43bcf_74b76011",
+      "range": {
+        "startLine": 1940,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 71
+      },
+      "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
