@@ -27,10 +27,10 @@
 <link rel="import" href="../default_browser_page/default_browser_page.html">
 </if>
 
-<if expr="is_win">
+<!-- <if expr="is_win">
 <link rel="import" href="../chrome_cleanup_page/chrome_cleanup_page.html">
 </if>
-
+ -->
 <!-- TODO(michaelpg): Rename to something better than "basic" now that this page
      includes both the basic and advanced settings. -->
 <dom-module id="settings-basic-page">
@@ -297,7 +297,7 @@
 </if>
           <template is="dom-if" if="[[showPage_(pageVisibility.reset)]]"
               restamp>
-            <settings-section page-title="$i18n{resetPageTitle}"
+            <settings-section page-title="Reset and cleanup"
                 section="reset">
               <settings-reset-page></settings-reset-page>
             </settings-section>

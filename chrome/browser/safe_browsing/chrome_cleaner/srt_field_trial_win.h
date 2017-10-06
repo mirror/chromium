@@ -56,6 +56,9 @@ enum PromptTypeHistogramValue {
 // within Chrome.
 extern const base::Feature kInBrowserCleanerUIFeature;
 
+// When enabled, allows user-initiated cleanups from the Setting page.
+extern const base::Feature kUserInitiatedChromeCleanupFeature;
+
 extern const char kSRTPromptTrial[];
 
 // Returns true if this Chrome is in a field trial group which shows the SRT
@@ -90,6 +93,8 @@ void RecordPromptShownWithTypeHistogram(PromptTypeHistogramValue value);
 // to |value|.
 void RecordPromptNotShownWithReasonHistogram(
     NoPromptReasonHistogramValue value);
+
+bool UserInitiatedChromeCleanupEnabled();
 
 }  // namespace safe_browsing
 
