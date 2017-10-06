@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "299077c0_e20c7285",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T16:46:12Z",
+      "side": 1,
+      "message": "Can we make this per-NetworkContext instead?  We can currently get a NetworkContext in production code.  We can\u0027t currently get a network service.  I want to avoid depending on on content/network/ directly (Since we\u0027ll need to separate out the network service to its own component).\n\nThe NetworkContext can be obtained from the StoragePartition used by a tab.",
+      "range": {
+        "startLine": 1173,
+        "startChar": 49,
+        "endLine": 1173,
+        "endChar": 53
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50153789_7682989f",
         "filename": "content/network/throttling/throttling_controller.h",
         "patchSetId": 3
