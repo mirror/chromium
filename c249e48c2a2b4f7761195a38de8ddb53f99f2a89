@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "7c260a36_9768d815",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-06T18:41:33Z",
+      "side": 1,
+      "message": "I agree it would be nice to drop this. It seems reasonable to delay the the WebUI script execution until after we send the DidCommit IPC, instead of just before.\n\nTBH, I feel like the SendDidCommitProvisionalLoad in render_frame_impl.cc ought to occur before observers are notified, but that\u0027s just me. Any IPC sent up before the URL commit seems like it would potentially be out-of-order. I wonder if there\u0027s a way to get a list of IPCs that are sent from the observers.",
+      "parentUuid": "7fb89527_e6cea1a5",
+      "range": {
+        "startLine": 1693,
+        "startChar": 20,
+        "endLine": 1693,
+        "endChar": 24
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea08fb44_50f08efa",
         "filename": "content/common/view_messages.h",
         "patchSetId": 2
