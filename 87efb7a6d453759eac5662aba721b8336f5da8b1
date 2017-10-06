@@ -186,6 +186,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c760f58_c20be39a",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-06T23:20:15Z",
+      "side": 1,
+      "message": "Do you want to pass it directly only in this branch, or also bind it to NavigationRequest::OnFailureChecksComplete instead of passing it to WillFailRequest() (which sets it on the handle)?",
+      "parentUuid": "95eebc15_58d19246",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
