@@ -25,14 +25,14 @@ using sync_datatype_helper::test;
 namespace {
 
 GUIDToTURLMap CreateGUIDToTURLMap(TemplateURLService* service) {
-  CHECK(service);
+  EXPECT_TRUE(service);
 
   GUIDToTURLMap map;
   TemplateURLService::TemplateURLVector turls = service->GetTemplateURLs();
   for (TemplateURLService::TemplateURLVector::iterator it = turls.begin();
        it != turls.end(); ++it) {
-    CHECK(*it);
-    CHECK(map.find((*it)->sync_guid()) == map.end());
+    EXPECT_TRUE(*it);
+    EXPECT_TRUE(map.find((*it)->sync_guid()) == map.end());
     map[(*it)->sync_guid()] = *it;
   }
 
@@ -40,15 +40,15 @@ GUIDToTURLMap CreateGUIDToTURLMap(TemplateURLService* service) {
 }
 
 std::string GetTURLInfoString(const TemplateURL* turl) {
-  DCHECK(turl);
+  EXPECT_TRUE(turl);
   return "TemplateURL: shortname: " + base::UTF16ToASCII(turl->short_name()) +
       " keyword: " + base::UTF16ToASCII(turl->keyword()) + " url: " +
       turl->url();
 }
 
 bool TURLsMatch(const TemplateURL* turl1, const TemplateURL* turl2) {
-  CHECK(turl1);
-  CHECK(turl2);
+  EXPECT_TRUE(turl1);
+  EXPECT_TRUE(turl2);
   bool result = (turl1->url() == turl2->url()) &&
       (turl1->keyword() == turl2->keyword()) &&
       (turl1->short_name() == turl2->short_name());
@@ -67,8 +67,8 @@ bool ServicesMatch(int profile_a, int profile_b) {
       search_engines_helper::GetServiceForBrowserContext(profile_a);
   TemplateURLService* service_b =
       search_engines_helper::GetServiceForBrowserContext(profile_b);
-  CHECK(service_a);
-  CHECK(service_b);
+  EXPECT_TRUE(service_a);
+  EXPECT_TRUE(service_b);
 
   // Services that have synced should have identical TURLs, including the GUIDs.
   // Make sure we compare those fields in addition to the user-visible fields.
@@ -93,8 +93,8 @@ bool ServicesMatch(int profile_a, int profile_b) {
 
   const TemplateURL* default_a = service_a->GetDefaultSearchProvider();
   const TemplateURL* default_b = service_b->GetDefaultSearchProvider();
-  CHECK(default_a);
-  CHECK(default_b);
+  EXPECT_TRUE(default_a);
+  EXPECT_TRUE(default_b);
   if (!TURLsMatch(default_a, default_b)) {
     DVLOG(1) << "Default search providers do not match: A's default: "
              << default_a->keyword()
@@ -131,8 +131,8 @@ bool ServiceMatchesVerifier(int profile_index) {
   TemplateURLService* verifier = GetVerifierService();
   TemplateURLService* other = GetServiceForBrowserContext(profile_index);
 
-  CHECK(verifier);
-  CHECK(other);
+  EXPECT_TRUE(verifier);
+  EXPECT_TRUE(other);
 
   TemplateURLService::TemplateURLVector verifier_turls =
       verifier->GetTemplateURLs();
@@ -145,7 +145,7 @@ bool ServiceMatchesVerifier(int profile_index) {
 
   for (size_t i = 0; i < verifier_turls.size(); ++i) {
     const TemplateURL* verifier_turl = verifier_turls.at(i);
-    CHECK(verifier_turl);
+    EXPECT_TRUE(verifier_turl);
     const TemplateURL* other_turl = other->GetTemplateURLForKeyword(
         verifier_turl->keyword());
 
@@ -224,7 +224,7 @@ void EditSearchEngine(int profile_index,
                       const base::string16& short_name,
                       const base::string16& new_keyword,
                       const std::string& url) {
-  DCHECK(!url.empty());
+  ASSERT_FALSE(url.empty());
   TemplateURLService* service = GetServiceForBrowserContext(profile_index);
   TemplateURL* turl = service->GetTemplateURLForKeyword(keyword);
   EXPECT_TRUE(turl);
