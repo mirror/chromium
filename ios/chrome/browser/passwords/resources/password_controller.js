@@ -255,8 +255,13 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    */
   __gCrWeb['fillPasswordForm'] = function(formData, username, password,
                                           opt_normalizedOrigin) {
+   if (!__gCrWeb.common.isSameOrigin(origin, normalizedOrigin)) {
+          return false;
+    }
+  var normalizedOrigin = opt_normalizedOrigin ||
+      __gCrWeb.common.removeQueryAndReferenceFromURL(win.location.href);
     return fillPasswordFormWithData_(
-        formData, username, password, window, opt_normalizedOrigin);
+        formData, username, password, window, normalizedOrigin);
   };
 
   /**
@@ -295,22 +300,16 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    * @param {string} username The username to fill.
    * @param {string} password The password to fill.
    * @param {Object} win A window or a frame containing formData.
-   * @param {string=} opt_normalizedOrigin The origin URL to compare to.
+   * @param {string=} normalizedOrigin The origin URL to compare to.
    * @return {boolean} Whether a form field has been filled.
    */
   var fillPasswordFormWithData_ = function(
-      formData, username, password, win, opt_normalizedOrigin) {
+      formData, username, password, win, normalizedOrigin) {
     var doc = win.document;
     var origin = formData['origin'];
-    var normalizedOrigin = opt_normalizedOrigin ||
-        __gCrWeb.common.removeQueryAndReferenceFromURL(win.location.href);
-    if (origin != normalizedOrigin) {
-      return false;
-    }
-
     var filled = false;
 
-    __gCrWeb.findMatchingPasswordForms(formData, doc, opt_normalizedOrigin).
+    __gCrWeb.findMatchingPasswordForms(formData, doc, normalizedOrigin).
         forEach(function(form) {
       var usernameInput =
           __gCrWeb.getElementByNameWithParent(form, formData.fields[0].name);
