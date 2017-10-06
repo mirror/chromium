@@ -1,6 +1,7 @@
 include_rules = [
   "-components/payments/content/android",
   "-components/payments/content/utility",
+  "-components/payments/core/util",
   "+components/autofill",
   "+components/keyed_service/content",
   "+components/prefs",
