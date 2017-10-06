@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "945b7d92_9b9506d6",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-06T22:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c278d08d_8a9afcda",
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e176ec52_99b18d6d",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 9
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4110aba9_db3aa0b6",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-06T22:33:19Z",
+      "side": 1,
+      "message": "It\u0027s getting called from MediaInterfaceProxy::GetCdmInterfaceFactory() as well as inside this file.",
+      "parentUuid": "e176ec52_99b18d6d",
+      "range": {
+        "startLine": 152,
+        "startChar": 5,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1245b87_a1b16439",
         "filename": "content/browser/media/cdm_storage_impl.cc",
         "patchSetId": 9
@@ -56,6 +98,24 @@
       "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d96e93_03779fb4",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-06T22:33:19Z",
+      "side": 1,
+      "message": "I considered it (actually std::string::find_first_not_of). However, the number of possible characters would be 65, so I think it would take a long time to iterate over the list for each character. Plus this matches what is in PepperFileSystemBrowserHost::GeneratePluginId().",
+      "parentUuid": "f1245b87_a1b16439",
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36018a9_cf94564d",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-10-06T22:33:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94745ad8_5026f1c2",
+      "range": {
+        "startLine": 75,
+        "startChar": 71,
+        "endLine": 77,
+        "endChar": 74
+      },
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
