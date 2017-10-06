@@ -49,6 +49,9 @@ class SynchronousCompositorBrowserFilter;
 class SynchronousCompositorHost;
 class TextInputClientMac;
 }  // namespace content
+namespace cronet {
+class CronetScopedAllowBlocking;
+}  // namespace cronet
 namespace dbus {
 class Bus;
 }
@@ -157,6 +160,7 @@ class BASE_EXPORT ScopedAllowBlocking {
   // in unit tests to avoid the friend requirement.
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest, ScopedAllowBlocking);
   friend class ScopedAllowBlockingForTesting;
+  friend class cronet::CronetScopedAllowBlocking;
 
   ScopedAllowBlocking() EMPTY_BODY_IF_DCHECK_IS_OFF;
   ~ScopedAllowBlocking() EMPTY_BODY_IF_DCHECK_IS_OFF;
