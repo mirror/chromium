@@ -551,6 +551,9 @@ class QUIC_EXPORT_PRIVATE QuicConnection
   // Sends a ping frame.
   void SendPing();
 
+  // Sends a probing packet.
+  void SendProbing();
+
   // Sets up a packet with an QuicAckFrame and sends it out.
   void SendAck();
 

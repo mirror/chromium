@@ -1822,6 +1822,13 @@ void QuicConnection::SendPing() {
   }
 }
 
+void QuicConnection::SendProbing() {
+  // Flush all queued frames so that probing will be sent in an independent
+  // packet.
+  packet_generator_.FlushAllQueuedFrames();
+  // TODO(zhongyi): use packet generator to send a Probing.
+}
+
 void QuicConnection::SendAck() {
   ack_alarm_->Cancel();
   ack_queued_ = false;
