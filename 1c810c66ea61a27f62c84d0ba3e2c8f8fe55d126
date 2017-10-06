@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5c0ff2ee_b41b03aa",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T18:42:16Z",
+      "side": 1,
+      "message": "Right-- I was trying to decide which is more useful: finding it in the order of the header file, or having the git blame be easier to read.  We have tool support for the latter, so I guess let\u0027s leave it where you have it.",
+      "parentUuid": "7357f94f_87f4b246",
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82ef4778_0ed22e4b",
         "filename": "content/browser/frame_host/navigation_entry_impl.h",
         "patchSetId": 4
@@ -142,6 +160,30 @@
       "side": 1,
       "message": "I renamed it. However, shouldn\u0027t we call it FindTreeNode? After all, it isn\u0027t just a getter, it traverses the tree to find the proper node.",
       "parentUuid": "82ef4778_0ed22e4b",
+      "range": {
+        "startLine": 215,
+        "startChar": 33,
+        "endLine": 215,
+        "endChar": 47
+      },
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1a5873_2383d26e",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T18:42:16Z",
+      "side": 1,
+      "message": "I suggested \"Get\" to be consistent with GetFrameEntry below, which calls this.  Let\u0027s stick with Get for now to be consistent, and if you\u0027d find it clearer to have them called Find later, we can update them all in another CL.  (There\u0027s a lot of call sites for GetFrameEntry.)",
+      "parentUuid": "2e275ba0_e5a65e73",
       "range": {
         "startLine": 215,
         "startChar": 33,
