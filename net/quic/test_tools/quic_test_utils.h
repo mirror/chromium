@@ -736,7 +736,7 @@ class MockSendAlgorithm : public SendAlgorithmInterface {
                     QuicByteCount bytes_in_flight,
                     QuicTime event_time,
                     const AckedPacketVector& acked_packets,
-                    const CongestionVector& lost_packets));
+                    const LostPacketVector& lost_packets));
   MOCK_METHOD5(OnPacketSent,
                void(QuicTime,
                     QuicByteCount,
@@ -776,7 +776,7 @@ class MockLossAlgorithm : public LossDetectionInterface {
                     QuicTime time,
                     const RttStats& rtt_stats,
                     QuicPacketNumber largest_recently_acked,
-                    SendAlgorithmInterface::CongestionVector* packets_lost));
+                    LostPacketVector* packets_lost));
   MOCK_CONST_METHOD0(GetLossTimeout, QuicTime());
   MOCK_METHOD4(SpuriousRetransmitDetected,
                void(const QuicUnackedPacketMap&,

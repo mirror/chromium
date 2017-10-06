@@ -43,12 +43,11 @@ class QUIC_EXPORT_PRIVATE PacingSender {
     max_pacing_rate_ = max_pacing_rate;
   }
 
-  void OnCongestionEvent(
-      bool rtt_updated,
-      QuicByteCount bytes_in_flight,
-      QuicTime event_time,
-      const AckedPacketVector& acked_packets,
-      const SendAlgorithmInterface::CongestionVector& lost_packets);
+  void OnCongestionEvent(bool rtt_updated,
+                         QuicByteCount bytes_in_flight,
+                         QuicTime event_time,
+                         const AckedPacketVector& acked_packets,
+                         const LostPacketVector& lost_packets);
 
   void OnPacketSent(QuicTime sent_time,
                     QuicByteCount bytes_in_flight,

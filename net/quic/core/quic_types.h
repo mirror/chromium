@@ -284,6 +284,19 @@ struct AckedPacket {
 // A vector of acked packets.
 typedef std::vector<AckedPacket> AckedPacketVector;
 
+// Information about a newly lost packet.
+struct LostPacket {
+  LostPacket(QuicPacketNumber packet_number, QuicPacketLength bytes_lost)
+      : packet_number(packet_number), bytes_lost(bytes_lost) {}
+
+  QuicPacketNumber packet_number;
+  // Number of bytes sent in the packet that was lost.
+  QuicPacketLength bytes_lost;
+};
+
+// A vector of lost packets.
+typedef std::vector<LostPacket> LostPacketVector;
+
 }  // namespace net
 
 #endif  // NET_QUIC_CORE_QUIC_TYPES_H_

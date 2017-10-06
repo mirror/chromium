@@ -30,10 +30,6 @@ const QuicPacketCount kDefaultMaxCongestionWindowPackets = 2000;
 
 class QUIC_EXPORT_PRIVATE SendAlgorithmInterface {
  public:
-  // A sorted vector of packets.
-  typedef std::vector<std::pair<QuicPacketNumber, QuicPacketLength>>
-      CongestionVector;
-
   static SendAlgorithmInterface* Create(
       const QuicClock* clock,
       const RttStats* rtt_stats,
@@ -61,7 +57,7 @@ class QUIC_EXPORT_PRIVATE SendAlgorithmInterface {
                                  QuicByteCount prior_in_flight,
                                  QuicTime event_time,
                                  const AckedPacketVector& acked_packets,
-                                 const CongestionVector& lost_packets) = 0;
+                                 const LostPacketVector& lost_packets) = 0;
 
   // Inform that we sent |bytes| to the wire, and if the packet is
   // retransmittable.  |bytes_in_flight| is the number of bytes in flight before

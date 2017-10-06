@@ -92,7 +92,7 @@ class TcpCubicSenderPacketsTest : public QuicTest {
     sender_->rtt_stats_.UpdateRtt(QuicTime::Delta::FromMilliseconds(60),
                                   QuicTime::Delta::Zero(), clock_.Now());
     AckedPacketVector acked_packets;
-    SendAlgorithmInterface::CongestionVector lost_packets;
+    LostPacketVector lost_packets;
     for (int i = 0; i < n; ++i) {
       ++acked_packet_number_;
       acked_packets.push_back(
@@ -108,11 +108,10 @@ class TcpCubicSenderPacketsTest : public QuicTest {
 
   void LoseNPackets(int n, QuicPacketLength packet_length) {
     AckedPacketVector acked_packets;
-    SendAlgorithmInterface::CongestionVector lost_packets;
+    LostPacketVector lost_packets;
     for (int i = 0; i < n; ++i) {
       ++acked_packet_number_;
-      lost_packets.push_back(
-          std::make_pair(acked_packet_number_, packet_length));
+      lost_packets.push_back(LostPacket(acked_packet_number_, packet_length));
     }
     sender_->OnCongestionEvent(false, bytes_in_flight_, clock_.Now(),
                                acked_packets, lost_packets);
@@ -122,8 +121,8 @@ class TcpCubicSenderPacketsTest : public QuicTest {
   // Does not increment acked_packet_number_.
   void LosePacket(QuicPacketNumber packet_number) {
     AckedPacketVector acked_packets;
-    SendAlgorithmInterface::CongestionVector lost_packets;
-    lost_packets.push_back(std::make_pair(packet_number, kDefaultTCPMSS));
+    LostPacketVector lost_packets;
+    lost_packets.push_back(LostPacket(packet_number, kDefaultTCPMSS));
     sender_->OnCongestionEvent(false, bytes_in_flight_, clock_.Now(),
                                acked_packets, lost_packets);
     bytes_in_flight_ -= kDefaultTCPMSS;
@@ -876,7 +875,7 @@ TEST_F(TcpCubicSenderPacketsTest, DefaultMaxCwnd) {
       QuicRandom::GetInstance(), &stats, kInitialCongestionWindow));
 
   AckedPacketVector acked_packets;
-  SendAlgorithmInterface::CongestionVector missing_packets;
+  LostPacketVector missing_packets;
   for (uint64_t i = 1; i < kDefaultMaxCongestionWindowPackets; ++i) {
     acked_packets.clear();
     acked_packets.push_back(AckedPacket(i, 1350, QuicTime::Zero()));

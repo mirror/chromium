@@ -52,7 +52,7 @@ class QUIC_EXPORT_PRIVATE TcpCubicSenderBase : public SendAlgorithmInterface {
                          QuicByteCount prior_in_flight,
                          QuicTime event_time,
                          const AckedPacketVector& acked_packets,
-                         const CongestionVector& lost_packets) override;
+                         const LostPacketVector& lost_packets) override;
   void OnPacketSent(QuicTime sent_time,
                     QuicByteCount bytes_in_flight,
                     QuicPacketNumber packet_number,

@@ -46,8 +46,8 @@ class PacingSenderTest : public QuicTest {
     EXPECT_CALL(*mock_sender_, PacingRate(_)).WillRepeatedly(Return(bandwidth));
     if (burst_size == 0) {
       EXPECT_CALL(*mock_sender_, OnCongestionEvent(_, _, _, _, _));
-      SendAlgorithmInterface::CongestionVector lost_packets;
-      lost_packets.push_back(std::make_pair(1, kMaxPacketSize));
+      LostPacketVector lost_packets;
+      lost_packets.push_back(LostPacket(1, kMaxPacketSize));
       AckedPacketVector empty;
       pacing_sender_->OnCongestionEvent(true, 1234, clock_.Now(), empty,
                                         lost_packets);
@@ -105,7 +105,7 @@ class PacingSenderTest : public QuicTest {
     EXPECT_CALL(*mock_sender_,
                 OnCongestionEvent(true, kBytesInFlight, _, _, _));
     AckedPacketVector empty_acked;
-    SendAlgorithmInterface::CongestionVector empty_lost;
+    LostPacketVector empty_lost;
     pacing_sender_->OnCongestionEvent(true, kBytesInFlight, clock_.Now(),
                                       empty_acked, empty_lost);
   }
@@ -318,11 +318,11 @@ TEST_F(PacingSenderTest, NoBurstEnteringRecovery) {
   CheckPacketIsSentImmediately();
 
   // Losing a packet will set clear burst tokens.
-  SendAlgorithmInterface::CongestionVector lost_packets;
-  lost_packets.push_back(std::make_pair(1, kMaxPacketSize));
+  LostPacketVector lost_packets;
+  lost_packets.push_back(LostPacket(1, kMaxPacketSize));
   AckedPacketVector empty_acked;
-  EXPECT_CALL(*mock_sender_, OnCongestionEvent(true, kMaxPacketSize, _,
-                                               IsEmpty(), lost_packets));
+  EXPECT_CALL(*mock_sender_,
+              OnCongestionEvent(true, kMaxPacketSize, _, IsEmpty(), _));
   pacing_sender_->OnCongestionEvent(true, kMaxPacketSize, clock_.Now(),
                                     empty_acked, lost_packets);
   // One packet is sent immediately, because of 1ms pacing granularity.

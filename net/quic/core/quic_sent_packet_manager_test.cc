@@ -37,11 +37,6 @@ const QuicStreamId kStreamId = 7;
 // Minimum number of consecutive RTOs before path is considered to be degrading.
 const size_t kMinTimeoutsBeforePathDegrading = 2;
 
-// Matcher to check the key of the key-value pair it receives as first argument
-// equals its second argument.
-MATCHER(KeyEq, "") {
-  return std::tr1::get<0>(arg).first == std::tr1::get<1>(arg);
-}
 // Matcher to check that the packet number matches the second argument.
 MATCHER(PacketNumberEq, "") {
   return std::tr1::get<0>(arg).packet_number == std::tr1::get<1>(arg);
@@ -138,7 +133,7 @@ class QuicSentPacketManagerTest : public QuicTest {
         *send_algorithm_,
         OnCongestionEvent(rtt_updated, _, _,
                           Pointwise(PacketNumberEq(), {largest_observed}),
-                          ElementsAre(Pair(lost_packet, _))));
+                          Pointwise(PacketNumberEq(), {lost_packet})));
     EXPECT_CALL(*network_change_visitor_, OnCongestionChange());
   }
 
@@ -159,7 +154,7 @@ class QuicSentPacketManagerTest : public QuicTest {
     EXPECT_CALL(*send_algorithm_,
                 OnCongestionEvent(rtt_updated, _, _,
                                   Pointwise(PacketNumberEq(), ack_vector),
-                                  Pointwise(KeyEq(), lost_vector)));
+                                  Pointwise(PacketNumberEq(), lost_vector)));
     EXPECT_CALL(*network_change_visitor_, OnCongestionChange())
         .Times(AnyNumber());
   }

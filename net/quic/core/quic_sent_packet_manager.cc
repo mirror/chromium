@@ -671,21 +671,22 @@ void QuicSentPacketManager::InvokeLossDetection(QuicTime time) {
   }
   loss_algorithm_->DetectLosses(unacked_packets_, time, rtt_stats_,
                                 largest_newly_acked_, &packets_lost_);
-  for (const auto& pair : packets_lost_) {
+  for (const LostPacket& packet : packets_lost_) {
     ++stats_->packets_lost;
     if (debug_delegate_ != nullptr) {
-      debug_delegate_->OnPacketLoss(pair.first, LOSS_RETRANSMISSION, time);
+      debug_delegate_->OnPacketLoss(packet.packet_number, LOSS_RETRANSMISSION,
+                                    time);
     }
 
     // TODO(ianswett): This could be optimized.
-    if (unacked_packets_.HasRetransmittableFrames(pair.first)) {
-      MarkForRetransmission(pair.first, LOSS_RETRANSMISSION);
+    if (unacked_packets_.HasRetransmittableFrames(packet.packet_number)) {
+      MarkForRetransmission(packet.packet_number, LOSS_RETRANSMISSION);
     } else {
       // Since we will not retransmit this, we need to remove it from
       // unacked_packets_.   This is either the current transmission of
       // a packet whose previous transmission has been acked or a packet that
       // has been TLP retransmitted.
-      unacked_packets_.RemoveFromInFlight(pair.first);
+      unacked_packets_.RemoveFromInFlight(packet.packet_number);
     }
   }
 }

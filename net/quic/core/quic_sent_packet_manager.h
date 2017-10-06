@@ -387,7 +387,7 @@ class QUIC_EXPORT_PRIVATE QuicSentPacketManager {
 
   // Vectors packets acked and lost as a result of the last congestion event.
   AckedPacketVector packets_acked_;
-  SendAlgorithmInterface::CongestionVector packets_lost_;
+  LostPacketVector packets_lost_;
   // Largest newly acknowledged packet.
   QuicPacketNumber largest_newly_acked_;
   // Largest packet in bytes ever acknowledged.
