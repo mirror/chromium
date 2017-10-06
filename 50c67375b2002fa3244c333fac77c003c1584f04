@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46712265_3189538d",
+        "filename": "base/process/process_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-06T19:12:24Z",
+      "side": 1,
+      "message": "Would it be cleaner/simpler to leave CalculateIdleWakeupsPerSecond as is (i.e. same for all three platforms) and create an ifdef\u0027ed OS_MACOS CalculatePackageIdleWakeupsPerSecond()? Basically unroll the package_idle bool into two separate functions?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 50
+      },
+      "revId": "50c67375b2002fa3244c333fac77c003c1584f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b87ff5f_425039d8",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1137614
+      },
+      "writtenOn": "2017-10-06T19:12:24Z",
+      "side": 1,
+      "message": "pro-cessor -\u003e processor",
+      "range": {
+        "startLine": 231,
+        "startChar": 22,
+        "endLine": 231,
+        "endChar": 32
+      },
+      "revId": "50c67375b2002fa3244c333fac77c003c1584f04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
