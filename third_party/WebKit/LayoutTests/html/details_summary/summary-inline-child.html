@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+
+<details>
+  <summary><a href="#inside-summary"><span id="sp">Click Me!</span></a></summary>
+</details>
+
+<script>
+var testClick = async_test('Test that click on anchor inside SUMMARY with text inside inline element works');
+testClick.step(() => {
+assert_exists(window, "chrome");
+assert_exists(chrome, "gpuBenchmarking");
+var span = document.getElementById("sp");
+var pointerActions =
+		[{ source: "mouse",
+	      actions: [
+	      { name: "pointerDown", x: span.offsetLeft + span.offsetWidth / 2, y: span.offsetTop + span.offsetHeight / 2 },
+	      { name: "pointerUp"}]}];
+	chrome.gpuBenchmarking.pointerActionSequence(pointerActions, testClick.step_func_done(() => {
+		assert_equals(document.location.hash , "#inside-summary");
+	}));
+});
+</script>

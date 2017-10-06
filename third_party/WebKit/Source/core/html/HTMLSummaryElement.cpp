@@ -103,7 +103,6 @@ void HTMLSummaryElement::DefaultEventHandler(Event* event) {
         !IsClickableControl(event->target()->ToNode())) {
       if (HTMLDetailsElement* details = DetailsElement())
         details->ToggleOpen();
-      event->SetDefaultHandled();
       return;
     }
 
