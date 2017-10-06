@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27f9d259_7c42c83f",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-06T20:11:06Z",
+      "side": 1,
+      "message": "NetworkService is initialized on the IO thread. NCN constructors can be called on any thread. The only place that I found mentions UI thread is NetworkChangeNotifierFactoryAndroid and NetworkChangeNotifierDelegateAndroid.\nThat seems an outdated comment after your CL (https://codereview.chromium.org/2812963002) on NCNAutoDetect and ProxyChangeListener. We no longer require these two classes to live on UI thread.\n\nDoes this look correct to you?",
+      "parentUuid": "9db77cfd_78fb4955",
+      "range": {
+        "startLine": 19,
+        "startChar": 51,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be7b611e_8e4a2c6e",
         "filename": "content/network/network_change_manager_impl.cc",
         "patchSetId": 16
@@ -65,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "a61611f0_1ba997f3",
+        "filename": "content/network/network_service_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-06T20:11:06Z",
+      "side": 1,
+      "message": "This is because we have getters for these members. \nnet_log() and network_change_manager_for_testing(). The latter needs to return a modifiable type and not a const ref.",
+      "parentUuid": "a0a13e37_aeeced5b",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 68
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18114084_e7436d4f",
         "filename": "content/public/common/network_connection_tracker.cc",
         "patchSetId": 16
@@ -76,6 +124,30 @@
       "writtenOn": "2017-10-05T02:14:41Z",
       "side": 1,
       "message": "how do we get the actual initial connection type?",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 51
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98bc325e_97ece10a",
+        "filename": "content/public/common/network_connection_tracker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-06T20:11:06Z",
+      "side": 1,
+      "message": "This constructor registers for notification. The connection type will be populated when we receive the first broadcast?",
+      "parentUuid": "18114084_e7436d4f",
       "range": {
         "startLine": 18,
         "startChar": 10,
