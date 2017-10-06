@@ -147,7 +147,9 @@ bool TextTrackLoader::Load(const KURL& url,
   }
 
   ResourceFetcher* fetcher = GetDocument().Fetcher();
-  SetResource(RawResource::FetchTextTrack(cue_fetch_params, fetcher));
+  SetResource(
+      RawResource::FetchTextTrack(cue_fetch_params, fetcher),
+      TaskRunnerHelper::Get(TaskType::kNetworking, &GetDocument()).get());
   return GetResource();
 }
 

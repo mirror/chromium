@@ -143,7 +143,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     return ResourcePriority();
   }
 
-  void AddClient(ResourceClient*);
+  void AddClient(ResourceClient*, WebTaskRunner*);
   void RemoveClient(ResourceClient*);
 
   void AddFinishObserver(ResourceFinishObserver*, WebTaskRunner*);

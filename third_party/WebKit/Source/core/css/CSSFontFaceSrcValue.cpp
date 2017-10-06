@@ -29,6 +29,7 @@
 #include "core/css/StyleSheetContents.h"
 #include "core/dom/Document.h"
 #include "core/dom/Node.h"
+#include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/FontResource.h"
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/fonts/FontCache.h"
@@ -101,7 +102,8 @@ FontResource* CSSFontFaceSrcValue::Fetch(Document* document) const {
     FontResource* resource = FontResource::Fetch(params, document->Fetcher());
     if (!resource)
       return nullptr;
-    fetched_ = FontResourceHelper::Create(resource);
+    fetched_ = FontResourceHelper::Create(
+        resource, TaskRunnerHelper::Get(TaskType::kNetworking, document).get());
   } else {
     // FIXME: CSSFontFaceSrcValue::Fetch is invoked when @font-face rule
     // is processed by StyleResolver / StyleEngine.

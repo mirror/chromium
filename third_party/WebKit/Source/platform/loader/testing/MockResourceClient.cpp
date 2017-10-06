@@ -10,7 +10,7 @@ MockResourceClient::MockResourceClient(Resource* resource)
     : resource_(resource),
       notify_finished_called_(false),
       encoded_size_on_notify_finished_(0) {
-  resource_->AddClient(this);
+  resource_->AddClient(this, nullptr);
 }
 
 MockResourceClient::~MockResourceClient() {}

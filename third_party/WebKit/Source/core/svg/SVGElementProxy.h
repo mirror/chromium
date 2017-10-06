@@ -106,6 +106,7 @@ class SVGElementProxy : public GarbageCollectedFinalized<SVGElementProxy> {
   HeapHashMap<Member<SVGResourceClient>, Member<IdObserver>> clients_;
   HeapHashMap<Member<TreeScope>, Member<IdObserver>> observers_;
   Member<DocumentResource> document_;
+  Member<Document> context_document_;
   AtomicString id_;
   // URL for resolving references to external resource documents. Contains an
   // absolute URL to the resource to load. Cleared when a load has been

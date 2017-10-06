@@ -37,7 +37,9 @@ ClassicPendingScript::ClassicPendingScript(
       integrity_failure_(false),
       is_currently_streaming_(false) {
   CheckState();
-  SetResource(resource);
+  SetResource(resource, TaskRunnerHelper::Get(TaskType::kNetworking,
+                                              &element->GetDocument())
+                            .get());
   MemoryCoordinator::Instance().RegisterClient(this);
 }
 
@@ -60,7 +62,7 @@ void ClassicPendingScript::Prefinalize() {
 
 void ClassicPendingScript::DisposeInternal() {
   MemoryCoordinator::Instance().UnregisterClient(this);
-  SetResource(nullptr);
+  ClearResource();
   integrity_failure_ = false;
   CancelStreaming();
 }
