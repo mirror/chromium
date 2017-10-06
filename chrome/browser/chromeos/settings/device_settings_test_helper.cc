@@ -178,9 +178,7 @@ DeviceSettingsTestBase::~DeviceSettingsTestBase() {
 void DeviceSettingsTestBase::SetUp() {
   // Initialize DBusThreadManager with a stub implementation.
   dbus_setter_ = chromeos::DBusThreadManager::GetSetterForTesting();
-
   base::RunLoop().RunUntilIdle();
-
   device_policy_.payload().mutable_metrics_enabled()->set_metrics_enabled(
       false);
   owner_key_util_->SetPublicKeyFromPrivateKey(*device_policy_.GetSigningKey());
