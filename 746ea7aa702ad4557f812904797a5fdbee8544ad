@@ -1,0 +1,273 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f52b198b_94c65467",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "DCHECK(current_sending_url_.IsEmpty());",
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52c9867_43525213",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "Can you explain why we need to check |has_main_script_streamed_| here? I guess it\u0027s necessary because importScripts() may import the same URL with the main script. Is this right?\n\nbool IsSendingMainScript() could be useful?",
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0921b57c_43a909d4",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0252b211_25be2b4f",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "Can base::STLClearObject() be useful?",
+      "range": {
+        "startLine": 412,
+        "startChar": 29,
+        "endLine": 412,
+        "endChar": 30
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4686f3e0_71f9535d",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "How about LookupResourceId() instead of GetResources()?",
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4eeae8_c0137a71",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "Can you add a comment like this?\n\n// The sender is now sending other scripts. Push the requested script into the waiting queue.",
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d32e948_fa9bcf88",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "|finished_reason_|?",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af9b4f3_9d5fac42",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "Just \"Stops\" would be OK.",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 18
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c843a5_c6f0c780",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "the disk cache",
+      "range": {
+        "startLine": 77,
+        "startChar": 67,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb5dae71_15c8e11b",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "|owner_| ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 16,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81392bf4_574e6bb6",
+        "filename": "content/renderer/service_worker/thread_safe_script_container.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "\"the script\" vs. \"the script data\". Can you make them consistent?",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08252352_db6f09d9",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "Sets |out_script_data| to the script?",
+      "range": {
+        "startLine": 59,
+        "startChar": 71,
+        "endLine": 60,
+        "endChar": 59
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c622a70b_2514af6b",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T04:04:27Z",
+      "side": 1,
+      "message": "This indent is broken.",
+      "range": {
+        "startLine": 63,
+        "startChar": 29,
+        "endLine": 63,
+        "endChar": 30
+      },
+      "revId": "746ea7aa702ad4557f812904797a5fdbee8544ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
