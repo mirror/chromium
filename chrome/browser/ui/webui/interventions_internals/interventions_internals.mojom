@@ -4,6 +4,9 @@
 
 module mojom;
 
+import "mojo/common/time.mojom";
+import "url/mojo/url.mojom";
+
 struct PreviewsStatus {
   // The human readable description of the status that will be displayed on
   // chrome://interventions-internals.
@@ -14,4 +17,15 @@ struct PreviewsStatus {
 interface InterventionsInternalsPageHandler {
   // Returns a map of previews modes statuses.
   GetPreviewsEnabled() => (map<string, PreviewsStatus> statuses);
+
+  // Inject the client side page object.
+  SetClientPage(InterventionsInternalsPage page);
+};
+
+interface InterventionsInternalsPage {
+  // Pushes a new log message to the page. This is called by
+  // InterventionsInternalsPageHandler when it receives a new MessageLog, and
+  // publishes it on the javscript side.
+  LogNewMessage(string type, string description, url.mojom.Url url,
+  		mojo.common.mojom.Time time);
 };

@@ -23,10 +23,29 @@ const char kOfflineDesciption[] = "Offline Previews";
 }  // namespace
 
 InterventionsInternalsPageHandler::InterventionsInternalsPageHandler(
-    mojom::InterventionsInternalsPageHandlerRequest request)
-    : binding_(this, std::move(request)) {}
+    mojom::InterventionsInternalsPageHandlerRequest request,
+    previews::PreviewsLogger* logger)
+    : binding_(this, std::move(request)), logger_(logger) {
+  DCHECK(logger_);
+}
 
-InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {}
+InterventionsInternalsPageHandler::~InterventionsInternalsPageHandler() {
+  DCHECK(logger_);
+  logger_->RemoveObserver(this);
+}
+
+void InterventionsInternalsPageHandler::SetClientPage(
+    mojom::InterventionsInternalsPagePtr page) {
+  page_ = std::move(page);
+  DCHECK(page_);
+  logger_->AddAndNotifyObserver(this);
+}
+
+void InterventionsInternalsPageHandler::OnNewMessageLogAdded(
+    const previews::PreviewsLogger::MessageLog& message) {
+  page_->LogNewMessage(message.event_type, message.event_description,
+                       message.url, message.time);
+}
 
 void InterventionsInternalsPageHandler::GetPreviewsEnabled(
     GetPreviewsEnabledCallback callback) {
