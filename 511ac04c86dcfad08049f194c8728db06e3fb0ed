@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b40fd02_b0c73cf3",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:56:22Z",
+      "side": 1,
+      "message": "nit: *value",
+      "range": {
+        "startLine": 358,
+        "startChar": 7,
+        "endLine": 358,
+        "endChar": 12
+      },
+      "revId": "511ac04c86dcfad08049f194c8728db06e3fb0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ab618f_e6b90858",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:56:22Z",
+      "side": 1,
+      "message": "Could you please add some comment, with adding |mask| it\u0027s becoming not clear how this function works",
+      "range": {
+        "startLine": 310,
+        "startChar": 5,
+        "endLine": 310,
+        "endChar": 27
+      },
+      "revId": "511ac04c86dcfad08049f194c8728db06e3fb0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54114295_1c3464b4",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:56:22Z",
+      "side": 1,
+      "message": "nit: not clear what passwords is in the name, isn\u0027t it better to name something like \nform_has_autofilled_password?",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 37
+      },
+      "revId": "511ac04c86dcfad08049f194c8728db06e3fb0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fff1ac_24df68fa",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1134,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-10-06T13:56:22Z",
+      "side": 1,
+      "message": "Please remove",
+      "range": {
+        "startLine": 1134,
+        "startChar": 17,
+        "endLine": 1134,
+        "endChar": 26
+      },
+      "revId": "511ac04c86dcfad08049f194c8728db06e3fb0ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
