@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "056bee82_b3019e55",
+        "filename": "chrome/browser/component_updater/recovery_component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "Now that the callback re-posts, should we just run it directly here, instead of posting a task for it? If not, can we specify the traits it should be called with as an object or initializer defined near the interface?",
+      "range": {
+        "startLine": 406,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 26
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed614330_1e61f1ac",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "Previous code would delete local_install_path in this case (which might be important if the Move has to be accomplished via the copy \u0026 delete strategy, rather than a rename).\n\nSame for the early return if SetPosixFilePermissions fails.\n\nMove the ScopedTempDir setup up to ~:116?",
+      "range": {
+        "startLine": 119,
+        "startChar": 50,
+        "endLine": 119,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5962d276_ee55d3fa",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "braces on single-line if is inconsistent with our style in this file. Also below (:143)",
+      "range": {
+        "startLine": 141,
+        "startChar": 3,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d0763e_3826e5bb",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "The recovery component installer uses PostTaskWithTraits to post the callback - should this be consistent across installers? (Same with the PostTask on :182 for the successful case).",
+      "range": {
+        "startLine": 165,
+        "startChar": 73,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257a5533_72bfaca8",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "In my opinion, having a single line where we call the callback is worth the extra nesting caused by eliminating the early return - up to you.",
+      "range": {
+        "startLine": 166,
+        "startChar": 11,
+        "endLine": 166,
+        "endChar": 0
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "360ea1ec_7030b789",
+        "filename": "components/component_updater/component_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "extra space in \"running  on\"",
+      "range": {
+        "startLine": 175,
+        "startChar": 42,
+        "endLine": 175,
+        "endChar": 43
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac7f119_84306858",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "Can this be a ref or do we need the pass-by-value?",
+      "range": {
+        "startLine": 70,
+        "startChar": 53,
+        "endLine": 70,
+        "endChar": 54
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e5de94_c8fd1d43",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "Previous code would delete unpack_path in this case.",
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c3e592_6fa3d5ec",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-10-06T14:35:33Z",
+      "side": 1,
+      "message": "Previous code would delete unpack_path in this case.",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 8
+      },
+      "revId": "0e145f3a072c617f7c17d0bb90bf44efd84395b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
