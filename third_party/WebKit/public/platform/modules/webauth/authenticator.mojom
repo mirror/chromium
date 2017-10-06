@@ -60,7 +60,7 @@ struct PublicKeyCredentialEntity {
   // A unique identifier for the entity. An ASCII serialization of an origin
   // for a relying party, and an arbitrary string specified by the relying party
   // for user accounts.
-  string id;
+  string? id;
 
   // Friendly name associated with the entity intended for display.
   // e.g. "Acme Corporation" for a relying party and "john.p.smith@example.com"
