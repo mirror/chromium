@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e663e284_0327336e",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-06T05:54:30Z",
+      "side": 1,
+      "message": "Yeah I know it\u0027s slightly ambiguous, but I don\u0027t have a better word for it (and I have been thinking about this problem for years). I\u0027ll leave as-is for the time being.",
+      "parentUuid": "6d151382_756dd531",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 30
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "209f1303_2c05378c",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 25
@@ -45,6 +69,30 @@
       "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d96ea47_9e96f0ef",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3701,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-06T05:54:30Z",
+      "side": 1,
+      "message": "Not sure. It seems to work fine without it (and there are very few instances of u8\"\" in the code base). msw@ has replaced this whole file with \\u and didn\u0027t add u8\"\" anywhere else.",
+      "parentUuid": "209f1303_2c05378c",
+      "range": {
+        "startLine": 3700,
+        "startChar": 4,
+        "endLine": 3701,
+        "endChar": 43
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "38445fe1_b508abfa",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-06T05:54:30Z",
+      "side": 1,
+      "message": "Added U+202D LEFT-TO-RIGHT OVERRIDE ... U+202C POP DIRECTIONAL FORMATTING, so it always renders in logical order.",
+      "parentUuid": "be087ae3_d1df32f8",
+      "range": {
+        "startLine": 3711,
+        "startChar": 23,
+        "endLine": 3711,
+        "endChar": 48
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4017bd16_f5584666",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 25
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "faabc3ec_d8f06bde",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3740,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-06T05:54:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4017bd16_f5584666",
+      "range": {
+        "startLine": 3740,
+        "startChar": 22,
+        "endLine": 3740,
+        "endChar": 48
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfb98318_58306167",
         "filename": "ui/gfx/render_text_unittest.cc",
         "patchSetId": 25
@@ -114,6 +210,30 @@
       "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09280bfb_8975017f",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3762,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-10-06T05:54:30Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "dfb98318_58306167",
+      "range": {
+        "startLine": 3759,
+        "startChar": 6,
+        "endLine": 3762,
+        "endChar": 28
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
