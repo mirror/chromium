@@ -9,11 +9,13 @@ import android.content.ContextWrapper;
 import android.net.Uri;
 import android.support.test.InstrumentationRegistry;
 
+import org.junit.Assert;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import org.chromium.base.CommandLine;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.test.partnercustomizations.TestPartnerBrowserCustomizationsDelayedProvider;
 import org.chromium.chrome.test.partnercustomizations.TestPartnerBrowserCustomizationsProvider;
 
@@ -59,7 +61,10 @@ public class BasePartnerBrowserCustomizationUnitTestRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                CommandLine.init(null);
+                CommandLine.init(
+                        new String[] {"_", "--" + ChromeSwitches.ALLOW_PARTNER_CUSTOMIZATION});
+                Assert.assertTrue(CommandLine.getInstance().hasSwitch(
+                        ChromeSwitches.ALLOW_PARTNER_CUSTOMIZATION));
                 base.evaluate();
             }
         };
