@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3656d57e_806d6a6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-06T21:29:36Z",
+      "side": 1,
+      "message": "On the server cert side, net.ErrorCodesForMainFrame3 and net.ErrorCodesForSubresources2 for Windows M61 show SSL_SERVER_CERT_BAD_FORMAT as a tiny percentage (there is a bump over M60, but still tiny in total). Nothing like what we saw with the teletexstring or invalid serial issues. \n\nI couldn\u0027t see a way to easily generate certs that were broken this way using openssl.\n\n(Also M61 has been stable for a month now.)\n\nSo on the one hand, this would be a much simpler CL if it was just done for all certs. On the other hand it\u0027d be nice to not laxen the parsing more, lacking evidence that it is necessary.",
+      "parentUuid": "00ce8f05_b7fa068a",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e230c11c_1ccb3b8e",
         "filename": "net/cert/internal/parse_name.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fa2f01f1_12f46e14",
+        "filename": "net/cert/internal/parse_name.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-06T21:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e230c11c_1ccb3b8e",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9baeb71_a11d277b",
         "filename": "net/cert/x509_cert_types.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "759cb79bae49232801dccf2776711845d77ffe03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf9ab81_08237562",
+        "filename": "net/cert/x509_cert_types.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-10-06T21:29:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9baeb71_a11d277b",
+      "revId": "759cb79bae49232801dccf2776711845d77ffe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
