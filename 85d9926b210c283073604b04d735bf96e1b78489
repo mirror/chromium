@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b02c8b8c_872222e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T20:33:35Z",
+      "side": 1,
+      "message": "nit/alternative: I\u0027m OK with this but if you feel like returning |null| is more appropriate the implementation below could also be adapted to do so (easier than changing the native implementation).",
+      "range": {
+        "startLine": 633,
+        "startChar": 80,
+        "endLine": 633,
+        "endChar": 92
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa6bae3_0aae7463",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/OfflineNotificationBackgroundTask.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T20:33:35Z",
+      "side": 1,
+      "message": "Is this an UMA reporting bugfix? Could you mention that in the CL description?",
+      "range": {
+        "startLine": 155,
+        "startChar": 8,
+        "endLine": 156,
+        "endChar": 70
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62103cb_811afa7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-06T20:33:35Z",
+      "side": 1,
+      "message": "Now that this method is not private anymore, could you add a doc comment?",
+      "range": {
+        "startLine": 160,
+        "startChar": 16,
+        "endLine": 160,
+        "endChar": 40
+      },
+      "revId": "85d9926b210c283073604b04d735bf96e1b78489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
