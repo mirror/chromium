@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f64afe9_82b6be27",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertParagraphSeparatorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-06T02:13:35Z",
+      "side": 1,
+      "message": "Note(not related to this patch): This call of |EndingVisibleSelection()|\nis unsafe due by |DeleteSelection()| call, which can make ending selection\ninvalid.\n\nI have an idea to avoid this[1].\n\n[1] http://crbug.com/772248 Revise CompositeEditCommand::DeleteSelection(EditingState*, ...)",
+      "revId": "760ba9a71e250d7dd9bed711b6fe784fcaf12c65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
