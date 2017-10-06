@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e03ee082_783ce791",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-06T08:44:13Z",
+      "side": 1,
+      "message": "This code is really complicated. An alternative would look something like:\n\n```\nif (mime_type.StartsWithIgnoringASCIICase(\"application/\")) {\n  type_id \u003d kApplication;\n  if (mime_type \u003d\u003d \"application/octet-stream\")\n    subtype_id \u003d kApplicationOctetStream;\n  if (mime_type \u003d\u003d \"application/xml\")\n    subtype_id \u003d kApplicationXml;\n} else if (mime_type.StartsWithIgnoringASCIICase(\"text/\")) {\n  type_id \u003d kText;\n  if (mime_type \u003d\u003d \"text/html\")\n    subtype_id \u003d kTextHtml;\n  ...\n}\n```\n\nThat is less efficient, but I suspect that the readability improvements justify the additional string scans.",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2643e0_90072b4b",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-06T08:44:13Z",
+      "side": 1,
+      "message": "Nit: We don\u0027t really need this variable, as we just use it for the `if` directly following.",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5255b333_6ae2490d",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-06T08:44:13Z",
+      "side": 1,
+      "message": "Nit: Please add a link to https://fetch.spec.whatwg.org/#should-response-to-request-be-blocked-due-to-mime-type?.",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06c5af0_92666640",
+        "filename": "third_party/WebKit/Source/core/loader/AllowedByNosniff.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-10-06T08:44:13Z",
+      "side": 1,
+      "message": "Nit: Please add something like \"// TODO(mkwst): Remove these measurements once we verify that other vendors are following along with these restrictions..\"",
+      "revId": "ab76dea8cadccd8f30e8cf7aef5e37778d8f9728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
