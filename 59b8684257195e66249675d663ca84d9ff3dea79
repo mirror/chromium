@@ -1,0 +1,346 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db27682_0e998864",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "I think this comment should be updated to say that all fields should have explicit ordinals now.",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7568cd_4f5883c9",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca19c621_5e97c133",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Please also add next field ID comments (in the spirit of https://cs.chromium.org/chromium/src/components/arc/common/app.mojom?rcl\u003d0e72c666e0e41affd4d7f7de239b2b13eb64e4f5\u0026l\u003d103)\n\nIt\u0027s kind of annoying to have so much redundancy, but I think it\u0027ll be useful if the structs get longer in the future.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a0e580_aa12f5ae",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "It\u0027s not mentioned in the docs (I guess we need to update them), but I think unions can also have explicit ordinals. If it works, we should use it here as well.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2cc1d5_1db40667",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "This field is missing an ordinal.",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 47
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbee083d_c9b87f0d",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "The ordinal for this should start at 0",
+      "range": {
+        "startLine": 92,
+        "startChar": 37,
+        "endLine": 92,
+        "endChar": 53
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea27768f_1900130d",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "In theory, this should always match |has_state_object|... but perhaps just go with what the original code did, which was just a straight assign?",
+      "range": {
+        "startLine": 626,
+        "startChar": 41,
+        "endLine": 626,
+        "endChar": 49
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38596a1c_13c8a16b",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Can we add a TODO to move the legacy write methods into a test-only helper?",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1c3b8c_09c658ad",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Remove default unless we really need it (it suppresses compiler warnings when new enum values are added)",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa77ec31_a9470786",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bea235f_818bc475",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Nit: please use base::MakeRefCounted",
+      "range": {
+        "startLine": 826,
+        "startChar": 30,
+        "endLine": 826,
+        "endChar": 53
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e8ed93_02bd85d7",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Consider grouping this with the if at line 838?",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da529df8_413fb9ba",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Consider grouping this with referrer above.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046d0eca_941d5332",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Is this still required? This was noted to be an explicit quirk in the past.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52075b9_41195e9b",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Minor nit: it would be nice if we ordered things similarly to how WriteFrameState has them ordered, for better symmetry (and perhaps have the mojom definitions follow the same ordering too?)",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc2b5c1_129e652f",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 882,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026 to avoid copies",
+      "range": {
+        "startLine": 882,
+        "startChar": 7,
+        "endLine": 882,
+        "endChar": 11
+      },
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a824b3a_e3540e24",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "ReadData() already internally checks that length is valid, so length \u003c\u003d 0 isn\u0027t needed. Feel free to DCHECK for sanity though.",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c55f105_873faeb2",
+        "filename": "content/renderer/history_serialization.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "This include shouldn\u0027t be needed. Is there a compile error without this?",
+      "revId": "59b8684257195e66249675d663ca84d9ff3dea79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0ae76423_42c7b77f",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T20:13:16Z",
+      "side": 1,
+      "message": "I guess my worry is that we\u0027d get a new value in the enum, which Mojo would then ignore (since it\u0027s not in range). Having an explicit function that maps, using a switch, would produce a compile warning when a new enum value is added without updating this.",
+      "parentUuid": "a01cb631_4043d34c",
+      "revId": "052d6e80385056554df6a6d1495ebce13f229ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07b42e43_d1cd26f6",
         "filename": "content/common/page_state_serialization.cc",
         "patchSetId": 12
