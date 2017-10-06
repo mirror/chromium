@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "511909f5_52754721",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a2f17f_c5644295",
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ab0c8b6_6d4af2dd",
         "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
         "patchSetId": 9
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-05T22:35:04Z",
       "side": 1,
       "message": "Is this file for browser process coordinator? If yes maybe we should rename it to browser_process_resource_coordinator.[h|cc] :)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 99
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db1705e5_2d9db1b0",
+        "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "The naming convention for ChromeBrowserMainExtraParts seems to be |chrome_browser_main_extra_parts_\u003csuffix\u003e.\n\nsee:\n\nhttps://cs.chromium.org/search/?q\u003dChromeBrowserMainExtraParts\u0026p\u003d2\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nI do not have a strong opinion on it. I used the same naming convention used in the rest of the code base.",
+      "parentUuid": "2ab0c8b6_6d4af2dd",
       "range": {
         "startLine": 5,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "cd4ef5ce_268de338",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "The reason that the DCHECK is present is because the code doesn\u0027t handle correctly when IsResourceCoordinatorEnabled is false.\n\nsee:\nhttps://cs.chromium.org/chromium/src/content/browser/renderer_host/render_process_host_impl.cc?type\u003dcs\u0026q\u003dGetProcessResourceCoordinator\u0026sq\u003dpackage:chromium\u0026l\u003d2128\n\nMy first patch was handling it the same way, but I\u0027ve got told to remove the check and use a  DCHECK instead.",
+      "parentUuid": "3abe4572_9769d271",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3c5fda7_c56aa6ff",
         "filename": "content/browser/browser_child_process_host_impl.cc",
         "patchSetId": 9
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "82d0c7f5_4743ba21",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3c5fda7_c56aa6ff",
+      "range": {
+        "startLine": 301,
+        "startChar": 2,
+        "endLine": 302,
+        "endChar": 0
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3378f4f5_601a3c80",
         "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
         "patchSetId": 9
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "71da5c1a_275f8a9d",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit_introspector.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3378f4f5_601a3c80",
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3309aec1_88512471",
         "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
         "patchSetId": 9
@@ -116,6 +224,30 @@
       "writtenOn": "2017-10-05T22:35:04Z",
       "side": 1,
       "message": "move it up above kNetworkAlmostIdle",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8cd4b59_d0516dc0",
+        "filename": "services/resource_coordinator/public/interfaces/signals.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1215674
+      },
+      "writtenOn": "2017-10-06T13:14:14Z",
+      "side": 1,
+      "message": "Are they sorted? If so, kVisible, is not at the right place too.",
+      "parentUuid": "3309aec1_88512471",
       "range": {
         "startLine": 33,
         "startChar": 2,
