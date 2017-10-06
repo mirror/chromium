@@ -69,10 +69,11 @@ struct AutocompleteMatch {
     // GENERATED_JAVA_ENUM_PACKAGE: org.chromium.chrome.browser.omnibox
     // GENERATED_JAVA_CLASS_NAME_OVERRIDE: MatchClassificationStyle
     enum Style {
-      NONE  = 0,
-      URL   = 1 << 0,  // A URL
-      MATCH = 1 << 1,  // A match for the user's search term
-      DIM   = 1 << 2,  // "Helper text"
+      NONE      = 0,
+      URL       = 1 << 0,  // A URL
+      MATCH     = 1 << 1,  // A match for the user's search term
+      DIM       = 1 << 2,  // "Helper text"
+      INVISIBLE = 1 << 3,  // "Prefix" text we don't want to see
     };
 
     ACMatchClassification(size_t offset, int style)

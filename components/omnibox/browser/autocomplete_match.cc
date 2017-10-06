@@ -684,13 +684,15 @@ void AutocompleteMatch::InlineTailPrefix(const base::string16& common_prefix) {
     for (ACMatchClassification& classification : contents_class)
       classification.offset += common_prefix.size();
     // Prefix with dim text.
-    contents_class.insert(contents_class.begin(),
-                          ACMatchClassification(0, ACMatchClassification::DIM));
+    contents_class.insert(
+        contents_class.begin(),
+        ACMatchClassification(0, ACMatchClassification::INVISIBLE));
   } else if (base::StartsWith(contents, common_prefix,
                               base::CompareCase::SENSITIVE)) {
     // Prefix with dim text.
-    contents_class.insert(contents_class.begin(),
-                          ACMatchClassification(0, ACMatchClassification::DIM));
+    contents_class.insert(
+        contents_class.begin(),
+        ACMatchClassification(0, ACMatchClassification::INVISIBLE));
     // Find last one that overlaps or starts at common prefix.
     size_t i = 1;
     while (i < contents_class.size() &&
