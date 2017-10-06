@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "1e2f25a0_eccfb3ca",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T01:01:50Z",
+      "side": 1,
+      "message": "Maybe combine into a base::Optional\u003cint\u003e then?",
+      "parentUuid": "c2507472_e531841a",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40d7f5a1_809cb8cf",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 10
@@ -330,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "0b03d450_e896f675",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T01:01:50Z",
+      "side": 1,
+      "message": "I would:\n- Add a comment in the header.\n- Add DCHECK(target); here, or just freely dereference |target| and never check. Either should make it obvious to readers what this method expects.",
+      "parentUuid": "6572545f_38efbb04",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7c70f99_0d087028",
         "filename": "pdf/pdfium/pdfium_page.h",
         "patchSetId": 10
@@ -359,6 +395,24 @@
       "side": 1,
       "message": "I had to change this now to fill |has_y| as well, so leaving as LinkTarget*.",
       "parentUuid": "a7c70f99_0d087028",
+      "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ded1b01e_82396477",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T01:01:50Z",
+      "side": 1,
+      "message": "It\u0027s still a bit weird because the callers to GetPageYTarget() don\u0027t check the return value. Yet there\u0027s struct member that corresponds exactly to the return value.",
+      "parentUuid": "9040a5af_e0c51ef9",
       "revId": "0f81e85ab3a162c4327e23aa058fc8d8ed37d6fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
