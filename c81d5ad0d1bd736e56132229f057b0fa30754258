@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67627990_7c66eb67",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-06T08:44:04Z",
+      "side": 1,
+      "message": "It\u0027s not common yet, but it is pretty new and usage is spreading slowly. Newer policy-related classes on the chromium side use it (e.g. PreSigninPolicyFetcher, DeviceOffHoursController, CachedPolicyKeyLoader).\nI think it\u0027s a good tool for the job - otherwise we decouple the return value into return value + out parameter and make the callsite less readable.\n\nAlso, it mimics std::optional from C++17 and I assume we will migrate to that someday. See https://cs.chromium.org/chromium/src/docs/optional.md?q\u003doptional.md\u0026sq\u003dpackage:chromium\u0026dr and http://en.cppreference.com/w/cpp/utility/optional",
+      "parentUuid": "0efc460a_096d1f03",
+      "range": {
+        "startLine": 224,
+        "startChar": 0,
+        "endLine": 224,
+        "endChar": 44
+      },
+      "revId": "c81d5ad0d1bd736e56132229f057b0fa30754258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71123024_03511ff4",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "c81d5ad0d1bd736e56132229f057b0fa30754258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a47a4d7_f5fd37d7",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-10-06T08:44:04Z",
+      "side": 1,
+      "message": "I thought we had a code style rule to always have a default, but I just double-checked, and you\u0027re right - it says \"if not conditional on an enumerated value\" [1]. That\u0027s nice!\nRemoved.\n\n[1] https://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements",
+      "parentUuid": "71123024_03511ff4",
+      "range": {
+        "startLine": 271,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 0
+      },
+      "revId": "c81d5ad0d1bd736e56132229f057b0fa30754258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
