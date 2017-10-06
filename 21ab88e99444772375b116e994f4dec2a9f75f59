@@ -70,6 +70,30 @@
       "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6696e2_9a7c4d33",
+        "filename": "components/download/internal/download_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-10-06T19:24:16Z",
+      "side": 1,
+      "message": "Done, moved to DeviceStatusListener.",
+      "parentUuid": "7eaf5443_7701a03a",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 31
+      },
+      "revId": "21ab88e99444772375b116e994f4dec2a9f75f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
