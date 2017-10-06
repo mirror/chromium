@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "34aac4b0_231e8290",
+        "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T06:29:34Z",
+      "side": 1,
+      "message": "Just for comparison, could you also test the following cases in the same test case?\n\n\"foo^ bar|\" --\u003e insertText(\" \")\n\"foo^bar| \" --\u003e insertText(\"\")\n\"foo^bar |\" --\u003e insertText(\" \")\n\nI expect that the results should be the same.\n\nAlso, having the following reverse cases (in another test case?) would be helpful:\n\n\"\u003cp\u003ebaz\u003c/p\u003e^bar| foo\" --\u003e insertText(\"\")\n\"\u003cp\u003ebaz\u003c/p\u003e^bar |foo\" --\u003e insertText(\" \")\n\"\u003cp\u003ebaz\u003c/p\u003e ^bar|foo\" --\u003e insertText(\"\")\n\"\u003cp\u003ebaz\u003c/p\u003e^ bar|foo\" --\u003e insertText(\" \")\n\nLastly, how do we handle \\t?\n\nfoo\\t^bar|\u003cp\u003ebaz\u003c/p\u003e --\u003e insertText(\"\")\n\nWould this result in breaking foo and baz?",
+      "range": {
+        "startLine": 109,
+        "startChar": 51,
+        "endLine": 109,
+        "endChar": 60
+      },
+      "revId": "1e4e77ed94f4571421c631556aa84ea94baa4016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2848fadc_21241abc",
         "filename": "third_party/WebKit/Source/core/editing/commands/InsertTextCommandTest.cpp",
         "patchSetId": 1
