@@ -13163,6 +13163,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="DefaultProtocolClient.State" enum="DefaultBrowserState">
+  <owner>chengx@chromium.org</owner>
+  <summary>
+    Whether Chrome was the default protocol handler when it started up.
+  </summary>
+</histogram>
+
 <histogram name="DelayNavigationThrottle.Delay.Actual" units="ms">
   <owner>bmcquade@chromium.org</owner>
   <summary>
