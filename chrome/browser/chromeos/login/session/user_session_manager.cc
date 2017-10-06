@@ -427,6 +427,20 @@ UserSessionManager::UserSessionManager()
       weak_factory_(this) {
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
   user_manager::UserManager::Get()->AddSessionStateObserver(this);
+
+  auto* cros_settings = CrosSettings::Get();
+  allow_guest_subscription_ = cros_settings->AddSettingsObserver(
+      kAccountsPrefAllowGuest,
+      base::Bind(&UserSessionManager::DeviceSettingsChanged,
+                 base::Unretained(this)));
+  allow_supervised_user_subscription_ = cros_settings->AddSettingsObserver(
+      kAccountsPrefSupervisedUsersEnabled,
+      base::Bind(&UserSessionManager::DeviceSettingsChanged,
+                 base::Unretained(this)));
+  // user whitelist
+  users_subscription_ = cros_settings->AddSettingsObserver(
+      kAccountsPrefUsers, base::Bind(&UserSessionManager::DeviceSettingsChanged,
+                                     base::Unretained(this)));
 }
 
 UserSessionManager::~UserSessionManager() {
@@ -951,6 +965,16 @@ void UserSessionManager::OnProfilePrepared(Profile* profile,
 
   // Restore other user sessions if any.
   RestorePendingUserSessions();
+}
+
+void UserSessionManager::DeviceSettingsChanged() {
+  LOG(ERROR) << "device settings is changed";
+  // TODO: bad
+  auto* current_user = user_manager::UserManager::Get()->GetActiveUser();
+  if (current_user && !IsUserAllowed(current_user)) {
+    LOG(ERROR) << "Current user isn't allowed. User is signed out.";
+    chrome::AttemptUserExit();
+  }
 }
 
 void UserSessionManager::ChildAccountStatusReceivedCallback(Profile* profile) {
@@ -1913,6 +1937,41 @@ void UserSessionManager::RunCallbackOnLocaleLoaded(
 
 void UserSessionManager::RemoveProfileForTesting(Profile* profile) {
   default_ime_states_.erase(profile);
+}
+
+bool UserSessionManager::IsUserAllowed(user_manager::User* user) {
+  LOG(ERROR) << "Daria: IsUserAllowed()";
+  bool is_user_allowed = false;
+  auto* cros_settings = CrosSettings::Get();
+  // If no user pods are visible, fallback to single new user pod which will
+  // have guest session link.
+  bool is_guest_allowed;
+  cros_settings->GetBoolean(kAccountsPrefAllowGuest, &is_guest_allowed);
+
+  if (user->GetType() == user_manager::USER_TYPE_GUEST && !is_guest_allowed)
+    return false;
+  LOG(ERROR) << "Daria: IsUserAllowed()1";
+  // Skip kiosk apps for login screen user list. Kiosk apps as pods (aka new
+  // kiosk UI) is currently disabled and it gets the apps directly from
+  // KioskAppManager and ArcKioskAppManager.
+  if (user->GetType() == user_manager::USER_TYPE_KIOSK_APP ||
+      user->GetType() == user_manager::USER_TYPE_ARC_KIOSK_APP) {
+    return false;
+  }
+  LOG(ERROR) << "Daria: IsUserAllowed()2";
+  const bool meets_supervised_requirements =
+      user->GetType() != user_manager::USER_TYPE_SUPERVISED ||
+      user_manager::UserManager::Get()->AreSupervisedUsersAllowed();
+  const bool meets_whitelist_requirements =
+      CrosSettings::IsWhitelisted(user->GetAccountId().GetUserEmail(),
+                                  nullptr) ||
+      !user->HasGaiaAccount();
+
+  if (meets_supervised_requirements && meets_whitelist_requirements) {
+    is_user_allowed = true;
+  }
+  LOG(ERROR) << "Daria: IsUserAllowed()3";
+  return is_user_allowed;
 }
 
 void UserSessionManager::InjectStubUserContext(
