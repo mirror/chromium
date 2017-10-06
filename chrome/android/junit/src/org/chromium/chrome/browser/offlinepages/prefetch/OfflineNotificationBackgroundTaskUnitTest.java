@@ -12,6 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doNothing;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.when;
 
 import android.content.Context;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -111,6 +113,8 @@ public class OfflineNotificationBackgroundTaskUnitTest {
     private FakeBackgroundTaskScheduler mFakeTaskScheduler;
     private Calendar mCalendar;
 
+    private String mContentHost = "www.example.com";
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -133,7 +137,7 @@ public class OfflineNotificationBackgroundTaskUnitTest {
 
         doAnswer((invocation) -> {
             Object callback = invocation.getArguments()[1];
-            ((Callback<String>) callback).onResult("www.example.com");
+            ((Callback<String>) callback).onResult(mContentHost);
             return null;
         })
                 .when(mOfflinePageBridge)
@@ -153,6 +157,12 @@ public class OfflineNotificationBackgroundTaskUnitTest {
 
         OfflineNotificationBackgroundTask.setCalendarForTesting(mCalendar);
         clearPrefs();
+    }
+
+    @After
+    public void tearDown() {
+        // Ensure that an empty content notificaition is not shown in any test.
+        verify(mPrefetchedPagesNotifier, never()).showNotification("");
     }
 
     private void clearPrefs() {
@@ -236,7 +246,7 @@ public class OfflineNotificationBackgroundTaskUnitTest {
     }
 
     private void assertNotificationNotShown() {
-        verify(mPrefetchedPagesNotifier, never()).showNotification("www.example.com");
+        verify(mPrefetchedPagesNotifier, never()).showNotification(anyString());
     }
 
     private void assertNotificationShown() {
@@ -404,6 +414,24 @@ public class OfflineNotificationBackgroundTaskUnitTest {
         assertNativeDidNotStart();
         assertNoTaskScheduled(
                 "If the notifications were ignored, the task should not reschedule itself.");
+        assertNotificationNotShown();
+    }
+
+    @Test
+    public void contentCheckFailedPreventsNotificationShow() {
+        // Set up the callback to return empty string as if there were no fresh content in reality.
+        mContentHost = "";
+
+        PrefetchPrefs.setHasNewPages(true);
+        setupDeviceOnlineStatus(false);
+
+        // Run the task almost enough times.
+        for (int i = 0; i < OfflineNotificationBackgroundTask.OFFLINE_POLLING_ATTEMPTS - 1; i++) {
+            runTask();
+            assertNativeDidNotStart();
+        }
+        runTaskAndExpectTaskDone();
+        assertNativeStarted();
         assertNotificationNotShown();
     }
 
