@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f37fb33d_c6087a07",
+        "filename": "chrome/browser/extensions/extension_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Oh. I thought that EXPECT would just throw a failure and end the test. Fixed.",
+      "parentUuid": "c0f73767_da29c00e",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10289ff0_dc37af1c",
         "filename": "chrome/browser/sync/test/integration/sync_app_helper.cc",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "42f55588_32763251",
+        "filename": "chrome/browser/sync/test/integration/sync_app_helper.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10289ff0_dc37af1c",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248d68e3_7de8e4d0",
         "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
         "patchSetId": 13
@@ -47,6 +83,30 @@
       "writtenOn": "2017-10-05T18:13:10Z",
       "side": 1,
       "message": "any reason for this change?",
+      "range": {
+        "startLine": 383,
+        "startChar": 55,
+        "endLine": 383,
+        "endChar": 59
+      },
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cbef05_10acbcd6",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Not strictly necessary, but it makes the sync test more robust. Previously scope was being set to app_url on sync, and since these values were the same, it wasn\u0027t caught when CheckAllWhatevers() was called.",
+      "parentUuid": "248d68e3_7de8e4d0",
       "range": {
         "startLine": 383,
         "startChar": 55,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ed806303_12ee0887",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browser_controller.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Oops. Fixed.",
+      "parentUuid": "afbf5b88_40bf5a50",
+      "range": {
+        "startLine": 49,
+        "startChar": 44,
+        "endLine": 49,
+        "endChar": 63
+      },
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53f48faf_87159205",
         "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
         "patchSetId": 13
@@ -93,6 +177,24 @@
       "writtenOn": "2017-10-05T13:34:09Z",
       "side": 1,
       "message": "Is there any platform-agnostic way we can test the browser frame color to ensure it\u0027s being respected?",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebafb32_addad402",
+        "filename": "chrome/browser/ui/extensions/hosted_app_browsertest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Not really! I\u0027ll be putting a test for the ash implementation in https://chromium-review.googlesource.com/c/chromium/src/+/701857. I think this is the best point for a generic test. All platforms will use the color here. Whether they apply it correctly is going to have to be platform specific.",
+      "parentUuid": "53f48faf_87159205",
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "673fe95b_dbf31025",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f27af8a2_62ddd0b2",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c4733c9_160bfecd",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 13
@@ -127,6 +247,24 @@
       "writtenOn": "2017-10-05T23:33:17Z",
       "side": 1,
       "message": "Is this opaqueness a cross-platform thing? Seems like it should be... Can we then encode that logic somewhere like AppThemeColorHandler::Parse()? Or just say `*error \u003d \"frame colors can\u0027t have an alpha component`",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da45d739_75f319a7",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "I was talking to ortuno@ and I think we should push this decision either here or in HostedAppBrowserController. Transparent colors are allowed by the spec and might be respected on some platforms someday (esp CrOS, Android) so we should store the site-provided color and then process it when it\u0027s used.",
+      "parentUuid": "7c4733c9_160bfecd",
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +288,24 @@
     },
     {
       "key": {
+        "uuid": "e0c3a04d_e76d54ec",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Yeah, this was updated to maintain behavior when the option was made explicit in AppIconColorInfo. Also updating all of this there coz why not.",
+      "parentUuid": "54903bb4_e2050ef3",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4067d91_7bf06bfc",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 13
@@ -167,6 +323,24 @@
     },
     {
       "key": {
+        "uuid": "021fb8cb_aeecca33",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4067d91_7bf06bfc",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70bb9a5a_2a94845d",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 13
@@ -178,6 +352,24 @@
       "writtenOn": "2017-10-05T13:34:09Z",
       "side": 1,
       "message": "nit: initialize",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3377ec18_3371bdf9",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done, but:\n\nUgh. Okay. So apparently the C++ spec says that uint-\u003eint conversion is unspecified, so it\u0027s not _totally_ safe to do this. Do you think it\u0027s worth storing this as a String of the uint value and then parsing it back out?",
+      "parentUuid": "70bb9a5a_2a94845d",
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +393,24 @@
     },
     {
       "key": {
+        "uuid": "f7657ebd_0a051cf2",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d680d1_b578b72f",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25b24aca_d299a571",
         "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
         "patchSetId": 13
@@ -215,6 +425,24 @@
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f76bbb_e046bae7",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25b24aca_d299a571",
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +483,30 @@
       "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70b43f9f_47eb0ebd",
+        "filename": "components/sync/protocol/proto_visitors.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-10-06T04:36:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93e9243c_075c5b93",
+      "range": {
+        "startLine": 126,
+        "startChar": 34,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "e41fe8268b6bd451f68f1ca4310b3a029609adc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
