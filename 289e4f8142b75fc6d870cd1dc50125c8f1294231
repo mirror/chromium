@@ -16,6 +16,24 @@
       "revId": "289e4f8142b75fc6d870cd1dc50125c8f1294231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15210fb5_07dadd32",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5987,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T16:24:06Z",
+      "side": 1,
+      "message": "We could and it will eliminate this block. However, the latter for loop will continue to exist, as the FTN is deleted at that point and we can\u0027t use GetFrameEntry.",
+      "parentUuid": "be5a3372_4dfa38b8",
+      "revId": "289e4f8142b75fc6d870cd1dc50125c8f1294231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
