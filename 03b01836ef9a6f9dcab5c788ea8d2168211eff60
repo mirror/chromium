@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "feb902d9_11486d3d",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-10-06T21:02:24Z",
+      "side": 1,
+      "message": "I think we need a nullptr color space before the false. I think this is doing an unfortunate false -\u003e 0 -\u003e NULL -\u003e ColorSpace* implicit conversion and then using the default true for the allocate_encoded_memory.",
+      "revId": "03b01836ef9a6f9dcab5c788ea8d2168211eff60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
