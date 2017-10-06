@@ -10,6 +10,7 @@ import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
+import org.chromium.components.offline_items_collection.OfflineItem;
 
 import java.util.UUID;
 
@@ -48,6 +49,24 @@ public class DownloadSharedPreferenceEntry {
         this.isAutoResumable = isAutoResumable;
         this.id = id != null ? id : new ContentId();
         this.isTransient = isTransient;
+    }
+
+    DownloadSharedPreferenceEntry(OfflineItem offlineItem) {
+        this.notificationId = offlineItem.notificationId;
+        this.isOffTheRecord = offlineItem.isOffTheRecord;
+        this.canDownloadWhileMetered = offlineItem.allowMetered;
+        this.fileName = offlineItem.fileName;
+        this.isAutoResumable = offlineItem.isResumable;
+        this.id = offlineItem.id != null ? offlineItem.id : new ContentId();
+        this.isTransient = offlineItem.isTransient;
+    }
+
+    static OfflineItem offlineItem(DownloadSharedPreferenceEntry entry) {
+        OfflineItem offlineItem = new OfflineItem(entry.id);
+        offlineItem.fileName = entry.fileName;
+        offlineItem.isOffTheRecord = entry.isOffTheRecord;
+        offlineItem.isTransient = entry.isTransient;
+        return offlineItem;
     }
 
     /**

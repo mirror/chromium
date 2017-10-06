@@ -4,6 +4,8 @@
 
 package org.chromium.components.offline_items_collection;
 
+import android.graphics.Bitmap;
+
 import org.chromium.base.annotations.SuppressFBWarnings;
 
 /**
@@ -75,6 +77,8 @@ public class OfflineItem {
     public int filter;
     public boolean isTransient;
     public boolean isSuggested;
+    public Bitmap icon;
+    public int notificationId = -1;
 
     // Content Metadata.
     public long totalSizeBytes;
@@ -84,24 +88,35 @@ public class OfflineItem {
     public boolean isOpenable;
     public String filePath;
     public String mimeType;
+    public String fileName;
+    public long systemDownloadId = -1;
+    public boolean isSupportedMimeType;
+    public boolean canResolve;
 
     // Request Metadata.
     public String pageUrl;
     public String originalUrl;
     public boolean isOffTheRecord;
+    public String referrer;
 
     // In Progress Metadata.
     @OfflineItemState
     public int state;
     public boolean isResumable;
+    public boolean isAutoResumable;
     public boolean allowMetered;
     public long receivedBytes;
     public Progress progress;
     public long timeRemainingMs;
+    public boolean isPending;
 
     public OfflineItem() {
         id = new ContentId();
         filter = OfflineItemFilter.FILTER_OTHER;
         state = OfflineItemState.COMPLETE;
+    }
+
+    public OfflineItem(ContentId contentId) {
+        id = contentId;
     }
 }
