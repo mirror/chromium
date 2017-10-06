@@ -16,6 +16,24 @@
       "revId": "d571d1c264494a56377fc40aa7d6d4ea4e94c2ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42155006_cb843abb",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-06T22:14:36Z",
+      "side": 1,
+      "message": "Yes.  It\u0027s just a style change.",
+      "parentUuid": "c9bd0171_4b1ec5f6",
+      "revId": "d571d1c264494a56377fc40aa7d6d4ea4e94c2ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
