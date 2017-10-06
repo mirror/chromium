@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4263993_d0104971",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 0,
+      "message": "There\u0027s no requirement in the style guide that definitions have to match the order of declarations in the header file. I personally find it cumbersome to maintain and not useful given the use of IDEs.\n\nIf you choose to enforce this kind of optional style in the future, you should in general submit the reformat/rearrangement as a separate CL and not mix it in with a CL that also contains new functionality.",
+      "range": {
+        "startLine": 216,
+        "startChar": 5,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "aa5ab43f3be953fd669336335bf977e1235bcce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

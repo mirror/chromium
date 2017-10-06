@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a4a5719_d0e94e9b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 1,
+      "message": "nit: my preference is for APIs like this that are pure getters, we should name them things like is_off_hours_mode() to make it clear that they are just aliases for the value. Likewise below for GetOffHourseEndTime()",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 21
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a7c6c19_4b0da785",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 1,
+      "message": "Can you clarify what \"If OffHours mode is in current time\" means? maybe this should say \"If device should be in OffHours mode based on the current time\"",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 17
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59df47d5_6a4400e0",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a const method? It doesn\u0027t modify this object?",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 63
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac47f848_14e97083",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 1,
+      "message": "nit: restrics-\u003erestrict",
+      "range": {
+        "startLine": 143,
+        "startChar": 5,
+        "endLine": 143,
+        "endChar": 13
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a12ac89_f96832b9",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T13:31:11Z",
+      "side": 1,
+      "message": "nit:SessionLenght-\u003eSessionLength",
+      "range": {
+        "startLine": 143,
+        "startChar": 31,
+        "endLine": 143,
+        "endChar": 49
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
