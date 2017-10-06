@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e5d3703_0367fa11",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:45:31Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0a71f6_92a9fcbd",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:45:31Z",
+      "side": 1,
+      "message": "nit: delete \u0027,\u0027 here",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 15
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8466840e_cae2fca0",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:45:31Z",
+      "side": 1,
+      "message": "part of me wonders if we could just abort in cases where we\u0027ve failed but the error would be null:\n\n- we already abort for OOM errors in \u0027new\u0027, iirc\n- is |bus_| being disconnected always a programming error?\n\nare there other cases we need to worry about?",
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df49dd80_f13eb6df",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:45:31Z",
+      "side": 1,
+      "message": "what would you and others think about overloading CallMethod so this has the same name but just takes a different callback type? it might be nice to have the shorter name here if we think that this will be called frequently, and as the comment says, this method is almost identical to CallMethod.",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 42
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad83ab6_e364238a",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T13:45:31Z",
+      "side": 1,
+      "message": "nit: CallMethodWithErrorResponse",
+      "range": {
+        "startLine": 151,
+        "startChar": 28,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "9efbeff1ad8c5110ba11208641429c8655771150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
