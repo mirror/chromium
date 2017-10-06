@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce30a311_402c82c5",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T11:31:06Z",
+      "side": 1,
+      "message": "Incremental marking finishes incremental sweeping for now. \n\nAt some point I\u0027d like to handle this similar to V8, where we finish sweeping in incremental marking steps.",
+      "parentUuid": "32744e6a_ad37869d",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4cecef7_a87b073e",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "fc2209dc_bac3fc41",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T11:31:06Z",
+      "side": 1,
+      "message": "I\u0027d like to keep this as in V8.",
+      "parentUuid": "d57a2f1c_f966a367",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44cdd882_b219cbf9",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2017-10-06T09:55:25Z",
       "side": 1,
       "message": "So I want to drop kSweeping for now.",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2891dbde_5d1b9fe1",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T11:31:06Z",
+      "side": 1,
+      "message": "I\u0027d like to keep it as in V8.",
+      "parentUuid": "44cdd882_b219cbf9",
       "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "79ba1a83_c299f507",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T11:31:06Z",
+      "side": 1,
+      "message": "For incremental marking we actuall schedule tasks. Having explicit states allows us to reason about what tasks have been scheduled and which actions we might take.",
+      "parentUuid": "2e17495a_75f78881",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ced7c87_35bc32cd",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
         "patchSetId": 3
@@ -98,6 +170,24 @@
       "writtenOn": "2017-10-06T09:55:25Z",
       "side": 1,
       "message": "Would you help me understand why we need the kIncrementalMarkingFinalizeScheduled state?",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20f0720_8e44fa9c",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T11:31:06Z",
+      "side": 1,
+      "message": "I suspect that there might be counters (local, UMA) that need to be flushed back here before we enter a precise GC.\n\nFurthermore, I\u0027d like to disable the barrier here.\n\nWe can always remove phases if we figure out that we don\u0027t need them later on. I\u0027d just like to have something I can play with for now.",
+      "parentUuid": "7ced7c87_35bc32cd",
       "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
