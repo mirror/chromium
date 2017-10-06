@@ -115,6 +115,8 @@ class DeviceOffHoursControllerTest : public DeviceSettingsTestBase {
 };
 
 TEST_F(DeviceOffHoursControllerTest, CheckOffHoursUnset) {
+  device_settings_service_.device_off_hours_controller()
+      ->SetNetworkSynchronizedForTesting(true);
   enterprise_management::ChromeDeviceSettingsProto& proto(
       device_policy_.payload());
   proto.mutable_guest_mode_enabled()->set_guest_mode_enabled(false);
@@ -129,6 +131,8 @@ TEST_F(DeviceOffHoursControllerTest, CheckOffHoursUnset) {
 }
 
 TEST_F(DeviceOffHoursControllerTest, CheckOffHoursModeOff) {
+  device_settings_service_.device_off_hours_controller()
+      ->SetNetworkSynchronizedForTesting(true);
   enterprise_management::ChromeDeviceSettingsProto& proto(
       device_policy_.payload());
   proto.mutable_guest_mode_enabled()->set_guest_mode_enabled(false);
@@ -143,6 +147,8 @@ TEST_F(DeviceOffHoursControllerTest, CheckOffHoursModeOff) {
 }
 
 TEST_F(DeviceOffHoursControllerTest, CheckOffHoursModeOn) {
+  device_settings_service_.device_off_hours_controller()
+      ->SetNetworkSynchronizedForTesting(true);
   enterprise_management::ChromeDeviceSettingsProto& proto(
       device_policy_.payload());
   proto.mutable_guest_mode_enabled()->set_guest_mode_enabled(false);

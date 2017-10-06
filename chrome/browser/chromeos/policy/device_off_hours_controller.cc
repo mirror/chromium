@@ -196,12 +196,22 @@ DeviceOffHoursController::DeviceOffHoursController() {
   if (chromeos::DBusThreadManager::IsInitialized()) {
     chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
         this);
+    chromeos::DBusThreadManager::Get()->GetSystemClockClient()->AddObserver(
+        this);
+    // Ask SystemClockClient to update information about the system time
+    // synchronization with network time asynchronously. If time is synchronized
+    // then NetworkSynchronized method is called.
+    chromeos::DBusThreadManager::Get()
+        ->GetSystemClockClient()
+        ->GetLastSyncInfo();
   }
 }
 
 DeviceOffHoursController::~DeviceOffHoursController() {
   if (chromeos::DBusThreadManager::IsInitialized()) {
     chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
+        this);
+    chromeos::DBusThreadManager::Get()->GetSystemClockClient()->RemoveObserver(
         this);
   }
 }
@@ -213,8 +223,18 @@ void DeviceOffHoursController::SuspendDone(
   UpdateOffHoursMode();
 }
 
+void DeviceOffHoursController::SetNetworkSynchronizedForTesting(
+    bool network_synchronized) {
+  network_synchronized_ = network_synchronized;
+}
+
 void DeviceOffHoursController::UpdateOffHoursMode() {
-  if (off_hours_intervals_.empty()) {
+  if (off_hours_intervals_.empty() || !network_synchronized_) {
+    if (!network_synchronized_) {
+      DVLOG(1)
+          << "The system time isn't network synchronized. OffHours mode is "
+             "not available.";
+    }
     StopOffHoursTimer();
     SetOffHoursMode(false);
     return;
@@ -253,10 +273,26 @@ void DeviceOffHoursController::StopOffHoursTimer() {
   timer_.Stop();
 }
 
+void DeviceOffHoursController::SystemClockUpdated() {
+  // Triggered when device time is changed. When it happens "OffHours" mode
+  // could be changed too because "OffHours" mode directly depends on current
+  // device time.
+  // Ask SystemClockClient to update information about the system time
+  // synchronization with network time asynchronously. If time is synchronized
+  // then NetworkSynchronized method is called.
+  chromeos::DBusThreadManager::Get()->GetSystemClockClient()->GetLastSyncInfo();
+  UpdateOffHoursMode();
+}
+
+void DeviceOffHoursController::NetworkSynchronizationUpdated(
+    bool network_synchronized) {
+  // Triggered when the system time is synchronized with network time. After
+  // that "OffHours" mode is available.
+  network_synchronized_ = network_synchronized;
+}
+
 void DeviceOffHoursController::OffHoursModeIsChanged() {
   DVLOG(1) << "OffHours mode is changed.";
-  // TODO(yakovleva): Get discussion about what is better to user Load() or
-  // LoadImmediately().
   chromeos::DeviceSettingsService::Get()->Load();
 }
 

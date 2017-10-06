@@ -27,6 +27,9 @@ class CHROMEOS_EXPORT SystemClockClient : public DBusClient {
     // when the clock syncs with or goes out of sync with the network.
     virtual void SystemClockCanSetTimeChanged(bool can_set_time) {}
 
+    // Called when the system time is synchronized with network time.
+    virtual void NetworkSynchronizationUpdated(bool network_synchronized) {}
+
    protected:
     virtual ~Observer() {}
   };
@@ -43,6 +46,10 @@ class CHROMEOS_EXPORT SystemClockClient : public DBusClient {
 
   // Checks if the system time can be set.
   virtual bool CanSetTime() = 0;
+
+  // Calls dbus method kSystemClockInterface.kSystemLastSyncInfo asynchronously
+  // to check the system time synchronization with network time.
+  virtual void GetLastSyncInfo() = 0;
 
   // Creates the instance.
   static SystemClockClient* Create();
