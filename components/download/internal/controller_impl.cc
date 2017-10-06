@@ -579,13 +579,8 @@ void ControllerImpl::AttemptToFinalizeSetup() {
 
   controller_state_ = State::READY;
 
-  UpdateDriverStates();
-
   KillTimedOutDownloads();
   NotifyServiceOfStartup();
-
-  // Pull the initial straw if active downloads haven't reach maximum.
-  ActivateMoreDownloads();
 }
 
 void ControllerImpl::HandleUnrecoverableSetup() {
@@ -1044,6 +1039,7 @@ void ControllerImpl::KillTimedOutDownloads() {
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
+  LOG(ERROR) << "@@@ " << __func__;
   if (controller_state_ != State::READY)
     return;
 
