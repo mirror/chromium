@@ -34,6 +34,24 @@
       "revId": "556baa6c7a1cda2044c1cf0efc8168f06802488f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31914448_a2fc18c7",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-10-06T15:23:05Z",
+      "side": 1,
+      "message": "Ack. Got it. I missed that. SGTM",
+      "parentUuid": "38aac50a_07874500",
+      "revId": "556baa6c7a1cda2044c1cf0efc8168f06802488f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
