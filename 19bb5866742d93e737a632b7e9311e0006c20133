@@ -52,6 +52,24 @@
       "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bfd27d_15e31c23",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T14:14:49Z",
+      "side": 1,
+      "message": "I can\u0027t because CallMethod declaration asks ResponseCallback: https://cs.chromium.org/chromium/src/dbus/object_proxy.cc?type\u003dcs\u0026l\u003d121\n\nWhich is \n\n  ResponseCallback \u003d base::OnceCallback\u003cvoid(Response*)\u003e\n\nbut \n\n  base::BindOnce(\u0026SystemClockClientImpl::OnGotLastSyncInfo, weak_ptr_factory_.GetWeakPtr(), callback)) \n\nis not pattern math with it.",
+      "parentUuid": "3c466be0_12e3d1da",
+      "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
