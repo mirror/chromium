@@ -7,8 +7,10 @@ package org.chromium.chrome.browser.payments;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.DELAYED_CREATION;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.DELAYED_RESPONSE;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.HAVE_INSTRUMENTS;
+import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDIATE_CREATION;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDIATE_RESPONSE;
 
+import android.support.test.filters.LargeTest;
 import android.support.test.filters.MediumTest;
 
 import org.junit.Rule;
@@ -98,5 +100,18 @@ public class PaymentRequestPaymentAppUiSkipTest {
         mPaymentRequestTestRule.openPageAndClickBuyAndWait(mPaymentRequestTestRule.getDismissed());
         mPaymentRequestTestRule.expectResultContains(
                 new String[] {"https://bobpay.com", "\"transaction\"", "1337"});
+    }
+
+    /** Two payments apps with the same payment method name should not skip payments UI. */
+    @Test
+    @LargeTest
+    @Feature({"Payments"})
+    public void testTwoPaymentsAppsWithTheSamePaymentMethodName()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        mPaymentRequestTestRule.installPaymentApp(
+                "https://bobpay.com", HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE, IMMEDIATE_CREATION);
+        mPaymentRequestTestRule.installPaymentApp(
+                "https://bobpay.com", HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE, IMMEDIATE_CREATION);
+        mPaymentRequestTestRule.openPageAndClickBuyAndWait(mPaymentRequestTestRule.getReadyToPay());
     }
 }
