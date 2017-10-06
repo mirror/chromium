@@ -6,7 +6,10 @@
 
 #include <utility>
 
+#include "ash/display/mirror_window_controller.h"
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/host/root_window_transformer.h"
+#include "ash/shell.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/window.h"
@@ -26,6 +29,11 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
   ui::EventTarget* FindTargetForEvent(ui::EventTarget* root,
                                       ui::Event* event) override {
     if (root == src_root_ && !event->target()) {
+      Shell::Get()
+          ->window_tree_host_manager()
+          ->mirror_window_controller()
+          ->set_current_event_targeter_src_host(src_root_->GetHost());
+
       if (event->IsLocatedEvent()) {
         ui::LocatedEvent* located_event = static_cast<ui::LocatedEvent*>(event);
         located_event->ConvertLocationToTarget(
@@ -33,6 +41,13 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
       }
       ignore_result(
           dst_root_->GetHost()->event_sink()->OnEventFromSource(event));
+
+      // Reset the source host.
+      Shell::Get()
+          ->window_tree_host_manager()
+          ->mirror_window_controller()
+          ->set_current_event_targeter_src_host(nullptr);
+
       return nullptr;
     } else {
       NOTREACHED() << "event type:" << event->type();
@@ -40,6 +55,7 @@ class UnifiedEventTargeter : public aura::WindowTargeter {
     }
   }
 
+ private:
   aura::Window* src_root_;
   aura::Window* dst_root_;
 
