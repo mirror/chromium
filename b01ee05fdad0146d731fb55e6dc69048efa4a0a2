@@ -1,0 +1,317 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09f2f1ad_1565c27a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "unused? Please remove if so.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29801251_d65f053f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "Instead of this, what about just doing\n\n if (ui_displayed_)\n   return PROCEED;\n\n? That\u0027s simpler.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 3
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f07184_f61fd44d",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "Then I think you can replace this line with DCHECK(!ui_displayed_);.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e637d2_83720d2f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: Can you move this back to the original position? (below ArcNavigationThrottle::GetStartingGURL())  The git diff seems unnecessarily large because of the shuffle.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce1b46d_ce9379fe",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: I think you can call Resume() unconditionally at L231 which I think is less error-prone.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c56fe5_34ab8f77",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "(and remove this)",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92327bf3_77e988b9",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "Unlike L236, ui_displayed_ is not reset here. Is that okay? No in-flight IPC at this point, I guess.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4ad3ff_c6e06123",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "same, can you move this up to the original position?",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc3d586_ed17827d",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: prefix",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52703cc_3859a2e1",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "Remove? Since the UI is non-blocking now, this variable seems almost useless. I think WillRedirectRequest() can check |ui_displayed_| instead of this variable.",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 36
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fa92ed_c358d47f",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "This additional boolean is necessary because the picker UI no longer blocks the navigation, and therefore WillRedirectRequest() may issue the mojo IPC again, correct? If this is correct, can you mention that here? It was not obvious to me why this boolean is necessary.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0c6947_b0001606",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "IWYU: base/macros.h for DISALLOW_COPY_AND_ASSIGN.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284c2d72_a3d23987",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: sort, please.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5084f674_12d8df76",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc072375_6918afb5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: Does this have to be protected: ? I guess you can move this to private:.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf8ff9a_42a5cc53",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit: std::make_unique\n\nbut it might be simpler to have the object as a value (without unique_ptr).",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91f071f_1498e03d",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "nit:\n  // namespace arc",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "322330b7_3a13a80a",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "unused too??",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "231ada8f5569969b9300cb3e9972285438983dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653c24b1_c340c5fe",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T23:35:36Z",
+      "side": 1,
+      "message": "They can be private:, correct? Can you move if so?",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 60
+      },
+      "revId": "231ada8f5569969b9300cb3e9972285438983dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
