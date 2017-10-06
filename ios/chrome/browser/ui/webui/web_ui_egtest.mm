@@ -11,7 +11,7 @@
 #include "components/version_info/version_info.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/experimental_flags.h"
-#import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_text_field.h"
 #include "ios/chrome/test/app/navigation_test_util.h"
 #include "ios/chrome/test/app/web_view_interaction_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
@@ -45,11 +45,10 @@ void LoadWebUIUrl(const std::string& host) {
 // matcher or resides in the same location with the omniboxText matcher.
 id<GREYMatcher> WaitForOmniboxText(std::string text) {
   MatchesBlock matches = ^BOOL(UIView* view) {
-    if (![view isKindOfClass:[OmniboxTextFieldIOS class]]) {
+    if (![view isKindOfClass:[OmniboxTextfield class]]) {
       return NO;
     }
-    OmniboxTextFieldIOS* omnibox =
-        base::mac::ObjCCast<OmniboxTextFieldIOS>(view);
+    OmniboxTextfield* omnibox = base::mac::ObjCCast<OmniboxTextfield>(view);
     GREYAssert(testing::WaitUntilConditionOrTimeout(
                    testing::kWaitForUIElementTimeout,
                    ^{

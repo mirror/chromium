@@ -13,7 +13,7 @@
 #include "ios/chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/search_engines/template_url_service_factory.h"
-#import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
+#import "ios/chrome/browser/ui/omnibox/omnibox_text_field.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_delegate_ios.h"
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_impl_ios.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
@@ -135,14 +135,13 @@ class OmniboxPerfTest : public PerfTest {
 
   // Returns whether Omnibox has been loaded.
   bool IsToolbarLoaded(UIView* topView) {
-    return FindViewByClass(topView, [OmniboxTextFieldIOS class]) != nil;
+    return FindViewByClass(topView, [OmniboxTextfield class]) != nil;
   }
 
   // Inserts the |text| string into the |textField| and return the amount
   // of time it took to complete the insertion. This does not time
   // any activities that may be triggered on other threads.
-  base::TimeDelta TimeInsertText(OmniboxTextFieldIOS* textField,
-                                 NSString* text) {
+  base::TimeDelta TimeInsertText(OmniboxTextfield* textField, NSString* text) {
     base::Time startTime = base::Time::NowFromSystemTime();
     [textField insertTextWhileEditing:text];
     base::TimeDelta elapsed = base::Time::NowFromSystemTime() - startTime;
@@ -187,7 +186,7 @@ class OmniboxPerfTest : public PerfTest {
 
   // Enables the on-screen keyboard as if user has tapped on |textField|.
   // Returns the amount of time it took for the keyboard to appear.
-  base::TimeDelta EnableKeyboard(OmniboxTextFieldIOS* textField) {
+  base::TimeDelta EnableKeyboard(OmniboxTextfield* textField) {
     return base::test::ios::TimeUntilCondition(
         ^{
           [textField becomeFirstResponder];
@@ -200,7 +199,7 @@ class OmniboxPerfTest : public PerfTest {
 
   // Performs necessary cleanup (so next pass of unit test can start from
   // a clean slate) and then exit from |textField| to dismiss keyboard.
-  void DisableKeyboard(OmniboxTextFieldIOS* textField) {
+  void DisableKeyboard(OmniboxTextfield* textField) {
     // Busy wait until keyboard is hidden.
     base::test::ios::TimeUntilCondition(
         ^{
@@ -227,8 +226,8 @@ class OmniboxPerfTest : public PerfTest {
 // the on-screen keyboard.
 TEST_F(OmniboxPerfTest, TestTextFieldDidBeginEditing) {
   LogPerfTiming("Keyboard preload", PreLoadKeyboard());
-  OmniboxTextFieldIOS* textField = (OmniboxTextFieldIOS*)FindViewByClass(
-      [toolbar_ view], [OmniboxTextFieldIOS class]);
+  OmniboxTextfield* textField = (OmniboxTextfield*)FindViewByClass(
+      [toolbar_ view], [OmniboxTextfield class]);
 
   // Time how long it takes to "focus" on omnibox.
   RepeatTimedRuns("Begin editing",
@@ -243,8 +242,8 @@ TEST_F(OmniboxPerfTest, TestTextFieldDidBeginEditing) {
 // Measures the amount of time it takes to type in the first character
 // into the Omnibox.
 TEST_F(OmniboxPerfTest, TestTypeOneCharInTextField) {
-  OmniboxTextFieldIOS* textField = (OmniboxTextFieldIOS*)FindViewByClass(
-      [toolbar_ view], [OmniboxTextFieldIOS class]);
+  OmniboxTextfield* textField = (OmniboxTextfield*)FindViewByClass(
+      [toolbar_ view], [OmniboxTextfield class]);
   RepeatTimedRuns("Type first character",
                   ^base::TimeDelta(int index) {
                     EnableKeyboard(textField);
@@ -259,8 +258,8 @@ TEST_F(OmniboxPerfTest, TestTypeOneCharInTextField) {
 // Measures the amount of time it takes to type in the word "google" one
 // letter at a time.
 TEST_F(OmniboxPerfTest, TestTypingInTextField) {
-  OmniboxTextFieldIOS* textField = (OmniboxTextFieldIOS*)FindViewByClass(
-      [toolbar_ view], [OmniboxTextFieldIOS class]);
+  OmniboxTextfield* textField = (OmniboxTextfield*)FindViewByClass(
+      [toolbar_ view], [OmniboxTextfield class]);
   // The characters to type into the omnibox text field.
   NSArray* inputCharacters =
       [NSArray arrayWithObjects:@"g", @"o", @"o", @"g", @"l", @"e", nil];
