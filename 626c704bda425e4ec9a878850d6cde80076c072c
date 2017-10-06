@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d151382_756dd531",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-06T05:30:44Z",
+      "side": 1,
+      "message": "just a nit:\n\nI\u0027m not sure how important this description is. \u0027Component\u0027 is a bit ambiguous. It can be mistaken to be \u0027path\u0027, \u0027host\u0027, \u0027query\u0027, \u0027scheme\u0027, etc instead of their sub-components (if there are multiple components as is the case of path, host, query, etc).",
+      "range": {
+        "startLine": 745,
+        "startChar": 0,
+        "endLine": 748,
+        "endChar": 30
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209f1303_2c05378c",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3701,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-06T05:30:44Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you need \u0027u8\u0027 to get \\uxxxx to be correctly interpreted? \n\nu8\"......\\u05D0....\"",
+      "range": {
+        "startLine": 3700,
+        "startChar": 4,
+        "endLine": 3701,
+        "endChar": 43
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be087ae3_d1df32f8",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3711,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-06T05:30:44Z",
+      "side": 1,
+      "message": "nit: It seems that this comment needs directional isolate or overrides characters embedded to \nget them rendered as you intended.  \n\nAn alternative would be to give up using real Hebrew characters in comment. Instead, just \nuse \\uxxxx. \n\nwww.\\u05D5\\u05d4/\\u05d3\\u05d2.\\u05d1\\u05d0abc/def?\\u05d9\\u05d8\u003d\\u05d7\\u05d6",
+      "range": {
+        "startLine": 3711,
+        "startChar": 23,
+        "endLine": 3711,
+        "endChar": 48
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4017bd16_f5584666",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3740,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-06T05:30:44Z",
+      "side": 1,
+      "message": "nit: same problem here as above.",
+      "range": {
+        "startLine": 3740,
+        "startChar": 22,
+        "endLine": 3740,
+        "endChar": 48
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb98318_58306167",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 3762,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-10-06T05:30:44Z",
+      "side": 1,
+      "message": "again, u8 is necessary, isn\u0027t it?   Ditto for other UTF-8 strings with \u0027\\uxxxx\u0027.",
+      "range": {
+        "startLine": 3759,
+        "startChar": 6,
+        "endLine": 3762,
+        "endChar": 28
+      },
+      "revId": "626c704bda425e4ec9a878850d6cde80076c072c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
