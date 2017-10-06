@@ -399,4 +399,42 @@ TEST(EDIDParserTest, ParseChromaticityCoordinates) {
                       kEvePrimaries);
 }
 
+TEST(EDIDParserTest, GetGamma) {
+  const std::vector<uint8_t> edid_normal_display(
+      kNormalDisplay, kNormalDisplay + charsize(kNormalDisplay));
+  EXPECT_EQ(2.2, GetGammaValue(edid_normal_display));
+
+  const std::vector<uint8_t> edid_internal_display(
+      kInternalDisplay, kInternalDisplay + charsize(kInternalDisplay));
+  EXPECT_EQ(2.2, GetGammaValue(edid_internal_display));
+
+  const std::vector<uint8_t> edid_hpz32x(kHPz32x, kHPz32x + charsize(kHPz32x));
+  EXPECT_EQ(2.2, GetGammaValue(edid_hpz32x));
+
+  const std::vector<uint8_t> edid_samus(kSamus, kSamus + charsize(kSamus));
+  EXPECT_EQ(2.5, GetGammaValue(edid_samus));
+
+  const std::vector<uint8_t> edid_eve(kEve, kEve + charsize(kEve));
+  EXPECT_EQ(2.2, GetGammaValue(edid_eve));
+}
+
+TEST(EDIDParserTest, GetBitsPerChannel) {
+  const std::vector<uint8_t> edid_normal_display(
+      kNormalDisplay, kNormalDisplay + charsize(kNormalDisplay));
+  EXPECT_EQ(10, GetBitsPerChannel(edid_normal_display));
+
+  const std::vector<uint8_t> edid_internal_display(
+      kInternalDisplay, kInternalDisplay + charsize(kInternalDisplay));
+  EXPECT_EQ(0, GetBitsPerChannel(edid_internal_display));
+
+  const std::vector<uint8_t> edid_hpz32x(kHPz32x, kHPz32x + charsize(kHPz32x));
+  EXPECT_EQ(10, GetBitsPerChannel(edid_hpz32x));
+
+  const std::vector<uint8_t> edid_samus(kSamus, kSamus + charsize(kSamus));
+  EXPECT_EQ(8, GetBitsPerChannel(edid_samus));
+
+  const std::vector<uint8_t> edid_eve(kEve, kEve + charsize(kEve));
+  EXPECT_EQ(8, GetBitsPerChannel(edid_eve));
+}
+
 }  // namespace display
