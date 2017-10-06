@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd2d78e_d404e3c9",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:35:30Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mind repeating some of the comments of the function here too:\n\nCorresponds to a ServiceWorkerContainer. We notify it when ServiceWorkerContainer#controller should be changed.",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5e0d6f_4186180d",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T08:35:30Z",
+      "side": 1,
+      "message": "Say about about |used_features| too",
+      "revId": "bab3d2b2dd939c96b0a9fdce86b14f9fe929baa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
