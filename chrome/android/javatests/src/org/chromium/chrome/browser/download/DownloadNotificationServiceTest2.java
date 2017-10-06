@@ -72,9 +72,20 @@ public class DownloadNotificationServiceTest2 {
     @Feature({"Download"})
     public void testBasicDownloadFlow() {
         // Download is in-progress.
-        mDownloadNotificationService.notifyDownloadProgress(ID1, "test",
-                new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE), 100L, 1L, 1L, true, true,
-                false, null);
+        DownloadInfo inProgressDownloadInfo =
+                new DownloadInfo.Builder()
+                        .setContentId(ID1)
+                        .setFileName("test")
+                        .setProgress(new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE))
+                        .setBytesReceived(100L)
+                        .setTimeRemainingInMillis(1L)
+                        .setStartTime(1L)
+                        .setIsOffTheRecord(true)
+                        .setCanDownloadWhileMetered(true)
+                        .setIsTransient(false)
+                        .setIcon(null)
+                        .build();
+        mDownloadNotificationService.notifyDownloadProgress(inProgressDownloadInfo);
         mDownloadForegroundServiceManager.onServiceConnected();
 
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
@@ -84,8 +95,16 @@ public class DownloadNotificationServiceTest2 {
         assertTrue(mDownloadNotificationService.mDownloadsInProgress.contains(ID1));
 
         // Download is paused.
-        mDownloadNotificationService.notifyDownloadPaused(ID1, "test", true /* isResumable*/,
-                false /* isAutoResumable */, true, false, null, false);
+        DownloadInfo pausedDownloadInfo = new DownloadInfo.Builder()
+                                                  .setContentId(ID1)
+                                                  .setFileName("test")
+                                                  .setIsResumable(true)
+                                                  .setIsAutoResumable(false)
+                                                  .setIsOffTheRecord(true)
+                                                  .setIsTransient(false)
+                                                  .setIcon(null)
+                                                  .build();
+        mDownloadNotificationService.notifyDownloadPaused(pausedDownloadInfo, false);
 
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
         assertFalse(mDownloadForegroundServiceManager.mDownloadUpdateQueue.containsKey(
@@ -93,9 +112,11 @@ public class DownloadNotificationServiceTest2 {
         assertFalse(mDownloadNotificationService.mDownloadsInProgress.contains(ID1));
 
         // Download is again in-progress.
-        mDownloadNotificationService.notifyDownloadProgress(ID1, "test",
-                new Progress(20, 100L, OfflineItemProgressUnit.PERCENTAGE), 100L, 1L, 1L, true,
-                true, false, null);
+        inProgressDownloadInfo =
+                DownloadInfo.Builder.fromDownloadInfo(inProgressDownloadInfo)
+                        .setProgress(new Progress(20, 100L, OfflineItemProgressUnit.PERCENTAGE))
+                        .build();
+        mDownloadNotificationService.notifyDownloadProgress(inProgressDownloadInfo);
         mDownloadForegroundServiceManager.onServiceConnected();
 
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
@@ -104,8 +125,19 @@ public class DownloadNotificationServiceTest2 {
         assertTrue(mDownloadNotificationService.mDownloadsInProgress.contains(ID1));
 
         // Download is successful.
-        mDownloadNotificationService.notifyDownloadSuccessful(
-                ID1, "", "test", 1L, true, true, true, null, "", "");
+        DownloadInfo successfulDownloadInfo = new DownloadInfo.Builder()
+                                                      .setContentId(ID1)
+                                                      .setFilePath("")
+                                                      .setFileName("test")
+                                                      .setSystemDownloadId(1L)
+                                                      .setIsOffTheRecord(true)
+                                                      .setIsSupportedMimeType(true)
+                                                      .setIsOpenable(true)
+                                                      .setIcon(null)
+                                                      .setOriginalUrl("")
+                                                      .setReferrer("")
+                                                      .build();
+        mDownloadNotificationService.notifyDownloadSuccessful(successfulDownloadInfo);
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
         assertFalse(mDownloadForegroundServiceManager.mDownloadUpdateQueue.containsKey(
                 notificationId1));
@@ -117,9 +149,20 @@ public class DownloadNotificationServiceTest2 {
     @Feature({"Download"})
     public void testDownloadPendingAndCancelled() {
         // Download is in-progress.
-        mDownloadNotificationService.notifyDownloadProgress(ID1, "test",
-                new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE), 100L, 1L, 1L, true, true,
-                false, null);
+        DownloadInfo inProgressDownloadInfo =
+                new DownloadInfo.Builder()
+                        .setContentId(ID1)
+                        .setFileName("test")
+                        .setProgress(new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE))
+                        .setBytesReceived(100L)
+                        .setTimeRemainingInMillis(1L)
+                        .setStartTime(1L)
+                        .setIsOffTheRecord(true)
+                        .setCanDownloadWhileMetered(true)
+                        .setIsTransient(false)
+                        .setIcon(null)
+                        .build();
+        mDownloadNotificationService.notifyDownloadProgress(inProgressDownloadInfo);
         mDownloadForegroundServiceManager.onServiceConnected();
 
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
@@ -129,8 +172,16 @@ public class DownloadNotificationServiceTest2 {
         assertTrue(mDownloadNotificationService.mDownloadsInProgress.contains(ID1));
 
         // Download is interrupted and now is pending.
-        mDownloadNotificationService.notifyDownloadPaused(ID1, "test", true /* isResumable */,
-                true /* isAutoResumable */, true, false, null, false);
+        DownloadInfo pausedDownloadInfo = new DownloadInfo.Builder()
+                                                  .setContentId(ID1)
+                                                  .setFileName("test")
+                                                  .setIsResumable(true)
+                                                  .setIsAutoResumable(true)
+                                                  .setIsOffTheRecord(true)
+                                                  .setIsTransient(false)
+                                                  .setIcon(null)
+                                                  .build();
+        mDownloadNotificationService.notifyDownloadPaused(pausedDownloadInfo, false);
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
         assertTrue(mDownloadForegroundServiceManager.mDownloadUpdateQueue.containsKey(
                 notificationId1));
@@ -150,9 +201,20 @@ public class DownloadNotificationServiceTest2 {
     @Feature({"Download"})
     public void testDownloadInterruptedAndFailed() {
         // Download is in-progress.
-        mDownloadNotificationService.notifyDownloadProgress(ID1, "test",
-                new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE), 100L, 1L, 1L, true, true,
-                false, null);
+        DownloadInfo inProgressDownloadInfo =
+                new DownloadInfo.Builder()
+                        .setContentId(ID1)
+                        .setFileName("test")
+                        .setProgress(new Progress(1, 100L, OfflineItemProgressUnit.PERCENTAGE))
+                        .setBytesReceived(100L)
+                        .setTimeRemainingInMillis(1L)
+                        .setStartTime(1L)
+                        .setIsOffTheRecord(true)
+                        .setCanDownloadWhileMetered(true)
+                        .setIsTransient(false)
+                        .setIcon(null)
+                        .build();
+        mDownloadNotificationService.notifyDownloadProgress(inProgressDownloadInfo);
         mDownloadForegroundServiceManager.onServiceConnected();
 
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
@@ -162,8 +224,16 @@ public class DownloadNotificationServiceTest2 {
         assertTrue(mDownloadNotificationService.mDownloadsInProgress.contains(ID1));
 
         // Download is interrupted but because it is not resumable, fails.
-        mDownloadNotificationService.notifyDownloadPaused(ID1, "test", false /* isResumable*/,
-                true /* isAutoResumable */, true, false, null, false);
+        DownloadInfo pausedDownloadInfo = new DownloadInfo.Builder()
+                                                  .setContentId(ID1)
+                                                  .setFileName("test")
+                                                  .setIsResumable(false)
+                                                  .setIsAutoResumable(false)
+                                                  .setIsOffTheRecord(true)
+                                                  .setIsTransient(false)
+                                                  .setIcon(null)
+                                                  .build();
+        mDownloadNotificationService.notifyDownloadPaused(pausedDownloadInfo, false);
         assertEquals(1, mDownloadNotificationService.getNotificationIds().size());
         assertFalse(mDownloadForegroundServiceManager.mDownloadUpdateQueue.containsKey(
                 notificationId1));
