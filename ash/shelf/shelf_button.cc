@@ -461,11 +461,16 @@ void ShelfButton::OnGestureEvent(ui::GestureEvent* event) {
   switch (event->type()) {
     case ui::ET_GESTURE_TAP_DOWN:
       AddState(STATE_HOVERED);
-      touch_drag_timer_.Start(
-          FROM_HERE,
-          base::TimeDelta::FromMilliseconds(kTouchDragTimeThresholdMs),
-          base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
-      event->SetHandled();
+      // Only need to enlarge the shelf items if shelf is not auto-hide, since
+      // shelf items can only be dragged if shelf is not auto-hide.
+      if (shelf_view_->shelf()->auto_hide_behavior() ==
+          SHELF_AUTO_HIDE_BEHAVIOR_NEVER) {
+        touch_drag_timer_.Start(
+            FROM_HERE,
+            base::TimeDelta::FromMilliseconds(kTouchDragTimeThresholdMs),
+            base::Bind(&ShelfButton::OnTouchDragTimer, base::Unretained(this)));
+        event->SetHandled();
+      }
       break;
     case ui::ET_GESTURE_END:
       touch_drag_timer_.Stop();
