@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a812afd_a9033327",
+        "filename": "components/viz/common/switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "I wouldn\u0027t put this comment about linux here, cuz it will go stale.",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2579c470_4d54bbff",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "I don\u0027t know that you need to do this. It\u0027s okay if the flag doesn\u0027t work",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29363944_4439303d",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1497,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "I always struggle with these mojo pointers. Can you comment tha tthis is setting up the FrameSinkManagerClient, with a deferred pointer to the FrameSinkManager. Then the opposite on the PostTask?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b8555c_daf2af8e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "nit: constructor init instead of assign?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996d4ec6_567f572d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "Remind me of the ways of mojo.. gpu_ is being set on the IO thread, how do this work if it races?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc68dc97_e5344422",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "Followup: Could we do that in the in-process one also and remove this sooner?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0abecf_e2bd2a00",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "Fix how?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3eb3b23_bbfdb76d",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "It\u0027d be really helpful if each NOTIMPLMENTED and NOTREACHED had a comment saying what should be done roughly.",
+      "range": {
+        "startLine": 161,
+        "startChar": 5,
+        "endLine": 161,
+        "endChar": 6
+      },
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3461b6a0_c0a6b1b2",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "cuz the FSM is in the viz process",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03fb09b_828e348f",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "tbh i thot this interface was for non-viz, am i wrong?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12889b8_f5688613",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "This impl should retry. If it just returns the client will hang waiting.\n\nYou could TODO if u dont wanna do so yet, and NOTIMPLEMENTED",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3f4c61_ff842b3e",
+        "filename": "content/browser/compositor/viz_process_transport_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "TODO about the worker?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c58fac_f1a576e0",
+        "filename": "content/browser/compositor/viz_process_transport_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:58:42Z",
+      "side": 1,
+      "message": "flat_map?",
+      "revId": "6c5fd7247d2e607b1f775e0b5e56e248fcd1c424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
