@@ -26,6 +26,12 @@ CrSettingsBrowserTest.prototype = {
     throw 'this is abstract and should be overridden by subclasses';
   },
 
+  /**
+   * Dedicated a11y tests exists under ./a11y/ folder.
+   * @override
+   */
+  runAccessibilityChecks: false,
+
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
     'ensure_lazy_loaded.js',
@@ -1378,9 +1384,6 @@ CrSettingsNonExistentRouteTest.prototype = {
 
   /** @override */
   browsePreload: 'chrome://settings/non/existent/route',
-
-  /** @override */
-  runAccessibilityChecks: false,
 };
 
 // Failing on ChromiumOS dbg. https://crbug.com/709442
@@ -1410,9 +1413,6 @@ CrSettingsRouteDynamicParametersTest.prototype = {
 
   /** @override */
   browsePreload: 'chrome://settings/search?guid=a%2Fb&foo=42',
-
-  /** @override */
-  runAccessibilityChecks: false,
 };
 
 TEST_F('CrSettingsRouteDynamicParametersTest', 'All', function() {

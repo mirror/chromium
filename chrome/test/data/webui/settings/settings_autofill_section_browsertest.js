@@ -102,11 +102,7 @@ SettingsAutofillSectionBrowserTest.prototype = {
     'ensure_lazy_loaded.js',
   ]),
 
-  /**
-   * TODO(hcarmona): Increases speed, but disables A11y checks. Enable checks
-   * when we "accessibilityIssuesAreErrors: true" for all tests.
-   * @override
-   */
+  /** @override */
   runAccessibilityChecks: false,
 
   /** @override */

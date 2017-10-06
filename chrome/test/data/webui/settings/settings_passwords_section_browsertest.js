@@ -34,6 +34,9 @@ SettingsPasswordSectionBrowserTest.prototype = {
   ]),
 
   /** @override */
+  runAccessibilityChecks: false,
+
+  /** @override */
   setUp: function() {
     PolymerTest.prototype.setUp.call(this);
     // Test is run on an individual element that won't have a page language.

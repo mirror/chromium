@@ -13,6 +13,10 @@ function PolymerInteractiveUITest() {}
 PolymerInteractiveUITest.prototype = {
   __proto__: PolymerTest.prototype,
 
+  /** @override */
+  runAccessibilityChecks: false,
+
+  /** @override */
   testGenPreamble: function() {
     // Must explicitly focus the web contents before running the test on Mac.
     // See: https://crbug.com/642467.
