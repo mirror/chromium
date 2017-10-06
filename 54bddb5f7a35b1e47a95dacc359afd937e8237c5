@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fd5695b_b878c5da",
+        "filename": "ui/platform_window/mojo/text_input_state.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T17:01:34Z",
+      "side": 1,
+      "message": "Is there a reason for the \u0027text\u0027 portion of the namespace? \u0027text\u0027 doesn\u0027t match the directory and no one else uses that namespace. Could this be ui.mojom?",
+      "range": {
+        "startLine": 5,
+        "startChar": 7,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "54bddb5f7a35b1e47a95dacc359afd937e8237c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
