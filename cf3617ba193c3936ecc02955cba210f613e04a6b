@@ -138,6 +138,24 @@
       "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becbd820_afa6157f",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-10-06T14:37:43Z",
+      "side": 1,
+      "message": "(The discussion threads seems to have drifted a bit here, so I\u0027d picked this one at random...)\n\nMaybe an option to consider here would be to simply move these methods out of ComputedStyle - it not overly logical that they live here in the first place!\nThe inputs to the \"transform evaluation\" are the ComputedStyle as well as layout data (which you need to resolve transform-origin and other percentages.) From a pipeline perspective this is a paint thing, but I think we\u0027d need it to straddle layout and paint - at least for now. Seems arguably better that computing and passing a shipping container full of layout data into a method on ComputedStyle...",
+      "parentUuid": "8354626e_91cf2404",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
