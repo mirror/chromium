@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "19d5ec39_f3ce0d81",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "Is |sample_rate| passed from JS layer? Should we do range-check? (I assume |sample_rate| should be \u003e 0)",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b193ef1_c86ff6b2",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "inputBuses -\u003e input_buses\noutputBuses -\u003e output_buses",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b970ee1_89b1e62a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletGlobalScope.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "\u0027o\u0027 and \u0027c\u0027 look confusing and they have the same type. Can we use non-abbreviated words, for example, output_index/channel_index, output_pos/channel_pos?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c302dad4_f9e2567e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "How about using a default value in the spec-level?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "905ff23c_eb59e0db",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 25
@@ -81,6 +149,80 @@
       "writtenOn": "2017-10-06T02:16:14Z",
       "side": 1,
       "message": "// ActiveScriptWrappable",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9b7c64_fb0c6fee",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNodeOptions.idl",
+        "patchSetId": 25
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "The spec doesn\u0027t define |outputChannelCount|. Will this be defined in the spec?",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df02d091_e0bd33a1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletProcessor.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "Indent",
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74118aad_52e5c752",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "\";\" is not neccesary.",
+      "range": {
+        "startLine": 1036,
+        "startChar": 1,
+        "endLine": 1036,
+        "endChar": 2
+      },
+      "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1901d832_262ddacd",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-10-06T05:36:00Z",
+      "side": 1,
+      "message": "Why don\u0027t we use WorkletMessagingProxy() for the existence check?",
       "revId": "141222758402dc9c530de4a5da61a1745239ffa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
