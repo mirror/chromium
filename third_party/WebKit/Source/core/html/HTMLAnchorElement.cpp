@@ -131,6 +131,9 @@ static void AppendServerMapMousePosition(StringBuilder& url, Event* event) {
   if (!layout_object || !layout_object->IsBox())
     return;
 
+  if (url.ToString().Contains("javascript:"))
+    return;
+
   // The coordinates sent in the query string are relative to the height and
   // width of the image element, ignoring CSS transform/zoom.
   LayoutPoint map_point(layout_object->AbsoluteToLocal(
