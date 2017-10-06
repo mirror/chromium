@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313a809f_daec364a",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-06T13:48:31Z",
+      "side": 1,
+      "message": "|special_element| is actually an alias for |Node\u0026 runner| which is not null.",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ab3559_01cae773",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-06T13:48:31Z",
+      "side": 1,
+      "message": "I suppose |IsHTMLSpanElement(top_node) \u003d\u003d true| means that top_node can\u0027t be null.",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7945676e_4419c7ac",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-10-06T13:48:31Z",
+      "side": 1,
+      "message": "Should we save the value of |NonPseudoNode()| to a local variable? It is called few times in this function.",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
