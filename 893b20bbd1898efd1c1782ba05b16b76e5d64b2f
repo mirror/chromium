@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aabdb3a3_e4e501c0",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-06T19:44:32Z",
+      "side": 1,
+      "message": "nullptr",
+      "range": {
+        "startLine": 328,
+        "startChar": 32,
+        "endLine": 328,
+        "endChar": 36
+      },
+      "revId": "893b20bbd1898efd1c1782ba05b16b76e5d64b2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
