@@ -503,14 +503,14 @@ TEST_F(UiSceneManagerTest, PropagateContentBoundsOnStart) {
               OnContentScreenBoundsChanged(
                   SizeFsAreApproximatelyEqual(expected_bounds, kTolerance)));
 
-  manager_->OnProjMatrixChanged(kProjMatrix);
+  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, PropagateContentBoundsOnFullscreen) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   AnimateBy(MsToDelta(0));
-  manager_->OnProjMatrixChanged(kProjMatrix);
+  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
   manager_->SetFullscreen(true);
   AnimateBy(MsToDelta(0));
 
@@ -519,7 +519,7 @@ TEST_F(UiSceneManagerTest, PropagateContentBoundsOnFullscreen) {
               OnContentScreenBoundsChanged(
                   SizeFsAreApproximatelyEqual(expected_bounds, kTolerance)));
 
-  manager_->OnProjMatrixChanged(kProjMatrix);
+  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, HitTestableElements) {
@@ -532,7 +532,7 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   AnimateBy(MsToDelta(0));
-  manager_->OnProjMatrixChanged(kProjMatrix);
+  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
 
   UiElement* content_quad = scene_->GetUiElementByName(kContentQuad);
   gfx::SizeF content_quad_size = content_quad->size();
@@ -542,7 +542,7 @@ TEST_F(UiSceneManagerTest, DontPropagateContentBoundsOnNegligibleChange) {
 
   EXPECT_CALL(*browser_, OnContentScreenBoundsChanged(testing::_)).Times(0);
 
-  manager_->OnProjMatrixChanged(kProjMatrix);
+  manager_->OnProjMatrixChanged(kPixelDaydreamProjMatrix);
 }
 
 TEST_F(UiSceneManagerTest, RendererUsesCorrectOpacity) {
