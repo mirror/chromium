@@ -25,6 +25,7 @@ namespace proximity_auth {
 // used solely for the lock screen anymore.
 class ScreenlockBridge {
  public:
+  // TODO: try using this.
   // User pod icons supported by lock screen / signin screen UI.
   enum UserPodCustomIcon {
     USER_POD_CUSTOM_ICON_NONE,

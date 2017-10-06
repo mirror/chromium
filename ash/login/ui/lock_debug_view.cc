@@ -34,6 +34,7 @@ struct UserMetadata {
 
   AccountId account_id;
   bool enable_pin = false;
+  bool enable_click_to_unlock = false;
   views::View* view = nullptr;
 };
 
@@ -107,6 +108,15 @@ class LockDebugView::DebugDataDispatcherTransformer
                                            debug_user->enable_pin);
   }
 
+  // Enables click to auth for the user at |user_index|.
+  void ToggleClickToUnlockStateForUserIndex(size_t user_index) {
+    DCHECK(user_index >= 0 && user_index < debug_users_.size());
+    UserMetadata* debug_user = &debug_users_[user_index];
+    debug_user->enable_click_to_unlock = !debug_user->enable_click_to_unlock;
+    debug_dispatcher_.SetClickToUnlockEnabledForUser(
+        debug_user->account_id, debug_user->enable_click_to_unlock);
+  }
+
   void ToggleLockScreenNoteButton() {
     if (lock_screen_note_state_ == mojom::TrayActionState::kAvailable) {
       lock_screen_note_state_ = mojom::TrayActionState::kNotAvailable;
@@ -139,9 +149,25 @@ class LockDebugView::DebugDataDispatcherTransformer
       }
     }
   }
+  void OnClickToUnlockEnabledForUserChanged(const AccountId& user,
+                                            bool enabled) override {
+    // Forward notification only if the user is currently being shown.
+    for (size_t i = 0u; i < debug_users_.size(); ++i) {
+      if (debug_users_[i].account_id == user) {
+        debug_users_[i].enable_click_to_unlock = enabled;
+        debug_dispatcher_.SetClickToUnlockEnabledForUser(user, enabled);
+        break;
+      }
+    }
+  }
   void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override {
     lock_screen_note_state_ = state;
     debug_dispatcher_.SetLockScreenNoteState(state);
+  }
+  void OnShowCustomIcon(
+      const AccountId& user,
+      const mojom::UserPodCustomIconOptionsPtr& icon) override {
+    debug_dispatcher_.ShowCustomIcon(user, icon);
   }
 
  private:
@@ -179,18 +205,21 @@ LockDebugView::LockDebugView(mojom::TrayActionState initial_note_action_state,
       new views::BoxLayout(views::BoxLayout::kHorizontal));
   AddChildView(debug_row_);
 
+  user_column_ = new NonAccessibleView();
+  user_column_->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kVertical));
+  debug_row_->AddChildView(user_column_);
+  RebuildDebugUserColumn();
+
+  auto* spacer = new NonAccessibleView();
+  spacer->SetPreferredSize(gfx::Size(10, 10));
+  debug_row_->AddChildView(spacer);
+
   toggle_blur_ = AddButton("Blur");
   toggle_note_action_ = AddButton("Toggle note action");
   add_user_ = AddButton("Add user");
   remove_user_ = AddButton("Remove user");
   toggle_auth_ = AddButton("Force fail auth");
-
-  user_column_ = new NonAccessibleView();
-  user_column_->SetLayoutManager(
-      new views::BoxLayout(views::BoxLayout::kVertical));
-  debug_row_->AddChildView(user_column_);
-
-  RebuildDebugUserColumn();
 }
 
 LockDebugView::~LockDebugView() = default;
@@ -247,17 +276,34 @@ void LockDebugView::ButtonPressed(views::Button* sender,
     if (user_column_entries_toggle_pin_[i] == sender)
       debug_data_dispatcher_->TogglePinStateForUserIndex(i);
   }
+
+  // Enable click auth.
+  for (size_t i = 0u; i < user_column_entries_enable_click_auth_.size(); ++i) {
+    if (user_column_entries_enable_click_auth_[i] == sender)
+      debug_data_dispatcher_->ToggleClickToUnlockStateForUserIndex(i);
+  }
 }
 
 void LockDebugView::RebuildDebugUserColumn() {
   user_column_->RemoveAllChildViews(true /*delete_children*/);
   user_column_entries_toggle_pin_.clear();
+  user_column_entries_enable_click_auth_.clear();
 
   for (size_t i = 0u; i < num_users_; ++i) {
+    auto* row = new NonAccessibleView();
+    row->SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
+
     views::View* toggle_pin =
         AddButton("Toggle PIN", false /*add_to_debug_row*/);
     user_column_entries_toggle_pin_.push_back(toggle_pin);
-    user_column_->AddChildView(toggle_pin);
+    row->AddChildView(toggle_pin);
+
+    views::View* toggle_click_auth =
+        AddButton("Click to auth", false /*add_to_debug_row*/);
+    user_column_entries_enable_click_auth_.push_back(toggle_click_auth);
+    row->AddChildView(toggle_click_auth);
+
+    user_column_->AddChildView(row);
   }
 }
 

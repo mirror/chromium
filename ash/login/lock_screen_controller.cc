@@ -73,18 +73,25 @@ void LockScreenController::ClearErrors() {
 void LockScreenController::ShowUserPodCustomIcon(
     const AccountId& account_id,
     mojom::UserPodCustomIconOptionsPtr icon) {
-  NOTIMPLEMENTED();
+  DataDispatcher()->ShowCustomIcon(account_id, icon);
 }
 
 void LockScreenController::HideUserPodCustomIcon(const AccountId& account_id) {
-  NOTIMPLEMENTED();
+  auto icon = mojom::UserPodCustomIconOptions::New();
+  icon->id = "none";  // See LoginPasswordView::GetStateForId.
+  DataDispatcher()->ShowCustomIcon(account_id, icon);
 }
 
 void LockScreenController::SetAuthType(
     const AccountId& account_id,
     proximity_auth::mojom::AuthType auth_type,
     const base::string16& initial_value) {
-  NOTIMPLEMENTED();
+  if (auth_type == proximity_auth::mojom::AuthType::USER_CLICK) {
+    DataDispatcher()->SetClickToUnlockEnabledForUser(account_id,
+                                                     true /*enabled*/);
+  } else {
+    NOTIMPLEMENTED();
+  }
 }
 
 void LockScreenController::LoadUsers(std::vector<mojom::LoginUserInfoPtr> users,
@@ -129,10 +136,12 @@ void LockScreenController::AuthenticateUser(
       &LockScreenController::OnGetSystemSalt, base::Unretained(this)));
 }
 
-void LockScreenController::AttemptUnlock(const AccountId& account_id) {
+void LockScreenController::AttemptUnlock(
+    const AccountId& account_id,
+    mojom::LockScreenClient::AttemptUnlockCallback callback) {
   if (!lock_screen_client_)
     return;
-  lock_screen_client_->AttemptUnlock(account_id);
+  lock_screen_client_->AttemptUnlock(account_id, std::move(callback));
 }
 
 void LockScreenController::HardlockPod(const AccountId& account_id) {

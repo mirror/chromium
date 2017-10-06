@@ -76,8 +76,8 @@ TEST_F(LockScreenControllerTest, RequestEasyUnlock) {
   AccountId id = AccountId::FromUserEmail("user1@test.com");
 
   // Verify AttemptUnlock mojo call is run with the same account id.
-  EXPECT_CALL(*client, AttemptUnlock(id));
-  controller->AttemptUnlock(id);
+  EXPECT_CALL(*client, AttemptUnlock_(id, testing::_));
+  controller->AttemptUnlock(id, base::BindOnce([](bool success) {}));
   base::RunLoop().RunUntilIdle();
 
   // Verify HardlockPod mojo call is run with the same account id.

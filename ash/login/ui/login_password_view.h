@@ -6,7 +6,9 @@
 #define ASH_LOGIN_UI_LOGIN_PASSWORD_VIEW_H_
 
 #include "ash/ash_export.h"
+#include "ash/login/ui/animated_rounded_image_view.h"
 #include "ash/public/interfaces/login_user_info.mojom.h"
+#include "ash/public/interfaces/user_info.mojom.h"
 #include "base/strings/string16.h"
 #include "ui/views/controls/button/button.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -17,6 +19,7 @@ class Button;
 class ButtonListener;
 class ImageButton;
 class Separator;
+class Textfield;
 }  // namespace views
 
 namespace ash {
@@ -47,9 +50,33 @@ class ASH_EXPORT LoginPasswordView : public views::View,
     LoginPasswordView* view_;
   };
 
+  enum class EasyUnlockState {
+    kNone,
+    kHardlocked,
+    // kHardlockedHover,
+    // kHardlockedPressed,
+    kLocked,
+    // kLockedHover,
+    // kLockedPressed,
+    kLockedToBeActivated,
+    // kLockedToBeActivatedHover,
+    // kLockedToBeActivatedPressed,
+    kLockedWithProximityHint,
+    // kLockedWithProximityHintHover,
+    // kLockedWithProximityHintPressed,
+    kUnlocked,
+    // kUnlockedHover,
+    // kUnlockedPressed,
+    kSpinner,
+  };
+
   using OnPasswordSubmit =
       base::RepeatingCallback<void(const base::string16& password)>;
   using OnPasswordTextChanged = base::RepeatingCallback<void(bool)>;
+  using OnEasyUnlockIconHovered = base::RepeatingClosure;
+  using OnEasyUnlockIconTapped = base::RepeatingClosure;
+
+  static EasyUnlockState GetStateForId(const std::string& id);
 
   // Must call |Init| after construction.
   LoginPasswordView();
@@ -59,7 +86,12 @@ class ASH_EXPORT LoginPasswordView : public views::View,
   // |on_password_text_changed| is called when the text in the password field
   // changes.
   void Init(const OnPasswordSubmit& on_submit,
-            const OnPasswordTextChanged& on_password_text_changed);
+            const OnPasswordTextChanged& on_password_text_changed,
+            const OnEasyUnlockIconHovered& on_easy_unlock_icon_hovered,
+            const OnEasyUnlockIconTapped& on_easy_unlock_icon_tapped);
+
+  // Change the active icon for easy unlock.
+  void SetEasyUnlockIcon(EasyUnlockState state);
 
   // Updates accessibility information for |user|.
   void UpdateForUser(const mojom::LoginUserInfoPtr& user);
@@ -98,6 +130,7 @@ class ASH_EXPORT LoginPasswordView : public views::View,
                        const base::string16& new_contents) override;
 
  private:
+  class EasyUnlockIcon;
   friend class TestApi;
 
   // Submits the current password field text to mojo call and resets the text
@@ -106,9 +139,14 @@ class ASH_EXPORT LoginPasswordView : public views::View,
 
   OnPasswordSubmit on_submit_;
   OnPasswordTextChanged on_password_text_changed_;
+  OnEasyUnlockIconHovered on_easy_unlock_icon_hovered_;
+  OnEasyUnlockIconTapped on_easy_unlock_icon_tapped_;
+
   views::Textfield* textfield_ = nullptr;
   views::ImageButton* submit_button_ = nullptr;
   views::Separator* separator_ = nullptr;
+  EasyUnlockIcon* easy_unlock_icon_ = nullptr;
+  views::View* easy_unlock_right_margin_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(LoginPasswordView);
 };

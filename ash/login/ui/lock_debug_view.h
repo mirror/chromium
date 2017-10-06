@@ -64,6 +64,7 @@ class LockDebugView : public views::View, public views::ButtonListener {
 
   views::View* user_column_ = nullptr;
   std::vector<views::View*> user_column_entries_toggle_pin_;
+  std::vector<views::View*> user_column_entries_enable_click_auth_;
 
   DISALLOW_COPY_AND_ASSIGN(LockDebugView);
 };

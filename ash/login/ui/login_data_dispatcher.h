@@ -10,6 +10,7 @@
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/login_user_info.mojom.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
+#include "ash/public/interfaces/user_info.mojom.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 
@@ -46,8 +47,17 @@ class ASH_EXPORT LoginDataDispatcher {
     virtual void OnPinEnabledForUserChanged(const AccountId& user,
                                             bool enabled);
 
+    // Called when the given user can click their pod to unlock.
+    virtual void OnClickToUnlockEnabledForUserChanged(const AccountId& user,
+                                                      bool enabled);
+
     // Called when the lock screen note state changes.
     virtual void OnLockScreenNoteStateChanged(mojom::TrayActionState state);
+
+    // Called when a custom icon should be display.
+    virtual void OnShowCustomIcon(
+        const AccountId& user,
+        const mojom::UserPodCustomIconOptionsPtr& icon);
   };
 
   LoginDataDispatcher();
@@ -60,7 +70,12 @@ class ASH_EXPORT LoginDataDispatcher {
 
   void SetPinEnabledForUser(const AccountId& user, bool enabled);
 
+  void SetClickToUnlockEnabledForUser(const AccountId& user, bool enabled);
+
   void SetLockScreenNoteState(mojom::TrayActionState state);
+
+  void ShowCustomIcon(const AccountId& user,
+                      const mojom::UserPodCustomIconOptionsPtr& icon);
 
  private:
   base::ObserverList<Observer> observers_;

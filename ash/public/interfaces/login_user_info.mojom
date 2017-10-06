@@ -18,6 +18,7 @@ enum MultiProfileUserBehavior {
 };
 
 // Information about the custom icon in the user pod.
+// TODO(jdufault): Remove |is_trial_run|, it is unused.
 struct UserPodCustomIconOptions {
   string id;
   mojo.common.mojom.String16 tooltip;

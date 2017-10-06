@@ -4,6 +4,8 @@
 
 #include "ash/login/ui/login_password_view.h"
 
+#include "ash/login/ui/hover_notifier.h"
+#include "ash/login/ui/image_parser.h"
 #include "ash/login/ui/login_constants.h"
 #include "ash/login/ui/non_accessible_view.h"
 #include "ash/resources/vector_icons/vector_icons.h"
@@ -12,11 +14,20 @@
 #include "ash/system/user/button_from_view.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "third_party/skia/include/core/SkImageInfo.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/compositor/layer.h"
+#include "ui/compositor/layer_animation_element.h"
+#include "ui/compositor/layer_animation_sequence.h"
+#include "ui/compositor/layer_animator.h"
+#include "ui/compositor/scoped_layer_animation_settings.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/keycodes/dom/dom_code.h"
+#include "ui/gfx/interpolated_transform.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/resources/grit/ui_resources.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/button/image_button.h"
@@ -33,6 +44,10 @@
 namespace ash {
 namespace {
 
+// How long the user must hover over the easy unlock icon before showing the
+// tooltip.
+const int kDelayBeforeShowingTooltipMs = 500;
+
 // Size (width/height) of the submit button.
 constexpr int kSubmitButtonSizeDp = 20;
 
@@ -48,6 +63,16 @@ constexpr int kDistanceBetweenPasswordAndSubmitDp = 0;
 
 // Color of the password field text.
 constexpr SkColor kTextColor = SkColorSetARGBMacro(0xAB, 0xFF, 0xFF, 0xFF);
+
+// Width and height of the easy unlock icon.
+constexpr const int kEasyUnlockIconSizeDp = 16;
+
+// Horizontal distance/margin between the easy unlock icon and the start of
+// the password view.
+constexpr const int kHorizontalDistanceBetweenEasyUnlockAndPasswordDp = 12;
+
+// Non-empty height, useful for debugging/visualization.
+constexpr const int kNonEmptyHeight = 1;
 
 constexpr const char kLoginPasswordViewName[] = "LoginPasswordView";
 
@@ -66,6 +91,96 @@ class NonAccessibleSeparator : public views::Separator {
   DISALLOW_COPY_AND_ASSIGN(NonAccessibleSeparator);
 };
 
+struct IconBundle {
+  int normal;
+  int hover;
+  int pressed;
+
+  base::TimeDelta duration;
+  int num_frames = 0;
+
+  // Creates an IconBundle for a static image.
+  IconBundle(int normal, int hover, int pressed)
+      : normal(normal), hover(hover), pressed(pressed) {}
+  // Creates an IconBundle instance for an animation.
+  IconBundle(int resource, base::TimeDelta duration, int num_frames)
+      : normal(resource),
+        hover(resource),
+        pressed(resource),
+        duration(duration),
+        num_frames(num_frames) {}
+};
+
+IconBundle GetEasyUnlockResources(LoginPasswordView::EasyUnlockState state) {
+  switch (state) {
+    case LoginPasswordView::EasyUnlockState::kNone:
+      break;
+    case LoginPasswordView::EasyUnlockState::kHardlocked:
+      return IconBundle(IDR_EASY_UNLOCK_HARDLOCKED,
+                        IDR_EASY_UNLOCK_HARDLOCKED_HOVER,
+                        IDR_EASY_UNLOCK_HARDLOCKED_PRESSED);
+    case LoginPasswordView::EasyUnlockState::kLocked:
+      return IconBundle(IDR_EASY_UNLOCK_LOCKED, IDR_EASY_UNLOCK_LOCKED_HOVER,
+                        IDR_EASY_UNLOCK_LOCKED_PRESSED);
+    case LoginPasswordView::EasyUnlockState::kLockedToBeActivated:
+      return IconBundle(IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED,
+                        IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_HOVER,
+                        IDR_EASY_UNLOCK_LOCKED_TO_BE_ACTIVATED_PRESSED);
+    case LoginPasswordView::EasyUnlockState::kLockedWithProximityHint:
+      return IconBundle(IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT,
+                        IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_HOVER,
+                        IDR_EASY_UNLOCK_LOCKED_WITH_PROXIMITY_HINT_PRESSED);
+    case LoginPasswordView::EasyUnlockState::kUnlocked:
+      return IconBundle(IDR_EASY_UNLOCK_UNLOCKED,
+                        IDR_EASY_UNLOCK_UNLOCKED_HOVER,
+                        IDR_EASY_UNLOCK_UNLOCKED_PRESSED);
+    case LoginPasswordView::EasyUnlockState::kSpinner:
+      return IconBundle(IDR_EASY_UNLOCK_SPINNER,
+                        base::TimeDelta::FromSeconds(2), 45 /*num_frames*/);
+  };
+
+  NOTREACHED();
+  return IconBundle(IDR_EASY_UNLOCK_LOCKED, IDR_EASY_UNLOCK_LOCKED_HOVER,
+                    IDR_EASY_UNLOCK_LOCKED_PRESSED);
+}
+
+// Decodes an animation strip that is laid out 1xN (ie, the image grows in
+// width, not height). There is no padding between frames in the animation
+// strip.
+//
+// As an example, if the following ASCII art is 100 pixels wide, it has 4 frames
+// each 25 pixels wide. The frames go from [0, 25), [25, 50), [50, 75), [75,
+// 100). All frames have the same height of 25 pixels.
+//
+//    [1][2][3][4]
+//
+// |duration|: The total duration of the animation.
+// |num_frames|: The total number of frames in the animation.
+AnimationFrames DecodeAnimationStrip(const SkBitmap& bitmap,
+                                     base::TimeDelta duration,
+                                     int num_frames) {
+  int frame_width = bitmap.width() / num_frames;
+  base::TimeDelta frame_duration = duration / num_frames;
+
+  AnimationFrames animation;
+  animation.reserve(num_frames);
+  for (int i = 0; i < num_frames; ++i) {
+    // Get the subsection of the animation strip.
+    SkBitmap frame_bitmap;
+    bitmap.extractSubset(
+        &frame_bitmap,
+        SkIRect::MakeXYWH(i * frame_width, 0, frame_width, bitmap.height()));
+
+    // Add an animation frame.
+    AnimationFrame frame;
+    frame.duration = frame_duration;
+    frame.image = gfx::ImageSkia::CreateFrom1xBitmap(frame_bitmap);
+    animation.push_back(frame);
+  }
+
+  return animation;
+}
+
 }  // namespace
 
 LoginPasswordView::TestApi::TestApi(LoginPasswordView* view) : view_(view) {}
@@ -80,6 +195,137 @@ views::View* LoginPasswordView::TestApi::submit_button() const {
   return view_->submit_button_;
 }
 
+class LoginPasswordView::EasyUnlockIcon : public views::Button,
+                                          public views::ButtonListener {
+ public:
+  EasyUnlockIcon(const gfx::Size& size, int corner_radius)
+      : views::Button(this) {
+    SetPreferredSize(size);
+    SetLayoutManager(new views::FillLayout());
+    icon_ = new AnimatedRoundedImageView(size, corner_radius);
+    icon_->SetAnimationEnabled(true);
+    AddChildView(icon_);
+  }
+  ~EasyUnlockIcon() override = default;
+
+  void Init(const OnEasyUnlockIconHovered& on_hovered,
+            const OnEasyUnlockIconTapped& on_tapped) {
+    DCHECK(on_hovered);
+    on_hovered_ = on_hovered;
+    on_tapped_ = on_tapped;
+
+    hover_notifier_ = std::make_unique<HoverNotifier>(
+        this,
+        base::Bind(&LoginPasswordView::EasyUnlockIcon::OnHoverStateChanged,
+                   base::Unretained(this)));
+  }
+
+  void SetEasyUnlockIcon(LoginPasswordView::EasyUnlockState state) {
+    bool changed_states = state != state_;
+    state_ = state;
+    UpdateImage(changed_states);
+  }
+
+  // views::Button:
+  void StateChanged(ButtonState old_state) override {
+    // Stop showing tooltip, as we most likely exited hover state.
+    show_tooltip_.Stop();
+
+    switch (state()) {
+      case ButtonState::STATE_NORMAL:
+        UpdateImage(false /*changed_states*/);
+        break;
+      case ButtonState::STATE_HOVERED:
+        UpdateImage(false /*changed_states*/);
+        show_tooltip_.Start(
+            FROM_HERE,
+            base::TimeDelta::FromMilliseconds(kDelayBeforeShowingTooltipMs),
+            on_hovered_);
+        break;
+      case ButtonState::STATE_PRESSED:
+        UpdateImage(false /*changed_states*/);
+        break;
+      case ButtonState::STATE_DISABLED:
+        break;
+      case ButtonState::STATE_COUNT:
+        break;
+    }
+  }
+
+  // views::ButtonListener:
+  void ButtonPressed(Button* sender, const ui::Event& event) override {
+    on_tapped_.Run();
+  }
+
+ private:
+  void OnHoverStateChanged(bool has_hover) {
+    SetState(has_hover ? ButtonState::STATE_HOVERED
+                       : ButtonState::STATE_NORMAL);
+  }
+
+  void UpdateImage(bool changed_states) {
+    if (state_ == EasyUnlockState::kNone)
+      return;
+
+    IconBundle resources = GetEasyUnlockResources(state_);
+
+    int active_resource = resources.normal;
+    if (IsMouseHovered())
+      active_resource = resources.hover;
+    if (state() == ButtonState::STATE_PRESSED)
+      active_resource = resources.pressed;
+
+    gfx::ImageSkia* image =
+        ResourceBundle::GetSharedInstance().GetImageSkiaNamed(active_resource);
+
+    if (!resources.duration.is_zero()) {
+      // Only change the animation if the state itself has changed, otherwise we
+      // will reset the active frame and do a lot of unnecessary decoding work.
+      // This only applies if all three resource assets are the same, though.
+      DCHECK_EQ(resources.normal, resources.hover);
+      DCHECK_EQ(resources.normal, resources.pressed);
+      if (changed_states) {
+        AnimationFrames animation = DecodeAnimationStrip(
+            *image->bitmap(), resources.duration, resources.num_frames);
+        icon_->SetAnimation(animation);
+      }
+    } else {
+      icon_->SetImage(*image);
+    }
+  }
+
+  LoginPasswordView::EasyUnlockState state_;
+  std::unique_ptr<HoverNotifier> hover_notifier_;
+  OnEasyUnlockIconHovered on_hovered_;
+  OnEasyUnlockIconTapped on_tapped_;
+  AnimatedRoundedImageView* icon_;
+  base::OneShotTimer show_tooltip_;
+
+  DISALLOW_COPY_AND_ASSIGN(EasyUnlockIcon);
+};
+
+// static
+LoginPasswordView::EasyUnlockState LoginPasswordView::GetStateForId(
+    const std::string& id) {
+  if (id == "none")
+    return EasyUnlockState::kNone;
+  if (id == "locked")
+    return EasyUnlockState::kLocked;
+  if (id == "locked-to-be-activated")
+    return EasyUnlockState::kLockedToBeActivated;
+  if (id == "locked-with-proximity-hint")
+    return EasyUnlockState::kLockedWithProximityHint;
+  if (id == "unlocked")
+    return EasyUnlockState::kUnlocked;
+  if (id == "hardlocked")
+    return EasyUnlockState::kHardlocked;
+  if (id == "spinner")
+    return EasyUnlockState::kSpinner;
+
+  NOTREACHED();
+  return EasyUnlockState::kNone;
+}
+
 LoginPasswordView::LoginPasswordView() {
   auto* root_layout = new views::BoxLayout(views::BoxLayout::kVertical);
   root_layout->set_main_axis_alignment(
@@ -87,18 +333,54 @@ LoginPasswordView::LoginPasswordView() {
   SetLayoutManager(root_layout);
 
   auto* row = new NonAccessibleView();
-  AddChildView(row);
+  // row->SetBackground(views::CreateSolidBackground(SK_ColorRED));
+
+  // DONOTSUBMIT
+  LOG(ERROR) << kPasswordInputWidthDp << kPasswordInputHeightDp;
+
+  constexpr const int kMarginAboveBelowPasswordIconsDp = 8;
   auto* layout =
-      new views::BoxLayout(views::BoxLayout::kHorizontal, gfx::Insets(),
-                           kDistanceBetweenPasswordAndSubmitDp);
+      new views::BoxLayout(views::BoxLayout::kHorizontal,
+                           gfx::Insets(kMarginAboveBelowPasswordIconsDp, 0));
   layout->set_main_axis_alignment(views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
+  layout->set_cross_axis_alignment(
+      views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
   row->SetLayoutManager(layout);
+  // TODO: this is ignored
+  // row->SetPreferredSize(gfx::Size(kPasswordInputWidthDp * 10,
+  // kPasswordInputHeightDp));
+
+  // auto* vertical_sizer = new NonAccessibleView();
+  // vertical_sizer->SetLayoutManager(
+  //     new views::BoxLayout(views::BoxLayout::kVertical));
+  // vertical_sizer->SetPreferredSize(gfx::Size(1, kPasswordInputHeightDp *
+  // 10)); vertical_sizer->AddChildView(row); AddChildView(vertical_sizer);
+  AddChildView(row);
+
+  // Add easy unlock icon.
+  easy_unlock_icon_ = new EasyUnlockIcon(
+      gfx::Size(kEasyUnlockIconSizeDp, kEasyUnlockIconSizeDp),
+      0 /*corner_radius*/);
+  // easy_unlock_icon_->SetPreferredSize(
+  //     gfx::Size(kEasyUnlockIconSizeDp, kEasyUnlockIconSizeDp));
+  row->AddChildView(easy_unlock_icon_);
+
+  easy_unlock_right_margin_ = new NonAccessibleView();
+  easy_unlock_right_margin_->SetPreferredSize(gfx::Size(
+      kHorizontalDistanceBetweenEasyUnlockAndPasswordDp, kNonEmptyHeight));
+  row->AddChildView(easy_unlock_right_margin_);
+
+  SetEasyUnlockIcon(EasyUnlockState::kNone);
+  // SetEasyUnlockIcon(EasyUnlockState::kSpinner);
+
+  // easy_unlock_icon_->SetVisible(false);
+  // easy_unlock_right_margin_->SetVisible(false);
 
   // Password textfield. We control the textfield size by sizing the parent
   // view, as the textfield will expand to fill it.
-  auto* textfield_sizer = new NonAccessibleView();
-  textfield_sizer->SetLayoutManager(new SizeRangeLayout(
-      gfx::Size(kPasswordInputWidthDp, kPasswordInputHeightDp)));
+  // auto* textfield_sizer = new NonAccessibleView();
+  // textfield_sizer->SetLayoutManager(new SizeRangeLayout(gfx::Size(
+  // kPasswordInputWidthDp - kEasyUnlockIconSizeDp, kPasswordInputHeightDp)));
   textfield_ = new views::Textfield();
   textfield_->set_controller(this);
   textfield_->SetTextInputType(ui::TEXT_INPUT_TYPE_PASSWORD);
@@ -108,8 +390,15 @@ LoginPasswordView::LoginPasswordView() {
   textfield_->SetBorder(nullptr);
   textfield_->SetBackgroundColor(SK_ColorTRANSPARENT);
 
-  textfield_sizer->AddChildView(textfield_);
-  row->AddChildView(textfield_sizer);
+  // textfield_sizer->AddChildView(textfield_);
+  // row->AddChildView(textfield_sizer);
+  row->AddChildView(textfield_);
+  layout->SetFlexForView(textfield_, 1);
+
+  auto* spacer = new NonAccessibleView();
+  spacer->SetPreferredSize(
+      gfx::Size(kDistanceBetweenPasswordAndSubmitDp, kNonEmptyHeight));
+  row->AddChildView(spacer);
 
   // Submit button.
   submit_button_ = new views::ImageButton(this);
@@ -141,11 +430,35 @@ LoginPasswordView::~LoginPasswordView() = default;
 
 void LoginPasswordView::Init(
     const OnPasswordSubmit& on_submit,
-    const OnPasswordTextChanged& on_password_text_changed) {
+    const OnPasswordTextChanged& on_password_text_changed,
+    const OnEasyUnlockIconHovered& on_easy_unlock_icon_hovered,
+    const OnEasyUnlockIconTapped& on_easy_unlock_icon_tapped) {
   DCHECK(on_submit);
   DCHECK(on_password_text_changed);
+  DCHECK(on_easy_unlock_icon_hovered);  // TODO: move to EasyUnlockIcon::Init?
+  DCHECK(on_easy_unlock_icon_tapped);
   on_submit_ = on_submit;
   on_password_text_changed_ = on_password_text_changed;
+
+  // TODO: do we need to store these?
+  on_easy_unlock_icon_hovered_ = on_easy_unlock_icon_hovered;
+  on_easy_unlock_icon_tapped_ = on_easy_unlock_icon_tapped;
+
+  easy_unlock_icon_->Init(on_easy_unlock_icon_hovered_,
+                          on_easy_unlock_icon_tapped_);
+}
+
+void LoginPasswordView::SetEasyUnlockIcon(EasyUnlockState state) {
+  easy_unlock_icon_->SetVisible(state != EasyUnlockState::kNone);
+  easy_unlock_right_margin_->SetVisible(state != EasyUnlockState::kNone);
+  if (state == EasyUnlockState::kNone)
+    return;
+
+  easy_unlock_icon_->SetEasyUnlockIcon(state);
+
+  // We need to update textfield layout, as the icon may have changed visiblity.
+  textfield_->InvalidateLayout();
+  Layout();
 }
 
 void LoginPasswordView::UpdateForUser(const mojom::LoginUserInfoPtr& user) {

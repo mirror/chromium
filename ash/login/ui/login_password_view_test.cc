@@ -27,7 +27,12 @@ class LoginPasswordViewTest : public LoginTestBase {
     view_->Init(base::Bind(&LoginPasswordViewTest::OnPasswordSubmit,
                            base::Unretained(this)),
                 base::Bind(&LoginPasswordViewTest::OnPasswordTextChanged,
+                           base::Unretained(this)),
+                base::Bind(&LoginPasswordViewTest::OnEasyUnlockIconHovered,
+                           base::Unretained(this)),
+                base::Bind(&LoginPasswordViewTest::OnEasyUnlockIconTapped,
                            base::Unretained(this)));
+
     ShowWidgetWithContent(view_);
   }
 
@@ -40,6 +45,9 @@ class LoginPasswordViewTest : public LoginTestBase {
   void OnPasswordTextChanged(bool is_empty) {
     is_password_field_empty_ = is_empty;
   }
+
+  void OnEasyUnlockIconHovered() {}
+  void OnEasyUnlockIconTapped() {}
 
   LoginPasswordView* view_ = nullptr;
   base::Optional<base::string16> password_;

@@ -48,9 +48,10 @@ void LockScreenClient::AuthenticateUser(const AccountId& account_id,
                                         const std::string& hashed_password,
                                         bool authenticated_by_pin,
                                         AuthenticateUserCallback callback) {
-  if (delegate_)
-    delegate_->HandleAuthenticateUser(account_id, hashed_password,
-                                    authenticated_by_pin, std::move(callback));
+  if (delegate_) {
+    delegate_->HandleAuthenticateUser(
+        account_id, hashed_password, authenticated_by_pin, std::move(callback));
+  }
 }
 
 void LockScreenClient::ShowLockScreen(
@@ -58,9 +59,10 @@ void LockScreenClient::ShowLockScreen(
   lock_screen_->ShowLockScreen(std::move(on_shown));
 }
 
-void LockScreenClient::AttemptUnlock(const AccountId& account_id) {
+void LockScreenClient::AttemptUnlock(const AccountId& account_id,
+                                     AttemptUnlockCallback callback) {
   if (delegate_)
-    delegate_->HandleAttemptUnlock(account_id);
+    delegate_->HandleAttemptUnlock(account_id, std::move(callback));
 }
 
 void LockScreenClient::HardlockPod(const AccountId& account_id) {

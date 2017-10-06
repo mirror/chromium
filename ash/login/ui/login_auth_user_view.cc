@@ -99,13 +99,19 @@ LoginPasswordView* LoginAuthUserView::TestApi::password_view() const {
   return view_->password_view_;
 }
 
-LoginAuthUserView::LoginAuthUserView(const mojom::LoginUserInfoPtr& user,
-                                     const OnAuthCallback& on_auth,
-                                     const LoginUserView::OnTap& on_tap)
-    : NonAccessibleView(kLoginAuthUserViewClassName), on_auth_(on_auth) {
+LoginAuthUserView::LoginAuthUserView(
+    const mojom::LoginUserInfoPtr& user,
+    const OnAuthCallback& on_auth,
+    const LoginUserView::OnTap& on_tap,
+    const OnEasyUnlockIconHovered& on_easy_unlock_icon_hovered,
+    const OnEasyUnlockIconTapped& on_easy_unlock_icon_tapped)
+    : NonAccessibleView(kLoginAuthUserViewClassName),
+      on_auth_(on_auth),
+      on_tap_(on_tap) {
   // Build child views.
-  user_view_ = new LoginUserView(LoginDisplayStyle::kLarge,
-                                 true /*show_dropdown*/, on_tap);
+  user_view_ = new LoginUserView(
+      LoginDisplayStyle::kLarge, true /*show_dropdown*/,
+      base::Bind(&LoginAuthUserView::OnUserViewTap, base::Unretained(this)));
   password_view_ = new LoginPasswordView();
   // Enable layer rendering so the password opacity can be animated.
   password_view_->SetPaintToLayer();
@@ -122,7 +128,8 @@ LoginAuthUserView::LoginAuthUserView(const mojom::LoginUserInfoPtr& user,
   password_view_->Init(
       base::Bind(&LoginAuthUserView::OnAuthSubmit, base::Unretained(this)),
       base::Bind(&LoginPinView::OnPasswordTextChanged,
-                 base::Unretained(pin_view_)));
+                 base::Unretained(pin_view_)),
+      on_easy_unlock_icon_hovered, on_easy_unlock_icon_tapped);
 
   // Build layout.
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kVertical));
@@ -188,8 +195,9 @@ LoginAuthUserView::~LoginAuthUserView() = default;
 void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
   // TODO(jdufault): Implement additional auth methods.
   auth_methods_ = static_cast<AuthMethods>(auth_methods);
-  bool has_password = (auth_methods & AUTH_PASSWORD) != 0;
-  bool has_pin = (auth_methods & AUTH_PIN) != 0;
+  bool has_password = HasAuthMethod(AUTH_PASSWORD);
+  bool has_pin = HasAuthMethod(AUTH_PIN);
+  bool has_tap = HasAuthMethod(AUTH_TAP);
 
   password_view_->SetEnabled(has_password);
   password_view_->SetFocusEnabledForChildViews(has_password);
@@ -205,10 +213,13 @@ void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
 
   pin_view_->SetVisible(has_pin);
 
-  if (has_password && has_pin) {
+  if (has_pin) {
     password_view_->SetPlaceholderText(
         l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_PIN_PLACEHOLDER));
-  } else if (has_password) {
+  } else if (has_tap) {
+    password_view_->SetPlaceholderText(
+        l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_TAP_PLACEHOLDER));
+  } else {
     password_view_->SetPlaceholderText(
         l10n_util::GetStringUTF16(IDS_ASH_LOGIN_POD_PASSWORD_PLACEHOLDER));
   }
@@ -221,6 +232,11 @@ void LoginAuthUserView::SetAuthMethods(uint32_t auth_methods) {
                                             : FocusBehavior::ALWAYS);
 
   PreferredSizeChanged();
+}
+
+void LoginAuthUserView::SetEasyUnlockIcon(
+    LoginPasswordView::EasyUnlockState state) {
+  password_view_->SetEasyUnlockIcon(state);
 }
 
 void LoginAuthUserView::CaptureStateForAnimationPreLayout() {
@@ -339,12 +355,23 @@ void LoginAuthUserView::RequestFocus() {
 }
 
 void LoginAuthUserView::OnAuthSubmit(const base::string16& password) {
+  bool authenticated_by_pin = (auth_methods_ & AUTH_PIN) != 0;
   Shell::Get()->lock_screen_controller()->AuthenticateUser(
       current_user()->basic_user_info->account_id, base::UTF16ToUTF8(password),
-      (auth_methods_ & AUTH_PIN) != 0,
-      base::BindOnce([](OnAuthCallback on_auth,
-                        bool auth_success) { on_auth.Run(auth_success); },
-                     on_auth_));
+      authenticated_by_pin, on_auth_);
+}
+
+void LoginAuthUserView::OnUserViewTap() {
+  if (HasAuthMethod(AUTH_TAP)) {
+    Shell::Get()->lock_screen_controller()->AttemptUnlock(
+        current_user()->basic_user_info->account_id, on_auth_);
+  } else {
+    on_tap_.Run();
+  }
+}
+
+bool LoginAuthUserView::HasAuthMethod(AuthMethods auth_method) const {
+  return (auth_methods_ & auth_method) != 0;
 }
 
 }  // namespace ash

@@ -22,14 +22,14 @@ class AnimatedRoundedImageView : public views::View {
  public:
   // Constructs a new rounded image view with rounded corners of radius
   // |corner_radius|.
-  explicit AnimatedRoundedImageView(int corner_radius);
+  explicit AnimatedRoundedImageView(const gfx::Size& size, int corner_radius);
   ~AnimatedRoundedImageView() override;
 
   // Show an animation.
-  void SetAnimation(const AnimationFrames& animation, const gfx::Size& size);
+  void SetAnimation(const AnimationFrames& animation);
 
   // Show a static image.
-  void SetImage(const gfx::ImageSkia& image, const gfx::Size& size);
+  void SetImage(const gfx::ImageSkia& image);
 
   // Start or stop animation.
   void SetAnimationEnabled(bool enabled);

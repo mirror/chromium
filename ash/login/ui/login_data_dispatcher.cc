@@ -15,8 +15,16 @@ void LoginDataDispatcher::Observer::OnPinEnabledForUserChanged(
     const AccountId& user,
     bool enabled) {}
 
+void LoginDataDispatcher::Observer::OnClickToUnlockEnabledForUserChanged(
+    const AccountId& user,
+    bool enabled) {}
+
 void LoginDataDispatcher::Observer::OnLockScreenNoteStateChanged(
     mojom::TrayActionState state) {}
+
+void LoginDataDispatcher::Observer::OnShowCustomIcon(
+    const AccountId& user,
+    const mojom::UserPodCustomIconOptionsPtr& icon) {}
 
 LoginDataDispatcher::LoginDataDispatcher() = default;
 
@@ -42,9 +50,22 @@ void LoginDataDispatcher::SetPinEnabledForUser(const AccountId& user,
     observer.OnPinEnabledForUserChanged(user, enabled);
 }
 
+void LoginDataDispatcher::SetClickToUnlockEnabledForUser(const AccountId& user,
+                                                         bool enabled) {
+  for (auto& observer : observers_)
+    observer.OnClickToUnlockEnabledForUserChanged(user, enabled);
+}
+
 void LoginDataDispatcher::SetLockScreenNoteState(mojom::TrayActionState state) {
   for (auto& observer : observers_)
     observer.OnLockScreenNoteStateChanged(state);
+}
+
+void LoginDataDispatcher::ShowCustomIcon(
+    const AccountId& user,
+    const mojom::UserPodCustomIconOptionsPtr& icon) {
+  for (auto& observer : observers_)
+    observer.OnShowCustomIcon(user, icon);
 }
 
 }  // namespace ash
