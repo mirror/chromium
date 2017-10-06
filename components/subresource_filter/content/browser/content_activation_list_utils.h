@@ -5,7 +5,7 @@
 #ifndef COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_CONTENT_ACTIVATION_LIST_UTILS_H_
 #define COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_CONTENT_ACTIVATION_LIST_UTILS_H_
 
-#include "components/safe_browsing/db/util.h"
+#include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "components/subresource_filter/core/common/activation_list.h"
 
 namespace subresource_filter {
