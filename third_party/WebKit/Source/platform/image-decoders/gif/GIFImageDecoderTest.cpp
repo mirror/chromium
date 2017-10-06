@@ -402,10 +402,16 @@ TEST(GIFImageDecoderTest, bitmapAlphaType) {
 }
 
 namespace {
-// Needed to exercise ImageDecoder::SetMemoryAllocator, but still does the
-// default allocation.
+// Needed to exercise ImageDecoder::SetMemoryAllocator and zero-filling, but
+// still does the default allocation.
 class Allocator final : public SkBitmap::Allocator {
-  bool allocPixelRef(SkBitmap* dst) override { return dst->tryAllocPixels(); }
+  bool allocPixelRef(SkBitmap* dst) override {
+    if (dst->tryAllocPixels()) {
+      dst->eraseARGB(0xcd, 0xcd, 0xcd, 0xcd);
+      return true;
+    }
+    return false;
+  }
 };
 }
 
@@ -427,6 +433,44 @@ TEST(GIFImageDecoderTest, externalAllocator) {
   ASSERT_TRUE(frame);
   EXPECT_EQ(IntRect(IntPoint(), decoder->Size()), frame->OriginalFrameRect());
   EXPECT_FALSE(frame->HasAlpha());
+}
+
+TEST(GIFImageDecoderTest, partialFrameIsZeroFilledWhenIndependent) {
+  const Vector<char> data =
+      ReadFile(kLayoutTestResourcesDir, "animated-gif-with-offsets.gif")
+          ->Copy();
+  const size_t midway_into_first_frame = 330;
+  ASSERT_GE(data.size(), midway_into_first_frame);
+  RefPtr<SharedBuffer> incomplete_data =
+      SharedBuffer::Create(data.data(), midway_into_first_frame);
+
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  decoder->SetData(incomplete_data.get(), false);
+  Allocator allocator;
+  decoder->SetMemoryAllocator(&allocator);
+
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
+  EXPECT_TRUE(frame);
+  EXPECT_FALSE(decoder->Failed());
+  EXPECT_EQ(*frame->GetAddr(99, 99), 0u);
+}
+
+TEST(GIFImageDecoderTest, partialFrameIsPriorFilledWhenDependent) {
+  const Vector<char> data =
+      ReadFile(kLayoutTestResourcesDir, "animated-gif-with-offsets.gif")
+          ->Copy();
+  const size_t midway_into_second_frame = 850;
+  ASSERT_GE(data.size(), midway_into_second_frame);
+  RefPtr<SharedBuffer> incomplete_data =
+      SharedBuffer::Create(data.data(), midway_into_second_frame);
+
+  std::unique_ptr<ImageDecoder> decoder = CreateDecoder();
+  decoder->SetData(incomplete_data.get(), false);
+
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(1);
+  EXPECT_TRUE(frame);
+  EXPECT_FALSE(decoder->Failed());
+  EXPECT_EQ(*frame->GetAddr(50, 50), 4280193279);
 }
 
 TEST(GIFImageDecoderTest, recursiveDecodeFailure) {
