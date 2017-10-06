@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85e17fe0_8a94c1d9",
+        "filename": "base/numerics/ranges.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:20:12Z",
+      "side": 1,
+      "message": "nit: functions should be verbs. IsApproximatelyEqual?\n\ncan this be constexpr?\nstatic is not needed",
+      "revId": "84a36dc13bf57a3eb78ef63ef5d73137f87f9c8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
