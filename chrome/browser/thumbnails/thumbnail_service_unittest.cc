@@ -15,6 +15,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/history/core/browser/top_sites_impl.h"
+#include "components/history/core/browser/top_sites_most_visited_provider.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -30,6 +31,7 @@ class MockTopSites : public history::TopSitesImpl {
  public:
   explicit MockTopSites(Profile* profile)
       : history::TopSitesImpl(profile->GetPrefs(),
+                              nullptr,
                               nullptr,
                               history::PrepopulatedPageList(),
                               base::Bind(CanAddURLToHistory)),

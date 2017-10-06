@@ -30,6 +30,7 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/page_usage_data.h"
 #include "components/history/core/browser/top_sites_cache.h"
+#include "components/history/core/browser/top_sites_most_visited_provider.h"
 #include "components/history/core/browser/top_sites_observer.h"
 #include "components/history/core/browser/url_utils.h"
 #include "components/history/core/common/thumbnail_score.h"
@@ -113,21 +114,25 @@ const char kMostVisitedURLsBlacklist[] = "ntp.most_visited_blacklist";
 // Initially, histogram is not recorded.
 bool TopSitesImpl::histogram_recorded_ = false;
 
-TopSitesImpl::TopSitesImpl(PrefService* pref_service,
-                           HistoryService* history_service,
-                           const PrepopulatedPageList& prepopulated_pages,
-                           const CanAddURLToHistoryFn& can_add_url_to_history)
+TopSitesImpl::TopSitesImpl(
+    PrefService* pref_service,
+    HistoryService* history_service,
+    std::unique_ptr<TopSitesMostVisitedProvider> provider,
+    const PrepopulatedPageList& prepopulated_pages,
+    const CanAddURLToHistoryFn& can_add_url_to_history)
     : backend_(nullptr),
       cache_(base::MakeUnique<TopSitesCache>()),
       thread_safe_cache_(base::MakeUnique<TopSitesCache>()),
       prepopulated_pages_(prepopulated_pages),
       pref_service_(pref_service),
       history_service_(history_service),
+      provider_(std::move(provider)),
       can_add_url_to_history_(can_add_url_to_history),
       loaded_(false),
       history_service_observer_(this) {
   DCHECK(pref_service_);
   DCHECK(!can_add_url_to_history_.is_null());
+  DCHECK(provider_);
 }
 
 void TopSitesImpl::Init(const base::FilePath& db_name) {
@@ -408,13 +413,14 @@ TopSitesImpl::~TopSitesImpl() = default;
 
 void TopSitesImpl::StartQueryForMostVisited() {
   DCHECK(loaded_);
+  DCHECK_GE(num_results_to_request_from_history(), 0);
   timer_.Stop();
 
   if (!history_service_)
     return;
 
-  history_service_->QueryMostVisitedURLs(
-      num_results_to_request_from_history(), kDaysOfHistory,
+  provider_->QueryMostVisitedURLs(
+      history_service_, num_results_to_request_from_history(), kDaysOfHistory,
       base::Bind(&TopSitesImpl::OnTopSitesAvailableFromHistory,
                  base::Unretained(this)),
       &cancelable_task_tracker_);

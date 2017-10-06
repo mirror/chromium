@@ -831,6 +831,9 @@ extern const char kThreadedScrollingDescription[];
 extern const char kTopDocumentIsolationName[];
 extern const char kTopDocumentIsolationDescription[];
 
+extern const char kTopSitesEngagementSortingName[];
+extern const char kTopSitesEngagementSortingDescription[];
+
 extern const char kTouchAdjustmentName[];
 extern const char kTouchAdjustmentDescription[];
 

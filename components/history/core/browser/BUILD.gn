@@ -64,6 +64,8 @@ static_library("browser") {
     "top_sites_database.h",
     "top_sites_impl.cc",
     "top_sites_impl.h",
+    "top_sites_most_visited_provider.cc",
+    "top_sites_most_visited_provider.h",
     "top_sites_observer.h",
     "typed_url_data_type_controller.cc",
     "typed_url_data_type_controller.h",

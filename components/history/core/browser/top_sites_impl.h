@@ -8,6 +8,7 @@
 #include <stddef.h>
 
 #include <list>
+#include <memory>
 #include <set>
 #include <string>
 #include <utility>
@@ -46,6 +47,7 @@ namespace history {
 class HistoryService;
 class TopSitesCache;
 class TopSitesImplTest;
+class TopSitesMostVisitedProvider;
 
 // This class allows requests for most visited urls and thumbnails on any
 // thread. All other methods must be invoked on the UI thread. All mutations
@@ -65,6 +67,7 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
 
   TopSitesImpl(PrefService* pref_service,
                HistoryService* history_service,
+               std::unique_ptr<TopSitesMostVisitedProvider> provider,
                const PrepopulatedPageList& prepopulated_pages,
                const CanAddURLToHistoryFn& can_add_url_to_history);
 
@@ -314,6 +317,9 @@ class TopSitesImpl : public TopSites, public HistoryServiceObserver {
   // HistoryService that TopSitesImpl can query. May be null, but if defined it
   // must outlive TopSitesImpl.
   HistoryService* history_service_;
+
+  // The provider to query for most visited URLs.
+  std::unique_ptr<TopSitesMostVisitedProvider> provider_;
 
   // Can URL be added to the history?
   CanAddURLToHistoryFn can_add_url_to_history_;

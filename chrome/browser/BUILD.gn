@@ -418,6 +418,8 @@ split_static_library("browser") {
     "engagement/site_engagement_helper.h",
     "engagement/site_engagement_metrics.cc",
     "engagement/site_engagement_metrics.h",
+    "engagement/site_engagement_most_visited_provider.cc",
+    "engagement/site_engagement_most_visited_provider.h",
     "engagement/site_engagement_observer.cc",
     "engagement/site_engagement_observer.h",
     "engagement/site_engagement_score.cc",

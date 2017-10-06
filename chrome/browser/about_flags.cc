@@ -3546,6 +3546,11 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(TabUnderNavigationThrottle::kBlockTabUnders)},
 #endif  // defined(OS_ANDROID)
 
+    {"top-sites-engagement-sorting",
+     flag_descriptions::kTopSitesEngagementSortingName,
+     flag_descriptions::kTopSitesEngagementSortingDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kTopSitesEngagementSorting)},
+
     // NOTE: Adding a new flag requires adding a corresponding entry to enum
     // "LoginCustomFlags" in tools/metrics/histograms/enums.xml. See "Flag
     // Histograms" in tools/metrics/histograms/README.md (run the
