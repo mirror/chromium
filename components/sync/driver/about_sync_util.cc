@@ -86,10 +86,10 @@ base::ListValue* AddSection(base::ListValue* parent_list,
   section->SetBoolean("is_sensitive", false);
   // If the following |Append| results in a reallocation, pointers to the
   // members of |parent_list| will be invalidated. This would result in
-  // use-after-free in |*SyncStat::SetValue|. This is why the following CHECK is
-  // necessary to ensure no reallocation takes place.
+  // use-after-free in |*SyncStat::SetValue|. This is why the following DCHECK
+  // is necessary to ensure no reallocation takes place.
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
-  CHECK_LT(parent_list->GetSize(), parent_list->capacity());
+  DCHECK_LT(parent_list->GetSize(), parent_list->capacity());
   parent_list->Append(std::move(section));
   return section_contents;
 }
@@ -105,9 +105,9 @@ base::ListValue* AddSensitiveSection(base::ListValue* parent_list,
   section->SetBoolean("is_sensitive", true);
   // If the following |Append| results in a reallocation, pointers to
   // |parent_list| and its members will be invalidated. This would result in
-  // use-after-free in |*SyncStat::SetValue|. This is why the following CHECK is
-  // necessary to ensure no reallocation takes place.
-  CHECK_LT(parent_list->GetSize(), parent_list->capacity());
+  // use-after-free in |*SyncStat::SetValue|. This is why the following DCHECK
+  // is necessary to ensure no reallocation takes place.
+  DCHECK_LT(parent_list->GetSize(), parent_list->capacity());
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
   parent_list->Append(std::move(section));
   return section_contents;
@@ -139,10 +139,10 @@ StringSyncStat::StringSyncStat(base::ListValue* section,
   stat_->SetBoolean("is_valid", false);
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
-  // other SyncStats will be invalidated. This is why the following check is
+  // other SyncStats will be invalidated. This is why the following dcheck is
   // necessary, so that it is guaranteed that a reallocation will not happen.
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
-  CHECK_LT(section->GetSize(), section->capacity());
+  DCHECK_LT(section->GetSize(), section->capacity());
   section->Append(base::WrapUnique(stat_));
   section->GetDictionary(section->GetSize() - 1, &stat_);
 }
@@ -174,10 +174,10 @@ BoolSyncStat::BoolSyncStat(base::ListValue* section, const std::string& key) {
   stat_->SetBoolean("is_valid", false);
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
-  // other SyncStats will be invalidated. This is why the following check is
+  // other SyncStats will be invalidated. This is why the following dcheck is
   // necessary, so that it is guaranteed that a reallocation will not happen.
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
-  CHECK_LT(section->GetSize(), section->capacity());
+  DCHECK_LT(section->GetSize(), section->capacity());
   section->Append(base::WrapUnique(stat_));
   section->GetDictionary(section->GetSize() - 1, &stat_);
 }
@@ -204,10 +204,10 @@ IntSyncStat::IntSyncStat(base::ListValue* section, const std::string& key) {
   stat_->SetBoolean("is_valid", false);
   // |stat_| will be invalidated by |Append|, so it needs to be reset.
   // Furthermore, if |Append| results in a reallocation, |stat_| members of
-  // other SyncStats will be invalidated. This is why the following check is
+  // other SyncStats will be invalidated. This is why the following dcheck is
   // necessary, so that it is guaranteed that a reallocation will not happen.
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
-  CHECK_LT(section->GetSize(), section->capacity());
+  DCHECK_LT(section->GetSize(), section->capacity());
   section->Append(base::WrapUnique(stat_));
   section->GetDictionary(section->GetSize() - 1, &stat_);
 }
@@ -548,7 +548,7 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
   // The values set from this point onwards do not belong in the
   // details list.
 
-  // We don't need to check is_status_valid here.
+  // We don't need to dcheck is_status_valid here.
   // full_status.sync_protocol_error is exported directly from the
   // ProfileSyncService, even if the backend doesn't exist.
   const bool actionable_error_detected =
