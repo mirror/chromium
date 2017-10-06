@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b335965c_d4d3fe87",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-06T00:28:43Z",
+      "side": 1,
+      "message": "any chance this is exposed as a resource to java?  If so, we should try to share the same to avoid this test failing on someone changing the name (or the phone being in a different locale).  I wouldn\u0027t stress too much about it, but it would be a bit better.",
+      "range": {
+        "startLine": 185,
+        "startChar": 43,
+        "endLine": 185,
+        "endChar": 48
+      },
+      "revId": "21061407662cf717829a7995652dbac5a8b45ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
