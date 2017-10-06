@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff4ad4eb_6887fdb5",
+        "filename": "chrome/browser/ui/ash/tablet_mode_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "This method is confusing, especially when combined with the one below. How about making the callers check both tablet_mode_enabled() \u0026\u0026 auto_hide_title_bars() when it needs to?",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd63000f_62586340",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "nit: document why there might not be a client (tests? during startup?)",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90dd8bf3_35722289",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "2017?",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d0a80b_1a7839cb",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "nit: remove reference to \"light bar\", we don\u0027t do that now, just slide up all the top views.",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a8289f_653a933f",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "nit: blank line below this, or move the comment above line 121, or both",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d9181fa_a092b6f5",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-06T01:33:04Z",
+      "side": 1,
+      "message": "nit: I would either move this comment above line 129, or add a separate comment there about turning off tablet mode",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
