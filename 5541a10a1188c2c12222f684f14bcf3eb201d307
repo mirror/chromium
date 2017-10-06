@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "52c12b95_472d46d3",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/clientXY-in-zoom-and-scroll.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-10-06T19:20:34Z",
+      "side": 1,
+      "message": "Please use \"const\" instead.\n\nSame elsewhere.",
+      "revId": "5541a10a1188c2c12222f684f14bcf3eb201d307",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a9bd6ff_cc9b4362",
         "filename": "third_party/WebKit/LayoutTests/fast/events/pointerevents/pointer-coords-in-zoom-and-scroll.html",
         "patchSetId": 5
