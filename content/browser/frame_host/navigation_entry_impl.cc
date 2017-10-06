@@ -777,6 +777,24 @@ void NavigationEntryImpl::ResetForCommit(FrameNavigationEntry* frame_entry) {
 #endif
 }
 
+NavigationEntryImpl::TreeNode* NavigationEntryImpl::FindFrameEntry(
+    FrameTreeNode* frame_tree_node) const {
+  NavigationEntryImpl::TreeNode* node = nullptr;
+  base::queue<NavigationEntryImpl::TreeNode*> work_queue;
+  work_queue.push(root_node());
+  while (!work_queue.empty()) {
+    node = work_queue.front();
+    work_queue.pop();
+    if (node->MatchesFrame(frame_tree_node))
+      return node;
+
+    // Enqueue any children and keep looking.
+    for (const auto& child : node->children)
+      work_queue.push(child.get());
+  }
+  return nullptr;
+}
+
 void NavigationEntryImpl::AddOrUpdateFrameEntry(
     FrameTreeNode* frame_tree_node,
     int64_t item_sequence_number,
@@ -936,24 +954,6 @@ void NavigationEntryImpl::SetScreenshotPNGData(
 
 GURL NavigationEntryImpl::GetHistoryURLForDataURL() const {
   return GetBaseURLForDataURL().is_empty() ? GURL() : GetVirtualURL();
-}
-
-NavigationEntryImpl::TreeNode* NavigationEntryImpl::FindFrameEntry(
-    FrameTreeNode* frame_tree_node) const {
-  NavigationEntryImpl::TreeNode* node = nullptr;
-  base::queue<NavigationEntryImpl::TreeNode*> work_queue;
-  work_queue.push(root_node());
-  while (!work_queue.empty()) {
-    node = work_queue.front();
-    work_queue.pop();
-    if (node->MatchesFrame(frame_tree_node))
-      return node;
-
-    // Enqueue any children and keep looking.
-    for (const auto& child : node->children)
-      work_queue.push(child.get());
-  }
-  return nullptr;
 }
 
 }  // namespace content
