@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27e85430_e8ac99a5",
+        "filename": "device/hid/mock_hid_connection.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-06T01:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a2cb394_6b6e0b1e",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d4f2582_e996fa15",
         "filename": "services/device/hid/hid_manager_unittest.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4beaad8d_3257579e",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-06T01:30:14Z",
+      "side": 1,
+      "message": "Not only check the size, but also compare the data. So still keep the memcmp.",
+      "parentUuid": "1d4f2582_e996fa15",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ff84f3_158c5ed4",
         "filename": "services/device/hid/hid_manager_unittest.cc",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T17:19:37Z",
       "side": 1,
       "message": "EXPECT_EQ(buffer-\u003esize(), sizeof(expected) - 1);",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93f3738c_f37787fe",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-06T01:30:14Z",
+      "side": 1,
+      "message": "same as above.",
+      "parentUuid": "57ff84f3_158c5ed4",
       "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
