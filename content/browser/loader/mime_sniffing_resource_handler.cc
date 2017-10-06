@@ -54,13 +54,13 @@ const char kImageAcceptHeader[] = "image/webp,image/apng,image/*,*/*;q=0.8";
 const char kDefaultAcceptHeader[] = "*/*";
 
 // Used to write into an existing IOBuffer at a given offset.
-class DependentIOBuffer : public net::WrappedIOBuffer {
+class DependentIOBufferBar : public net::WrappedIOBuffer {
  public:
-  DependentIOBuffer(net::IOBuffer* buf, int offset)
+  DependentIOBufferBar(net::IOBuffer* buf, int offset)
       : net::WrappedIOBuffer(buf->data() + offset), buf_(buf) {}
 
  private:
-  ~DependentIOBuffer() override {}
+  ~DependentIOBufferBar() override {}
 
   scoped_refptr<net::IOBuffer> buf_;
 };
@@ -233,7 +233,7 @@ void MimeSniffingResourceHandler::OnWillRead(
 
   if (read_buffer_.get()) {
     CHECK_LT(bytes_read_, read_buffer_size_);
-    *buf = new DependentIOBuffer(read_buffer_.get(), bytes_read_);
+    *buf = new DependentIOBufferBar(read_buffer_.get(), bytes_read_);
     *buf_size = read_buffer_size_ - bytes_read_;
     controller->Resume();
     return;

@@ -28,8 +28,9 @@ namespace {
 // scrolling is active and possible.
 const double kAsyncTouchMoveIntervalSec = .2;
 
+  // FIXME: Identical HasPointChanged in passthrough_touch_event_queue()
 // Compare all properties of touch points to determine the state.
-bool HasPointChanged(const WebTouchPoint& point_1,
+bool HasPointChangedLegacy(const WebTouchPoint& point_1,
                      const WebTouchPoint& point_2) {
   DCHECK_EQ(point_1.id, point_2.id);
   if (point_1.PositionInScreen() != point_2.PositionInScreen() ||
@@ -526,7 +527,7 @@ void LegacyTouchEventQueue::SendTouchEventImmediately(
         if (current_touchmove_point.id != last_touch_point.id)
           continue;
 
-        if (!HasPointChanged(last_touch_point, current_touchmove_point))
+        if (!HasPointChangedLegacy(last_touch_point, current_touchmove_point))
           touch->event.touches[j].state = WebTouchPoint::kStateStationary;
 
         break;
@@ -622,7 +623,7 @@ LegacyTouchEventQueue::FilterBeforeForwarding(const WebTouchEvent& event) {
         // All pointers in TouchMove events may have state as StateMoved,
         // even though none of the pointers have not changed in real.
         // Forward these events when at least one pointer has changed.
-        if (HasPointChanged(last_sent_touchevent_->touches[j], point))
+        if (HasPointChangedLegacy(last_sent_touchevent_->touches[j], point))
           return FORWARD_TO_RENDERER;
 
         // This is a TouchMove event for which we have yet to find a

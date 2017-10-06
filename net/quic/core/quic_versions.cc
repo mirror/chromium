@@ -147,6 +147,8 @@ string QuicVersionToString(const QuicVersion version) {
   }
 }
 
+#undef RETURN_STRING_LITERAL
+
 string QuicVersionVectorToString(const QuicVersionVector& versions) {
   string result = "";
   for (size_t i = 0; i < versions.size(); ++i) {

@@ -1851,6 +1851,11 @@ test("content_unittests") {
     }
   }
   if (is_win) {
+    defines += [
+      # Must be defined to get access to M_PI and M_PI_2 in VS.
+      "_USE_MATH_DEFINES",
+    ]
+
     deps += [ "//third_party/iaccessible2" ]
     libs = [ "dwrite.lib" ]
   }

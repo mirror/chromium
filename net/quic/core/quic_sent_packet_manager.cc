@@ -957,4 +957,6 @@ void QuicSentPacketManager::SetStreamNotifier(
   unacked_packets_.SetStreamNotifier(stream_notifier);
 }
 
+#undef ENDPOINT
+
 }  // namespace net
