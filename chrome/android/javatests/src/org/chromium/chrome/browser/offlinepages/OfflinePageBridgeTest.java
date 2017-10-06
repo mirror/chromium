@@ -379,7 +379,7 @@ public class OfflinePageBridgeTest {
                     }
                 });
 
-                downloadBridge.startDownload(
+                OfflinePageDownloadBridge.getInstance().startDownload(
                         mActivityTestRule.getActivity().getActivityTab(), origin);
             }
         });

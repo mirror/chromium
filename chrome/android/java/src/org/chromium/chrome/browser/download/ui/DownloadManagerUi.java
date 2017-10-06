@@ -79,10 +79,9 @@ public class DownloadManagerUi implements OnMenuItemClickListener, SearchDelegat
             mSelectionDelegate = new DownloadItemSelectionDelegate();
             mThumbnailProvider = new ThumbnailProviderImpl(referencePool);
 
-            // Create a OfflinePageDownloadBridge in order to initialize and register the offline
-            // pages backend to the offline content aggregator.
-            // TODO(shaktisahu): Find an explicit way of doing this.
-            new OfflinePageDownloadBridge(Profile.getLastUsedProfile().getOriginalProfile());
+            // Make sure OfflinePageDownloadBridge is initialized so that the offline
+            // pages backend is registered to the offline content aggregator.
+            OfflinePageDownloadBridge.getInstance();
         }
 
         @Override
