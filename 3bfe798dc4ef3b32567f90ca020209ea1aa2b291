@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a2bf63dc_1065e73c",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "167d103e_7e2fb95a",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 31
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f442473a_e9071a09",
         "filename": "components/signin/ios/browser/account_consistency_service.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-05T10:00:04Z",
       "side": 1,
       "message": "I think you may add \"\u003d default\" in the header file.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc418c6_16b6fc69",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "No, constructors and destructors should not be inlined.\n\"Showing Recent Issues\n../../components/signin/ios/browser/account_consistency_service.h:105:5: error: [chromium-style] Complex constructor has an inlined body.\"",
+      "parentUuid": "f442473a_e9071a09",
       "range": {
         "startLine": 105,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6cc5da6a_45052bce",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77777487_9a31ef54",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e57d637_14d7458e",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dcf4a8fd_599611a3",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "Unit tests was not implemented yet. This is now done with web_view_load_expection_count_ in AccountConsistencyServiceTest::RemoveCookieDone().",
+      "parentUuid": "0e57d637_14d7458e",
+      "range": {
+        "startLine": 297,
+        "startChar": 2,
+        "endLine": 297,
+        "endChar": 39
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57e9a013_eabea4d6",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2017-10-05T10:00:04Z",
       "side": 1,
       "message": "Is is really needed to make a copy of the callback here?",
+      "range": {
+        "startLine": 412,
+        "startChar": 20,
+        "endLine": 412,
+        "endChar": 28
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b61f43_c9474253",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "the request is destroyed at line 413. I prefer to do the cleanup first (removing it from the queue), and then call the callback.",
+      "parentUuid": "57e9a013_eabea4d6",
       "range": {
         "startLine": 412,
         "startChar": 20,
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "50003b31_dec03ada",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0867bce_069975d8",
+      "range": {
+        "startLine": 482,
+        "startChar": 2,
+        "endLine": 482,
+        "endChar": 27
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc3e4f32_c743f15c",
         "filename": "components/signin/ios/browser/account_consistency_service.mm",
         "patchSetId": 10
@@ -184,6 +328,30 @@
       "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48f1da43_6634f9fb",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-10-06T12:31:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc3e4f32_c743f15c",
+      "range": {
+        "startLine": 499,
+        "startChar": 54,
+        "endLine": 499,
+        "endChar": 57
+      },
+      "revId": "3bfe798dc4ef3b32567f90ca020209ea1aa2b291",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
