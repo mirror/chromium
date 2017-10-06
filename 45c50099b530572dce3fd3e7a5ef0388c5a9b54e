@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7976a043_8d1dc233",
+        "filename": "third_party/WebKit/Source/core/events/PointerEvent.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-10-06T19:00:15Z",
+      "side": 1,
+      "message": "If we send a pen pointerevent this is changing developer facing behavior (before it was int now it is float). You are exposing this float coordinated in your next patch anyway (which I suggested to add it behind the flag).\nIf we can also hide this scenario behind that flag (or for now just move the exposure of this scenario to the next CL) that would be fabulous.",
+      "revId": "45c50099b530572dce3fd3e7a5ef0388c5a9b54e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
