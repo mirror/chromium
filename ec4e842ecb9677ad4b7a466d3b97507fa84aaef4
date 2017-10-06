@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60da2bf9_b1521c41",
+        "filename": "content/browser/background_fetch/background_fetch_registration_id.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T19:09:37Z",
+      "side": 1,
+      "message": "Yeah, these are strong indicators that base::UnguessableToken is the way to go.",
+      "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b8e26b_8ac987bd",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T19:09:37Z",
+      "side": 1,
+      "message": "Nit: Period at end of sentence.",
+      "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86d67f7_e4c03312",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T19:09:37Z",
+      "side": 1,
+      "message": "I wonder if we can use base::UnguessableToken for |unique_id|? Strong guarantee of uniqueness, plus not a string.\n\nAnd does |developer_id| absolutely have to be a string? Reading content/browser/background_fetch/background_fetch_registration_id.h it seems like maybe it could also be an UnguessableToken?",
+      "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
