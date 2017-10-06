@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "01eaa423_ea6392e3",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T19:26:18Z",
+      "side": 1,
+      "message": "It\u0027s slightly related. As I moved the constant over, I changed it from into to size_t since that\u0027s the right type, and it in turn triggers a 1 line change here which is not too crazy.",
+      "parentUuid": "ff69626a_759146a3",
+      "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ee99286_5d5cf1f1",
         "filename": "chrome/browser/ui/webui/signin_internals_ui.cc",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-10-06T19:21:59Z",
       "side": 1,
       "message": "Question for potential future cleanup:\nDo we need both the full URL and the host as separate constants? For example see kChromeUIAboutURL and kChromeUIAboutHost. It seems redundant, perhaps we can derive one from the other?",
+      "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00c41d4_7fd9ab73",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T19:26:18Z",
+      "side": 1,
+      "message": "Maybe we can do that. I was just going to sort the list, since keeping kFooHost and kFooUI apart feels like more work. e.g. potentially need 2 #ifs. Not sure why we split them in the first place.",
+      "parentUuid": "01ce0cb6_d2fde635",
       "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
