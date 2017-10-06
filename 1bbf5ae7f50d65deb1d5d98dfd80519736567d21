@@ -99,6 +99,24 @@
       "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3098ca10_1a76be2c",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-10-06T15:39:43Z",
+      "side": 1,
+      "message": "Ah, gotcha. Sorry I didn\u0027t realise that - kind of assumes since this is Chrome we can use the latest and greatest - but yeah iOS. Sadness.",
+      "parentUuid": "9576501a_d5bb8d81",
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
