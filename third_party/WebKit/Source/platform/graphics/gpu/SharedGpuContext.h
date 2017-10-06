@@ -22,8 +22,13 @@ class WebGraphicsContext3DProvider;
 // Platform::createSharedOffscreenGraphicsContext3DProvider
 class PLATFORM_EXPORT SharedGpuContext {
  public:
-  // May re-create context if context was lost
-  static WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper();
+  // May re-create context if context was lost. If |using_software_compositing|
+  // is true on return, then the compositor is not using the gpu, even if the
+  // result is a valid pointer. Conversely, if it is false but the result is a
+  // null pointer, then the context was not able to be created but it is not yet
+  // known that the compositor has given up on using gpu.
+  static WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper(
+      bool* using_software_compositing);
   static bool AllowSoftwareToAcceleratedCanvasUpgrade();
   static bool IsValidWithoutRestoring();
   typedef std::function<std::unique_ptr<WebGraphicsContext3DProvider>()>
@@ -34,9 +39,10 @@ class PLATFORM_EXPORT SharedGpuContext {
   static SharedGpuContext* GetInstanceForCurrentThread();
 
   SharedGpuContext();
-  void CreateContextProviderOnMainThread(WaitableEvent*);
-  void CreateContextProviderIfNeeded();
-  void SetContextProvider(std::unique_ptr<WebGraphicsContext3DProvider>&&);
+  void CreateContextProviderOnMainThread(WaitableEvent*,
+                                         bool* using_software_compositing);
+  void CreateContextProviderIfNeeded(bool* using_software_compositing);
+  void SetContextProvider(std::unique_ptr<WebGraphicsContext3DProvider>);
 
   ContextProviderFactory context_provider_factory_ = nullptr;
   std::unique_ptr<WebGraphicsContext3DProviderWrapper>

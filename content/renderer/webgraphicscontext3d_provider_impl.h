@@ -27,7 +27,7 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
  public:
   explicit WebGraphicsContext3DProviderImpl(
       scoped_refptr<ui::ContextProviderCommandBuffer> provider,
-      bool software_rendering);
+      bool software_compositing);
   ~WebGraphicsContext3DProviderImpl() override;
 
   // WebGraphicsContext3DProvider implementation.
@@ -35,7 +35,7 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
   gpu::gles2::GLES2Interface* ContextGL() override;
   GrContext* GetGrContext() override;
   gpu::Capabilities GetCapabilities() override;
-  bool IsSoftwareRendering() const override;
+  bool UsingSoftwareCompositing() const override;
   void SetLostContextCallback(const base::Closure&) override;
   void SetErrorMessageCallback(
       const base::Callback<void(const char*, int32_t)>&) override;
@@ -47,7 +47,7 @@ class CONTENT_EXPORT WebGraphicsContext3DProviderImpl
 
  private:
   scoped_refptr<ui::ContextProviderCommandBuffer> provider_;
-  const bool software_rendering_;
+  const bool software_compositing_;
 };
 
 }  // namespace content
