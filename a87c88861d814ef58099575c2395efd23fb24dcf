@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e1b5995_23046eb8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T01:29:31Z",
+      "side": 1,
+      "message": "Bikeshedding: I\u0027m a little ambivalent about whether this should be --test-name-file, since I\u0027d normally write \"test name\" as two words rather than one. But, if you prefer --testname-file with testname written as one word, then I\u0027m OK with it.",
+      "revId": "a87c88861d814ef58099575c2395efd23fb24dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d908921_8867e90a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/tool/commands/rebaseline_cl.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T01:29:31Z",
+      "side": 1,
+      "message": "Nit: could be _log.error.",
+      "revId": "a87c88861d814ef58099575c2395efd23fb24dcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
