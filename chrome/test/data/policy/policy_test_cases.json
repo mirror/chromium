@@ -3267,6 +3267,16 @@
     ]
   },
 
+  "AllowUserAvatarVideos": {
+    "os": ["chromeos"],
+    "test_policy": {
+      "allow-user-avatar-videos": true
+    },
+    "pref_mappings": [
+      { "pref": "allow_user_avatar_videos" }
+    ]
+  },
+
 
   "----- Chrome Frame policies -------------------------------------------": {},
 

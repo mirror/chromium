@@ -702,6 +702,10 @@ const PolicyToPreferenceMapEntry kSimplePolicyMap[] = {
   { key::kCastReceiverName,
     prefs::kCastReceiverName,
     base::Value::Type::STRING },
+
+  { key::kAllowUserAvatarVideos,
+    prefs::kAllowUserAvatarVideos,
+    base::Value::Type::BOOLEAN },
 #endif
 
   { key::kRoamingProfileSupportEnabled,
