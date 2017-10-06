@@ -294,6 +294,14 @@ ManagePasswordsBubbleModel::ManagePasswordsBubbleModel(
         interaction_stats.dismissal_count = stats->dismissal_count;
       }
     }
+    LOG(ERROR) << "is fallback "
+               << delegate_->BubbleIsManualFallbackForSaving();
+    LOG(ERROR) << "autofilled value "
+               << pending_password_.passwords_has_autofilled_value;
+    LOG(ERROR) << "is user action" << (display_reason == USER_ACTION);
+    hide_eye_icon_ = delegate_->BubbleIsManualFallbackForSaving()
+                         ? pending_password_.passwords_has_autofilled_value
+                         : display_reason == USER_ACTION;
     UpdatePendingStateTitle();
   } else if (state_ == password_manager::ui::CONFIRMATION_STATE) {
     title_ =
