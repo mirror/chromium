@@ -234,6 +234,24 @@
       "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d535bd0_bf2bd0e5",
+        "filename": "third_party/WebKit/Source/platform/loader/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T03:23:33Z",
+      "side": 1,
+      "message": "I think we can take care of that :), didn\u0027t realize we can remove some of them.",
+      "parentUuid": "35a9bed5_5c032e2a",
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
