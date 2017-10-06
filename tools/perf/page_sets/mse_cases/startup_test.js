@@ -34,7 +34,6 @@
     var queryParameters = parseQueryParameters();
     testParams = {};
     testParams.testType = queryParameters["testType"] || "AV";
-    testParams.useAppendStream = (queryParameters["useAppendStream"] == "true");
     testParams.doNotWaitForBodyOnLoad =
         (queryParameters["doNotWaitForBodyOnLoad"] == "true");
     testParams.startOffset = 0;
@@ -165,8 +164,6 @@
       }
     }
 
-    document.getElementById("useAppendStream").checked =
-        testParams.useAppendStream;
     document.getElementById("doNotWaitForBodyOnLoad").checked =
         testParams.doNotWaitForBodyOnLoad;
     document.getElementById("appendSize").value = testParams.appendSize;
@@ -211,14 +208,9 @@
 
     this.appendStartTime = getPerfTimestamp();
 
-    if (this.sourceBuffer.appendBuffer) {
-      this.sourceBuffer.addEventListener('updateend',
-                                         this.onUpdateEnd.bind(this));
-      this.sourceBuffer.appendBuffer(this.xhr.response);
-    } else {
-      this.sourceBuffer.append(new Uint8Array(this.xhr.response));
-      this.appendEndTime = getPerfTimestamp();
-    }
+    this.sourceBuffer.addEventListener('updateend',
+                                       this.onUpdateEnd.bind(this));
+    this.sourceBuffer.appendBuffer(this.xhr.response);
 
     this.xhr = null;
   };
@@ -457,11 +449,7 @@
 
     var appenders = [];
 
-    if (testParams.useAppendStream && !window.MediaSource)
-      EndTest("Can't use appendStream() because the unprefixed MediaSource " +
-              "object is not present.");
-
-    var Appender = testParams.useAppendStream ? StreamAppender : BufferAppender;
+    var Appender = BufferAppender;
 
     if (testParams.testType.indexOf("A") != -1) {
       appenders.push(
@@ -502,10 +490,7 @@
 
   function getTestID() {
     var id = testParams.testType;
-    if (testParams.useAppendStream)
-      id += "_stream"
-    else
-      id += "_buffer"
+    id += "_buffer"
     if (testParams.doNotWaitForBodyOnLoad)
       id += "_pre_load"
     else
