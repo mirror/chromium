@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47c1d5d4_182cfa14",
+        "filename": "ash/system/power/power_button_screenshot_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T01:17:11Z",
+      "side": 1,
+      "message": "This might be a bit awkward. But I am not aware of a better way to test this.",
+      "revId": "0b620f2bdc4b3cccb53eee4bf517a0ec7984c9be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

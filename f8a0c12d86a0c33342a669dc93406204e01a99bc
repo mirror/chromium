@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2254d5ce_d7ec5ea5",
+        "filename": "chromeos/audio/cras_audio_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T01:17:11Z",
+      "side": 0,
+      "message": "We probably can revert to the code that jennyz@ made before https://codereview.chromium.org/2190773002/.\nBut I want to do it separately since I don\u0027t want this patch to introduce bugs in audio code.",
+      "revId": "f8a0c12d86a0c33342a669dc93406204e01a99bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
