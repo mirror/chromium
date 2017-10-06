@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0167958_c2662c44",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/canvas/captureStream-on-detached-canvas.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-06T13:20:16Z",
+      "side": 1,
+      "message": "Don\u0027t we need to retrieve this first?\n\n  var i \u003d document.getElementById(\"i\");",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 6
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4faed4_87255986",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/canvas/captureStream-on-detached-canvas.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-06T13:20:16Z",
+      "side": 1,
+      "message": "nit: remove blank.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
