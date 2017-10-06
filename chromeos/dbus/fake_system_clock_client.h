@@ -25,6 +25,7 @@ class CHROMEOS_EXPORT FakeSystemClockClient : public SystemClockClient {
   bool HasObserver(const Observer* observer) const override;
   void SetTime(int64_t time_in_seconds) override;
   bool CanSetTime() override;
+  void GetLastSyncInfo(const GetLastSyncInfoCallback& callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeSystemClockClient);

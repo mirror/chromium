@@ -31,4 +31,7 @@ bool FakeSystemClockClient::CanSetTime() {
   return true;
 }
 
+void FakeSystemClockClient::GetLastSyncInfo(
+    const GetLastSyncInfoCallback& callback) {}
+
 }  // namespace chromeos
