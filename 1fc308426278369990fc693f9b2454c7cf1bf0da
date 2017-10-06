@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42c27767_60ab287f",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-06T03:53:27Z",
+      "side": 1,
+      "message": "I\u0027d prefer a comment at the top defining what goes in the\nfeature vector. Then 90% of this will be self-explanatory.\n\nJust mention that we compute a single feature vector\nfrom the entire image based on metadata and/or by\nsampling some number of pixels, and that currently\nthe feature vector contains the following features:\n\n0: ...\n1: ...\n\nwith a concise definition of each one.",
+      "revId": "1fc308426278369990fc693f9b2454c7cf1bf0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc146c6e_fa439cdb",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-06T03:53:27Z",
+      "side": 1,
+      "message": "Explain where 4096 and 16 come from? Or in the comment at the\ntop",
+      "revId": "1fc308426278369990fc693f9b2454c7cf1bf0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cecd98c8_b0d6dd8a",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifierTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-06T03:53:27Z",
+      "side": 1,
+      "message": "Rather than an array of test cases, I think I\u0027d prefer more\nseparate tests:\n\nTEST_F(HighContrastImageClassifierTest,\n       BlueWheelFeaturesAndClassification) {\n\n}\n\nTEST_F(HighContrastImageClassifierTest,\n       GridLargeFeaturesAndClassification) {\n\n}\n\nWrite helper functions (like LoadImage) to make each one\nas concise as possible.\n\nThe main reason is that it will be easier to figure out what\u0027s\ngoing on if just one test fails. For example what if someone\nelse is busy refactoring and they modify one of those images -\nit\u0027d be a lot easier to see what\u0027s going on if just one test\nfails and that test references that image filename.",
+      "revId": "1fc308426278369990fc693f9b2454c7cf1bf0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
