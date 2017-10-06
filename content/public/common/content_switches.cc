@@ -449,6 +449,9 @@ const char kV8CacheOptions[] = "v8-cache-options";
 const char kV8CacheStrategiesForCacheStorage[] =
     "v8-cache-strategies-for-cache-storage";
 
+// Enables future V8 VM features
+const char kV8Future[] = "enable-future-v8-vm-features";
+
 // Cause the OS X sandbox write to syslog every time an access to a resource
 // is denied by the sandbox.
 const char kEnableSandboxLogging[]          = "enable-sandbox-logging";
