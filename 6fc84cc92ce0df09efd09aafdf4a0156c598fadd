@@ -16,6 +16,47 @@
       "revId": "6fc84cc92ce0df09efd09aafdf4a0156c598fadd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c630642_55644187",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-06T15:19:26Z",
+      "side": 1,
+      "message": "Yes, indeed. Might need to borrow logic from CLM. It occurs to me to add unit testing too.",
+      "parentUuid": "0bfde818_bf67e456",
+      "revId": "6fc84cc92ce0df09efd09aafdf4a0156c598fadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918d381e_38b97787",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingLayerAssigner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-10-06T15:19:26Z",
+      "side": 1,
+      "message": "And spell correctly.",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 64
+      },
+      "revId": "6fc84cc92ce0df09efd09aafdf4a0156c598fadd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
