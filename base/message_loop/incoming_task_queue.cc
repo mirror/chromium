@@ -51,6 +51,9 @@ TimeTicks CalculateDelayedRuntime(TimeDelta delay) {
 
 IncomingTaskQueue::IncomingTaskQueue(MessageLoop* message_loop)
     : always_schedule_work_(AlwaysNotifyPump(message_loop->type())),
+      initial_tasks_(this),
+      delayed_tasks_(this),
+      deferred_tasks_(this),
       message_loop_(message_loop) {
   // The constructing sequence is not necessarily the running sequence in the
   // case of base::Thread.
@@ -89,26 +92,6 @@ bool IncomingTaskQueue::IsIdleForTesting() {
   return incoming_queue_.empty();
 }
 
-int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
-  // Make sure no tasks are lost.
-  DCHECK(work_queue->empty());
-
-  // Acquire all we can from the inter-thread queue with one lock acquisition.
-  AutoLock lock(incoming_queue_lock_);
-  if (incoming_queue_.empty()) {
-    // If the loop attempts to reload but there are no tasks in the incoming
-    // queue, that means it will go to sleep waiting for more work. If the
-    // incoming queue becomes nonempty we need to schedule it again.
-    message_loop_scheduled_ = false;
-  } else {
-    incoming_queue_.swap(*work_queue);
-  }
-  // Reset the count of high resolution tasks since our queue is now empty.
-  int high_res_tasks = high_res_task_count_;
-  high_res_task_count_ = 0;
-  return high_res_tasks;
-}
-
 void IncomingTaskQueue::WillDestroyCurrentMessageLoop() {
   {
     AutoLock auto_lock(incoming_queue_lock_);
@@ -145,6 +128,157 @@ IncomingTaskQueue::~IncomingTaskQueue() {
 void IncomingTaskQueue::RunTask(PendingTask* pending_task) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   task_annotator_.RunTask("MessageLoop::PostTask", pending_task);
+}
+
+bool IncomingTaskQueue::HasPendingHighResolutionTasks() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  return pending_high_res_tasks_ > 0;
+}
+
+IncomingTaskQueue::InitialQueue::InitialQueue(IncomingTaskQueue* outer)
+    : outer_(outer) {}
+
+IncomingTaskQueue::InitialQueue::~InitialQueue() = default;
+
+const PendingTask& IncomingTaskQueue::InitialQueue::Peek() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  ReloadIfEmptyFromIncomingQueue();
+  DCHECK(!queue_.empty());
+  return queue_.front();
+}
+
+PendingTask IncomingTaskQueue::InitialQueue::Pop() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  ReloadIfEmptyFromIncomingQueue();
+  DCHECK(!queue_.empty());
+  PendingTask pending_task = std::move(queue_.front());
+  queue_.pop();
+
+  if (pending_task.is_high_res)
+    --outer_->pending_high_res_tasks_;
+
+  return pending_task;
+}
+
+bool IncomingTaskQueue::InitialQueue::HasTasks() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  ReloadIfEmptyFromIncomingQueue();
+  return !queue_.empty();
+}
+
+void IncomingTaskQueue::InitialQueue::Clear() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  // Previously, MessageLoop would delete all tasks including delayed and
+  // deferred tasks in a single round before attempting to reload from the
+  // incoming queue to see if more tasks remained. This gave it a chance to
+  // assess whether or not clearing should continue. As a result, while
+  // reloading is automatic for getting and seeing if tasks exist, it is not
+  // automatic for Clear().
+  while (!queue_.empty()) {
+    PendingTask pending_task = std::move(queue_.front());
+    queue_.pop();
+
+    if (pending_task.is_high_res)
+      --outer_->pending_high_res_tasks_;
+
+    if (!pending_task.delayed_run_time.is_null()) {
+      outer_->delayed_tasks().Push(std::move(pending_task));
+    }
+  }
+}
+
+void IncomingTaskQueue::InitialQueue::ReloadIfEmptyFromIncomingQueue() {
+  if (queue_.empty())
+    outer_->pending_high_res_tasks_ += outer_->ReloadWorkQueue(&queue_);
+}
+
+IncomingTaskQueue::DelayedQueue::DelayedQueue(IncomingTaskQueue* outer)
+    : outer_(outer) {}
+
+IncomingTaskQueue::DelayedQueue::~DelayedQueue() = default;
+
+void IncomingTaskQueue::DelayedQueue::Push(PendingTask pending_task) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+
+  if (pending_task.is_high_res)
+    ++outer_->pending_high_res_tasks_;
+
+  queue_.push(std::move(pending_task));
+}
+
+const PendingTask& IncomingTaskQueue::DelayedQueue::Peek() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  DCHECK(!queue_.empty());
+  return queue_.top();
+}
+
+PendingTask IncomingTaskQueue::DelayedQueue::Pop() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  DCHECK(!queue_.empty());
+  PendingTask delayed_task = std::move(const_cast<PendingTask&>(queue_.top()));
+  queue_.pop();
+
+  if (delayed_task.is_high_res)
+    --outer_->pending_high_res_tasks_;
+
+  return delayed_task;
+}
+
+bool IncomingTaskQueue::DelayedQueue::HasTasks() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  while (!queue_.empty() && Peek().task.IsCancelled())
+    Pop();
+
+  return !queue_.empty();
+}
+
+void IncomingTaskQueue::DelayedQueue::Clear() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  while (!queue_.empty())
+    Pop();
+}
+
+IncomingTaskQueue::DeferredQueue::DeferredQueue(IncomingTaskQueue* outer)
+    : outer_(outer) {}
+
+IncomingTaskQueue::DeferredQueue::~DeferredQueue() = default;
+
+void IncomingTaskQueue::DeferredQueue::Push(PendingTask pending_task) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+
+  if (pending_task.is_high_res)
+    ++outer_->pending_high_res_tasks_;
+
+  queue_.push(std::move(pending_task));
+}
+
+const PendingTask& IncomingTaskQueue::DeferredQueue::Peek() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  DCHECK(!queue_.empty());
+  return queue_.front();
+}
+
+PendingTask IncomingTaskQueue::DeferredQueue::Pop() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  DCHECK(!queue_.empty());
+  PendingTask deferred_task = std::move(queue_.front());
+  queue_.pop();
+
+  if (deferred_task.is_high_res)
+    --outer_->pending_high_res_tasks_;
+
+  return deferred_task;
+}
+
+bool IncomingTaskQueue::DeferredQueue::HasTasks() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  return !queue_.empty();
+}
+
+void IncomingTaskQueue::DeferredQueue::Clear() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(outer_->sequence_checker_);
+  while (!queue_.empty())
+    Pop();
 }
 
 bool IncomingTaskQueue::PostPendingTask(PendingTask* pending_task) {
@@ -214,6 +348,26 @@ bool IncomingTaskQueue::PostPendingTaskLockRequired(PendingTask* pending_task) {
     return true;
   }
   return false;
+}
+
+int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
+  // Make sure no tasks are lost.
+  DCHECK(work_queue->empty());
+
+  // Acquire all we can from the inter-thread queue with one lock acquisition.
+  AutoLock lock(incoming_queue_lock_);
+  if (incoming_queue_.empty()) {
+    // If the loop attempts to reload but there are no tasks in the incoming
+    // queue, that means it will go to sleep waiting for more work. If the
+    // incoming queue becomes nonempty we need to schedule it again.
+    message_loop_scheduled_ = false;
+  } else {
+    incoming_queue_.swap(*work_queue);
+  }
+  // Reset the count of high resolution tasks since our queue is now empty.
+  int high_res_tasks = high_res_task_count_;
+  high_res_task_count_ = 0;
+  return high_res_tasks;
 }
 
 }  // namespace internal
