@@ -22,6 +22,30 @@
       "revId": "160bb8cbfe331c4da055f8af138d899a53fd4d3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec35595_ff92965f",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-10-06T04:28:30Z",
+      "side": 1,
+      "message": "Good catch!\nDone.",
+      "parentUuid": "f4ae4440_d6e303c8",
+      "range": {
+        "startLine": 306,
+        "startChar": 30,
+        "endLine": 306,
+        "endChar": 78
+      },
+      "revId": "160bb8cbfe331c4da055f8af138d899a53fd4d3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
