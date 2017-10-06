@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "568556fd_bbb99f51",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Update to match new signature.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91632819_5510e7df",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "nit: use a normal docstring here",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7d148c_b0e0bc28",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Don\u0027t parse every line of the diff unless you know you need to. Should check against commit hash first, and short-circuit return if possible. Then define the file_exceptions, and short circuit return from this loop if possible as well. Something like:\n\n  def should_skip_commit(c, d):\n    banned_commits \u003d [...]\n    if commit not in banned_commits:\n      return False\n    file_exceptions \u003d [...]\n    for line in diff:\n      if line.startswith(\u0027---\u0027) or line.startswith(\u0027+++\u0027):\n        if line.split(\u0027 \u0027)[1] in file_exceptions:\n          return False\n    return True\n\nI think that does the same thing?",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0e89b9_8186d3d7",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "docstring here too",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e185de_f0cf467d",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Instead of skipping lines, pass a --format specifier to git log so it has exactly the format you want with only the information you need.",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c864f71a_a18f02d4",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Commit messages can have empty lines in them. Why does this work? Because git log prints leading spaces?",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "166a5916_0b91f5a5",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Update to match signature",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86fcfe4_420854e3",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "This is a great idea, and honestly I\u0027d change this comment to not reference testing and just do it anyway. Loading the same blame of the same file twice should result in the same page.",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "033f2666_94e44447",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "nit: no spaces inside list brackets",
+      "range": {
+        "startLine": 382,
+        "startChar": 10,
+        "endLine": 382,
+        "endChar": 11
+      },
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75de007d_ac0239df",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Appends are expensive, and lists of strings inside function calls like this are hard to edit. It would be better to use textwrap.dedent and put all of this boilerplate inside a single triple-quoted string. Then you can just have a placeholder character (%v) for the contents of the diff itself, and insert the whole diff in one go after you generate it in the for-loop.",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed9279b_eb664bfb",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "docstring",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab0eb00_61809ce3",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "Please use argparse for argument parsing and automatic help/usage generation.",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce363c0_6962ea91",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-10-06T17:48:32Z",
+      "side": 1,
+      "message": "FWIW, I would make this as similar to \u0027git blame\u0027 as possible (https://git-scm.com/docs/git-blame#_synopsis). In other words, all options (such as a specified revision) should be specified by flags, not position-arguments, and the filename should come last.",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
