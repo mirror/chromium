@@ -149,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "331d0165_2d0384c8",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T18:36:31Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/chromium/src/+/704075",
+      "parentUuid": "bea0fc23_d23cd412",
+      "range": {
+        "startLine": 976,
+        "startChar": 6,
+        "endLine": 976,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7fc5c9_0b6d32c9",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 5
