@@ -70,6 +70,30 @@
       "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25b9308_cb45f227",
+        "filename": "chrome/android/java/res/drawable/ic_drive_document_24dp.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-10-06T16:43:52Z",
+      "side": 1,
+      "message": "setBounds is controlled by ImageView:\nhttps://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/widget/ImageView.java#1214\n\nI was looking to see if there was a way to overwrite the intrinsic size of a vector, but I couldn\u0027t immediately find anything.  I was hoping there was a DrawableWrapper, but those didn\u0027t expose this and seemed to be internal appcompat classes.  For vectors, we\u0027ll probably need to find a more flexible way of dealing with this then requiring multiple views or mucking around with other stuff.  For now though, it\u0027s find to have two versions to unblock this.",
+      "parentUuid": "d0145d5c_8e107dc6",
+      "range": {
+        "startLine": 9,
+        "startChar": 19,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "ef23ad4d5dacf5010a75bffc6c37ef73fbde96dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
