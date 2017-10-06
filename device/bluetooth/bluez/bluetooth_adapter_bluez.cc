@@ -366,6 +366,8 @@ void BluetoothAdapterBlueZ::SetPowered(bool powered,
     return;
   }
 
+  // TODO(crbug.com/772561): Change warning to vlog.
+  LOG(WARNING) << "Bluetooth SetPowered: " << powered;
   BLUETOOTH_LOG(EVENT) << "SetPowered: " << powered;
 
   bluez::BluezDBusManager::Get()
