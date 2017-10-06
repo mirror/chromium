@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c6e9da3_92931806",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-10-06T23:33:19Z",
+      "side": 1,
+      "message": "Lets just add in\n\n            boolean securityIcon \u003d locationBar.isSecurityButtonShown();\n            Assert.assertTrue(\"Omnibox should have a Security icon\", securityIcon);\n            Assert.assertEquals(\"security_button with wrong resource-id\", R.id.security_button,\n                    securityButton.getId());\n\nfrom the other test for the sake of completeness as long as it wont create timing flakiness.",
+      "range": {
+        "startLine": 743,
+        "startChar": 38,
+        "endLine": 743,
+        "endChar": 50
+      },
+      "revId": "c3ca5bc08eb90284540007f5cb1efc66eda066a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
