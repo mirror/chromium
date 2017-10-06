@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9c10028_687ec65d",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Personal perf: I suggest renaming this to StartGaiaLogOut",
+      "range": {
+        "startLine": 795,
+        "startChar": 31,
+        "endLine": 795,
+        "endChar": 49
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef53754d_7354eb54",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Add: \"Calls callback once all cookies were removed\".",
+      "range": {
+        "startLine": 71,
+        "startChar": 8,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc6fc5e_f2abe5dd",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "You are using \"default\" below, consider also using it for the constructors.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 17
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b2c9872_f10d1c9f",
+        "filename": "components/signin/ios/browser/account_consistency_service.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Nit: I like the way this is commented in documented in https://cs.chromium.org/chromium/src/url/origin.h?rcl\u003d1568ad12fcce9953fc2de99ea422128b6bfe21d7\u0026l\u003d92\n\nHow about adding something like (and remove DISALLOW_COPY_AND_ASSIGN(CookieRequest)):\n// Movable, not copyable.\nCookieRequest(const CookieRequest\u0026) \u003d delete;\nCookieRequest\u0026 operator\u003d(const CookieRequest\u0026) \u003d delete;\nCookieRequest(CookieRequest\u0026\u0026) \u003d default;\nCookieRequest\u0026 operator\u003d(CookieRequest\u0026\u0026) \u003d default;",
+      "range": {
+        "startLine": 109,
+        "startChar": 42,
+        "endLine": 109,
+        "endChar": 55
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd606a4b_9442559e",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Nit: Change this check to empty().",
+      "range": {
+        "startLine": 288,
+        "startChar": 29,
+        "endLine": 288,
+        "endChar": 35
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc93426_d6f6972c",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "The callback is not called in this case. This is bad as this will break the reconcilor.\n\nPlease add a unit test for this.",
+      "range": {
+        "startLine": 289,
+        "startChar": 4,
+        "endLine": 289,
+        "endChar": 10
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d12698_feef8a5f",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "The callback is not called in this case. This is bad as this will break the reconcilor.\n\nPlease add a unit test for this.",
+      "range": {
+        "startLine": 316,
+        "startChar": 6,
+        "endLine": 316,
+        "endChar": 29
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c11189_778c9635",
+        "filename": "components/signin/ios/browser/account_consistency_service.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "This comment is confusing to me (the cookies will not actually be removed \"before of Chrome signed out\"). I suggest changing it to:\n\"There is not need to remove CHROME_CONNECTED cookies on |GoogleSignedOut| events as these\ncookies will be removed by the GaiaCookieManagerServer right before fetching the Gaia logout request\".",
+      "range": {
+        "startLine": 500,
+        "startChar": 45,
+        "endLine": 500,
+        "endChar": 52
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af60c82b_1c510fb1",
+        "filename": "components/signin/ios/browser/account_consistency_service_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Optional: In C++, folks prefer using name like \"On..\" instead of \"\"..Done\". I suggest renaming this to OnRemoveChromeConnectedCookieFinished.",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 23
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfebd6b0_33636b7b",
+        "filename": "components/signin/ios/browser/account_consistency_service_unittest.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Optional: You may move this to a helper function named SimulateGaiaCookieManagerServiceLogout",
+      "range": {
+        "startLine": 199,
+        "startChar": 7,
+        "endLine": 199,
+        "endChar": 16
+      },
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca755bf2_53055ed6",
+        "filename": "ios/chrome/browser/signin/ios_chrome_signin_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-10-06T16:10:55Z",
+      "side": 1,
+      "message": "Adding this here for the sake of dicussion, I do not think this can occur in the current state of the code.\n\nThere is a weird dependency issue here, but I do not know how this can be fixed (and it is not needed now):\nWhen the profile is shut down, GaiaCookieManagerService is killed after the AccountConsistencyService. If GaiaCookieManagerService decides to make a call to Logout after the AccountConsistencyService was shut down, then the client will attempt to get the AccountConsistencyService here and call RemoveChromeConnectedCookies. This will probably will crash somehow.",
+      "revId": "5a44d09be4152c213f7ea0a88fcfc372b5736e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
