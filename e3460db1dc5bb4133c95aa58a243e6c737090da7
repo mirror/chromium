@@ -68,6 +68,30 @@
       "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55d48d90_003d798b",
+        "filename": "third_party/WebKit/Source/modules/mediacapturefromelement/HTMLCanvasElementCapture.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T20:19:16Z",
+      "side": 1,
+      "message": "I believe that to get to this point, the ScriptState will always be for a Document (i.e., workers and other utility script contexts should never be touching DOM objects like HTMLCanvasElement). Will add a DCHECK before landing if that would make things clearer.",
+      "parentUuid": "e9e16209_9c0775bf",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "e3460db1dc5bb4133c95aa58a243e6c737090da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
