@@ -18,12 +18,18 @@
 namespace {
 
 const char kShortcutNameKey[] = "shortcut_name";
+const char kGAIANameKey[] = "gaia_name";
+const char kGAIAGivenNameKey[] = "gaia_given_name";
+const char kGAIAIdKey[] = "gaia_id";
 const char kActiveTimeKey[] = "active_time";
 const char kUserNameKey[] = "user_name";
+const char kIsUsingDefaultAvatarKey[] = "is_using_default_avatar";
 const char kAvatarIconKey[] = "avatar_icon";
 const char kAuthCredentialsKey[] = "local_auth_credentials";
 const char kPasswordTokenKey[] = "gaia_password_token";
+const char kUseGAIAPictureKey[] = "use_gaia_picture";
 const char kBackgroundAppsKey[] = "background_apps";
+const char kGAIAPictureFileNameKey[] = "gaia_picture_file_name";
 const char kProfileIsEphemeral[] = "is_ephemeral";
 const char kIsAuthErrorKey[] = "is_auth_error";
 
@@ -114,29 +120,36 @@ bool ProfileAttributesEntry::GetBackgroundStatus() const {
 }
 
 base::string16 ProfileAttributesEntry::GetGAIAName() const {
-  return profile_info_cache_->GetGAIANameOfProfileAtIndex(profile_index());
+  return GetString16(kGAIANameKey);
 }
 
 base::string16 ProfileAttributesEntry::GetGAIAGivenName() const {
-  return profile_info_cache_->GetGAIAGivenNameOfProfileAtIndex(profile_index());
+  return GetString16(kGAIAGivenNameKey);
 }
 
 std::string ProfileAttributesEntry::GetGAIAId() const {
-  return profile_info_cache_->GetGAIAIdOfProfileAtIndex(profile_index());
+  return GetString(kGAIAIdKey);
 }
 
 const gfx::Image* ProfileAttributesEntry::GetGAIAPicture() const {
-  return profile_info_cache_->GetGAIAPictureOfProfileAtIndex(profile_index());
+  std::string file_name = GetString(kGAIAPictureFileNameKey);
+
+  // If the picture is not on disk then return null.
+  if (file_name.empty())
+    return nullptr;
+
+  base::FilePath image_path = profile_path_.AppendASCII(file_name);
+  return profile_info_cache_->LoadAvatarPictureFromPath(
+      profile_path_, storage_key_, image_path);
 }
 
 bool ProfileAttributesEntry::IsUsingGAIAPicture() const {
-  return profile_info_cache_->IsUsingGAIAPictureOfProfileAtIndex(
-      profile_index());
+  return GetBool(kUseGAIAPictureKey) ||
+         (IsUsingDefaultAvatar() && GetGAIAPicture());
 }
 
 bool ProfileAttributesEntry::IsGAIAPictureLoaded() const {
-  return profile_info_cache_->IsGAIAPictureOfProfileAtIndexLoaded(
-      profile_index());
+  return profile_info_cache_->HasCachedAvatarImage(storage_key_);
 }
 
 bool ProfileAttributesEntry::IsSupervised() const {
@@ -237,20 +250,52 @@ void ProfileAttributesEntry::SetBackgroundStatus(bool running_background_apps) {
 }
 
 void ProfileAttributesEntry::SetGAIAName(const base::string16& name) {
-  profile_info_cache_->SetGAIANameOfProfileAtIndex(profile_index(), name);
+  if (name == GetGAIAName())
+    return;
+
+  base::string16 old_display_name = GetName();
+  SetString16(kGAIANameKey, name);
+  base::string16 new_display_name = GetName();
+
+  base::FilePath profile_path = GetPath();
+  profile_info_cache_->UpdateSortForProfileIndex(profile_index());
+
+  if (old_display_name != new_display_name) {
+    profile_info_cache_->NotifyOnProfileNameChanged(profile_path,
+                                                    old_display_name);
+  }
 }
 
 void ProfileAttributesEntry::SetGAIAGivenName(const base::string16& name) {
-  profile_info_cache_->SetGAIAGivenNameOfProfileAtIndex(profile_index(), name);
+  if (name == GetGAIAGivenName())
+    return;
+
+  base::string16 old_display_name = GetName();
+  SetString16(kGAIAGivenNameKey, name);
+  base::string16 new_display_name = GetName();
+
+  base::FilePath profile_path = GetPath();
+  profile_info_cache_->UpdateSortForProfileIndex(profile_index());
+
+  if (old_display_name != new_display_name) {
+    profile_info_cache_->NotifyOnProfileNameChanged(profile_path,
+                                                    old_display_name);
+  }
 }
 
 void ProfileAttributesEntry::SetGAIAPicture(const gfx::Image* image) {
-  profile_info_cache_->SetGAIAPictureOfProfileAtIndex(profile_index(), image);
+  base::FilePath profile_path = GetPath();
+  std::string new_file_name =
+      profile_info_cache_->SaveGAIAImageAndGetNewAvatarFileName(
+          profile_path, image, storage_key_,
+          GetString(kGAIAPictureFileNameKey));
+  SetString(kGAIAPictureFileNameKey, new_file_name);
+  profile_info_cache_->NotifyOnProfileAvatarChanged(profile_path);
 }
 
 void ProfileAttributesEntry::SetIsUsingGAIAPicture(bool value) {
-  profile_info_cache_->SetIsUsingGAIAPictureOfProfileAtIndex(
-      profile_index(), value);
+  SetBool(kUseGAIAPictureKey, value);
+  profile_info_cache_->NotifyOnProfileAvatarChanged(GetPath());
 }
 
 void ProfileAttributesEntry::SetIsSigninRequired(bool value) {
@@ -277,8 +322,9 @@ void ProfileAttributesEntry::SetIsUsingDefaultName(bool value) {
 }
 
 void ProfileAttributesEntry::SetIsUsingDefaultAvatar(bool value) {
-  profile_info_cache_->SetProfileIsUsingDefaultAvatarAtIndex(
-      profile_index(), value);
+  if (value == IsUsingDefaultAvatar())
+    return;
+  SetBool(kIsUsingDefaultAvatarKey, value);
 }
 
 void ProfileAttributesEntry::SetIsAuthError(bool value) {
@@ -293,13 +339,11 @@ void ProfileAttributesEntry::SetAvatarIconIndex(size_t icon_index) {
   }
   SetString(kAvatarIconKey, profiles::GetDefaultAvatarIconUrl(icon_index));
 
-  base::FilePath profile_path = GetPath();
-
   if (!profile_info_cache_->GetDisableAvatarDownloadForTesting())
     profile_info_cache_->DownloadHighResAvatarIfNeeded(icon_index,
-                                                       profile_path);
+                                                       profile_path_);
 
-  profile_info_cache_->NotifyOnProfileAvatarChanged(profile_path);
+  profile_info_cache_->NotifyOnProfileAvatarChanged(profile_path_);
 }
 
 void ProfileAttributesEntry::SetAuthInfo(
@@ -328,7 +372,7 @@ const gfx::Image* ProfileAttributesEntry::GetHighResAvatar() const {
       profiles::GetDefaultAvatarIconFileNameAtIndex(avatar_index);
   const base::FilePath image_path =
       profiles::GetPathOfHighResAvatarAtIndex(avatar_index);
-  return profile_info_cache_->LoadAvatarPictureFromPath(GetPath(), key,
+  return profile_info_cache_->LoadAvatarPictureFromPath(profile_path_, key,
                                                         image_path);
 }
 
