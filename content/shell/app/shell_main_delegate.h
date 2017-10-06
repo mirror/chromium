@@ -33,7 +33,8 @@ class ShellMainDelegate : public ContentMainDelegate {
   void PreSandboxStartup() override;
   int RunProcess(const std::string& process_type,
                  const MainFunctionParams& main_function_params) override;
-#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX)
+#if defined(OS_POSIX) && !defined(OS_ANDROID) && !defined(OS_MACOSX) && \
+    !defined(OS_FUCHSIA)
   void ZygoteForked() override;
 #endif
   ContentBrowserClient* CreateContentBrowserClient() override;
