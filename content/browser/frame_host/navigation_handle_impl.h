@@ -114,6 +114,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // NavigationHandle implementation:
   int64_t GetNavigationId() const override;
   const GURL& GetURL() override;
+  const std::string& GetMethod() override;
   SiteInstance* GetStartingSiteInstance() override;
   bool IsInMainFrame() override;
   bool IsParentMainFrame() override;
@@ -166,6 +167,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
   bool IsDownload() override;
+  void SetIsIgnoredByWebView() override;
+  bool IsIgnoredByWebView() const override;
 
   // Resume and CancelDeferredNavigation must only be called by the
   // NavigationThrottle that is currently deferring the navigation.
@@ -609,6 +612,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // Used in tests. Called when the navigation is deferred by one of the
   // NavigationThrottles.
   base::Closure on_defer_callback_for_testing_;
+
+  bool is_ignored_by_webview_;
 
   base::WeakPtrFactory<NavigationHandleImpl> weak_factory_;
 

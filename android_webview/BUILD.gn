@@ -484,6 +484,8 @@ source_set("common") {
     "browser/aw_metrics_log_uploader.h",
     "browser/aw_metrics_service_client.cc",
     "browser/aw_metrics_service_client.h",
+    "browser/aw_navigation_throttle.cc",
+    "browser/aw_navigation_throttle.h",
     "browser/aw_pdf_exporter.cc",
     "browser/aw_pdf_exporter.h",
     "browser/aw_permission_manager.cc",
