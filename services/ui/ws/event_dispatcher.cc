@@ -312,7 +312,7 @@ void EventDispatcher::ProcessEvent(const ui::Event& event,
   const EventSource event_source =
       event.IsMousePointerEvent() ? EventSource::MOUSE : EventSource::TOUCH;
   DCHECK(event_location.location == event.AsPointerEvent()->root_location_f());
-  DCHECK(event_location.location == event.AsPointerEvent()->location_f());
+  // DCHECK(event_location.location == event.AsPointerEvent()->location_f());
   if (ShouldUseEventTargeter(*event.AsPointerEvent())) {
     waiting_on_event_targeter_ = true;
     event_targeter_->FindTargetForLocation(
