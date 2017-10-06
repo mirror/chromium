@@ -27,11 +27,14 @@ std::unique_ptr<PrinterHandler> PrinterHandler::CreateForExtensionPrinters(
 
 // static
 std::unique_ptr<PrinterHandler> PrinterHandler::CreateForLocalPrinters(
+    PrintPreviewUI* print_preview_ui,
+    content::WebContents* preview_web_contents,
     Profile* profile) {
 #if defined(OS_CHROMEOS)
   return base::MakeUnique<LocalPrinterHandlerChromeos>(profile);
 #else
-  return base::MakeUnique<LocalPrinterHandlerDefault>();
+  return base::MakeUnique<LocalPrinterHandlerDefault>(print_preview_ui,
+                                                      preview_web_contents);
 #endif
 }
 

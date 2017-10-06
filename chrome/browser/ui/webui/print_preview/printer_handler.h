@@ -32,6 +32,7 @@ namespace printing {
 class StickySettings;
 }
 
+class PrintPreviewUI;
 class Profile;
 
 // Wrapper around PrinterProviderAPI to be used by print preview.
@@ -72,6 +73,8 @@ class PrinterHandler {
       printing::StickySettings* sticky_settings);
 
   static std::unique_ptr<PrinterHandler> CreateForLocalPrinters(
+      PrintPreviewUI* print_preview_ui,
+      content::WebContents* preview_web_contents,
       Profile* profile);
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
