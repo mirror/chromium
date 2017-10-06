@@ -502,6 +502,8 @@ initWithRootViewController:(UIViewController*)rootViewController
 
 #pragma mark - ApplicationSettingsCommands
 
+- (void)showAccountsSettings:(UIViewController*)presentingViewController {
+}
 - (void)showAccountsSettings {
   AccountsCollectionViewController* controller =
       [[AccountsCollectionViewController alloc]
