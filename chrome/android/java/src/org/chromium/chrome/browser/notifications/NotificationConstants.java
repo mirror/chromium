@@ -99,5 +99,5 @@ public class NotificationConstants {
     static final String GROUP_WEB_PREFIX = "Web:";
 
     // Default notificationId until it has been set.
-    public static final int DEFAULT_NOTIFICATION_ID = -1;
+    public static final int INVALID_NOTIFICATION_ID = -1;
 }

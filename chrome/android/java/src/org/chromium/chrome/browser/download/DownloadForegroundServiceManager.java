@@ -4,7 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
-import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
+import static org.chromium.chrome.browser.notifications.NotificationConstants.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
 import android.app.NotificationManager;

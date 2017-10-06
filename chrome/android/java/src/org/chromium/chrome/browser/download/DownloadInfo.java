@@ -238,6 +238,34 @@ public final class DownloadInfo {
                 .build();
     }
 
+    // NOTE: Make sure this is in sync with the fields in DownloadInfo.
+    static OfflineItem offlineItem(DownloadInfo downloadInfo) {
+        OfflineItem offlineItem = new OfflineItem(downloadInfo.getContentId());
+        offlineItem.pageUrl = downloadInfo.getUrl();
+        // No userAgent.
+        offlineItem.mimeType = downloadInfo.getMimeType();
+        // No cookie.
+        offlineItem.fileName = downloadInfo.getFileName();
+        offlineItem.description = downloadInfo.getDescription();
+        offlineItem.filePath = downloadInfo.getFilePath();
+        offlineItem.referrer = downloadInfo.getReferrer();
+        offlineItem.originalUrl = downloadInfo.getOriginalUrl();
+        offlineItem.receivedBytes = downloadInfo.getBytesReceived();
+        // No downloadGuid, hasUserGesture, isGETRequest, contentDisposition.
+        offlineItem.progress = downloadInfo.getProgress();
+        offlineItem.timeRemainingMs = downloadInfo.getTimeRemainingInMillis();
+        offlineItem.isResumable = downloadInfo.isResumable();
+        offlineItem.isPaused = downloadInfo.isPaused();
+        offlineItem.isOffTheRecord = downloadInfo.isOffTheRecord();
+        offlineItem.isOfflinePage = downloadInfo.isOfflinePage();
+        // No state.
+        offlineItem.lastAccessedTimeMs = downloadInfo.getLastAccessTime();
+        offlineItem.isOpenable = downloadInfo.getIsOpenable();
+        offlineItem.isTransient = downloadInfo.getIsTransient();
+        offlineItem.icon = downloadInfo.getIcon();
+        return offlineItem;
+    }
+
     /**
      * Helper class for building the DownloadInfo object.
      */

@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.download;
 import android.content.Context;
 
 import org.chromium.components.offline_items_collection.ContentId;
+import org.chromium.components.offline_items_collection.OfflineItem;
 
 /**
  * DownloadNotifier implementation that creates and updates download notifications.
@@ -34,10 +35,13 @@ public class SystemDownloadNotifier2 implements DownloadNotifier {
     @Override
     public void notifyDownloadSuccessful(DownloadInfo info, long systemDownloadId,
             boolean canResolve, boolean isSupportedMimeType) {
-        final int notificationId = mDownloadNotificationService.notifyDownloadSuccessful(
-                info.getContentId(), info.getFilePath(), info.getFileName(), systemDownloadId,
-                info.isOffTheRecord(), isSupportedMimeType, info.getIsOpenable(), info.getIcon(),
-                info.getOriginalUrl(), info.getReferrer());
+        OfflineItem offlineItem = DownloadInfo.offlineItem(info);
+        offlineItem.systemDownloadId = systemDownloadId;
+        offlineItem.canResolve = canResolve;
+        offlineItem.isSupportedMimeType = isSupportedMimeType;
+
+        final int notificationId =
+                mDownloadNotificationService.notifyDownloadSuccessful(offlineItem);
 
         if (info.getIsOpenable()) {
             DownloadManagerService.getDownloadManagerService().onSuccessNotificationShown(
@@ -47,30 +51,32 @@ public class SystemDownloadNotifier2 implements DownloadNotifier {
 
     @Override
     public void notifyDownloadFailed(DownloadInfo info) {
-        mDownloadNotificationService.notifyDownloadFailed(
-                info.getContentId(), info.getFileName(), info.getIcon());
+        mDownloadNotificationService.notifyDownloadFailed(DownloadInfo.offlineItem(info));
     }
 
     @Override
     public void notifyDownloadProgress(
             DownloadInfo info, long startTime, boolean canDownloadWhileMetered) {
-        mDownloadNotificationService.notifyDownloadProgress(info.getContentId(), info.getFileName(),
-                info.getProgress(), info.getBytesReceived(), info.getTimeRemainingInMillis(),
-                startTime, info.isOffTheRecord(), canDownloadWhileMetered, info.getIsTransient(),
-                info.getIcon());
+        OfflineItem offlineItem = DownloadInfo.offlineItem(info);
+        offlineItem.creationTimeMs = startTime;
+        offlineItem.allowMetered = canDownloadWhileMetered;
+
+        mDownloadNotificationService.notifyDownloadProgress(offlineItem);
     }
 
     @Override
     public void notifyDownloadPaused(DownloadInfo info) {
-        mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
-                true, false, info.isOffTheRecord(), info.getIsTransient(), info.getIcon(), false);
+        OfflineItem offlineItem = DownloadInfo.offlineItem(info);
+        offlineItem.isResumable = true;
+        offlineItem.isAutoResumable = false;
+
+        mDownloadNotificationService.notifyDownloadPaused(offlineItem, false);
     }
 
     @Override
     public void notifyDownloadInterrupted(DownloadInfo info, boolean isAutoResumable) {
-        mDownloadNotificationService.notifyDownloadPaused(info.getContentId(), info.getFileName(),
-                info.isResumable(), isAutoResumable, info.isOffTheRecord(), info.getIsTransient(),
-                info.getIcon(), false);
+        OfflineItem offlineItem = DownloadInfo.offlineItem(info);
+        mDownloadNotificationService.notifyDownloadPaused(offlineItem, false);
     }
 
     @Override

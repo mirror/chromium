@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.notifications.NotificationConstants.INVALID_NOTIFICATION_ID;
+
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -1162,8 +1164,7 @@ public class DownloadManagerService
                         handleAutoOpenAfterDownload(result.item);
                     } else {
                         mDownloadSnackbarController.onDownloadSucceeded(
-                                result.item.getDownloadInfo(),
-                                DownloadSnackbarController.INVALID_NOTIFICATION_ID,
+                                result.item.getDownloadInfo(), INVALID_NOTIFICATION_ID,
                                 result.item.getSystemDownloadId(), result.canResolve, true);
                     }
                     break;
