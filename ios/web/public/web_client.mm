@@ -95,7 +95,7 @@ void WebClient::AllowCertificateError(
 }
 
 bool WebClient::IsSlimNavigationManagerEnabled() const {
-  return false;
+  return true;
 }
 
 }  // namespace web
