@@ -22,6 +22,30 @@
       "revId": "6d791b8590964dedd833ea3cf97885bca89b66d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d432709_c21c9b6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/OverlayPanelContent.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-06T17:06:59Z",
+      "side": 1,
+      "message": "Bar height is the correct value to use. We shouldn\u0027t abuse the fact that the control container and bar height happen to be the same size.",
+      "parentUuid": "6047e198_5c028f71",
+      "range": {
+        "startLine": 353,
+        "startChar": 46,
+        "endLine": 353,
+        "endChar": 58
+      },
+      "revId": "6d791b8590964dedd833ea3cf97885bca89b66d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
