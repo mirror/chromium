@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1bf310d3_18bc5377",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-10-06T06:20:27Z",
+      "side": 1,
+      "message": "Can you change the bucketing to be something like [0, 10), [10, 20), ..., [90, 100] so there isn\u0027t the weird little bucket at the end? And then have BATTERY_BUCKETS \u003d 10.",
+      "parentUuid": "e4b38981_c78d2a06",
+      "revId": "685a80deab5a0c8e509dbf6854126b59969bd97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16fab2dc_9a284815",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionUmaUtil.java",
         "patchSetId": 4
