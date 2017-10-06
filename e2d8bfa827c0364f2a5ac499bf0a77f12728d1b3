@@ -70,6 +70,24 @@
       "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "603865e2_b7e4f87b",
+        "filename": "ui/chromeos/events/modifier_key.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-10-06T07:44:35Z",
+      "side": 1,
+      "message": "Done. Although due to the direct reference to the enum type, I had to give it an inner name. I opened a bug to clean this up and put it in the TODO (assigned to self).",
+      "parentUuid": "1e33c738_af4eec54",
+      "revId": "e2d8bfa827c0364f2a5ac499bf0a77f12728d1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
