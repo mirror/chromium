@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "28d3d8a6_30dc1c28",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "I\u0027ve linked to the doc from the bug.\n\nI\u0027ve been instructing others to do so as well in other reviews since the crbug should be a one-stop-shop for all the resources. It also has the benefits of mutability, whereas CL descriptions do not.",
+      "parentUuid": "a40ba496_2fa8c7bb",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54b7390_9600dd4f",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e4f1c48_38905dc2",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Method renamed.",
+      "parentUuid": "c54b7390_9600dd4f",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "19c0dde2_7ed27282",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "c94d9952_7fb2433b",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9099103_0d7bc62b",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91676f91_e9484b73",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Done. Elaborated more on this.",
+      "parentUuid": "d9099103_0d7bc62b",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f4f47e32_aa734e80",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Went with had_tasks to maintain the positive modifier.",
+      "parentUuid": "fee4730a_b855ca61",
+      "range": {
+        "startLine": 234,
+        "startChar": 7,
+        "endLine": 234,
+        "endChar": 16
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d9dcfd0_29c437b7",
         "filename": "base/message_loop/incoming_task_queue.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b130d4_412339e8",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Agreed, but I couldn\u0027t think of a reasonable way to share these as many have subtle quirks like reloading or not reloading and differing underlying data structures. As such, it was easier to keep these separate.\n\nAdded a note to the banner comment.",
+      "parentUuid": "6d9dcfd0_29c437b7",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "11974869_fbf80863",
+        "filename": "base/message_loop/incoming_task_queue.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "It seems so to correctly minimize the number of MessageLoop scheduling requests.\n\nThis is here as a signal the MessageLoop woke up and has responded to the request.",
+      "parentUuid": "efaba060_c56adc02",
+      "range": {
+        "startLine": 366,
+        "startChar": 4,
+        "endLine": 366,
+        "endChar": 27
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c64bcc1_1a757b91",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 1
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "b022acb9_5a1fa1d5",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Technically both. Fixed.",
+      "parentUuid": "6c64bcc1_1a757b91",
+      "range": {
+        "startLine": 31,
+        "startChar": 16,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b53dfc46_96ea8d57",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 1
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "354fb09e_dd6c3331",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b53dfc46_96ea8d57",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a15028b_4d6c0087",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 1
@@ -184,6 +364,30 @@
       "writtenOn": "2017-09-25T22:43:48Z",
       "side": 1,
       "message": "It\u0027s not \"initial\" if it can be reloaded, right? How about MainQueue? Or \"work queue\" as it used to be called?",
+      "range": {
+        "startLine": 95,
+        "startChar": 8,
+        "endLine": 95,
+        "endChar": 20
+      },
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4e07f5_2ffe3ea7",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Well, it\u0027s the initial queue for the sequence processing these tasks. I\u0027ve added a comment as such. MainQueue and WorkQueue didn\u0027t seem appropriate since we also have Delayed and Deferred, which also contain work.\n\nSince this is the triage point, initial seemed to work, but happy to entertain similar meaning names.",
+      "parentUuid": "3a15028b_4d6c0087",
       "range": {
         "startLine": 95,
         "startChar": 8,
@@ -213,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "dd6ae573_c503cfe7",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Just did the rename. The comment would just restate the name.",
+      "parentUuid": "13097548_0546c46b",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbdb28c7_7b248a24",
         "filename": "base/message_loop/incoming_task_queue.h",
         "patchSetId": 1
@@ -227,6 +449,24 @@
       "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b74b8ec_01884c92",
+        "filename": "base/message_loop/incoming_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Done. Added a banner comment above.",
+      "parentUuid": "bbdb28c7_7b248a24",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "91ac56d3_79a9679b",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Changed the name to tasks_remain.\n\nOddly enough, we don\u0027t actually care about the result of DeletePendingTask. What we do care about is if there are still initial tasks pending. I\u0027ve removed the return chain from DeletePendingTask instead.",
+      "parentUuid": "e9716c13_9f6dfba8",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d983b3f7_70d20c33",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 1
@@ -264,6 +522,24 @@
     },
     {
       "key": {
+        "uuid": "07d65637_95e3fa4d",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "Sounds reasonable to me. Done.",
+      "parentUuid": "d983b3f7_70d20c33",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f3ce3ae_86ede3ae",
         "filename": "base/message_loop/message_loop.cc",
         "patchSetId": 1
@@ -278,6 +554,24 @@
       "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fdf932_c16b6550",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 1,
+      "message": "All tasks including delayed tasks are posted to the incoming queue (note that IncomingTaskQueue::PostPendingTask doesn\u0027t check for delays). The delays are actually not processed until the processing sequence reloads the work queue and iterates through the incoming queue at this point.",
+      "parentUuid": "5f3ce3ae_86ede3ae",
+      "revId": "83dbdd88ca44f3704a88f0d4474b8fee4b197d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

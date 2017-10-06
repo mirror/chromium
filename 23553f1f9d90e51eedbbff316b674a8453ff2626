@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "68d2ece2_1ab7536c",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 0,
+      "message": "Yeah, I was surprised by this non-symmetric behavior too, but it definitely makes sense for the other queues. To keep this closer to the old behavior, I\u0027m leaving this as is, but we can consider for a follow up.",
+      "parentUuid": "a95c4a82_2a9fdc41",
+      "range": {
+        "startLine": 434,
+        "startChar": 18,
+        "endLine": 434,
+        "endChar": 67
+      },
+      "revId": "23553f1f9d90e51eedbbff316b674a8453ff2626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a4c5291_deb7fa5c",
+        "filename": "base/message_loop/message_loop.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "a9f73e02_853346bd",
+      "revId": "23553f1f9d90e51eedbbff316b674a8453ff2626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c28990d2_02679fef",
         "filename": "base/message_loop/message_loop.h",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "23553f1f9d90e51eedbbff316b674a8453ff2626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "384f5b3e_c762da47",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T01:35:57Z",
+      "side": 0,
+      "message": "pending_task.h:DelayedTaskQueue is used in IncomingTaskQueue instead so it\u0027s still around.",
+      "parentUuid": "c28990d2_02679fef",
+      "range": {
+        "startLine": 393,
+        "startChar": 2,
+        "endLine": 393,
+        "endChar": 18
+      },
+      "revId": "23553f1f9d90e51eedbbff316b674a8453ff2626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
