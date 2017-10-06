@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35d18624_c3ad7733",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "nit: Might be good to point out it\u0027s a singleton up here.",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f624c1_8399c6c6",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "API design notes:\n\nI have to wonder if people won\u0027t accidentally make this mistake anyway. \n\n-----------\nI saw you have Java 8 support, so maybe the linter could catch this?\n\n   registerNativeReference(ptr, obj, Foo::bar) // warn unless Foo#bar is static.\n\n-----------\n\nAlternatively, if you used reflection to invoke the \"static native nativeDestroy(long)\" , it would absolve this problem?\n\n  void registerNativeReference(long ptr, Object object, Class\u003cT\u003e destroyer) {\n    Method destroyNative \u003d destroyer.getMethod(\"nativeDestroy\", long.TYPE);\n    if (destroyNative !\u003d static) throw;\n\n    .....\n    // instead of calling Destroyer.onDestroy, call destroyNative.invoke(long)\n  }\n  \n  void registerNativeReference(long ptr, Object object) {\n    registerNativeReference(ptr, object, object.getClass());\n  }\n\n(as a variation, if you use JNI to do this you can avoid boxing the Long pointer if thats a concern).\n\n---------",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f362ca5_012b8c70",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "nit: Destroyer\u003cT\u003e might look a bit cleaner to the user ?\n\n  BitmapDestroyer implements Destroyer\u003cBitmap\u003e\n  YuvDestroyer implements Destroyer\u003cYuv\u003e\n\netc. Not sure if it will break lambdas. Probably not, it\u0027s still a SAM.",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22eb270e_4ac53854",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "(Curious random question. Why can\u0027t you just mock the regular INSTANCE here by overwriting it with reflection? Is it because there\u0027s no Looper during a test?)",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0f74e3e_8cab33f9",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "(is this an alternative syntax for {@code referent} ?)",
+      "range": {
+        "startLine": 131,
+        "startChar": 7,
+        "endLine": 131,
+        "endChar": 17
+      },
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51e5631_43c41110",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefAssassin.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "Is it only used by testing? @VisibleForTesting ?\n\nOtherwise I\u0027m concerned native memory will be dropped on the floor (with a leak).\n\nTypically to be safe with such an operation, it would mean that the queue has to be fully drained and future attempts to register new objects would fail.",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e3a3f73_dac35512",
+        "filename": "base/android/java/src/org/chromium/base/NativeRefHolder.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1224415
+      },
+      "writtenOn": "2017-10-06T20:22:54Z",
+      "side": 1,
+      "message": "This operation is inherently unsafe.\n\nSuppose one thread (A) calls getNativePtr, getting a non-null pointer.\nAnother thread then (B) cleans it up.\n(A) proceeds to use-after-free the pointer.\n\nLikely this should be either only @VisibleForTesting or there should be additional steps taken to ensure pointer is not destroyed while its used.",
+      "revId": "26c961f5ab0b9a9d8367cf9f3dff8c1f0904358f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
