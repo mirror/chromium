@@ -124,7 +124,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
     // to the client disconnecting).
     std::set<QueuedMemoryDumpRequest::PendingResponse> pending_responses;
     std::map<mojom::ClientProcess*, Response> responses;
-    int failed_memory_dump_count = 0;
     bool dump_in_progress = false;
     // The time we started handling the request (does not including queuing
     // time).
@@ -146,13 +145,11 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // Callback of RequestChromeMemoryDump.
   void OnChromeMemoryDumpResponse(
       mojom::ClientProcess*,
-      bool success,
       uint64_t dump_guid,
       std::unique_ptr<base::trace_event::ProcessMemoryDump> chrome_memory_dump);
 
   // Callback of RequestOSMemoryDump.
   void OnOSMemoryDumpResponse(mojom::ClientProcess*,
-                              bool success,
                               OSMemDumpMap);
 
   void RemovePendingResponse(mojom::ClientProcess*,

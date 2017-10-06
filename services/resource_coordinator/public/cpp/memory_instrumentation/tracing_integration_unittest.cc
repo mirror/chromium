@@ -182,38 +182,35 @@ class MemoryTracingIntegrationTest : public testing::Test {
   }
 
   // Blocks the current thread (spinning a nested message loop) until the
-  // memory dump is complete. Returns:
-  // - return value: the |success| from the RequestChromeMemoryDump() callback.
+  // memory dump is complete. Returns true iff the result was non-null.
   bool RequestChromeDumpAndWait(
       MemoryDumpType dump_type,
       MemoryDumpLevelOfDetail level_of_detail,
       std::unique_ptr<base::trace_event::ProcessMemoryDump>* result = nullptr) {
     base::RunLoop run_loop;
-    bool success = false;
     MemoryDumpRequestArgs request_args{kTestGuid, dump_type, level_of_detail};
     ClientProcessImpl::RequestChromeMemoryDumpCallback callback = base::Bind(
-        [](bool* curried_success, base::Closure curried_quit_closure,
+        [](base::Closure curried_quit_closure,
            std::unique_ptr<base::trace_event::ProcessMemoryDump>*
                curried_result,
-           bool success, uint64_t dump_guid,
+           uint64_t dump_guid,
            std::unique_ptr<base::trace_event::ProcessMemoryDump> result) {
           EXPECT_EQ(kTestGuid, dump_guid);
-          *curried_success = success;
           if (curried_result)
             *curried_result = std::move(result);
           curried_quit_closure.Run();
         },
-        &success, run_loop.QuitClosure(), result);
+        run_loop.QuitClosure(), result);
     client_process_->RequestChromeMemoryDump(request_args, callback);
     run_loop.Run();
-    return success;
+    return result != nullptr;
   }
 
   void RequestChromeDump(MemoryDumpType dump_type,
                          MemoryDumpLevelOfDetail level_of_detail) {
     MemoryDumpRequestArgs request_args{kTestGuid, dump_type, level_of_detail};
     ClientProcessImpl::RequestChromeMemoryDumpCallback callback = base::Bind(
-        [](bool success, uint64_t dump_guid,
+        [](uint64_t dump_guid,
            std::unique_ptr<base::trace_event::ProcessMemoryDump> result) {});
     client_process_->RequestChromeMemoryDump(request_args, callback);
   }
