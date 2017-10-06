@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "af858625_62342e5b",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-06T18:18:19Z",
+      "side": 1,
+      "message": "However, couldn\u0027t it still be true that OnTracingReaderStopped doesn\u0027t have a chance to run?\nI\u0027m particularly thinking of cases where we may want to trace shutdown. It sounds like if this doesn\u0027t run, then we would not record the data?",
+      "parentUuid": "21b217ee_793e508d",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92682c34_bb5330ea",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
         "patchSetId": 52
@@ -212,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "79dab6fa_a71fee00",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-06T18:18:19Z",
+      "side": 1,
+      "message": "SG, thanks!",
+      "parentUuid": "e1e76a29_b59e7cfa",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8f4f68a_dd688f01",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
         "patchSetId": 52
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Again, these all existed before in content/public/browser/arc_tracing_agent.{cc,h}. I feel safer if I don\u0027t make this change bigger than necessary and do this in a separate CL if you agree?",
       "parentUuid": "c8f4f68a_dd688f01",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b775fb52_de54f494",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-10-06T18:18:19Z",
+      "side": 1,
+      "message": "Ok",
+      "parentUuid": "5eed55cd_44b79ae7",
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
