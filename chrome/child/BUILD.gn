@@ -15,6 +15,7 @@ static_library("child") {
   configs += [ "//build/config/compiler:wexit_time_destructors" ]
 
   deps = [
+    "../common:features",
     "//base",
     "//content/public/child",
     "//gin",
