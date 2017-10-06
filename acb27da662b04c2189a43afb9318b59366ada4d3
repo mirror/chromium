@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "704c8951_51153ac8",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "568556fd_bbb99f51",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91632819_5510e7df",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "163bfc82_cac81ed9",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91632819_5510e7df",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "db73fdae_b79ce286",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done. I early-returned at the first \u0027@@\u0027 instead of the end of the diff, so that we don\u0027t have to go through the whole diff",
+      "parentUuid": "9f7d148c_b0e0bc28",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e0e89b9_8186d3d7",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c843a81_cd8a9569",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e0e89b9_8186d3d7",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "37825dd8_69beedfb",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done, except there\u0027s no way to format the diff, so there will always be a blank line between the commit metadata and the diff.",
+      "parentUuid": "82e185de_f0cf467d",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c864f71a_a18f02d4",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -107,6 +203,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb51ad7_8873515b",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "c864f71a_a18f02d4",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "05173651_5630f4a7",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "166a5916_0b91f5a5",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f86fcfe4_420854e3",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -141,6 +273,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc289c9_4cac10cb",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f86fcfe4_420854e3",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +334,48 @@
     },
     {
       "key": {
+        "uuid": "ef478025_13f5b76e",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "033f2666_94e44447",
+      "range": {
+        "startLine": 382,
+        "startChar": 10,
+        "endLine": 382,
+        "endChar": 11
+      },
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db562c9b_fc3b4d78",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75de007d_ac0239df",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ed9279b_eb664bfb",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -198,6 +390,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30edb9ed_1bc7a7f3",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed9279b_eb664bfb",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -218,6 +428,24 @@
     },
     {
       "key": {
+        "uuid": "bc5f3b89_a1e19f1e",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab0eb00_61809ce3",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce363c0_6962ea91",
         "filename": "tools/uberblame.py",
         "patchSetId": 4
@@ -232,6 +460,24 @@
       "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb010072_75d56ab1",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-10-06T21:54:12Z",
+      "side": 1,
+      "message": "Done.  But the revision is a positional argument too",
+      "parentUuid": "7ce363c0_6962ea91",
+      "revId": "acb27da662b04c2189a43afb9318b59366ada4d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
