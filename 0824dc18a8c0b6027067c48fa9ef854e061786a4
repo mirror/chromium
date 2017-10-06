@@ -16,6 +16,24 @@
       "revId": "0824dc18a8c0b6027067c48fa9ef854e061786a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1effde89_fe09a8a6",
+        "filename": "base/memory/shared_memory_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-06T05:01:15Z",
+      "side": 1,
+      "message": "I have updated the test case a little bit. Now it:\n  - Creates three mapped instances of SharedMemory. They are referring to the same memory address.\n  - Two of them are read/write, one is readonly.\n  - The read/write instances sequentially write content to the memory.\n  - ASSERT_EQ() all the three instances can return the latest content.\n\nThis is the expected behavior to cover the scenario in media/gpu/ and remoting/.",
+      "parentUuid": "1f25edec_68005403",
+      "revId": "0824dc18a8c0b6027067c48fa9ef854e061786a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
