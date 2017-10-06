@@ -99,7 +99,8 @@ enum PromoAction {
       dismissViewControllerAnimated:YES
                          completion:^{
                            if (showAccountsSettings) {
-                             [self.dispatcher showAccountsSettings];
+                             [self.dispatcher
+                                 showAccountsSettings:presentingViewController];
                            }
                          }];
 }

@@ -158,9 +158,10 @@ NSString* const kSignInSkipButtonAccessibilityIdentifier =
   DCHECK_EQ(self, controller);
 
   // User is done with First Run after explicit sign-in accept.
+  UIViewController* presentingViewController = self.presentingViewController;
   [self finishFirstRunAndDismiss];
   if (showAccountsSettings) {
-    [self.dispatcher showAccountsSettings];
+    [self.dispatcher showAccountsSettings:presentingViewController];
   }
 }
 
