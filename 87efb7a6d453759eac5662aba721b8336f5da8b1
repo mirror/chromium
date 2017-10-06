@@ -204,6 +204,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff425a8_fdabc114",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T23:49:01Z",
+      "side": 1,
+      "message": "Do we need it for WillFailRequest? I would say we don\u0027t bind it unless we clearly know that we do need it. Also, not setting it on the NavigationHandle allows us to restore the state DCHECK, as there will be nothing to return anyway.",
+      "parentUuid": "4c760f58_c20be39a",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
