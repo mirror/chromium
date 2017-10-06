@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "74a3c3dd_d26260b5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-10-06T18:27:16Z",
+      "side": 1,
+      "message": "This is a test that you fill up the param value array correctly.  No other node does this (I think).\n\nBut leave the tests you added; we need those too.",
+      "parentUuid": "9bcb1aae_1ccdd30c",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a50807e_cecb3e6d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
         "patchSetId": 22
