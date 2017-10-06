@@ -22,6 +22,30 @@
       "revId": "3460697872a4d2effbd4ebe7f9a634defeb92a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5bd828_f88abdf4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 13569,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-06T00:55:14Z",
+      "side": 0,
+      "message": "That\u0027s a very good point!\nSo, it seems like I made a mistake in my last CL (670459) and I submitted the automatically generated enum file with a line that should have been added in this CL only.\n\nI am not familiar with this file, so I don\u0027t know if now it\u0027s OK to switch positions of the methods in the enum. But when I generate the file via python script, this is what I get.\nDo you happen to know if it\u0027s OK?",
+      "parentUuid": "7d45457a_9cc4da71",
+      "range": {
+        "startLine": 13569,
+        "startChar": 77,
+        "endLine": 13569,
+        "endChar": 0
+      },
+      "revId": "3460697872a4d2effbd4ebe7f9a634defeb92a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

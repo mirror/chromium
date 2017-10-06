@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "032ee19b_f65757ff",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-06T00:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a0f981b_dc02ce12",
+      "revId": "29244ece3a84cff17fdd87b407211184db0bf591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa40f458_825b1d30",
         "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "29244ece3a84cff17fdd87b407211184db0bf591",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cd3b06_4f9d13e1",
+        "filename": "chrome/browser/extensions/api/language_settings_private/language_settings_private_api.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1234767
+      },
+      "writtenOn": "2017-10-06T00:55:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa40f458_825b1d30",
+      "revId": "29244ece3a84cff17fdd87b407211184db0bf591",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
