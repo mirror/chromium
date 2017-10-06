@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d99b04_a93e97eb",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:01:09Z",
+      "side": 1,
+      "message": "Is there a corresponding XML change needed?",
+      "range": {
+        "startLine": 164,
+        "startChar": 35,
+        "endLine": 164,
+        "endChar": 0
+      },
+      "revId": "4806a7dd0b874a3e0fb79983287936b75b210932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4698af4a_acc27868",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 56742,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:01:09Z",
+      "side": 1,
+      "message": "Please define a custom enum in enums.xml with semantically relevant labels, and use it here.",
+      "range": {
+        "startLine": 56742,
+        "startChar": 64,
+        "endLine": 56742,
+        "endChar": 71
+      },
+      "revId": "4806a7dd0b874a3e0fb79983287936b75b210932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8723bd95_076f58f0",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 56746,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:01:09Z",
+      "side": 1,
+      "message": "nit: the username",
+      "range": {
+        "startLine": 56746,
+        "startChar": 50,
+        "endLine": 56746,
+        "endChar": 58
+      },
+      "revId": "4806a7dd0b874a3e0fb79983287936b75b210932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4de4187_b9099ede",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 56746,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-10-06T07:01:09Z",
+      "side": 1,
+      "message": "nit: an incorrect",
+      "range": {
+        "startLine": 56746,
+        "startChar": 10,
+        "endLine": 56746,
+        "endChar": 19
+      },
+      "revId": "4806a7dd0b874a3e0fb79983287936b75b210932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
