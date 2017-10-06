@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7a35526_92c0e487",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:01:54Z",
+      "side": 0,
+      "message": "Probably a copy+pasta error from the .h file.",
+      "revId": "0c9e9e3a150086f563be8f7b3c36367653e97a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ebbe5b_d89fa863",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:01:54Z",
+      "side": 0,
+      "message": "A bunch of these aren\u0027t needed. Removed.",
+      "revId": "0c9e9e3a150086f563be8f7b3c36367653e97a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0284beb8_d07fa45e",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:01:54Z",
+      "side": 0,
+      "message": "Not sure why this is an int when |kNumberOfChromeHostURLs| above is a size_t. I changed it to size_t.",
+      "revId": "0c9e9e3a150086f563be8f7b3c36367653e97a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6ae768_7857b4cb",
+        "filename": "chrome/common/url_constants.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:01:54Z",
+      "side": 0,
+      "message": "Defined twice. :-\\",
+      "revId": "0c9e9e3a150086f563be8f7b3c36367653e97a78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
