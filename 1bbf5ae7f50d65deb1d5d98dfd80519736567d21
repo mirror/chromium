@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ea2ec511_fa98b742",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-06T10:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd5b143_5fe7d051",
+      "range": {
+        "startLine": 297,
+        "startChar": 12,
+        "endLine": 297,
+        "endChar": 0
+      },
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3ef6296_72039b1f",
         "filename": "components/flags_ui/resources/flags.js",
         "patchSetId": 8
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "I\u0027m not sure if ES6 features are supported on iOS, where this page is also shown...",
       "parentUuid": "f3ef6296_72039b1f",
+      "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9576501a_d5bb8d81",
+        "filename": "components/flags_ui/resources/flags.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1118329
+      },
+      "writtenOn": "2017-10-06T10:57:02Z",
+      "side": 1,
+      "message": "That\u0027s right I originally had this all as a class and using let but I can\u0027t use ES6 because of iOS 9 support. ES6 support is iOS 10+.",
+      "parentUuid": "7855c798_9e77bb12",
       "revId": "1bbf5ae7f50d65deb1d5d98dfd80519736567d21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
