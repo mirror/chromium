@@ -1,0 +1,6 @@
+# Don't manage line endings in generated files.
+* -text
+
+OWNERS text
+README.chromium text
+
