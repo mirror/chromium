@@ -54,6 +54,12 @@
       #addPrinterErrorMessage a[is='action-link'] {
         text-transform: uppercase;
       }
+
+      #addPrinterFailedMessage {
+        padding-left: 15px;
+        padding-right: 15px;
+        text-align: justify;
+      }
     </style>
 
     <div class="settings-box first">
@@ -95,9 +101,6 @@
         <span id="addPrinterFailedMessage">
           $i18n{printerAddedFailedMessage}
         </span>
-        <a is="action-link" on-tap="onAddPrinterTap_">
-          $i18n{printerAddedTryAgainMessage}
-        </a>
       </div>
     </div>
   </template>
