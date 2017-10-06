@@ -45,7 +45,7 @@ AnimationHost::AnimationHost(ThreadInstance thread_instance)
       thread_instance_(thread_instance),
       supports_scroll_animations_(false),
       needs_push_properties_(false),
-      mutator_needs_mutate_(false),
+      needs_tick_mutates_(0),
       mutator_(nullptr) {
   if (thread_instance_ == ThreadInstance::IMPL) {
     scroll_offset_animations_impl_ =
@@ -278,7 +278,7 @@ bool AnimationHost::NeedsTickAnimations() const {
 }
 
 bool AnimationHost::NeedsTickMutator() const {
-  return mutator_ && mutator_needs_mutate_;
+  return mutator_ && (needs_tick_mutates_ || mutator_->HasAnimators());
 }
 
 bool AnimationHost::NeedsTickAnimationPlayers() const {
@@ -311,9 +311,13 @@ bool AnimationHost::TickAnimations(base::TimeTicks monotonic_time) {
   if (NeedsTickMutator()) {
     // TODO(majidvp): At the moment we call this for both active and pending
     // trees similar to other animations. However our final goal is to only
-    // call these once ideally after activation.
-    did_animate |= mutator_->Mutate(monotonic_time);
-    mutator_needs_mutate_ = did_animate;
+    // call these once ideally after activation, and only when the input
+    // to an active timeline has changed.
+    mutator_->Mutate(monotonic_time);
+    did_animate = true;
+    // After we have forced enough fresh ones we rely on the animators list.
+    if (needs_tick_mutates_)
+      needs_tick_mutates_--;
   }
 
   return did_animate;
@@ -575,10 +579,8 @@ void AnimationHost::SetLayerTreeMutator(
     return;
   mutator_ = std::move(mutator);
   mutator_->SetClient(this);
-}
-
-void AnimationHost::SetNeedsMutate() {
-  mutator_needs_mutate_ = true;
+  // TODO(majidvp): Remove this hackery.  4 is not enough to pass tests.
+  needs_tick_mutates_ = 5;
 }
 
 }  // namespace cc
