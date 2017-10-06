@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da6862bd_6cc401f1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T18:01:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d52570a_3e77bc8e",
+      "range": {
+        "startLine": 7,
+        "startChar": 39,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6869882a_1d82b823",
         "filename": "components/leveldb_proto/proto_database_impl.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-10-05T21:03:31Z",
       "side": 1,
       "message": "I think this is OK, but since LevelDB::Get can return false without ever setting found you should probably check *success first, and then *found afterwards.",
+      "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0be1ac7_b1f230ac",
+        "filename": "components/leveldb_proto/proto_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T18:01:33Z",
+      "side": 1,
+      "message": "Good call! I now also force-set found to false if *success wasn\u0027t so happy, since there\u0027s no way we found it in that case.\n\nWasn\u0027t sure whether I should do that edit here or in the LevelDB backing DB though. Thoughts?",
+      "parentUuid": "6869882a_1d82b823",
       "revId": "7d830a1b59edd21a4ba833dc28c85a5d4293f0da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
