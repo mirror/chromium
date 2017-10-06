@@ -209,6 +209,8 @@ component("chromeos") {
     "dbus/fake_upstart_client.h",
     "dbus/gsm_sms_client.cc",
     "dbus/gsm_sms_client.h",
+    "dbus/huddly_monitor_client.cc",
+    "dbus/huddly_monitor_client.h",
     "dbus/image_burner_client.cc",
     "dbus/image_burner_client.h",
     "dbus/image_loader_client.cc",

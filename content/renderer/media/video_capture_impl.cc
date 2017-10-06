@@ -14,6 +14,8 @@
 #include <stddef.h>
 #include <utility>
 
+#include <chrono>
+#include "base/logging.h"
 #include "base/bind.h"
 #include "base/macros.h"
 #include "base/stl_util.h"
@@ -26,7 +28,9 @@
 #include "media/base/video_frame.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/public/cpp/connector.h"
-
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/huddly_monitor_client.h"
+#include "content/public/browser/browser_thread.h"
 namespace content {
 
 // A holder of a memory-backed buffer and accessors to it.
@@ -93,12 +97,16 @@ VideoCaptureImpl::~VideoCaptureImpl() {
 
 void VideoCaptureImpl::SuspendCapture(bool suspend) {
   DCHECK(io_thread_checker_.CalledOnValidThread());
-  if (suspend)
+  if (suspend) {
+    LOG(ERROR) << "YAYAYA";
     GetVideoCaptureHost()->Pause(device_id_);
-  else
+  }
+  else {
+    LOG(ERROR) << "LALLALA";
     GetVideoCaptureHost()->Resume(device_id_, session_id_, params_);
+  }
 }
-
+/bin/bash: q: command not found
 void VideoCaptureImpl::StartCapture(
     int client_id,
     const media::VideoCaptureParams& params,
@@ -110,6 +118,13 @@ void VideoCaptureImpl::StartCapture(
   client_info.params = params;
   client_info.state_update_cb = state_update_cb;
   client_info.deliver_frame_cb = deliver_frame_cb;
+  if(!chromeos::DBusThreadManager::IsInitialized()) {
+    chromeos::DBusThreadManager::Initialize(chromeos::DBusThreadManager::PROCESS_BROWSER);
+  }
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  chromeos::DBusThreadManager* dbus_threader = chromeos::DBusThreadManager::Get();
+  chromeos::HuddlyMonitorClient* client = dbus_threader->GetHuddlyMonitorClient();
+  client->UpdateCondition(true, std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count());
 
   switch (state_) {
     case VIDEO_CAPTURE_STATE_STARTING:
@@ -154,6 +169,9 @@ void VideoCaptureImpl::StopCapture(int client_id) {
   // A client ID can be in only one client list.
   // If this ID is in any client list, we can just remove it from
   // that client list and don't have to run the other following RemoveClient().
+  DVLOG(1) << "StopCapture: No more client, stopping ...";
+  chromeos::HuddlyMonitorClient* client = chromeos::DBusThreadManager::Get()->GetHuddlyMonitorClient();
+  client->UpdateCondition(false, 35);
   if (!RemoveClient(client_id, &clients_pending_on_restart_)) {
     RemoveClient(client_id, &clients_);
   }

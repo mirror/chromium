@@ -42,6 +42,7 @@
 #include "chromeos/dbus/system_clock_client.h"
 #include "chromeos/dbus/update_engine_client.h"
 #include "chromeos/dbus/upstart_client.h"
+#include "chromeos/dbus/huddly_monitor_client.h"
 #include "dbus/bus.h"
 #include "dbus/dbus_statistics.h"
 
@@ -227,6 +228,9 @@ UpdateEngineClient* DBusThreadManager::GetUpdateEngineClient() {
 UpstartClient* DBusThreadManager::GetUpstartClient() {
   return clients_browser_ ? clients_browser_->upstart_client_.get() : nullptr;
 }
+HuddlyMonitorClient* DBusThreadManager::GetHuddlyMonitorClient() {
+  return clients_browser_->huddly_monitor_client_.get();
+}
 
 void DBusThreadManager::InitializeClients() {
   // Some clients call DBusThreadManager::Get() during initialization.
@@ -300,8 +304,10 @@ void DBusThreadManager::Shutdown() {
 
 // static
 DBusThreadManager* DBusThreadManager::Get() {
+  LOG(ERROR) << "7777777";
   CHECK(g_dbus_thread_manager)
       << "DBusThreadManager::Get() called before Initialize()";
+  LOG(ERROR) << "66666";
   return g_dbus_thread_manager;
 }
 
@@ -428,5 +434,9 @@ void DBusThreadManagerSetter::SetUpstartClient(
   DBusThreadManager::Get()->clients_browser_->upstart_client_ =
       std::move(client);
 }
-
+void DBusThreadManagerSetter::SetHuddlyMonitorClient(
+    std::unique_ptr<HuddlyMonitorClient> client) {
+  DBusThreadManager::Get()->clients_browser_->huddly_monitor_client_ =
+      std::move(client);
+}
 }  // namespace chromeos
