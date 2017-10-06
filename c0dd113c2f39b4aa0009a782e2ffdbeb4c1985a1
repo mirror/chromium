@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f021c2e1_ce9a1b36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/SurveyInfoBar.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-06T18:04:18Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "62d9cc22_5db0fb12",
+      "range": {
+        "startLine": 103,
+        "startChar": 8,
+        "endLine": 105,
+        "endChar": 71
+      },
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57a4d932_f0bb94bb",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "48264286_0bf405d2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8710,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-06T18:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57a4d932_f0bb94bb",
+      "range": {
+        "startLine": 8710,
+        "startChar": 17,
+        "endLine": 8710,
+        "endChar": 54
+      },
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "451905d5_00bbe65a",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -62,6 +110,24 @@
       "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6702244d_5252c861",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8716,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-10-06T18:04:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "451905d5_00bbe65a",
+      "revId": "c0dd113c2f39b4aa0009a782e2ffdbeb4c1985a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
