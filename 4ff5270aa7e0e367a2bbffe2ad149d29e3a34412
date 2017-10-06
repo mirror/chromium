@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85b06c34_01234f18",
+        "filename": "net/quic/chromium/quic_chromium_client_session_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-06T17:21:30Z",
+      "side": 0,
+      "message": "I thought the flag is default to true. Does this test still pass? That\u0027s surprising... \n\nAt a quick glance, this test seemed to be testing migration, and shouldn\u0027t be related to the flag. I am not sure why we flip the flag explicitly in this test.",
+      "revId": "4ff5270aa7e0e367a2bbffe2ad149d29e3a34412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb64e7d_aa2a6981",
+        "filename": "net/quic/chromium/quic_network_transaction_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4849,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-06T17:21:30Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "4ff5270aa7e0e367a2bbffe2ad149d29e3a34412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
