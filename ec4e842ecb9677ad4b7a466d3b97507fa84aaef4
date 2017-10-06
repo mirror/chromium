@@ -50,6 +50,24 @@
       "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2767cb20_8c5016f3",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-10-06T20:39:10Z",
+      "side": 1,
+      "message": "|unique_id| internally is the GUID for a job. Background Fetch uses the Download Service, which is very heavily based on GUIDs. There\u0027s a lot of value in maintaining consistency there -- otherwise we\u0027d need to maintain another mapping.\n\n|developer_id| is the `id` of a Background Fetch supplied by the Web developer, so yes. We renamed it from `id` to `developer_id` (except in the IDL) to distinguish it from the unique Id.",
+      "parentUuid": "c86d67f7_e4c03312",
+      "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
