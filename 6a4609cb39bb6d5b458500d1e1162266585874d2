@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "c2f4df83_1a0e0d35",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T22:58:10Z",
+      "side": 1,
+      "message": "Not sure if there\u0027s problems in practice here; I\u0027ll defer to jam@ for that.\n\nHowever, there\u0027s lots of tests where it won\u0027t be true (see calls to SetBrowserClientForTesting).  Many of these tests change the ContentBrowserClient halfway through the test, which seems like it could be an issue for this code.  Are you concerned about test code, or is that not a problem?",
+      "parentUuid": "42b6d72f_5039be5c",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7a47558_6a5b1bb5",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 7
