@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "663b1970_27fefab5",
+        "filename": "third_party/WebKit/Source/modules/broadcastchannel/BroadcastChannel.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:09:12Z",
+      "side": 1,
+      "message": "Nit: make this a DCHECK (we assume that the browser doesn\u0027t send the renderer bad data; if so, we\u0027re kind of hosed anyway)",
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad2fc42d_2a65fdd5",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:09:12Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 931,
+        "startChar": 47,
+        "endLine": 931,
+        "endChar": 67
+      },
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d74f8369_b063a2bf",
+        "filename": "third_party/WebKit/public/platform/modules/broadcastchannel/broadcast_channel.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:09:12Z",
+      "side": 1,
+      "message": "Nit: method\n\nAlso, we could split it into distinct types, right? So broadcast channel would pass the port-less version, while the version with ports could embed the port-less version and contain the ports as an additional field.",
+      "range": {
+        "startLine": 17,
+        "startChar": 28,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "fd0dfaa90a1db75007086a2f840dba8d77f15fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
