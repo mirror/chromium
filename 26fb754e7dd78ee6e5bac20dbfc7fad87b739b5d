@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dad60e6b_efbf102d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/buildbot.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T22:14:31Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "95f23145_bdd47a25",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb9b30c_5755dddd",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/models/test_expectations.py",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "I wanted a simplified configuration for the time being, that only starts three bots and doesn\u0027t deal with version specifiers (Mac10.10 vs Mac10.11 etc), so going through builder_list.py seemed like overkill.\n\nAre there any meaningful differences between *_chromium_rel_ng and *_blink_rel?  I picked the former because they are in the CQ.",
       "parentUuid": "b1771122_156da81f",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739ba342_024f7a77",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T22:14:31Z",
+      "side": 1,
+      "message": "The main difference when running layout tests is that CQ bots run a build with DCHECK on. There are also minor practical differences:\n\n - The CQ builders have more slaves\n - CQ builders may run more extra tests\n\nThe CQ bots do also run on specific versions, so results obtained from CQ try bots won\u0027t necessarily be correct for all versions. I think they use Mac 10.12, Win 7 and Linux Trusty now.",
+      "parentUuid": "7401791b_7f27373d",
       "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +245,24 @@
       "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73b36b4_d7341342",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/try_flag.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-06T22:14:31Z",
+      "side": 1,
+      "message": "Ack, OK.\n\nCurrently some of the scripts in Tools/Scripts construct the Host object etc, and some don\u0027t.",
+      "parentUuid": "ae350693_99905c7b",
+      "revId": "26fb754e7dd78ee6e5bac20dbfc7fad87b739b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
