@@ -184,6 +184,8 @@ struct GPU_EXPORT Capabilities {
 
   bool texture_npot = false;
 
+  bool texture_storage_image = false;
+
   int major_version = 2;
   int minor_version = 0;
 };
