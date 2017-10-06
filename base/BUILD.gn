@@ -2479,6 +2479,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/ApplicationStatus.java",
       "android/java/src/org/chromium/base/BuildInfo.java",
       "android/java/src/org/chromium/base/Callback.java",
+      "android/java/src/org/chromium/base/Callback1.java",
       "android/java/src/org/chromium/base/CommandLine.java",
       "android/java/src/org/chromium/base/ContentUriUtils.java",
       "android/java/src/org/chromium/base/CpuFeatures.java",
@@ -2545,6 +2546,7 @@ if (is_android) {
       "android/java/src/org/chromium/base/BaseSwitches.java",
       "android/java/src/org/chromium/base/BuildInfo.java",
       "android/java/src/org/chromium/base/Callback.java",
+      "android/java/src/org/chromium/base/Callback1.java",
       "android/java/src/org/chromium/base/CollectionUtil.java",
       "android/java/src/org/chromium/base/CommandLine.java",
       "android/java/src/org/chromium/base/CommandLineInitUtil.java",
@@ -2563,6 +2565,8 @@ if (is_android) {
       "android/java/src/org/chromium/base/LocaleUtils.java",
       "android/java/src/org/chromium/base/Log.java",
       "android/java/src/org/chromium/base/MemoryPressureListener.java",
+      "android/java/src/org/chromium/base/NativeRefAssassin.java",
+      "android/java/src/org/chromium/base/NativeRefHolder.java",
       "android/java/src/org/chromium/base/NonThreadSafe.java",
       "android/java/src/org/chromium/base/ObserverList.java",
       "android/java/src/org/chromium/base/PackageUtils.java",
@@ -2739,6 +2743,8 @@ if (is_android) {
       "android/junit/src/org/chromium/base/BaseChromiumApplicationTest.java",
       "android/junit/src/org/chromium/base/DiscardableReferencePoolTest.java",
       "android/junit/src/org/chromium/base/LogTest.java",
+      "android/junit/src/org/chromium/base/NativeRefAssassinTest.java",
+      "android/junit/src/org/chromium/base/NativeRefHolderTest.java",
       "android/junit/src/org/chromium/base/NonThreadSafeTest.java",
       "android/junit/src/org/chromium/base/PromiseTest.java",
       "android/junit/src/org/chromium/base/process_launcher/ChildConnectionAllocatorTest.java",
@@ -2759,6 +2765,7 @@ if (is_android) {
       ":base_java_process_launcher_test_support",
       ":base_java_test_support",
       "//third_party/android_support_test_runner:runner_java",
+      "//third_party/jsr-305:jsr_305_javalib",
     ]
     srcjar_deps = [ ":base_build_config_gen" ]
   }
