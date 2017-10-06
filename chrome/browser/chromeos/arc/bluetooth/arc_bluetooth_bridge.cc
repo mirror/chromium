@@ -2195,6 +2195,7 @@ void ArcBluetoothBridge::EnqueueRemotePowerChange(
   // the callee interface.
   auto repeating_callback =
       base::AdaptCallbackForRepeating(std::move(callback));
+  VLOG(1) << "ARC bluetooth set power: " << turn_on;
   bluetooth_adapter_->SetPowered(
       turn_on,
       base::Bind(turn_on ? &ArcBluetoothBridge::OnPoweredOn
