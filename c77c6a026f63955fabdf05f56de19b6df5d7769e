@@ -16,6 +16,24 @@
       "revId": "c77c6a026f63955fabdf05f56de19b6df5d7769e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d410dd0_05b0ebb4",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-06T20:48:55Z",
+      "side": 1,
+      "message": "I think the interesting thing is to see what the max is in real life, and to detect changes in that max.",
+      "parentUuid": "6d64dad1_57f8aa17",
+      "revId": "c77c6a026f63955fabdf05f56de19b6df5d7769e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
