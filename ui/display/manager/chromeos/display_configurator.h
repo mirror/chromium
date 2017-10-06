@@ -153,13 +153,13 @@ class DISPLAY_MANAGER_EXPORT DisplayConfigurator
 
   // The delay to perform configuration after RRNotify. See the comment for
   // |configure_timer_|.
-  static const int kConfigureDelayMs = 1000;
+  static const int kConfigureDelayMs = 2000;
 
   // The delay to perform configuration after waking up from suspend when in
   // multi display mode. Should be bigger than |kConfigureDelayMs|. Generally
   // big enough for external displays to be detected and added.
   // crbug.com/614624.
-  static const int kResumeConfigureMultiDisplayDelayMs = 2000;
+  static const int kResumeConfigureMultiDisplayDelayMs = 3000;
 
   // Returns the mode within |display| that matches the given size with highest
   // refresh rate. Returns None if no matching display was found.
