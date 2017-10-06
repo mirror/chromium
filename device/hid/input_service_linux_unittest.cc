@@ -15,6 +15,13 @@
 
 namespace device {
 
+namespace {
+void OnGetDevices(std::vector<device::mojom::InputDeviceInfoPtr> devices) {
+  for (size_t i = 0; i < devices.size(); ++i)
+    ASSERT_TRUE(!devices[i]->id.empty());
+}
+}  // namespace
+
 TEST(InputServiceLinux, Simple) {
   base::MessageLoopForIO message_loop;
   base::FileDescriptorWatcher file_descriptor_watcher(&message_loop);
@@ -25,10 +32,7 @@ TEST(InputServiceLinux, Simple) {
   base::RunLoop().RunUntilIdle();
 
   ASSERT_TRUE(service);
-  std::vector<device::mojom::InputDeviceInfoPtr> devices;
-  service->GetDevices(&devices);
-  for (size_t i = 0; i < devices.size(); ++i)
-    ASSERT_TRUE(!devices[i]->id.empty());
+  service->GetDevices(base::BindOnce(&OnGetDevices));
 }
 
 }  // namespace device
