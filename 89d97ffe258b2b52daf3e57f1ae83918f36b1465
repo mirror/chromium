@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a752ba6_f441b9db",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cceea44_195a8101",
+      "range": {
+        "startLine": 287,
+        "startChar": 6,
+        "endLine": 287,
+        "endChar": 58
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42d547dc_1a0bffdf",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb86ee8_a4ea01c8",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "42d547dc_1a0bffdf",
+      "range": {
+        "startLine": 405,
+        "startChar": 73,
+        "endLine": 406,
+        "endChar": 37
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ebf79da1_3ec681e0",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fed1e1c2_065e5496",
+      "range": {
+        "startLine": 407,
+        "startChar": 6,
+        "endLine": 407,
+        "endChar": 15
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c05133_251e081d",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-05T15:17:03Z",
       "side": 1,
       "message": "Why ASSERT_GE (Greater-than-or-Equal)? Don\u0027t you know the size of the file? Can\u0027t this be ASSERT_GT (Greater-Than)?",
+      "range": {
+        "startLine": 443,
+        "startChar": 2,
+        "endLine": 443,
+        "endChar": 11
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf5fada_12546bcb",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "My intent was to follow the existing pattern, such as this [1] found in allDataReceivedTruncation. It trims off the last 10 bytes so it asserts that there are at least 10 bytes to trim.\n\nThe test itself uses an explicit image. So it could know in advance that the image is large enough.\n\nI think the important difference is that test is generic enough that you could swap it onto another image and the test would still work. So having a generic check makes sense. This test we are commenting on needs to intimately know details about the image. I needs to know the range of image data for the first frame. And it needs to know that a certain pixel\u0027s data isn\u0027t included yet.\n\nSince this test is not generic like the other test I mimicked, I think it makes sense to remove this assertion completely.\n\n[1] https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp?q\u003dGIFImageDecoderTest.cpp\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d163",
+      "parentUuid": "14c05133_251e081d",
       "range": {
         "startLine": 443,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a5f88217_314b8dc1",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b420f1a_7c493d47",
+      "range": {
+        "startLine": 450,
+        "startChar": 11,
+        "endLine": 450,
+        "endChar": 29
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8245e5b4_6e860fbc",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7240dd7d_63c516f7",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8245e5b4_6e860fbc",
+      "range": {
+        "startLine": 453,
+        "startChar": 2,
+        "endLine": 453,
+        "endChar": 13
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "31809517_93d185eb",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59c64ba6_b4b73ab3",
+      "range": {
+        "startLine": 455,
+        "startChar": 2,
+        "endLine": 455,
+        "endChar": 41
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84af636b_c4432f16",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
         "patchSetId": 7
@@ -174,6 +342,30 @@
       "writtenOn": "2017-10-05T15:17:03Z",
       "side": 1,
       "message": "ASSERT_GT?",
+      "range": {
+        "startLine": 463,
+        "startChar": 2,
+        "endLine": 463,
+        "endChar": 11
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad40adae_f7a776c5",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Removed, since I think it doesn\u0027t provide much value.",
+      "parentUuid": "84af636b_c4432f16",
       "range": {
         "startLine": 463,
         "startChar": 2,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "77163b1c_a4b32f6f",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "966899e0_2ae92126",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 13
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc99216f_a8c6de1f",
         "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
         "patchSetId": 7
@@ -220,6 +436,30 @@
       "writtenOn": "2017-10-05T15:17:03Z",
       "side": 1,
       "message": "Oh, haha, this one threw me for a loop. I was thinking that the decoder should have failed, since the second frame was incomplete. But that\u0027s only because the decoder won\u0027t be called (by Chrome) until all the data is available in the second frame. (Maybe worth a comment here?)",
+      "range": {
+        "startLine": 472,
+        "startChar": 2,
+        "endLine": 472,
+        "endChar": 34
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0bf633_42d7a58e",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Right. At the moment, Chrome doesn\u0027t attempt to decode a non-first frame until it is complete. But the image decoders support it. Or at least this one does.\n\nIn the future, this could be used to do a partial decode with the data Chrome has when there is nothing else going on.\n\nThat said, I\u0027m not sure what I would even write as a comment here.",
+      "parentUuid": "cc99216f_a8c6de1f",
       "range": {
         "startLine": 472,
         "startChar": 2,
@@ -252,6 +492,30 @@
       "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89a407a_38b328b3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/gif/GIFImageDecoderTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-10-06T23:19:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95319b9d_88f1d81f",
+      "range": {
+        "startLine": 473,
+        "startChar": 2,
+        "endLine": 473,
+        "endChar": 49
+      },
+      "revId": "89d97ffe258b2b52daf3e57f1ae83918f36b1465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
