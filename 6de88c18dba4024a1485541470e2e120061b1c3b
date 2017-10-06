@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "1d3ad57d_a265f637",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-10-06T15:05:58Z",
+      "side": 1,
+      "message": "Thanks! Yep that makes sense to me that event_dispatcher.mojom isn\u0027t the focal point of this system.",
+      "parentUuid": "692427ac_fcc57439",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25e59e16_19348559",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.cpp",
         "patchSetId": 5
