@@ -22,6 +22,30 @@
       "revId": "21061407662cf717829a7995652dbac5a8b45ff3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47ee00c_534af7e4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-10-06T18:11:11Z",
+      "side": 1,
+      "message": "I briefly searched and I didn\u0027t see any java files referring to resources starting with IDS_, so I\u0027m guessing it\u0027s not available? Made this a constant instead.",
+      "parentUuid": "b335965c_d4d3fe87",
+      "range": {
+        "startLine": 185,
+        "startChar": 43,
+        "endLine": 185,
+        "endChar": 48
+      },
+      "revId": "21061407662cf717829a7995652dbac5a8b45ff3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
