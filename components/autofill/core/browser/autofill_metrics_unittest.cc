@@ -5623,6 +5623,17 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
   }
 }
 
+TEST_F(AutofillMetricsTest, FormFillDurationFromInteraction_CreditCardForm) {
+  // Should log time duration with autofill for credit card form
+  {
+    base::HistogramTester histogram_tester;
+    AutofillMetrics::LogFormFillDurationFromInteraction(
+        {CREDIT_CARD_FORM}, true, base::TimeDelta::FromMilliseconds(2000));
+    histogram_tester.ExpectUniqueSample(
+        "Autofill.FillDuration.FromInteraction.WithAutofill", 2, 1);
+  }
+}
+
 // Verify that we correctly log metrics for profile action on form submission.
 TEST_F(AutofillMetricsTest, ProfileActionOnFormSubmitted) {
   base::HistogramTester histogram_tester;

@@ -565,6 +565,8 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
     }
   }
 
+  // TODO: check why interaction timestamp is logged here not in
+  // OnQueryFormFieldAutofill
   UpdateInitialInteractionTimestamp(timestamp);
 }
 
