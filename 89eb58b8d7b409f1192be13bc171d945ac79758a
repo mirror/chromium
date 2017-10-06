@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "40ca31bd_add895bf",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T19:23:13Z",
+      "side": 1,
+      "message": "Oh, this worked before in GetDestinationTarget() because all the possible callstacks already called GetPage(). They also checked |available_| and bailed out if it\u0027s false. Now you are exposing this bit of code as a public method, so that\u0027s why it\u0027s happening.\n\nDo you want to add the check for |available_| at the top of the method?",
+      "parentUuid": "696e1df2_29fbf6fc",
+      "range": {
+        "startLine": 384,
+        "startChar": 52,
+        "endLine": 384,
+        "endChar": 61
+      },
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772e8ea8_084484a3",
         "filename": "pdf/pdfium/pdfium_page.h",
         "patchSetId": 14
