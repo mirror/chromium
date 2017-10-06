@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b324460_bf03e2fb",
+        "filename": "sandbox/fuzzer/fuzzer_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-06T17:39:19Z",
+      "side": 1,
+      "message": "This file really needs a comment to explain what\u0027s going on, because on first glance it\u0027s a giant WTF.",
+      "revId": "ba0b74758e42758a788bcce3553cea9d1611978b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e52be1_060a19e7",
+        "filename": "sandbox/win/src/crosscall_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-10-06T17:39:19Z",
+      "side": 1,
+      "message": "Is it that much work to change the types rather than comment it out? Or is it just not going to matter for fuzzer coverage (which I find confusing)?",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 29
+      },
+      "revId": "ba0b74758e42758a788bcce3553cea9d1611978b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
