@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb22c85a_5073dff1",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:17:09Z",
+      "side": 1,
+      "message": "Since we are adding a ctor, should we initialize |page| ? Maybe to -1?",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cf8a1c_b2a0f298",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:17:09Z",
+      "side": 1,
+      "message": "Why did we change this from |page_| and lose method const-ness in the process?",
+      "range": {
+        "startLine": 384,
+        "startChar": 52,
+        "endLine": 384,
+        "endChar": 61
+      },
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772e8ea8_084484a3",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:17:09Z",
+      "side": 1,
+      "message": "At this point, there\u0027s too many members. I think trying to make this a union is a lost cause.",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a50fbd_d24277cd",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:17:09Z",
+      "side": 1,
+      "message": "Move to the top.",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a753f0e0_be87d920",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:17:09Z",
+      "side": 1,
+      "message": "I still don\u0027t understand why we bother if nobody checks the return value.",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
