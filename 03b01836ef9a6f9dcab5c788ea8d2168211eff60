@@ -16,6 +16,24 @@
       "revId": "03b01836ef9a6f9dcab5c788ea8d2168211eff60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a264f2b_165511ae",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1116011
+      },
+      "writtenOn": "2017-10-06T21:09:26Z",
+      "side": 1,
+      "message": "yep, the double-default-arg fooled me. will fix.",
+      "parentUuid": "feb902d9_11486d3d",
+      "revId": "03b01836ef9a6f9dcab5c788ea8d2168211eff60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
