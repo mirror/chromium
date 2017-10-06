@@ -69,6 +69,40 @@
       "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1235c4_f9345832",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-06T11:32:42Z",
+      "side": 1,
+      "message": "I\u0027d eventually like to copy the implementation of this method into this class, so that we can stop using the shared util version.",
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49b4d25f_8083d31b",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-06T11:32:42Z",
+      "side": 1,
+      "message": "Does the caller need to be in charge of deciding whether to call presentVC vs presentTopVC?  Is there any way to move that logic into the coordinator instead, so that the caller can always call presentVC but we still do the right thing?",
+      "revId": "ea1a62f7d2db4c0b95389e69c9b0b131e3e14bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
