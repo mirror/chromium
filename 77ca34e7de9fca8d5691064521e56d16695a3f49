@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4676d876_909e37a3",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Use unique_ptr, then later .release(). Or even better, use base::Passed() below instead of base::Owned().",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 9
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f9ecef_86e6fd00",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Would stable_sort make any difference here? You know better the internals of this score and how the list is produced.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ab865e_fee13dc8",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Please add a comment to describe where the rest of the fields will be populated.",
+      "range": {
+        "startLine": 40,
+        "startChar": 31,
+        "endLine": 40,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a4107ee_714fac77",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Optional: you could add a comment to emphasize SiteEngagement score is on a origin basis as opposed to regular TopSites which handles paths, and how we go about this (IIUC, we ignore this problem for now?).",
+      "range": {
+        "startLine": 41,
+        "startChar": 27,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59e3fd6_c6421a27",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Does this code handle well the urls-\u003eempty() case? I don\u0027t see a codepath that would trigger the completion callback. Please add a unit test too.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89383f43_e44919da",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "No action required now, but the code below seems fishy to me and deserves manual testing, because I suspect it\u0027s fairly easy that the lookup will fail (depending on how SiteEngagement canonicalized/mangles URLs).",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b416d00_9d546c57",
+        "filename": "chrome/browser/engagement/site_engagement_top_sites_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "This class doesn\u0027t seem to have an actual dependency to |profile|, but instead SiteEngagementService. Injecting that would be cleaner and also easier to test.\n\nOptional: besides, I personally like documenting that |profile|/|service| must not be null.",
+      "range": {
+        "startLine": 20,
+        "startChar": 60,
+        "endLine": 20,
+        "endChar": 0
+      },
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af58baf4_30d4ad5a",
+        "filename": "components/history/core/browser/top_sites_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "I think it\u0027d be great to document a few more details here:\n- That |tracker| must not be null.\n- That the client can interrupt the process by using |tracker|.\n- (Depending on the outcome of an ongoing discussion) That the client must not start two overlaping requests (must cancel the first one before starting the second).\n- The |callback| will never be called before the function returns.",
+      "revId": "77ca34e7de9fca8d5691064521e56d16695a3f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

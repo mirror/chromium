@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "7256767a_be29653b",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "I think it\u0027s sufficient to unit-test your new provider only, without actual integration tests.\n\nYou could consider updating TopSitesImpl unit tests to *not* use the default provider and instead use some test double, but I don\u0027t think it\u0027s desirable.\n\nEither way, the fact that TopSitesImpl properly exercises providers already has test coverage, so more integration tests (for siteengagement) do not add value IMO.",
+      "parentUuid": "7f697e12_56b4b58c",
+      "range": {
+        "startLine": 91,
+        "startChar": 34,
+        "endLine": 91,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c78754ce_145ebdb8",
         "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
         "patchSetId": 3
@@ -319,6 +343,30 @@
       "side": 1,
       "message": "It seemed a bit wasteful to have a HistoryService pointer on the owning TopSitesImpl as well as in here, which was why I passed it in.",
       "parentUuid": "c78754ce_145ebdb8",
+      "range": {
+        "startLine": 25,
+        "startChar": 47,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "34c44875572150a9ae275c8f90a9f3a356155c76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e16e4e_423748eb",
+        "filename": "chrome/browser/engagement/site_engagement_most_visited_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-10-06T08:07:35Z",
+      "side": 1,
+      "message": "Not that I\u0027m feeling strongly, but I think simpler APIs are preferable, even if it means a bit of extra boilerplate in certain implementations. It\u0027s simpler to reason about this interface not necessarily involving a historyservice.",
+      "parentUuid": "6474401b_ae75b411",
       "range": {
         "startLine": 25,
         "startChar": 47,
