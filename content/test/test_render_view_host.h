@@ -95,8 +95,8 @@ class TestRenderWidgetHostView : public RenderWidgetHostViewBase,
   void StopSpeaking() override;
 #endif  // defined(OS_MACOSX)
   void DidCreateNewRendererCompositorFrameSink(
-      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
-      override;
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+      viz::mojom::TargetFrameForInputDelegate*) override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              viz::CompositorFrame frame) override;
   void ClearCompositorFrame() override {}

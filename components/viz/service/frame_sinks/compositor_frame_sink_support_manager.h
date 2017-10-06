@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/callback.h"
-
 namespace viz {
 
 class CompositorFrameSinkSupport;
@@ -16,6 +15,7 @@ class FrameSinkId;
 
 namespace mojom {
 class CompositorFrameSinkClient;
+class TargetFrameForInputDelegate;
 }
 
 // This inteface provides a way for DirectLayerTreeFrameSink to create a
@@ -24,6 +24,7 @@ class CompositorFrameSinkSupportManager {
  public:
   virtual std::unique_ptr<CompositorFrameSinkSupport>
   CreateCompositorFrameSinkSupport(mojom::CompositorFrameSinkClient* client,
+                                   mojom::TargetFrameForInputDelegate*,
                                    const FrameSinkId& frame_sink_id,
                                    bool is_root,
                                    bool needs_sync_points) = 0;

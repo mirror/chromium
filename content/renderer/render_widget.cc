@@ -845,6 +845,10 @@ void RenderWidget::OnHandleInputEvent(
       latency_info, std::move(callback));
 }
 
+int RenderWidget::HitTestFrameAt(const gfx::Point& point) {
+  return input_handler_->HitTestFrameAt(point);
+}
+
 void RenderWidget::HandleInputEvent(
     const blink::WebCoalescedInputEvent& input_event,
     const ui::LatencyInfo& latency_info,

@@ -93,10 +93,11 @@ class FrameInputHandlerImpl : public mojom::FrameInputHandler {
   FrameInputHandlerImpl(base::WeakPtr<RenderFrameImpl> render_frame,
                         mojom::FrameInputHandlerRequest request);
 
-  void RunOnMainThread(const base::Closure& closure);
+  void RunOnMainThread(base::OnceClosure closure);
   void BindNow(mojom::FrameInputHandlerRequest request);
   void ExecuteCommandOnMainThread(const std::string& command,
                                   UpdateState state);
+
   void Release();
 
   mojo::Binding<mojom::FrameInputHandler> binding_;

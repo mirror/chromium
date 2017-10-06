@@ -27,7 +27,8 @@ void FrameSinkProviderImpl::Unbind() {
 void FrameSinkProviderImpl::CreateForWidget(
     int32_t widget_id,
     viz::mojom::CompositorFrameSinkRequest request,
-    viz::mojom::CompositorFrameSinkClientPtr client) {
+    viz::mojom::CompositorFrameSinkClientPtr client,
+    viz::mojom::TargetFrameForInputDelegatePtr input_delegate) {
   RenderWidgetHostImpl* render_widget_host_impl =
       RenderWidgetHostImpl::FromID(process_id_, widget_id);
   if (!render_widget_host_impl) {
@@ -35,8 +36,8 @@ void FrameSinkProviderImpl::CreateForWidget(
                 << "in process " << process_id_;
     return;
   }
-  render_widget_host_impl->RequestCompositorFrameSink(std::move(request),
-                                                      std::move(client));
+  render_widget_host_impl->RequestCompositorFrameSink(
+      std::move(request), std::move(client), std::move(input_delegate));
 }
 
 }  // namespace content

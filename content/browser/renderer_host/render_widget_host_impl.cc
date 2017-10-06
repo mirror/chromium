@@ -475,9 +475,11 @@ RenderWidgetHostImpl* RenderWidgetHostImpl::From(RenderWidgetHost* rwh) {
 void RenderWidgetHostImpl::SetView(RenderWidgetHostViewBase* view) {
   if (view) {
     view_ = view->GetWeakPtr();
-    if (renderer_compositor_frame_sink_.is_bound()) {
+    if (renderer_compositor_frame_sink_.is_bound() &&
+        target_frame_for_input_delegate_.is_bound()) {
       view->DidCreateNewRendererCompositorFrameSink(
-          renderer_compositor_frame_sink_.get());
+          renderer_compositor_frame_sink_.get(),
+          target_frame_for_input_delegate_.get());
     }
     // Views start out not needing begin frames, so only update its state
     // if the value has changed.
@@ -2599,15 +2601,18 @@ void RenderWidgetHostImpl::RequestCompositionUpdates(bool immediate_request,
 
 void RenderWidgetHostImpl::RequestCompositorFrameSink(
     viz::mojom::CompositorFrameSinkRequest request,
-    viz::mojom::CompositorFrameSinkClientPtr client) {
+    viz::mojom::CompositorFrameSinkClientPtr client,
+    viz::mojom::TargetFrameForInputDelegatePtr input_delegate) {
   if (compositor_frame_sink_binding_.is_bound())
     compositor_frame_sink_binding_.Close();
   compositor_frame_sink_binding_.Bind(
       std::move(request),
       BrowserMainLoop::GetInstance()->GetResizeTaskRunner());
   if (view_)
-    view_->DidCreateNewRendererCompositorFrameSink(client.get());
+    view_->DidCreateNewRendererCompositorFrameSink(client.get(),
+                                                   input_delegate.get());
   renderer_compositor_frame_sink_ = std::move(client);
+  target_frame_for_input_delegate_ = std::move(input_delegate);
 }
 
 bool RenderWidgetHostImpl::HasGestureStopped() {

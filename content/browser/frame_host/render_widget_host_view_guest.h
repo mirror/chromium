@@ -109,8 +109,8 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   void UnlockMouse() override;
   viz::LocalSurfaceId GetLocalSurfaceId() const override;
   void DidCreateNewRendererCompositorFrameSink(
-      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink)
-      override;
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+      viz::mojom::TargetFrameForInputDelegate*) override;
 
 #if defined(OS_MACOSX)
   // RenderWidgetHostView implementation.

@@ -480,10 +480,11 @@ void RenderWidgetHostViewChildFrame::DidReceiveCompositorFrameAck(
 }
 
 void RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
-    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   ResetCompositorFrameSinkSupport();
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
-  CreateCompositorFrameSinkSupport();
+  CreateCompositorFrameSinkSupport(input_delegate);
   has_frame_ = false;
 }
 
@@ -922,7 +923,8 @@ viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
   return viz::SurfaceId(frame_sink_id_, last_received_local_surface_id_);
 }
 
-void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
+void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport(
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   if (IsUsingMus())
     return;
 
@@ -930,7 +932,7 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   constexpr bool is_root = false;
   constexpr bool needs_sync_points = true;
   support_ = GetHostFrameSinkManager()->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root, needs_sync_points);
+      this, input_delegate, frame_sink_id_, is_root, needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetHostFrameSinkManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                           frame_sink_id_);

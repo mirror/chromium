@@ -24,7 +24,8 @@ class FrameSinkProviderImpl : public mojom::FrameSinkProvider {
   void CreateForWidget(
       int32_t widget_id,
       viz::mojom::CompositorFrameSinkRequest request,
-      viz::mojom::CompositorFrameSinkClientPtr client) override;
+      viz::mojom::CompositorFrameSinkClientPtr client,
+      viz::mojom::TargetFrameForInputDelegatePtr input_delegate) override;
 
  private:
   const int32_t process_id_;

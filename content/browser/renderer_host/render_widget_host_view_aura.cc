@@ -904,11 +904,13 @@ void RenderWidgetHostViewAura::OnLegacyWindowDestroyed() {
 #endif
 
 void RenderWidgetHostViewAura::DidCreateNewRendererCompositorFrameSink(
-    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   renderer_compositor_frame_sink_ = renderer_compositor_frame_sink;
+  target_frame_for_input_delegate_ = input_delegate;
   if (delegated_frame_host_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
-        renderer_compositor_frame_sink_);
+        renderer_compositor_frame_sink_, input_delegate);
   }
 }
 
@@ -1934,9 +1936,9 @@ void RenderWidgetHostViewAura::CreateDelegatedFrameHostClient() {
   delegated_frame_host_ = base::MakeUnique<DelegatedFrameHost>(
       frame_sink_id_, delegated_frame_host_client_.get(),
       enable_surface_synchronization_);
-  if (renderer_compositor_frame_sink_) {
+  if (renderer_compositor_frame_sink_ && target_frame_for_input_delegate_) {
     delegated_frame_host_->DidCreateNewRendererCompositorFrameSink(
-        renderer_compositor_frame_sink_);
+        renderer_compositor_frame_sink_, target_frame_for_input_delegate_);
   }
   UpdateNeedsBeginFramesInternal();
 

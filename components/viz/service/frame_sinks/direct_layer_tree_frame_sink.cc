@@ -74,7 +74,7 @@ bool DirectLayerTreeFrameSink::BindToClient(
 
   constexpr bool is_root = true;
   support_ = support_manager_->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root,
+      this, nullptr, frame_sink_id_, is_root,
       capabilities_.delegated_sync_points_required);
   begin_frame_source_ = base::MakeUnique<ExternalBeginFrameSource>(this);
   client_->SetBeginFrameSource(begin_frame_source_.get());

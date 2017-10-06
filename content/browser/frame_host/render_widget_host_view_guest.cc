@@ -458,11 +458,12 @@ viz::LocalSurfaceId RenderWidgetHostViewGuest::GetLocalSurfaceId() const {
 }
 
 void RenderWidgetHostViewGuest::DidCreateNewRendererCompositorFrameSink(
-    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink) {
+    viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+    viz::mojom::TargetFrameForInputDelegate* input_delegate) {
   RenderWidgetHostViewChildFrame::DidCreateNewRendererCompositorFrameSink(
-      renderer_compositor_frame_sink);
+      renderer_compositor_frame_sink, input_delegate);
   platform_view_->DidCreateNewRendererCompositorFrameSink(
-      renderer_compositor_frame_sink);
+      renderer_compositor_frame_sink, input_delegate);
 }
 
 #if defined(OS_MACOSX)

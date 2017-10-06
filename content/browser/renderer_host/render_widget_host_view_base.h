@@ -27,6 +27,7 @@
 #include "content/public/common/screen_info.h"
 #include "ipc/ipc_listener.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 #include "third_party/WebKit/public/web/WebPopupType.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
@@ -226,8 +227,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // expected not to return resources belonging to the old
   // RendererCompositorFrameSink after this method finishes.
   virtual void DidCreateNewRendererCompositorFrameSink(
-      viz::mojom::CompositorFrameSinkClient*
-          renderer_compositor_frame_sink) = 0;
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+      viz::mojom::TargetFrameForInputDelegate*) = 0;
 
   virtual void SubmitCompositorFrame(
       const viz::LocalSurfaceId& local_surface_id,

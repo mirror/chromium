@@ -57,11 +57,11 @@ void FrameInputHandlerImpl::CreateMojoService(
   new FrameInputHandlerImpl(render_frame, std::move(request));
 }
 
-void FrameInputHandlerImpl::RunOnMainThread(const base::Closure& closure) {
+void FrameInputHandlerImpl::RunOnMainThread(base::OnceClosure closure) {
   if (input_event_queue_) {
-    input_event_queue_->QueueClosure(closure);
+    input_event_queue_->QueueClosure(std::move(closure));
   } else {
-    closure.Run();
+    std::move(closure).Run();
   }
 }
 

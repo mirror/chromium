@@ -12,6 +12,7 @@
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/hit_test/target_frame_for_input_delegate.mojom.h"
 
 namespace viz {
 
@@ -163,6 +164,7 @@ void HostFrameSinkManager::DropTemporaryReference(const SurfaceId& surface_id) {
 std::unique_ptr<CompositorFrameSinkSupport>
 HostFrameSinkManager::CreateCompositorFrameSinkSupport(
     mojom::CompositorFrameSinkClient* client,
+    mojom::TargetFrameForInputDelegate* input_delegate,
     const FrameSinkId& frame_sink_id,
     bool is_root,
     bool needs_sync_points) {
@@ -181,6 +183,7 @@ HostFrameSinkManager::CreateCompositorFrameSinkSupport(
 
   data.support = support.get();
   data.is_root = is_root;
+  data.target_frame_for_input_delegate = input_delegate;
 
   return support;
 }

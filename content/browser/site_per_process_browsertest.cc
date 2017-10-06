@@ -285,6 +285,14 @@ double GetPageScaleFactor(Shell* shell) {
       .page_scale_factor;
 }
 
+bool callback_received = false;
+int received_frame_id = -2;
+
+void callback(int frame_id) {
+  received_frame_id = frame_id;
+  callback_received = true;
+}
+
 // Helper function that performs a surface hittest.
 void SurfaceHitTestTestHelper(
     Shell* shell,
@@ -342,6 +350,18 @@ void SurfaceHitTestTestHelper(
   child_event.click_count = 1;
   main_frame_monitor.ResetEventReceived();
   child_frame_monitor.ResetEventReceived();
+
+  callback_received = false;
+  root->current_frame_host()->GetFrameInputHandler()->HitTestFrameAt(
+      (gfx::PointF)child_event.PositionInWidget(), base::Bind(&callback));
+  while (!callback_received) {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE, run_loop.QuitClosure(), TestTimeouts::tiny_timeout());
+    run_loop.Run();
+  }
+  ASSERT_EQ(4, received_frame_id);
+
   router->RouteMouseEvent(root_view, &child_event, ui::LatencyInfo());
 
   EXPECT_TRUE(child_frame_monitor.EventWasReceived());

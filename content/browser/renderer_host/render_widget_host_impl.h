@@ -581,7 +581,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   void RequestCompositorFrameSink(
       viz::mojom::CompositorFrameSinkRequest request,
-      viz::mojom::CompositorFrameSinkClientPtr client);
+      viz::mojom::CompositorFrameSinkClientPtr client,
+      viz::mojom::TargetFrameForInputDelegatePtr hit_test);
 
   const viz::CompositorFrameMetadata& last_frame_metadata() {
     return last_frame_metadata_;
@@ -1007,6 +1008,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
 
   mojo::Binding<viz::mojom::CompositorFrameSink> compositor_frame_sink_binding_;
   viz::mojom::CompositorFrameSinkClientPtr renderer_compositor_frame_sink_;
+  viz::mojom::TargetFrameForInputDelegatePtr target_frame_for_input_delegate_;
 
   viz::CompositorFrameMetadata last_frame_metadata_;
 

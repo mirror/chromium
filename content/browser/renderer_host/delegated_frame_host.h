@@ -124,7 +124,8 @@ class CONTENT_EXPORT DelegatedFrameHost
   // Public interface exposed to RenderWidgetHostView.
 
   void DidCreateNewRendererCompositorFrameSink(
-      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink);
+      viz::mojom::CompositorFrameSinkClient* renderer_compositor_frame_sink,
+      viz::mojom::TargetFrameForInputDelegate*);
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              viz::CompositorFrame frame);
   void ClearDelegatedFrame();
@@ -256,7 +257,8 @@ class CONTENT_EXPORT DelegatedFrameHost
   // initiate a copy-into-video-frame request.
   void AttemptFrameSubscriberCapture(const gfx::Rect& damage_rect);
 
-  void CreateCompositorFrameSinkSupport();
+  void CreateCompositorFrameSinkSupport(
+      viz::mojom::TargetFrameForInputDelegate* = nullptr);
   void ResetCompositorFrameSinkSupport();
 
   const viz::FrameSinkId frame_sink_id_;
