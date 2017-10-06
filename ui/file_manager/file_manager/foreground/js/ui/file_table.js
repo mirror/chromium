@@ -378,6 +378,8 @@ FileTable.decorate = function(
   /** @private {function(!Event)} */
   self.onThumbnailLoadedBound_ = self.onThumbnailLoaded_.bind(self);
 
+  self.list.addEventListener('change', self.handleOnChange_.bind(self));
+
   /**
    * Reflects the visibility of import status in the UI.  Assumption: import
    * status is only enabled in import-eligible locations.  See
@@ -485,6 +487,22 @@ FileTable.decorate = function(
     }
     return currentSelection;
   };
+};
+
+/**
+ * Updates checkmark icons based on the selection status of the listitems.
+ *
+ * @param {Event} e Change event.
+ * @private
+ */
+FileTable.prototype.handleOnChange_ = function(e) {
+  var listItems = this.list_.querySelectorAll('li.table-row');
+  listItems.forEach(function(element, index, array) {
+    var checkmark = /** @type {!HTMLDivElement} */
+        (element.querySelector('.detail-checkmark'));
+    var checked = element.selected;
+    checkmark.setAttribute('aria-checked', checked);
+  });
 };
 
 /**
@@ -1034,6 +1052,8 @@ FileTable.prototype.renderCheckmark_ = function() {
   var checkmark = /** @type {!HTMLDivElement} */
       (this.ownerDocument.createElement('div'));
   checkmark.className = 'detail-checkmark';
+  checkmark.setAttribute('role', 'checkbox');
+  checkmark.setAttribute('aria-checked', 'false');
   return checkmark;
 };
 
