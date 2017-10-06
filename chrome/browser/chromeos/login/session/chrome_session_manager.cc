@@ -72,7 +72,7 @@ void StartKioskSession() {
 // Starts the login/oobe screen.
 void StartLoginOobeSession() {
   // State will be defined once out-of-box/login branching is complete.
-  ShowLoginWizard(OobeScreen::SCREEN_UNKNOWN);
+  ShowLoginWizard(OobeScreen::SCREEN_TERMS_OF_SERVICE);
 
   // Reset reboot after update flag when login screen is shown.
   policy::BrowserPolicyConnectorChromeOS* connector =

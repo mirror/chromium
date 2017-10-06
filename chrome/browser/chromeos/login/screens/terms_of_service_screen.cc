@@ -76,11 +76,12 @@ void TermsOfServiceScreen::OnViewDestroyed(TermsOfServiceScreenView* view) {
 }
 
 void TermsOfServiceScreen::StartDownload() {
-  const PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
   // If an URL from which the Terms of Service can be downloaded has not been
   // set, show an error message to the user.
+
+  // A test url that returns text/plain.
   std::string terms_of_service_url =
-      prefs->GetString(prefs::kTermsOfServiceURL);
+      "http://fonts.gstatic.com/ea/notosansteluguui/v1/LICENSE.txt";
   if (terms_of_service_url.empty()) {
     if (view_)
       view_->OnLoadError();

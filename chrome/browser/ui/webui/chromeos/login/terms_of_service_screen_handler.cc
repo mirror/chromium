@@ -81,12 +81,7 @@ void TermsOfServiceScreenHandler::Show() {
     return;
   }
 
-  const std::string locale =
-      ProfileHelper::Get()
-          ->GetProfileByUserUnsafe(
-              user_manager::UserManager::Get()->GetActiveUser())
-          ->GetPrefs()
-          ->GetString(prefs::kApplicationLocale);
+  const std::string locale = "";
 
   if (locale.empty() || locale == g_browser_process->GetApplicationLocale()) {
     // If the user has not chosen a UI locale yet or the chosen locale matches
@@ -145,13 +140,7 @@ void TermsOfServiceScreenHandler::OnLanguageChangedCallback(
 
 void TermsOfServiceScreenHandler::DoShow() {
   // Determine the user's most preferred input method.
-  std::vector<std::string> input_methods = base::SplitString(
-      ProfileHelper::Get()
-          ->GetProfileByUserUnsafe(
-              user_manager::UserManager::Get()->GetActiveUser())
-          ->GetPrefs()
-          ->GetString(prefs::kLanguagePreloadEngines),
-      ",", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  std::vector<std::string> input_methods;
 
   if (!input_methods.empty()) {
     // If the user has a preferred input method, enable it and switch to it.

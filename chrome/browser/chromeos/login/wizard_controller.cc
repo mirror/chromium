@@ -551,16 +551,6 @@ void WizardController::ShowEnableDebuggingScreen() {
 }
 
 void WizardController::ShowTermsOfServiceScreen() {
-  // Only show the Terms of Service when logging into a public account and Terms
-  // of Service have been specified through policy. In all other cases, advance
-  // to the ARC opt-in screen immediately.
-  if (!user_manager::UserManager::Get()->IsLoggedInAsPublicAccount() ||
-      !ProfileManager::GetActiveUserProfile()->GetPrefs()->IsManagedPreference(
-          prefs::kTermsOfServiceURL)) {
-    ShowArcTermsOfServiceScreen();
-    return;
-  }
-
   VLOG(1) << "Showing Terms of Service screen.";
   UpdateStatusAreaVisibilityForScreen(OobeScreen::SCREEN_TERMS_OF_SERVICE);
   SetCurrentScreen(GetScreen(OobeScreen::SCREEN_TERMS_OF_SERVICE));
