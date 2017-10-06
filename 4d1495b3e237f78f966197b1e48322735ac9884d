@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "d1a1ccb7_0aeeaeda",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-10-06T15:01:08Z",
+      "side": 1,
+      "message": "Style guide: https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Use_of_const\n\nCritical part:\n\n\"Declare methods to be const whenever possible. Accessors should almost always be const. Other methods should be const if they do not modify any data members, do not call any non-const methods, and do not return a non-const pointer or non-const reference to a data member.\"\n\nMy reading of this is that a non-const return value is not sufficient to make an accessor non-const, unless it explicitly returns a pointer/reference into this object itself.",
+      "parentUuid": "3e64ba25_ad4c00a0",
+      "range": {
+        "startLine": 139,
+        "startChar": 36,
+        "endLine": 139,
+        "endChar": 63
+      },
+      "revId": "4d1495b3e237f78f966197b1e48322735ac9884d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac47f848_14e97083",
         "filename": "chrome/browser/ui/ash/session_controller_client.h",
         "patchSetId": 11
