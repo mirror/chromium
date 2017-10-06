@@ -235,6 +235,10 @@ const GURL& NavigationHandleImpl::GetURL() {
   return url_;
 }
 
+const std::string& NavigationHandleImpl::GetMethod() {
+  return method_;
+}
+
 SiteInstance* NavigationHandleImpl::GetStartingSiteInstance() {
   return starting_site_instance_.get();
 }
@@ -515,6 +519,14 @@ void NavigationHandleImpl::SetOnDeferCallbackForTesting(
 const GlobalRequestID& NavigationHandleImpl::GetGlobalRequestID() {
   DCHECK(state_ >= WILL_PROCESS_RESPONSE);
   return request_id_;
+}
+
+void NavigationHandleImpl::SetIsIgnoredByWebView() {
+  is_ignored_by_webview_ = true;
+}
+
+bool NavigationHandleImpl::IsIgnoredByWebView() const {
+  return is_ignored_by_webview_;
 }
 
 void NavigationHandleImpl::InitServiceWorkerHandle(
