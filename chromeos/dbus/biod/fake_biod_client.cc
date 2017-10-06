@@ -154,11 +154,12 @@ void FakeBiodClient::GetRecordsForUser(const std::string& user_id,
       FROM_HERE, base::Bind(callback, records_object_paths));
 }
 
-void FakeBiodClient::DestroyAllRecords(VoidDBusMethodCallback callback) {
+void FakeBiodClient::DestroyAllRecords(
+    DBusMethodCallback<std::tuple<>> callback) {
   records_.clear();
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeBiodClient::StartAuthSession(const ObjectPathCallback& callback) {
@@ -178,7 +179,8 @@ void FakeBiodClient::RequestType(const BiometricTypeCallback& callback) {
                      biod::BiometricType::BIOMETRIC_TYPE_FINGERPRINT)));
 }
 
-void FakeBiodClient::CancelEnrollSession(VoidDBusMethodCallback callback) {
+void FakeBiodClient::CancelEnrollSession(
+    DBusMethodCallback<std::tuple<>> callback) {
   DCHECK_EQ(current_session_, FingerprintSession::ENROLL);
 
   // Clean up the in progress enrollment.
@@ -187,33 +189,33 @@ void FakeBiodClient::CancelEnrollSession(VoidDBusMethodCallback callback) {
   current_session_ = FingerprintSession::NONE;
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
-void FakeBiodClient::EndAuthSession(VoidDBusMethodCallback callback) {
+void FakeBiodClient::EndAuthSession(DBusMethodCallback<std::tuple<>> callback) {
   DCHECK_EQ(current_session_, FingerprintSession::AUTH);
 
   current_session_ = FingerprintSession::NONE;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeBiodClient::SetRecordLabel(const dbus::ObjectPath& record_path,
                                     const std::string& label,
-                                    VoidDBusMethodCallback callback) {
+                                    DBusMethodCallback<std::tuple<>> callback) {
   if (records_.find(record_path) != records_.end())
     records_[record_path]->label = label;
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeBiodClient::RemoveRecord(const dbus::ObjectPath& record_path,
-                                  VoidDBusMethodCallback callback) {
+                                  DBusMethodCallback<std::tuple<>> callback) {
   records_.erase(record_path);
 
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeBiodClient::RequestRecordLabel(const dbus::ObjectPath& record_path,

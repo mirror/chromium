@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_FAKE_SHILL_IPCONFIG_CLIENT_H_
 
 #include <string>
+#include <tuple>
 
 #include "base/macros.h"
 #include "chromeos/chromeos_export.h"
@@ -30,18 +31,18 @@ class CHROMEOS_EXPORT FakeShillIPConfigClient
       const dbus::ObjectPath& ipconfig_path,
       ShillPropertyChangedObserver* observer) override;
   void Refresh(const dbus::ObjectPath& ipconfig_path,
-               VoidDBusMethodCallback callback) override;
+               DBusMethodCallback<std::tuple<>> callback) override;
   void GetProperties(const dbus::ObjectPath& ipconfig_path,
                      const DictionaryValueCallback& callback) override;
   void SetProperty(const dbus::ObjectPath& ipconfig_path,
                    const std::string& name,
                    const base::Value& value,
-                   VoidDBusMethodCallback callback) override;
+                   DBusMethodCallback<std::tuple<>> callback) override;
   void ClearProperty(const dbus::ObjectPath& ipconfig_path,
                      const std::string& name,
-                     VoidDBusMethodCallback callback) override;
+                     DBusMethodCallback<std::tuple<>> callback) override;
   void Remove(const dbus::ObjectPath& ipconfig_path,
-              VoidDBusMethodCallback callback) override;
+              DBusMethodCallback<std::tuple<>> callback) override;
   ShillIPConfigClient::TestInterface* GetTestInterface() override;
 
   // ShillIPConfigClient::TestInterface overrides.

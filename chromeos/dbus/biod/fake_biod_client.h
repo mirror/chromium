@@ -8,6 +8,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include "base/macros.h"
 #include "base/observer_list.h"
@@ -63,16 +64,16 @@ class CHROMEOS_EXPORT FakeBiodClient : public BiodClient {
                           const ObjectPathCallback& callback) override;
   void GetRecordsForUser(const std::string& user_id,
                          const UserRecordsCallback& callback) override;
-  void DestroyAllRecords(VoidDBusMethodCallback callback) override;
+  void DestroyAllRecords(DBusMethodCallback<std::tuple<>> callback) override;
   void StartAuthSession(const ObjectPathCallback& callback) override;
   void RequestType(const BiometricTypeCallback& callback) override;
-  void CancelEnrollSession(VoidDBusMethodCallback callback) override;
-  void EndAuthSession(VoidDBusMethodCallback callback) override;
+  void CancelEnrollSession(DBusMethodCallback<std::tuple<>> callback) override;
+  void EndAuthSession(DBusMethodCallback<std::tuple<>> callback) override;
   void SetRecordLabel(const dbus::ObjectPath& record_path,
                       const std::string& label,
-                      VoidDBusMethodCallback callback) override;
+                      DBusMethodCallback<std::tuple<>> callback) override;
   void RemoveRecord(const dbus::ObjectPath& record_path,
-                    VoidDBusMethodCallback callback) override;
+                    DBusMethodCallback<std::tuple<>> callback) override;
   void RequestRecordLabel(const dbus::ObjectPath& record_path,
                           const LabelCallback& callback) override;
 

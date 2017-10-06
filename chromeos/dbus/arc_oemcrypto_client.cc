@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/optional.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
@@ -24,11 +25,12 @@ class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
   ~ArcOemCryptoClientImpl() override {}
 
   // ArcOemCryptoClient override:
-  void BootstrapMojoConnection(base::ScopedFD fd,
-                               VoidDBusMethodCallback callback) override {
+  void BootstrapMojoConnection(
+      base::ScopedFD fd,
+      DBusMethodCallback<std::tuple<>> callback) override {
     if (!service_available_) {
       DVLOG(1) << "ArcOemCrypto D-Bus service not available";
-      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE);
+      std::move(callback).Run(base::nullopt);
       return;
     }
     dbus::MethodCall method_call(arc_oemcrypto::kArcOemCryptoServiceInterface,
@@ -54,10 +56,10 @@ class ArcOemCryptoClientImpl : public ArcOemCryptoClient {
 
  private:
   // Runs the callback with the method call result.
-  void OnVoidDBusMethod(VoidDBusMethodCallback callback,
+  void OnVoidDBusMethod(DBusMethodCallback<std::tuple<>> callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                     : base::nullopt);
   }
 
   void OnServiceAvailable(bool service_is_available) {

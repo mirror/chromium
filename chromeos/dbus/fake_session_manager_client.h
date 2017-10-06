@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -34,7 +35,7 @@ class FakeSessionManagerClient : public SessionManagerClient {
   void EmitLoginPromptVisible() override;
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
-                  VoidDBusMethodCallback callback) override;
+                  DBusMethodCallback<std::tuple<>> callback) override;
   void StartSession(const cryptohome::Identification& cryptohome_id) override;
   void StopSession() override;
   void NotifySupervisedUserCreationStarted() override;

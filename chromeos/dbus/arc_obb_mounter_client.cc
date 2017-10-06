@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/callback.h"
+#include "base/optional.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
@@ -36,7 +37,7 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
   void MountObb(const std::string& obb_file,
                 const std::string& mount_path,
                 int32_t owner_gid,
-                VoidDBusMethodCallback callback) override {
+                DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(kArcObbMounterInterface, kMountObbMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(obb_file);
@@ -49,7 +50,7 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
   }
 
   void UnmountObb(const std::string& mount_path,
-                  VoidDBusMethodCallback callback) override {
+                  DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(kArcObbMounterInterface, kUnmountObbMethod);
     dbus::MessageWriter writer(&method_call);
     writer.AppendString(mount_path);
@@ -68,10 +69,10 @@ class ArcObbMounterClientImpl : public ArcObbMounterClient {
 
  private:
   // Runs the callback with the method call result.
-  void OnVoidDBusMethod(VoidDBusMethodCallback callback,
+  void OnVoidDBusMethod(DBusMethodCallback<std::tuple<>> callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                     : base::nullopt);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;

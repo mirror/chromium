@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_SHILL_DEVICE_CLIENT_H_
 
 #include <string>
+#include <tuple>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -104,7 +105,7 @@ class CHROMEOS_EXPORT ShillDeviceClient : public DBusClient {
   // |callback| is called after the method call finishes.
   virtual void ClearProperty(const dbus::ObjectPath& device_path,
                              const std::string& name,
-                             VoidDBusMethodCallback callback) = 0;
+                             DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Calls the RequirePin method.
   // |callback| is called after the method call finishes.

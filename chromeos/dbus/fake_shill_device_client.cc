@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -125,17 +126,18 @@ void FakeShillDeviceClient::SetPropertyInternal(
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, callback);
 }
 
-void FakeShillDeviceClient::ClearProperty(const dbus::ObjectPath& device_path,
-                                          const std::string& name,
-                                          VoidDBusMethodCallback callback) {
+void FakeShillDeviceClient::ClearProperty(
+    const dbus::ObjectPath& device_path,
+    const std::string& name,
+    DBusMethodCallback<std::tuple<>> callback) {
   base::DictionaryValue* device_properties = NULL;
   if (!stub_devices_.GetDictionaryWithoutPathExpansion(device_path.value(),
                                                        &device_properties)) {
-    PostVoidCallback(std::move(callback), DBUS_METHOD_CALL_FAILURE);
+    PostVoidCallback(std::move(callback), base::nullopt);
     return;
   }
   device_properties->RemoveWithoutPathExpansion(name, NULL);
-  PostVoidCallback(std::move(callback), DBUS_METHOD_CALL_SUCCESS);
+  PostVoidCallback(std::move(callback), std::tuple<>());
 }
 
 void FakeShillDeviceClient::RequirePin(const dbus::ObjectPath& device_path,
@@ -616,10 +618,11 @@ void FakeShillDeviceClient::PassStubDeviceProperties(
 }
 
 // Posts a task to run a void callback with status code |status|.
-void FakeShillDeviceClient::PostVoidCallback(VoidDBusMethodCallback callback,
-                                             DBusMethodCallStatus status) {
+void FakeShillDeviceClient::PostVoidCallback(
+    DBusMethodCallback<std::tuple<>> callback,
+    base::Optional<std::tuple<>> result) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), status));
+      FROM_HERE, base::BindOnce(std::move(callback), result));
 }
 
 void FakeShillDeviceClient::NotifyObserversPropertyChanged(

@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <string>
+#include <tuple>
 
 #include "base/callback_forward.h"
 #include "base/files/scoped_file.h"
@@ -34,8 +35,9 @@ class CHROMEOS_EXPORT ArcOemCryptoClient : public DBusClient {
 
   // Bootstraps the Mojo IPC connection between Chrome and the service daemon.
   // This should pass in the child end of a Mojo pipe.
-  virtual void BootstrapMojoConnection(base::ScopedFD fd,
-                                       VoidDBusMethodCallback callback) = 0;
+  virtual void BootstrapMojoConnection(
+      base::ScopedFD fd,
+      DBusMethodCallback<std::tuple<>> callback) = 0;
 };
 }  // namespace chromeos
 

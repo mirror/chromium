@@ -7,7 +7,10 @@
 
 #include <stdint.h>
 
+#include <tuple>
+
 #include "base/macros.h"
+#include "base/optional.h"
 #include "chromeos/dbus/biod/biod_client.h"
 #include "dbus/object_path.h"
 #include "services/device/fingerprint/fingerprint_export.h"
@@ -74,10 +77,10 @@ class SERVICES_DEVICE_FINGERPRINT_EXPORT FingerprintChromeOS
                                 const dbus::ObjectPath& record_path,
                                 const std::string& label);
 
-  void OnCloseEnrollSessionForAuth(chromeos::DBusMethodCallStatus result);
+  void OnCloseEnrollSessionForAuth(base::Optional<std::tuple<>> result);
   void OnCloseAuthSessionForEnroll(const std::string& user_id,
                                    const std::string& label,
-                                   chromeos::DBusMethodCallStatus result);
+                                   base::Optional<std::tuple<>> result);
   void ScheduleStartEnroll(const std::string& user_id,
                            const std::string& label);
   void ScheduleStartAuth();

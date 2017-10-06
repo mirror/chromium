@@ -233,15 +233,15 @@ bool FakeCryptohomeClient::CallTpmIsBeingOwnedAndBlock(bool* owning) {
 }
 
 void FakeCryptohomeClient::TpmCanAttemptOwnership(
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeCryptohomeClient::TpmClearStoredPassword(
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 bool FakeCryptohomeClient::CallTpmClearStoredPasswordAndBlock() {
@@ -659,9 +659,9 @@ void FakeCryptohomeClient::FlushAndSignBootAttributes(
 void FakeCryptohomeClient::MigrateToDircrypto(
     const cryptohome::Identification& cryptohome_id,
     const cryptohome::MigrateToDircryptoRequest& request,
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
   dircrypto_migration_progress_ = 0;
   dircrypto_migration_progress_timer_.Start(
       FROM_HERE,

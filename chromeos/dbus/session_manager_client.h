@@ -7,6 +7,7 @@
 
 #include <map>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/callback.h"
@@ -117,7 +118,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // waiting for the result.
   virtual void RestartJob(int socket_fd,
                           const std::vector<std::string>& argv,
-                          VoidDBusMethodCallback callback) = 0;
+                          DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Starts the session for the user.
   virtual void StartSession(

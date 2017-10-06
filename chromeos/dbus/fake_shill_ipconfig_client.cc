@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -42,8 +43,9 @@ void FakeShillIPConfigClient::RemovePropertyChangedObserver(
     ShillPropertyChangedObserver* observer) {
 }
 
-void FakeShillIPConfigClient::Refresh(const dbus::ObjectPath& ipconfig_path,
-                                      VoidDBusMethodCallback callback) {}
+void FakeShillIPConfigClient::Refresh(
+    const dbus::ObjectPath& ipconfig_path,
+    DBusMethodCallback<std::tuple<>> callback) {}
 
 void FakeShillIPConfigClient::GetProperties(
     const dbus::ObjectPath& ipconfig_path,
@@ -57,10 +59,11 @@ void FakeShillIPConfigClient::GetProperties(
                             weak_ptr_factory_.GetWeakPtr(), dict, callback));
 }
 
-void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
-                                          const std::string& name,
-                                          const base::Value& value,
-                                          VoidDBusMethodCallback callback) {
+void FakeShillIPConfigClient::SetProperty(
+    const dbus::ObjectPath& ipconfig_path,
+    const std::string& name,
+    const base::Value& value,
+    DBusMethodCallback<std::tuple<>> callback) {
   base::DictionaryValue* dict = NULL;
   if (!ipconfigs_.GetDictionaryWithoutPathExpansion(ipconfig_path.value(),
                                                     &dict)) {
@@ -70,21 +73,22 @@ void FakeShillIPConfigClient::SetProperty(const dbus::ObjectPath& ipconfig_path,
   // Update existing ip config stub object's properties.
   dict->SetKey(name, value.Clone());
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 void FakeShillIPConfigClient::ClearProperty(
     const dbus::ObjectPath& ipconfig_path,
     const std::string& name,
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
-void FakeShillIPConfigClient::Remove(const dbus::ObjectPath& ipconfig_path,
-                                     VoidDBusMethodCallback callback) {
+void FakeShillIPConfigClient::Remove(
+    const dbus::ObjectPath& ipconfig_path,
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_SUCCESS));
+      FROM_HERE, base::BindOnce(std::move(callback), std::tuple<>()));
 }
 
 ShillIPConfigClient::TestInterface*

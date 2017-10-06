@@ -7,12 +7,14 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/base/locale_util.h"
 #include "chrome/browser/chromeos/eol_notification.h"
@@ -320,7 +322,7 @@ class UserSessionManager
 
   // Called on UI thread once Cryptohome operation completes.
   void OnCryptohomeOperationCompleted(Profile* profile,
-                                      DBusMethodCallStatus call_status);
+                                      base::Optional<std::tuple<>> result);
 
   // Finalized profile preparation.
   void FinalizePrepareProfile(Profile* profile);

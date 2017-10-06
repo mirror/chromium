@@ -9,6 +9,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_proxy.h"
@@ -28,8 +29,9 @@ class ArcMidisClientImpl : public ArcMidisClient {
 
   ~ArcMidisClientImpl() override = default;
 
-  void BootstrapMojoConnection(base::ScopedFD fd,
-                               VoidDBusMethodCallback callback) override {
+  void BootstrapMojoConnection(
+      base::ScopedFD fd,
+      DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(midis::kMidisInterfaceName,
                                  midis::kBootstrapMojoConnectionMethod);
     dbus::MessageWriter writer(&method_call);
@@ -48,10 +50,10 @@ class ArcMidisClientImpl : public ArcMidisClient {
   }
 
  private:
-  void OnVoidDBusMethod(VoidDBusMethodCallback callback,
+  void OnVoidDBusMethod(DBusMethodCallback<std::tuple<>> callback,
                         dbus::Response* response) {
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                     : base::nullopt);
   }
 
   dbus::ObjectProxy* proxy_ = nullptr;

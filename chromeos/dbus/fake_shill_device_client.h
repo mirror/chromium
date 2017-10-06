@@ -9,8 +9,10 @@
 #include <memory>
 #include <set>
 #include <string>
+#include <tuple>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "chromeos/chromeos_export.h"
 #include "chromeos/dbus/shill_device_client.h"
 
@@ -42,7 +44,7 @@ class CHROMEOS_EXPORT FakeShillDeviceClient
                    const ErrorCallback& error_callback) override;
   void ClearProperty(const dbus::ObjectPath& device_path,
                      const std::string& name,
-                     VoidDBusMethodCallback callback) override;
+                     DBusMethodCallback<std::tuple<>> callback) override;
   void RequirePin(const dbus::ObjectPath& device_path,
                   const std::string& pin,
                   bool require,
@@ -130,8 +132,8 @@ class CHROMEOS_EXPORT FakeShillDeviceClient
                                 const DictionaryValueCallback& callback) const;
 
   // Posts a task to run a void callback with status code |status|.
-  void PostVoidCallback(VoidDBusMethodCallback callback,
-                        DBusMethodCallStatus status);
+  void PostVoidCallback(DBusMethodCallback<std::tuple<>> callback,
+                        base::Optional<std::tuple<>> result);
 
   void SetPropertyInternal(const dbus::ObjectPath& device_path,
                            const std::string& name,

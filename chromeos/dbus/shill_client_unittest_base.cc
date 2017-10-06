@@ -329,8 +329,8 @@ ShillClientUnittestBase::CreateExampleServiceProperties() {
 
 // static
 void ShillClientUnittestBase::ExpectNoResultValue(
-    DBusMethodCallStatus call_status) {
-  EXPECT_EQ(DBUS_METHOD_CALL_SUCCESS, call_status);
+    base::Optional<std::tuple<>> result) {
+  EXPECT_TRUE(result.has_value());
 }
 
 // static

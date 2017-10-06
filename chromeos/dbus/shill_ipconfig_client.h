@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_SHILL_IPCONFIG_CLIENT_H_
 
 #include <string>
+#include <tuple>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -67,7 +68,7 @@ class CHROMEOS_EXPORT ShillIPConfigClient : public DBusClient {
   // Refreshes the active IP configuration after service property changes and
   // renews the DHCP lease, if any.
   virtual void Refresh(const dbus::ObjectPath& ipconfig_path,
-                       VoidDBusMethodCallback callback) = 0;
+                       DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Calls GetProperties method.
   // |callback| is called after the method call succeeds.
@@ -79,18 +80,18 @@ class CHROMEOS_EXPORT ShillIPConfigClient : public DBusClient {
   virtual void SetProperty(const dbus::ObjectPath& ipconfig_path,
                            const std::string& name,
                            const base::Value& value,
-                           VoidDBusMethodCallback callback) = 0;
+                           DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Calls ClearProperty method.
   // |callback| is called after the method call succeeds.
   virtual void ClearProperty(const dbus::ObjectPath& ipconfig_path,
                              const std::string& name,
-                             VoidDBusMethodCallback callback) = 0;
+                             DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Calls Remove method.
   // |callback| is called after the method call succeeds.
   virtual void Remove(const dbus::ObjectPath& ipconfig_path,
-                      VoidDBusMethodCallback callback) = 0;
+                      DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Returns an interface for testing (stub only), or returns NULL.
   virtual ShillIPConfigClient::TestInterface* GetTestInterface() = 0;

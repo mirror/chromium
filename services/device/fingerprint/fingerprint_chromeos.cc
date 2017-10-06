@@ -18,8 +18,8 @@ constexpr int64_t kFingerprintSessionTimeoutMs = 150;
 
 // Used to convert mojo Callback to VoidDbusMethodCallback.
 void RunFingerprintCallback(base::OnceCallback<void(bool)> callback,
-                            chromeos::DBusMethodCallStatus result) {
-  std::move(callback).Run(result == chromeos::DBUS_METHOD_CALL_SUCCESS);
+                            base::Optional<std::tuple<>> result) {
+  std::move(callback).Run(result.has_value());
 }
 
 chromeos::BiodClient* GetBiodClient() {
@@ -64,8 +64,8 @@ void FingerprintChromeOS::StartEnrollSession(const std::string& user_id,
 void FingerprintChromeOS::OnCloseAuthSessionForEnroll(
     const std::string& user_id,
     const std::string& label,
-    chromeos::DBusMethodCallStatus result) {
-  if (result != chromeos::DBUS_METHOD_CALL_SUCCESS)
+    base::Optional<std::tuple<>> result) {
+  if (!result.has_value())
     return;
 
   // TODO(xiaoyinh@): Timeout should be removed after we resolve
@@ -129,8 +129,8 @@ void FingerprintChromeOS::StartAuthSession() {
 }
 
 void FingerprintChromeOS::OnCloseEnrollSessionForAuth(
-    chromeos::DBusMethodCallStatus result) {
-  if (result != chromeos::DBUS_METHOD_CALL_SUCCESS)
+    base::Optional<std::tuple<>> result) {
+  if (!result.has_value())
     return;
 
   // TODO(xiaoyinh@): Timeout should be removed after we resolve

@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/login/chrome_restart_request.h"
 
 #include <sys/socket.h>
+#include <tuple>
 #include <vector>
 
 #include "ash/public/cpp/ash_switches.h"
@@ -13,6 +14,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
+#include "base/optional.h"
 #include "base/process/launch.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -261,7 +263,8 @@ class ChromeRestartRequest
   void RestartJob();
 
   // Called when RestartJob D-Bus method call is complete.
-  void OnRestartJob(base::ScopedFD local_auth_fd, DBusMethodCallStatus status);
+  void OnRestartJob(base::ScopedFD local_auth_fd,
+                    base::Optional<std::tuple<>> result);
 
   const std::vector<std::string> argv_;
   base::OneShotTimer timer_;
@@ -319,7 +322,7 @@ void ChromeRestartRequest::RestartJob() {
 }
 
 void ChromeRestartRequest::OnRestartJob(base::ScopedFD local_auth_fd,
-                                        DBusMethodCallStatus status) {
+                                        base::Optional<std::tuple<>> result) {
   // Now that the call is complete, local_auth_fd can be closed and discarded,
   // which will happen automatically when it goes out of scope.
   VLOG(1) << "OnRestartJob";

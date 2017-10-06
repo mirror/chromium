@@ -83,7 +83,7 @@ class ShillDeviceClientImpl : public ShillDeviceClient {
 
   void ClearProperty(const dbus::ObjectPath& device_path,
                      const std::string& name,
-                     VoidDBusMethodCallback callback) override {
+                     DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(shill::kFlimflamDeviceInterface,
                                  shill::kClearPropertyFunction);
     dbus::MessageWriter writer(&method_call);

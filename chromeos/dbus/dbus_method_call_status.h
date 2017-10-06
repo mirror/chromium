@@ -9,6 +9,7 @@
 // get rid of DBusMethodCallStatus enum defined below.
 
 #include <string>
+#include <tuple>
 
 #include "base/callback.h"
 #include "base/optional.h"
@@ -22,6 +23,8 @@ class ObjectPath;
 
 namespace chromeos {
 
+// DEPRECATED. Migrating to DBusMethodCallback style.
+// TODO(hidehiko): Remove this when migration is completed.
 // An enum to describe whether or not a DBus method call succeeded.
 enum DBusMethodCallStatus {
   DBUS_METHOD_CALL_FAILURE,
@@ -29,14 +32,13 @@ enum DBusMethodCallStatus {
 };
 
 // Callback to handle response of methods with result.
+// If the method returns multiple values or none, std::tuple<> will be used.
+// Specifically, for the method returns none, DBusMethodCallback<std::tuple<>>
+// is the signature to be used.
 // In case of error, nullopt should be passed.
 template <typename ResultType>
 using DBusMethodCallback =
     base::OnceCallback<void(base::Optional<ResultType> result)>;
-
-// A callback to handle responses of methods without results.
-using VoidDBusMethodCallback =
-    base::OnceCallback<void(DBusMethodCallStatus call_status)>;
 
 // TODO(crbug.com/739622): Use OnceCallback in following definition, too.
 
@@ -49,7 +51,7 @@ using WaitForServiceToBeAvailableCallback =
     base::OnceCallback<void(bool service_is_available)>;
 
 // Returns an empty callback that does nothing.
-CHROMEOS_EXPORT VoidDBusMethodCallback EmptyVoidDBusMethodCallback();
+CHROMEOS_EXPORT DBusMethodCallback<std::tuple<>> EmptyVoidDBusMethodCallback();
 
 }  // namespace chromeos
 

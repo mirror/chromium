@@ -18,6 +18,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/optional.h"
 #include "base/path_service.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -192,7 +193,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
 
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
-                  VoidDBusMethodCallback callback) override {
+                  DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(login_manager::kSessionManagerInterface,
                                  login_manager::kSessionManagerRestartJob);
     dbus::MessageWriter writer(&method_call);
@@ -658,12 +659,13 @@ class SessionManagerClientImpl : public SessionManagerClient {
   }
 
   // Called when kSessionManagerRestartJob method is complete.
-  void OnRestartJob(VoidDBusMethodCallback callback, dbus::Response* response) {
+  void OnRestartJob(DBusMethodCallback<std::tuple<>> callback,
+                    dbus::Response* response) {
     LOG_IF(ERROR, !response)
         << "Failed to call "
         << login_manager::kSessionManagerRestartJob;
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+    std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                     : base::nullopt);
   }
 
   // Called when kSessionManagerRetrieveActiveSessions method is complete.
@@ -936,7 +938,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   void EmitLoginPromptVisible() override {}
   void RestartJob(int socket_fd,
                   const std::vector<std::string>& argv,
-                  VoidDBusMethodCallback callback) override {}
+                  DBusMethodCallback<std::tuple<>> callback) override {}
   void StartSession(const cryptohome::Identification& cryptohome_id) override {}
   void StopSession() override {}
   void NotifySupervisedUserCreationStarted() override {}

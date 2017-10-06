@@ -6,10 +6,12 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/location.h"
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
@@ -68,10 +70,9 @@ void HandleShillCallFailure(
 }
 
 void IPConfigRefreshCallback(const std::string& ipconfig_path,
-                             DBusMethodCallStatus call_status) {
-  if (call_status != DBUS_METHOD_CALL_SUCCESS) {
-    NET_LOG(ERROR) << "IPConfigs.Refresh Failed: " << call_status << ": "
-                   << ipconfig_path;
+                             base::Optional<std::tuple<>> result) {
+  if (!result.has_value()) {
+    NET_LOG(ERROR) << "IPConfigs.Refresh Failed: " << ipconfig_path;
   } else {
     NET_LOG(EVENT) << "IPConfigs.Refresh Succeeded: " << ipconfig_path;
   }
