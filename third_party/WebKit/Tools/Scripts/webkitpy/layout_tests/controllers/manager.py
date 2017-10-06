@@ -149,45 +149,13 @@ class Manager(object):
             should_retry_failures = self._options.retry_failures
 
         enabled_pixel_tests_in_retry = False
+
         try:
             self._start_servers(tests_to_run)
-
-            num_workers = self._port.num_workers(int(self._options.child_processes))
-
-            initial_results = self._run_tests(
-                tests_to_run, tests_to_skip, self._options.repeat_each, self._options.iterations,
-                num_workers)
-
-            # Don't retry failures when interrupted by user or failures limit exception.
-            should_retry_failures = should_retry_failures and not (
-                initial_results.interrupted or initial_results.keyboard_interrupted)
-
-            tests_to_retry = self._tests_to_retry(initial_results)
-            all_retry_results = []
-            if should_retry_failures and tests_to_retry:
-                enabled_pixel_tests_in_retry = self._force_pixel_tests_if_needed()
-
-                for retry_attempt in xrange(1, self._options.num_retries + 1):
-                    if not tests_to_retry:
-                        break
-
-                    _log.info('')
-                    _log.info('Retrying %s, attempt %d of %d...',
-                              grammar.pluralize('unexpected failure', len(tests_to_retry)),
-                              retry_attempt, self._options.num_retries)
-
-                    retry_results = self._run_tests(tests_to_retry,
-                                                    tests_to_skip=set(),
-                                                    repeat_each=1,
-                                                    iterations=1,
-                                                    num_workers=num_workers,
-                                                    retry_attempt=retry_attempt)
-                    all_retry_results.append(retry_results)
-
-                    tests_to_retry = self._tests_to_retry(retry_results)
-
-                if enabled_pixel_tests_in_retry:
-                    self._options.pixel_tests = False
+            if self._options.watch:
+                initial_results, all_retry_results = self._watch_test(tests_to_run, tests_to_skip)
+            else:
+                initial_results, all_retry_results = self._run_test_loop(tests_to_run, tests_to_skip, should_retry_failures)
         finally:
             self._stop_servers()
             self._clean_up_run()
@@ -234,6 +202,61 @@ class Manager(object):
         return test_run_results.RunDetails(
             exit_code, summarized_full_results, summarized_failing_results,
             initial_results, all_retry_results, enabled_pixel_tests_in_retry)
+
+    def _watch_test(self, tests_to_run, tests_to_skip):
+        keep_running = True
+        while keep_running:
+            initial_results, all_retry_results = self._run_test_loop(tests_to_run, tests_to_skip, should_retry_failures=False)
+            for name, failure in initial_results.failures_by_name.iteritems():
+                full_test_path = self._filesystem.join(self._results_directory, name)
+                filename, _ = self._filesystem.splitext(full_test_path)
+                pretty_diff_path = 'file://' + filename + '-pretty-diff.html'
+                print('Link to pretty diff:')
+                print(pretty_diff_path + '\n')
+            user_input = raw_input('Interactive watch mode: (q)uit (r)etry\nCommand: ').lower()
+            if user_input == 'q' or user_input == 'quit':
+                keep_running = False
+        return (initial_results, all_retry_results)
+
+    def _run_test_loop(self, tests_to_run, tests_to_skip, should_retry_failures):
+        num_workers = self._port.num_workers(int(self._options.child_processes))
+
+        initial_results = self._run_tests(
+            tests_to_run, tests_to_skip, self._options.repeat_each, self._options.iterations,
+            num_workers)
+
+        # Don't retry failures when interrupted by user or failures limit exception.
+        should_retry_failures = should_retry_failures and not (
+            initial_results.interrupted or initial_results.keyboard_interrupted)
+
+        tests_to_retry = self._tests_to_retry(initial_results)
+        all_retry_results = []
+        if should_retry_failures and tests_to_retry:
+            enabled_pixel_tests_in_retry = self._force_pixel_tests_if_needed()
+
+            for retry_attempt in xrange(1, self._options.num_retries + 1):
+                if not tests_to_retry:
+                    break
+
+                _log.info('')
+                _log.info('Retrying %s, attempt %d of %d...',
+                            grammar.pluralize('unexpected failure', len(tests_to_retry)),
+                            retry_attempt, self._options.num_retries)
+
+                retry_results = self._run_tests(tests_to_retry,
+                                                tests_to_skip=set(),
+                                                repeat_each=1,
+                                                iterations=1,
+                                                num_workers=num_workers,
+                                                retry_attempt=retry_attempt)
+                all_retry_results.append(retry_results)
+
+                tests_to_retry = self._tests_to_retry(retry_results)
+
+            if enabled_pixel_tests_in_retry:
+                self._options.pixel_tests = False
+        return (initial_results, all_retry_results)
+
 
     def _collect_tests(self, args):
         return self._finder.find_tests(args, test_list=self._options.test_list,
