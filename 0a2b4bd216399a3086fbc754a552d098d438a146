@@ -16,6 +16,24 @@
       "revId": "0a2b4bd216399a3086fbc754a552d098d438a146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d30d7b_a0d872b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-10-06T13:19:29Z",
+      "side": 1,
+      "message": "Hi Nektarios, I perhaps don\u0027t understand what you mean.\n\nWhatever is exposed as the hypertext\u0027s text -- the nCharacters should match in terms of length, as it is a type of offset into the text (although to the very end of the text). In addition, any other text offsets used, such as in textBeforeOffset or returned for text attribute ranges, etc. should relate to the hyper text.",
+      "parentUuid": "aa934c64_259bc459",
+      "revId": "0a2b4bd216399a3086fbc754a552d098d438a146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
