@@ -3487,25 +3487,6 @@ bool WebContentsImpl::GetClosedByUserGesture() const {
   return closed_by_user_gesture_;
 }
 
-void WebContentsImpl::ViewSource() {
-  if (!delegate_)
-    return;
-
-  NavigationEntry* entry = GetController().GetLastCommittedEntry();
-  if (!entry)
-    return;
-
-  delegate_->ViewSourceForTab(this, entry->GetURL());
-}
-
-void WebContentsImpl::ViewFrameSource(const GURL& url,
-                                      const PageState& page_state) {
-  if (!delegate_)
-    return;
-
-  delegate_->ViewSourceForFrame(this, url, page_state);
-}
-
 int WebContentsImpl::GetMinimumZoomPercent() const {
   return minimum_zoom_percent_;
 }

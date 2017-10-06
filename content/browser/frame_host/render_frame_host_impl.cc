@@ -127,6 +127,7 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
+#include "net/http/http_request_headers.h"
 #include "services/device/public/cpp/device_features.h"
 #include "services/device/public/interfaces/constants.mojom.h"
 #include "services/device/public/interfaces/sensor_provider.mojom.h"
@@ -2145,6 +2146,37 @@ bool RenderFrameHostImpl::IsFeatureEnabled(
     blink::WebFeaturePolicyFeature feature) {
   return feature_policy_ && feature_policy_->IsFeatureEnabledForOrigin(
                                 feature, GetLastCommittedOrigin());
+}
+
+void RenderFrameHostImpl::ViewSource() {
+  NavigationEntryImpl* entry = static_cast<NavigationEntryImpl*>(
+      frame_tree_node_->navigator()->GetController()->GetLastCommittedEntry());
+  FrameNavigationEntry* frame_entry = entry->GetFrameEntry(frame_tree_node_);
+  if (!frame_entry)
+    return;
+
+  GURL view_source_url(kViewSourceScheme + std::string(":") +
+                       frame_entry->url().spec());
+
+  std::string post_data_content_type;
+  scoped_refptr<ResourceRequestBody> post_data =
+      frame_entry->GetPostData(&post_data_content_type);
+  bool uses_post = static_cast<bool>(post_data);
+  net::HttpRequestHeaders extra_headers;
+  if (uses_post) {
+    extra_headers.SetHeader(net::HttpRequestHeaders::kContentType,
+                            post_data_content_type);
+  }
+
+  constexpr bool kForceNewProcessForNewContents = true;
+  constexpr bool kShouldReplaceCurrentEntry = false;
+  constexpr bool kUserGesture = true;
+
+  frame_tree_node_->navigator()->RequestOpenURL(
+      this, view_source_url, uses_post, post_data, extra_headers.ToString(),
+      Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+      kForceNewProcessForNewContents, kShouldReplaceCurrentEntry, kUserGesture,
+      blink::WebTriggeringEventInfo::kNotFromEvent);
 }
 
 void RenderFrameHostImpl::OnDidAccessInitialDocument() {

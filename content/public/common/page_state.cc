@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <limits>
+
 #include "base/files/file_path.h"
 #include "base/optional.h"
 #include "base/strings/string16.h"
@@ -37,11 +39,6 @@ PageState ToPageState(const ExplodedPageState& state) {
 void RecursivelyRemovePasswordData(ExplodedFrameState* state) {
   if (state->http_body.contains_passwords)
     state->http_body = ExplodedHttpBody();
-}
-
-void RecursivelyRemoveScrollOffset(ExplodedFrameState* state) {
-  state->scroll_offset = gfx::Point();
-  state->visual_viewport_scroll_offset = gfx::PointF();
 }
 
 void RecursivelyRemoveReferrer(ExplodedFrameState* state) {
@@ -149,16 +146,6 @@ PageState PageState::RemovePasswordData() const {
     return PageState();  // Oops!
 
   RecursivelyRemovePasswordData(&state.top);
-
-  return ToPageState(state);
-}
-
-PageState PageState::RemoveScrollOffset() const {
-  ExplodedPageState state;
-  if (!DecodePageState(data_, &state))
-    return PageState();  // Oops!
-
-  RecursivelyRemoveScrollOffset(&state.top);
 
   return ToPageState(state);
 }
