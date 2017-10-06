@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaa83c4d_a7a2cdc4",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:37:31Z",
+      "side": 1,
+      "message": "#include base/logging.h",
+      "revId": "e2352914839d87b8e40b4d6b6d2df59b5588f692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

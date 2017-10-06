@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "795de3a9_587e71ec",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:37:31Z",
+      "side": 1,
+      "message": "I don\u0027t really want to do that, because I\u0027m still actively using the feature (mostly for testing) on desktop and I don\u0027t want it to crash during development.\n\nI\u0027ve added a NOTIMPLEMENTED() with a short message instead of NOTREACHED.",
+      "parentUuid": "2912b635_826039de",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 6
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8013ec87_3fd42236",
         "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
         "patchSetId": 4
@@ -92,6 +116,30 @@
       "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa36410_b52128fd",
+        "filename": "chrome/browser/ui/blocked_content/tab_under_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-06T19:37:31Z",
+      "side": 1,
+      "message": "Yes! Done.",
+      "parentUuid": "8013ec87_3fd42236",
+      "range": {
+        "startLine": 81,
+        "startChar": 14,
+        "endLine": 81,
+        "endChar": 23
+      },
+      "revId": "fcd0dc893331cb824a40c3f4350bc0d3f42e5dcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
