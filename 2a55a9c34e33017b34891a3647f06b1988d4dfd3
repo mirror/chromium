@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e54ca7_72eca387",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Can you pull this 1 out as a const somewhere?",
+      "range": {
+        "startLine": 446,
+        "startChar": 39,
+        "endLine": 446,
+        "endChar": 42
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d8d6ce_4fee6eb5",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "I don\u0027t think \"AndWrite\" adds much to the method. Same for \"Metadata\" suffix - that\u0027s implied by the class, isn\u0027t it?",
+      "range": {
+        "startLine": 46,
+        "startChar": 32,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6a9c51_8c38e3dd",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Maybe clarify \"for the named database, if found\"",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bb927a_41848c41",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "s/Read/Find/ ?",
+      "range": {
+        "startLine": 60,
+        "startChar": 26,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb30cdb3_dc44ac81",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t commit, does it? So it only writes to the transaction, not disk.",
+      "range": {
+        "startLine": 73,
+        "startChar": 64,
+        "endLine": 73,
+        "endChar": 68
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f441d037_b0a4e057",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Drop \"AndWrite\" ?",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 40
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4afb036_1c881f80",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Drop \"Metadata\" ?",
+      "range": {
+        "startLine": 93,
+        "startChar": 43,
+        "endLine": 93,
+        "endChar": 51
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51b31ea_ff389cb0",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Drop \"AndWrite\" ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 32,
+        "endLine": 106,
+        "endChar": 40
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c06207_73f431ed",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T20:56:22Z",
+      "side": 1,
+      "message": "Drop \"Metadata\" ?",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 45
+      },
+      "revId": "2a55a9c34e33017b34891a3647f06b1988d4dfd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
