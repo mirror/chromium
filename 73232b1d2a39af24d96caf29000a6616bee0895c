@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23d8f636_96b13f3e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppUiSkipPreloadTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1207930
+      },
+      "writtenOn": "2017-10-06T18:46:56Z",
+      "side": 1,
+      "message": "add another line to click Pay and complete the purchase so you exercise the UI all the way to expecting a result?\n\nI have the feeling that the test in the way it is will still pass even if you revert your change",
+      "range": {
+        "startLine": 118,
+        "startChar": 8,
+        "endLine": 118,
+        "endChar": 100
+      },
+      "revId": "73232b1d2a39af24d96caf29000a6616bee0895c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b82a22b_e00ff9e6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppUiSkipTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1207930
+      },
+      "writtenOn": "2017-10-06T18:46:56Z",
+      "side": 1,
+      "message": "same comment applies here",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 31
+      },
+      "revId": "73232b1d2a39af24d96caf29000a6616bee0895c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
