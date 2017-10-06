@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ae7118b_c1ba686d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-10-06T04:27:50Z",
+      "side": 1,
+      "message": "Can you make this comment clearer please? If it is not needed, then that is probably all you need to say.",
+      "revId": "81be1ca835c900a1058d7b081b7278aedb99b038",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
