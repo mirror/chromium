@@ -17,6 +17,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views_context.h"
+#include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_context.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "ui/base/accelerators/accelerator.h"
 
@@ -24,6 +25,7 @@ class Browser;
 class BrowserWindow;
 @class BrowserWindowController;
 class ExclusiveAccessBubbleViews;
+class FullscreenControlHost;
 class GURL;
 class NewBackShortcutBubble;
 
@@ -32,7 +34,8 @@ class NewBackShortcutBubble;
 // fullscreen.
 class ExclusiveAccessController : public ExclusiveAccessContext,
                                   public ui::AcceleratorProvider,
-                                  public ExclusiveAccessBubbleViewsContext {
+                                  public ExclusiveAccessBubbleViewsContext,
+                                  public FullscreenControlContext {
  public:
   ExclusiveAccessController(BrowserWindowController* controller,
                             Browser* browser);
@@ -106,6 +109,8 @@ class ExclusiveAccessController : public ExclusiveAccessContext,
 
   // Used to keep track of the kShowFullscreenToolbar preference.
   PrefChangeRegistrar pref_registrar_;
+
+  std::unique_ptr<FullscreenControlHost> fullscreen_control_host_;
 
   DISALLOW_COPY_AND_ASSIGN(ExclusiveAccessController);
 };

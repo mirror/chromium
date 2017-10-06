@@ -8,10 +8,11 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/cocoa/accelerators_cocoa.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
-#include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.h"
+#include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/status_bubble.h"
 #include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
+#include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h"
 #include "chrome/browser/ui/views/new_back_shortcut_bubble.h"
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
@@ -35,12 +36,14 @@ ExclusiveAccessController::ExclusiveAccessController(
     Browser* browser)
     : controller_(controller),
       browser_(browser),
-      bubble_type_(EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE) {
+      bubble_type_(EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE),
+      fullscreen_control_host_(std::make_unique<FullscreenControlHost>(this)) {
   pref_registrar_.Init(GetProfile()->GetPrefs());
   pref_registrar_.Add(
       prefs::kShowFullscreenToolbar,
       base::Bind(&ExclusiveAccessController::UpdateFullscreenToolbar,
                  base::Unretained(this)));
+  GetBubbleParentView()->AddPreTargetHandler(fullscreen_control_host_.get());
 }
 
 ExclusiveAccessController::~ExclusiveAccessController() {

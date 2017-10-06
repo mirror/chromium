@@ -774,6 +774,7 @@ split_static_library("ui") {
       "find_bar/find_bar_controller.h",
       "first_run_bubble_presenter.cc",
       "first_run_bubble_presenter.h",
+      "fullscreen_control/fullscreen_control_context.h",
       "global_error/global_error.cc",
       "global_error/global_error.h",
       "global_error/global_error_bubble_view_base.h",
