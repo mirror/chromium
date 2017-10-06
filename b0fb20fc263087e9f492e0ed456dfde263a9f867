@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dd70263_db1fbf0d",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:31:16Z",
+      "side": 1,
+      "message": "I\u0027m having a hard time reasoning about this code now. This function is already super long and now you\u0027re making the conditions hard to reason about. In particular if you skip all the profiles (hit the continue on line 792), then really you want to execute the code in 736-745. Please better structure this code to make it easier to follow and more maintainable.",
+      "range": {
+        "startLine": 791,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 17
+      },
+      "revId": "b0fb20fc263087e9f492e0ed456dfde263a9f867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c3d696_e55b7d27",
+        "filename": "chrome/browser/ui/startup/startup_browser_creator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-10-06T23:31:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this mean the DCHECK on line 787 would hit?",
+      "range": {
+        "startLine": 794,
+        "startChar": 6,
+        "endLine": 798,
+        "endChar": 31
+      },
+      "revId": "b0fb20fc263087e9f492e0ed456dfde263a9f867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
