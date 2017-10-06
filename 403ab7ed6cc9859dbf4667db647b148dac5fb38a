@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898746c0_39547232",
+        "filename": "media/cdm/cdm_host_files.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1213236
+      },
+      "writtenOn": "2017-10-06T23:47:23Z",
+      "side": 1,
+      "message": "Only InitVerificationWithAdapter or following two?",
+      "range": {
+        "startLine": 66,
+        "startChar": 55,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "403ab7ed6cc9859dbf4667db647b148dac5fb38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a25e2b_964eacd8",
+        "filename": "media/mojo/services/mojo_media_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1213236
+      },
+      "writtenOn": "2017-10-06T23:47:23Z",
+      "side": 1,
+      "message": "Just curious, why this is in comment?",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "403ab7ed6cc9859dbf4667db647b148dac5fb38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
