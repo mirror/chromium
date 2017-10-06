@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f150a67_b4792955",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/partnercustomizations/BasePartnerBrowserCustomizationUnitTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-10-06T18:58:02Z",
+      "side": 1,
+      "message": "As discussed offline, this doesn\u0027t need to be done, the tests can just use ChromeJUnit4ClassRunner",
+      "revId": "1778a6d11e6eea1474dbb982827b132ce2de3061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
