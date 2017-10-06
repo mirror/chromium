@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/time/time.h"
 #include "chrome/browser/banners/app_banner_metrics.h"
@@ -104,7 +105,12 @@ void AppBannerManager::RequestAppBanner(const GURL& validated_url,
       base::Bind(&AppBannerManager::OnDidGetManifest, GetWeakPtr()));
 }
 
-void AppBannerManager::OnInstall() {
+void AppBannerManager::OnInstall(bool is_native,
+                                 blink::WebDisplayMode display) {
+  if (!is_native) {
+    UMA_HISTOGRAM_ENUMERATION("Webapp.Install.DisplayMode", display,
+                              blink::WebDisplayMode::kWebDisplayModeLast);
+  }
   blink::mojom::InstallationServicePtr installation_service;
   web_contents()->GetMainFrame()->GetRemoteInterfaces()->GetInterface(
       mojo::MakeRequest(&installation_service));
