@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b80192_d46c811b",
+        "filename": "media/video/jpeg_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-10-06T10:09:57Z",
+      "side": 1,
+      "message": "Why do we need this destructor implementation? Is this just to test if the header file compiles?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
