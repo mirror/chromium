@@ -114,7 +114,7 @@ static const VAConfigAttrib kCommonVAConfigAttribs[] = {
 
 // Attributes required for encode.
 static const VAConfigAttrib kEncodeVAConfigAttribs[] = {
-    {VAConfigAttribRateControl, VA_RC_CBR},
+    //{VAConfigAttribRateControl, VA_RC_CBR},
     {VAConfigAttribEncPackedHeaders,
      VA_ENC_PACKED_HEADER_SEQUENCE | VA_ENC_PACKED_HEADER_PICTURE},
 };
@@ -192,7 +192,7 @@ scoped_refptr<VaapiWrapper> VaapiWrapper::Create(
     VAProfile va_profile,
     const base::Closure& report_error_to_uma_cb) {
   if (!GetProfileInfos()->IsProfileSupported(mode, va_profile)) {
-    DVLOG(1) << "Unsupported va_profile: " << va_profile;
+    VLOG(1) << "Unsupported va_profile: " << va_profile;
     return nullptr;
   }
 
@@ -272,6 +272,12 @@ bool VaapiWrapper::IsJpegDecodeSupported() {
   return GetProfileInfos()->IsProfileSupported(kDecode, VAProfileJPEGBaseline);
 }
 
+// static
+bool VaapiWrapper::IsJpegEncodeSupported() {
+  return GetProfileInfos()->IsProfileSupported(kEncodeJpeg,
+                                               VAProfileJPEGBaseline);
+}
+
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
   base::AutoLock auto_lock(*va_lock_);
   VADisplayAttribute item = {VADisplayAttribRenderMode,
@@ -319,15 +325,22 @@ VaapiWrapper::GetSupportedProfileInfosForCodecModeInternal(CodecMode mode) {
     return supported_profile_infos;
 
   std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
-  VAEntrypoint entrypoint =
-      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  VAEntrypoint entrypoint = GetVaEntryPoint(mode);
 
   base::AutoLock auto_lock(*va_lock_);
   for (const auto& va_profile : va_profiles) {
-    if (!IsEntrypointSupported_Locked(va_profile, entrypoint))
+    if (!IsEntrypointSupported_Locked(va_profile, entrypoint)) {
+      if (va_profile == VAProfileJPEGBaseline && mode == kEncodeJpeg) {
+        LOG(ERROR) << "encode jpeg profile fail when finding entry point";
+      }
       continue;
-    if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs))
+    }
+    if (!AreAttribsSupported_Locked(va_profile, entrypoint, required_attribs)) {
+      if (va_profile == VAProfileJPEGBaseline && mode == kEncodeJpeg) {
+        LOG(ERROR) << "encode jpeg profile fail when finding attributes";
+      }
       continue;
+    }
     ProfileInfo profile_info;
     if (!GetMaxResolution_Locked(va_profile, entrypoint, required_attribs,
                                  &profile_info.max_resolution)) {
@@ -435,8 +448,10 @@ bool VaapiWrapper::AreAttribsSupported_Locked(
     if (attribs[i].type != required_attribs[i].type ||
         (attribs[i].value & required_attribs[i].value) !=
             required_attribs[i].value) {
-      DVLOG(1) << "Unsupported value " << required_attribs[i].value
-               << " for attribute type " << required_attribs[i].type;
+      if (entrypoint == VAEntrypointEncPicture) {
+        VLOG(1) << "Unsupported value " << required_attribs[i].value
+                << " for attribute type " << required_attribs[i].type;
+      }
       return false;
     }
   }
@@ -487,11 +502,25 @@ bool VaapiWrapper::GetMaxResolution_Locked(
   return true;
 }
 
+VAEntrypoint VaapiWrapper::GetVaEntryPoint(CodecMode mode) {
+  switch (mode) {
+    case kDecode:
+      return VAEntrypointVLD;
+    case kEncode:
+      return VAEntrypointEncSlice;
+    case kEncodeJpeg:
+      return VAEntrypointEncPicture;
+    case kCodecModeMax:
+    default:
+      NOTREACHED();
+      return VAEntrypointVLD;
+  }
+}
+
 bool VaapiWrapper::Initialize(CodecMode mode, VAProfile va_profile) {
   TryToSetVADisplayAttributeToLocalGPU();
 
-  VAEntrypoint entrypoint =
-      (mode == kEncode ? VAEntrypointEncSlice : VAEntrypointVLD);
+  VAEntrypoint entrypoint = GetVaEntryPoint(mode);
   std::vector<VAConfigAttrib> required_attribs = GetRequiredAttribs(mode);
   base::AutoLock auto_lock(*va_lock_);
   VAStatus va_res =
@@ -959,6 +988,45 @@ bool VaapiWrapper::UploadVideoFrameToSurface(
   VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
 
   return ret == 0;
+}
+
+bool VaapiWrapper::UploadFrameToSurface(
+    const scoped_refptr<SharedMemoryRegion>& frame,
+    int width,
+    int height,
+    VASurfaceID va_surface_id) {
+  base::AutoLock auto_lock(*va_lock_);
+
+  VAImage image;
+  VAStatus va_res = vaDeriveImage(va_display_, va_surface_id, &image);
+  VA_SUCCESS_OR_RETURN(va_res, "vaDeriveImage failed", false);
+  base::ScopedClosureRunner vaimage_deleter(
+      base::Bind(&DestroyVAImage, va_display_, image));
+
+  if (image.width != width || image.height != height) {
+    LOG(ERROR) << "Buffer dimension does not match the frame.";
+    return false;
+  }
+
+  void* image_ptr = NULL;
+  va_res = vaMapBuffer(va_display_, image.buf, &image_ptr);
+  VA_SUCCESS_OR_RETURN(va_res, "vaMapBuffer failed", false);
+  DCHECK(image_ptr);
+
+  {
+    base::AutoUnlock auto_unlock(*va_lock_);
+
+    uint8_t* src = static_cast<uint8_t*>(frame->memory());
+    if (src == nullptr) {
+      LOG(ERROR) << "SharedMemoryRegion |frame| has not been mapped.";
+      return false;
+    }
+    memcpy(static_cast<uint8_t*>(image_ptr), src, frame->size());
+  }
+
+  va_res = vaUnmapBuffer(va_display_, image.buf);
+  VA_LOG_ON_ERROR(va_res, "vaUnmapBuffer failed");
+  return 0;
 }
 
 bool VaapiWrapper::DownloadAndDestroyCodedBuffer(VABufferID buffer_id,
