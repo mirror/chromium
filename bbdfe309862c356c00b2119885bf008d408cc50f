@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d11344cf_0b14b7d1",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-06T13:24:20Z",
+      "side": 1,
+      "message": "Could you also double check that this doesn\u0027t collide with the CL adding AudioOutputStream tests? I think it had some tests for invalid parameters, not sure it takes this code path though.",
+      "parentUuid": "a126f47d_f4bc2e5e",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa897032_69d4e4cf",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 2
