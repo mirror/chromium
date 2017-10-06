@@ -32,6 +32,8 @@ class BrowserNonClientFrameViewAsh : public BrowserNonClientFrameView,
 
   void Init();
 
+  ash::HeaderPainter* header_painter() { return header_painter_.get(); }
+
   // BrowserNonClientFrameView:
   gfx::Rect GetBoundsForTabStrip(views::View* tabstrip) const override;
   int GetTopInset(bool restored) const override;
