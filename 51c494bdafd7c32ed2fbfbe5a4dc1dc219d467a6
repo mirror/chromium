@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be47f970_d00ad9d6",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T17:34:30Z",
+      "side": 1,
+      "message": "Let\u0027s not call out explicitly WebView, but say that the content/ embedder might cause this, so we keep this comment very generic, as any content/ embedder can inflict the same case to happen. The bug has specific details about one of those cases.",
+      "revId": "51c494bdafd7c32ed2fbfbe5a4dc1dc219d467a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7430f346_5186483a",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-10-06T17:34:30Z",
+      "side": 1,
+      "message": "Maybe add a bit of text like we have in other places that has stronger wording on not using navigation_request beyond this point.\n\nnit: nullptr",
+      "revId": "51c494bdafd7c32ed2fbfbe5a4dc1dc219d467a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
