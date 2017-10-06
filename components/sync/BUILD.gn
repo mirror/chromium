@@ -4,10 +4,11 @@
 
 import("//build/buildflag_header.gni")
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//components/sync/protocol/protocol_sources.gni")
 import("//testing/test.gni")
 
-static_library("sync") {
+jumbo_static_library("sync") {  # -8.5 CPU minutes
   sources = [
     "base/attachment_id_proto.cc",
     "base/attachment_id_proto.h",
@@ -608,6 +609,22 @@ static_library("sync") {
     "//third_party/leveldatabase",
     "//third_party/zlib",
     "//third_party/zlib/google:compression_utils",
+  ]
+
+  jumbo_excluded_sources = [
+    # Macros (ENUM_CASE)
+    "syncable/syncable_enum_conversions.cc",
+    "engine_impl/net/server_connection_manager.cc",
+    "engine_impl/cycle/data_type_tracker.cc",
+    "syncable/syncable_write_transaction.cc",
+    "engine_impl/nudge_source.cc",
+    "engine_impl/sync_scheduler_impl.cc",
+
+    # Namespaces
+    "engine_impl/conflict_resolver.cc",
+
+    # Weird error
+    "base/nigori.cc",
   ]
 
   if (is_android) {

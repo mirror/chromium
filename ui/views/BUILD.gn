@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import("//build/config/features.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/ui.gni")
 import("//testing/test.gni")
 import("//ui/base/ui_features.gni")
@@ -30,7 +31,7 @@ aggregate_vector_icons("views_vector_icons") {
   ]
 }
 
-component("views") {
+jumbo_component("views") {
   all_dependent_configs = [ ":flags" ]
 
   public = [
@@ -422,6 +423,29 @@ component("views") {
   ]
 
   sources += get_target_outputs(":views_vector_icons")
+
+  jumbo_excluded_sources = [
+    # : explicit specialization of 'GetProperty<gfx::Insets *>' after instantiation
+    "view_properties.cc",
+    "view_constants_aura.cc",
+
+    # Symbols
+    "controls/combobox/combobox.cc",
+
+    # X11
+    "widget/desktop_aura/desktop_screen_x11.cc",
+    "controls/scrollbar/overlay_scroll_bar.cc",
+    "controls/textfield/textfield.cc",
+    "widget/native_widget_aura.cc",
+    "widget/desktop_aura/x11_pointer_grab.cc",
+    "widget/desktop_aura/desktop_drag_drop_client_aurax11.cc",
+    "widget/desktop_aura/desktop_window_tree_host_x11.cc",
+    "widget/desktop_aura/x11_topmost_window_finder.cc",
+    "widget/desktop_aura/x11_window_event_filter.cc",
+    "widget/desktop_aura/x11_desktop_handler.cc",
+    "widget/desktop_aura/x11_desktop_window_move_client.cc",
+    "widget/desktop_aura/x11_whole_screen_move_loop.cc",
+  ]
 
   configs += [
     "//build/config:precompiled_headers",

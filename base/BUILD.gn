@@ -24,6 +24,7 @@ import("//build/config/chromecast_build.gni")
 import("//build/config/clang/clang.gni")
 import("//build/config/compiler/compiler.gni")
 import("//build/config/dcheck_always_on.gni")
+import("//build/config/jumbo.gni")
 import("//build/config/nacl/config.gni")
 import("//build/config/sysroot.gni")
 import("//build/config/ui.gni")
@@ -105,7 +106,13 @@ if (is_android) {
 # to be linked in where they wouldn't have otherwise. This does not include
 # test code (test support and anything in the test directory) which should use
 # source_set as is recommended for GN targets).
-component("base") {
+jumbo_component("base") {
+  target_type = "component"
+  if (is_nacl) {
+    # Link errors related to malloc functions if libbase for nacl is
+    # compiled with jumbo.
+    never_build_jumbo = true
+  }
   if (is_nacl_nonsfi) {
     # TODO(phosek) bug 570839: If field_trial.cc is in a static library,
     # nacl_helper_nonsfi doesn't link properly on Linux in debug builds. The
@@ -1130,6 +1137,11 @@ component("base") {
     libs = [ "atomic" ]
   }
 
+  jumbo_excluded_sources = [
+    # Works on a header without include guards: base/trace_event_common.h.
+    "trace_event/trace_event_argument.cc",
+  ]
+
   if (use_allocator_shim) {
     sources += [
       "allocator/allocator_shim.cc",
@@ -1138,6 +1150,7 @@ component("base") {
       "allocator/allocator_shim_override_cpp_symbols.h",
       "allocator/allocator_shim_override_libc_symbols.h",
     ]
+    jumbo_excluded_sources += [ "allocator/allocator_shim.cc" ]
     if (is_win) {
       sources += [
         "allocator/allocator_shim_default_dispatch_to_winheap.cc",
@@ -1159,6 +1172,7 @@ component("base") {
         "allocator/allocator_shim_override_linker_wrapped_symbols.h",
       ]
       all_dependent_configs += [ "//base/allocator:wrap_malloc_symbols" ]
+      jumbo_excluded_sources += [ "allocator/allocator_shim_default_dispatch_to_linker_wrapped_symbols.cc" ]
     } else if (is_mac) {
       sources += [
         "allocator/allocator_shim_default_dispatch_to_mac_zoned_malloc.cc",
@@ -1708,7 +1722,7 @@ static_library("base_static") {
   }
 }
 
-component("i18n") {
+jumbo_component("i18n") {
   output_name = "base_i18n"
   sources = [
     "i18n/base_i18n_export.h",
