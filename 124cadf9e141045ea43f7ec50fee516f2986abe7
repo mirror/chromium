@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "352c7c51_bacac798",
+        "filename": "content/renderer/render_thread_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "724a5be8_7e44431a",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf67ac5_ffae9542",
         "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
         "patchSetId": 5
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "48d823a4_9d5b6052",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "ok, we\u0027ll have to make ShouldAccelerate() make the context then, is that what you\u0027re expecting?",
+      "parentUuid": "9bf67ac5_ffae9542",
+      "range": {
+        "startLine": 976,
+        "startChar": 6,
+        "endLine": 976,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7fc5c9_0b6d32c9",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 5
@@ -70,6 +112,30 @@
       "writtenOn": "2017-10-06T01:08:14Z",
       "side": 1,
       "message": "It\u0027s a good question. I think the answer is yes. Currently this code assumes that it should hand back a texture-backed StaticBitmapImage, but if we\u0027re using SwiftShader and software compositing, it should probably be creating a CPU-backed Skia surface / image. Does that sound correct?",
+      "range": {
+        "startLine": 786,
+        "startChar": 5,
+        "endLine": 786,
+        "endChar": 9
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e72ad3_eb3bfe19",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "Yes, if the output of this goes to the compositor, it needs to be software or it\u0027ll not display when compositor is software compositing..",
+      "parentUuid": "6f7fc5c9_0b6d32c9",
       "range": {
         "startLine": 786,
         "startChar": 5,
@@ -128,6 +194,30 @@
     },
     {
       "key": {
+        "uuid": "8d71a819_86caebe1",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "I\u0027m not sure how to describe when we\u0027ll fall back but it will stop being able to make a context if the gpu process can\u0027t be established by some mechanism, yeah. I think when that happens it will usually be the case that the context here is null too. But we shouldn\u0027t rely on that if we can do better with a more clear signal.",
+      "parentUuid": "1bb629da_1330cebd",
+      "range": {
+        "startLine": 929,
+        "startChar": 37,
+        "endLine": 929,
+        "endChar": 48
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc8c56e0_e1dcddfd",
         "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
         "patchSetId": 5
@@ -139,6 +229,30 @@
       "writtenOn": "2017-10-06T14:34:01Z",
       "side": 1,
       "message": "Nope. No need for it here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de87907_6a56bd46",
+        "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "Ok, I\u0027d like to explain why, is this correct?\n\n  // Software compositing isn\u0027t relevant here, this isn\u0027t a compositor input.",
+      "parentUuid": "bc8c56e0_e1dcddfd",
       "range": {
         "startLine": 27,
         "startChar": 31,
@@ -198,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "4bd7804b_05dcebea",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50159d44_dd5fd021",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc45a9a2_280f360c",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
         "patchSetId": 5
@@ -218,6 +356,30 @@
       "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe916d8_3cdddaef",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T15:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc45a9a2_280f360c",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 17
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
