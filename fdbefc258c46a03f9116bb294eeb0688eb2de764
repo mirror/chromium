@@ -260,6 +260,24 @@
     },
     {
       "key": {
+        "uuid": "8dd3900c_d7bc186a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_operation_response_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-10-06T18:31:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b796da0_b0443730",
+      "revId": "fdbefc258c46a03f9116bb294eeb0688eb2de764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66f94055_4ee82df4",
         "filename": "components/offline_pages/core/prefetch/prefetch_types.h",
         "patchSetId": 1
