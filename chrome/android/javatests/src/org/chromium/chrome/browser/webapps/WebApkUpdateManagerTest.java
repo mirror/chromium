@@ -103,6 +103,7 @@ public class WebApkUpdateManagerTest {
         public String name;
         public String shortName;
         public Map<String, String> iconUrlToMurmur2HashMap;
+        @WebDisplayMode
         public int displayMode;
         public int orientation;
         public long themeColor;
