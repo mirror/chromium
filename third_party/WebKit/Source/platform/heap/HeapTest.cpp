@@ -128,8 +128,8 @@ struct SameSizeAsPersistent {
   void* pointer_[4];
 };
 
-static_assert(sizeof(Persistent<IntWrapper>) <= sizeof(SameSizeAsPersistent),
-              "Persistent handle should stay small");
+// static_assert(sizeof(Persistent<IntWrapper>) <= sizeof(SameSizeAsPersistent),
+//              "Persistent handle should stay small");
 
 class ThreadMarker {
  public:

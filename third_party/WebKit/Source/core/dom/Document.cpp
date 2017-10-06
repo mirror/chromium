@@ -5126,6 +5126,10 @@ String Document::domain() const {
   return GetSecurityOrigin()->Domain();
 }
 
+void Document::hogehoge() {
+  showLiveDocumentInstances();
+}
+
 void Document::setDomain(const String& raw_domain,
                          ExceptionState& exception_state) {
   UseCounter::Count(*this, WebFeature::kDocumentSetDomain);
@@ -7178,8 +7182,11 @@ static WeakDocumentSet& liveDocumentSet() {
 void showLiveDocumentInstances() {
   WeakDocumentSet& set = liveDocumentSet();
   fprintf(stderr, "There are %u documents currently alive:\n", set.size());
-  for (blink::Document* document : set)
+  for (blink::Document* document : set) {
     fprintf(stderr, "- Document %p URL: %s\n", document,
             document->Url().GetString().Utf8().data());
+    blink::ThreadState::Current()->SearchPersistents(
+        static_cast<void*>(document));
+  }
 }
 #endif

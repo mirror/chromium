@@ -21,7 +21,9 @@ class PersistentNode final {
   DISALLOW_NEW();
 
  public:
-  PersistentNode() : self_(nullptr), trace_(nullptr) { DCHECK(IsUnused()); }
+  PersistentNode() : self_(nullptr), trace_(nullptr), should_search_(false) {
+    DCHECK(IsUnused());
+  }
 
 #if DCHECK_IS_ON()
   ~PersistentNode() {
@@ -50,18 +52,21 @@ class PersistentNode final {
     trace_(visitor, self_);
   }
 
-  void Initialize(void* self, TraceCallback trace) {
+  void Initialize(void* self, TraceCallback trace, bool should_search) {
     DCHECK(IsUnused());
     self_ = self;
     trace_ = trace;
+    should_search_ = should_search;
   }
 
   void SetFreeListNext(PersistentNode* node) {
     DCHECK(!node || node->IsUnused());
     self_ = node;
     trace_ = nullptr;
+    should_search_ = false;
     DCHECK(IsUnused());
   }
+  bool ShouldSearch() { return should_search_; }
 
   PersistentNode* FreeListNext() {
     DCHECK(IsUnused());
@@ -83,6 +88,7 @@ class PersistentNode final {
   //   - m_trace is nullptr.
   void* self_;
   TraceCallback trace_;
+  bool should_search_;
 };
 
 struct PersistentNodeSlots final {
@@ -115,7 +121,11 @@ class PLATFORM_EXPORT PersistentRegion final {
   }
   ~PersistentRegion();
 
-  PersistentNode* AllocatePersistentNode(void* self, TraceCallback trace) {
+  void SearchPersistentNodes(void* needle);
+
+  PersistentNode* AllocatePersistentNode(void* self,
+                                         TraceCallback trace,
+                                         bool should_search = false) {
 #if DCHECK_IS_ON()
     ++persistent_count_;
 #endif
@@ -124,7 +134,7 @@ class PLATFORM_EXPORT PersistentRegion final {
     DCHECK(free_list_head_);
     PersistentNode* node = free_list_head_;
     free_list_head_ = free_list_head_->FreeListNext();
-    node->Initialize(self, trace);
+    node->Initialize(self, trace, should_search);
     DCHECK(!node->IsUnused());
     return node;
   }

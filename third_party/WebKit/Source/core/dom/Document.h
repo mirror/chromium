@@ -884,6 +884,7 @@ class CORE_EXPORT Document : public ContainerNode,
   const AtomicString& referrer() const;
 
   String domain() const;
+  void hogehoge();
   void setDomain(const String& new_domain, ExceptionState&);
 
   String lastModified() const;

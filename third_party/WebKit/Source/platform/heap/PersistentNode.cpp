@@ -125,6 +125,36 @@ void PersistentRegion::TracePersistentNodes(Visitor* visitor,
 #endif
 }
 
+void PersistentRegion::SearchPersistentNodes(void* needle) {
+  int persistent_count = 0;
+  PersistentNodeSlots* slots = slots_;
+  while (slots) {
+    for (int i = 0; i < PersistentNodeSlots::kSlotCount; ++i) {
+      PersistentNode* node = &slots->slot_[i];
+      if (!node->IsUnused()) {
+        ++persistent_count;
+        if (persistent_count % 1000 == 5) {
+          LOG(INFO) << "Scanned " << persistent_count << "/"
+                    << persistent_count_ << " i=" << i << "/"
+                    << PersistentNodeSlots::kSlotCount;
+        }
+        if (node->ShouldSearch()) {
+          Persistent<DummyGCBase>* persistent =
+              reinterpret_cast<Persistent<DummyGCBase>*>(node->Self());
+          if (persistent->Get() == needle) {
+            LOG(INFO) << "Found Persistent with " << needle;
+            persistent->LogCreationStack();
+          }
+        }
+      }
+    }
+    slots = slots->next_;
+  }
+#if DCHECK_IS_ON()
+  DCHECK_EQ(persistent_count, persistent_count_);
+#endif
+}
+
 bool CrossThreadPersistentRegion::ShouldTracePersistentNode(
     Visitor* visitor,
     PersistentNode* node) {

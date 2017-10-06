@@ -5,6 +5,7 @@
 #ifndef Persistent_h
 #define Persistent_h
 
+#include <base/debug/stack_trace.h>
 #include "platform/heap/Heap.h"
 #include "platform/heap/Member.h"
 #include "platform/heap/PersistentNode.h"
@@ -174,6 +175,23 @@ class PersistentBase {
     return this;
   }
 
+  void LogCreationStack() {
+    if (creation_stack_)
+      creation_stack_->Print();
+    else
+      LOG(ERROR) << "Missing creation_stack_";
+  }
+
+  template <typename VisitorDispatcher>
+  void SearchPersistent(VisitorDispatcher visitor, void*) {
+    if (raw_ == reinterpret_cast<void*>(visitor)) {
+      if (creation_stack_)
+        creation_stack_->Print();
+      else
+        LOG(ERROR) << "Missing creation_stack_";
+    }
+  }
+
  protected:
   NO_SANITIZE_ADDRESS
   T* AtomicGet() {
@@ -230,7 +248,9 @@ class PersistentBase {
         ThreadStateFor<ThreadingTrait<T>::kAffinity>::GetState();
     DCHECK(state->CheckThread());
     persistent_node_ = state->GetPersistentRegion()->AllocatePersistentNode(
-        this, trace_callback);
+        this, trace_callback,
+        crossThreadnessConfiguration != kCrossThreadPersistentConfiguration &&
+            weaknessConfiguration != kWeakPersistentConfiguration);
 #if DCHECK_IS_ON()
     state_ = state;
 #endif
@@ -287,6 +307,7 @@ class PersistentBase {
       creation_thread_state_ = ThreadState::Current();
       DCHECK(creation_thread_state_);
     }
+    creation_stack_ = WTF::MakeUnique<base::debug::StackTrace>();
 #endif
   }
 
@@ -306,6 +327,7 @@ class PersistentBase {
 #if DCHECK_IS_ON()
   ThreadState* state_ = nullptr;
   const ThreadState* creation_thread_state_;
+  std::unique_ptr<base::debug::StackTrace> creation_stack_;
 #endif
 };
 

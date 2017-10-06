@@ -64,6 +64,7 @@ typedef (HTMLScriptElement or SVGScriptElement) HTMLOrSVGScriptElement;
     [NewObject, RaisesException] CDATASection createCDATASection(DOMString data);
     [NewObject] Comment createComment(DOMString data);
     [NewObject, RaisesException] ProcessingInstruction createProcessingInstruction(DOMString target, DOMString data);
+    void hogehoge();
 
     [NewObject, DoNotTestNewObject, CEReactions, CustomElementCallbacks, RaisesException] Node importNode(Node node, optional boolean deep = false);
     [RaisesException, CEReactions, CustomElementCallbacks] Node adoptNode(Node node);
