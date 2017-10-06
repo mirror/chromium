@@ -19,12 +19,14 @@ namespace net {
 
 HttpBasicState::HttpBasicState(std::unique_ptr<ClientSocketHandle> connection,
                                bool using_proxy,
-                               bool http_09_on_non_default_ports_enabled)
+                               bool http_09_on_non_default_ports_enabled,
+                               const ProxyServer& proxy_server)
     : read_buf_(new GrowableIOBuffer()),
       connection_(std::move(connection)),
       using_proxy_(using_proxy),
       http_09_on_non_default_ports_enabled_(
-          http_09_on_non_default_ports_enabled) {}
+          http_09_on_non_default_ports_enabled),
+      proxy_server_(proxy_server) {}
 
 HttpBasicState::~HttpBasicState() {}
 

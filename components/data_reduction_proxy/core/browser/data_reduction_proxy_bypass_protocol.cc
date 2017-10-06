@@ -14,6 +14,7 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_headers.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params.h"
 #include "net/base/load_flags.h"
+#include "net/base/net_error_details.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 #include "net/proxy/proxy_config.h"
@@ -24,6 +25,7 @@
 #include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_status.h"
 #include "url/gurl.h"
 
 namespace data_reduction_proxy {
@@ -87,10 +89,44 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
     DataReductionProxyInfo* data_reduction_proxy_info) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(request);
+
+  const net::URLRequestStatus status = request->status();
+  net::NetErrorDetails net_error_details;
+  request->PopulateNetErrorDetails(&net_error_details);
+
+  if (request->url().SchemeIs(url::kHttpScheme)) {
+    LOG(WARNING) << "xxx MaybeInterceptResponse cp0 url="
+                 << request->url().spec() << " error=" << status.error()
+                 << " status=" << status.status() << " ps="
+                 << (!request->proxy_server().is_valid()
+                         ? "empty"
+                         : request->proxy_server().ToPacString())
+                 << " response_headers_is_null="
+                 << (request->response_info().headers.get() == nullptr)
+                 << "  was_fetched_via_proxy()="
+                 << request->was_fetched_via_proxy()
+                 << " net_error_details=" << net_error_details.connection_info
+                 << " proxy_server_used="
+                 << net_error_details.proxy_server.ToPacString();
+  }
+
+  DataReductionProxyTypeInfo data_reduction_proxy_type_info;
+
   const net::HttpResponseHeaders* response_headers =
       request->response_info().headers.get();
-  if (!response_headers)
+  if (!response_headers) {
+    if (!request->proxy_server().is_valid() ||
+        request->proxy_server().is_direct() ||
+        request->proxy_server().host_port_pair().IsEmpty()) {
+      return false;
+    }
+    if (!config_->WasDataReductionProxyUsed(request,
+                                            &data_reduction_proxy_type_info)) {
+      return false;
+    }
+
     return false;
+  }
 
   // Empty implies either that the request was served from cache or that
   // request was served directly from the origin.
@@ -102,7 +138,6 @@ bool DataReductionProxyBypassProtocol::MaybeBypassProxyAndPrepareToRetry(
     return false;
   }
 
-  DataReductionProxyTypeInfo data_reduction_proxy_type_info;
   if (!config_->WasDataReductionProxyUsed(request,
                                           &data_reduction_proxy_type_info)) {
     if (!HasDataReductionProxyViaHeader(*response_headers, nullptr)) {

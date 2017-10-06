@@ -1179,6 +1179,10 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
     bool using_proxy = (proxy_info_.is_http() || proxy_info_.is_https()) &&
                        (request_info_.url.SchemeIs(url::kHttpScheme) ||
                         request_info_.url.SchemeIs(url::kFtpScheme));
+    ProxyServer proxy_server;
+    if (using_proxy) {
+      proxy_server = proxy_info_.proxy_server();
+    }
     if (delegate_->for_websockets()) {
       DCHECK_NE(job_type_, PRECONNECT);
       DCHECK(delegate_->websocket_handshake_stream_create_helper());
@@ -1188,7 +1192,8 @@ int HttpStreamFactoryImpl::Job::DoCreateStream() {
     } else {
       stream_ = std::make_unique<HttpBasicStream>(
           std::move(connection_), using_proxy,
-          session_->params().http_09_on_non_default_ports_enabled);
+          session_->params().http_09_on_non_default_ports_enabled,
+          proxy_server);
     }
     return OK;
   }

@@ -7,6 +7,7 @@
 
 #include "net/base/net_export.h"
 #include "net/http/http_response_info.h"
+#include "net/proxy/proxy_server.h"
 #include "net/quic/core/quic_packets.h"
 
 namespace net {
@@ -37,6 +38,9 @@ struct NET_EXPORT NetErrorDetails {
   // True if receives a GoAway frame from the server due to connection
   // migration with port change.
   bool quic_port_migration_detected;
+  // ProxyServer that was used to fetch the request. May not be set in all
+  // cases.
+  ProxyServer proxy_server;
 };
 
 }  // namespace net

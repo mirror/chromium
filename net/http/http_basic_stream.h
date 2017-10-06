@@ -35,7 +35,8 @@ class NET_EXPORT_PRIVATE HttpBasicStream : public HttpStream {
   // initialize it correctly.
   HttpBasicStream(std::unique_ptr<ClientSocketHandle> connection,
                   bool using_proxy,
-                  bool http_09_on_non_default_ports_enabled);
+                  bool http_09_on_non_default_ports_enabled,
+                  const ProxyServer& proxy_server);
   ~HttpBasicStream() override;
 
   // HttpStream methods:

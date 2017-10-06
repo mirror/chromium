@@ -16,10 +16,12 @@ namespace net {
 
 HttpBasicStream::HttpBasicStream(std::unique_ptr<ClientSocketHandle> connection,
                                  bool using_proxy,
-                                 bool http_09_on_non_default_ports_enabled)
+                                 bool http_09_on_non_default_ports_enabled,
+                                 const ProxyServer& proxy_server)
     : state_(std::move(connection),
              using_proxy,
-             http_09_on_non_default_ports_enabled) {}
+             http_09_on_non_default_ports_enabled,
+             proxy_server) {}
 
 HttpBasicStream::~HttpBasicStream() {}
 
@@ -72,7 +74,8 @@ HttpStream* HttpBasicStream::RenewStreamForAuth() {
   // than leaving it until the destructor is called.
   state_.DeleteParser();
   return new HttpBasicStream(state_.ReleaseConnection(), state_.using_proxy(),
-                             state_.http_09_on_non_default_ports_enabled());
+                             state_.http_09_on_non_default_ports_enabled(),
+                             state_.proxy_server());
 }
 
 bool HttpBasicStream::IsResponseBodyComplete() const {
@@ -144,6 +147,7 @@ void HttpBasicStream::PopulateNetErrorDetails(NetErrorDetails* details) {
   // TODO(mmenke):  Consumers don't actually care about HTTP version, but seems
   // like the right version should be reported, if headers were received.
   details->connection_info = HttpResponseInfo::CONNECTION_INFO_HTTP1_1;
+  details->proxy_server = state_.proxy_server();
   return;
 }
 

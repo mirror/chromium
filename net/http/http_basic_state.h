@@ -16,6 +16,7 @@
 #include "net/base/completion_callback.h"
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
+#include "net/proxy/proxy_server.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -30,7 +31,8 @@ class NET_EXPORT_PRIVATE HttpBasicState {
  public:
   HttpBasicState(std::unique_ptr<ClientSocketHandle> connection,
                  bool using_proxy,
-                 bool http_09_on_non_default_ports_enabled);
+                 bool http_09_on_non_default_ports_enabled,
+                 const ProxyServer& proxy_server);
   ~HttpBasicState();
 
   // Initialize() must be called before using any of the other methods.
@@ -42,6 +44,8 @@ class NET_EXPORT_PRIVATE HttpBasicState {
   HttpStreamParser* parser() const { return parser_.get(); }
 
   bool using_proxy() const { return using_proxy_; }
+
+  const ProxyServer& proxy_server() const { return proxy_server_; }
 
   bool http_09_on_non_default_ports_enabled() const {
     return http_09_on_non_default_ports_enabled_;
@@ -73,6 +77,8 @@ class NET_EXPORT_PRIVATE HttpBasicState {
 
   GURL url_;
   std::string request_method_;
+
+  ProxyServer proxy_server_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpBasicState);
 };

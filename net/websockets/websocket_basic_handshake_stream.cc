@@ -297,7 +297,8 @@ WebSocketBasicHandshakeStream::WebSocketBasicHandshakeStream(
     WebSocketStreamRequest* request)
     : state_(std::move(connection),
              using_proxy,
-             false /* http_09_on_non_default_ports_enabled */),
+             false /* http_09_on_non_default_ports_enabled */,
+             ProxyServer()),
       connect_delegate_(connect_delegate),
       http_response_info_(nullptr),
       requested_sub_protocols_(requested_sub_protocols),
