@@ -727,9 +727,7 @@ ScriptPromise WebGLRenderingContextBase::commit(
   int width = GetDrawingBuffer()->Size().Width();
   int height = GetDrawingBuffer()->Size().Height();
   if (!GetDrawingBuffer()) {
-    bool is_web_gl_software_rendering = false;
-    return host()->Commit(nullptr, SkIRect::MakeWH(width, height),
-                          is_web_gl_software_rendering, script_state,
+    return host()->Commit(nullptr, SkIRect::MakeWH(width, height), script_state,
                           exception_state);
   }
 
@@ -737,7 +735,6 @@ ScriptPromise WebGLRenderingContextBase::commit(
 
   return host()->Commit(
       std::move(image), SkIRect::MakeWH(width, height),
-      GetDrawingBuffer()->ContextProvider()->IsSoftwareRendering(),
       script_state, exception_state);
 }
 
@@ -786,8 +783,10 @@ RefPtr<StaticBitmapImage> WebGLRenderingContextBase::GetImage(
 RefPtr<StaticBitmapImage> WebGLRenderingContextBase::MakeImageSnapshot(
     SkImageInfo& image_info) {
   GetDrawingBuffer()->ResolveAndBindForReadAndDraw();
+  // TODO(kbr): Should we use this information here?
+  bool using_software_compositing;
   WeakPtr<WebGraphicsContext3DProviderWrapper> shared_context_wrapper =
-      SharedGpuContext::ContextProviderWrapper();
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
   if (!shared_context_wrapper)
     return nullptr;
   gpu::gles2::GLES2Interface* gl =
