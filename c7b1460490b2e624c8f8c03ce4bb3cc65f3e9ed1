@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493164cc_8a057189",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:24:19Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "c7b1460490b2e624c8f8c03ce4bb3cc65f3e9ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb85d93_22581a96",
+        "filename": "ash/wm/workspace/workspace_layout_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:24:19Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "c7b1460490b2e624c8f8c03ce4bb3cc65f3e9ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890d4136_ee18c615",
+        "filename": "ash/wm/workspace/workspace_layout_manager_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:24:19Z",
+      "side": 1,
+      "message": "Update comment (here and below).",
+      "revId": "c7b1460490b2e624c8f8c03ce4bb3cc65f3e9ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e01c325_8122fd8e",
+        "filename": "ui/keyboard/keyboard_ui.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:24:19Z",
+      "side": 1,
+      "message": "Update comment.",
+      "revId": "c7b1460490b2e624c8f8c03ce4bb3cc65f3e9ed1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
