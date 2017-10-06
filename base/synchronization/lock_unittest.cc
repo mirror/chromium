@@ -50,6 +50,8 @@ class BasicLockTestThread : public PlatformThread::Delegate {
 };
 
 TEST(LockTest, Basic) {
+  printf("_MSC_VER = %d\n", _MSC_VER);
+  printf("_MSC_FULL_VER = %d\n", _MSC_FULL_VER);
   Lock lock;
   BasicLockTestThread thread(&lock);
   PlatformThreadHandle handle;
