@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dfbcb90_7fe86c7b",
+        "filename": "media/cdm/cdm_host_files.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T23:53:36Z",
+      "side": 1,
+      "message": "I meant InitializeWithAdapter() must be called before calling InitVerificationWithAdapter(). And Initialize() must be called before InitVerification...",
+      "parentUuid": "898746c0_39547232",
+      "range": {
+        "startLine": 66,
+        "startChar": 55,
+        "endLine": 66,
+        "endChar": 59
+      },
+      "revId": "403ab7ed6cc9859dbf4667db647b148dac5fb38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40a25e2b_964eacd8",
         "filename": "media/mojo/services/mojo_media_client.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-06T23:47:23Z",
       "side": 1,
       "message": "Just curious, why this is in comment?",
+      "range": {
+        "startLine": 62,
+        "startChar": 44,
+        "endLine": 62,
+        "endChar": 63
+      },
+      "revId": "403ab7ed6cc9859dbf4667db647b148dac5fb38a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fe47fd1_aeaa7f6c",
+        "filename": "media/mojo/services/mojo_media_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T23:53:36Z",
+      "side": 1,
+      "message": "See style guide:\n\nhttps://google.github.io/styleguide/cppguide.html#Function_Declarations_and_Definitions\n\nUnused parameters that might not be obvious should comment out the variable name in the function definition.\n\nI guess in this case it\u0027s not too hard to guess what the parameter is, but I\u0027d like to err on the clearer side.",
+      "parentUuid": "40a25e2b_964eacd8",
       "range": {
         "startLine": 62,
         "startChar": 44,
