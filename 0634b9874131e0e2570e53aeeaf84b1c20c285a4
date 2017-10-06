@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "958e7f23_75d7703a",
+        "filename": "chrome/browser/apps/platform_app_navigation_redirector.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T01:21:02Z",
+      "side": 1,
+      "message": "MaybeCreateThrottleFor",
+      "range": {
+        "startLine": 54,
+        "startChar": 29,
+        "endLine": 54,
+        "endChar": 46
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a957208a_91b1d916",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3195,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T01:21:02Z",
+      "side": 1,
+      "message": "Q: does this need to be guarded by IsInMainFrame like line 3186 above?\n\nAh I see that MaybeCreateThrottleFor checks for that. maybe move line 3195-3201 inside the if () in line 3186 and DCHECK(IsInMainFrame()) inside MaybeCreateThrottleFor?",
+      "range": {
+        "startLine": 3195,
+        "startChar": 0,
+        "endLine": 3195,
+        "endChar": 69
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce67b50_b2e69fd6",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T01:21:02Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27f07df4_5c4ecae4",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T01:21:02Z",
+      "side": 1,
+      "message": "remove this as well. (since .h has it already), same for navigation_throttle.h",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 36
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aede306b_467e2ebb",
+        "filename": "chrome/browser/extensions/bookmark_app_navigation_throttle.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-06T01:21:02Z",
+      "side": 1,
+      "message": "nit: this comment would be better suited right before the if() on line 92.",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 73
+      },
+      "revId": "0634b9874131e0e2570e53aeeaf84b1c20c285a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
