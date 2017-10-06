@@ -1814,6 +1814,7 @@ bool PrintRenderFrameHelper::UpdatePrintSettings(
     modified_job_settings.MergeDictionary(job_settings);
     modified_job_settings.SetBoolean(kSettingHeaderFooterEnabled, false);
     modified_job_settings.SetInteger(kSettingMarginsType, NO_MARGINS);
+    modified_job_settings.SetBoolean(kSettingPreviewModifiable, source_is_html);
     job_settings = &modified_job_settings;
   }
 
