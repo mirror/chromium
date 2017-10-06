@@ -10,6 +10,7 @@
 
 #import "ios/third_party/material_components_ios/src/components/AppBar/src/MaterialAppBar.h"
 #import "ios/third_party/material_components_ios/src/components/Buttons/src/MaterialButtons.h"
+#import "ios/third_party/material_components_ios/src/components/ShadowLayer/src/MaterialShadowLayer.h"
 #import "remoting/ios/app/app_delegate.h"
 #import "remoting/ios/app/remoting_theme.h"
 #import "remoting/ios/app/settings/setting_option.h"
@@ -58,6 +59,12 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
 
   _appBar.headerViewController.headerView.trackingScrollView =
       self.collectionView;
+
+  // Hide the header shadow so that the navigation bar and the content can look
+  // connected.
+  MDCShadowLayer* shadowLayer = [MDCShadowLayer layer];
+  shadowLayer.elevation = 0.f;
+  _appBar.headerViewController.headerView.shadowLayer = shadowLayer;
   [_appBar addSubviewsToParent];
 
   self.collectionView.backgroundColor = RemotingTheme.menuBlueColor;
