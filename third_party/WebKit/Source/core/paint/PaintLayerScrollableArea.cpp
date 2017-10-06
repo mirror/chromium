@@ -121,6 +121,7 @@ PaintLayerScrollableArea::PaintLayerScrollableArea(PaintLayer& layer)
       in_resize_mode_(false),
       scrolls_overflow_(false),
       in_overflow_relayout_(false),
+      layout_has_forced_initial_vertical_scrollbar_(false),
       needs_composited_scrolling_(false),
       rebuild_horizontal_scrollbar_layer_(false),
       rebuild_vertical_scrollbar_layer_(false),
@@ -826,6 +827,9 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   bool relayout_is_prevented = PreventRelayoutScope::RelayoutIsPrevented();
   bool scrollbars_are_frozen =
       in_overflow_relayout_ || FreezeScrollbarsScope::ScrollbarsAreFrozen();
+  bool forced_initial_vertical_scrollbar =
+      layout_has_forced_initial_vertical_scrollbar_;
+  layout_has_forced_initial_vertical_scrollbar_ = false;
 
   if (NeedsScrollbarReconstruction()) {
     SetHasHorizontalScrollbar(false);
@@ -882,7 +886,16 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
         PreventRelayoutScope::SetBoxNeedsLayout(*this, had_horizontal_scrollbar,
                                                 had_vertical_scrollbar);
       } else {
-        in_overflow_relayout_ = true;
+        if (forced_initial_vertical_scrollbar &&
+            vertical_scrollbar_should_change) {
+          // We forced a vertical scrollbar but it was not needed. Reset the
+          // scrollbar state and perform a relayout (which may include up to one
+          // more relayout, see: in_overflow_relayout_).
+          SetHasHorizontalScrollbar(false);
+          SetHasVerticalScrollbar(false);
+        } else {
+          in_overflow_relayout_ = true;
+        }
         SubtreeLayoutScope layout_scope(Box());
         layout_scope.SetNeedsLayout(
             &Box(), LayoutInvalidationReason::kScrollbarChanged);
