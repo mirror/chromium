@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff69626a_759146a3",
+        "filename": "chrome/browser/ui/webui/about_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T19:21:59Z",
+      "side": 1,
+      "message": "Nit: Maybe move this change and bookmarks_file_importer to a different CL? Seems unrelated cleanup.",
+      "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ee99286_5d5cf1f1",
         "filename": "chrome/browser/ui/webui/signin_internals_ui.cc",
         "patchSetId": 3
@@ -13,6 +30,23 @@
       "writtenOn": "2017-10-06T18:01:54Z",
       "side": 1,
       "message": "IWYU. Needed for ENABLE_DICE_SUPPORT below. Previously was relying on url_constants.h.",
+      "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ce0cb6_d2fde635",
+        "filename": "chrome/common/webui_url_constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T19:21:59Z",
+      "side": 1,
+      "message": "Question for potential future cleanup:\nDo we need both the full URL and the host as separate constants? For example see kChromeUIAboutURL and kChromeUIAboutHost. It seems redundant, perhaps we can derive one from the other?",
       "revId": "a696b6650f67c4fb0c4a85c9cdcbc0e5b931c886",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
