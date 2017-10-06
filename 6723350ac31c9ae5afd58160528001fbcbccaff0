@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0a6b43e_d0a9fa8e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T16:18:22Z",
+      "side": 1,
+      "message": "Practically, this was mostly used for tests anyway, make it official to force real Finish() callers to provide a WebTaskRunner.\n\nPassing a nullptr here appears to work because no test that uses FinishForTest covers ResourceFinishObserver logic. I could use a generic task queue here if preferred.",
+      "revId": "6723350ac31c9ae5afd58160528001fbcbccaff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

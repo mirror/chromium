@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1f725ba_5bac3126",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T16:18:22Z",
+      "side": 0,
+      "message": "Call in Resource::Finish and Resource::FinishAsError instead.",
+      "revId": "4d0b463401e7778a39022e0c946cc16a949b0780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ac47d69_7e4dedb8",
+        "filename": "third_party/WebKit/Source/core/loader/resource/XSLStyleSheetResource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-10-06T16:18:22Z",
+      "side": 0,
+      "message": "Call in Resource::Finish and Resource::FinishAsError instead.",
+      "revId": "4d0b463401e7778a39022e0c946cc16a949b0780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
