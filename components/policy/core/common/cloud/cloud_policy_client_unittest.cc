@@ -55,6 +55,8 @@ const char kLocation[] = "fake-location";
 const char kGcmID[] = "fake-gcm-id";
 const char kEnrollmentCertificate[] = "fake-certificate";
 
+const bool kEphemeral = false;
+
 const int64_t kAgeOfCommand = 123123123;
 const int64_t kLastCommandId = 123456789;
 const int64_t kTimestamp = 987654321;
@@ -431,6 +433,7 @@ TEST_F(CloudPolicyClientTest, RegistrationAndPolicyFetch) {
   EXPECT_CALL(observer_, OnRegistrationStateChanged(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
+                    em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
                     em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
                     std::string(), std::string());
   EXPECT_TRUE(client_->is_registered());
@@ -451,6 +454,7 @@ TEST_F(CloudPolicyClientTest, RegistrationWithCertificateAndPolicyFetch) {
   client_->RegisterWithCertificate(
       em::DeviceRegisterRequest::DEVICE,
       em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_ATTESTATION,
+      em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
       em::LicenseType::UNDEFINED, kEnrollmentCertificate, std::string(),
       std::string(), std::string());
   EXPECT_TRUE(client_->is_registered());
@@ -470,6 +474,7 @@ TEST_F(CloudPolicyClientTest, RegistrationWithCertificateFailToSignRequest) {
   client_->RegisterWithCertificate(
       em::DeviceRegisterRequest::DEVICE,
       em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_ATTESTATION,
+      em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
       em::LicenseType::UNDEFINED, kEnrollmentCertificate, std::string(),
       std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
@@ -488,6 +493,9 @@ TEST_F(CloudPolicyClientTest, RegistrationParametersPassedThrough) {
   EXPECT_CALL(observer_, OnRegistrationStateChanged(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_ENROLLMENT_MANUAL,
+                    kEphemeral
+                        ? em::DeviceRegisterRequest::LIFETIME_EPHEMERAL_USER
+                        : em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
                     em::LicenseType::UNDEFINED, kOAuthToken, kClientID,
                     kRequisition, kStateKey);
   EXPECT_EQ(kClientID, client_id_);
@@ -500,6 +508,7 @@ TEST_F(CloudPolicyClientTest, RegistrationNoToken) {
   EXPECT_CALL(observer_, OnClientError(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
+                    em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
                     em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
                     std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
@@ -516,6 +525,7 @@ TEST_F(CloudPolicyClientTest, RegistrationFailure) {
   EXPECT_CALL(observer_, OnClientError(_));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
+                    em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
                     em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
                     std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
@@ -538,6 +548,7 @@ TEST_F(CloudPolicyClientTest, RetryRegistration) {
                        MatchProto(registration_request_)));
   client_->Register(em::DeviceRegisterRequest::USER,
                     em::DeviceRegisterRequest::FLAVOR_USER_REGISTRATION,
+                    em::DeviceRegisterRequest::LIFETIME_INDEFINITE,
                     em::LicenseType::UNDEFINED, kOAuthToken, std::string(),
                     std::string(), std::string());
   EXPECT_FALSE(client_->is_registered());
