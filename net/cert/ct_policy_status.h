@@ -10,7 +10,8 @@ namespace net {
 namespace ct {
 
 // Information about the connection's compliance with the CT
-// certificate policy.
+// certificate policy. This value is histogrammed, so do not re-order or change
+// values, and add new values at the end.
 enum class CertPolicyCompliance {
   // The connection complied with the certificate policy by
   // including SCTs that satisfy the policy.
@@ -23,6 +24,7 @@ enum class CertPolicyCompliance {
   // isn't timely and therefore log information might be out of date
   // (for example a log might no longer be considered trustworthy).
   CERT_POLICY_BUILD_NOT_TIMELY,
+  CERT_POLICY_MAX
 };
 
 }  // namespace ct
