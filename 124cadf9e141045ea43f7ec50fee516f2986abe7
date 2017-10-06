@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e822197_a2b29a06",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T20:52:37Z",
+      "side": 1,
+      "message": "Does webgl start making frames before BeginMainFrames (RAF etc) start happening?\n\nIf so then it would race and that would be unfortunate. We don\u0027t need to lose contexts if software_rendering is there though. We can disable gpu compositing when we make any context and see software rendering. Then it would be disabled when the WebGL context was made, instead of later when the compositor context is made.\n\nI did that in the last patch set.",
+      "parentUuid": "a665f5c5_7cd4c5a2",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "724a5be8_7e44431a",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 5
