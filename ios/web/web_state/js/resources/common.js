@@ -508,15 +508,19 @@ __gCrWeb['common'] = __gCrWeb.common;
    */
   __gCrWeb.common.removeQueryAndReferenceFromURL = function(url) {
     var queryIndex = url.indexOf('?');
-    if (queryIndex != -1) {
-      return url.substring(0, queryIndex);
-    }
-
     var hashIndex = url.indexOf('#');
-    if (hashIndex != -1) {
-      return url.substring(0, hashIndex);
+    if (queryIndex != -1 && hashIndex != -1) {
+      // Truncate URL at the earlier index because '?' and '#' can appear
+      // in either order.
+      return url.substring(0, Math.min(queryIndex, hashIndex));
+    } else if (queryIndex == -1 && hashIndex == -1) {
+      // Returns the original URL that does not have a query string or
+      // a fragment.
+      return url;
     }
-    return url;
+    // Either queryIndex or hashIndex is -1 at this point. Truncate URL at
+    // the index that is not -1.
+    return url.substring(0, Math.max(queryIndex, hashIndex));
   };
 
   /**
