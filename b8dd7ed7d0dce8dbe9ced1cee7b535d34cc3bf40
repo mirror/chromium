@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a315f9b_17f386f8",
+        "filename": "tools/android/forwarder2/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-06T21:28:11Z",
+      "side": 1,
+      "message": "oops, the toolchain needs to be qualified:\n\n  :host_forwarder(//build/toolchain/linux:clang_arm)",
+      "revId": "b8dd7ed7d0dce8dbe9ced1cee7b535d34cc3bf40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
