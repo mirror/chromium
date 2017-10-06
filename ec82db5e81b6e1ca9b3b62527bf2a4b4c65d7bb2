@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "35531960_bacbcac2",
+        "filename": "build/config/freetype/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-10-06T08:09:38Z",
+      "side": 1,
+      "message": "\u003e \u0027font\u0027 does seem a bit generic, but this is probably the best candidate for the name (it is the library for all things to do with font files).\n\nFrom a Blink perspective, a big part of \"all things font\" are done in Skia, so what is in \"font\" and what is not?\n\n\u003e Calling it harfbuzz_freetype or freetype_harfbuzz is explicit and clear, but it would bother me that this is effectively FreeOpenFreeType or FreeTypeFreeOpen (roughly). I think freetype_harfbuzz could be loosely translated/read as \"FreeType is being a pain again\".\n\n:-) That\u0027s one way to look at it, including the meaning of the names. I read it more from the level of \"what library names are in this component\".\n\n\u003e I rather like HarfType (more or less FreeType, but half transliterated Persian) which also seems fairly clear. A bit silly, but HarfSchriftart (half Persian / half German FreeType) seems somewhat appropriate but less obvious as to pedigree.\n\nHarfType works for me, as it symbolizes that we are building a hybrid of the two.\n\nSo, bottom line, either harfbuzz_freetype/freetype_harfbuzz or harftype or HarfType all work for me.",
+      "parentUuid": "1136e9f8_dd443b34",
+      "revId": "ec82db5e81b6e1ca9b3b62527bf2a4b4c65d7bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fb3f718_33cdab09",
         "filename": "remoting/host/it2me/BUILD.gn",
         "patchSetId": 8
