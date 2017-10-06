@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f84fa81d_e7f05f95",
+        "filename": "chrome/profiling/memlog_receiver_pipe.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T03:55:33Z",
+      "side": 1,
+      "message": "And std::move() one too ;-)",
+      "revId": "2c75765b95ae204272dc0142e21d160e22edb296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
