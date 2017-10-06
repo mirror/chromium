@@ -5,7 +5,8 @@
 #include "chrome/browser/vr/ui_scene_manager.h"
 
 #include "base/macros.h"
-#include "cc/base/math_util.h"
+#include "base/message_loop/message_loop.h"
+#include "base/numerics/ranges.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/content_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
@@ -64,10 +65,8 @@ static constexpr float kTolerance = 1e-5;
 static constexpr float kSmallDelaySeconds = 0.1;
 
 MATCHER_P2(SizeFsAreApproximatelyEqual, other, tolerance, "") {
-  return cc::MathUtil::ApproximatelyEqual(arg.width(), other.width(),
-                                          tolerance) &&
-         cc::MathUtil::ApproximatelyEqual(arg.height(), other.height(),
-                                          tolerance);
+  return base::ApproximatelyEqual(arg.width(), other.width(), tolerance) &&
+         base::ApproximatelyEqual(arg.height(), other.height(), tolerance);
 }
 
 void CheckHitTestableRecursive(UiElement* element) {
