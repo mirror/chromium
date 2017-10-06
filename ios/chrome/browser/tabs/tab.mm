@@ -1343,6 +1343,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
       ios::AccountReconcilorFactory::GetForBrowserState(_browserState)
           ->GetState());
+  // We know the BVC is displaying since the user tapped the web page to manage
+  // accounts. This call presents the account settings UI from the BVC.
   [self.dispatcher showAccountsSettings];
 }
 
