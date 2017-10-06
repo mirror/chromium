@@ -30,6 +30,8 @@ bool ShelfItemStructTraits::Read(ash::mojom::ShelfItemDataView data,
       !data.ReadTitle(&out->title)) {
     return false;
   }
+  // LOG(ERROR) << "MSW ShelfItemStructTraits::Read id:" << out->id.app_id << " image:" << !out->image.isNull() << " reps:" << out->image.image_reps().size() << " !!!!!!!!!!!!!!!!!";
+  out->image.EnsureRepsForSupportedScales();
   out->shows_tooltip = data.shows_tooltip();
   out->pinned_by_policy = data.pinned_by_policy();
   return true;

@@ -108,6 +108,8 @@ bool ChromeAppIcon::IsValid() const {
 void ChromeAppIcon::UpdateIcon() {
   DCHECK(icon_);
 
+  // TODO(msw): Only notify the delegate on proper image changes?
+  // bool updated = false;
   image_skia_ = icon_->image_skia();
 #if defined(OS_CHROMEOS)
   util::MaybeApplyChromeBadge(browser_context_, app_id_, &image_skia_);

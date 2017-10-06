@@ -51,6 +51,8 @@ class ShelfController : public mojom::ShelfController,
   void UpdateShelfItem(const ShelfItem& item) override;
   void SetShelfItemDelegate(const ShelfID& id,
                             mojom::ShelfItemDelegatePtr delegate) override;
+  void SetShelfItemImage(const ShelfID& id,
+                         const gfx::ImageSkia& image) override;
 
   // ShelfModelObserver:
   void ShelfItemAdded(int index) override;

@@ -79,9 +79,13 @@ interface ShelfController {
   // not exceeding the item count. Bails if |id| is unknown or for the AppList.
   MoveShelfItem(ShelfID id, int32 target_index);
   // Updates |item| via ShelfID. Bails if the id is unknown or for the AppList.
+  // SetShelfItemImage should be invoked separately to transport item images.
   UpdateShelfItem(ShelfItem item);
   // Sets the |delegate| for the item with |id|.
   SetShelfItemDelegate(ShelfID id, ShelfItemDelegate delegate);
+  // Sets the image for the item with |id|. UpdateShelfItem is called more often
+  // and avoids transporting images as an efficiency optimization.
+  SetShelfItemImage(ShelfID id, gfx.mojom.ImageSkia? image);
 };
 
 // A Shelf observer, used to persist profile settings and cache a ShelfModel.
@@ -93,6 +97,7 @@ interface ShelfObserver {
   // Called when the item with |id| has been moved to |index|.
   OnShelfItemMoved(ShelfID id, int32 index);
   // Called when the |item| with matching ShelfID has been updated.
+  // Note: This does not transport the item image for efficiency.
   OnShelfItemUpdated(ShelfItem item);
   // Called when |delegate| for the item with |id| has been changed.
   OnShelfItemDelegateChanged(ShelfID id, ShelfItemDelegate delegate);

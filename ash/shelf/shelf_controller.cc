@@ -27,7 +27,7 @@
 #include "ui/base/models/simple_menu_model.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
-
+#include "base/debug/stack_trace.h" 
 namespace ash {
 
 namespace {
@@ -218,7 +218,12 @@ void ShelfController::UpdateShelfItem(const ShelfItem& item) {
   if (index < 0)
     return;
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
-  model_.Set(index, item);
+
+  // The item was transported without an image, use any pre-existing image.
+  LOG(ERROR) << "MSW ShelfController::UpdateShelfItem " << item.id << " isNull: " << model_.items()[index].image.isNull() << " / " << item.image.isNull();
+  ash::ShelfItem new_item = item;
+  new_item.image = model_.items()[index].image;
+  model_.Set(index, new_item);
 }
 
 void ShelfController::SetShelfItemDelegate(
@@ -232,6 +237,20 @@ void ShelfController::SetShelfItemDelegate(
         id, base::MakeUnique<RemoteShelfItemDelegate>(id, std::move(delegate)));
   else
     model_.SetShelfItemDelegate(id, nullptr);
+}
+
+void ShelfController::SetShelfItemImage(const ShelfID& id, const gfx::ImageSkia& image) {
+  DCHECK(should_synchronize_shelf_models_) << " Unexpected model sync";
+  DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
+  const int index = model_.ItemIndexByID(id);
+  DCHECK_GE(index, 0) << " No item found with the id: " << id;
+  if (index < 0)
+    return;
+  base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
+  ash::ShelfItem item = model_.items()[index];
+  LOG(ERROR) << "MSW ShelfController::SetShelfItemImage " << item.id << " isNull: " << item.image.isNull() << " / " << image.isNull();
+  item.image = image;
+  model_.Set(index, item);
 }
 
 void ShelfController::ShelfItemAdded(int index) {
@@ -267,7 +286,10 @@ void ShelfController::ShelfItemChanged(int index, const ShelfItem& old_item) {
   if (applying_remote_shelf_model_changes_ || !should_synchronize_shelf_models_)
     return;
 
-  const ShelfItem& item = model_.items()[index];
+  // Transport the item update without its image; clients dont need the image.
+  ShelfItem item = model_.items()[index];
+  item.image = gfx::ImageSkia();
+  
   observers_.ForAllPtrs([item](mojom::ShelfObserver* observer) {
     observer->OnShelfItemUpdated(item);
   });
