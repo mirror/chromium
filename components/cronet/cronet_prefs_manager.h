@@ -16,8 +16,11 @@ class NetLog;
 class PrefService;
 
 namespace base {
+class FilePath;
+class WaitableEvent;
 class SingleThreadTaskRunner;
 class SequencedTaskRunner;
+class TaskRunner;
 }  // namespace base
 
 namespace net {
@@ -59,6 +62,17 @@ class CronetPrefsManager {
   void PrepareForShutdown();
 
  private:
+  // Initializes the preference storage directory on the task runner associated
+  // with the file thread and waits until the initialization is done.
+  void InitializeStorageDirectorySync(base::TaskRunner* file_runner,
+                                      const base::FilePath& storage_path);
+
+  // Initializes the preference storage directory on the file thread and signals
+  // when the initialization is done.
+  void InitializeStorageDirectoryOnFileThread(
+      const base::FilePath& storage_path,
+      base::WaitableEvent* lock);
+
   // |pref_service_| should outlive the HttpServerPropertiesManager owned by
   // |host_cache_persistence_manager_|.
   std::unique_ptr<PrefService> pref_service_;
