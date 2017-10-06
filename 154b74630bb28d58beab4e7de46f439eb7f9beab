@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "092edfa9_540fd41f",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Good one.  TIL.  I thought the unnamed namespace kept things local.",
+      "parentUuid": "4522319f_c940d7d1",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54300975_d2e440bc",
         "filename": "chrome_elf/whitelist/whitelist.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "should this be declared in the .h?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae7c745_3d9b2ea4",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done.  I\u0027m not using it yet.",
+      "parentUuid": "54300975_d2e440bc",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "31d888ad_2ed2ad3f",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "This is true.  That\u0027s not actually why I add these section headers - I add them for visual organizational cues.  When scrolling through files of code, I spend a lot of time in aggregate trying to find the function/code I\u0027m interested in (when it all looks the same).  \n\nI can rapid scroll with these in there and quickly find relative locations in the file.\n\nI\u0027ve removed the two (\"private\") blocks that aren\u0027t needed in this file (at this time).  I get the same functionality from the two that I\u0027ve left in.",
+      "parentUuid": "17725a32_7b83efa6",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c41ee399_b33ea4ff",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "73a69794_818efa79",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c41ee399_b33ea4ff",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b8a67bf_911d5e72",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "(part 1 of memory suggestion): i\u0027m fairly certain you can have the same good memory patterns without std::unique_ptr. try changing guid_ and path_ to plain std::string and change this ctor to:\n\n  IME(std::wstring\u0026\u0026 guid, ..., std::wstring\u0026\u0026 path) : ..., guid_(std::move(guid)), path_(std::move(path)) {}",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e94f2b_4115d601",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "I must admit.  I still find the std::move and std::unique_ptr stuff very un-intuitive.  Even after reading the official documentation for them.\n\nFor some reason I thought that I needed a unique_ptr to use std::move.\n\nI\u0027m very happy to remove all these unique_ptrs!",
+      "parentUuid": "3b8a67bf_911d5e72",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "26de8ba7_7917a87d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done.  TIL\n\nI\u0027ve not really used the default stuff before.  Had to go read up what it\u0027ll actually do:\n\"The implicitly defined (default) destructor will call the destructor for each member.\"\n\n\"Cool.\" as the kids used to say.",
+      "parentUuid": "d2cabe36_dbd38431",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "265b1188_fb32764e",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -115,6 +223,47 @@
       "writtenOn": "2017-09-28T13:21:14Z",
       "side": 1,
       "message": "nit: constipate these methods",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09793abe_f0af59ce",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "...I don\u0027t actually know what this means Greg?!  \n\nHow does one constipate methods?  You can imagine what showed up in results when I googled \"how to constipate methods/functions\".  I think I\u0027ll be getting very targeted ads for the next year.",
+      "parentUuid": "265b1188_fb32764e",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858fc649_a6061929",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Question Greg: I had to delete this line due to compile failure:\n\"\n../../chrome_elf/whitelist/whitelist_ime.cc(67,3):  note: \u0027IME\u0027 has been explicitly marked deleted here\n  IME(const IME\u0026) \u003d delete;\n\"\n\nSo I\u0027ve just removed the whole \"disallow_copy_and_assign\" part.  I don\u0027t 100% understand why though.  Any insight?",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 26
+      },
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +304,24 @@
     },
     {
       "key": {
+        "uuid": "70694d04_e679ee4f",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Excellent idea.  Thanks Greg!",
+      "parentUuid": "9bcb7276_e8821444",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dece7508_a5d4862d",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -178,6 +345,30 @@
     },
     {
       "key": {
+        "uuid": "a714fb89_d2cfaf1d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dece7508_a5d4862d",
+      "range": {
+        "startLine": 101,
+        "startChar": 28,
+        "endLine": 101,
+        "endChar": 42
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dd3db84_44fd6814",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -192,6 +383,24 @@
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0101eda4_2cbac432",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dd3db84_44fd6814",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "5b3bfe2e_79a83244",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e3c9f1e_634c6171",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf52363_08dddc4e",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -223,6 +450,24 @@
       "writtenOn": "2017-09-28T13:21:14Z",
       "side": 1,
       "message": "does this need to handle both? how could a 64-bit chrome.exe load a 32-bit IME (or vice-versa)?",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3744f075_118944d7",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "(Note, I\u0027ve run into this a couple times now.  Opened new ticket: crbug/772168.)\n\nSo it\u0027s not that we\u0027ll see a load attempt in the NtMapViewOfSection hook.  But this code is enumerating and analyzing 32 and 64-bit IME dlls from reg.\n\nTechnically I can analyze each binary up to the OptionalHeader-\u003eMagic value without knowing bitness.  Beyond that is different.  Also, pe_image isn\u0027t currently really written for untrusted/external [partial] binaries.  Very few sanity checks in there.\n\nIdeally, I\u0027d like to update pe_image in static_base to handle both architectures, support partial/header-only parsing, and definitely add safety checking (to not trust the contents of the file we\u0027re parsing).  See ticket above.  If I do that, I\u0027d swap out this whole GetModuleData() function for static_base.\n\n**However, you have got me thinking that I don\u0027t actually need to store the opposite from my own bitness - because we won\u0027t see these in the NtMapViewOfSection hook (where this is ultimately used to make whitelist decisions).  IME whitelist will be tiny anyways, but why not cut out incompatible bitness.  I\u0027ve added that decision down in InitIMEs() before emplace_back()!",
+      "parentUuid": "aaf52363_08dddc4e",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -246,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "b1cd7d1e_283126a0",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done.  Did a check above for all the PE headers.",
+      "parentUuid": "8d8572d9_e22e772a",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54744c99_66b31b2d",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -263,6 +526,24 @@
     },
     {
       "key": {
+        "uuid": "d3d8c967_9cd6bd18",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54744c99_66b31b2d",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a902968_126818eb",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -274,6 +555,24 @@
       "writtenOn": "2017-09-28T13:21:14Z",
       "side": 1,
       "message": "consider moving this up so that it encloses the unnamed namespace -- this way you don\u0027t need \"whitelist::\" anywhere up there.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa44d498_bbff2871",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Good call.",
+      "parentUuid": "6a902968_126818eb",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -303,6 +602,30 @@
     },
     {
       "key": {
+        "uuid": "61b81478_9d23fa5d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83f0f325_01cd14a6",
+      "range": {
+        "startLine": 203,
+        "startChar": 9,
+        "endLine": 203,
+        "endChar": 26
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0747335e_853aec33",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -314,6 +637,24 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "it would be nice to size g_ime_list properly before putting anything in it. i can think of a few options:\n1. run the loop below twice: once to get the exact size needed then once to populate g_ime_list. this makes the code O(2count), but gives you the tightest memory usage possible (O(count - fluff)).\n2. g_ime_list.reserve(count); down on line 224. this will over-allocate the vector, but will guarantee no reallocations while inserting. back to O(count) insertion, but also O(count) space.\n2.a. same as 2, but follow it with g_ime_list.shrink_to_fit(). this may do a single reallocation and move-all to bring the space back to O(count - fluff) at some cost.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671c5ade_b2bc03b7",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "I\u0027m hesitant to actually enumerate twice... calling IsMicrosoftIme() each time, and potentially the PE header parsing to get bitness as well.  It\u0027s also not very safe with registry to maybe store the indecies of non-MS IME keys that we want to go back and grab.\n\nThe upside here is that the number of \"valid\", non-Microsoft, \"registered\" IMEs will be very small.  (I have zero on my English install, using only English keyboard, Win10.  The ones registered by default are all Microsoft.)  So whatever we decide to do here, the cost will be fairly low.\n\nI feel like the two main options here are:\n1) pre-allocate for some small number like... 5?  3?  Honestly, I don\u0027t have data, but a lot of our users will end up with 0.  So I\u0027m not sure if we gain much by pre-allocating, or if it\u0027s a \"pessimization\".  (And maybe shrink_to_fit after.)\n\n2) don\u0027t pre-allocate.  Take the hit of inserting, knowing it will be a very small number.\n\nI am digging around with chrisha and pmonette to see if we have any data on numbers seen in wild.\n\nThoughts?",
+      "parentUuid": "0747335e_853aec33",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -337,6 +678,24 @@
     },
     {
       "key": {
+        "uuid": "8897dc6a_ea1b36fc",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d5d298d_4de25416",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc45a786_dae85c4c",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -348,6 +707,24 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "(part 2 of memory suggestion) make this and dll_path plain-jane std::wstrings and std::move them into IME.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fb8063_f3cd1b2d",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done.  \u003csigh\u003e for some reason I thought I could only std::move a std::unique_ptr.",
+      "parentUuid": "bc45a786_dae85c4c",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -371,6 +748,24 @@
     },
     {
       "key": {
+        "uuid": "e102893b_6d2e5d9f",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "My mind just exploded.  That is so much simpler and clean.  Amazing.\n\nI was struggling to figure out how to \"move\" the new IME structure onto the vector without a unique_ptr (without copies happening).... and then I read this comment.\n\n\u003chalf an hour later\u003e\nThat is so much more elegant.  I don\u0027t know how that hasn\u0027t existed before.",
+      "parentUuid": "8d7b464a_98f92339",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc4dfec_b68b4f85",
         "filename": "chrome_elf/whitelist/whitelist_ime.h",
         "patchSetId": 3
@@ -385,6 +780,24 @@
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4a82a2_48bbf5a5",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edc4dfec_b68b4f85",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +818,24 @@
     },
     {
       "key": {
+        "uuid": "f03c56af_8278dc53",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bdc575d_5d1d52cc",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bea516fb_6b27f48d",
         "filename": "chrome_elf/whitelist/whitelist_ime.h",
         "patchSetId": 3
@@ -416,6 +847,24 @@
       "writtenOn": "2017-09-28T09:32:25Z",
       "side": 1,
       "message": "move the definition of these into the .cc -- it\u0027s bad form to have string definitions in headers.",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cdb46b_81fd619f",
+        "filename": "chrome_elf/whitelist/whitelist_ime.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done. Fair.  I initially had them as extern, with the strings themselves in the .cc file.  But then it\u0027s super annoying while developing to not be able to have hover/intelli-sense that shows the actual string.  (When writing the tests.)  SAD.",
+      "parentUuid": "bea516fb_6b27f48d",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -439,6 +888,24 @@
     },
     {
       "key": {
+        "uuid": "efa0b7f4_d594ea37",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c75bf5_cd4cdd68",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cf12f67_7024811b",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 3
@@ -450,6 +917,24 @@
       "writtenOn": "2017-09-28T13:21:14Z",
       "side": 1,
       "message": "ReadValue returns a last error code, so this should be:\n    if (classes_key.ReadValue(L\"\", path) !\u003d ERROR_SUCCESS)",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1563f7ed_5b437022",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done.  \n\n(NT_SUCCESS works fine with GetLastError codes... but I suppose the internal code could change and return something other than an NTSTATUS.  It\u0027s only documented as a random LONG value.)",
+      "parentUuid": "8cf12f67_7024811b",
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -473,6 +958,24 @@
     },
     {
       "key": {
+        "uuid": "b66ad1d9_33375fde",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "I just realized how silly that bit of code is.  I\u0027ve adjusted.  |path| is already holding the return value if the file IsValid.",
+      "parentUuid": "4882e695_0fd2863f",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e803788d_607c7217",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 3
@@ -490,6 +993,24 @@
     },
     {
       "key": {
+        "uuid": "f86b2ee6_229da05b",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e803788d_607c7217",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16237ed3_2c13faeb",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 3
@@ -504,6 +1025,24 @@
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97ae439_36d17d39",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16237ed3_2c13faeb",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -530,6 +1069,30 @@
     },
     {
       "key": {
+        "uuid": "64effb86_f7af2a3a",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "643ac983_24c8bc61",
+      "range": {
+        "startLine": 99,
+        "startChar": 46,
+        "endLine": 99,
+        "endChar": 59
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5084dd9_1e34d284",
         "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
         "patchSetId": 3
@@ -544,6 +1107,24 @@
       "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3710a5d_6c025892",
+        "filename": "chrome_elf/whitelist/whitelist_ime_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1122084
+      },
+      "writtenOn": "2017-10-06T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5084dd9_1e34d284",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
