@@ -16,6 +16,109 @@
       "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4b0064d2_c3af2289",
+        "filename": "media/video/jpeg_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "Should be able to inline this.",
+      "parentUuid": "84b80192_d46c811b",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c99ce3f8_571bdc3e",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "Seems pretty dicey to do things this way. See suggestion below about returning allocated memory.",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8aa366d_65936675",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "const gfx::Size\u0026?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96eb8a77_f1c54615",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "Why return the id vs a pointer back to the bitstream buffer? Does it make sense to just let VideoFrameReady allocate and return the memory?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61575663_d906efa5",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "Pass by value nowadays for scoped_refptr, use std::move where applicable. Stylistically we generally prefer primitive types come first, but up to you.",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1136024e_3ea5bdee",
+        "filename": "media/video/jpeg_encode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-10-06T17:58:28Z",
+      "side": 1,
+      "message": "Seems a little late by this point? Should this be a static? Should Initialize() just fail instead?",
+      "revId": "8e0f557c33d84adfad5c216606f7dc5d7b2630ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
