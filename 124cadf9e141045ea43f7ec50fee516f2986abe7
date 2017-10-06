@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "9bf67ac5_ffae9542",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "Could you move this check to the shouldAccelerate() method?",
+      "range": {
+        "startLine": 976,
+        "startChar": 6,
+        "endLine": 976,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7fc5c9_0b6d32c9",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 5
@@ -59,6 +82,75 @@
     },
     {
       "key": {
+        "uuid": "69f66ac3_c71d343e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "This is guaranteed by the condition in HTMLCanvasElement that I asked you move to shouldAccelerate()",
+      "range": {
+        "startLine": 212,
+        "startChar": 20,
+        "endLine": 212,
+        "endChar": 24
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb629da_1330cebd",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "Yes. Please create a crbug tied to this comment. In the event that we give up on GPU acceleration after a context reset (the three strikes, is that still a thing?), the canvas should switch to software rendering.",
+      "range": {
+        "startLine": 929,
+        "startChar": 37,
+        "endLine": 929,
+        "endChar": 48
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8c56e0_e1dcddfd",
+        "filename": "third_party/WebKit/Source/platform/graphics/SkiaTextureHolder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "Nope. No need for it here.",
+      "range": {
+        "startLine": 27,
+        "startChar": 31,
+        "endLine": 27,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8bb1d8f_033ed019",
         "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
         "patchSetId": 5
@@ -75,6 +167,53 @@
         "startChar": 4,
         "endLine": 130,
         "endChar": 5
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50159d44_dd5fd021",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "Yes, see comment below.",
+      "parentUuid": "a8bb1d8f_033ed019",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc45a9a2_280f360c",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-10-06T14:34:01Z",
+      "side": 1,
+      "message": "Should add \"!using_software_compositing \u0026\u0026\" to this expression",
+      "range": {
+        "startLine": 135,
+        "startChar": 9,
+        "endLine": 135,
+        "endChar": 17
       },
       "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
