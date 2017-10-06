@@ -121,7 +121,7 @@ void GlobalErrorBubbleTest::ShowDialog(const std::string& name) {
     // Only BLACKLISTED_MALWARE results in a bubble displaying to the user.
     // Other types are greylisted, not blacklisted.
     test_blacklist.SetBlacklistState(test_extension->id(),
-                                     extensions::BLACKLISTED_MALWARE, true);
+                                     extensions::BLACKLISTED_MALWARE);
     // Ensure ExtensionService::ManageBlacklist() runs, which shows the dialog.
     // (This flow doesn't use NOTIFICATION_GLOBAL_ERRORS_CHANGED.) This is
     // asynchronous, and using TestBlacklist ensures the tasks run without

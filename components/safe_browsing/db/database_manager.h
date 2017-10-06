@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted_delete_on_sequence.h"
 #include "components/safe_browsing/db/hit_report.h"
-#include "components/safe_browsing/db/util.h"
 #include "components/safe_browsing/db/v4_protocol_manager_util.h"
 #include "content/public/common/resource_type.h"
 #include "url/gurl.h"
