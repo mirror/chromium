@@ -44,7 +44,9 @@ base::Optional<cricket::VideoCodec> VEAToWebRTCCodec(
       webrtc::H264::Profile h264_profile;
       switch (profile.profile) {
         case media::H264PROFILE_BASELINE:
-          h264_profile = webrtc::H264::kProfileBaseline;
+          // WebRTC requests CBP support to H264. As to HW H264 implementation,
+          // ContrainedBaseline is equivalent to Baseline.
+          h264_profile = webrtc::H264::kProfileConstrainedBaseline;
           break;
         case media::H264PROFILE_MAIN:
           h264_profile = webrtc::H264::kProfileMain;
