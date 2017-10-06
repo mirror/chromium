@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17d66274_1aca904c",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 0,
+      "message": "Thanks for catching this! I removed this as well.\n\nThe conversion happens when we compute the bounds here when calling GetNativeEdgeBounds(): https://cs.chromium.org/chromium/src/ash/display/unified_mouse_warp_controller.cc?q\u003dComputeBounds\u0026sq\u003dpackage:chromium\u0026l\u003d133",
+      "parentUuid": "46a1eb0b_d2f42624",
+      "range": {
+        "startLine": 50,
+        "startChar": 21,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "8fade5ff5cf0ce54530d26dfea9364233fbc5398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "976e5521_1c0e5884",
         "filename": "ash/display/mirror_window_controller.cc",
         "patchSetId": 4
@@ -72,6 +96,24 @@
       "side": 0,
       "message": "Hmm, looks like something has regressed because dragging window doesn\u0027t work on x11 environment. Maybe ozone behaves differently than old X11 impl.\n\nDoes dragging work on desktop?",
       "parentUuid": "b5b60c70_d80f5dd5",
+      "revId": "8fade5ff5cf0ce54530d26dfea9364233fbc5398",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e6b3689_a5a0a37c",
+        "filename": "ash/display/mirror_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 0,
+      "message": "With this code removed, Window dragging and mouse warp works perfectly on the device.\n\nOn desktop, mouse warp works perfectly, but window dragging has that jump issue I showed you today. I wonder if it has something to do with the issue described in this comment: https://cs.chromium.org/chromium/src/ash/display/screen_position_controller.cc?q\u003dScreenPositionController::ConvertHostPointToRelativeToRootWindow\u0026sq\u003dpackage:chromium\u0026l\u003d33\n\nThat jump doesn\u0027t happen on device.",
+      "parentUuid": "fd5b1785_326dd9cc",
       "revId": "8fade5ff5cf0ce54530d26dfea9364233fbc5398",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

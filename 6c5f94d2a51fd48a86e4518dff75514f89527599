@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d2b2687_4bc49ee6",
+        "filename": "ash/display/root_window_transformers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 1,
+      "message": "As we discussed offline, letterbox/pillarbox handling is not needed in this implementation.",
+      "parentUuid": "4d9c76e4_59b4840c",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1855641e_aa36ebd4",
         "filename": "ash/display/unified_mouse_warp_controller.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "beb4a9a3_f0c3aefe",
+        "filename": "ash/display/unified_mouse_warp_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1855641e_aa36ebd4",
+      "range": {
+        "startLine": 82,
+        "startChar": 22,
+        "endLine": 82,
+        "endChar": 63
+      },
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f2a176f_fa5198c3",
         "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1992412_48e8f8a6",
+        "filename": "ash/display/unified_mouse_warp_controller_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f2a176f_fa5198c3",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "60325027_0619ea5a",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ede924db_0a4e9d40",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecc6e77_a4edbc6a",
         "filename": "ui/display/manager/display_manager.h",
         "patchSetId": 5
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-03T17:00:47Z",
       "side": 1,
       "message": "Maybe it\u0027s better to have a separate class that manages unified desktop layout and put utilities function together there. You don\u0027t have to do it now but that\u0027s something you may want as a cleanup.",
+      "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c0d72b_dd2361bf",
+        "filename": "ui/display/manager/display_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-06T03:58:31Z",
+      "side": 1,
+      "message": "I agree. I will split this into a separate class in a follow-up CL.",
+      "parentUuid": "fecc6e77_a4edbc6a",
       "revId": "6c5f94d2a51fd48a86e4518dff75514f89527599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
