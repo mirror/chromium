@@ -112,6 +112,24 @@
     },
     {
       "key": {
+        "uuid": "2886ba06_0efca9d6",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:54:38Z",
+      "side": 1,
+      "message": "Thanks for catching this.\n\nI think what you propose should also work for hosted apps (i.e. I think that it is okay to match web extents on the \"resolved\" origin/url).\n\nI am a bit worries that after the CL the special sauce is duplicated across CanCommitURL and ShouldAllosOpenURL.  I wonder if we could somehow consolidate handling of blob/filesystem URLs into a single place.  FWIW, RFHI::CanCommitOrigin already does this, but here maybe ExtensionRegistry::GetExtensionOrAppByURL should be doing this?\n\nWDYT?",
+      "parentUuid": "f0ddc142_44bc9a48",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebfc0973_72fd9014",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 7
@@ -129,6 +147,24 @@
     },
     {
       "key": {
+        "uuid": "a91e42eb_a5f6e321",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:54:38Z",
+      "side": 1,
+      "message": "Yes - good point.  I am trying to flip this to |return false| in https://chromium-review.googlesource.com/c/chromium/src/+/696270.  It still needs more work / it is failing lots of test right now.",
+      "parentUuid": "ebfc0973_72fd9014",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa443bf8_43911a97",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 7
@@ -143,6 +179,24 @@
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883b26e7_fd45c7c6",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:54:38Z",
+      "side": 1,
+      "message": "I forgot, sorry :-(\n\nhttps://build.chromium.org/p/tryserver.chromium.linux/builders/linux_chromium_rel_ng/builds/554573 lists some failures (look for renderer_side_navigation* steps).  Unfortunately it is difficult to see which failures also repro *with* PlzNavigate (and were fixed in subsequent patchsets).",
+      "parentUuid": "aa443bf8_43911a97",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -304,6 +358,24 @@
     },
     {
       "key": {
+        "uuid": "10d6d464_c0dbba3a",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:54:38Z",
+      "side": 1,
+      "message": "I wondered whether CanCommitURL could not only return a true/false verdict, but might also be able to return a separate classification of the problem.  I didn\u0027t think about a separate UMA, but thought that maybe a bad message number/enum could be returned.  This seems difficult to achieve from layering perspective (the enum has to be unique across //content and //extensions).\n\nPlease let me know if you can think of a nice way to achieve this.",
+      "parentUuid": "eb234ab4_6554bc62",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0879ba_f17d9177",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -318,6 +390,24 @@
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3ef522_8a6ae3c9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3667,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:54:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f0879ba_f17d9177",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
