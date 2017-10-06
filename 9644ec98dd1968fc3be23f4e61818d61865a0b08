@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "639c9bc9_9908f296",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-06T22:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc98144a_52d43677",
+      "range": {
+        "startLine": 179,
+        "startChar": 41,
+        "endLine": 179,
+        "endChar": 50
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e0d8870_72851ead",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f54bf9_1759374d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-06T22:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e0d8870_72851ead",
+      "range": {
+        "startLine": 180,
+        "startChar": 2,
+        "endLine": 180,
+        "endChar": 5
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b86591b4_bdfecde8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-06T22:47:54Z",
+      "side": 1,
+      "message": "Done, eliminated extra variable.\n\nDid not rename child_legacy_box to child_descendant. To me, that\u0027s confusing, is it a child, or a descendant?\nIt is a child fragment, whose LayoutObject is our descendant.\nI find child_legacy_box to be a better fit for this description.",
+      "parentUuid": "f7f15970_6d355a48",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 67
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aae1f3f_bff1140e",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "88f2bc0c_e6991355",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-06T22:47:54Z",
+      "side": 1,
+      "message": "It is ok, because \"this\" is always the first child. I\u0027ll add the DCHECK",
+      "parentUuid": "7aae1f3f_bff1140e",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 194,
+        "endChar": 75
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0971b426_825710ba",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052be658_d666961a",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_out_of_flow_layout_part.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-10-06T22:47:54Z",
+      "side": 1,
+      "message": "Turns out this code was not necessary, my tests saved me :)",
+      "parentUuid": "0971b426_825710ba",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "9644ec98dd1968fc3be23f4e61818d61865a0b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
