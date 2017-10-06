@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57c5a94_ed35125d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ShortcutHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "I would write this as:\n\nfinal @WebDisplayMode int displayMode\n\nsince the WebDisplayMode feels a a part of the type, not a qualifier.",
+      "range": {
+        "startLine": 163,
+        "startChar": 32,
+        "endLine": 163,
+        "endChar": 46
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08908f50_c7b5226f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "I would write this as:\n\nprivate @WebDisplayMode int mDisplayMode\n\nto keep WebDisplayMode next to the type",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 19
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8986575e_d722c983",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "I would write this as\n\n@CalledByNative\nprivate @WebDisplayMode int getDisplayMode()",
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9bd4781_b4c07c8b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "Can @WebDisplayMode go here?",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 115,
+        "endChar": 11
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9f629a6_586fb188",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "private static @WebDisplayMode int displayModeFromString(String displayMode)",
+      "range": {
+        "startLine": 359,
+        "startChar": 11,
+        "endLine": 359,
+        "endChar": 12
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eb2a788_b83af830",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "private @WebDisplayMode int mDisplayMode;",
+      "range": {
+        "startLine": 64,
+        "startChar": 12,
+        "endLine": 64,
+        "endChar": 15
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9d025e_5e9c51b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "I assume it\u0027s not possible to put @WebDisplayMode on this one?",
+      "range": {
+        "startLine": 117,
+        "startChar": 12,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae9eace_3d8a4b88",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "public @WebDisplayMode int displayMode()",
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0181d29d_475e6b30",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-10-06T03:33:23Z",
+      "side": 1,
+      "message": "public @WebDisplayMode int displayMode",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 14
+      },
+      "revId": "3ea99f45382ef45221af20d222f86b4c156c8110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
