@@ -88,6 +88,24 @@
       "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b916499d_8f834972",
+        "filename": "third_party/WebKit/Source/platform/heap/HeapWrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T01:26:22Z",
+      "side": 1,
+      "message": "As discussed offline, converting the value to a ScriptValue also resolves this issue.",
+      "parentUuid": "3dcd7cfa_debb7dd2",
+      "revId": "77de78301080dbb1a7e770cfc1d0f483a11e3f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
