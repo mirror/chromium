@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eb7e6c45_0662977d",
+        "filename": "third_party/WebKit/Source/platform/heap/BlinkGC.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T08:51:34Z",
+      "side": 1,
+      "message": "Done (removed)",
+      "parentUuid": "0e588aff_a020b3a2",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 28
+      },
+      "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98820f38_8e68c9fe",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-06T06:34:26Z",
       "side": 1,
       "message": "/Start/Step/",
+      "range": {
+        "startLine": 104,
+        "startChar": 14,
+        "endLine": 104,
+        "endChar": 38
+      },
+      "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcb0f60_09f4a0cb",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T08:51:34Z",
+      "side": 1,
+      "message": "Was removed above.",
+      "parentUuid": "98820f38_8e68c9fe",
       "range": {
         "startLine": 104,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0152438b_c0b211ba",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T08:51:34Z",
+      "side": 1,
+      "message": "Was removed above.",
+      "parentUuid": "adf38cf7_0c7fb0fd",
+      "range": {
+        "startLine": 106,
+        "startChar": 14,
+        "endLine": 106,
+        "endChar": 38
+      },
+      "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37f0d04_48d036c7",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-10-06T08:27:04Z",
       "side": 1,
       "message": "What do you have in mind here? I guess we should finalize incremental marking in this case in one go.",
+      "range": {
+        "startLine": 591,
+        "startChar": 18,
+        "endLine": 591,
+        "endChar": 62
+      },
+      "revId": "e60050eb19f6bc32cccb9d6c6f081bac202134c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cfdeaf_09446082",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-10-06T08:51:34Z",
+      "side": 1,
+      "message": "Yeah, that is the intention. We still need to migrate a few things such as counters, properly transition states, etc etc\n\nSee MarkPhasePrologue.",
+      "parentUuid": "f37f0d04_48d036c7",
       "range": {
         "startLine": 591,
         "startChar": 18,
