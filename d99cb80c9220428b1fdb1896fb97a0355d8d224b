@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "709fc0b8_b380977b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1489,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-06T04:31:47Z",
+      "side": 1,
+      "message": "this inconsistency about the order of changing state and notifying about the changed state makes me uncomfortable.\n\nThat said, the solution might be simpler as EnterStateXXX() is IMO simply a misnomer. Every of the EnterStateXXX does something very specific and not update the state.\nWe should avoid that extra layer of abstraction around state handling and simply rename / inline them, e.g.\n\nEnterStateReady() --\u003e UpdateFetchedCategoryStatusAvailable();\nI\u0027m tempted to move the clear-history-dependent-state out of EnterStateReady() and into this block.\n\nEnterStateDisabled() --\u003e just inline\nEnterStateError() --\u003e just inline",
+      "range": {
+        "startLine": 1489,
+        "startChar": 27,
+        "endLine": 1489,
+        "endChar": 0
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d99e0137_314770a4",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 3
@@ -13,6 +36,30 @@
       "writtenOn": "2017-10-05T17:40:07Z",
       "side": 1,
       "message": "Well, if the provider is not activated (i.e. not ready()), schedule_ is empty. It was always the case and thus the post-poning code in the provider actually never got executed.\n\nI can make it more explicit by introducing a bool provider_is_active_. I had it in the previous version of the CL, only the unit-tests revealed that it is not needed as this is already stored in schedule_ and guarded by the if-statement here.",
+      "range": {
+        "startLine": 836,
+        "startChar": 65,
+        "endLine": 837,
+        "endChar": 40
+      },
+      "revId": "d99cb80c9220428b1fdb1896fb97a0355d8d224b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70838e3a_1374d596",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-10-06T04:31:47Z",
+      "side": 1,
+      "message": "I don\u0027t think this is correct.\nAt construction time, we load the schedule from prefs.\nWe also do this when the provider gets activated.\n\nSo in the case that there is a schedule present but the provider is not yet initialized, we\u0027d run into this case.\n\nIt might actually be simplest, to publicly expose the ready() function on the provider and simply check (instead of keeping the state in an additional layer).\n\nIt seems our unit tests are incomplete (or I\u0027m missing something :-)).",
+      "parentUuid": "d99e0137_314770a4",
       "range": {
         "startLine": 836,
         "startChar": 65,
