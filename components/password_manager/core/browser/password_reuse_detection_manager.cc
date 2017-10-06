@@ -32,9 +32,11 @@ PasswordReuseDetectionManager::~PasswordReuseDetectionManager() {}
 
 void PasswordReuseDetectionManager::DidNavigateMainFrame(
     const GURL& main_frame_url) {
-  main_frame_url_ = main_frame_url;
-  input_characters_.clear();
-  reuse_on_this_page_was_found_ = false;
+  if (main_frame_url.host() != main_frame_url_.host()) {
+    main_frame_url_ = main_frame_url;
+    input_characters_.clear();
+    reuse_on_this_page_was_found_ = false;
+  }
 }
 
 void PasswordReuseDetectionManager::OnKeyPressed(const base::string16& text) {
