@@ -4,6 +4,8 @@
 
 #include "ash/system/tray/tray_details_view.h"
 
+#include <memory>
+
 #include "ash/ash_view_ids.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/system_tray.h"
@@ -123,7 +125,7 @@ class TrayDetailsViewTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     scoped_task_runner_ =
-        base::MakeUnique<base::ScopedMockTimeMessageLoopTaskRunner>();
+        std::make_unique<base::ScopedMockTimeMessageLoopTaskRunner>();
   }
 
   void TearDown() override {
