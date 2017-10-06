@@ -366,6 +366,7 @@ void BluetoothAdapterBlueZ::SetPowered(bool powered,
     return;
   }
 
+  VLOG(1) << "Bluetooth SetPowered: " << powered;
   BLUETOOTH_LOG(EVENT) << "SetPowered: " << powered;
 
   bluez::BluezDBusManager::Get()
