@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff849c9_008031fc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-10-06T17:10:41Z",
+      "side": 1,
+      "message": "Might of course keep the \"-\" operator now, but up to you.",
+      "revId": "4be7d1e9d7b519e349f562d62f7cbbfc0ddec99f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
