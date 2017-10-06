@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c405bde_251c2a3e",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-10-06T15:08:26Z",
+      "side": 1,
+      "message": "crbug.com/772327 external/wpt/css/css-shapes-1/shape-outside/values/shape-outside-computed-shape-000.html [ Failure Pass ]\n\nis more likely to work.",
+      "revId": "e069c8e6ee6bccf661a00447f9dbb099f0863993",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
