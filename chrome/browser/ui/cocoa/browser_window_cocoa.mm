@@ -28,6 +28,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window_state.h"
+#include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/cocoa/autofill/save_card_bubble_view_views.h"
 #import "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
@@ -55,6 +56,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/bookmarks/common/bookmark_pref_names.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/common/profile_management_switches.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/translate/core/browser/language_state.h"
 #include "content/public/browser/keyboard_event_processing_result.h"
@@ -685,8 +687,12 @@ void BrowserWindowCocoa::ShowAvatarBubbleFromAvatarButton(
   profiles::BubbleViewModeFromAvatarBubbleMode(mode, &bubble_view_mode);
 
   if (SigninViewController::ShouldShowModalSigninForMode(bubble_view_mode)) {
-    browser_->signin_view_controller()->ShowModalSignin(bubble_view_mode,
-                                                        browser_, access_point);
+    if (signin::IsAccountConsistencyDiceEnabled()) {
+      chrome::ShowBrowserSigninForDice(browser_.get());
+    } else {
+      browser_->signin_view_controller()->ShowModalSignin(
+          bubble_view_mode, browser_, access_point);
+    }
   } else {
     AvatarBaseController* controller = [controller_ avatarButtonController];
     NSView* anchor = [controller buttonView];

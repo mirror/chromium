@@ -114,6 +114,12 @@ void ShowBrowserSignin(Browser* browser,
 // otherwise initiates signin in a new browser tab.
 void ShowBrowserSigninOrSettings(Browser* browser,
                                  signin_metrics::AccessPoint access_point);
+
+// Start a DICE-specific sign-in flow: opens a Gaia sign-in webpage in a new
+// tab and automatically and starts syncing after the user signs in on the web
+// with a Google account.
+void ShowBrowserSigninForDice(Browser* browser);
+
 #endif
 
 }  // namespace chrome
