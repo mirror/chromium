@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b44f227_18e7830b",
+        "filename": "components/viz/common/resources/resource_format_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-10-06T11:27:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a133c37c_17dc74c5",
+      "revId": "feb2eff2a8fd9d626e3ec3fd66edf89c1881417c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54739dde_74162952",
         "filename": "components/viz/common/resources/resource_settings.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "09aa367b_38ef84f4",
+        "filename": "components/viz/common/resources/resource_settings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-10-06T11:27:07Z",
+      "side": 1,
+      "message": "Done. I set it to true, to check in trybots.",
+      "parentUuid": "54739dde_74162952",
+      "revId": "feb2eff2a8fd9d626e3ec3fd66edf89c1881417c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dcd924e_393c7d01",
         "filename": "gpu/command_buffer/service/gles2_cmd_validation_implementation_autogen.h",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "feb2eff2a8fd9d626e3ec3fd66edf89c1881417c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0461069c_251c8f2d",
+        "filename": "gpu/command_buffer/service/gles2_cmd_validation_implementation_autogen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1110804
+      },
+      "writtenOn": "2017-10-06T11:27:07Z",
+      "side": 1,
+      "message": "Done. Thanks",
+      "parentUuid": "2dcd924e_393c7d01",
+      "revId": "feb2eff2a8fd9d626e3ec3fd66edf89c1881417c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
