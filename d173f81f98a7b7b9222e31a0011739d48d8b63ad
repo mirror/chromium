@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "da46f625_67869689",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:53:00Z",
+      "side": 1,
+      "message": "And base::TimeDelta can be constexpr:\n\nconstexpr base::TimeDelta kUtilityProcessIdleTimeout \u003d base::TimeDelta::FromSeconds(5);",
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd904f57_34681b14",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:53:00Z",
+      "side": 1,
+      "message": "Add: // namespace",
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ee78f3_39ff8180",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:53:00Z",
+      "side": 1,
+      "message": "Maybe just pass in TimeDelta?",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 45
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e35b9ca9_84ff2e00",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
         "patchSetId": 22
@@ -48,6 +105,23 @@
     },
     {
       "key": {
+        "uuid": "bb4bdd70_fb8c5e2d",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:53:00Z",
+      "side": 1,
+      "message": "Not needed. No #ifs here.",
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f698c842_2f29d723",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
         "patchSetId": 22
@@ -88,6 +162,23 @@
         "endLine": 89,
         "endChar": 32
       },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55c6107_6c302df0",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-06T18:53:00Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN() ?",
       "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
