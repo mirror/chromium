@@ -40,13 +40,9 @@ navigator.geolocation.getCurrentPosition(function(p) {
 }, function(e) {
     testFailed('Error callback invoked unexpectedly');
     finishJSTest();
-});
+}, { maximumAge: 1000 });
 
 function continueTest() {
-    mock.setGeolocationPosition(++mockLatitude,
-                                ++mockLongitude,
-                                ++mockAccuracy);
-
     navigator.geolocation.getCurrentPosition(function(p) {
         position = p;
         shouldBe('position.coords.latitude', 'mockLatitude');
@@ -56,7 +52,11 @@ function continueTest() {
     }, function(e) {
         testFailed('Error callback invoked unexpectedly');
         finishJSTest();
-    });
+    }, { maximumAge: 0 });
+
+    mock.setGeolocationPosition(++mockLatitude,
+                                ++mockLongitude,
+                                ++mockAccuracy);
 }
 
 window.jsTestIsAsync = true;
