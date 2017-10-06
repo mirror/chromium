@@ -13,43 +13,99 @@
 <link rel="import" href="powerwash_dialog.html">
 </if>
 
+<if expr="is_win">
+<link rel="import" href="../chrome_cleanup_page/chrome_cleanup_page.html">
+</if>
+
 <dom-module id="settings-reset-page">
   <template>
-    <style include="settings-shared"></style>
-    <div class="settings-box first two-line" id="resetProfile"
-        on-tap="onShowResetProfileDialog_" actionable>
-      <div class="start">
-        $i18n{resetPageTitle}
-        <div class="secondary" id="resetProfileSecondary">
-          $i18n{resetPageDescription}
+    <style include="settings-shared">
+      .status-icon-container {
+        -webkit-padding-end: var(--settings-box-row-padding);
+      }
+      .chrome-cleanup-status-icon-remove {
+        --iron-icon-fill-color: var(--paper-grey-700);
+      }
+    </style>
+<!--
+    <settings-animated-pages id="pages" section="reset"
+        focus-config="[[focusConfig_]]">
+ -->    
+    <settings-animated-pages id="pages" section="reset">
+      <neon-animatable route-path="default">
+        <div class="settings-box first two-line" id="resetProfile"
+            on-tap="onShowResetProfileDialog_" actionable>
+          <div class="start">
+            $i18n{resetPageTitle}
+            <div class="secondary" id="resetProfileSecondary">
+              $i18n{resetPageDescription}
+            </div>
+          </div>
+          <button id="resetProfileArrow" is="paper-icon-button-light"
+              class="subpage-arrow" aria-label="$i18n{resetPageTitle}"
+              aria-describedby="resetProfileSecondary"></button>
         </div>
-      </div>
-      <button id="resetProfileArrow" is="paper-icon-button-light"
-          class="subpage-arrow" aria-label="$i18n{resetPageTitle}"
-          aria-describedby="resetProfileSecondary"></button>
-    </div>
-    <template is="dom-if" if="[[showResetProfileDialog_]]" restamp>
-      <settings-reset-profile-dialog on-close="onResetProfileDialogClose_">
-      </settings-reset-profile-dialog>
-    </template>
+        <template is="dom-if" if="[[showResetProfileDialog_]]" restamp>
+          <settings-reset-profile-dialog on-close="onResetProfileDialogClose_">
+          </settings-reset-profile-dialog>
+        </template>
 <if expr="chromeos">
-    <div class="settings-box two-line" id="powerwash" actionable
-        on-tap="onShowPowerwashDialog_" hidden="[[!allowPowerwash_]]">
-      <div class="start">
-        $i18n{powerwashTitle}
-        <div class="secondary" id="powerwashSecondary">
-          $i18n{powerwashDescription}
+        <div class="settings-box two-line" id="powerwash" actionable
+            on-tap="onShowPowerwashDialog_" hidden="[[!allowPowerwash_]]">
+          <div class="start">
+            $i18n{powerwashTitle}
+            <div class="secondary" id="powerwashSecondary">
+              $i18n{powerwashDescription}
+            </div>
+          </div>
+          <button id="powerwashArrow" is="paper-icon-button-light"
+              class="subpage-arrow" aria-label="$i18n{powerwashTitle}"
+              aria-describedby="powerwashSecondary"></button>
         </div>
-      </div>
-      <button id="powerwashArrow" is="paper-icon-button-light"
-          class="subpage-arrow" aria-label="$i18n{powerwashTitle}"
-          aria-describedby="powerwashSecondary"></button>
-    </div>
-    <template is="dom-if" if="[[showPowerwashDialog_]]" restamp>
-      <settings-powerwash-dialog on-close="onPowerwashDialogClose_">
-      </settings-powerwash-dialog>
-    </template>
+        <template is="dom-if" if="[[showPowerwashDialog_]]" restamp>
+          <settings-powerwash-dialog on-close="onPowerwashDialogClose_">
+          </settings-powerwash-dialog>
+        </template>
 </if>
+
+<!-- This needs to be conditioned to a feature being enabled. -->
+<if expr="is_win">
+        <div class="settings-box two-line" id="chromeCleanup"
+            on-tap="onChromeCleanupTap_" actionable>
+          <div class="status-icon-container">
+            <iron-icon icon="settings:security"
+                class="chrome-cleanup-status-icon-remove"
+                id="chrome-cleanup-status-icon">
+            </iron-icon>
+          </div>
+          <!-- i18n this -->
+          <div class="start">
+            Chrome Cleanup
+            <!-- i18n this -->
+            <div class="secondary" id="chromeCleanupSecondary">
+              Detect and remove harmful software
+            </div>
+          </div>
+          <!-- i18n this -->
+          <button id="chromeCleanupArrow" is="paper-icon-button-light"
+              class="subpage-arrow" aria-label="Chrome Cleanup"
+              aria-describedby="chromeCleanupSecondary"></button>
+        </div>
+</if>
+
+      </neon-animatable>
+
+      <template is="dom-if" route-path="/cleanup">
+        <settings-subpage
+            associated-control="[[$$('#chromeCleanup')]]"
+            id="chromeCleanupSubpage"
+            page-title="Chrome Cleanup"
+            learn-more-url="$i18n{chromeCleanupLearnMoreUrl}">
+          <settings-chrome-cleanup-page></settings-chrome-cleanup-page>
+        </settings-subpage>
+      </template>
+
+    </settings-animated-pages>
   </template>
   <script src="reset_page.js"></script>
 </dom-module>
