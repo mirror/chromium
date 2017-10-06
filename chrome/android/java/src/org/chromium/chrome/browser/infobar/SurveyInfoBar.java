@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.survey.SurveyController;
 import org.chromium.chrome.browser.tab.Tab;
@@ -18,6 +20,8 @@ import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.text.SpanApplier.SpanInfo;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * An {@link InfoBar} that prompts the user to take an optional survey.
@@ -31,6 +35,12 @@ public class SurveyInfoBar extends InfoBar {
 
     // The display logo to be shown on the survey and this infobar.
     private final int mDisplayLogoResId;
+
+    // When the survey infobar was created.
+    private long mCreationTime;
+
+    // When the survey infobar was dismissed.
+    private long mDismissalTime;
 
     /**
      * Create and show the {@link SurveyInfoBar}.
@@ -55,6 +65,7 @@ public class SurveyInfoBar extends InfoBar {
         mSiteId = siteId;
         mShowAsBottomSheet = showAsBottomSheet;
         mDisplayLogoResId = displayLogoResId;
+        mCreationTime = System.currentTimeMillis();
     }
 
     @Override
@@ -67,6 +78,8 @@ public class SurveyInfoBar extends InfoBar {
         NoUnderlineClickableSpan clickableSpan = new NoUnderlineClickableSpan() {
             @Override
             public void onClick(View widget) {
+                RecordUserAction.record("Android.ChromeHome.AcceptedSurvey");
+
                 SurveyController.getInstance().showSurveyIfAvailable(
                         nativeGetTab(getNativeInfoBarPtr()).getActivity(), mSiteId,
                         mShowAsBottomSheet, mDisplayLogoResId);
@@ -83,6 +96,14 @@ public class SurveyInfoBar extends InfoBar {
         prompt.setGravity(Gravity.CENTER_VERTICAL);
         ApiCompatibilityUtils.setTextAppearance(prompt, R.style.BlackTitle1);
         layout.addContent(prompt, 1f);
+    }
+
+    @Override
+    public void onCloseButtonClicked() {
+        mDismissalTime = System.currentTimeMillis();
+        RecordHistogram.recordMediumTimesHistogram("Android.ChromeHome.SurveyInfoBarLifetime",
+                mDismissalTime - mCreationTime, TimeUnit.MILLISECONDS);
+        super.onCloseButtonClicked();
     }
 
     @CalledByNative
