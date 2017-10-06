@@ -21,6 +21,16 @@ using ConnectionType = net::NetworkChangeNotifier::ConnectionType;
 namespace download {
 namespace {
 
+// Network status equality matcher.
+MATCHER_P(NetworkStatusEqual, value, "") {
+  return arg.network_status == value;
+}
+
+// Battery status equality matcher.
+MATCHER_P(BatteryStatusEqual, value, "") {
+  return arg.battery_status == value;
+}
+
 // NetworkChangeNotifier that can change network type in tests.
 class TestNetworkChangeNotifier : public net::NetworkChangeNotifier {
  public:
@@ -99,16 +109,11 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
   listener_->Start(&mock_observer_);
 
   // Initial states check.
-  DeviceStatus status = listener_->CurrentDeviceStatus();
-  EXPECT_EQ(NetworkStatus::DISCONNECTED, status.network_status);
+  EXPECT_EQ(NetworkStatus::DISCONNECTED,
+            listener_->CurrentDeviceStatus().network_status);
 
   // Network switch between mobile networks, the observer should be notified
   // only once.
-  status.network_status = NetworkStatus::METERED;
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
-      .Times(1)
-      .RetiresOnSaturation();
-
   ChangeNetworkType(ConnectionType::CONNECTION_4G);
   ChangeNetworkType(ConnectionType::CONNECTION_3G);
   ChangeNetworkType(ConnectionType::CONNECTION_2G);
@@ -116,20 +121,23 @@ TEST_F(DeviceStatusListenerTest, NotifyObserverNetworkChange) {
   // Verifies the online signal is sent in a post task after a delay.
   EXPECT_EQ(NetworkStatus::DISCONNECTED,
             listener_->CurrentDeviceStatus().network_status);
+  EXPECT_CALL(mock_observer_,
+              OnDeviceStatusChanged(NetworkStatusEqual(NetworkStatus::METERED)))
+      .Times(1)
+      .RetiresOnSaturation();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(NetworkStatus::METERED,
             listener_->CurrentDeviceStatus().network_status);
 
   // Network is switched between wifi and ethernet, the observer should be
   // notified only once.
-  status.network_status = NetworkStatus::UNMETERED;
-  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(status))
-      .Times(1)
-      .RetiresOnSaturation();
-
   ChangeNetworkType(ConnectionType::CONNECTION_WIFI);
   ChangeNetworkType(ConnectionType::CONNECTION_ETHERNET);
 
+  EXPECT_CALL(mock_observer_, OnDeviceStatusChanged(
+                                  NetworkStatusEqual(NetworkStatus::UNMETERED)))
+      .Times(1)
+      .RetiresOnSaturation();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(NetworkStatus::UNMETERED,
             listener_->CurrentDeviceStatus().network_status);
