@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.EnormousTest;
 import org.chromium.base.test.util.Feature;
@@ -42,6 +43,8 @@ import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.omnibox.AutocompleteController.OnSuggestionsReceivedListener;
 import org.chromium.chrome.browser.omnibox.LocationBarLayout.OmniboxSuggestionsList;
+import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.tabmodel.TabModelSelectorTabObserver;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.util.ChromeTabUtils;
@@ -712,6 +715,39 @@ public class OmniboxTest {
                     R.drawable.omnibox_https_valid, locationBar.getSecurityIconResourceId());
         } finally {
             httpsTestServer.stopAndDestroyServer();
+        }
+    }
+
+    /**
+     * Test whether the color of the Location bar is correct for HTTPS scheme.
+     */
+    @Test
+    @SmallTest
+    @SkipCommandLineParameterization
+    public void testHttpsLocationBarColor() throws Exception {
+        EmbeddedTestServer mTestServer = EmbeddedTestServer.createAndStartHTTPSServer(
+                InstrumentationRegistry.getInstrumentation().getContext(),
+                ServerCertificate.CERT_OK);
+        CallbackHelper didThemeColorChangedCallbackHelper = new CallbackHelper();
+        new TabModelSelectorTabObserver(mActivityTestRule.getActivity().getTabModelSelector()) {
+            @Override
+            public void onDidChangeThemeColor(Tab tab, int color) {
+                didThemeColorChangedCallbackHelper.notifyCalled();
+            }
+        };
+
+        try {
+            final String testHttpsUrl =
+                    mTestServer.getURL("/chrome/test/data/android/theme_color_test.html");
+
+            mActivityTestRule.loadUrl(testHttpsUrl);
+            didThemeColorChangedCallbackHelper.waitForCallback(0);
+            LocationBarLayout locationBarLayout =
+                    (LocationBarLayout) mActivityTestRule.getActivity().findViewById(
+                            R.id.location_bar);
+            Assert.assertFalse(locationBarLayout.shouldEmphasizeHttpsScheme());
+        } finally {
+            mTestServer.stopAndDestroyServer();
         }
     }
 
