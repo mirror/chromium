@@ -105,7 +105,9 @@ void IdentityManager::GetPrimaryAccountWhenAvailable(
   AccountInfo account_info = signin_manager_->GetAuthenticatedAccountInfo();
   AccountState account_state = GetStateOfAccount(account_info);
 
-  if (!account_state.has_refresh_token) {
+  if (!account_state.has_refresh_token ||
+      token_service_->GetDelegate()->RefreshTokenHasError(
+          account_info.account_id)) {
     primary_account_available_callbacks_.push_back(std::move(callback));
     return;
   }

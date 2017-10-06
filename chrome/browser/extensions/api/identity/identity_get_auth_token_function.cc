@@ -422,7 +422,7 @@ void IdentityGetAuthTokenFunction::OnMintTokenFailure(
   CompleteMintTokenFlow();
   switch (error.state()) {
     case GoogleServiceAuthError::SERVICE_ERROR:
-      if (interactive_) {
+      if (should_prompt_for_signin_) {
         StartSigninFlow();
         return;
       }
@@ -510,7 +510,7 @@ void IdentityGetAuthTokenFunction::OnGaiaFlowFailure(
       if (service_error.state() != GoogleServiceAuthError::CONNECTION_FAILED &&
           service_error.state() !=
               GoogleServiceAuthError::SERVICE_UNAVAILABLE &&
-          interactive_ && HasLoginToken()) {
+          should_prompt_for_signin_ && HasLoginToken()) {
         StartSigninFlow();
         return;
       }

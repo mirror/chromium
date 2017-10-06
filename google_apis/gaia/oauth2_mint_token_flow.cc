@@ -72,6 +72,7 @@ static GoogleServiceAuthError CreateAuthError(const net::URLFetcher* source) {
 
   std::string response_body;
   source->GetResponseAsString(&response_body);
+  LOG(ERROR) << "Response body: " << response_body;
   std::unique_ptr<base::Value> value = base::JSONReader::Read(response_body);
   base::DictionaryValue* response;
   if (!value.get() || !value->GetAsDictionary(&response)) {
