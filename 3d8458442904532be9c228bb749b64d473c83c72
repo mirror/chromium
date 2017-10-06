@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afa96a3_5938f583",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-10-06T22:24:47Z",
+      "side": 1,
+      "message": "What is wrong with only having a single connection? Even if there is no client we should be able to call GetDevices() at any time.",
+      "revId": "3d8458442904532be9c228bb749b64d473c83c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
