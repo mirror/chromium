@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "1e6bcd57_b6303aa2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2961,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:49:40Z",
+      "side": 1,
+      "message": "Does this need to be associated to prevent races when accessing GetLastCommittedOrigin?",
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90437214_5203d645",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 5
@@ -30,6 +47,92 @@
       "writtenOn": "2017-10-06T08:35:01Z",
       "side": 1,
       "message": "Can you move this to line 125?",
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "698e9bc4_b886ec94",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:49:40Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 15
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0577f0_f5d09d1a",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerMessagingProxy.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:49:40Z",
+      "side": 1,
+      "message": "What are the cases where we would create a dedicated worker with a unique origin? Can you create a worker from a file:// URL?\n\n(This would be slightly horrifying)",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe8469b_60171346",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:49:40Z",
+      "side": 1,
+      "message": "Nit: _in -\u003e _info",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b890fab_ec7f99dd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T08:49:40Z",
+      "side": 1,
+      "message": "Why the unique_ptr indirection?",
       "revId": "b1ee766a8e0fda28f84b3b5f9766992917afeb42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
