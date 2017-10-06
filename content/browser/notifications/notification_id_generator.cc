@@ -69,11 +69,12 @@ std::string NotificationIdGenerator::GenerateForPersistentNotification(
   std::stringstream stream;
 
   stream << kPersistentNotificationPrefix;
-  stream << ComputeBrowserContextHash(browser_context_);
-  stream << base::IntToString(browser_context_->IsOffTheRecord());
-  stream << origin;
+  stream << ComputeBrowserContextHash(browser_context_) << kSeparator;
+  stream << base::IntToString(browser_context_->IsOffTheRecord()) << kSeparator;
+  stream << origin << kSeparator;
 
-  stream << base::IntToString(!tag.empty());
+  stream << base::IntToString(!tag.empty()) << kSeparator;
+
   if (tag.size())
     stream << tag;
   else
@@ -93,15 +94,14 @@ std::string NotificationIdGenerator::GenerateForNonPersistentNotification(
   std::stringstream stream;
 
   stream << kNonPersistentNotificationPrefix;
-  stream << ComputeBrowserContextHash(browser_context_);
-  stream << base::IntToString(browser_context_->IsOffTheRecord());
-  stream << origin;
+  stream << ComputeBrowserContextHash(browser_context_) << kSeparator;
 
-  stream << base::IntToString(!tag.empty());
+  stream << base::IntToString(browser_context_->IsOffTheRecord()) << kSeparator;
+  stream << origin << kSeparator;
+  stream << base::IntToString(!tag.empty()) << kSeparator;
+
   if (tag.empty()) {
-    stream << base::IntToString(render_process_id);
-    stream << kSeparator;
-
+    stream << base::IntToString(render_process_id) << kSeparator;
     stream << base::IntToString(non_persistent_notification_id);
   } else {
     stream << tag;
