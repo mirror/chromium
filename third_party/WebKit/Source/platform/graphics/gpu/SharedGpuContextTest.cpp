@@ -24,15 +24,19 @@ template <class GLES2InterfaceType>
 class SharedGpuContextTestBase : public Test {
  public:
   void SetUp() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting([this] {
-      gl_.SetIsContextLost(false);
-      return std::unique_ptr<WebGraphicsContext3DProvider>(
-          new FakeWebGraphicsContext3DProvider(&gl_));
-    });
+    auto factory = [](GLES2InterfaceType* gl, bool* using_software_compositing)
+        -> std::unique_ptr<WebGraphicsContext3DProvider> {
+      *using_software_compositing = false;
+      gl->SetIsContextLost(false);
+      return std::make_unique<FakeWebGraphicsContext3DProvider>(gl);
+    };
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Bind(factory, WTF::Unretained(&gl_)));
   }
 
   void TearDown() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Function<std::unique_ptr<WebGraphicsContext3DProvider>(bool*)>());
   }
 
   bool IsUnitTest() { return true; }
@@ -58,26 +62,38 @@ class MailboxSharedGpuContextTest
 class BadSharedGpuContextTest : public Test {
  public:
   void SetUp() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting(
-        [] { return std::unique_ptr<WebGraphicsContext3DProvider>(nullptr); });
+    auto factory = [](bool* using_software_compositing)
+        -> std::unique_ptr<WebGraphicsContext3DProvider> {
+      *using_software_compositing = true;
+      return nullptr;
+    };
+    SharedGpuContext::SetContextProviderFactoryForTesting(WTF::Bind(factory));
   }
 
   void TearDown() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Function<std::unique_ptr<WebGraphicsContext3DProvider>(bool*)>());
   }
 };
 
 TEST_F(SharedGpuContextTest, contextLossAutoRecovery) {
-  EXPECT_NE(SharedGpuContext::ContextProviderWrapper(), nullptr);
+  bool using_software_compositing;
+  EXPECT_NE(
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing),
+      nullptr);
+  EXPECT_FALSE(using_software_compositing);
   WeakPtr<WebGraphicsContext3DProviderWrapper> context =
-      SharedGpuContext::ContextProviderWrapper();
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+  EXPECT_FALSE(using_software_compositing);
   gl_.SetIsContextLost(true);
   EXPECT_FALSE(SharedGpuContext::IsValidWithoutRestoring());
   EXPECT_TRUE(!!context);
 
   // Context recreation results in old provider being discarded.
-  EXPECT_TRUE(!!SharedGpuContext::ContextProviderWrapper());
+  EXPECT_TRUE(
+      !!SharedGpuContext::ContextProviderWrapper(&using_software_compositing));
   EXPECT_FALSE(!!context);
+  EXPECT_FALSE(using_software_compositing);
 }
 
 TEST_F(SharedGpuContextTest, AccelerateImageBufferSurfaceAutoRecovery) {
@@ -110,7 +126,10 @@ TEST_F(SharedGpuContextTest, Canvas2DLayerBridgeAutoRecovery) {
 }
 
 TEST_F(SharedGpuContextTest, IsValidWithoutRestoring) {
-  EXPECT_NE(SharedGpuContext::ContextProviderWrapper(), nullptr);
+  bool using_software_compositing;
+  EXPECT_NE(
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing),
+      nullptr);
   EXPECT_TRUE(SharedGpuContext::IsValidWithoutRestoring());
 }
 
@@ -156,8 +175,11 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
       .WillOnce(::testing::Invoke(&mailboxGenerator,
                                   &FakeMailboxGenerator::GenMailbox));
 
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  bool using_software_compositing;
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
 
   EXPECT_EQ(mailbox.name[0], 1);
 
@@ -167,8 +189,10 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCaching) {
       .Times(0);  // GenMailboxCHROMIUM must not be called!
 
   mailbox.name[0] = 0;
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
   EXPECT_EQ(mailbox.name[0], 1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
@@ -192,8 +216,11 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
       .WillOnce(::testing::Invoke(&mailboxGenerator,
                                   &FakeMailboxGenerator::GenMailbox));
 
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  bool using_software_compositing;
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
 
   EXPECT_EQ(mailbox.name[0], 1);
   ::testing::Mock::VerifyAndClearExpectations(&gl_);
@@ -217,8 +244,10 @@ TEST_F(MailboxSharedGpuContextTest, MailboxCacheSurvivesSkiaRecycling) {
       .Times(0);  // GenMailboxCHROMIUM must not be called!
 
   mailbox.name[0] = 0;
-  SharedGpuContext::ContextProviderWrapper()->Utils()->GetMailboxForSkImage(
-      mailbox, image->PaintImageForCurrentFrame().GetSkImage());
+  SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+      ->Utils()
+      ->GetMailboxForSkImage(mailbox,
+                             image->PaintImageForCurrentFrame().GetSkImage());
   EXPECT_EQ(mailbox.name[0], 1);
 
   ::testing::Mock::VerifyAndClearExpectations(&gl_);

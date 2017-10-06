@@ -141,13 +141,17 @@ class Canvas2DLayerBridgeTest : public Test {
     return bridge;
   }
   void SetUp() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting([this] {
-      return std::unique_ptr<WebGraphicsContext3DProvider>(
-          new FakeWebGraphicsContext3DProvider(&gl_));
-    });
+    auto factory = [](FakeGLES2Interface* gl, bool* using_software_compositing)
+        -> std::unique_ptr<WebGraphicsContext3DProvider> {
+      *using_software_compositing = false;
+      return std::make_unique<FakeWebGraphicsContext3DProvider>(gl);
+    };
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Bind(factory, WTF::Unretained(&gl_)));
   }
   void TearDown() override {
-    SharedGpuContext::SetContextProviderFactoryForTesting(nullptr);
+    SharedGpuContext::SetContextProviderFactoryForTesting(
+        WTF::Function<std::unique_ptr<WebGraphicsContext3DProvider>(bool*)>());
   }
   bool IsUnitTest() { return true; }
 
@@ -199,9 +203,12 @@ class Canvas2DLayerBridgeTest : public Test {
 
     {
       // Fallback case.
-      GrContext* gr = SharedGpuContext::ContextProviderWrapper()
-                          ->ContextProvider()
-                          ->GetGrContext();
+      bool using_software_compositing;
+      GrContext* gr =
+          SharedGpuContext::ContextProviderWrapper(&using_software_compositing)
+              ->ContextProvider()
+              ->GetGrContext();
+      EXPECT_FALSE(using_software_compositing);
       Canvas2DLayerBridgePtr bridge(WTF::WrapUnique(
           new Canvas2DLayerBridge(IntSize(300, 150), 0, kNonOpaque,
                                   Canvas2DLayerBridge::kEnableAcceleration,
@@ -303,7 +310,9 @@ class Canvas2DLayerBridgeTest : public Test {
     // Get a new context provider so that the WeakPtr to the old one is null.
     // This is the test to make sure that ReleaseMailboxImageResource() handles
     // null context_provider_wrapper properly.
-    SharedGpuContext::ContextProviderWrapper();
+    bool using_software_compositing;
+    SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
+    EXPECT_FALSE(using_software_compositing);
     release_callback->Run(gpu::SyncToken(), lost_resource);
   }
 

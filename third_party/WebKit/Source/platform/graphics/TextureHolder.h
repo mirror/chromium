@@ -59,9 +59,11 @@ class PLATFORM_EXPORT TextureHolder {
   bool IsAbandoned() const { return is_abandoned_; }
 
  protected:
-  TextureHolder(
-      WeakPtr<WebGraphicsContext3DProviderWrapper>&& context_provider_wrapper)
-      : context_provider_wrapper_(std::move(context_provider_wrapper)) {}
+  TextureHolder() = default;
+  void Init(
+      WeakPtr<WebGraphicsContext3DProviderWrapper> context_provider_wrapper) {
+    context_provider_wrapper_ = std::move(context_provider_wrapper);
+  }
 
  private:
   // Keep a clone of the WebTaskRunner. This is to handle the case where the
