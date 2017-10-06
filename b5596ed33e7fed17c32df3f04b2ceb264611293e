@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39fa273b_eb7127f2",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2807,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-10-06T03:59:21Z",
+      "side": 1,
+      "message": "Not a huge deal, but rather than duplicating these lines twice\nin one method I wonder if there should be a helper function like\nshowVirtualKeyboardOnElementFocusIfNeeded.",
+      "revId": "b5596ed33e7fed17c32df3f04b2ceb264611293e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
