@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "582ea11b_5328c7d1",
+        "filename": "third_party/WebKit/Source/core/editing/EditingStyleUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "There\u0027s only one call site of this function in StyledMarkupSerializer.cpp, where it\u0027s called with non-null ptr.\n\nIt seems better to DCHECK(context) in this function, and add a TODO that this function should take |const ContainerNode\u0026|.",
+      "range": {
+        "startLine": 57,
+        "startChar": 23,
+        "endLine": 57,
+        "endChar": 67
+      },
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b34f862_914cace7",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "It seems better to return kLtr when |container_node| is null, and then proceed assuming non-null |container_node|.\n\nBtw, it looks weird to call this function with null or invalid position. I think we should have a TODO to add a DCHECK(position.ComputeContainerNode()) here.",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "313a809f_daec364a",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 1
@@ -16,6 +56,24 @@
       "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df4de37a_0752991b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "313a809f_daec364a",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -36,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "fa29b172_d04a5ccb",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11ab3559_01cae773",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7945676e_4419c7ac",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 1
@@ -47,6 +123,41 @@
       "writtenOn": "2017-10-06T13:48:31Z",
       "side": 1,
       "message": "Should we save the value of |NonPseudoNode()| to a local variable? It is called few times in this function.",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173050a9_c0caf748",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4832,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "That should be helpful.\n\nBesides, it seems better to:\n\nreturn NonPseudoNode() ? CreatePWA(...) : {};",
+      "parentUuid": "7945676e_4419c7ac",
+      "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b20a3cb4_aa5c6ea4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4923,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-06T18:49:28Z",
+      "side": 1,
+      "message": "Ditto.",
       "revId": "efd6f50fc792de00e6bf248ba47c87d7373e5e92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
