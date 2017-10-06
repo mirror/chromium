@@ -88,11 +88,18 @@
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
+#include "gpu/vulkan/features.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
+
+#if BUILDFLAG(ENABLE_VULKAN)
+const bool enable_sw_rasterization = true;
+#else
+const bool enable_sw_rasterization = false;
+#endif
 
 namespace cc {
 namespace {
@@ -758,7 +765,8 @@ void LayerTreeHostImpl::FrameData::AsValueInto(
 DrawMode LayerTreeHostImpl::GetDrawMode() const {
   if (resourceless_software_draw_) {
     return DRAW_MODE_RESOURCELESS_SOFTWARE;
-  } else if (layer_tree_frame_sink_->context_provider()) {
+  } else if (layer_tree_frame_sink_->context_provider() &&
+             !enable_sw_rasterization) {
     return DRAW_MODE_HARDWARE;
   } else {
     return DRAW_MODE_SOFTWARE;
@@ -2430,7 +2438,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
   viz::ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
-  if (!compositor_context_provider) {
+  if (!compositor_context_provider || enable_sw_rasterization) {
     *resource_pool =
         ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
                              ResourceProvider::TEXTURE_HINT_DEFAULT,
@@ -2563,7 +2571,8 @@ void LayerTreeHostImpl::CleanUpTileManagerAndUIResources() {
   // preventing driver cache growth. See crbug.com/643251
   if (layer_tree_frame_sink_) {
     if (auto* compositor_context = layer_tree_frame_sink_->context_provider())
-      compositor_context->ContextGL()->ShallowFlushCHROMIUM();
+      if (!enable_sw_rasterization)
+        compositor_context->ContextGL()->ShallowFlushCHROMIUM();
     if (auto* worker_context =
             layer_tree_frame_sink_->worker_context_provider()) {
       viz::ContextProvider::ScopedContextLock hold(worker_context);
@@ -2626,13 +2635,21 @@ bool LayerTreeHostImpl::InitializeRenderer(
 
   layer_tree_frame_sink_ = layer_tree_frame_sink;
   has_valid_layer_tree_frame_sink_ = true;
+#if BUILDFLAG(ENABLE_VULKAN)
+  resource_provider_ = std::make_unique<LayerTreeResourceProvider>(
+      nullptr,
+      layer_tree_frame_sink_->shared_bitmap_manager(),
+      layer_tree_frame_sink_->gpu_memory_buffer_manager(),
+      layer_tree_frame_sink_->capabilities().delegated_sync_points_required,
+      settings_.resource_settings);
+#else
   resource_provider_ = std::make_unique<LayerTreeResourceProvider>(
       layer_tree_frame_sink_->context_provider(),
       layer_tree_frame_sink_->shared_bitmap_manager(),
       layer_tree_frame_sink_->gpu_memory_buffer_manager(),
       layer_tree_frame_sink_->capabilities().delegated_sync_points_required,
       settings_.resource_settings);
-
+#endif
   // Since the new context may be capable of MSAA, update status here. We don't
   // need to check the return value since we are recreating all resources
   // already.

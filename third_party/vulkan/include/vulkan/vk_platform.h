@@ -117,7 +117,8 @@ extern "C"
 #endif
 
 #ifdef VK_USE_PLATFORM_XLIB_KHR
-#include <X11/Xlib.h>
+// Included already on gpu/vulkan/vulkan_platform.h
+//#include <X11/Xlib.h>
 #endif
 
 #ifdef VK_USE_PLATFORM_XCB_KHR

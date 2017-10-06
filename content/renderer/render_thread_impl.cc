@@ -1984,6 +1984,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       DCHECK(!layout_test_mode());
       frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                             std::move(client));
+      params.shared_bitmap_manager = shared_bitmap_manager();
       callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
           std::move(vulkan_context_provider), &params));
       return;
