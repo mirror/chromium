@@ -7,6 +7,7 @@
 #include "net/quic/core/quic_error_codes.h"
 #include "net/quic/core/quic_tag.h"
 #include "net/quic/core/quic_types.h"
+#include "net/quic/platform/api/quic_bug_tracker.h"
 #include "net/quic/platform/api/quic_endian.h"
 #include "net/quic/platform/api/quic_flag_utils.h"
 #include "net/quic/platform/api/quic_flags.h"
@@ -26,6 +27,65 @@ QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
   QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_use_net_byte_order_version_label,
                     1, 10);
   return MakeQuicTag(d, c, b, a);
+}
+
+// Constructs a QuicVersionLabel from the provided QuicVersion and
+// HandshakeProtocol.
+QuicVersionLabel LabelFromVersionAndProtocol(QuicVersion version,
+                                             HandshakeProtocol handshake) {
+  char proto = 0;
+  switch (handshake) {
+    case PROTOCOL_QUIC_CRYPTO:
+      proto = 'Q';
+      break;
+    case PROTOCOL_TLS1_3:
+      if (!FLAGS_quic_supports_tls_handshake) {
+        QUIC_BUG << "TLS use attempted when not enabled";
+      }
+      proto = 'T';
+      break;
+    default:
+      QUIC_LOG(ERROR) << "Invalid HandshakeProtocol: " << handshake;
+      return 0;
+  }
+  switch (version) {
+    case QUIC_VERSION_35:
+      return MakeVersionLabel(proto, '0', '3', '5');
+    case QUIC_VERSION_37:
+      return MakeVersionLabel(proto, '0', '3', '7');
+    case QUIC_VERSION_38:
+      return MakeVersionLabel(proto, '0', '3', '8');
+    case QUIC_VERSION_39:
+      return MakeVersionLabel(proto, '0', '3', '9');
+    case QUIC_VERSION_41:
+      return MakeVersionLabel(proto, '0', '4', '1');
+    case QUIC_VERSION_42:
+      return MakeVersionLabel(proto, '0', '4', '2');
+    default:
+      // This shold be an ERROR because we should never attempt to convert an
+      // invalid QuicVersion to be written to the wire.
+      QUIC_LOG(ERROR) << "Unsupported QuicVersion: " << version;
+      return 0;
+  }
+}
+
+std::pair<QuicVersion, HandshakeProtocol> VersionAndProtocolFromLabel(
+    QuicVersionLabel version_label) {
+  std::vector<HandshakeProtocol> protocols = {PROTOCOL_QUIC_CRYPTO};
+  if (FLAGS_quic_supports_tls_handshake) {
+    protocols.push_back(PROTOCOL_TLS1_3);
+  }
+  for (QuicVersion version : kSupportedQuicVersions) {
+    for (HandshakeProtocol handshake : protocols) {
+      if (version_label == LabelFromVersionAndProtocol(version, handshake)) {
+        return std::make_pair(version, handshake);
+      }
+    }
+  }
+  // Reading from the client so this should not be considered an ERROR.
+  QUIC_DLOG(INFO) << "Unsupported QuicVersionLabel version: "
+                  << QuicVersionLabelToString(version_label);
+  return std::make_pair(QUIC_VERSION_UNSUPPORTED, PROTOCOL_UNSUPPORTED);
 }
 
 }  // namespace
@@ -87,25 +147,7 @@ QuicVersionVector VersionOfIndex(const QuicVersionVector& versions, int index) {
 }
 
 QuicVersionLabel QuicVersionToQuicVersionLabel(const QuicVersion version) {
-  switch (version) {
-    case QUIC_VERSION_35:
-      return MakeVersionLabel('Q', '0', '3', '5');
-    case QUIC_VERSION_37:
-      return MakeVersionLabel('Q', '0', '3', '7');
-    case QUIC_VERSION_38:
-      return MakeVersionLabel('Q', '0', '3', '8');
-    case QUIC_VERSION_39:
-      return MakeVersionLabel('Q', '0', '3', '9');
-    case QUIC_VERSION_41:
-      return MakeVersionLabel('Q', '0', '4', '1');
-    case QUIC_VERSION_42:
-      return MakeVersionLabel('Q', '0', '4', '2');
-    default:
-      // This shold be an ERROR because we should never attempt to convert an
-      // invalid QuicVersion to be written to the wire.
-      QUIC_LOG(ERROR) << "Unsupported QuicVersion: " << version;
-      return 0;
-  }
+  return LabelFromVersionAndProtocol(version, PROTOCOL_QUIC_CRYPTO);
 }
 
 string QuicVersionLabelToString(QuicVersionLabel version_label) {
@@ -118,16 +160,12 @@ string QuicVersionLabelToString(QuicVersionLabel version_label) {
 }
 
 QuicVersion QuicVersionLabelToQuicVersion(QuicVersionLabel version_label) {
-  for (size_t i = 0; i < arraysize(kSupportedQuicVersions); ++i) {
-    if (version_label ==
-        QuicVersionToQuicVersionLabel(kSupportedQuicVersions[i])) {
-      return kSupportedQuicVersions[i];
-    }
-  }
-  // Reading from the client so this should not be considered an ERROR.
-  QUIC_DLOG(INFO) << "Unsupported QuicVersionLabel version: "
-                  << QuicVersionLabelToString(version_label);
-  return QUIC_VERSION_UNSUPPORTED;
+  return VersionAndProtocolFromLabel(version_label).first;
+}
+
+HandshakeProtocol QuicVersionLabelToHandshakeProtocol(
+    QuicVersionLabel version_label) {
+  return VersionAndProtocolFromLabel(version_label).second;
 }
 
 #define RETURN_STRING_LITERAL(x) \

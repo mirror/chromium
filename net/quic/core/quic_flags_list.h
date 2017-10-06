@@ -143,6 +143,10 @@ QUIC_FLAG(uint32_t, FLAGS_quic_buffered_data_threshold, 8192u)
 // Max size of data slice in bytes for QUIC stream send buffer.
 QUIC_FLAG(uint32_t, FLAGS_quic_send_buffer_max_data_slice_size, 4096u)
 
+// If true, QUIC supports both QUIC Crypto and TLS 1.3 for the handshake
+// protocol.
+QUIC_FLAG(bool, FLAGS_quic_supports_tls_handshake, false)
+
 // Add 4 new ack decimation modes to QUIC that are entirely time based at 1/4
 // or 1/8 RTT.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_ack_decimation, false)
@@ -185,3 +189,6 @@ QUIC_FLAG(bool,
 // If true, send stateless reset token in SHLO. This token is used in IETF
 // public reset packet.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_send_reset_token_in_shlo, false)
+
+// Default enable all cubic fixes in QUIC Cubic by default.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_cubic_fixes, false)

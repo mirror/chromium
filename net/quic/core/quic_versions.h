@@ -18,8 +18,8 @@ namespace net {
 // will match the version number.
 // When adding a new version to this enum you should add it to
 // kSupportedQuicVersions (if appropriate), and also add a new case to the
-// helper methods QuicVersionToQuicTag, QuicTagToQuicVersion, and
-// QuicVersionToString.
+// helper methods QuicVersionToQuicVersionLabel, QuicVersionLabelToQuicVersion,
+// and QuicVersionToString.
 enum QuicVersion {
   // Special case to indicate unknown/unsupported QUIC version.
   QUIC_VERSION_UNSUPPORTED = 0,
@@ -37,6 +37,13 @@ enum QuicVersion {
 
   // IMPORTANT: if you are adding to this list, follow the instructions at
   // http://sites/quic/adding-and-removing-versions
+};
+
+// The crypto handshake protocols that can be used with QUIC.
+enum HandshakeProtocol {
+  PROTOCOL_UNSUPPORTED,
+  PROTOCOL_QUIC_CRYPTO,
+  PROTOCOL_TLS1_3,
 };
 
 // Representation of the on-the-wire QUIC version number. Will be written/read
@@ -86,9 +93,14 @@ QUIC_EXPORT_PRIVATE std::string QuicVersionLabelToString(
     QuicVersionLabel version_label);
 
 // Returns appropriate QuicVersion from a QuicVersionLabel.
-// Returns QUIC_VERSION_UNSUPPORTED if version_tag cannot be understood.
+// Returns QUIC_VERSION_UNSUPPORTED if |version_label| cannot be understood.
 QUIC_EXPORT_PRIVATE QuicVersion
 QuicVersionLabelToQuicVersion(QuicVersionLabel version_label);
+
+// Returns the HandshakeProtocol used with the given |version_label|, returning
+// PROTOCOL_UNSUPPORTED if it is unknown.
+QUIC_EXPORT_PRIVATE HandshakeProtocol
+QuicVersionLabelToHandshakeProtocol(QuicVersionLabel version_label);
 
 // Helper function which translates from a QuicVersion to a string.
 // Returns strings corresponding to enum names (e.g. QUIC_VERSION_6).
