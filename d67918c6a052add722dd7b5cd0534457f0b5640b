@@ -16,6 +16,24 @@
       "revId": "d67918c6a052add722dd7b5cd0534457f0b5640b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb8ec6e_5a434f62",
+        "filename": "services/data_decoder/public/cpp/json_sanitizer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-10-06T19:58:23Z",
+      "side": 1,
+      "message": "I think it\u0027s for API symmetry with SafeJsonParser, which is a class to allow overloading the factory function.",
+      "parentUuid": "83d31c42_5d85cbaf",
+      "revId": "d67918c6a052add722dd7b5cd0534457f0b5640b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
