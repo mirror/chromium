@@ -7,7 +7,7 @@ Script execution paused.
 Call stack:
     0) testElementEventListener (event-listener-breakpoints.html:7)
     1) addListenerAndClick (event-listener-breakpoints.html:16)
-    2)  (:1)
+    2)  (event-listener-breakpoints.html:0)
 Event target: INPUT
 Script execution resumed.
 
@@ -16,7 +16,7 @@ Script execution paused.
 Call stack:
     0) testElementEventListener (event-listener-breakpoints.html:7)
     1) addListenerAndAuxclick (event-listener-breakpoints.html:23)
-    2)  (:1)
+    2)  (event-listener-breakpoints.html:0)
 Event target: INPUT
 Script execution resumed.
 
@@ -45,7 +45,7 @@ Script execution paused.
 Call stack:
     0) testElementEventListener (event-listener-breakpoints.html:7)
     1) addListenerAndPointerDown (event-listener-breakpoints.html:30)
-    2)  (:1)
+    2)  (event-listener-breakpoints.html:0)
 Event target: INPUT
 Script execution resumed.
 

@@ -35,6 +35,7 @@
 #include "bindings/core/v8/V8GCForContextDispose.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/ScriptableDocumentParser.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMTimer.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
@@ -44,6 +45,21 @@
 namespace blink {
 
 namespace DOMWindowTimers {
+
+namespace {
+
+TextPosition GetCurrentTextPosition(ExecutionContext* execution_context) {
+  if (!execution_context->IsDocument())
+    return TextPosition::BelowRangePosition();
+
+  Document* document = ToDocument(execution_context);
+  if (auto* parser = document->GetScriptableDocumentParser())
+    return parser->GetTextPosition();
+
+  return TextPosition::BelowRangePosition();
+}
+
+}  // namespace
 
 static bool IsAllowed(ScriptState* script_state,
                       ExecutionContext* execution_context,
@@ -114,8 +130,9 @@ int setTimeout(ScriptState* script_state,
     // be done using the scheduler instead.
     V8GCForContextDispose::Instance().NotifyIdle();
   }
-  ScheduledAction* action =
-      ScheduledAction::Create(script_state, execution_context, handler);
+  TextPosition start_position = GetCurrentTextPosition(execution_context);
+  ScheduledAction* action = ScheduledAction::Create(
+      script_state, execution_context, handler, start_position);
   return DOMTimer::Install(execution_context, action, timeout, true);
 }
 
@@ -144,8 +161,9 @@ int setInterval(ScriptState* script_state,
   // perfomance issue.
   if (handler.IsEmpty())
     return 0;
-  ScheduledAction* action =
-      ScheduledAction::Create(script_state, execution_context, handler);
+  TextPosition start_position = GetCurrentTextPosition(execution_context);
+  ScheduledAction* action = ScheduledAction::Create(
+      script_state, execution_context, handler, start_position);
   return DOMTimer::Install(execution_context, action, timeout, false);
 }
 

@@ -36,6 +36,7 @@
 #include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
+#include "platform/wtf/text/TextPosition.h"
 #include "v8/include/v8.h"
 
 namespace blink {
@@ -55,7 +56,8 @@ class ScheduledAction final
                                  const Vector<ScriptValue>& arguments);
   static ScheduledAction* Create(ScriptState*,
                                  ExecutionContext* target,
-                                 const String& handler);
+                                 const String& handler,
+                                 const TextPosition& start_position);
 
   ~ScheduledAction();
   void Dispose();
@@ -68,7 +70,9 @@ class ScheduledAction final
   ScheduledAction(ScriptState*,
                   const ScriptValue& handler,
                   const Vector<ScriptValue>& arguments);
-  ScheduledAction(ScriptState*, const String& handler);
+  ScheduledAction(ScriptState*,
+                  const String& handler,
+                  const TextPosition& start_position);
 
   // Creates an empty ScheduledAction.
   explicit ScheduledAction(ScriptState*);
@@ -81,6 +85,7 @@ class ScheduledAction final
   ScopedPersistent<v8::Function> function_;
   V8PersistentValueVector<v8::Value> info_;
   String code_;
+  const TextPosition start_position_;
 };
 
 }  // namespace blink

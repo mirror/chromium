@@ -5,7 +5,7 @@ Running: testFetchBreakpoint
 Script execution paused.
 Call stack:
     0) sendRequest (fetch-breakpoints.html:9)
-    1)  (:1)
+    1)  (fetch-breakpoints.html:0)
 Script execution resumed.
 
 Running: testPauseOnAnyFetch
