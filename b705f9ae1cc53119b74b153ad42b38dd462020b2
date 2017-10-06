@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7707531f_ffb0c285",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Can you use \"for (base::string16\u0026 name : names) {\" (non-const iteration instead of const iteration) and move each string into the new vector? The old vector would end up with moved-out strings, which would be discarded at the end of the method.\n\nI\u0027m asking because I think this code would be easier to reason if it looked like a standard loop.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa23cb03_edb4ca8c",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Leftover from a different CL?",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302b3e0e_aad856f6",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "nit: ReadObjectStoreMetadata?\n\nThe metadata carries the index list, so it makes sense to me that it\u0027d be read. If anything, it\u0027d be nice to limit/remove methods that read a subset of the output argument, in the future.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "916f4c71_ad513415",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "What does \"AndWrite\" mean?",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586570dd_e3c356c3",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "nit: Move Delete up, next to Create?\n\nHaving Delete next to Create makes sense from both an alphabetical ordering sense, and because it mimics how we put destructors next to constructors. It makes it easier to check that the \"delete\" does tear down every structure that the \"create\" puts in place.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3d9075_4b8f06ee",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Note for future CL: Does it still make sense to check that the object store\u0027s ID is valid? I\u0027d hope that we only create IndexedDBObjectStoreMetadata instances with valid members.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6ec61d3_cce9cb16",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Same question as before about \"AndWrite\"",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd406759_98d86afb",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Same comment as before regarding ordering.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008f1b60_4581cb6c",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like a factory, according to the definition in https://en.wikipedia.org/wiki/Abstract_factory_pattern\n\nHow about something like IndexedDBMetadataCoding?\n\nIdeally, the methods here would be pushed onto metadata classes, but that would be best addressed in a follow-up CL, not in this move CL.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa78646_c64457e4",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T20:35:50Z",
+      "side": 1,
+      "message": "Given that this CL is just a move, it should not address the issue, so noting it for the future -- it\u0027s a bit unclear how this method works. I\u0027m guessing that it uses the transaction to update the metadata, and also updates an in-memory version pointed by IndexedDBDatabaseMetadata*, but it\u0027d be nice if it stated that.\n\nAt the very least, the method docs should say that the change is only persisted if the transaction commits.",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
