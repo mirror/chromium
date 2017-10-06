@@ -123,6 +123,24 @@
       "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e7af66_a1c3af3a",
+        "filename": "ui/aura/client/screen_position_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:46:06Z",
+      "side": 1,
+      "message": "We will continue to have both versions unless someone goes in and does the conversion. Can you file a bug for this and make sure it gets fixed?\n\nThe Point versions of these functions, in that case, should not be virtual anymore.",
+      "parentUuid": "908675e1_0622e9c0",
+      "revId": "7ece7a85d31d91f20fee595d3361ef32d6bc92e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7881203_0f5126e9",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:46:06Z",
+      "side": 1,
+      "message": "Looks like this one has only four uses (and one of which you are already removing in window.cc). I looked at the other three non-test uses (and only four uses in tests), and it should be trivial to fix those (i.e. use the new PointF version). Can you please do that?",
+      "revId": "71f7183146d8f2ae83a1df023c185a48ab820153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31938add_79a33f9b",
+        "filename": "ui/compositor/layer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:46:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you need these anymore?",
+      "revId": "71f7183146d8f2ae83a1df023c185a48ab820153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0b8f216_51342205",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:46:06Z",
+      "side": 1,
+      "message": "Call this version from the Point version? Or use a template\u003c\u003eized function?",
+      "revId": "71f7183146d8f2ae83a1df023c185a48ab820153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ae4809_20282874",
+        "filename": "ui/gfx/transform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-10-06T03:46:06Z",
+      "side": 1,
+      "message": "Use PointF version.",
+      "revId": "71f7183146d8f2ae83a1df023c185a48ab820153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
