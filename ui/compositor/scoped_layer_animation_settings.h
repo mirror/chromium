@@ -28,7 +28,10 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
   virtual ~ScopedLayerAnimationSettings();
 
   void AddObserver(ImplicitAnimationObserver* observer);
-
+  // Add a referrence to the animator so that the |owned_observer_list_| will
+  // not be destroyed. The observer will be accessed in
+  // |~ScopedLayerAnimationSettings()|.
+  void AddScopedLayerAnimator(scoped_refptr<LayerAnimator> animator);
   void SetAnimationMetricsReporter(AnimationMetricsReporter* reporter);
   void SetTransitionDuration(base::TimeDelta duration);
   // This will request render surface caching on the animating layer. The cache
@@ -53,6 +56,7 @@ class COMPOSITOR_EXPORT ScopedLayerAnimationSettings {
 
  private:
   scoped_refptr<LayerAnimator> animator_;
+  std::vector<scoped_refptr<LayerAnimator>> scoped_layer_animators_;
   bool old_is_transition_duration_locked_;
   base::TimeDelta old_transition_duration_;
   gfx::Tween::Type old_tween_type_;

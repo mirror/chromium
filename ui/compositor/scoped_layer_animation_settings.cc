@@ -97,7 +97,9 @@ void AddDeferredPaintObserverRecursive(
     ui::ScopedLayerAnimationSettings* settings) {
   auto observer = base::MakeUnique<DeferredPaintObserver>(layer);
   settings->AddObserver(observer.get());
-  layer->GetAnimator()->AddOwnedObserver(std::move(observer));
+  scoped_refptr<ui::LayerAnimator> animator = layer->GetAnimator();
+  settings->AddScopedLayerAnimator(animator);
+  animator->AddOwnedObserver(std::move(observer));
   for (auto* child : layer->children())
     AddDeferredPaintObserverRecursive(child, settings);
 }
@@ -185,6 +187,11 @@ void ScopedLayerAnimationSettings::SetPreemptionStrategy(
 LayerAnimator::PreemptionStrategy
 ScopedLayerAnimationSettings::GetPreemptionStrategy() const {
   return animator_->preemption_strategy();
+}
+
+void ScopedLayerAnimationSettings::AddScopedLayerAnimator(
+    scoped_refptr<LayerAnimator> animator) {
+  scoped_layer_animators_.push_back(animator);
 }
 
 }  // namespace ui
