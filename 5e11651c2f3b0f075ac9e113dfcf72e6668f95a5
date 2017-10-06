@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e5bd04f_e87424ed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/bottombar/contextualsearch/ContextualSearchPanel.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T21:50:11Z",
+      "side": 1,
+      "message": "Conceptually, is it possible to get this profile from somewhere else? In practice I guess we only have two profiles on Android, and currently the factory returns the non-incognito Tracker in case it\u0027s the incognito profile.",
+      "range": {
+        "startLine": 217,
+        "startChar": 66,
+        "endLine": 217,
+        "endChar": 94
+      },
+      "revId": "5e11651c2f3b0f075ac9e113dfcf72e6668f95a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6122ba89_dfba1a37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T21:50:11Z",
+      "side": 1,
+      "message": "Same here about profile. Possible to get from somewhere?",
+      "range": {
+        "startLine": 508,
+        "startChar": 62,
+        "endLine": 508,
+        "endChar": 90
+      },
+      "revId": "5e11651c2f3b0f075ac9e113dfcf72e6668f95a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
