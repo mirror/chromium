@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca4ed77c_29b4a484",
+        "filename": "content/browser/indexed_db/indexed_db_active_blob_registry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-10-06T21:05:25Z",
+      "side": 1,
+      "message": "Can we use goo.gl as a shortener instead?",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "bbe18bffda3c3a61f523abe3207eccd8eb85b6f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
