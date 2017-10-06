@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "eb05c88f_235793ff",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T21:23:08Z",
+      "side": 1,
+      "message": "CreateObjectStore seems sufficient. This is because I know there\u0027s a database context here, so  \"CREATE TABLE\" in SQL has a stronger influence than the Create* convention for naming a factory method.",
+      "parentUuid": "4a1aba5b_34052009",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "586570dd_e3c356c3",
         "filename": "content/browser/indexed_db/indexed_db_metadata_factory.cc",
         "patchSetId": 2
@@ -227,6 +245,24 @@
     },
     {
       "key": {
+        "uuid": "4de42901_d2f7ff2d",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T21:23:08Z",
+      "side": 1,
+      "message": "I agree that moving methods to metadata shouldn\u0027t happen in this CL.\n\nFactory generally suggests that the point of the class is to help select between multiple implementations of an abstract class. In this case, I think the main responsibility of this class is to manage the leveldb encoding of database metadata, hence the name suggestion I had above.",
+      "parentUuid": "6712b727_873d4b09",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3fa78646_c64457e4",
         "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
         "patchSetId": 2
@@ -256,6 +292,24 @@
       "side": 1,
       "message": "That\u0027s the case for all of these methods that take a transaction - do you have the same feedback for all of those?\n\nI feel like it\u0027s obvious that we would be using the transaction for doing modification - but maybe I can comment that on the class comment?",
       "parentUuid": "3fa78646_c64457e4",
+      "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75903a3_fa5f6acf",
+        "filename": "content/browser/indexed_db/indexed_db_metadata_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-06T21:23:08Z",
+      "side": 1,
+      "message": "The Read* methods are fairly straightforward. The Create* and Delete* methods also seem easy to reason about.\n\nUpdate* is different because you could be updating the Metadata instance to reflect the reality in the database (effectively a Read), or you could be updating the database (by writing to the transaction) to reflect the reality in the Metadata instance. The truth (IIUC) is you change both the database and the Metadata instance to reflect the value the \"version\" argument.\n\nI got the hint that the Metadata instance is changing because it\u0027s at the end of the argument list. Perhaps move the Transaction to the right of row_id / version, as it\u0027s also changing. Also, the name SetDatabaseVersion() would help me guess better.\n\nLast, to actually answer your question :) I haven\u0027t had this concern with any other method in this CL.",
+      "parentUuid": "33905c29_456b0ebe",
       "revId": "b705f9ae1cc53119b74b153ad42b38dd462020b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
