@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a35ab610_37c67ae9",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-10-06T20:53:29Z",
+      "side": 1,
+      "message": "The comments in |IsValidSessionName| make claims:\n\n  bool PolicyToolUIHandler::IsValidSessionName(\n      const base::FilePath::StringType\u0026 name) const {\n    // Check if the session name is valid, which means that it doesn\u0027t use\n    // filesystem navigation (e.g. ../ or nested folder).\n    base::FilePath session_path \u003d GetSessionPath(name);\n    return !session_path.empty() \u0026\u0026 session_path.DirName() \u003d\u003d sessions_dir_;\n  }\n\nthat base/files/file_path_unittest.cc doesn\u0027t seem to have unit tests to ensure (`TEST_F(FilePathTest, DirName)`). So I think we need tests there first.",
+      "revId": "b0576af6bbaaa17d777cb07e0c1ca8df234cf019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
