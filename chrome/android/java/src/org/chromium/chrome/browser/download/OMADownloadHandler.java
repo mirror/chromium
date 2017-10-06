@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.notifications.NotificationConstants.INVALID_NOTIFICATION_ID;
+
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
@@ -818,9 +820,8 @@ public class OMADownloadHandler extends BroadcastReceiver
             if (result.first == DownloadManager.STATUS_SUCCESSFUL) {
                 onDownloadCompleted(mDownloadInfo, downloadId, mInstallNotifyURI);
                 removeOMADownloadFromSharedPrefs(downloadId);
-                mDownloadSnackbarController.onDownloadSucceeded(mDownloadInfo,
-                        DownloadSnackbarController.INVALID_NOTIFICATION_ID, downloadId,
-                        result.second, true);
+                mDownloadSnackbarController.onDownloadSucceeded(
+                        mDownloadInfo, INVALID_NOTIFICATION_ID, downloadId, result.second, true);
             } else if (result.first == DownloadManager.STATUS_FAILED) {
                 onDownloadFailed(mDownloadInfo, downloadId, mFailureReason, mInstallNotifyURI);
                 removeOMADownloadFromSharedPrefs(downloadId);

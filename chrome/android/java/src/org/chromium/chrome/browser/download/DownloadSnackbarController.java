@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.notifications.NotificationConstants.INVALID_NOTIFICATION_ID;
+
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -22,7 +24,6 @@ import org.chromium.components.offline_items_collection.LegacyHelpers;
  * Class for displaying a snackbar when a download completes.
  */
 public class DownloadSnackbarController implements SnackbarManager.SnackbarController {
-    public static final int INVALID_NOTIFICATION_ID = -1;
     private static final int SNACKBAR_DURATION_IN_MILLISECONDS = 5000;
     private final Context mContext;
 

@@ -39,6 +39,7 @@ import org.chromium.chrome.browser.init.EmptyBrowserParts;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
+import org.chromium.components.offline_items_collection.OfflineItem;
 
 /**
  * Class that spins up native when an interaction with a notification happens and passes the
@@ -128,8 +129,12 @@ public class DownloadBroadcastManager extends Service {
 
         switch (action) {
             case ACTION_DOWNLOAD_PAUSE:
-                mDownloadNotificationService.notifyDownloadPaused(entry.id, entry.fileName, true,
-                        false, entry.isOffTheRecord, entry.isTransient, null, true);
+                OfflineItem offlineItem = DownloadSharedPreferenceEntry.offlineItem(entry);
+                offlineItem.isResumable = true;
+                offlineItem.isAutoResumable = false;
+                offlineItem.icon = null;
+
+                mDownloadNotificationService.notifyDownloadPaused(offlineItem, true);
                 break;
 
             case ACTION_DOWNLOAD_CANCEL:
@@ -137,9 +142,11 @@ public class DownloadBroadcastManager extends Service {
                 break;
 
             case ACTION_DOWNLOAD_RESUME:
-                mDownloadNotificationService.notifyDownloadPending(entry.id, entry.fileName,
-                        entry.isOffTheRecord, entry.canDownloadWhileMetered, entry.isTransient,
-                        null, true);
+                OfflineItem item = DownloadSharedPreferenceEntry.offlineItem(entry);
+                item.allowMetered = entry.canDownloadWhileMetered;
+                item.icon = null;
+
+                mDownloadNotificationService.notifyDownloadPending(item, true);
                 break;
 
             default:
