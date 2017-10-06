@@ -687,6 +687,8 @@ video::-internal-media-controls-overflow-menu-list-item, audio::-internal-media-
     color: #424242;
     line-height: 40px;
     padding-left: 28px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 
 label[pseudo="-internal-media-controls-overflow-menu-list-item"] input{
