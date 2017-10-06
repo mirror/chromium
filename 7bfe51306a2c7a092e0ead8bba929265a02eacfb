@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd3413a4_d45ef181",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-06T23:14:08Z",
+      "side": 1,
+      "message": "can this be done explicitly from the test? or maybe have a \"shouldSuggestResult\" and a \"shouldNotSuggestResult\"?\n\nHaving the mock override what\u0027s set by the test seems weird..",
+      "revId": "7bfe51306a2c7a092e0ead8bba929265a02eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
