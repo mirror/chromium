@@ -10,6 +10,7 @@
 #include "components/policy/core/common/policy_types.h"
 #include "components/policy/policy_constants.h"
 #include "components/prefs/pref_value_map.h"
+#include "components/sync/base/pref_names.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace policy {
@@ -24,6 +25,9 @@ TEST_F(AutofillCreditCardPolicyHandlerTest, Default) {
   handler.ApplyPolicySettings(policy, &prefs);
   EXPECT_FALSE(
       prefs.GetValue(autofill::prefs::kAutofillCreditCardEnabled, NULL));
+  EXPECT_FALSE(prefs.GetValue(syncer::prefs::kSyncAutofillWallet, NULL));
+  EXPECT_FALSE(
+      prefs.GetValue(syncer::prefs::kSyncAutofillWalletMetadata, NULL));
 }
 
 TEST_F(AutofillCreditCardPolicyHandlerTest, Enabled) {
@@ -38,6 +42,9 @@ TEST_F(AutofillCreditCardPolicyHandlerTest, Enabled) {
   // Enabling Autofill for credit cards should not set the prefs.
   EXPECT_FALSE(
       prefs.GetValue(autofill::prefs::kAutofillCreditCardEnabled, NULL));
+  EXPECT_FALSE(prefs.GetValue(syncer::prefs::kSyncAutofillWallet, NULL));
+  EXPECT_FALSE(
+      prefs.GetValue(syncer::prefs::kSyncAutofillWalletMetadata, NULL));
 }
 
 TEST_F(AutofillCreditCardPolicyHandlerTest, Disabled) {
@@ -49,7 +56,7 @@ TEST_F(AutofillCreditCardPolicyHandlerTest, Disabled) {
   AutofillCreditCardPolicyHandler handler;
   handler.ApplyPolicySettings(policy, &prefs);
 
-  // Disabling Autofill should switch the prefs to managed.
+  // Disabling Autofill for credit cards should switch the prefs to managed.
   const base::Value* value = NULL;
   EXPECT_TRUE(
       prefs.GetValue(autofill::prefs::kAutofillCreditCardEnabled, &value));
@@ -58,6 +65,21 @@ TEST_F(AutofillCreditCardPolicyHandlerTest, Disabled) {
   bool result = value->GetAsBoolean(&autofill_credt_card_enabled);
   ASSERT_TRUE(result);
   EXPECT_FALSE(autofill_credt_card_enabled);
+
+  EXPECT_TRUE(prefs.GetValue(syncer::prefs::kSyncAutofillWallet, &value));
+  ASSERT_TRUE(value);
+  bool wallet_enabled = true;
+  result = value->GetAsBoolean(&wallet_enabled);
+  ASSERT_TRUE(result);
+  EXPECT_FALSE(wallet_enabled);
+
+  EXPECT_TRUE(
+      prefs.GetValue(syncer::prefs::kSyncAutofillWalletMetadata, &value));
+  ASSERT_TRUE(value);
+  bool wallet_metadata_enabled = true;
+  result = value->GetAsBoolean(&wallet_metadata_enabled);
+  ASSERT_TRUE(result);
+  EXPECT_FALSE(wallet_metadata_enabled);
 }
 
 }  // namespace policy
