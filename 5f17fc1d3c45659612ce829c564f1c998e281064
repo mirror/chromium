@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c411754f_77719632",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-06T20:50:16Z",
+      "side": 1,
+      "message": "I can\u0027t see how this bool is used, but is it necessary to return values from here? l.344 will fail if we couldn\u0027t load any DLL and GetSupportedProfiles() will return empty, indicating that nothing is supported. GetSupportedProfiles() is tasked to check the platform support.",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 72
+      },
+      "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
