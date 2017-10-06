@@ -212,6 +212,7 @@ Polymer({
   /** @private */
   onCancelTap_: function() {
     this.close();
+    this.fire('setup-abandoned');
   },
 
   /** @private */
@@ -314,6 +315,7 @@ Polymer({
     'open-discovery-printers-dialog': 'openDiscoveryPrintersDialog_',
     'open-manufacturer-model-dialog': 'openManufacturerModelDialog_',
     'no-detected-printer': 'onNoDetectedPrinter_',
+    'setup-abandoned': 'setupAbandoned_',
   },
 
   /** @override */
@@ -461,6 +463,12 @@ Polymer({
       this.newPrinter = getEmptyPrinter_();
       this.openManuallyAddPrinterDialog_();
     }
+  },
+
+  /** @private */
+  setupAbandoned_: function() {
+    settings.CupsPrintersBrowserProxyImpl.getInstance().cancelPrinterSetUp(
+        this.newPrinter);
   },
 
   /**
