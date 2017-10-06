@@ -731,6 +731,12 @@ NSString* const kOmniboxFadeAnimationKey = @"OmniboxFadeAnimation";
   // First find how much (if any) of the scheme/host needs to be clipped so that
   // the end of the TLD fits in |rect|. Note that if the omnibox is currently
   // displaying a search query the prefix is not clipped.
+
+  if (base::ios::IsRunningOnOrLater(11, 1, 0)) {
+    // -[UITextField drawTextInRect:] ignores the argument.
+    return rect;
+  }
+
   CGFloat widthOfClippedPrefix = 0;
   url::Component scheme, host;
   AutocompleteInput::ParseForEmphasizeComponents(
