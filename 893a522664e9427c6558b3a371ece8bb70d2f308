@@ -16,6 +16,29 @@
       "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe17a99d_58b81afe",
+        "filename": "chrome/browser/resources/md_extensions/item_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 0,
+      "message": "Let\u0027s also remove this line https://cs.chromium.org/chromium/src/chrome/browser/resources/md_extensions/compiled_resources2.gyp?l\u003d80.",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 45
+      },
+      "revId": "893a522664e9427c6558b3a371ece8bb70d2f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

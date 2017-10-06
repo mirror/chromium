@@ -16,6 +16,91 @@
       "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ec644a_8a49f36d",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 1,
+      "message": "How about we simplify this as follows?\n\n - move source-indicator within icon-wrapper\n - icon-wrapper should have position:relative\n - source-indicator would become\n    bottom: 0;\n    right: 0;\n    position: absolute;\n  - #main no longer needs position: relative.\n\nThis seems simpler and more robust since it does not involve \"magic\" constants like 30px.",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e807aef_88ab28ca",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 1,
+      "message": "Nit: extensions-card-width seems to only be used within two types of elements. Would it work if we narrow down the scope as follows?\n\n#items-container,\nextensions-item {\n  --extensions-card-width: 400px;\n}",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82b437a_d3fd540d",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this has any effect, does it? (I think it is overriden in all cases)",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f132c9c_68c3155d",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 1,
+      "message": "Nit: s/max-column/max-columns",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c1d4c1_1e35f8d4",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-06T22:17:05Z",
+      "side": 1,
+      "message": "Is the |id| attribute used anywhere?",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
