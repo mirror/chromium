@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba4a61b_1d8fcb2e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaStream-idl.https-expected.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002823
+      },
+      "writtenOn": "2017-10-06T09:04:47Z",
+      "side": 0,
+      "message": "Hooray!",
+      "revId": "de8cfb511d9881d7961fb8856bd202d975922a56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
