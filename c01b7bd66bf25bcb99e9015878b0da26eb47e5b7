@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32828ab_a21df236",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-06T03:31:58Z",
+      "side": 1,
+      "message": "It turned out this TODO isn\u0027t actually true, so I removed it (and the corresponding DCHECK in WriteFrameState). There are some instances where the page state we\u0027re going to commit is empty (for example, for blocked navigations): in those cases, we create a new PageState for the URL (which doesn\u0027t populate target). So we need to always handle the case where it\u0027s nullable currently (though we may simply try to collapse nullable and empty into the same thing in the future).",
+      "revId": "c01b7bd66bf25bcb99e9015878b0da26eb47e5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
