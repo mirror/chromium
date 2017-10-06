@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35b9ca9_84ff2e00",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:32:54Z",
+      "side": 1,
+      "message": "nit:  Blank line between C and C++ headers",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "670df61e_717468c5",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:32:54Z",
+      "side": 1,
+      "message": "This goes above C and C++ headers, with a blank line below.",
+      "range": {
+        "startLine": 8,
+        "startChar": 29,
+        "endLine": 8,
+        "endChar": 63
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f698c842_2f29d723",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:32:54Z",
+      "side": 1,
+      "message": "I think this can just be an expect?  Running the next lines doesn\u0027t seem like a big deal?",
+      "range": {
+        "startLine": 73,
+        "startChar": 17,
+        "endLine": 73,
+        "endChar": 33
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d11ba323_63e54545",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:32:54Z",
+      "side": 1,
+      "message": "Again, maybe an EXPECT?",
+      "range": {
+        "startLine": 89,
+        "startChar": 16,
+        "endLine": 89,
+        "endChar": 32
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43025a4a_4d736350",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T18:32:54Z",
+      "side": 1,
+      "message": "nit:  another?",
+      "range": {
+        "startLine": 214,
+        "startChar": 36,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "d173f81f98a7b7b9222e31a0011739d48d8b63ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
