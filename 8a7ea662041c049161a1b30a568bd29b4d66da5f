@@ -22,6 +22,52 @@
       "revId": "8a7ea662041c049161a1b30a568bd29b4d66da5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee63d419_fe9be110",
+        "filename": "media/gpu/d3d11_video_decode_accelerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-06T20:14:52Z",
+      "side": 1,
+      "message": "I recommend making state updates before client_ calls.",
+      "range": {
+        "startLine": 261,
+        "startChar": 2,
+        "endLine": 261,
+        "endChar": 27
+      },
+      "revId": "8a7ea662041c049161a1b30a568bd29b4d66da5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8debe845_274da68b",
+        "filename": "media/gpu/d3d11_video_decode_accelerator_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-10-06T20:14:52Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 84,
+        "startChar": 70,
+        "endLine": 84,
+        "endChar": 71
+      },
+      "revId": "8a7ea662041c049161a1b30a568bd29b4d66da5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
