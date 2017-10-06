@@ -46,6 +46,7 @@ class NGLineBreakerTest : public NGBaseLayoutAlgorithmTest {
     NGLineBreaker line_breaker(node, *space, &container_builder,
                                &unpositioned_floats);
 
+    // TODO FIXME
     Vector<NGInlineItemResults> lines;
     NGExclusionSpace exclusion_space;
     NGLineInfo line_info;
