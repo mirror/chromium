@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f800f225_badc691f",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-06T18:06:55Z",
+      "side": 0,
+      "message": "It does not appear so. It was introduced in https://chromium.googlesource.com/chromium/src/+/0bc588b1289ff9bda42a91ed8f57eaf0e36d7978%5E%21/#F0 in what appears to be its current form. I assume an oversight.",
+      "parentUuid": "f655dc24_26868e94",
+      "revId": "b6de262a1c493935983e068ccb506008022ab79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b02ba6_c99e78fb",
         "filename": "cc/animation/animation_host.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b6de262a1c493935983e068ccb506008022ab79f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7344654f_30c39809",
+        "filename": "cc/animation/animation_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-10-06T18:06:55Z",
+      "side": 0,
+      "message": "Internally each AnimationTimeline::PushPropertiesTo checks its own needs_push_properties_ flag. See https://cs.chromium.org/chromium/src/cc/animation/animation_timeline.cc?l\u003d82\u0026rcl\u003daa5306329a841818b63279811e798eeb7423bff3",
+      "parentUuid": "12b02ba6_c99e78fb",
+      "revId": "b6de262a1c493935983e068ccb506008022ab79f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
