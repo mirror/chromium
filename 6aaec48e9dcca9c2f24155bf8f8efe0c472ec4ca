@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e931963a_259e61bb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-06T21:20:53Z",
+      "side": 1,
+      "message": "Would it be okay if both used \"Browser themes\". I\u0027d prefer to avoid differences between platforms (I mean it\u0027s okay to have differences, but it\u0027s nicer to reduce the differences).",
+      "revId": "6aaec48e9dcca9c2f24155bf8f8efe0c472ec4ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
