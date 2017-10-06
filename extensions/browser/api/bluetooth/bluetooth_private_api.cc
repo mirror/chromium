@@ -171,6 +171,8 @@ bool BluetoothPrivateSetAdapterStateFunction::DoWork(
 
   if (powered && adapter->IsPowered() != *powered) {
     BLUETOOTH_LOG(USER) << "SetAdapterState: powerd=" << *powered;
+    // TODO(crbug.com/772561): Change warning to vlog.
+    LOG(WARNING) << "Bluetooth private api set power = " << *powered;
     pending_properties_.insert(kPoweredProperty);
     adapter->SetPowered(*powered, CreatePropertySetCallback(kPoweredProperty),
                         CreatePropertyErrorCallback(kPoweredProperty));
