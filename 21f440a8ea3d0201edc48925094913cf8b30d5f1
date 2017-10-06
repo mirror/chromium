@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f1e7294_041c0d97",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-06T18:35:02Z",
+      "side": 1,
+      "message": "nit: I think it\u0027s better to return than having the else. Makes code a little clearer.",
+      "range": {
+        "startLine": 153,
+        "startChar": 4,
+        "endLine": 153,
+        "endChar": 8
+      },
+      "revId": "21f440a8ea3d0201edc48925094913cf8b30d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097ec604_d66b7cac",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-06T18:35:02Z",
+      "side": 1,
+      "message": "nit: Validate first that bytes_written is positive. Otherwise, possible (albeit unlikely) overflow here.\n\n  return bytes_written \u003e 0 \u0026\u0026 bytes_written \u003d\u003d static_cast\u003cint\u003e(contents.size());\n\n(Assuming contents cannot be empty, otherwise use \u003e\u003d 0)",
+      "range": {
+        "startLine": 221,
+        "startChar": 9,
+        "endLine": 221,
+        "endChar": 22
+      },
+      "revId": "21f440a8ea3d0201edc48925094913cf8b30d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf8fc5d_63aad55f",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 11
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-10-06T18:35:02Z",
+      "side": 1,
+      "message": "nit: wording.\n\nThere was a problem accessing the session files. Saving to disk is currently disabled. Please reload the page to try again.",
+      "range": {
+        "startLine": 244,
+        "startChar": 119,
+        "endLine": 244,
+        "endChar": 123
+      },
+      "revId": "21f440a8ea3d0201edc48925094913cf8b30d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
