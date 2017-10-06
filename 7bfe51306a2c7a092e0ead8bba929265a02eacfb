@@ -34,6 +34,24 @@
       "revId": "7bfe51306a2c7a092e0ead8bba929265a02eacfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7f9346_ab2251d2",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-10-06T23:40:05Z",
+      "side": 1,
+      "message": "\u003e If shouldSuggest was false, we won\u0027t change startAdjust and endAdjust, so they will be 0 for the new |SelectionClient.Result| https://cs.chromium.org/chromium/src/content/public/android/java/src/org/chromium/content/browser/SmartSelectionProvider.java?q\u003dsmartselection\u0026sq\u003dpackage:chromium\u0026l\u003d141, I kind wanted to force it here, this isn\u0027t test specific.\n\ndon\u0027t modify mResult then?",
+      "parentUuid": "7766b99b_93c89736",
+      "revId": "7bfe51306a2c7a092e0ead8bba929265a02eacfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
