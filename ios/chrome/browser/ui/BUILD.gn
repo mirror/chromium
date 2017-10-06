@@ -60,6 +60,7 @@ source_set("ui_util") {
     "//base",
     "//base:i18n",
     "//ios/chrome/browser",
+    "//ios/chrome/browser/ui/toolbar:toolbar_base_feature",
     "//ios/web",
     "//ui/base",
     "//ui/gfx",
