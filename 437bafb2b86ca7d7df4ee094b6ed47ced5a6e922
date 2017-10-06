@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d2f5556e_ae561a07",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T15:38:11Z",
+      "side": 1,
+      "message": "Nice catch! Yeah, we should probably remove line 536 and 537.\n\nThat said, I don\u0027t think it makes sense to add GcState()\u003d\u003dkSweeping here. If we do this, we will end up with calling CompleteSweep() when ScheduleGCIfNeeded() gets called at the first time. I guess it will end up mostly disabling the incremental sweeping.",
+      "parentUuid": "e5a7101b_c3eec4e9",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4cecef7_a87b073e",
         "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
         "patchSetId": 3
@@ -120,6 +138,24 @@
       "side": 1,
       "message": "Already answered this to Hannes: \n\nMigrateIncrementalMarkingToFullGCIfNecessary will migrate counters, statistics and potentially GcState so that we can just call CollectGarbage.\n\nHappy to remove for this CL but I think we will need something like this pretty soon.",
       "parentUuid": "88bcd9fb_ba5e911c",
+      "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0362103_2c7ff095",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-10-06T15:38:11Z",
+      "side": 1,
+      "message": "Yeah, let\u0027s factor it out from this CL.\n\nI guess we should use MakeConsistentForGC() for those purposes.",
+      "parentUuid": "f9523201_90e152e4",
       "revId": "437bafb2b86ca7d7df4ee094b6ed47ced5a6e922",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
