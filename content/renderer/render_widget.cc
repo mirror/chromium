@@ -2381,9 +2381,8 @@ void RenderWidget::SetTouchAction(cc::TouchAction touch_action) {
 
   if (widget_input_handler_manager_) {
     widget_input_handler_manager_->ProcessTouchAction(touch_action);
-  } else {
-    Send(new InputHostMsg_SetTouchAction(routing_id_, touch_action));
   }
+  Send(new InputHostMsg_SetTouchAction(routing_id_, touch_action));
 }
 
 void RenderWidget::RegisterRenderFrameProxy(RenderFrameProxy* proxy) {
