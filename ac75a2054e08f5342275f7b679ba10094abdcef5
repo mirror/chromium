@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "364a3627_af136ffc",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/video-in-scrollable-iframe-has-full-panel.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-06T16:47:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ecde63b_c0f9ac88",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "ac75a2054e08f5342275f7b679ba10094abdcef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd92b2da_e7afe2c8",
         "filename": "third_party/WebKit/LayoutTests/media/controls/video-in-scrollable-iframe-has-full-panel.html",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "ac75a2054e08f5342275f7b679ba10094abdcef5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943c17d6_2a333b60",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/video-in-scrollable-iframe-has-full-panel.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-10-06T16:47:57Z",
+      "side": 1,
+      "message": "I thought it was needed to force the page to layout (since that\u0027s what we were doing in related layout tests), but I removed it and it seems to work fine without",
+      "parentUuid": "fd92b2da_e7afe2c8",
+      "revId": "ac75a2054e08f5342275f7b679ba10094abdcef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
