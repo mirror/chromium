@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d540ddc7_c3148e71",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-06T21:31:04Z",
+      "side": 1,
+      "message": "This reference to the presenting VC already existed. Since the sign-in UI has been dismissed, we can use the presenting VC to launch the account settings UI.",
+      "range": {
+        "startLine": 394,
+        "startChar": 42,
+        "endLine": 394,
+        "endChar": 67
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2653732a_6b3a45f6",
+        "filename": "ios/chrome/browser/ui/settings/settings_navigation_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-06T21:31:04Z",
+      "side": 1,
+      "message": "Perhaps make this optional.",
+      "range": {
+        "startLine": 505,
+        "startChar": 0,
+        "endLine": 505,
+        "endChar": 74
+      },
+      "revId": "613c990fa8b1274bc74b8fbc5a1e6b4695007981",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
