@@ -11,7 +11,29 @@ struct PreviewsStatus {
   bool enabled;
 };
 
+struct MessageLog {
+  // The tye of event message (E.g. "Navigation").
+  string type;
+
+  // The human readable description of the event.
+  string description;
+
+  // The url that associated with the event.
+  string url;
+
+  // The time milliseconds representation of time when the event happened.
+  int64 time;
+};
+
 interface InterventionsInternalsPageHandler {
   // Returns a map of previews modes statuses.
   GetPreviewsEnabled() => (map<string, PreviewsStatus> statuses);
+
+  // Inject the client side page object.
+  SetClientPage(InterventionsInternalsPage page);
+};
+
+interface InterventionsInternalsPage {
+  // Push a new log message to the page.
+  LogNewMessage(MessageLog log);
 };

@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_UI_WEBUI_INTERVENTIONS_INTERNALS_INTERVENTIONS_INTERNALS_UI_H_
 
 #include "base/macros.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_controller.h"
@@ -21,6 +22,9 @@ class InterventionsInternalsUI
   // MojoWebUIController overrides:
   void BindUIHandler(
       mojom::InterventionsInternalsPageHandlerRequest request) override;
+
+  // The Profile that has this ui.
+  Profile* profile_;
 
   std::unique_ptr<InterventionsInternalsPageHandler> page_handler_;
 

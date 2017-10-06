@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/previews/core/previews_log.h"
+#include "components/previews/core/previews_logger.h"
 
 #include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
+#include "components/previews/core/previews_logger_observer.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace previews {
@@ -18,7 +19,33 @@ namespace {
 const char kPreviewsNavigationEventType[] = "Navigation";
 const size_t kMaximumMessageLogs = 10;
 
-}  // namespace
+// Mock class to test correct MessageLog is passed back to the
+// mojo::InterventionsInternalsPagePtr.
+class TestPreviewsLoggerObserver : public PreviewsLoggerObserver {
+ public:
+  TestPreviewsLoggerObserver()
+      : new_message_log_added_called_(false), message_(nullptr) {}
+
+  ~TestPreviewsLoggerObserver() override {}
+
+  // PreviewsLoggerObserver:
+  void OnNewMessageLogAdded(PreviewsLogger::MessageLog message) override {
+    new_message_log_added_called_ = true;
+    message_ = base::MakeUnique<PreviewsLogger::MessageLog>(message);
+  }
+
+  // Check if the mocked OnNewMessageLogAdded is called.
+  bool OnNewMessageLogAddedCalled() { return new_message_log_added_called_; }
+
+  // Expose the passed in MessageLog for testing.
+  PreviewsLogger::MessageLog* message() { return message_.get(); }
+
+ private:
+  bool new_message_log_added_called_;
+
+  // The passed in MessageLog in OnNewMessageLogAdded.
+  std::unique_ptr<PreviewsLogger::MessageLog> message_;
+};
 
 class PreviewsLoggerTest : public testing::Test {
  public:
@@ -115,5 +142,32 @@ TEST_F(PreviewsLoggerTest, PreviewsLoggerOnlyKeepsCertainNumberOfMessageLogs) {
 
   EXPECT_EQ(kMaximumMessageLogs, logger_->log_messages().size());
 }
+
+TEST_F(PreviewsLoggerTest, ObserversOnNewMessageIsCalledWithCorrectParams) {
+  TestPreviewsLoggerObserver* observers[] = {
+      new TestPreviewsLoggerObserver(), new TestPreviewsLoggerObserver(),
+      new TestPreviewsLoggerObserver(),
+  };
+
+  for (auto* obs : observers) {
+    logger_->AddObserver(obs);
+  }
+
+  std::string type = "Event";
+  std::string description = "Some description";
+  GURL url("http://www.url_.com/url_");
+  base::Time now = base::Time::Now();
+  logger_->LogMessage(type, description, url, now);
+
+  for (auto* obs : observers) {
+    EXPECT_TRUE(obs->OnNewMessageLogAddedCalled());
+    EXPECT_EQ(type, obs->message()->event_type);
+    EXPECT_EQ(description, obs->message()->event_description);
+    EXPECT_EQ(url, obs->message()->url);
+    EXPECT_EQ(now, obs->message()->time);
+  }
+}
+
+}  // namespace
 
 }  // namespace previews

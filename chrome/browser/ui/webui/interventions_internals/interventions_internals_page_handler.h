@@ -6,23 +6,43 @@
 #define CHROME_BROWSER_UI_WEBUI_INTERVENTIONS_INTERNALS_INTERVENTIONS_INTERNALS_PAGE_HANDLER_H_
 
 #include "base/macros.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/interventions_internals/interventions_internals.mojom.h"
 #include "chrome/browser/ui/webui/mojo_web_ui_handler.h"
+#include "components/previews/core/previews_logger.h"
+#include "components/previews/core/previews_logger_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 class InterventionsInternalsPageHandler
-    : public mojom::InterventionsInternalsPageHandler,
+    : public previews::PreviewsLoggerObserver,
+      public mojom::InterventionsInternalsPageHandler,
       public MojoWebUIHandler {
  public:
   explicit InterventionsInternalsPageHandler(
-      mojom::InterventionsInternalsPageHandlerRequest request);
+      mojom::InterventionsInternalsPageHandlerRequest request,
+      Profile* profile);
   ~InterventionsInternalsPageHandler() override;
 
-  // mojom::InterventionsInternalsPageHandler.
+  // mojom::InterventionsInternalsPageHandler:
   void GetPreviewsEnabled(GetPreviewsEnabledCallback callback) override;
+  void SetClientPage(mojom::InterventionsInternalsPagePtr page) override;
+
+  // previews::PreviewsLoggerObserver:
+  void OnNewMessageLogAdded(
+      previews::PreviewsLogger::MessageLog message) override;
+
+  // Retrieve the PreviewsLogger that this handler is listening to. Virtualized
+  // in testing.
+  virtual previews::PreviewsLogger* logger() const;
 
  private:
   mojo::Binding<mojom::InterventionsInternalsPageHandler> binding_;
+
+  // The pointer to the profile that this handler belongs to.
+  Profile* profile_;
+
+  // Handle back to the page by which we can pass in new log messages.
+  mojom::InterventionsInternalsPagePtr page_;
 
   DISALLOW_COPY_AND_ASSIGN(InterventionsInternalsPageHandler);
 };

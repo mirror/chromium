@@ -6,9 +6,11 @@
 
 #include <string>
 
-#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/previews/previews_service.h"
+#include "chrome/browser/previews/previews_service_factory.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
+#include "components/previews/core/previews_ui_service.h"
 #include "content/public/browser/web_ui_data_source.h"
 
 InterventionsInternalsUI::InterventionsInternalsUI(content::WebUI* web_ui)
@@ -24,7 +26,8 @@ InterventionsInternalsUI::InterventionsInternalsUI(content::WebUI* web_ui)
   source->SetDefaultResource(IDR_INTERVENTIONS_INTERNALS_INDEX_HTML);
   source->UseGzip(std::vector<std::string>());
 
-  content::WebUIDataSource::Add(Profile::FromWebUI(web_ui), source);
+  profile_ = Profile::FromWebUI(web_ui);
+  content::WebUIDataSource::Add(profile_, source);
 }
 
 InterventionsInternalsUI::~InterventionsInternalsUI() {}
@@ -32,5 +35,5 @@ InterventionsInternalsUI::~InterventionsInternalsUI() {}
 void InterventionsInternalsUI::BindUIHandler(
     mojom::InterventionsInternalsPageHandlerRequest request) {
   page_handler_.reset(
-      new InterventionsInternalsPageHandler(std::move(request)));
+      new InterventionsInternalsPageHandler(std::move(request), profile_));
 }
