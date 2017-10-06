@@ -16,6 +16,24 @@
       "revId": "09df15de4042c6a4fbde31b1db41fcf15056be52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffce1ff0_981407a4",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T11:40:00Z",
+      "side": 1,
+      "message": "Done (though I didn\u0027t have much to add other than that they fire the events they are named after, and that as usual for ExtendableEvents the callbacks are run when the event handler has run and the waitUntil() promise has settled).",
+      "parentUuid": "ff047087_e57a2e34",
+      "revId": "09df15de4042c6a4fbde31b1db41fcf15056be52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
