@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "871066e2_a3f55747",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-06T22:18:46Z",
+      "side": 1,
+      "message": "I agree that SendDidCommitProvisionalLoad should happen before observers are notified, but this is surprisingly difficult... :-(  Copy \u0026 pasting my current notes on the commit-before-scripts stuff:\n\nApproach #1: Postpone notifying the observers\n(https://chromium-review.googlesource.com/671469)\n- Test failures:\n  - SubresourceFilterBrowserTest.PageLoadMetrics (browser_tests)\n  - MultiTabLoadingPageLoadMetricsBrowserTest.MultiTabForeground (browser_tests)\n  - (CrOs) PageLoadMetricsBrowserTest.DocumentWriteReload (mus_browser_tests)\n  - Fix idea #1: Switch to WillCommit\n      - Difficult - MetricsRenderFrameObserver depends on\n        |is_same_document_navigation| arg of DidCommit...\n        this is missing in WillCommit…).  Maybe this argument\n        can be added to WillCommit… as well?\n      - Risk of changing the metrics - if WillCommit… fires\n        earlier, then the metrics measures by MetricsRenderFrameObservers\n        will change - this is undesirable\n  - Fix idea #2: Fix PLM so that it works fine after the change?\n      - TODO: look what goes wrong here...\n\nApproach #2: PostTask to postpone WebUI script execution\n(https://chromium-review.googlesource.com/701420)\n- Test failures:\n  - a bunch of failures in chromevox_tests\n    (e.g. CvoxBrailleDisplayManagerUnitTest.BasicGroup)\n\nI hope that I can make some progress on the above next week (the out-of-order script execution is blocking more verification of localStorage origin - https://chromium-review.googlesource.com/c/chromium/src/+/666317).",
+      "parentUuid": "7c260a36_9768d815",
+      "range": {
+        "startLine": 1693,
+        "startChar": 20,
+        "endLine": 1693,
+        "endChar": 24
+      },
+      "revId": "c249e48c2a2b4f7761195a38de8ddb53f99f2a89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea08fb44_50f08efa",
         "filename": "content/common/view_messages.h",
         "patchSetId": 2
