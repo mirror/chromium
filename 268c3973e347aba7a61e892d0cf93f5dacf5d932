@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7005948_a3350d32",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1867,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-06T15:56:54Z",
+      "side": 1,
+      "message": "pcc: it looks like -gsplit-dwarf implies -ggnu-pubnames in gcc (https://gcc.gnu.org/ml/gcc-patches/2014-05/msg01003.html) -- we probably want that too? If so, we could probably not pass -ggnu-pubnames explicitly then?",
+      "revId": "268c3973e347aba7a61e892d0cf93f5dacf5d932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cca11f_4f219e6e",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1884,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-06T15:56:54Z",
+      "side": 1,
+      "message": "gcc supports this flag starting in gcc 4.9.0. Which gcc versions do you support?\n\nDepending on what pcc says above, maybe we could add a comment like \"-ggnu-pubnames is only supported on gcc 4.9+; some v8 bots use older gccs. For gcc, -gsplit-dwarf above already implies -ggnu-pubnames, so passing this for gcc isn\u0027t as important. TODO: Remove this flag for clang too once -gsplit-dwarf implies -ggnu-pubnames there too\". If you\u0027re in a rush, you can land this with that comment without the TODO part, and we can add that when pcc replies later.",
+      "revId": "268c3973e347aba7a61e892d0cf93f5dacf5d932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
