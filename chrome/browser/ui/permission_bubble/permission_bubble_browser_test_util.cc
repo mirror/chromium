@@ -29,6 +29,10 @@ TestPermissionBubbleViewDelegate::Requests() {
   return requests_;
 }
 
+base::string16 GetDisplayOrigin() {
+  return base::string16();
+}
+
 PermissionBubbleBrowserTest::PermissionBubbleBrowserTest() {
 }
 
