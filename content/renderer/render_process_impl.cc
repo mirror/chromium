@@ -159,6 +159,8 @@ RenderProcessImpl::RenderProcessImpl(
   SetV8FlagIfNotFeature(features::kSharedArrayBuffer,
                         "--no-harmony-sharedarraybuffer");
 
+  SetV8FlagIfHasSwitch(switches::kV8Future, "--future");
+
   SetV8FlagIfFeature(features::kWebAssemblyTrapHandler, "--wasm-trap-handler");
   SetV8FlagIfNotFeature(features::kWebAssemblyTrapHandler,
                         "--no-wasm-trap-handler");

@@ -259,6 +259,7 @@ CONTENT_EXPORT extern const char kUtilityProcessRunningElevated[];
 CONTENT_EXPORT extern const char kUtilityStartupDialog[];
 CONTENT_EXPORT extern const char kV8CacheOptions[];
 CONTENT_EXPORT extern const char kV8CacheStrategiesForCacheStorage[];
+CONTENT_EXPORT extern const char kV8Future[];
 CONTENT_EXPORT extern const char kValidateInputEventStream[];
 CONTENT_EXPORT extern const char kWaitForDebuggerChildren[];
 CONTENT_EXPORT extern const char kZygoteCmdPrefix[];

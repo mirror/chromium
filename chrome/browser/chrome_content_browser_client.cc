@@ -1776,6 +1776,7 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
       switches::kProfilingFlush,
       switches::kReaderModeHeuristics,
       switches::kUnsafelyTreatInsecureOriginAsSecure,
+      switches::kV8Future,
       translate::switches::kTranslateSecurityOrigin,
     };
 

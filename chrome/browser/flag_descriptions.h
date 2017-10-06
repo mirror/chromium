@@ -889,6 +889,9 @@ extern const char kV8CacheStrategiesForCacheStorageAggressive[];
 extern const char kV8ContextSnapshotName[];
 extern const char kV8ContextSnapshotDescription[];
 
+extern const char kV8FutureName[];
+extern const char kV8FutureDescription[];
+
 extern const char kVibrateRequiresUserGestureName[];
 extern const char kVibrateRequiresUserGestureDescription[];
 

@@ -1408,6 +1408,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"shared-array-buffer", flag_descriptions::kEnableSharedArrayBufferName,
      flag_descriptions::kEnableSharedArrayBufferDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kSharedArrayBuffer)},
+    {"enable-future-v8-vm-features", flag_descriptions::kV8FutureName,
+     flag_descriptions::kV8FutureDescription, kOsAll,
+     SINGLE_VALUE_TYPE(switches::kV8Future)},
     {"disable-software-rasterizer", flag_descriptions::kSoftwareRasterizerName,
      flag_descriptions::kSoftwareRasterizerDescription,
 #if BUILDFLAG(ENABLE_SWIFTSHADER)
