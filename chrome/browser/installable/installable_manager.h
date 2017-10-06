@@ -54,8 +54,10 @@ class InstallableManager
   // at all if a service worker is never registered).
   //
   // Calls requesting data that is already fetched will return the cached data.
-  virtual void GetData(const InstallableParams& params,
-                       const InstallableCallback& callback);
+  virtual void GetData(
+      const InstallableParams& params,
+      InstallableParams::ServiceWorkerWaitBehavior wait_behavior,
+      const InstallableCallback& callback);
 
   // Called via AppBannerManagerAndroid to record metrics on how often the
   // installable check is completed when the menu or add to homescreen menu item
@@ -172,7 +174,7 @@ class InstallableManager
   void OnDidGetManifest(const GURL& manifest_url,
                         const content::Manifest& manifest);
 
-  void CheckInstallable();
+  void CheckManifestValid();
   bool IsManifestValidForWebApp(const content::Manifest& manifest);
   void CheckServiceWorker();
   void OnDidCheckHasServiceWorker(content::ServiceWorkerCapability capability);
@@ -193,7 +195,8 @@ class InstallableManager
 
   const GURL& manifest_url() const;
   const content::Manifest& manifest() const;
-  bool is_installable() const;
+  bool valid_manifest();
+  bool has_worker();
 
   InstallableTaskQueue task_queue_;
   std::unique_ptr<InstallableMetrics> metrics_;
