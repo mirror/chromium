@@ -70,6 +70,30 @@
       "revId": "019ea546582786a97476007914405558beccb6d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf5ffd2_d2865dee",
+        "filename": "chrome/browser/feature_engagement/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-10-06T23:16:15Z",
+      "side": 1,
+      "message": "To reiterate, the reason for this split is to keep as much of the views code outside of chrome/browser/feature_engagement as much as we could. \n\nThis allows for the code that handles the UI to remain in views and for things like policy (what to do in response to certain events), to remain self-contained here in chrome/browser/feature_engagement.",
+      "parentUuid": "a93d283a_a4d77efd",
+      "range": {
+        "startLine": 5,
+        "startChar": 4,
+        "endLine": 5,
+        "endChar": 43
+      },
+      "revId": "019ea546582786a97476007914405558beccb6d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
