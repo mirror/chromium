@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7364d704_2d036e7c",
+        "filename": "content/renderer/media/gpu/rtc_video_encoder_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-06T22:11:24Z",
+      "side": 1,
+      "message": "They are not equivalent. Some Android devices happen to output ContrainedBaseline when you checked the SPS output. But there might be devices which actually output Baseline, or can be configured to do so.\nWhat I would recommend is to do this cleanly and still have 1-to-1 match between Chrome and WebRTC profiles here. \n- Add a a new media::H264PROFILE_CONSTRAINEDBASELINE enum.\n- Make AndroidVEA return that enum as supported profile.\n- Make a new case block here that maps media::H264PROFILE_CONSTRAINEDBASELINE to webrtc::H264::kProfileConstrainedBaseline.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 70
+      },
+      "revId": "7fe5b95903c2939ac9184e319f3f372035675e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
