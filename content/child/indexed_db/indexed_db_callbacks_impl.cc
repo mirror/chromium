@@ -129,10 +129,10 @@ void IndexedDBCallbacksImpl::Error(int32_t code,
                      code, message));
 }
 
-void IndexedDBCallbacksImpl::SuccessStringList(
-    const std::vector<base::string16>& value) {
+void IndexedDBCallbacksImpl::SuccessDatabaseInfoList(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
   callback_runner_->PostTask(
-      FROM_HERE, base::BindOnce(&InternalState::SuccessStringList,
+      FROM_HERE, base::BindOnce(&InternalState::SuccessDatabaseInfoList,
                                 base::Unretained(internal_state_), value));
 }
 
@@ -257,12 +257,14 @@ void IndexedDBCallbacksImpl::InternalState::Error(
   callbacks_.reset();
 }
 
-void IndexedDBCallbacksImpl::InternalState::SuccessStringList(
-    const std::vector<base::string16>& value) {
-  WebVector<WebString> web_value(value.size());
-  std::transform(
-      value.begin(), value.end(), web_value.begin(),
-      [](const base::string16& s) { return WebString::FromUTF16(s); });
+void IndexedDBCallbacksImpl::InternalState::SuccessDatabaseInfoList(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
+  WebVector<WebIDBDatabaseInfo> web_value(value.size());
+  for (size_t i = 0; i < value.size(); ++i) {
+    web_value[i].name = WebString::FromUTF16(value[i].name);
+    web_value[i].id = value[i].id;
+    web_value[i].version = value[i].version;
+  }
   callbacks_->OnSuccess(web_value);
   callbacks_.reset();
 }

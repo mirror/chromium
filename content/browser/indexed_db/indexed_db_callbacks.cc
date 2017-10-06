@@ -137,7 +137,8 @@ class IndexedDBCallbacks::IOThreadHelper {
   ~IOThreadHelper();
 
   void SendError(const IndexedDBDatabaseError& error);
-  void SendSuccessStringList(const std::vector<base::string16>& value);
+  void SendSuccessDatabaseInfoList(
+      const std::vector<IndexedDBDatabaseInfo>& value);
   void SendBlocked(int64_t existing_version);
   void SendUpgradeNeeded(SafeIOThreadConnectionWrapper connection,
                          int64_t old_version,
@@ -231,14 +232,15 @@ void IndexedDBCallbacks::OnError(const IndexedDBDatabaseError& error) {
   }
 }
 
-void IndexedDBCallbacks::OnSuccess(const std::vector<base::string16>& value) {
+void IndexedDBCallbacks::OnSuccess(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(!complete_);
   DCHECK(io_helper_);
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&IOThreadHelper::SendSuccessStringList,
+      base::BindOnce(&IOThreadHelper::SendSuccessDatabaseInfoList,
                      base::Unretained(io_helper_.get()), value));
   complete_ = true;
 }
@@ -521,8 +523,8 @@ void IndexedDBCallbacks::IOThreadHelper::SendError(
   callbacks_->Error(error.code(), error.message());
 }
 
-void IndexedDBCallbacks::IOThreadHelper::SendSuccessStringList(
-    const std::vector<base::string16>& value) {
+void IndexedDBCallbacks::IOThreadHelper::SendSuccessDatabaseInfoList(
+    const std::vector<IndexedDBDatabaseInfo>& value) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!callbacks_)
     return;
@@ -530,7 +532,7 @@ void IndexedDBCallbacks::IOThreadHelper::SendSuccessStringList(
     OnConnectionError();
     return;
   }
-  callbacks_->SuccessStringList(value);
+  callbacks_->SuccessDatabaseInfoList(value);
 }
 
 void IndexedDBCallbacks::IOThreadHelper::SendBlocked(int64_t existing_version) {

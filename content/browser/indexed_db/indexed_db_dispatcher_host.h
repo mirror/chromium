@@ -91,7 +91,7 @@ class CONTENT_EXPORT IndexedDBDispatcherHost
   ~IndexedDBDispatcherHost() override;
 
   // indexed_db::mojom::Factory implementation:
-  void GetDatabaseNames(
+  void GetDatabasesInfo(
       ::indexed_db::mojom::CallbacksAssociatedPtrInfo callbacks_info,
       const url::Origin& origin) override;
   void Open(::indexed_db::mojom::CallbacksAssociatedPtrInfo callbacks_info,

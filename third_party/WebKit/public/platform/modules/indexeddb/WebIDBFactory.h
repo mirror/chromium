@@ -29,6 +29,7 @@
 #ifndef WebIDBFactory_h
 #define WebIDBFactory_h
 
+#include "platform/wtf/Functional.h"
 #include "public/platform/WebCommon.h"
 
 namespace blink {
@@ -40,9 +41,14 @@ class WebString;
 
 class WebIDBFactory {
  public:
+  using GetAllDatabasesCallback =
+      WTF::Function<const Vector<WebIDBDatabaseInfo>&>;
+
   virtual ~WebIDBFactory() {}
 
-  virtual void GetDatabaseNames(WebIDBCallbacks*, const WebSecurityOrigin&) = 0;
+  virtual void GetAllDatabases(const blink::WebSecurityOrigin&,
+                               GetAllDatabasesCallback) = 0;
+
   virtual void Open(const WebString& name,
                     long long version,
                     long long transaction_id,

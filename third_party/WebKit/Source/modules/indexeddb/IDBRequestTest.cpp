@@ -115,7 +115,6 @@ void EnsureIDBCallbacksDontThrow(IDBRequest* request,
   request->HandleResponse();
   request->HandleResponse(IDBKey::CreateInvalid(), IDBKey::CreateInvalid(),
                           IDBValue::Create());
-  request->EnqueueResponse(Vector<String>());
 
   EXPECT_TRUE(!exception_state.HadException());
 }

@@ -16479,6 +16479,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2164" label="PseudoShadowInStaticProfile"/>
   <int value="2165" label="SchemeBypassesCSP"/>
   <int value="2166" label="InnerSchemeBypassesCSP"/>
+  <int value="2167" label="V8IDBFactory_GetAllDatabases_Method"/>
 </enum>
 
 <enum name="FeedbackSource">

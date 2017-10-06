@@ -13,6 +13,7 @@ public_headers = [
 traits_headers = [ "//content/common/indexed_db/indexed_db_struct_traits.h" ]
 type_mappings = [
   "indexed_db.mojom.CursorDirection=blink::WebIDBCursorDirection",
+  "indexed_db.mojom.DatabaseInfo=content::IndexedDBDatabaseInfo",
   "indexed_db.mojom.DatabaseMetadata=content::IndexedDBDatabaseMetadata",
   "indexed_db.mojom.DataLoss=blink::WebIDBDataLoss",
   "indexed_db.mojom.IndexKeys=content::IndexedDBIndexKeys",

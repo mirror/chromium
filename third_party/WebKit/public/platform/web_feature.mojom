@@ -1695,6 +1695,7 @@ enum WebFeature {
   kPseudoShadowInStaticProfile = 2164,
   kSchemeBypassesCSP = 2165,
   kInnerSchemeBypassesCSP = 2166,
+  kV8IDBFactory_GetAllDatabases_Method = 2167,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

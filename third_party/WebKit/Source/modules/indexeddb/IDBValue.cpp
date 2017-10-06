@@ -5,6 +5,7 @@
 #include "modules/indexeddb/IDBValue.h"
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
+#include "modules/indexeddb/IDBDatabaseInfo.h"
 #include "platform/blob/BlobData.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefPtr.h"
