@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e9480c5_43d07a9d",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-10-06T20:26:25Z",
+      "side": 1,
+      "message": "I think these changes in SurfaceAggregator can be simplified. The basic idea is to get primary_rect from the surface_quad, and try to fill that rect with a compositor frame. The compositor frame can be either primary or fallback, and if the size doesn\u0027t match, checkerboard. This won\u0027t need creating a temporary quad.\n\nShould be able to achieve this by factoring out the HandleSurfaceQuad function from around getting active frame from surface.",
+      "revId": "020f4d70f00332721c8384998e3c28fd6eae904d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
