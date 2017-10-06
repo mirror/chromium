@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "76d18316_ee0e14a8",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/setOptions-reject.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-06T13:30:35Z",
+      "side": 0,
+      "message": "The way to pass PhotoSettings now is directly into TakePhoto(),\nso instead of nuking this file, could you refactor it to test\nthat TakePhoto() rejects if given any unsupported/outside range\noption?",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "89b5c3ba0427dd52df552d63238f3a0c4377861a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fe6158e_8c0ac797",
         "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
         "patchSetId": 3
