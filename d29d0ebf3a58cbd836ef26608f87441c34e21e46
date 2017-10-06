@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ed6ba6a_3506436f",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "I\u0027ll have a look to see if I can find some. Worst case: it isn\u0027t recognized for some and no workaround is applied.",
+      "parentUuid": "e520d7f0_113cd74a",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0717835_bf2836ff",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T14:22:44Z",
       "side": 1,
       "message": "DyldInterposeTuple\n(or are you perhaps following some other convention that I\u0027m not seeing?)",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33360466_ab4b9694",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "I should add a comment with a link to the definitions of this (dyld_priv.h). It doesn\u0027t seem to be a public header but it\u0027s available on Apple Open Source.",
+      "parentUuid": "a0717835_bf2836ff",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b2f8edb5_25fc5d28",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "I want to name it so it\u0027s clear it\u0027s the signature of the function dyld_dynamic_interpose, so I\u0027d rather keep this naming here if possible.",
+      "parentUuid": "203b0924_6eb05a47",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d81f425_93e1ffdb",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0b6036c7_14df3ef9",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "Sounds reasonable. I\u0027ll rename it.",
+      "parentUuid": "2d81f425_93e1ffdb",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ccd828b_3ec8bf2e",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-06T14:22:44Z",
       "side": 1,
       "message": "GetGlobalQueueOverride - although in this case, since we\u0027re copying a known API, I can see why it would make sense to keep the name close to what it\u0027s overriding.",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0228c81_3924e2a1",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "I think so too. I\u0027ll fix the other naming issues tho - the ones that aren\u0027t directly mimicking existing APIs.",
+      "parentUuid": "3ccd828b_3ec8bf2e",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +228,24 @@
     },
     {
       "key": {
+        "uuid": "93845377_62986ab2",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "Yeah, these TODOs are only for me in this CL. They will be removed before landing. This one even got some logging. :)\n\nI think we should probably add a stat, though, to see how often this gets enabled and how often it doesn\u0027t.",
+      "parentUuid": "96020e6d_5eefa07f",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "634ea170_6f426de7",
         "filename": "media/audio/mac/coreaudio_dispatch_override.h",
         "patchSetId": 4
@@ -149,6 +257,30 @@
       "writtenOn": "2017-10-06T14:22:44Z",
       "side": 1,
       "message": "InitializeCoreAudioDispatchOverride();",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 43
+      },
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7dd2961_8cd53d42",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-06T14:36:19Z",
+      "side": 1,
+      "message": "I keep forgetting which naming rule is for what. I\u0027ll fix it! :)",
+      "parentUuid": "634ea170_6f426de7",
       "range": {
         "startLine": 9,
         "startChar": 5,
