@@ -507,6 +507,10 @@ bool FakeChromeUserManager::IsCurrentUserNonCryptohomeDataEphemeral() const {
   return false;
 }
 
+bool FakeChromeUserManager::IsCurrentUserCryptohomeDataEphemeral() const {
+  return current_user_ephemeral_;
+}
+
 bool FakeChromeUserManager::CanCurrentUserLock() const {
   return false;
 }
@@ -556,7 +560,7 @@ bool FakeChromeUserManager::IsLoggedInAsStub() const {
 
 bool FakeChromeUserManager::IsUserNonCryptohomeDataEphemeral(
     const AccountId& account_id) const {
-  return false;
+  return current_user_ephemeral_;
 }
 
 void FakeChromeUserManager::ChangeUserChildStatus(user_manager::User* user,
