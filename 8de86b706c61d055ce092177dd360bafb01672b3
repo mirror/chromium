@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "c21a9c80_524b439d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-gain-node.html",
+        "patchSetId": 22
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-10-06T19:22:55Z",
+      "side": 1,
+      "message": "Done. Please look at PS28. It has an AudioParam setter test with the context suspension.",
+      "parentUuid": "74a3c3dd_d26260b5",
+      "revId": "8de86b706c61d055ce092177dd360bafb01672b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a50807e_cecb3e6d",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webaudio/audio-worklet/audio-worklet-node-options.html",
         "patchSetId": 22
