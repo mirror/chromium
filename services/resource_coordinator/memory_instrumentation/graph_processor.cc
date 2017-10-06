@@ -55,6 +55,7 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
 
     Node* node;
     auto node_iterator = global_graph->nodes_by_guid().find(dump.guid());
+    LOG(ERROR) << "GUID: " << dump.guid().ToString() << " Path:" << path;
     if (node_iterator == global_graph->nodes_by_guid().end()) {
       node = graph->CreateNode(dump.guid(), path);
     } else {

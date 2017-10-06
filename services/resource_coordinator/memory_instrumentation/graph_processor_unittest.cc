@@ -49,4 +49,26 @@ TEST(GraphProcessorTest, ComputeMemoryGraph) {
   ASSERT_EQ(10ul, size->second.value_uint64);
 }
 
+TEST(GraphProcessorTest, HintsDcheck) {
+  std::map<ProcessId, ProcessMemoryDump> process_dumps;
+
+  MemoryDumpArgs dump_args = {MemoryDumpLevelOfDetail::DETAILED};
+
+  ProcessMemoryDump pmd1(new HeapProfilerSerializationState, dump_args);
+  auto* mad1 = pmd1.CreateAllocatorDump("malloc");
+  mad1->AddScalar(MemoryAllocatorDump::kNameSize,
+                  MemoryAllocatorDump::kUnitsBytes, 10);
+
+  ProcessMemoryDump pmd2(new HeapProfilerSerializationState, dump_args);
+  auto* mad2 = pmd2.CreateAllocatorDump("malloc");
+  mad2->AddScalar(MemoryAllocatorDump::kNameSize,
+                  MemoryAllocatorDump::kUnitsBytes, 10);
+
+  process_dumps.emplace(1, std::move(pmd1));
+  process_dumps.emplace(2, std::move(pmd2));
+
+  auto global_dump = ComputeMemoryGraph(std::move(process_dumps));
+  ASSERT_EQ(1u, global_dump->process_dump_graphs().size());
+}
+
 }  // namespace memory_instrumentation
