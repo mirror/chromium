@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 
+#include "base/observer_list.h"
 #include "base/optional.h"
 #include "base/sequenced_task_runner.h"
 #include "base/synchronization/lock.h"
@@ -61,6 +62,14 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   base::Optional<sync_pb::PrinterSpecifics> GetPrinter(
       const std::string& id) const;
 
+  class Observer {
+   public:
+    virtual void OnPrintersUpdated() = 0;
+  };
+
+  void AddObserver(Observer* observer);
+  void RemoveObserver(Observer* observer);
+
  private:
   class StoreProxy;
 
@@ -77,7 +86,10 @@ class PrintersSyncBridge : public syncer::ModelTypeSyncBridge {
   bool DeleteSpecifics(const std::string& id,
                        syncer::ModelTypeStore::WriteBatch* batch);
 
+  void NotifyPrintersUpdated();
+
   std::unique_ptr<StoreProxy> store_delegate_;
+  base::ObserverList<Observer> observer_list_;
 
   // Lock over |all_data_|.
   mutable base::Lock data_lock_;

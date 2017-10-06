@@ -136,6 +136,7 @@ class PrintersSyncBridge::StoreProxy {
       return;
     }
 
+    owner_->NotifyPrintersUpdated();
     owner_->change_processor()->ModelReadyToSync(std::move(metadata_batch));
   }
 
@@ -380,6 +381,7 @@ void PrintersSyncBridge::AddPrinterLocked(
   CommitPrinterPut(*printer);
   auto& dest = all_data_[printer->id()];
   dest = std::move(printer);
+  NotifyPrintersUpdated();
 }
 
 void PrintersSyncBridge::StoreSpecifics(
@@ -389,6 +391,7 @@ void PrintersSyncBridge::StoreSpecifics(
   const std::string id = specifics->id();
   batch->WriteData(id, specifics->SerializeAsString());
   all_data_[id] = std::move(specifics);
+  NotifyPrintersUpdated();
 }
 
 bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
@@ -402,6 +405,19 @@ bool PrintersSyncBridge::DeleteSpecifics(const std::string& id,
   }
 
   return false;
+}
+
+void PrintersSyncBridge::AddObserver(Observer* obs) {
+  observer_list_.AddObserver(obs);
+}
+
+void PrintersSyncBridge::RemoveObserver(Observer* obs) {
+  observer_list_.RemoveObserver(obs);
+}
+
+void PrintersSyncBridge::NotifyPrintersUpdated() {
+  for (auto& observer : observer_list_)
+    observer.OnPrintersUpdated();
 }
 
 }  // namespace chromeos
