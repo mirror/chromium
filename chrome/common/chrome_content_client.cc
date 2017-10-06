@@ -416,13 +416,16 @@ std::string GetUserAgent() {
       return ua;
     LOG(WARNING) << "Ignored invalid value for flag --" << switches::kUserAgent;
   }
-
   std::string product = GetProduct();
 #if defined(OS_ANDROID)
   if (command_line->HasSwitch(switches::kUseMobileUserAgent))
     product += " Mobile";
 #endif
   return content::BuildUserAgentFromProduct(product);
+}
+
+std::string GetUserAgentNoOverride() {
+  return content::BuildUserAgentFromProduct(GetProduct());
 }
 
 ChromeContentClient::ChromeContentClient() {

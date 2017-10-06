@@ -26,6 +26,9 @@
 
 // Returns the user agent of Chrome.
 std::string GetUserAgent();
+// Returns the user agent of Chrome without allowing the user-agent flag to
+// override it.
+std::string GetUserAgentNoOverride();
 
 class ChromeContentClient : public content::ContentClient {
  public:

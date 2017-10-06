@@ -6,6 +6,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/common/chrome_content_client.h"
 #include "components/offline_pages/core/prefetch/prefetch_server_urls.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/load_flags.h"
@@ -80,6 +81,7 @@ PrefetchRequestFetcher::PrefetchRequestFetcher(
   url_fetcher_->SetRequestContext(request_context_getter_.get());
   url_fetcher_->SetAutomaticallyRetryOn5xx(false);
   url_fetcher_->SetAutomaticallyRetryOnNetworkChanges(0);
+  url_fetcher_->AddExtraRequestHeader(GetUserAgentNoOverride());
   std::string experiment_header = PrefetchExperimentHeader();
   if (!experiment_header.empty())
     url_fetcher_->AddExtraRequestHeader(experiment_header);
