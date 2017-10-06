@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c278d08d_8a9afcda",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:50:07Z",
+      "side": 1,
+      "message": "nit: Maybe just add a helper function to wrap std::get\u003ckFileNameIndex\u003e(file_lock_key)?",
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e176ec52_99b18d6d",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:50:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be a class member function.",
+      "range": {
+        "startLine": 152,
+        "startChar": 5,
+        "endLine": 152,
+        "endChar": 40
+      },
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1245b87_a1b16439",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:50:07Z",
+      "side": 1,
+      "message": "You can use base::ContainsOnlyChars()",
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94745ad8_5026f1c2",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-10-06T20:50:07Z",
+      "side": 1,
+      "message": "nit: This comments should go with where those ID strings are defined, e.g. widevine_cdm_common.h",
+      "range": {
+        "startLine": 75,
+        "startChar": 71,
+        "endLine": 77,
+        "endChar": 74
+      },
+      "revId": "b33bcb084cb082f4e067a254b05237e4d2060b7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
