@@ -57,6 +57,48 @@
       "revId": "3cff9cd8b0bd0d45a0c6c47b373b38d37f857703",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881f3ff8_27cc5304",
+        "filename": "media/audio/fuchsia/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T01:18:41Z",
+      "side": 1,
+      "message": "Added reference for file://build/fuchsia/OWNERS.\nI don\u0027t think per-file OWNERS rules apply to directories.",
+      "parentUuid": "d8a690ec_c404b46b",
+      "revId": "3cff9cd8b0bd0d45a0c6c47b373b38d37f857703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efad6e4e_f4a9bdfe",
+        "filename": "media/audio/fuchsia/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-10-06T01:18:41Z",
+      "side": 1,
+      "message": "Will remove him from build/fuchsia in a separate CL.",
+      "parentUuid": "e7d2d4e4_8efb9b38",
+      "range": {
+        "startLine": 1,
+        "startChar": 7,
+        "endLine": 1,
+        "endChar": 15
+      },
+      "revId": "3cff9cd8b0bd0d45a0c6c47b373b38d37f857703",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
