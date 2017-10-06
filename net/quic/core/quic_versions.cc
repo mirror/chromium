@@ -29,12 +29,11 @@ QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
   return MakeQuicTag(d, c, b, a);
 }
 
-// Constructs a QuicVersionLabel from the provided QuicTransportVersion and
-// HandshakeProtocol.
-QuicVersionLabel LabelFromVersionAndProtocol(QuicTransportVersion version,
-                                             HandshakeProtocol handshake) {
+}  // namespace
+
+QuicVersionLabel CreateQuicVersionLabel(ParsedQuicVersion parsed_version) {
   char proto = 0;
-  switch (handshake) {
+  switch (parsed_version.handshake_protocol) {
     case PROTOCOL_QUIC_CRYPTO:
       proto = 'Q';
       break;
@@ -45,10 +44,11 @@ QuicVersionLabel LabelFromVersionAndProtocol(QuicTransportVersion version,
       proto = 'T';
       break;
     default:
-      QUIC_LOG(ERROR) << "Invalid HandshakeProtocol: " << handshake;
+      QUIC_LOG(ERROR) << "Invalid HandshakeProtocol: "
+                      << parsed_version.handshake_protocol;
       return 0;
   }
-  switch (version) {
+  switch (parsed_version.transport_version) {
     case QUIC_VERSION_35:
       return MakeVersionLabel(proto, '0', '3', '5');
     case QUIC_VERSION_37:
@@ -64,31 +64,30 @@ QuicVersionLabel LabelFromVersionAndProtocol(QuicTransportVersion version,
     default:
       // This shold be an ERROR because we should never attempt to convert an
       // invalid QuicTransportVersion to be written to the wire.
-      QUIC_LOG(ERROR) << "Unsupported QuicTransportVersion: " << version;
+      QUIC_LOG(ERROR) << "Unsupported QuicTransportVersion: "
+                      << parsed_version.transport_version;
       return 0;
   }
 }
 
-std::pair<QuicTransportVersion, HandshakeProtocol> VersionAndProtocolFromLabel(
-    QuicVersionLabel version_label) {
+ParsedQuicVersion ParseQuicVersionLabel(QuicVersionLabel version_label) {
   std::vector<HandshakeProtocol> protocols = {PROTOCOL_QUIC_CRYPTO};
   if (FLAGS_quic_supports_tls_handshake) {
     protocols.push_back(PROTOCOL_TLS1_3);
   }
   for (QuicTransportVersion version : kSupportedTransportVersions) {
     for (HandshakeProtocol handshake : protocols) {
-      if (version_label == LabelFromVersionAndProtocol(version, handshake)) {
-        return std::make_pair(version, handshake);
+      if (version_label ==
+          CreateQuicVersionLabel(ParsedQuicVersion(handshake, version))) {
+        return ParsedQuicVersion(handshake, version);
       }
     }
   }
   // Reading from the client so this should not be considered an ERROR.
   QUIC_DLOG(INFO) << "Unsupported QuicVersionLabel version: "
                   << QuicVersionLabelToString(version_label);
-  return std::make_pair(QUIC_VERSION_UNSUPPORTED, PROTOCOL_UNSUPPORTED);
+  return ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED);
 }
-
-}  // namespace
 
 QuicTransportVersionVector AllSupportedTransportVersions() {
   QuicTransportVersionVector supported_versions;
@@ -150,8 +149,9 @@ QuicTransportVersionVector VersionOfIndex(
 }
 
 QuicVersionLabel QuicVersionToQuicVersionLabel(
-    const QuicTransportVersion version) {
-  return LabelFromVersionAndProtocol(version, PROTOCOL_QUIC_CRYPTO);
+    QuicTransportVersion transport_version) {
+  return CreateQuicVersionLabel(
+      ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, transport_version));
 }
 
 string QuicVersionLabelToString(QuicVersionLabel version_label) {
@@ -165,20 +165,20 @@ string QuicVersionLabelToString(QuicVersionLabel version_label) {
 
 QuicTransportVersion QuicVersionLabelToQuicVersion(
     QuicVersionLabel version_label) {
-  return VersionAndProtocolFromLabel(version_label).first;
+  return ParseQuicVersionLabel(version_label).transport_version;
 }
 
 HandshakeProtocol QuicVersionLabelToHandshakeProtocol(
     QuicVersionLabel version_label) {
-  return VersionAndProtocolFromLabel(version_label).second;
+  return ParseQuicVersionLabel(version_label).handshake_protocol;
 }
 
 #define RETURN_STRING_LITERAL(x) \
   case x:                        \
     return #x
 
-string QuicVersionToString(const QuicTransportVersion version) {
-  switch (version) {
+string QuicVersionToString(QuicTransportVersion transport_version) {
+  switch (transport_version) {
     RETURN_STRING_LITERAL(QUIC_VERSION_35);
     RETURN_STRING_LITERAL(QUIC_VERSION_37);
     RETURN_STRING_LITERAL(QUIC_VERSION_38);

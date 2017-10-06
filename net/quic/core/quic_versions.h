@@ -46,6 +46,23 @@ enum HandshakeProtocol {
   PROTOCOL_TLS1_3,
 };
 
+// A parsed QUIC version label which determines that handshake protocol
+// and the transport version.
+struct ParsedQuicVersion {
+  HandshakeProtocol handshake_protocol;
+  QuicTransportVersion transport_version;
+
+  ParsedQuicVersion(HandshakeProtocol handshake_protocol,
+                    QuicTransportVersion transport_version)
+      : handshake_protocol(handshake_protocol),
+        transport_version(transport_version) {}
+
+  bool operator==(const ParsedQuicVersion& other) const {
+    return handshake_protocol == other.handshake_protocol &&
+           transport_version == other.transport_version;
+  }
+};
+
 // Representation of the on-the-wire QUIC version number. Will be written/read
 // to the wire in network-byte-order.
 using QuicVersionLabel = uint32_t;
@@ -83,11 +100,22 @@ QUIC_EXPORT_PRIVATE QuicTransportVersionVector
 VersionOfIndex(const QuicTransportVersionVector& versions, int index);
 
 // QuicVersionLabel is written to and read from the wire, but we prefer to use
+// the more readable ParsedQuicVersion at other levels.
+// Helper function which translates from a QuicVersionLabel to a
+// ParsedQuicVersion.
+QUIC_EXPORT_PRIVATE ParsedQuicVersion
+ParseQuicVersionLabel(QuicVersionLabel version_label);
+
+// Constructs a QuicVersionLabel from the provided ParsedQuicVersion.
+QUIC_EXPORT_PRIVATE QuicVersionLabel
+CreateQuicVersionLabel(ParsedQuicVersion parsed_version);
+
+// QuicVersionLabel is written to and read from the wire, but we prefer to use
 // the more readable QuicTransportVersion at other levels.
 // Helper function which translates from a QuicTransportVersion to a
 // QuicVersionLabel. Returns 0 if |version| is unsupported.
 QUIC_EXPORT_PRIVATE QuicVersionLabel
-QuicVersionToQuicVersionLabel(const QuicTransportVersion version);
+QuicVersionToQuicVersionLabel(QuicTransportVersion transport_version);
 
 // Helper function which translates from a QuicVersionLabel to a std::string.
 QUIC_EXPORT_PRIVATE std::string QuicVersionLabelToString(
@@ -103,10 +131,10 @@ QuicVersionLabelToQuicVersion(QuicVersionLabel version_label);
 QUIC_EXPORT_PRIVATE HandshakeProtocol
 QuicVersionLabelToHandshakeProtocol(QuicVersionLabel version_label);
 
-// Helper function which translates from a QuicVersion to a string.
+// Helper function which translates from a QuicTransportVersion to a string.
 // Returns strings corresponding to enum names (e.g. QUIC_VERSION_6).
 QUIC_EXPORT_PRIVATE std::string QuicVersionToString(
-    const QuicTransportVersion version);
+    QuicTransportVersion transport_version);
 
 // Returns comma separated list of string representations of QuicVersion enum
 // values in the supplied |versions| vector.

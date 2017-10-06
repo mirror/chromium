@@ -12,7 +12,15 @@ namespace net {
 namespace test {
 namespace {
 
-class QuicVersionsTest : public QuicTest {};
+class QuicVersionsTest : public QuicTest {
+ protected:
+  QuicVersionLabel MakeVersionLabel(char a, char b, char c, char d) {
+    if (!FLAGS_quic_reloadable_flag_quic_use_net_byte_order_version_label) {
+      return MakeQuicTag(a, b, c, d);
+    }
+    return MakeQuicTag(d, c, b, a);
+  }
+};
 
 TEST_F(QuicVersionsTest, QuicVersionToQuicVersionLabel) {
 // If you add a new version to the QuicTransportVersion enum you will need to
@@ -154,6 +162,106 @@ TEST_F(QuicVersionsTest, QuicVersionLabelToHandshakeProtocol) {
 #endif
 #endif
   EXPECT_EQ(PROTOCOL_UNSUPPORTED, QuicVersionLabelToHandshakeProtocol(tls_tag));
+}
+
+TEST_F(QuicVersionsTest, ParseQuicVersionLabel) {
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_35),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '3', '5')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_37),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '3', '7')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_38),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '3', '8')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_39),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '3', '9')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_41),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '4', '1')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_42),
+            ParseQuicVersionLabel(MakeVersionLabel('Q', '0', '4', '2')));
+
+  // Test a TLS version:
+  FLAGS_quic_supports_tls_handshake = true;
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_35),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '5')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_37),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '7')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_38),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '8')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_39),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '9')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_41),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '1')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_42),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '2')));
+
+  FLAGS_quic_supports_tls_handshake = false;
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '5')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '7')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '8')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '9')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '1')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '2')));
+}
+
+TEST_F(QuicVersionsTest, CreateQuicVersionLabel) {
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '3', '5'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_35)));
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '3', '7'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_37)));
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '3', '8'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_38)));
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '3', '9'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_39)));
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '4', '1'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_41)));
+  EXPECT_EQ(MakeVersionLabel('Q', '0', '4', '2'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_QUIC_CRYPTO, QUIC_VERSION_42)));
+
+  // Test a TLS version:
+  FLAGS_quic_supports_tls_handshake = true;
+  EXPECT_EQ(MakeVersionLabel('T', '0', '3', '5'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_35)));
+  EXPECT_EQ(MakeVersionLabel('T', '0', '3', '7'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_37)));
+  EXPECT_EQ(MakeVersionLabel('T', '0', '3', '8'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_38)));
+  EXPECT_EQ(MakeVersionLabel('T', '0', '3', '9'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_39)));
+  EXPECT_EQ(MakeVersionLabel('T', '0', '4', '1'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_41)));
+  EXPECT_EQ(MakeVersionLabel('T', '0', '4', '2'),
+            CreateQuicVersionLabel(
+                ParsedQuicVersion(PROTOCOL_TLS1_3, QUIC_VERSION_42)));
+
+  FLAGS_quic_supports_tls_handshake = false;
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '5')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '7')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '8')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '3', '9')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '1')));
+  EXPECT_EQ(ParsedQuicVersion(PROTOCOL_UNSUPPORTED, QUIC_VERSION_UNSUPPORTED),
+            ParseQuicVersionLabel(MakeVersionLabel('T', '0', '4', '2')));
 }
 
 TEST_F(QuicVersionsTest, QuicVersionToString) {
