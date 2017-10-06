@@ -104,6 +104,23 @@
     },
     {
       "key": {
+        "uuid": "f873d30d_a57db9b5",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T09:43:27Z",
+      "side": 1,
+      "message": "Hm... if the finished_reason_ gets updated every time pending_scripts_ becomes empty I prefer calling it last_finished_reason_ or last_ something, which feels a little clearer.",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32213d3a_d64c0651",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
         "patchSetId": 12
@@ -115,6 +132,23 @@
       "writtenOn": "2017-10-06T08:24:45Z",
       "side": 1,
       "message": "\"if the installed script stored in the disk cache is corrupted\" -\u003e something like \"if |reason| indicates failure to read the installed script from the disk cache (kNoHttpInfoError or kResponseReaderError), then |owner_|  is doomed via ServiceWorkerRegistration::DeleteVersion()\"",
+      "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e8f15b_7aaee754",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T09:43:27Z",
+      "side": 1,
+      "message": "This Finish() feels a bit confusing too, while I know this is aligned with the enum name FinishedReason (and I don\u0027t have any better idea about what the enum could be called otherwise)\n\nUpdateFinishedReasonAndBecomeIdle()\n\nis the best descriptive name I can think of, but it\u0027s probably a bit too long?",
       "revId": "582bd2c4b10a8e4b910f3df8faabe8dcbbeb69df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
