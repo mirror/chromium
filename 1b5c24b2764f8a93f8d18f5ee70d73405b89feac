@@ -16,6 +16,24 @@
       "revId": "1b5c24b2764f8a93f8d18f5ee70d73405b89feac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c02c500_7764acd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-10-06T18:22:55Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I had updated the commit message locally, but forgot that \u0027git cl upload\u0027 goes out of its way to not update commit messages.",
+      "parentUuid": "48165de9_e56f6919",
+      "revId": "1b5c24b2764f8a93f8d18f5ee70d73405b89feac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
