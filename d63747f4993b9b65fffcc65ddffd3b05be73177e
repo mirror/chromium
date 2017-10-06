@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c22a3ecb_4c30aa44",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 1730,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "For startup tracing, we start logging chrome trace events locally earlier:\n\nhttps://cs.chromium.org/chromium/src/content/app/content_main_runner.cc?l\u003d556\n\nThat is not changed in this CL. What is changed is that collecting traces from other sources, e.g. ETW, Chrome OS system tracing, BattOr, start a little bit later because now they need Mojo to communicate with the tracing controller. I think that should be OK; wdyt?",
+      "parentUuid": "9d023add_14e42b6c",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "862a34b8_c38ef213",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
         "patchSetId": 52
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T22:56:18Z",
       "side": 1,
       "message": "Is it possible that ArcTracingAgentImpl::StopAndFlush or ArcTracingAgentImpl::OnArcTracingStopped is called at destruction, when the UI thread\u0027s message loop will not run after joining the IO thread, meaning this callback might sit on the message loop\u0027s queue and never run? or equivalently, this gets deleted before the callback is run?\nIf so, should we pick things up in the destructor?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b217ee_793e508d",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "I don\u0027t think we call StopTracing (and so StopAndFlush) at destruction.",
+      "parentUuid": "862a34b8_c38ef213",
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a7c9b4f0_31dec4ca",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92682c34_bb5330ea",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc10662a_67e8712c",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
         "patchSetId": 52
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-05T22:56:18Z",
       "side": 1,
       "message": "Did you mean BrowserThread::UI?",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0a71db_85b0d59a",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "I did not change this part but it looks like the original author meant BrowserThread::UI as you suggested. It\u0027s strange that this does not cause crashes. Maybe because DCHECKs are turned off in production and this part is not covered by tests to cause crash in CQ bots... Done.",
+      "parentUuid": "cc10662a_67e8712c",
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bfd805c6_a44e5873",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f335dda_c5aa16cf",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372eeea3_4fe5f472",
         "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
         "patchSetId": 52
@@ -98,6 +188,24 @@
       "writtenOn": "2017-10-05T22:56:18Z",
       "side": 1,
       "message": "I have to say, using cc here is odd!\nIt\u0027s not a problem, since content already depends on cc/.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e76a29_b59e7cfa",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Good point. Looks like //base is a better place for defining the RingBuffer. However, note that this existed before:\n\nhttps://cs.chromium.org/chromium/src/content/public/browser/arc_tracing_agent.cc?l\u003d121\n\nChanging this will not be in the scope of this CL. I would be happy to move RingBuffer from //cc/base to //base in a separate CL if you think that makes sense.",
+      "parentUuid": "372eeea3_4fe5f472",
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "5eed55cd_44b79ae7",
+        "filename": "content/browser/tracing/arc_tracing_agent_impl.h",
+        "patchSetId": 52
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Again, these all existed before in content/public/browser/arc_tracing_agent.{cc,h}. I feel safer if I don\u0027t make this change bigger than necessary and do this in a separate CL if you agree?",
+      "parentUuid": "c8f4f68a_dd688f01",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "606b2409_2700d57f",
         "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
         "patchSetId": 52
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "7866684e_be7f7e75",
+        "filename": "content/browser/tracing/etw_tracing_agent_win.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "606b2409_2700d57f",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c19cdf05_72466c53",
         "filename": "content/browser/tracing/power_tracing_agent.cc",
         "patchSetId": 52
@@ -149,6 +293,24 @@
       "writtenOn": "2017-10-05T22:56:18Z",
       "side": 1,
       "message": "Is this called on the UI thread? Could you add a DCHECK, that would clarify things, in particular relative to lifetime.\n\nIs this class guaranteed to outlive the IO thread? If not the Unretained used in this file are not safe.",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4347cd9b_7408a7d9",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "DCHECK is added.\n\nThis is owned by TracingControllerImpl which is owned by BrowserMainLoop. So, I think it is guaranteed to outlive the IO thread.",
+      "parentUuid": "c19cdf05_72466c53",
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d384ea77_88dc2900",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4d96e06_9d77f157",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb963091_672baa85",
         "filename": "content/browser/tracing/power_tracing_agent.cc",
         "patchSetId": 52
@@ -186,6 +366,24 @@
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85111aa_ca7a86fa",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb963091_672baa85",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "b69b6026_8f15478e",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done.\n\nNote: the \"recorder_.reset()\" line in OnStopTracingComplete will post a task to the UI thread (guaranteed by mojo, because the recorder interface is bound on the UI thread) to tell the coordinator that tracing is stopped and the coordinator will not start another tracing before that. But passing the recorder to the IO thread makes things less confusing.",
+      "parentUuid": "e42e92be_e6feafa0",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f80f69cc_83f3ab7f",
         "filename": "content/browser/tracing/power_tracing_agent.cc",
         "patchSetId": 52
@@ -220,6 +436,24 @@
       "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ee5dbf_e832d033",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-10-06T18:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f80f69cc_83f3ab7f",
+      "revId": "d63747f4993b9b65fffcc65ddffd3b05be73177e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
