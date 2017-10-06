@@ -125,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "bea0fc23_d23cd412",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:28:11Z",
+      "side": 1,
+      "message": "Cool, can you link?",
+      "parentUuid": "59b5ed88_58cfe577",
+      "range": {
+        "startLine": 976,
+        "startChar": 6,
+        "endLine": 976,
+        "endChar": 32
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f7fc5c9_0b6d32c9",
         "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
         "patchSetId": 5
@@ -254,6 +278,30 @@
       "side": 1,
       "message": "Right, but are there cases where the compositor gives up on gpu-acceleration while and it is still possible to set-up a gpu context?",
       "parentUuid": "8d71a819_86caebe1",
+      "range": {
+        "startLine": 929,
+        "startChar": 37,
+        "endLine": 929,
+        "endChar": 48
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b504845_a3db80d4",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T18:28:11Z",
+      "side": 1,
+      "message": "Today, if the compositor context is made but lost before it gets to the impl thread, it will fall back to software. The gpu process may still be available afaik.",
+      "parentUuid": "4e35d2f0_24ec6e74",
       "range": {
         "startLine": 929,
         "startChar": 37,
