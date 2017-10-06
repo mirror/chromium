@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a665f5c5_7cd4c5a2",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-06T01:08:14Z",
+      "side": 1,
+      "message": "If SwiftShader\u0027s being used to render WebGL (--use-gl\u003dswiftshader-webgl), what\u0027s the likelihood that the WebGL context will be created before the compositor initializes? It seems that the \"Rats\" infobar will always be raised in that situation, which would be unfortunate. A while ago it used to be possible for the WebGL context and compositor\u0027s context to race for who got created first; not sure whether things have been changed so that even for documents which have script tags that run before onload that the compositor gets a chance to initialize before a WebGL context might get created.",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "724a5be8_7e44431a",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 5
@@ -13,6 +30,52 @@
       "writtenOn": "2017-10-06T00:42:49Z",
       "side": 1,
       "message": "typo: use -\u003e used",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7fc5c9_0b6d32c9",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-06T01:08:14Z",
+      "side": 1,
+      "message": "It\u0027s a good question. I think the answer is yes. Currently this code assumes that it should hand back a texture-backed StaticBitmapImage, but if we\u0027re using SwiftShader and software compositing, it should probably be creating a CPU-backed Skia surface / image. Does that sound correct?",
+      "range": {
+        "startLine": 786,
+        "startChar": 5,
+        "endLine": 786,
+        "endChar": 9
+      },
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bb1d8f_033ed019",
+        "filename": "third_party/WebKit/Source/platform/graphics/gpu/SharedGpuContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-10-06T01:08:14Z",
+      "side": 1,
+      "message": "This one should be assigned to junov -- it\u0027s for 2D canvas.",
+      "range": {
+        "startLine": 130,
+        "startChar": 4,
+        "endLine": 130,
+        "endChar": 5
+      },
       "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
