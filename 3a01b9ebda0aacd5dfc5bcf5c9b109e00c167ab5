@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bb1e256_3a0900fc",
+        "filename": "base/trace_event/memory_dump_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-10-06T01:35:27Z",
+      "side": 1,
+      "message": "the child processes get tracing enabled notification via IPC.",
+      "range": {
+        "startLine": 78,
+        "startChar": 13,
+        "endLine": 78,
+        "endChar": 43
+      },
+      "revId": "3a01b9ebda0aacd5dfc5bcf5c9b109e00c167ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
