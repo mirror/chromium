@@ -10,6 +10,7 @@
 namespace gfx {
 struct DecoratedText;
 class Point;
+class Rect;
 }
 
 namespace views {
@@ -25,6 +26,10 @@ class VIEWS_EXPORT WordLookupClient {
   virtual bool GetDecoratedWordAtPoint(const gfx::Point& point,
                                        gfx::DecoratedText* decorated_word,
                                        gfx::Point* baseline_point) = 0;
+
+  // Returns the bounds of the text in the given |range| in the coordinate
+  // system of the view.
+  virtual gfx::Rect GetRelativeBoundsForRange(const gfx::Range& range) = 0;
 
  protected:
   virtual ~WordLookupClient() {}

@@ -695,6 +695,28 @@ bool Label::GetDecoratedWordAtPoint(const gfx::Point& point,
              : false;
 }
 
+gfx::Rect Label::GetRelativeBoundsForRange(const gfx::Range& range) {
+  MaybeBuildRenderTextLines();
+  if (lines_.empty())
+    return GetFocusRingBounds();
+
+  int line_index = 0;
+  int char_offset = 0;
+  for (; line_index < lines_.size(); ++line_index) {
+    if (range.start() < char_offset + lines_[i]->text().length())
+      break;
+    char_offset += lines_[i]->text().length();
+  }
+  if (line_index == lines_.size())
+    return GetFocusRingBounds();
+
+  gfx::Range first_line_range(range.start() - char_offset, range.length());
+  bool spans_lines = first_line_range.end() > lines[i]->text().length();
+  // find (x,y) in first line.
+  // find (x,y) in last line.
+  // Just get selection bounds :/
+}
+
 gfx::RenderText* Label::GetRenderTextForSelectionController() {
   return const_cast<gfx::RenderText*>(
       static_cast<const Label*>(this)->GetRenderTextForSelectionController());

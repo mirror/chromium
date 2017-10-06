@@ -19,6 +19,7 @@
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/range/range.h"
 
 namespace content {
 
@@ -958,6 +959,11 @@ gfx::NativeViewAccessible BrowserAccessibility::HitTestSync(int x, int y) {
     return nullptr;
 
   return accessible->GetNativeViewAccessible();
+}
+
+gfx::Rect BrowserAccessibility::GetScreenBoundsForRangeSync(
+    const gfx::Range& range) {
+  return GetScreenBoundsForRange(range.start(), range.length());
 }
 
 gfx::NativeViewAccessible BrowserAccessibility::GetFocus() {

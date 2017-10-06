@@ -10,6 +10,10 @@
 #include "ui/gfx/geometry/vector2d.h"
 #include "ui/gfx/native_widget_types.h"
 
+namespace gfx {
+class Range;
+}
+
 namespace ui {
 
 struct AXActionData;
@@ -71,6 +75,12 @@ class AX_EXPORT AXPlatformNodeDelegate {
   // This function is mainly used by accessibility debugging software.
   // Platforms with touch accessibility use a different asynchronous interface.
   virtual gfx::NativeViewAccessible HitTestSync(int x, int y) = 0;
+
+  // For some text objects, screen bounds can be determined from the IntList
+  // ui::AX_ATTR_CHARACTER_OFFSETS attribute, but not all text objects populate
+  // it. This does a synchronous query to determine the on-screen bounds of a
+  // substring of a text object and returns the bounds in screen coordinates.
+  virtual gfx::Rect GetScreenBoundsForRangeSync(const gfx::Range& range) = 0;
 
   // Return the node within this node's subtree (inclusive) that currently
   // has focus.

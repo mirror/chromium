@@ -268,6 +268,7 @@ class VIEWS_EXPORT Textfield : public View,
   bool GetDecoratedWordAtPoint(const gfx::Point& point,
                                gfx::DecoratedText* decorated_word,
                                gfx::Point* baseline_point) override;
+  gfx::Rect GetRelativeBoundsForRange(const gfx::Range& range) override;
 
   // SelectionControllerDelegate overrides:
   bool HasTextBeingDragged() const override;
