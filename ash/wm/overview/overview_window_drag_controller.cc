@@ -72,7 +72,6 @@ void OverviewWindowDragController::Drag(const gfx::Point& location_in_screen) {
   if (wm::GetWindowState(item_->GetWindow())->CanSnap())
     UpdatePhantomWindowAndWindowGrid(location_in_screen);
 
-  // TODO(crbug.com/772201): The indicator should probably remain a bit longer.
   window_selector_->SetSplitViewOverviewOverlayIndicatorType(
       SplitViewOverviewOverlay::NONE, gfx::Point());
 }

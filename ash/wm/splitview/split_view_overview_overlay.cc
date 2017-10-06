@@ -13,6 +13,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/compositor/paint_recorder.h"
+#include "ui/gfx/canvas.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/image_view.h"
@@ -44,6 +46,12 @@ constexpr int kWarningIconSizeDp = 24;
 
 // The amount of vertical inset to be applied on a rotated image label view.
 constexpr int kRotatedViewVerticalInsetDp = 6;
+
+// The amount of round applied to the corners of a rotated image label view.
+constexpr int kRotatedViewVerticalRoundRectRadius = 20;
+
+// An alpha value for the rotated image label views.
+constexpr SkColor kRotatedViewBackgroundAlpha = 0xB0;
 
 // Creates the widget responsible for displaying the indicators.
 std::unique_ptr<views::Widget> CreateWidget() {
@@ -88,10 +96,9 @@ class SplitViewOverviewOverlay::RotatedImageLabelView : public views::View {
     icon_->SetPreferredSize(gfx::Size(kWarningIconSizeDp, kWarningIconSizeDp));
     icon_->SetImage(
         gfx::CreateVectorIcon(kSplitviewNosnapWarningIcon, SK_ColorWHITE));
+    icon_->SetVisible(false);
 
-    label_ =
-        new views::Label(l10n_util::GetStringUTF16(IDS_ASH_SPLIT_VIEW_GUIDANCE),
-                         views::style::CONTEXT_LABEL);
+    label_ = new views::Label(base::string16(), views::style::CONTEXT_LABEL);
     label_->SetPaintToLayer();
     label_->layer()->SetFillsBoundsOpaquely(false);
     label_->SetEnabledColor(kLabelEnabledColor);
@@ -100,7 +107,9 @@ class SplitViewOverviewOverlay::RotatedImageLabelView : public views::View {
     auto* layout = new views::BoxLayout(views::BoxLayout::kVertical);
     SetLayoutManager(layout);
     SetPaintToLayer(ui::LAYER_SOLID_COLOR);
-    layer()->SetColor(SK_ColorBLACK);
+    layer()->SetColor(SkColorSetA(SK_ColorBLACK, kRotatedViewBackgroundAlpha));
+    mask_ = std::make_unique<RoundedRectMask>();
+    layer()->SetMaskLayer(mask_->layer());
     AddChildView(icon_);
     AddChildView(label_);
     layout->SetFlexForView(label_, 1);
@@ -116,7 +125,53 @@ class SplitViewOverviewOverlay::RotatedImageLabelView : public views::View {
 
   void SetIconVisible(bool visible) { icon_->SetVisible(visible); }
 
+  // Called when the view's bounds are altered. Handles rotating the view.
+  void OnBoundsUpdated(const gfx::Rect& bounds, bool clockwise) {
+    SetBoundsRect(bounds);
+    mask_->SetSize(bounds.size());
+    SetTransform(ComputeRotateAroundCenterTransform(bounds, clockwise));
+  }
+
  private:
+  // Handles clipping of the view into a rounded rectangle.
+  class RoundedRectMask : public ui::LayerDelegate {
+   public:
+    RoundedRectMask() : layer_(ui::LAYER_TEXTURED) {
+      layer_.set_delegate(this);
+      layer_.SetFillsBoundsOpaquely(false);
+    }
+
+    ~RoundedRectMask() override { layer_.set_delegate(nullptr); }
+
+    void SetSize(const gfx::Size& size) { layer_.SetBounds(gfx::Rect(size)); }
+
+    ui::Layer* layer() { return &layer_; }
+
+   private:
+    // ui::LayerDelegate:
+    void OnPaintLayer(const ui::PaintContext& context) override {
+      ui::PaintRecorder recorder(context, layer()->size());
+
+      cc::PaintFlags flags;
+      flags.setAlpha(255);
+      flags.setAntiAlias(true);
+      flags.setStyle(cc::PaintFlags::kFill_Style);
+
+      gfx::Rect rect(layer()->bounds().size());
+      recorder.canvas()->DrawRoundRect(
+          rect, kRotatedViewVerticalRoundRectRadius, flags);
+    }
+
+    void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+    void OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                    float new_device_scale_factor) override {}
+
+    ui::Layer layer_;
+
+    DISALLOW_COPY_AND_ASSIGN(RoundedRectMask);
+  };
+
+  std::unique_ptr<RoundedRectMask> mask_;
   views::ImageView* icon_ = nullptr;
   views::Label* label_ = nullptr;
 
@@ -162,13 +217,8 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
     const gfx::Rect rotated_bounds(0, height() / 2 - rotated_bounds_height / 2,
                                    kHighlightScreenWidth,
                                    rotated_bounds_height);
-    left_rotated_view_->SetBoundsRect(rotated_bounds);
-    right_rotated_view_->SetBoundsRect(rotated_bounds);
-
-    left_rotated_view_->SetTransform(ComputeRotateAroundCenterTransform(
-        rotated_bounds, false /* clockwise */));
-    right_rotated_view_->SetTransform(ComputeRotateAroundCenterTransform(
-        rotated_bounds, true /* clockwise */));
+    left_rotated_view_->OnBoundsUpdated(rotated_bounds, false /* clockwise */);
+    right_rotated_view_->OnBoundsUpdated(rotated_bounds, true /* clockwise */);
   }
 
   void OnIndicatorTypeChanged(IndicatorType indicator_type) {
@@ -221,7 +271,7 @@ class SplitViewOverviewOverlay::SplitViewOverviewOverlayView
   RotatedImageLabelView* left_rotated_view_ = nullptr;
   RotatedImageLabelView* right_rotated_view_ = nullptr;
 
-  IndicatorType indicator_type_;
+  IndicatorType indicator_type_ = NONE;
 
   DISALLOW_COPY_AND_ASSIGN(SplitViewOverviewOverlayView);
 };
