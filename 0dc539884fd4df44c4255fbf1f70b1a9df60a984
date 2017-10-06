@@ -16,6 +16,24 @@
       "revId": "0dc539884fd4df44c4255fbf1f70b1a9df60a984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6ed511_1735eb67",
+        "filename": "third_party/accessibility_test_framework/version.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-10-06T22:12:19Z",
+      "side": 0,
+      "message": "I don\u0027t think the current yaml format supports that (https://github.com/luci/luci-go/blob/master/cipd/client/cipd/local/pkgdef.go#L35), but as they\u0027re primarily for ease of package creation (see below), I suppose they\u0027re not necessary.\n\n(I believe VersionFile is something else based on examples I\u0027m looking at.)",
+      "parentUuid": "9704aab1_024568a1",
+      "revId": "0dc539884fd4df44c4255fbf1f70b1a9df60a984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
