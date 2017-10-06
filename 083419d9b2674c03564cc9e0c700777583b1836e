@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "181358ae_4594df4e",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-06T19:13:15Z",
+      "side": 1,
+      "message": "Why !is_android?\n\nAlso, I think in general we don\u0027t make the whole target conditional, but make it an empty group on platforms where we don\u0027t want it, so that things depending on it can do so unconditionally",
+      "range": {
+        "startLine": 876,
+        "startChar": 4,
+        "endLine": 876,
+        "endChar": 16
+      },
+      "revId": "083419d9b2674c03564cc9e0c700777583b1836e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
