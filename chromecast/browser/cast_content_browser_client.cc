@@ -497,9 +497,7 @@ void CastContentBrowserClient::SelectClientCertificateOnIOThread(
   if (network_delegate->IsWhitelisted(requesting_url, render_process_id,
                                       false)) {
     original_runner->PostTask(
-        FROM_HERE,
-        base::Bind(continue_callback, CastNetworkDelegate::DeviceCert(),
-                   CastNetworkDelegate::DeviceKey()));
+        FROM_HERE, base::Bind(continue_callback, DeviceCert(), DeviceKey()));
     return;
   } else {
     LOG(ERROR) << "Invalid host for client certificate request: "
@@ -611,6 +609,14 @@ void CastContentBrowserClient::GetAdditionalWebUISchemes(
 content::DevToolsManagerDelegate*
 CastContentBrowserClient::GetDevToolsManagerDelegate() {
   return new CastDevToolsManagerDelegate();
+}
+
+scoped_refptr<net::X509Certificate> CastContentBrowserClient::DeviceCert() {
+  return nullptr;
+}
+
+scoped_refptr<net::SSLPrivateKey> CastContentBrowserClient::DeviceKey() {
+  return nullptr;
 }
 
 #if !defined(OS_ANDROID)
