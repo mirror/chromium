@@ -9,6 +9,7 @@
 
 #include <map>
 #include <string>
+#include <tuple>
 #include <utility>
 #include <vector>
 
@@ -79,8 +80,10 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
   bool CallTpmIsOwnedAndBlock(bool* owned) override;
   void TpmIsBeingOwned(DBusMethodCallback<bool> callback) override;
   bool CallTpmIsBeingOwnedAndBlock(bool* owning) override;
-  void TpmCanAttemptOwnership(VoidDBusMethodCallback callback) override;
-  void TpmClearStoredPassword(VoidDBusMethodCallback callback) override;
+  void TpmCanAttemptOwnership(
+      DBusMethodCallback<std::tuple<>> callback) override;
+  void TpmClearStoredPassword(
+      DBusMethodCallback<std::tuple<>> callback) override;
   bool CallTpmClearStoredPasswordAndBlock() override;
   void Pkcs11IsTpmTokenReady(DBusMethodCallback<bool> callback) override;
   void Pkcs11GetTpmTokenInfo(
@@ -205,7 +208,7 @@ class CHROMEOS_EXPORT FakeCryptohomeClient : public CryptohomeClient {
       DBusMethodCallback<cryptohome::BaseReply> callback) override;
   void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
                           const cryptohome::MigrateToDircryptoRequest& request,
-                          VoidDBusMethodCallback callback) override;
+                          DBusMethodCallback<std::tuple<>> callback) override;
   void SetDircryptoMigrationProgressHandler(
       const DircryptoMigrationProgessHandler& handler) override;
   void RemoveFirmwareManagementParametersFromTpm(

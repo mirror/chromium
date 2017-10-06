@@ -4,19 +4,17 @@
 
 #include "chromeos/dbus/dbus_method_call_status.h"
 
+#include <tuple>
+
 #include "base/bind.h"
+#include "base/optional.h"
 
 namespace chromeos {
-namespace {
 
-void EmptyVoidDBusMethodCallbackBody(DBusMethodCallStatus result) {
-}
-
-}  // namespace
-
-
-VoidDBusMethodCallback EmptyVoidDBusMethodCallback() {
-  return base::BindOnce(&EmptyVoidDBusMethodCallbackBody);
+DBusMethodCallback<std::tuple<>> EmptyVoidDBusMethodCallback() {
+  return base::BindOnce([](base::Optional<std::tuple<>> result) {
+    // Do nothing.
+  });
 }
 
 }  // namespace chromeos

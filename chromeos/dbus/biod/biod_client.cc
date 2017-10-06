@@ -13,6 +13,7 @@
 #include "base/bind_helpers.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/strings/stringprintf.h"
 #include "chromeos/dbus/biod/fake_biod_client.h"
 #include "chromeos/dbus/biod/messages.pb.h"
@@ -26,9 +27,10 @@ namespace chromeos {
 namespace {
 
 // D-Bus response handler for methods that use void callbacks.
-void OnVoidResponse(VoidDBusMethodCallback callback, dbus::Response* response) {
-  std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                   : DBUS_METHOD_CALL_FAILURE);
+void OnVoidResponse(DBusMethodCallback<std::tuple<>> callback,
+                    dbus::Response* response) {
+  std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                   : base::nullopt);
 }
 
 }  // namespace
@@ -91,7 +93,7 @@ class BiodClientImpl : public BiodClient {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void DestroyAllRecords(VoidDBusMethodCallback callback) override {
+  void DestroyAllRecords(DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(
         biod::kBiometricsManagerInterface,
         biod::kBiometricsManagerDestroyAllRecordsMethod);
@@ -133,9 +135,9 @@ class BiodClientImpl : public BiodClient {
                        weak_ptr_factory_.GetWeakPtr(), callback));
   }
 
-  void CancelEnrollSession(VoidDBusMethodCallback callback) override {
+  void CancelEnrollSession(DBusMethodCallback<std::tuple<>> callback) override {
     if (!current_enroll_session_path_) {
-      std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS);
+      std::move(callback).Run(std::tuple<>());
       return;
     }
     dbus::MethodCall method_call(biod::kEnrollSessionInterface,
@@ -149,9 +151,9 @@ class BiodClientImpl : public BiodClient {
     current_enroll_session_path_.reset();
   }
 
-  void EndAuthSession(VoidDBusMethodCallback callback) override {
+  void EndAuthSession(DBusMethodCallback<std::tuple<>> callback) override {
     if (!current_auth_session_path_) {
-      std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS);
+      std::move(callback).Run(std::tuple<>());
       return;
     }
     dbus::MethodCall method_call(biod::kAuthSessionInterface,
@@ -167,7 +169,7 @@ class BiodClientImpl : public BiodClient {
 
   void SetRecordLabel(const dbus::ObjectPath& record_path,
                       const std::string& label,
-                      VoidDBusMethodCallback callback) override {
+                      DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(biod::kRecordInterface,
                                  biod::kRecordSetLabelMethod);
     dbus::MessageWriter writer(&method_call);
@@ -181,7 +183,7 @@ class BiodClientImpl : public BiodClient {
   }
 
   void RemoveRecord(const dbus::ObjectPath& record_path,
-                    VoidDBusMethodCallback callback) override {
+                    DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(biod::kRecordInterface,
                                  biod::kRecordRemoveMethod);
 

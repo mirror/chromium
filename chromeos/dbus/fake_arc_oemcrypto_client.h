@@ -5,6 +5,8 @@
 #ifndef CHROMEOS_DBUS_FAKE_ARC_OEMCRYPTO_CLIENT_H_
 #define CHROMEOS_DBUS_FAKE_ARC_OEMCRYPTO_CLIENT_H_
 
+#include <tuple>
+
 #include "chromeos/dbus/arc_oemcrypto_client.h"
 
 namespace chromeos {
@@ -19,8 +21,9 @@ class CHROMEOS_EXPORT FakeArcOemCryptoClient : public ArcOemCryptoClient {
   void Init(dbus::Bus* bus) override;
 
   // ArcOemCryptoClient override:
-  void BootstrapMojoConnection(base::ScopedFD fd,
-                               VoidDBusMethodCallback callback) override;
+  void BootstrapMojoConnection(
+      base::ScopedFD fd,
+      DBusMethodCallback<std::tuple<>> callback) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FakeArcOemCryptoClient);

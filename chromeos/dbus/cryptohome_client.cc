@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <memory>
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -349,14 +350,16 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
-  void TpmCanAttemptOwnership(VoidDBusMethodCallback callback) override {
+  void TpmCanAttemptOwnership(
+      DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeTpmCanAttemptOwnership);
     CallVoidMethod(&method_call, std::move(callback));
   }
 
   // CryptohomeClient overrides.
-  void TpmClearStoredPassword(VoidDBusMethodCallback callback) override {
+  void TpmClearStoredPassword(
+      DBusMethodCallback<std::tuple<>> callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeTpmClearStoredPassword);
     CallVoidMethod(&method_call, std::move(callback));
@@ -934,7 +937,7 @@ class CryptohomeClientImpl : public CryptohomeClient {
 
   void MigrateToDircrypto(const cryptohome::Identification& cryptohome_id,
                           const cryptohome::MigrateToDircryptoRequest& request,
-                          VoidDBusMethodCallback callback) override {
+                          DBusMethodCallback<std::tuple<>> callback) override {
     // TODO(bug758837,pmarko): Switch back to MigrateToDircrypto when its
     // signature matches MigrateToDircryptoEx.
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
@@ -1046,16 +1049,17 @@ class CryptohomeClientImpl : public CryptohomeClient {
 
   // Calls a method without result values.
   void CallVoidMethod(dbus::MethodCall* method_call,
-                      VoidDBusMethodCallback callback) {
+                      DBusMethodCallback<std::tuple<>> callback) {
     proxy_->CallMethod(
         method_call, kTpmDBusTimeoutMs,
         base::BindOnce(&CryptohomeClientImpl::OnVoidMethod,
                        weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
   }
 
-  void OnVoidMethod(VoidDBusMethodCallback callback, dbus::Response* response) {
-    std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                     : DBUS_METHOD_CALL_FAILURE);
+  void OnVoidMethod(DBusMethodCallback<std::tuple<>> callback,
+                    dbus::Response* response) {
+    std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                     : base::nullopt);
   }
 
   // Calls a method with a bool value reult and block.

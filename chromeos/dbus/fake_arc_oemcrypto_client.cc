@@ -8,6 +8,7 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
+#include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 
 namespace chromeos {
@@ -20,9 +21,9 @@ void FakeArcOemCryptoClient::Init(dbus::Bus* bus) {}
 
 void FakeArcOemCryptoClient::BootstrapMojoConnection(
     base::ScopedFD fd,
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), DBUS_METHOD_CALL_FAILURE));
+      FROM_HERE, base::BindOnce(std::move(callback), base::nullopt));
 }
 
 }  // namespace chromeos

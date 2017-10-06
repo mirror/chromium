@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/callback.h"
@@ -91,7 +92,7 @@ class ShillClientHelper {
 
   // Calls a method without results.
   void CallVoidMethod(dbus::MethodCall* method_call,
-                      VoidDBusMethodCallback callback);
+                      DBusMethodCallback<std::tuple<>> callback);
 
   // Calls a method with an object path result where there is an error callback.
   void CallObjectPathMethodWithErrorCallback(

@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 
 #include "base/callback_forward.h"
 #include "base/files/scoped_file.h"
@@ -29,8 +30,9 @@ class CHROMEOS_EXPORT ArcMidisClient : public DBusClient {
 
   // Bootstrap the Mojo connection between Chrome and the MIDI service.
   // Should pass in the child end of the Mojo pipe.
-  virtual void BootstrapMojoConnection(base::ScopedFD fd,
-                                       VoidDBusMethodCallback callback) = 0;
+  virtual void BootstrapMojoConnection(
+      base::ScopedFD fd,
+      DBusMethodCallback<std::tuple<>> callback) = 0;
 
  protected:
   // Create() should be used instead.

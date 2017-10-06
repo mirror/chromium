@@ -94,10 +94,10 @@ void OnStringMethodWithErrorCallback(
 
 // Handles responses for methods without results.
 void OnVoidMethod(ShillClientHelper::RefHolder* ref_holder,
-                  VoidDBusMethodCallback callback,
+                  DBusMethodCallback<std::tuple<>> callback,
                   dbus::Response* response) {
-  std::move(callback).Run(response ? DBUS_METHOD_CALL_SUCCESS
-                                   : DBUS_METHOD_CALL_FAILURE);
+  std::move(callback).Run(response ? base::make_optional(std::tuple<>())
+                                   : base::nullopt);
 }
 
 // Handles responses for methods with ObjectPath results and no status.
@@ -258,8 +258,9 @@ void ShillClientHelper::MonitorPropertyChangedInternal(
                                      weak_ptr_factory_.GetWeakPtr()));
 }
 
-void ShillClientHelper::CallVoidMethod(dbus::MethodCall* method_call,
-                                       VoidDBusMethodCallback callback) {
+void ShillClientHelper::CallVoidMethod(
+    dbus::MethodCall* method_call,
+    DBusMethodCallback<std::tuple<>> callback) {
   DCHECK(!callback.is_null());
   proxy_->CallMethod(
       method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,

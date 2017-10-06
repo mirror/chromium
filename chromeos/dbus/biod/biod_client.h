@@ -6,6 +6,7 @@
 #define CHROMEOS_DBUS_BIOD_BIOD_CLIENT_H_
 
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
 
@@ -101,7 +102,7 @@ class CHROMEOS_EXPORT BiodClient : public DBusClient {
 
   // Irreversibly destroys all records registered. |callback| is called
   // asynchronously with the result.
-  virtual void DestroyAllRecords(VoidDBusMethodCallback callback) = 0;
+  virtual void DestroyAllRecords(DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Starts the biometric auth session. |callback| is called with the object
   // path of the auth session after the method succeeds.
@@ -113,23 +114,24 @@ class CHROMEOS_EXPORT BiodClient : public DBusClient {
 
   // Cancels the enroll session.
   // |callback| is called asynchronously with the result.
-  virtual void CancelEnrollSession(VoidDBusMethodCallback callback) = 0;
+  virtual void CancelEnrollSession(
+      DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Ends the auth session.
   // |callback| is called asynchronously with the result.
-  virtual void EndAuthSession(VoidDBusMethodCallback callback) = 0;
+  virtual void EndAuthSession(DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Changes the label of the record at |record_path| to |label|. |callback| is
   // called asynchronously with the result.
   virtual void SetRecordLabel(const dbus::ObjectPath& record_path,
                               const std::string& label,
-                              VoidDBusMethodCallback callback) = 0;
+                              DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Removes the record at |record_path|. This record will no longer be able to
   // used for authentication. |callback| is called asynchronously with the
   // result.
   virtual void RemoveRecord(const dbus::ObjectPath& record_path,
-                            VoidDBusMethodCallback callback) = 0;
+                            DBusMethodCallback<std::tuple<>> callback) = 0;
 
   // Requests the label of the record at |record_path|. |callback| is called
   // with the label of the record.

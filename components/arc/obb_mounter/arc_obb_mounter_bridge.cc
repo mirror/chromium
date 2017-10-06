@@ -4,6 +4,7 @@
 
 #include "components/arc/obb_mounter/arc_obb_mounter_bridge.h"
 
+#include <tuple>
 #include <utility>
 
 #include "base/bind.h"
@@ -17,10 +18,10 @@ namespace arc {
 
 namespace {
 
-// Used to convert mojo Callback to VoidDBusMethodCallback.
+// Used to convert mojo Callback to DBusMethodCallback<std::tuple<>>.
 void RunObbCallback(base::OnceCallback<void(bool)> callback,
-                    chromeos::DBusMethodCallStatus result) {
-  std::move(callback).Run(result == chromeos::DBUS_METHOD_CALL_SUCCESS);
+                    base::Optional<std::tuple<>> result) {
+  std::move(callback).Run(result.has_value());
 }
 
 // Singleton factory for ArcObbMounterBridge.

@@ -7,6 +7,8 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#include <tuple>
+
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -253,7 +255,6 @@ class HomedirMethodsImpl : public HomedirMethods {
     std::vector<KeyDefinition> key_definitions;
     for (RepeatedPtrField<KeyData>::const_iterator it = key_data.begin();
          it != key_data.end(); ++it) {
-
       // Extract |type|, |label| and |revision|.
       DCHECK_EQ(KeyData::KEY_TYPE_PASSWORD, it->type());
       key_definitions.push_back(KeyDefinition(std::string() /* secret */,
@@ -375,8 +376,8 @@ class HomedirMethodsImpl : public HomedirMethods {
   }
 
   void OnDBusResultCallback(const DBusResultCallback& callback,
-                            chromeos::DBusMethodCallStatus call_status) {
-    callback.Run(call_status == chromeos::DBUS_METHOD_CALL_SUCCESS);
+                            base::Optional<std::tuple<>> result) {
+    callback.Run(result.has_value());
   }
 
   base::WeakPtrFactory<HomedirMethodsImpl> weak_ptr_factory_;

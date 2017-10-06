@@ -43,18 +43,18 @@ class ShillIPConfigClientImpl : public ShillIPConfigClient {
     GetHelper(ipconfig_path)->RemovePropertyChangedObserver(observer);
   }
   void Refresh(const dbus::ObjectPath& ipconfig_path,
-               VoidDBusMethodCallback callback) override;
+               DBusMethodCallback<std::tuple<>> callback) override;
   void GetProperties(const dbus::ObjectPath& ipconfig_path,
                      const DictionaryValueCallback& callback) override;
   void SetProperty(const dbus::ObjectPath& ipconfig_path,
                    const std::string& name,
                    const base::Value& value,
-                   VoidDBusMethodCallback callback) override;
+                   DBusMethodCallback<std::tuple<>> callback) override;
   void ClearProperty(const dbus::ObjectPath& ipconfig_path,
                      const std::string& name,
-                     VoidDBusMethodCallback callback) override;
+                     DBusMethodCallback<std::tuple<>> callback) override;
   void Remove(const dbus::ObjectPath& ipconfig_path,
-              VoidDBusMethodCallback callback) override;
+              DBusMethodCallback<std::tuple<>> callback) override;
   ShillIPConfigClient::TestInterface* GetTestInterface() override;
 
  protected:
@@ -97,17 +97,19 @@ void ShillIPConfigClientImpl::GetProperties(
   GetHelper(ipconfig_path)->CallDictionaryValueMethod(&method_call, callback);
 }
 
-void ShillIPConfigClientImpl::Refresh(const dbus::ObjectPath& ipconfig_path,
-                                      VoidDBusMethodCallback callback) {
+void ShillIPConfigClientImpl::Refresh(
+    const dbus::ObjectPath& ipconfig_path,
+    DBusMethodCallback<std::tuple<>> callback) {
   dbus::MethodCall method_call(shill::kFlimflamIPConfigInterface,
                                shill::kRefreshFunction);
   GetHelper(ipconfig_path)->CallVoidMethod(&method_call, std::move(callback));
 }
 
-void ShillIPConfigClientImpl::SetProperty(const dbus::ObjectPath& ipconfig_path,
-                                          const std::string& name,
-                                          const base::Value& value,
-                                          VoidDBusMethodCallback callback) {
+void ShillIPConfigClientImpl::SetProperty(
+    const dbus::ObjectPath& ipconfig_path,
+    const std::string& name,
+    const base::Value& value,
+    DBusMethodCallback<std::tuple<>> callback) {
   dbus::MethodCall method_call(shill::kFlimflamIPConfigInterface,
                                shill::kSetPropertyFunction);
   dbus::MessageWriter writer(&method_call);
@@ -148,7 +150,7 @@ void ShillIPConfigClientImpl::SetProperty(const dbus::ObjectPath& ipconfig_path,
 void ShillIPConfigClientImpl::ClearProperty(
     const dbus::ObjectPath& ipconfig_path,
     const std::string& name,
-    VoidDBusMethodCallback callback) {
+    DBusMethodCallback<std::tuple<>> callback) {
   dbus::MethodCall method_call(shill::kFlimflamIPConfigInterface,
                                shill::kClearPropertyFunction);
   dbus::MessageWriter writer(&method_call);
@@ -156,8 +158,9 @@ void ShillIPConfigClientImpl::ClearProperty(
   GetHelper(ipconfig_path)->CallVoidMethod(&method_call, std::move(callback));
 }
 
-void ShillIPConfigClientImpl::Remove(const dbus::ObjectPath& ipconfig_path,
-                                     VoidDBusMethodCallback callback) {
+void ShillIPConfigClientImpl::Remove(
+    const dbus::ObjectPath& ipconfig_path,
+    DBusMethodCallback<std::tuple<>> callback) {
   dbus::MethodCall method_call(shill::kFlimflamIPConfigInterface,
                                shill::kRemoveConfigFunction);
   GetHelper(ipconfig_path)->CallVoidMethod(&method_call, std::move(callback));

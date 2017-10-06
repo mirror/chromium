@@ -9,6 +9,7 @@
 
 #include <memory>
 #include <string>
+#include <tuple>
 #include <vector>
 
 #include "base/memory/ref_counted.h"
@@ -146,7 +147,7 @@ class ShillClientUnittestBase : public testing::Test {
   static base::DictionaryValue* CreateExampleServiceProperties();
 
   // Expects the call status to be SUCCESS.
-  static void ExpectNoResultValue(DBusMethodCallStatus call_status);
+  static void ExpectNoResultValue(base::Optional<std::tuple<>> result);
 
   // Checks the result and expects the call status to be SUCCESS.
   static void ExpectObjectPathResult(const dbus::ObjectPath& expected_result,
