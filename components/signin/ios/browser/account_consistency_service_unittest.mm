@@ -120,6 +120,13 @@ class TestWebState : public web::TestWebState {
 }  // namespace
 
 class AccountConsistencyServiceTest : public PlatformTest {
+ public:
+  void RemoveCookieDone() {
+    EXPECT_FALSE(remove_cookie_callback_called_);
+    EXPECT_EQ(0, web_view_load_expection_count_);
+    remove_cookie_callback_called_ = true;
+  }
+
  protected:
   void SetUp() override {
     PlatformTest::SetUp();
@@ -130,6 +137,7 @@ class AccountConsistencyServiceTest : public PlatformTest {
     HostContentSettingsMap::RegisterProfilePrefs(prefs_.registry());
     SigninManagerBase::RegisterProfilePrefs(prefs_.registry());
 
+    web_view_load_expection_count_ = 0;
     gaia_cookie_manager_service_.reset(new MockGaiaCookieManagerService());
     signin_client_.reset(new TestSigninClient(&prefs_));
     signin_manager_.reset(new FakeSigninManager(
@@ -144,6 +152,8 @@ class AccountConsistencyServiceTest : public PlatformTest {
   }
 
   void TearDown() override {
+    EXPECT_EQ(0, web_view_load_expection_count_);
+    EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
     account_consistency_service_->Shutdown();
     settings_map_->ShutdownOnUIThread();
     ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(false);
@@ -155,7 +165,9 @@ class AccountConsistencyServiceTest : public PlatformTest {
   // |continue_navigation| controls whether navigation will continue or be
   // stopped on page load.
   void AddPageLoadedExpectation(NSURL* url, bool continue_navigation) {
+    ++web_view_load_expection_count_;
     void (^continueBlock)(NSInvocation*) = ^(NSInvocation* invocation) {
+      --web_view_load_expection_count_;
       if (!continue_navigation)
         return;
       __unsafe_unretained WKWebView* web_view = nil;
@@ -179,11 +191,28 @@ class AccountConsistencyServiceTest : public PlatformTest {
 
   void SignIn() {
     signin_manager_->SignIn("12345", "user@gmail.com", "password");
+    EXPECT_EQ(0, web_view_load_expection_count_);
   }
 
-  void SignOut() { signin_manager_->ForceSignOut(); }
+  void SignOut() {
+    signin_manager_->ForceSignOut();
+    // Simulate the action of the action GaiaCookieManagerService to cleanup
+    // the cookies once the sign-out is done.
+    remove_cookie_callback_called_ = false;
+    account_consistency_service_->RemoveChromeConnectedCookies(
+        base::BindOnce(&AccountConsistencyServiceTest::RemoveCookieDone,
+                       base::Unretained(this)));
+    EXPECT_TRUE(remove_cookie_callback_called_);
+  }
 
-  id GetMockWKWebView() { return account_consistency_service_->GetWKWebView(); }
+  id GetWKWebView() { return account_consistency_service_->GetWKWebView(); }
+
+  id GetMockWKWebView() {
+    // Should use BuildWKWebView() to always have the mock instance, even when
+    // the |account_consistency_service_| is inactive.
+    return account_consistency_service_->BuildWKWebView();
+  }
+
   id GetNavigationDelegate() {
     return account_consistency_service_->navigation_delegate_;
   }
@@ -216,14 +245,17 @@ class AccountConsistencyServiceTest : public PlatformTest {
   std::unique_ptr<MockGaiaCookieManagerService> gaia_cookie_manager_service_;
   scoped_refptr<HostContentSettingsMap> settings_map_;
   scoped_refptr<content_settings::CookieSettings> cookie_settings_;
+  bool remove_cookie_callback_called_;
+  int web_view_load_expection_count_;
 };
 
 // Tests whether the WKWebView is actually stopped when the browser state is
 // inactive.
 TEST_F(AccountConsistencyServiceTest, OnInactive) {
   [[GetMockWKWebView() expect] stopLoading];
+  // Loads the webview.
+  EXPECT_TRUE(GetWKWebView());
   ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(false);
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 }
 
 // Tests that cookies that are added during SignIn and subsequent navigations
@@ -244,17 +276,18 @@ TEST_F(AccountConsistencyServiceTest, SignInSignOut) {
                                   statusCode:200
                                  HTTPVersion:@"HTTP/1.1"
                                 headerFields:headers];
+  web_view_load_expection_count_ = 1;
   account_consistency_service_->SetWebStateHandler(&web_state_, delegate);
   EXPECT_TRUE(
       web_state_.ShouldAllowResponse(response, /* for_main_frame = */ true));
   web_state_.WebStateDestroyed();
+  EXPECT_EQ(0, web_view_load_expection_count_);
 
   // Check that all domains are removed.
   AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kCountryGoogleUrl, true /* continue_navigation */);
   SignOut();
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 }
 
 // Tests that pending cookie requests are correctly applied when the browser
@@ -263,12 +296,11 @@ TEST_F(AccountConsistencyServiceTest, ApplyOnActive) {
   // No request is made until the browser state is active, then a WKWebView and
   // its navigation delegate are created, and the requests are processed.
   [[GetMockWKWebView() expect] setNavigationDelegate:[OCMArg isNotNil]];
-  AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
-  AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(false);
   SignIn();
+  AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
+  AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(true);
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 }
 
 // Tests that cookie request being processed is correctly cancelled when the
@@ -279,12 +311,11 @@ TEST_F(AccountConsistencyServiceTest, CancelOnInactiveReApplyOnActive) {
   // state becomes inactive. It is resumed after the browser state becomes
   // active again.
   AddPageLoadedExpectation(kGoogleUrl, false /* continue_navigation */);
-  AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
-  AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   SignIn();
   ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(false);
+  AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
+  AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   ActiveStateManager::FromBrowserState(&browser_state_)->SetActive(true);
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 }
 
 // Tests that the X-Chrome-Manage-Accounts header is ignored unless it comes
@@ -364,7 +395,6 @@ TEST_F(AccountConsistencyServiceTest, DomainsWithCookiePrefsOnApplied) {
   AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kYoutubeUrl, false /* continue_navigation */);
   SignIn();
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 
   const base::DictionaryValue* dict =
       prefs_.GetDictionary(AccountConsistencyService::kDomainsWithCookiePref);
@@ -379,13 +409,11 @@ TEST_F(AccountConsistencyServiceTest, DomainsWithCookieLoadedFromPrefs) {
   AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   SignIn();
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 
   ResetAccountConsistencyService();
   AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   SignOut();
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
 }
 
 // Tests that domains with cookie are cleared when browsing data is removed.
@@ -393,7 +421,6 @@ TEST_F(AccountConsistencyServiceTest, DomainsClearedOnBrowsingDataRemoved) {
   AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
   AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
   SignIn();
-  EXPECT_OCMOCK_VERIFY(GetMockWKWebView());
   const base::DictionaryValue* dict =
       prefs_.GetDictionary(AccountConsistencyService::kDomainsWithCookiePref);
   EXPECT_EQ(2u, dict->size());
@@ -404,6 +431,25 @@ TEST_F(AccountConsistencyServiceTest, DomainsClearedOnBrowsingDataRemoved) {
   dict =
       prefs_.GetDictionary(AccountConsistencyService::kDomainsWithCookiePref);
   EXPECT_EQ(0u, dict->size());
+}
+
+// Tests that remove cookie call back is called when the signout is interrupted
+// by removing the browser data.
+TEST_F(AccountConsistencyServiceTest, DomainsClearedOnBrowsingDataRemoved2) {
+  AddPageLoadedExpectation(kGoogleUrl, true /* continue_navigation */);
+  AddPageLoadedExpectation(kYoutubeUrl, true /* continue_navigation */);
+  SignIn();
+
+  AddPageLoadedExpectation(kGoogleUrl, false /* continue_navigation */);
+  remove_cookie_callback_called_ = false;
+  account_consistency_service_->RemoveChromeConnectedCookies(
+      base::BindOnce(&AccountConsistencyServiceTest::RemoveCookieDone,
+                     base::Unretained(this)));
+  EXPECT_FALSE(remove_cookie_callback_called_);
+  EXPECT_CALL(*gaia_cookie_manager_service_, ForceOnCookieChangedProcessing())
+      .Times(1);
+  account_consistency_service_->OnBrowsingDataRemoved();
+  EXPECT_TRUE(remove_cookie_callback_called_);
 }
 
 // Tests that cookie requests are correctly processed or ignored when the update
