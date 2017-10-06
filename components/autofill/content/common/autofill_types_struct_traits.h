@@ -407,8 +407,8 @@ struct StructTraits<autofill::mojom::PasswordFormDataView,
     return r.all_possible_passwords;
   }
 
-  static bool form_has_autofilled_value(const autofill::PasswordForm& r) {
-    return r.form_has_autofilled_value;
+  static bool passwords_has_autofilled_value(const autofill::PasswordForm& r) {
+    return r.passwords_has_autofilled_value;
   }
 
   static const base::string16& password_element(

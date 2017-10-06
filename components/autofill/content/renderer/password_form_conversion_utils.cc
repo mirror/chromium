@@ -307,7 +307,6 @@ base::string16 FieldName(const WebInputElement& input_field,
   return field_name.empty() ? base::ASCIIToUTF16(dummy_name) : field_name;
 }
 
-// Returns true iff the properties mask of |element| intersects with |mask|.
 bool FieldHasPropertiesMask(const FieldValueAndPropertiesMaskMap* field_map,
                             const blink::WebFormControlElement& element,
                             FieldPropertiesMask mask) {
@@ -538,7 +537,8 @@ bool GetPasswordForm(
 
     if (!all_possible_passwords.empty()) {
       password_form->all_possible_passwords = std::move(all_possible_passwords);
-      password_form->form_has_autofilled_value = passwords_has_autofilled_value;
+      password_form->passwords_has_autofilled_value =
+          passwords_has_autofilled_value;
     }
   }
 

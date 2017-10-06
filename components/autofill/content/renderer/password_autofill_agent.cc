@@ -355,7 +355,7 @@ bool CanShowSuggestion(const PasswordFormFillData& fill_data,
 // |field_value_and_properties_map|.
 // Flags in |added_flags| are added with bitwise OR operation.
 // If |value| is null, the value is neither updated nor added.
-// If |*value| is empty, USER_TYPED and AUTOFILLED should be cleared.
+// If |value| is empty, USER_TYPED and AUTOFILLED should be cleared.
 void UpdateFieldValueAndPropertiesMaskMap(
     const blink::WebFormControlElement& element,
     const base::string16* value,

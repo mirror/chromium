@@ -189,7 +189,7 @@ struct PasswordForm {
   std::vector<base::string16> all_possible_passwords;
 
   // True if |all_possible_passwords| have autofilled value or its part.
-  bool form_has_autofilled_value;
+  bool passwords_has_autofilled_value;
 
   // The name of the input element corresponding to the current password.
   // Optional (improves scoring).
