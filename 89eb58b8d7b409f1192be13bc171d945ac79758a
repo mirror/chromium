@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee935485_b8fe0dbf",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T19:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb22c85a_5073dff1",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7cf8a1c_b2a0f298",
         "filename": "pdf/pdfium/pdfium_page.cc",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "696e1df2_29fbf6fc",
+        "filename": "pdf/pdfium/pdfium_page.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T19:02:35Z",
+      "side": 1,
+      "message": "Because page_ is not necessarily loaded all the time, in this case it wasn\u0027t. My previous change that added the \"page_\" reference did not take that into account, but it worked in that particular case because there was a page load before it. GetPage() is more correct and is what the other methods do.",
+      "parentUuid": "b7cf8a1c_b2a0f298",
+      "range": {
+        "startLine": 384,
+        "startChar": 52,
+        "endLine": 384,
+        "endChar": 61
+      },
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772e8ea8_084484a3",
         "filename": "pdf/pdfium/pdfium_page.h",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "780d7cef_4fa2a662",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T19:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "772e8ea8_084484a3",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "c80c0911_b4cfb1f0",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T19:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92a50fbd_d24277cd",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a753f0e0_be87d920",
         "filename": "pdf/pdfium/pdfium_page.h",
         "patchSetId": 14
@@ -90,6 +168,24 @@
       "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf2343e_ba85f229",
+        "filename": "pdf/pdfium/pdfium_page.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1241393
+      },
+      "writtenOn": "2017-10-06T19:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a753f0e0_be87d920",
+      "revId": "89eb58b8d7b409f1192be13bc171d945ac79758a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
