@@ -16,6 +16,24 @@
       "revId": "6fac3d7a007bb3a362d8a323bd877c4fe563d73a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e67d45c_a060a225",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-10-06T23:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd1e7df_222c5223",
+      "revId": "6fac3d7a007bb3a362d8a323bd877c4fe563d73a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
