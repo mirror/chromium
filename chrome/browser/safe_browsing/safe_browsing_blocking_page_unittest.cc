@@ -17,6 +17,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/db/test_database_manager.h"
 #include "components/security_interstitials/core/safe_browsing_quiet_error_ui.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/interstitial_page.h"
@@ -202,6 +203,7 @@ class SafeBrowsingBlockingPageTest : public ChromeRenderViewHostTestHarness {
     ResetUserResponse();
     // The safe browsing UI manager does not need a service for this test.
     ui_manager_ = new TestSafeBrowsingUIManager(NULL);
+    test_db_manager_ = new TestSafeBrowsingDatabaseManager();
   }
 
   void SetUp() override {
@@ -213,6 +215,7 @@ class SafeBrowsingBlockingPageTest : public ChromeRenderViewHostTestHarness {
 
     safe_browsing::TestSafeBrowsingServiceFactory sb_service_factory;
     sb_service_factory.SetTestUIManager(ui_manager_.get());
+    sb_service_factory.SetTestDatabaseManager(test_db_manager_.get());
     auto* safe_browsing_service =
         sb_service_factory.CreateSafeBrowsingService();
     TestingBrowserProcess::GetGlobal()->SetSafeBrowsingService(
@@ -223,6 +226,8 @@ class SafeBrowsingBlockingPageTest : public ChromeRenderViewHostTestHarness {
     safe_browsing_service->AddPrefService(
         Profile::FromBrowserContext(web_contents()->GetBrowserContext())
             ->GetPrefs());
+    VLOG(1) << __FUNCTION__ << ": database_manager(): "
+            << g_browser_process->safe_browsing_service()->database_manager();
   }
 
   void TearDown() override {
@@ -326,6 +331,7 @@ class SafeBrowsingBlockingPageTest : public ChromeRenderViewHostTestHarness {
   }
 
   scoped_refptr<TestSafeBrowsingUIManager> ui_manager_;
+  scoped_refptr<TestSafeBrowsingDatabaseManager> test_db_manager_;
 
   // Owned by TestSafeBrowsingBlockingPage.
   MockTestingProfile* mock_profile_;
@@ -885,6 +891,7 @@ class SafeBrowsingBlockingQuietPageTest
   SafeBrowsingBlockingQuietPageTest() {
     // The safe browsing UI manager does not need a service for this test.
     ui_manager_ = new TestSafeBrowsingUIManager(NULL);
+    test_db_manager_ = new TestSafeBrowsingDatabaseManager();
   }
 
   void SetUp() override {
@@ -895,6 +902,7 @@ class SafeBrowsingBlockingQuietPageTest
 
     safe_browsing::TestSafeBrowsingServiceFactory sb_service_factory;
     sb_service_factory.SetTestUIManager(ui_manager_.get());
+    sb_service_factory.SetTestDatabaseManager(test_db_manager_.get());
     auto* safe_browsing_service =
         sb_service_factory.CreateSafeBrowsingService();
     // A profile was created already but SafeBrowsingService wasn't around to
@@ -905,6 +913,8 @@ class SafeBrowsingBlockingQuietPageTest
     TestingBrowserProcess::GetGlobal()->SetSafeBrowsingService(
         safe_browsing_service);
     g_browser_process->safe_browsing_service()->Initialize();
+    VLOG(1) << __FUNCTION__ << ": database_manager(): "
+            << g_browser_process->safe_browsing_service()->database_manager();
   }
 
   void TearDown() override {
@@ -945,6 +955,7 @@ class SafeBrowsingBlockingQuietPageTest
   }
 
   scoped_refptr<TestSafeBrowsingUIManager> ui_manager_;
+  scoped_refptr<TestSafeBrowsingDatabaseManager> test_db_manager_;
 
   // Owned by TestSafeBrowsingBlockingQuietPage.
   MockTestingProfile* mock_profile_;
