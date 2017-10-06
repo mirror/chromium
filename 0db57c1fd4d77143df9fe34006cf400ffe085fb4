@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178ce379_292b8666",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-06T14:56:34Z",
+      "side": 1,
+      "message": "If you take my advice above, you could use emplace_back to construct the OverflowData in place.",
+      "revId": "0db57c1fd4d77143df9fe34006cf400ffe085fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85e4d7a_ce3c4ab4",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-06T14:56:34Z",
+      "side": 1,
+      "message": "The three first members could be const, if you changed the constructor to OverflowData(double volume, bool key_pressed, base::TimeTicks capture_time, std::unique_ptr\u003cmedia::AudioBus\u003e overflow_buses).",
+      "range": {
+        "startLine": 171,
+        "startChar": 4,
+        "endLine": 173,
+        "endChar": 33
+      },
+      "revId": "0db57c1fd4d77143df9fe34006cf400ffe085fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cb0b50_ce777650",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-06T14:56:34Z",
+      "side": 1,
+      "message": "This name is a bit unclear, it could probably just be \"audio_bus_\".",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 52
+      },
+      "revId": "0db57c1fd4d77143df9fe34006cf400ffe085fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc3e00d_063b782d",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-06T14:56:34Z",
+      "side": 1,
+      "message": "Wrapping in a unique_ptr shouldn\u0027t be needed, as OverflowData is movable.",
+      "revId": "0db57c1fd4d77143df9fe34006cf400ffe085fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
