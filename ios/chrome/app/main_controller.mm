@@ -1490,6 +1490,11 @@ const int kExternalFilesCleanupDelaySeconds = 60;
 #pragma mark - ApplicationSettingsCommands
 
 - (void)showAccountsSettings {
+  [self showAccountsSettings:[self topPresentedViewController]];
+}
+
+- (void)showAccountsSettings:(UIViewController*)presentingViewController {
+  DCHECK(presentingViewController);
   if ([self currentBrowserState]->IsOffTheRecord()) {
     NOTREACHED();
     return;
@@ -1501,10 +1506,9 @@ const int kExternalFilesCleanupDelaySeconds = 60;
   _settingsNavigationController = [SettingsNavigationController
       newAccountsController:self.currentBrowserState
                    delegate:self];
-  [[self topPresentedViewController]
-      presentViewController:_settingsNavigationController
-                   animated:YES
-                 completion:nil];
+  [presentingViewController presentViewController:_settingsNavigationController
+                                         animated:YES
+                                       completion:nil];
 }
 
 - (void)showSyncSettings {
