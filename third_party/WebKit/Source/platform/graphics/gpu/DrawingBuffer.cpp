@@ -165,7 +165,8 @@ DrawingBuffer::DrawingBuffer(
       discard_framebuffer_supported_(discard_framebuffer_supported),
       want_alpha_channel_(want_alpha_channel),
       premultiplied_alpha_(premultiplied_alpha),
-      software_rendering_(this->ContextProvider()->IsSoftwareRendering()),
+      software_compositing_(
+          this->ContextProvider()->UsingSoftwareCompositing()),
       want_depth_(want_depth),
       want_stencil_(want_stencil),
       storage_color_space_(color_params.GetStorageGfxColorSpace()),
@@ -298,7 +299,7 @@ bool DrawingBuffer::PrepareTextureMailboxInternal(
   // Resolve the multisampled buffer into m_backColorBuffer texture.
   ResolveIfNeeded();
 
-  if (software_rendering_ && !force_gpu_result) {
+  if (software_compositing_ && !force_gpu_result) {
     return FinishPrepareTextureMailboxSoftware(out_mailbox,
                                                out_release_callback);
   } else {

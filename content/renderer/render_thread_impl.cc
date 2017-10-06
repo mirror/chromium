@@ -812,6 +812,9 @@ void RenderThreadImpl::Init(
   is_gpu_memory_buffer_compositor_resources_enabled_ = command_line.HasSwitch(
       switches::kEnableGpuMemoryBufferCompositorResources);
 
+  if (command_line.HasSwitch(switches::kDisableGpuCompositing))
+    DisableGpuCompositing();
+
 // On macOS this value is adjusted in `UpdateScrollbarTheme()`,
 // but the system default is true.
 #if defined(OS_MACOSX)
@@ -1494,6 +1497,7 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(
       EstablishGpuChannelSync());
   if (!gpu_channel_host) {
+    DCHECK(gpu_compositing_disabled_);
     shared_main_thread_contexts_ = nullptr;
     return nullptr;
   }
@@ -1505,8 +1509,14 @@ RenderThreadImpl::SharedMainThreadContextProvider() {
       support_oop_rasterization,
       ui::command_buffer_metrics::RENDERER_MAINTHREAD_CONTEXT,
       kGpuStreamIdDefault, kGpuStreamPriorityDefault);
-  if (!shared_main_thread_contexts_->BindToCurrentThread())
+  if (!shared_main_thread_contexts_->BindToCurrentThread()) {
     shared_main_thread_contexts_ = nullptr;
+    // If the SharedMainThreadContextProvider() returns null, we want the client
+    // to be able to assume software compositing so it doesn't have to keep
+    // asking for a context repeatedly.
+    DisableGpuCompositing();
+    return nullptr;
+  }
   return shared_main_thread_contexts_;
 }
 
@@ -1904,9 +1914,25 @@ void RenderThreadImpl::RecordPurgeAndSuspendMemoryGrowthMetrics(
           1024);
 }
 
+void RenderThreadImpl::DisableGpuCompositing() {
+  if (gpu_compositing_disabled_)
+    return;
+
+#ifdef OS_ANDROID
+  CHECK(false) << "Android does not support software compositing.";
+#endif
+
+  gpu_compositing_disabled_ = true;
+  // Lose any contexts to signal that clients need to check
+  // IsGpuCompositingDisabled() again.
+  if (gpu_channel_) {
+    gpu_channel_->DestroyChannel();
+    gpu_channel_ = nullptr;
+  }
+}
+
 scoped_refptr<gpu::GpuChannelHost> RenderThreadImpl::EstablishGpuChannelSync() {
   TRACE_EVENT0("gpu", "RenderThreadImpl::EstablishGpuChannelSync");
-
   if (gpu_channel_) {
     // Do nothing if we already have a GPU channel or are already
     // establishing one.
@@ -1919,21 +1945,30 @@ scoped_refptr<gpu::GpuChannelHost> RenderThreadImpl::EstablishGpuChannelSync() {
   }
 
   gpu_channel_ = gpu_->EstablishGpuChannelSync();
-  if (gpu_channel_)
-    GetContentClient()->SetGpuInfo(gpu_channel_->gpu_info());
+  if (gpu_channel_) {
+    const auto& info = gpu_channel_->gpu_info();
+    GetContentClient()->SetGpuInfo(info);
+
+    // We may get a valid channel, but with a software renderer. In that case,
+    // disable GPU compositing.
+    if (info.software_rendering)
+      DisableGpuCompositing();
+  } else {
+    // If a client is unable to make a context, then we want it to be able
+    // to assume that gpu compositing is disabled so it doesn't have to keep
+    // retrying forever.
+    DisableGpuCompositing();
+  }
   return gpu_channel_;
 }
 
 void RenderThreadImpl::RequestNewLayerTreeFrameSink(
-    bool use_software,
     int routing_id,
     scoped_refptr<FrameSwapMessageQueue> frame_swap_message_queue,
     const GURL& url,
     const LayerTreeFrameSinkCallback& callback) {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kDisableGpuCompositing))
-    use_software = true;
 
   viz::ClientLayerTreeFrameSink::InitParams params;
   params.enable_surface_synchronization =
@@ -1952,7 +1987,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   }
 
 #if defined(USE_AURA)
-  if (!use_software && IsRunningInMash()) {
+  if (!gpu_compositing_disabled_ && IsRunningInMash()) {
     if (!RendererWindowTreeClient::Get(routing_id)) {
       callback.Run(nullptr);
       return;
@@ -1993,20 +2028,13 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
   // Create a gpu process channel and verify we want to use GPU compositing
   // before creating any context providers.
   scoped_refptr<gpu::GpuChannelHost> gpu_channel_host;
-  if (!use_software) {
+  if (!gpu_compositing_disabled_) {
+    // This may result in us deciding to use software compositing.
     gpu_channel_host = EstablishGpuChannelSync();
-    if (!gpu_channel_host) {
-      // Cause the compositor to wait and try again.
-      callback.Run(nullptr);
-      return;
-    }
-    // We may get a valid channel, but with a software renderer. In that case,
-    // disable GPU compositing.
-    if (gpu_channel_host->gpu_info().software_rendering)
-      use_software = true;
+    DCHECK_EQ(!gpu_channel_host, gpu_compositing_disabled_);
   }
 
-  if (use_software) {
+  if (gpu_compositing_disabled_) {
     DCHECK(!layout_test_mode());
     frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                           std::move(client));

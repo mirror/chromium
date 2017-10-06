@@ -7,6 +7,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/graphics/WebGraphicsContext3DProviderWrapper.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/ThreadSpecific.h"
 
 #include <memory>
@@ -22,23 +23,32 @@ class WebGraphicsContext3DProvider;
 // Platform::createSharedOffscreenGraphicsContext3DProvider
 class PLATFORM_EXPORT SharedGpuContext {
  public:
-  // May re-create context if context was lost
-  static WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper();
+  // May re-create context if context was lost. If |using_software_compositing|
+  // is true on return, then the compositor is not using the gpu, even if the
+  // result is a valid pointer. Conversely, if it is false but the result is a
+  // null pointer, then the context was not able to be created but it is not yet
+  // known that the compositor has given up on using gpu.
+  static WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper(
+      bool* using_software_compositing);
   static bool AllowSoftwareToAcceleratedCanvasUpgrade();
   static bool IsValidWithoutRestoring();
-  typedef std::function<std::unique_ptr<WebGraphicsContext3DProvider>()>
-      ContextProviderFactory;
+
+  using ContextProviderFactory =
+      WTF::Function<std::unique_ptr<WebGraphicsContext3DProvider>(
+                        bool* using_software_compositing),
+                    WTF::kSameThreadAffinity>;
   static void SetContextProviderFactoryForTesting(ContextProviderFactory);
 
  private:
   static SharedGpuContext* GetInstanceForCurrentThread();
 
   SharedGpuContext();
-  void CreateContextProviderOnMainThread(WaitableEvent*);
-  void CreateContextProviderIfNeeded();
-  void SetContextProvider(std::unique_ptr<WebGraphicsContext3DProvider>&&);
+  void CreateContextProviderOnMainThread(WaitableEvent*,
+                                         bool* using_software_compositing);
+  void CreateContextProviderIfNeeded(bool* using_software_compositing);
+  void SetContextProvider(std::unique_ptr<WebGraphicsContext3DProvider>);
 
-  ContextProviderFactory context_provider_factory_ = nullptr;
+  ContextProviderFactory context_provider_factory_;
   std::unique_ptr<WebGraphicsContext3DProviderWrapper>
       context_provider_wrapper_;
   friend class WTF::ThreadSpecific<SharedGpuContext>;
