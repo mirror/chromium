@@ -58,6 +58,10 @@ class CONTENT_EXPORT NavigationHandle {
   // virtual URL is prefixed with "view-source:".
   virtual const GURL& GetURL() = 0;
 
+  // The HTTP method used. This may change during the navigation when
+  // encountering a server redirect.
+  virtual const std::string& GetMethod() = 0;
+
   // Returns the SiteInstance that started the request.
   // If a frame in SiteInstance A navigates a frame in SiteInstance B to a URL
   // in SiteInstance C, then this returns B.
@@ -244,6 +248,9 @@ class CONTENT_EXPORT NavigationHandle {
   // yet known for this navigation.  Download status is determined for a
   // navigation when processing final (post redirect) HTTP response headers.
   virtual bool IsDownload() = 0;
+
+  virtual void SetIsIgnoredByWebView();
+  virtual bool IsIgnoredByWebView() const;
 
   // Testing methods ----------------------------------------------------------
   //

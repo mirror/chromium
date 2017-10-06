@@ -878,17 +878,6 @@ class CONTENT_EXPORT ContentBrowserClient {
       bool in_memory,
       const base::FilePath& relative_partition_path);
 
-#if defined(OS_ANDROID)
-  // Only used by Android WebView.
-  virtual bool ShouldOverrideUrlLoading(int frame_tree_node_id,
-                                        bool browser_initiated,
-                                        const GURL& gurl,
-                                        const std::string& request_method,
-                                        bool has_user_gesture,
-                                        bool is_redirect,
-                                        bool is_main_frame,
-                                        ui::PageTransition transition);
-#endif
 };
 
 }  // namespace content

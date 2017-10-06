@@ -235,6 +235,10 @@ const GURL& NavigationHandleImpl::GetURL() {
   return url_;
 }
 
+const std::string& NavigationHandleImpl::GetMethod() {
+  return method_;
+}
+
 SiteInstance* NavigationHandleImpl::GetStartingSiteInstance() {
   return starting_site_instance_.get();
 }
@@ -519,6 +523,14 @@ const GlobalRequestID& NavigationHandleImpl::GetGlobalRequestID() {
 
 bool NavigationHandleImpl::IsDownload() {
   return is_download_;
+}
+
+void NavigationHandleImpl::SetIsIgnoredByWebView() {
+  is_ignored_by_webview_ = true;
+}
+
+bool NavigationHandleImpl::IsIgnoredByWebView() const {
+  return is_ignored_by_webview_;
 }
 
 void NavigationHandleImpl::InitServiceWorkerHandle(
