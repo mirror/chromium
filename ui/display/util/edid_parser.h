@@ -56,6 +56,14 @@ DISPLAY_UTIL_EXPORT bool ParseChromaticityCoordinates(
     const std::vector<uint8_t>& edid,
     SkColorSpacePrimaries* primaries) WARN_UNUSED_RESULT;
 
+// Extracts the gamma value from |edid| and returns it, or returns 0.0.
+DISPLAY_UTIL_EXPORT double GetGammaValue(const std::vector<uint8_t>& edid)
+    WARN_UNUSED_RESULT;
+
+// Extracts the bits per channel from |edid| and returns it, or returns 0.
+DISPLAY_UTIL_EXPORT int GetBitsPerChannel(const std::vector<uint8_t>& edid)
+    WARN_UNUSED_RESULT;
+
 }  // namespace display
 
 #endif // UI_DISPLAY_UTIL_EDID_PARSER_H_

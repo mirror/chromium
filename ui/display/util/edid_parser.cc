@@ -339,4 +339,49 @@ bool ParseChromaticityCoordinates(const std::vector<uint8_t>& edid,
   return true;
 }
 
+DISPLAY_UTIL_EXPORT double GetGammaValue(const std::vector<uint8_t>& edid) {
+  // Constants are taken from "VESA Enhanced EDID Standard" Release A, Revision
+  // 2, Sep 2006, Sec. 3.6.3 "Display Transfer Characteristics (GAMMA ): 1 Byte"
+  const size_t kGammaOffset = 23;
+  const double kGammaMultiplier = 100.0;
+  const double kGammaBias = 100.0;
+
+  if (edid.size() < kGammaOffset + 1) {
+    LOG(ERROR) << "too short EDID data: gamma";
+    return 0.0;
+  }
+  if (edid[kGammaOffset] == 0xFF)  // Gamma is stored elsewhere.
+    return 0.0;
+  return (edid[kGammaOffset] + kGammaBias) / kGammaMultiplier;
+}
+
+DISPLAY_UTIL_EXPORT int GetBitsPerChannel(const std::vector<uint8_t>& edid) {
+  // Constants are taken from ["VESA Enhanced EDID Standard" Release A, Revision
+  // 1, Feb 2000, Sec 3.6 "Basic Display Parameters and Features: 5 bytes"
+  static const int kBitsPerChannelTable[] = {0, 6, 8, 10, 12, 14, 16};
+
+  const uint8_t kEDIDRevisionNumberOffset = 19;
+  const uint8_t kEDIDRevision4Value = 4;
+
+  const size_t kVideoInputDefinitionOffset = 20;
+  const uint8_t kDigitalInfoMask = 0x80;
+  const uint8_t kColorBitDepthMask = 0x70;
+  const uint8_t kColorBitDepthOffset = 4;
+
+  if (edid.size() < kVideoInputDefinitionOffset + 1) {
+    LOG(ERROR) << "too short EDID data: gamma";
+    return 0;
+  }
+  // EDID needs to be revision 4 at least, and kDigitalInfoMask be set for
+  // the Video Input Definition entry to describe a digital interface.
+  if (edid[kEDIDRevisionNumberOffset] < kEDIDRevision4Value ||
+      !(edid[kVideoInputDefinitionOffset] & kDigitalInfoMask)) {
+    return 0;
+  }
+
+  return kBitsPerChannelTable[(
+      (edid[kVideoInputDefinitionOffset] & kColorBitDepthMask) >>
+      kColorBitDepthOffset)];
+}
+
 }  // namespace display
