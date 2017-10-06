@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a126f47d_f4bc2e5e",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T13:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d255f290_4e018bbe",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa897032_69d4e4cf",
         "filename": "media/audio/audio_manager_base.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "da11628e_f4a2a761",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T13:17:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa897032_69d4e4cf",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c957c4cd_fafdc0da",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -65,6 +101,24 @@
       "writtenOn": "2017-10-05T18:37:51Z",
       "side": 1,
       "message": "Given the name, should this just be recorded in the AudioOutputProxy?",
+      "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60dd3d8_c4c2490a",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 1680,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T13:17:19Z",
+      "side": 1,
+      "message": "Fallback to a fake stream happens outside of AudioOutputProxy (in AudioManagerBase::MakeAudioOutputStreamProxy).",
+      "parentUuid": "c957c4cd_fafdc0da",
       "revId": "bbdfe309862c356c00b2119885bf008d408cc50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
