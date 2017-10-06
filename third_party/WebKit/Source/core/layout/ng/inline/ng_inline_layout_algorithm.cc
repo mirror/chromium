@@ -538,16 +538,27 @@ RefPtr<NGLayoutResult> NGInlineLayoutAlgorithm::Layout() {
     }
   }
 
-  NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
-                             &unpositioned_floats_, BreakToken());
+  LazyLineBreakIterator break_iterator(Node().Text());
+  HarfBuzzShaper shaper(Node().Text().Characters16(), Node().Text().length());
+  ShapeResultSpacing<String> spacing(Node().Text());
 
+  RefPtr<NGInlineBreakToken> break_token = BreakToken();
   std::unique_ptr<NGExclusionSpace> exclusion_space(
       WTF::MakeUnique<NGExclusionSpace>(ConstraintSpace().ExclusionSpace()));
   NGLineInfo line_info;
-  while (line_breaker.NextLine({LayoutUnit(), content_size_}, *exclusion_space,
-                               &line_info)) {
-    CreateLine(&line_info, line_breaker.ExclusionSpace(),
-               line_breaker.CreateBreakToken());
+  while (!break_token || !break_token->IsFinished()) {
+    NGLineBreaker line_breaker(Node(), constraint_space_, &container_builder_,
+                               &unpositioned_floats_, &break_iterator, shaper,
+                               &spacing, break_token.get());
+    bool success = line_breaker.NextLine({LayoutUnit(), content_size_},
+                                         *exclusion_space, &line_info);
+
+    if (!success)
+      break;
+
+    break_token = line_breaker.CreateBreakToken();
+    CreateLine(&line_info, line_breaker.ExclusionSpace(), break_token);
+
     exclusion_space =
         WTF::MakeUnique<NGExclusionSpace>(*line_breaker.ExclusionSpace());
   }
