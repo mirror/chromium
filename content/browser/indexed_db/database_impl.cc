@@ -682,17 +682,12 @@ void DatabaseImpl::IDBSequenceHelper::Put(
   UMA_HISTOGRAM_COUNTS_10000("WebCore.IndexedDB.PutKeySize",
                              key.size_estimate() / 1024);
 
-  uint64_t commit_size = mojo_value->bits.size() + key.size_estimate();
   IndexedDBValue value;
   swap(value.bits, mojo_value->bits);
   swap(value.blob_info, blob_info);
   connection_->database()->Put(transaction, object_store_id, &value, &handles,
                                base::MakeUnique<IndexedDBKey>(key), mode,
                                std::move(callbacks), index_keys);
-
-  // Size can't be big enough to overflow because it represents the
-  // actual bytes passed through IPC.
-  transaction->set_size(transaction->size() + commit_size);
 }
 
 void DatabaseImpl::IDBSequenceHelper::SetIndexKeys(
@@ -909,7 +904,7 @@ void DatabaseImpl::IDBSequenceHelper::Commit(int64_t transaction_id) {
     return;
 
   // Always allow empty or delete-only transactions.
-  if (transaction->size() == 0) {
+  if (transaction->GetTransactionSize() == 0) {
     connection_->database()->Commit(transaction);
     return;
   }
@@ -937,7 +932,7 @@ void DatabaseImpl::IDBSequenceHelper::OnGotUsageAndQuotaForCommit(
     return;
 
   if (status == storage::kQuotaStatusOk &&
-      usage + transaction->size() <= quota) {
+      usage + transaction->GetTransactionSize() <= quota) {
     connection_->database()->Commit(transaction);
   } else {
     connection_->AbortTransaction(

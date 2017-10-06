@@ -3959,7 +3959,19 @@ void IndexedDBBackingStore::Transaction::Rollback() {
 
 uint64_t IndexedDBBackingStore::Transaction::GetTransactionSize() {
   DCHECK(transaction_);
-  return transaction_->GetTransactionSize();
+  int64_t size = transaction_->GetTransactionSize();
+  for (const auto& os_blobs_pair : blob_change_map_) {
+    for (const auto& blob_info : os_blobs_pair.second->blob_info()) {
+      size += blob_info.size();
+    }
+  }
+  for (const auto& os_blobs_pair : incognito_blob_map_) {
+    for (const auto& blob_info : os_blobs_pair.second->blob_info()) {
+      size += blob_info.size();
+    }
+  }
+
+  return size;
 }
 
 IndexedDBBackingStore::BlobChangeRecord::BlobChangeRecord(

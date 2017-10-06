@@ -108,8 +108,8 @@ class CONTENT_EXPORT IndexedDBTransaction {
 
   const Diagnostics& diagnostics() const { return diagnostics_; }
 
-  void set_size(int64_t size) { size_ = size; }
-  int64_t size() const { return size_; }
+  // Returns the transaction size and the size of all blobs.
+  int64_t GetTransactionSize() const;
 
  protected:
   // Test classes may derive, but most creation should be done via
