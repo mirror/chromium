@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5056eb1a_fc5d758b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextualsearch/ContextualSearchManager.java",
+        "patchSetId": 29
+      },
+      "lineNbr": 1622,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T17:48:44Z",
+      "side": 1,
+      "message": "nit: suppress is a verb, and it is obvious that this is for ContextualSearch, how about\nshortening this to suppressForSmartSelection?",
+      "range": {
+        "startLine": 1622,
+        "startChar": 24,
+        "endLine": 1622,
+        "endChar": 67
+      },
+      "revId": "cf3fa38d862b4e530cef5600ed0df1e16d074797",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
