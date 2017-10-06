@@ -15,7 +15,9 @@ struct UniversalLinkDecodeTestCase {
   bool expected_complete_payment_request;
 };
 
-TEST(AppStartupParameters, QueryParametersPaymentRequest) {
+using AppStartupParameters = PlatformTest;
+
+TEST_F(AppStartupParameters, QueryParametersPaymentRequest) {
   const UniversalLinkDecodeTestCase test_cases[] = {
       {
           GURL("https://goo.gl/ioschrome/"), {}, false,

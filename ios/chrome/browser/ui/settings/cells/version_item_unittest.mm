@@ -10,7 +10,9 @@
 
 namespace {
 
-TEST(VersionItemTest, TextLabelGetsText) {
+using VersionItemTest = PlatformTest;
+
+TEST_F(VersionItemTest, TextLabelGetsText) {
   VersionItem* item = [[VersionItem alloc] initWithType:0];
   VersionCell* cell = [[[item cellClass] alloc] init];
   EXPECT_TRUE([cell isMemberOfClass:[VersionCell class]]);
