@@ -81,12 +81,23 @@ uint32_t ranval(ranctx* x) {
   return ret;
 }
 
+void setSeed(ranctx* x, int64_t seed) {
+// IMPORTANT: Predictable addresses must never be generated in branded
+// Chrome builds. In that case, this function must be a no-op.
+#if !defined(OFFICIAL_BUILD)
+  subtle::SpinLock::Guard guard(x->lock);
+  // Allow re-initialization. Clients may want to repeat the predictable
+  // sequence.
+  x->initialized = true;
+  x->a = x->b = static_cast<uint32_t>(seed);
+  x->c = x->d = static_cast<uint32_t>(seed >> 32);
+#endif  // !defined(OFFICIAL_BUILD)
+}
+
 static LazyInstance<ranctx>::Leaky s_ranctx = LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
-// Calculates a random preferred mapping address. In calculating an address, we
-// balance good ASLR against not fragmenting the address space too badly.
 void* GetRandomPageBase() {
   uintptr_t random = static_cast<uintptr_t>(ranval(s_ranctx.Pointer()));
 
@@ -130,6 +141,10 @@ void* GetRandomPageBase() {
 
   DCHECK_EQ(0ULL, (random & kPageAllocationGranularityOffsetMask));
   return reinterpret_cast<void*>(random);
+}
+
+void SetRandomPageBaseSeed(int64_t initial_seed) {
+  setSeed(s_ranctx.Pointer(), initial_seed);
 }
 
 }  // namespace base
