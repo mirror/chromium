@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae591790_3fa96ece",
+        "filename": "third_party/metrics_proto/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-06T20:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1f8ee74_25464f9f",
+      "revId": "600466d0030a542a1b9195d50fc3260d9f25e2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af3873b6_4ec7d390",
         "filename": "third_party/metrics_proto/README.chromium",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T16:23:18Z",
       "side": 1,
       "message": "I\u0027m not clear on what this means.",
+      "revId": "600466d0030a542a1b9195d50fc3260d9f25e2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981a5672_483722d6",
+        "filename": "third_party/metrics_proto/README.chromium",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-10-06T20:56:33Z",
+      "side": 1,
+      "message": "Changed to be \"not modified from exported version\"\nand mentioned the export script in Description.",
+      "parentUuid": "af3873b6_4ec7d390",
       "revId": "600466d0030a542a1b9195d50fc3260d9f25e2b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
