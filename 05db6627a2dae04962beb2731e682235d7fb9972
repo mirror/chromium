@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5fa196dc_31c65620",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-10-06T17:45:28Z",
+      "side": 1,
+      "message": "Why, GetNetworkService() actually returns a mojo interface,\nso it\u0027s not a direct dependence (https://cs.chromium.org/chromium/src/content/public/browser/network_service_instance.cc?l\u003d17). I assume this should work for out-of-process case as well. We already have similar code when granting raw headers permission (https://cs.chromium.org/chromium/src/content/browser/devtools/render_frame_devtools_agent_host.cc?l\u003d778)",
+      "parentUuid": "299077c0_e20c7285",
+      "range": {
+        "startLine": 1173,
+        "startChar": 49,
+        "endLine": 1173,
+        "endChar": 53
+      },
+      "revId": "05db6627a2dae04962beb2731e682235d7fb9972",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50153789_7682989f",
         "filename": "content/network/throttling/throttling_controller.h",
         "patchSetId": 3
