@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121530eb_55f5d445",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-06T22:35:23Z",
+      "side": 1,
+      "message": "Sidenote: Yay, with https://chromium-review.googlesource.com/c/chromium/src/+/697806 we\u0027ll be able to run most web-platform-tests, including RTCRtpReceiver-getSynchronizationSources.html:\nhttps://github.com/w3c/web-platform-tests/blob/0d78ba20b46ecbe6a08338f828cc079c8fd646c2/webrtc/RTCRtpReceiver-getSynchronizationSources.html\nMore test coverage for free!",
+      "revId": "98714e58a6e09cd27b6bf45ba76724390412067b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6890e580_aaa55aca",
+        "filename": "chrome/test/data/webrtc/peerconnection_rtp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-06T22:35:23Z",
+      "side": 1,
+      "message": "Other tests use DetectVideoAndHangUp, see https://cs.chromium.org/chromium/src/chrome/browser/media/webrtc/webrtc_browsertest.cc?sq\u003dpackage:chromium\u0026dr\u0026l\u003d104.\n\nYou could probably do what StartDetectingVideo and WaitForVideoToPlay does and do getSynchronizationSources at that point.",
+      "revId": "98714e58a6e09cd27b6bf45ba76724390412067b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
