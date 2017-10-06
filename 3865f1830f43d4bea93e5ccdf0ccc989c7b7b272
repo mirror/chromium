@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f445d08c_28c08f39",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_reboot_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-10-06T20:03:04Z",
+      "side": 1,
+      "message": "Please use a different bool variable here to make it clearer what conditions require us to call close manually",
+      "revId": "3865f1830f43d4bea93e5ccdf0ccc989c7b7b272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
