@@ -22,6 +22,30 @@
       "revId": "d1d508f587abbe16b3b2b260fdde60f8d5fcf2e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7bfbf2_836c093f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-10-06T09:20:22Z",
+      "side": 1,
+      "message": "D\u0027oh... Thanks!",
+      "parentUuid": "d244cf55_c5403e04",
+      "range": {
+        "startLine": 50,
+        "startChar": 27,
+        "endLine": 50,
+        "endChar": 50
+      },
+      "revId": "d1d508f587abbe16b3b2b260fdde60f8d5fcf2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
