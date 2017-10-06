@@ -932,16 +932,19 @@ void RenderWidget::BeginMainFrame(double frame_time_sec) {
   GetWebWidget()->BeginFrame(frame_time_sec);
 }
 
+void RenderWidget::DisableGpuCompositing() {
+  RenderThreadImpl::current()->DisableGpuCompositing();
+}
+
 void RenderWidget::RequestNewLayerTreeFrameSink(
-    bool fallback,
     const LayerTreeFrameSinkCallback& callback) {
   DCHECK(GetWebWidget());
   // For widgets that are never visible, we don't start the compositor, so we
   // never get a request for a cc::LayerTreeFrameSink.
   DCHECK(!compositor_never_visible_);
   RenderThreadImpl::current()->RequestNewLayerTreeFrameSink(
-      fallback, routing_id_, frame_swap_message_queue_,
-      GetURLForGraphicsContext3D(), callback);
+      routing_id_, frame_swap_message_queue_, GetURLForGraphicsContext3D(),
+      callback);
 }
 
 void RenderWidget::DidCommitAndDrawCompositorFrame() {

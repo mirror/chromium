@@ -205,10 +205,12 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       size_(size),
       color_params_(color_params) {
   if (acceleration_mode != kDisableAcceleration) {
-    context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
+    bool using_software_compositing;
+    context_provider_wrapper_ =
+        SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
     DCHECK(context_provider_wrapper_);
-    DCHECK(
-        !context_provider_wrapper_->ContextProvider()->IsSoftwareRendering());
+    // TODO(junov): What guarantees this?
+    DCHECK(!using_software_compositing);
   }
   // Used by browser tests to detect the use of a Canvas2DLayerBridge.
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
@@ -924,7 +926,11 @@ bool Canvas2DLayerBridge::Restore() {
 
   gpu::gles2::GLES2Interface* shared_gl = nullptr;
   layer_->ClearTexture();
-  context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
+  // TODO(772409): If compositor stops using gpu then Canvas2DLayerBridge
+  // should also, even if it's able to make a context.
+  bool using_software_compositing;
+  context_provider_wrapper_ =
+      SharedGpuContext::ContextProviderWrapper(&using_software_compositing);
   if (context_provider_wrapper_)
     shared_gl = context_provider_wrapper_->ContextProvider()->ContextGL();
 
