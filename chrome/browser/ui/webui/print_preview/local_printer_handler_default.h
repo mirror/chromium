@@ -10,14 +10,22 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 
+namespace content {
+class WebContents;
+}
+
+namespace printing {
+class PrintQueriesQueue;
+}  // namespace printing
+
 class LocalPrinterHandlerDefault : public PrinterHandler {
  public:
-  LocalPrinterHandlerDefault();
+  explicit LocalPrinterHandlerDefault(
+      content::WebContents* preview_web_contents);
   ~LocalPrinterHandlerDefault() override;
 
   // PrinterHandler implementation.
@@ -37,6 +45,9 @@ class LocalPrinterHandlerDefault : public PrinterHandler {
                   const PrintCallback& callback) override;
 
  private:
+  content::WebContents* preview_web_contents_;
+  scoped_refptr<printing::PrintQueriesQueue> queue_;
+
   DISALLOW_COPY_AND_ASSIGN(LocalPrinterHandlerDefault);
 };
 
