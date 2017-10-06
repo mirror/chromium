@@ -4,6 +4,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 
+#include "ash/display/cursor_window_controller.h"
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
@@ -91,13 +92,6 @@ bool AccessibilityController::IsHighContrastEnabled() const {
   return high_contrast_enabled_;
 }
 
-// static
-bool AccessibilityController::RequiresCursorCompositing(PrefService* prefs) {
-  return prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
-         prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
-         prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled);
-}
-
 void AccessibilityController::OnSigninScreenPrefServiceInitialized(
     PrefService* prefs) {
   ObservePrefs(prefs);
@@ -161,7 +155,8 @@ void AccessibilityController::UpdateLargeCursorFromPref() {
   ShellPort::Get()->SetCursorSize(
       large_cursor_enabled_ ? ui::CursorSize::kLarge : ui::CursorSize::kNormal);
   Shell::Get()->SetLargeCursorSizeInDip(large_cursor_size_in_dip_);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
+  Shell::Get()->SetCursorCompositingEnabled(
+      CursorWindowController::RequiresCursorCompositing(prefs));
 }
 
 void AccessibilityController::UpdateHighContrastFromPref() {
@@ -188,7 +183,8 @@ void AccessibilityController::UpdateHighContrastFromPref() {
 
   // Under classic ash high contrast mode is handled internally.
   Shell::Get()->high_contrast_controller()->SetEnabled(enabled);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
+  Shell::Get()->SetCursorCompositingEnabled(
+      CursorWindowController::RequiresCursorCompositing(prefs));
 }
 
 }  // namespace ash

@@ -9,6 +9,7 @@
 
 #include "ash/accessibility/accessibility_controller.h"
 #include "ash/accessibility_types.h"
+#include "ash/display/cursor_window_controller.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/magnifier/partial_magnification_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
@@ -178,7 +179,7 @@ class MagnificationManagerImpl
       AccessibilityManager::Get()->NotifyAccessibilityStatusChanged(details);
       if (ash::Shell::Get()) {
         ash::Shell::Get()->SetCursorCompositingEnabled(
-            ash::AccessibilityController::RequiresCursorCompositing(prefs));
+            ash::CursorWindowController::RequiresCursorCompositing(prefs));
       }
     }
   }

@@ -6,6 +6,7 @@
 
 #include <cmath>
 
+#include "ash/display/cursor_window_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/ash_switches.h"
 #include "ash/session/session_controller.h"
@@ -294,7 +295,11 @@ void NightLightController::RefreshLayersTemperature() {
   // animations.
   last_animation_duration_ = animation_duration_;
   animation_duration_ = AnimationDuration::kShort;
-  Shell::Get()->SetCursorCompositingEnabled(GetEnabled());
+  if (active_user_pref_service_) {
+    Shell::Get()->SetCursorCompositingEnabled(
+        CursorWindowController::RequiresCursorCompositing(
+            active_user_pref_service_));
+  }
 }
 
 void NightLightController::StartWatchingPrefsChanges() {

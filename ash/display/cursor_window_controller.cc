@@ -7,6 +7,7 @@
 #include "ash/ash_constants.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/shell.h"
@@ -114,6 +115,15 @@ void CursorWindowController::SetLargeCursorSizeInDip(
 
   if (display_.is_valid())
     UpdateCursorImage();
+}
+
+// static
+bool CursorWindowController::RequiresCursorCompositing(PrefService* prefs) {
+  DCHECK(prefs != nullptr);
+  return prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
+         prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
+         prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
+         prefs->GetBoolean(prefs::kNightLightEnabled);
 }
 
 void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {

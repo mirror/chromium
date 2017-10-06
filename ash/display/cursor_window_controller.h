@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "base/macros.h"
+#include "components/prefs/pref_service.h"
 #include "ui/aura/window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/display/display.h"
@@ -34,7 +35,13 @@ class ASH_EXPORT CursorWindowController {
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
 
-  // Sets cursor compositing mode on/off.
+  // Returns true if an feature is enabled that requires cursor compositing.
+  // Future feature that requires cursor compositing should be added in this
+  // function.
+  static bool RequiresCursorCompositing(PrefService* prefs);
+
+  // Sets cursor compositing mode on/off. |enabled| should be the value returned
+  // by RequiresCursorCompositing() except for testing.
   void SetCursorCompositingEnabled(bool enabled);
 
   // Updates the container window for the cursor window controller.
