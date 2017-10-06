@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2216f5e5_e564dfe6",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-10-06T19:27:10Z",
+      "side": 1,
+      "message": "We still need to resolve the callback in the event that the print has succeeded. The resolve/reject determines which function gets called in the Print Preview javascript. So maybe we can ensure that any error always sends some non-null error value, and then resolve the callback if error.type() \u003d\u003d NONE.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 2,
+        "endLine": 1354,
+        "endChar": 26
+      },
+      "revId": "638a4618b47bc80b226f30aff4e1db515a3f4134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
