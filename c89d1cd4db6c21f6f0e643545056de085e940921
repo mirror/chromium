@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd137332_a741a2d0",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T18:40:26Z",
+      "side": 1,
+      "message": "This sounds as if we were to clear selection. How about renaming this to SOURCE_ADJUST_SELECTION_RESET? Here and all the other places?",
+      "range": {
+        "startLine": 138,
+        "startChar": 54,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "c89d1cd4db6c21f6f0e643545056de085e940921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1881b10c_819f0285",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T18:40:26Z",
+      "side": 1,
+      "message": "nit: Can this be moved into the previous line?",
+      "range": {
+        "startLine": 412,
+        "startChar": 6,
+        "endLine": 412,
+        "endChar": 34
+      },
+      "revId": "c89d1cd4db6c21f6f0e643545056de085e940921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df29047_f5af6ff5",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-10-06T18:40:26Z",
+      "side": 1,
+      "message": "nit: could you move this into the previous line? then {} is not needed.",
+      "range": {
+        "startLine": 415,
+        "startChar": 56,
+        "endLine": 415,
+        "endChar": 74
+      },
+      "revId": "c89d1cd4db6c21f6f0e643545056de085e940921",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
