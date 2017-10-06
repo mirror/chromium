@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c79dbdfd_56821298",
+        "filename": "components/offline_pages/core/model/clear_storage_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f9b4167_1b9c4cae",
+      "range": {
+        "startLine": 20,
+        "startChar": 46,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85292c57_2542d5a9",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afedbe0_40a72741",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85292c57_2542d5a9",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 11,
+        "endChar": 70
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed85d460_c187e3ba",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "310d4e62_ce44e5b3",
+      "range": {
+        "startLine": 12,
+        "startChar": 46,
+        "endLine": 12,
+        "endChar": 70
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0866d06_224de624",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1abb8ba_cd594531",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Sorry but this is not working like this. The ItemActionStatus is currently used across multiple use cases, some of them are not casting ItemActionStatus to AddPageResult.\nI think there could be a better organization of the enum classes we\u0027re using and clear their responsibilities. But still, this needs a higher level view and it\u0027s probably won\u0027t be done in this patch.\nSo I\u0027ll leave this as-is, but I\u0027ve added the NOTREACHED() in the default.",
+      "parentUuid": "b0866d06_224de624",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "82a6ba25_12e76e08",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea83aa88_0261b1bd",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 33
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cf6ce1_b326bd0a",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2333f577_8a82cfc9",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "i think having a namespace instead of a wrapping class was suggested in style guide... I kind of like the idea of having a namespace within ::offline_pages for util functions. if the util functions are not used widely after we do the full transition, i\u0027d like to remove the. But it\u0027s a future step",
+      "parentUuid": "11cf6ce1_b326bd0a",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "3b4f9f5d_f525ac48",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a70355_1a2188f7",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 33
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8dad5e48_04c58810",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e4f2a7f_63b98f66",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "sure then i\u0027ll bring this file out of model/ and put it in core/",
+      "parentUuid": "8dad5e48_04c58810",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "58ad4d25_5e8c9bc5",
+        "filename": "components/offline_pages/core/offline_page_store_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "yes the implementation of this AsUTF8Unsafe is pretty similar to the one we removed.",
+      "parentUuid": "be05122c_9ac0451b",
+      "range": {
+        "startLine": 25,
+        "startChar": 19,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7b4fed_fa603efd",
         "filename": "components/offline_pages/core/offline_page_store_utils.h",
         "patchSetId": 5
@@ -226,6 +442,24 @@
     },
     {
       "key": {
+        "uuid": "47bff25c_66ab99a3",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "there\u0027s a new line in the styleguide between c headers and c++ headers.. so i\u0027m adding a new line here.",
+      "parentUuid": "bf7b4fed_fa603efd",
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ffd8739_bc2f1445",
         "filename": "components/offline_pages/core/offline_page_store_utils.h",
         "patchSetId": 5
@@ -240,6 +474,24 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d01d42a_e6e88c77",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ffd8739_bc2f1445",
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "5e9df154_9081f323",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "I think it\u0027s good to keep the namespace, as it will not pollute the ::offline_pages::, and the calls to the methods are more verbose, but in a better way, in my opinion :)",
+      "parentUuid": "9c57d790_611d78ea",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21107ff5_65ea58a0",
         "filename": "components/offline_pages/core/offline_page_store_utils.h",
         "patchSetId": 5
@@ -289,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "247562ba_acd6d9a0",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21107ff5_65ea58a0",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1e4d499_ea235338",
         "filename": "components/offline_pages/core/offline_page_store_utils.h",
         "patchSetId": 5
@@ -309,6 +609,30 @@
       "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d274dff4_ff8bdf19",
+        "filename": "components/offline_pages/core/offline_page_store_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-10-06T21:08:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1e4d499_ea235338",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 52
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
