@@ -460,9 +460,15 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   // want to make sure we include all of the correct nodes when building the
   // ancestor list. So this needs to be the deepest representation of the
   // position before we walk the DOM tree.
-  insertion_position = PositionOutsideTabSpan(
-      CreateVisiblePosition(insertion_position).DeepEquivalent());
+  VisiblePosition visible_insertion_position =
+      CreateVisiblePosition(insertion_position);
+  if (visible_insertion_position.IsNull()) {
+    editing_state->Abort();
+    return;
+  }
 
+  insertion_position =
+      PositionOutsideTabSpan(visible_insertion_position.DeepEquivalent());
   // If the returned position lies either at the end or at the start of an
   // element that is ignored by editing we should move to its upstream or
   // downstream position.
