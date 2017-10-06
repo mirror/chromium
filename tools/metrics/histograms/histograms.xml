@@ -87716,11 +87716,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Array buffer sizes for which V8 failed to allocate memory.</summary>
 </histogram>
 
+<histogram name="V8.AsmModuleSizeBytes" units="bytes">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>aseemgarg@chromium.org</owner>
+  <summary>Size of asm.js module.</summary>
+</histogram>
+
 <histogram name="V8.AsmWasmTranslationMicroSeconds" units="microseconds">
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
   <owner>aseemgarg@chromium.org</owner>
   <summary>Time to convert asm.js code to WebAssembly.</summary>
+</histogram>
+
+<histogram name="V8.AsmWasmTranslationThroughput" units="MB">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>aseemgarg@chromium.org</owner>
+  <summary>
+    Throughput of translation of asm.js code to WebAssembly in MB/s.
+  </summary>
 </histogram>
 
 <histogram name="V8.ASTOptimization">
@@ -88442,6 +88458,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
   <summary>Time to instantiate a WebAssembly module.</summary>
+</histogram>
+
+<histogram name="V8.WasmLazyCompilationMicroSeconds" units="microseconds">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>aseemgarg@chromium.org</owner>
+  <summary>Time for lazy compilation of wasm functions.</summary>
 </histogram>
 
 <histogram name="V8.WasmMaxMemPagesCount" units="pages">
