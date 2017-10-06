@@ -1,0 +1,297 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9331fc9_ffa45b5f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Nit: https://google.github.io/styleguide/cppguide.html#Enumerator_Names",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748579c0_ec1efd0a",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Freezes if YES and resumes otherwise?",
+      "range": {
+        "startLine": 21,
+        "startChar": 58,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad5527e_028a0d56",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "indicator\u0027s",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 17
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3808bcbc_a7270aa7",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Very optional: I was confused how this upcast worked on a non-class until I looked up and saw that they\u0027re the same type but CGPathRef is const. A comment explaining this couldn\u0027t hurt unless you think it\u0027s common knowledge.",
+      "range": {
+        "startLine": 35,
+        "startChar": 48,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be3ceca_9e97be62",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Not 100% following how this is narrower. It seems like it\u0027s just translated vertically by 15px.",
+      "range": {
+        "startLine": 53,
+        "startChar": 75,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1245d78a_501d3442",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Would something like CGPathCreateCopyByTransformingPath work so only one needs to be updated if the path changes?",
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce7635a_288eae2c",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "This is very clever, but what do you think about maintaining an explicit queue of state transitions? It might be easier to reason about",
+      "range": {
+        "startLine": 296,
+        "startChar": 48,
+        "endLine": 296,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8006abf5_954e6748",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Would it be possible for some of these larger blocks to call out to instance methods instead? This block runs almost 100 lines with several nested blocks so it\u0027s hard to tell what\u0027s happening where",
+      "range": {
+        "startLine": 339,
+        "startChar": 72,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc971893_e46eab0f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "I see that |setInProgressState| bails if state_ \u003d\u003d MDDownloadItemProgressIndicatorState::InProgress, but what if:\n1) This is called multiple times before the first block runs\n2) Since the state is set in |setInProgressState|, a second block is queued\n3) The transition into the next state happens *before* the second queued block runs. This might be impossible with the durations as they are right now, but what if someone changes the durations?\n\nI\u0027d suggest either moving the dispatch_after into the method and setting state_ before dispatching, or finding a way to enforce only scheduling one at a time.",
+      "range": {
+        "startLine": 349,
+        "startChar": 62,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf60527_57425cd4",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Super nitpicky nit: consider s/folks/the user",
+      "range": {
+        "startLine": 350,
+        "startChar": 18,
+        "endLine": 350,
+        "endChar": 23
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d3b09e_afdb915f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Stray?",
+      "range": {
+        "startLine": 376,
+        "startChar": 10,
+        "endLine": 376,
+        "endChar": 15
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f5b241_5c436159",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Stray?",
+      "range": {
+        "startLine": 398,
+        "startChar": 10,
+        "endLine": 398,
+        "endChar": 15
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ebb751_1d4c086c",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-10-06T17:28:26Z",
+      "side": 1,
+      "message": "Why here?",
+      "range": {
+        "startLine": 475,
+        "startChar": 31,
+        "endLine": 475,
+        "endChar": 0
+      },
+      "revId": "5543042ccb5003f59dccd6eab1f15fa856c4990d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
