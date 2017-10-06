@@ -429,8 +429,8 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInRectMaxImage) {
   content_layer_client.set_bounds(visible_rect.size());
 
   int dimension = std::numeric_limits<int>::max();
-  PaintImage discardable_image =
-      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  PaintImage discardable_image = CreateDiscardablePaintImage(
+      gfx::Size(dimension, dimension), false /* allocate_encoded_memory */);
   PaintFlags flags;
   content_layer_client.add_draw_image(discardable_image, gfx::Point(42, 42),
                                       flags);
@@ -463,12 +463,12 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesInRectMaxImageMaxLayer) {
   FakeContentLayerClient content_layer_client;
   content_layer_client.set_bounds(visible_rect.size());
 
-  PaintImage discardable_image1 =
-      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
-  PaintImage discardable_image2 =
-      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
-  PaintImage discardable_image3 =
-      CreateDiscardablePaintImage(gfx::Size(dimension, dimension));
+  PaintImage discardable_image1 = CreateDiscardablePaintImage(
+      gfx::Size(dimension, dimension), false /* allocate_encoded_memory */);
+  PaintImage discardable_image2 = CreateDiscardablePaintImage(
+      gfx::Size(dimension, dimension), false /* allocate_encoded_memory */);
+  PaintImage discardable_image3 = CreateDiscardablePaintImage(
+      gfx::Size(dimension, dimension), false /* allocate_encoded_memory */);
 
   PaintFlags flags;
   content_layer_client.add_draw_image(discardable_image1, gfx::Point(0, 0),

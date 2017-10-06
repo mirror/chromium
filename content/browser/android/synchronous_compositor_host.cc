@@ -233,7 +233,7 @@ bool SynchronousCompositorHost::DemandDrawSw(SkCanvas* canvas) {
       SkImageInfo::MakeN32Premul(params.size.width(), params.size.height());
   DCHECK_EQ(kRGBA_8888_SkColorType, info.colorType());
   size_t stride = info.minRowBytes();
-  size_t buffer_size = info.getSafeSize(stride);
+  size_t buffer_size = info.computeByteSize(stride);
   if (!buffer_size)
     return false;  // Overflow.
 
