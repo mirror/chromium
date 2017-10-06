@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#import "ios/chrome/browser/ui/page_not_available_controller.h"
 #include <gtest/gtest.h>
 #include "base/logging.h"
-#import "ios/chrome/browser/ui/page_not_available_controller.h"
+#include "testing/platform_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -12,7 +13,9 @@
 
 namespace {
 
-TEST(PageNotAvailableControllerTest, TestInitWithURL) {
+using PageNotAvailableControllerTest = PlatformTest;
+
+TEST_F(PageNotAvailableControllerTest, TestInitWithURL) {
   GURL url = GURL("http://foo.bar.com");
   PageNotAvailableController* controller =
       [[PageNotAvailableController alloc] initWithUrl:url];
