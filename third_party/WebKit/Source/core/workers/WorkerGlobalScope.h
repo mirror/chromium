@@ -149,7 +149,6 @@ class CORE_EXPORT WorkerGlobalScope
   WorkerSettings* GetWorkerSettings() const { return worker_settings_.get(); }
 
   DECLARE_VIRTUAL_TRACE();
-  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   WorkerGlobalScope(const KURL&,

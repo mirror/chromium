@@ -452,9 +452,4 @@ DEFINE_TRACE(WorkerGlobalScope) {
   Supplementable<WorkerGlobalScope>::Trace(visitor);
 }
 
-DEFINE_TRACE_WRAPPERS(WorkerGlobalScope) {
-  EventTargetWithInlineData::TraceWrappers(visitor);
-  Supplementable<WorkerGlobalScope>::TraceWrappers(visitor);
-}
-
 }  // namespace blink
