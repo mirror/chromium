@@ -433,6 +433,7 @@ void LoginHandler::DoCancelAuth(bool dismiss_navigation) {
 // Calls CancelAuth from the IO loop.
 void LoginHandler::CancelAuthDeferred() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  LOG(ERROR) << "#### LoginHandler::CancelAuthDeferred";
 
   if (request_) {
     request_->CancelAuth();
@@ -445,6 +446,7 @@ void LoginHandler::CancelAuthDeferred() {
 // Closes the view_contents from the UI loop.
 void LoginHandler::CloseContentsDeferred() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "#### LoginHandler::CloseContentsDeferred";
   CloseDialog();
   if (interstitial_delegate_)
     interstitial_delegate_->Proceed();
