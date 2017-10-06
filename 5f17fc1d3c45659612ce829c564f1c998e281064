@@ -70,6 +70,30 @@
       "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506fee83_1db93ec9",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-10-06T22:14:49Z",
+      "side": 1,
+      "message": "\u003e You should still use GetSupportedProfiles() to decide before creating an instance. Just checking DLLs is not enough to know that we can create one with all the requirements. GetSupportedProfiles() is already called once when GPU process starts and copied into renderer instances in gpu_info() struct, see below. So reading from that struct wouldn\u0027t be any extra work.\n\u003e https://cs.chromium.org/chromium/src/content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc?rcl\u003d981d33cf1aa08ef10e63cb707d85149d01c887c7\u0026l\u003d360\n\u003e \nWe do not use //content, and we do not have a GPU process.\n//remoting has bunch of limitations on these OS calls, but as long as we check both PreSandboxInitialization() and InitializeMediaFoundation(), it should be safe enough.\n\n\u003e Some important methods are only available For Win 8+ according to MSDN, i.e. eAVEncCommonRateControlMode_CBR, so Win8 check is good for early return.  \n\u003e https://msdn.microsoft.com/en-us/library/windows/desktop/dd797816(v\u003dvs.85).aspx\n\nI see. It looks like an optional configuration, I will try if HW encoder is still (at least partially) workable without it.",
+      "parentUuid": "723421db_8e1f23de",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 72
+      },
+      "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
