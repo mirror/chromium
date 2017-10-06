@@ -22,6 +22,30 @@
       "revId": "ee8ec320519696be72b1e2728aadc7ccb5807a84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ae7b96_18b4a446",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-06T20:28:32Z",
+      "side": 1,
+      "message": "Done and refactored the \u0027mUseToolbarHandle\u0027 to be \u0027mUseExpandButton\u0027.",
+      "parentUuid": "d098205d_88337d6b",
+      "range": {
+        "startLine": 722,
+        "startChar": 9,
+        "endLine": 722,
+        "endChar": 27
+      },
+      "revId": "ee8ec320519696be72b1e2728aadc7ccb5807a84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
