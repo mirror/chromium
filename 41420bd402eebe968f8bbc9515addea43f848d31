@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dc92b83_1dc0923f",
+        "filename": "tools/perf/page_sets/mse_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-06T21:19:23Z",
+      "side": 1,
+      "message": "nit: I suspect this pylint line is now not needed",
+      "range": {
+        "startLine": 30,
+        "startChar": 16,
+        "endLine": 30,
+        "endChar": 23
+      },
+      "revId": "41420bd402eebe968f8bbc9515addea43f848d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04efe388_601fd27f",
+        "filename": "tools/perf/page_sets/mse_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-06T21:19:23Z",
+      "side": 1,
+      "message": "nit: I suspect this pylint line is now not needed",
+      "range": {
+        "startLine": 34,
+        "startChar": 24,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "41420bd402eebe968f8bbc9515addea43f848d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faacb10_cb12fd31",
+        "filename": "tools/perf/page_sets/mse_cases/startup_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-06T21:19:23Z",
+      "side": 1,
+      "message": "looks like a whole bunch of this javascript leading up to this appendStream call here can also be removed...",
+      "range": {
+        "startLine": 291,
+        "startChar": 22,
+        "endLine": 291,
+        "endChar": 34
+      },
+      "revId": "41420bd402eebe968f8bbc9515addea43f848d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b4c73b_fa62110a",
+        "filename": "tools/perf/page_sets/mse_cases/startup_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-10-06T21:19:23Z",
+      "side": 1,
+      "message": "Since StreamAppender is no longer used, seems we can drop it :) (see my comment above).",
+      "range": {
+        "startLine": 452,
+        "startChar": 19,
+        "endLine": 452,
+        "endChar": 33
+      },
+      "revId": "41420bd402eebe968f8bbc9515addea43f848d31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
