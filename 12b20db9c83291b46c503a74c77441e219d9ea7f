@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2cd968c7_78e31bce",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-06T04:50:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10dfae9f_e0306af2",
+      "revId": "12b20db9c83291b46c503a74c77441e219d9ea7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13211abd_d80dd549",
         "filename": "chrome/browser/printing/print_view_manager_base.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b1edc59a_0f5b327c",
+        "filename": "chrome/browser/printing/print_view_manager_base.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-06T04:50:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13211abd_d80dd549",
+      "revId": "12b20db9c83291b46c503a74c77441e219d9ea7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e403a62_c06e543c",
         "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-05T21:55:14Z",
       "side": 1,
       "message": "Maybe this belong in the CL this is chained from. Is this not already set? Or is it set, but you want to force it to false?",
+      "revId": "12b20db9c83291b46c503a74c77441e219d9ea7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f161ef02_a46e1e4e",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002198
+      },
+      "writtenOn": "2017-10-06T04:50:58Z",
+      "side": 1,
+      "message": "It is not set yet. Moved to the other CL.",
+      "parentUuid": "3e403a62_c06e543c",
       "revId": "12b20db9c83291b46c503a74c77441e219d9ea7f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
