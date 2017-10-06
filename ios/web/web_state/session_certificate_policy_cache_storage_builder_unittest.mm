@@ -13,14 +13,17 @@
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #import "testing/gtest_mac.h"
+#include "testing/platform_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
+using SessionCertificatePolicyCacheStorageBuilderTest = PlatformTest;
+
 // Tests that creating a CRWSessionCertificateCacheStorage using BuildStorage()
 // populates the storage with the correct data.
-TEST(SessionCertificatePolicyCacheStorageBuilderTest, BuildStorage) {
+TEST_F(SessionCertificatePolicyCacheStorageBuilderTest, BuildStorage) {
   // Create a cache and populate it with an allowed cert.
   web::TestWebThreadBundle thread_bundle;
   web::SessionCertificatePolicyCacheImpl cache;

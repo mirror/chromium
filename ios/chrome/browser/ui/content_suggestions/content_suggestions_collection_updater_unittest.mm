@@ -22,7 +22,9 @@
 
 namespace {
 
-TEST(ContentSuggestionsCollectionUpdaterTest, addEmptyItemToEmptySection) {
+using ContentSuggestionsCollectionUpdaterTest = PlatformTest;
+
+TEST_F(ContentSuggestionsCollectionUpdaterTest, addEmptyItemToEmptySection) {
   // Setup.
   NSString* emptyString = @"test empty";
   id mockDataSource = OCMProtocolMock(@protocol(ContentSuggestionsDataSource));
@@ -92,7 +94,7 @@ TEST(ContentSuggestionsCollectionUpdaterTest,
   ASSERT_EQ(0, [model numberOfItemsInSection:0]);
 }
 
-TEST(ContentSuggestionsCollectionUpdaterTest, addEmptyItemToSection) {
+TEST_F(ContentSuggestionsCollectionUpdaterTest, addEmptyItemToSection) {
   // Setup.
   id mockDataSource = OCMProtocolMock(@protocol(ContentSuggestionsDataSource));
   ContentSuggestionsCollectionUpdater* updater =

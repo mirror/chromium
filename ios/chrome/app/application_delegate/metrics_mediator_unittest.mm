@@ -92,9 +92,11 @@ int getExpectedValue(int number) {
   return 1;
 }
 
+using MetricsMediatorTest = PlatformTest;
+
 // Verifies that connectionTypeChanged correctly enables or disables the
 // uploading in the breakpad and in the metrics service.
-TEST(MetricsMediatorTest, connectionTypeChanged) {
+TEST_F(MetricsMediatorTest, connectionTypeChanged) {
   [[PreviousSessionInfo sharedInstance] setIsFirstSessionAfterUpgrade:NO];
   MetricsMediatorMock* mock_metrics_helper = [[MetricsMediatorMock alloc] init];
 
@@ -216,8 +218,10 @@ TEST_F(MetricsMediatorLogLaunchTest, logLaunchMetricsNoBackgroundDate) {
   verifySwizzleHasBeenCalled();
 }
 
+using MetricsMediatorNoFixtureTest = PlatformTest;
+
 // Tests that +logDateInUserDefaults logs the date in UserDefaults.
-TEST(MetricsMediatorNoFixtureTest, logDateInUserDefaultsTest) {
+TEST_F(MetricsMediatorNoFixtureTest, logDateInUserDefaultsTest) {
   // Setup.
   [[NSUserDefaults standardUserDefaults]
       removeObjectForKey:metrics_mediator::kAppEnteredBackgroundDateKey];

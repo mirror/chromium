@@ -195,9 +195,11 @@ TEST(UserActivityHandlerNoFixtureTest,
   EXPECT_FALSE([UserActivityHandler willContinueUserActivityWithType:nil]);
 }
 
+using UserActivityHandlerNoFixtureTest = PlatformTest;
+
 // Tests that Chrome does not continue the activity is the activity type is
 // random.
-TEST(UserActivityHandlerNoFixtureTest, continueUserActivityFromGarbage) {
+TEST_F(UserActivityHandlerNoFixtureTest, continueUserActivityFromGarbage) {
   // Setup.
   NSString* handoffWithSuffix =
       [handoff::kChromeHandoffActivityType stringByAppendingString:@"test"];
@@ -230,7 +232,7 @@ TEST(UserActivityHandlerNoFixtureTest, continueUserActivityFromGarbage) {
 
 // Tests that Chrome does not continue the activity if the webpage url is not
 // set.
-TEST(UserActivityHandlerNoFixtureTest, continueUserActivityNoWebpage) {
+TEST_F(UserActivityHandlerNoFixtureTest, continueUserActivityNoWebpage) {
   // Setup.
   NSUserActivity* userActivity = [[NSUserActivity alloc]
       initWithActivityType:handoff::kChromeHandoffActivityType];
@@ -292,7 +294,7 @@ TEST(UserActivityHandlerNoFixtureTest,
 
 // Tests that Chrome continues the activity if the application is in background
 // by saving the url to startupParameters.
-TEST(UserActivityHandlerNoFixtureTest, continueUserActivityBackground) {
+TEST_F(UserActivityHandlerNoFixtureTest, continueUserActivityBackground) {
   // Setup.
   NSUserActivity* userActivity = [[NSUserActivity alloc]
       initWithActivityType:handoff::kChromeHandoffActivityType];
@@ -327,7 +329,7 @@ TEST(UserActivityHandlerNoFixtureTest, continueUserActivityBackground) {
 
 // Tests that Chrome continues the activity if the application is in foreground
 // by opening a new tab.
-TEST(UserActivityHandlerNoFixtureTest, continueUserActivityForeground) {
+TEST_F(UserActivityHandlerNoFixtureTest, continueUserActivityForeground) {
   // Setup.
   NSUserActivity* userActivity = [[NSUserActivity alloc]
       initWithActivityType:handoff::kChromeHandoffActivityType];
@@ -453,7 +455,7 @@ TEST_F(UserActivityHandlerTest, continueUserActivityShortcutActions) {
 }
 
 // Tests that handleStartupParameters with a non-U2F url opens a new tab.
-TEST(UserActivityHandlerNoFixtureTest, handleStartupParamsNonU2F) {
+TEST_F(UserActivityHandlerNoFixtureTest, handleStartupParamsNonU2F) {
   // Setup.
   GURL gurl("http://www.google.com");
 
@@ -487,7 +489,7 @@ TEST(UserActivityHandlerNoFixtureTest, handleStartupParamsNonU2F) {
 }
 
 // Tests that handleStartupParameters with a U2F url opens in the correct tab.
-TEST(UserActivityHandlerNoFixtureTest, handleStartupParamsU2F) {
+TEST_F(UserActivityHandlerNoFixtureTest, handleStartupParamsU2F) {
   // Setup.
   GURL gurl("chromium://u2f-callback?isU2F=1&tabID=B05B1860");
   NSString* tabID = [U2FController tabIDFromResponseURL:gurl];
