@@ -264,6 +264,23 @@
     },
     {
       "key": {
+        "uuid": "e6dd4a92_31a282b6",
+        "filename": "chrome/app/chrome_mac_dispatch_overrider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-10-06T09:11:49Z",
+      "side": 1,
+      "message": "Can mach-o/dyld-interposing.h be used?",
+      "revId": "ad96ce1bf936472e18d3e4ab98b9d9cefdf323cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "516c4fe9_92737b54",
         "filename": "chrome/app/chrome_mac_dispatch_overrider.h",
         "patchSetId": 1
