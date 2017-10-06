@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "ee28cafe_bffaa086",
+        "filename": "services/device/hid/hid_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-06T01:45:45Z",
+      "side": 1,
+      "message": "oh, got it. Thanks",
+      "parentUuid": "edcc7174_06e31465",
+      "revId": "e326a2592aab6ea2de1ae02b62ff40307e08ba96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57ff84f3_158c5ed4",
         "filename": "services/device/hid/hid_manager_unittest.cc",
         "patchSetId": 16
