@@ -62,7 +62,6 @@ app_list::AppListView* DemoAppListViewDelegate::InitView(
 
   view_ = new app_list::AppListView(this);
   view_->Initialize(container, 0, false, false);
-  view_->MaybeSetAnchorPoint(gfx::Point(300, 300));
 
   // Populate some apps.
   GetTestModel()->PopulateApps(kInitialItems);
@@ -91,12 +90,11 @@ views::View* DemoAppListViewDelegate::CreateStartPageWebView(
     const gfx::Size& size) {
   web_contents_.reset(content::WebContents::Create(
       content::WebContents::CreateParams(browser_context_)));
-  web_contents_->GetController().LoadURL(GURL("http://www.google.com/"),
-                                         content::Referrer(),
-                                         ui::PAGE_TRANSITION_AUTO_TOPLEVEL,
-                                         std::string());
-  views::WebView* web_view = new views::WebView(
-      web_contents_->GetBrowserContext());
+  web_contents_->GetController().LoadURL(
+      GURL("http://www.google.com/"), content::Referrer(),
+      ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
+  views::WebView* web_view =
+      new views::WebView(web_contents_->GetBrowserContext());
   web_view->SetPreferredSize(size);
   web_view->SetWebContents(web_contents_.get());
   return web_view;
