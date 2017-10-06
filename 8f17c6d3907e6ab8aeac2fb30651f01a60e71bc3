@@ -2,6 +2,161 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5eb18fe_9ac47c4d",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_network_delegate_unittest.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "What are the changes in this file about? Have we changed the public interface somehow?",
+      "range": {
+        "startLine": 661,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb645839_cb3b3f59",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "nit: Rename to Empty()?\n\nDoesn\u0027t have to be this CL, but Empty is the more common name for this type of operation.",
+      "range": {
+        "startLine": 109,
+        "startChar": 29,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44212d21_af78fc8b",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "Nothing to do with this CL, but this sophisticated teardown scares me.",
+      "range": {
+        "startLine": 331,
+        "startChar": 12,
+        "endLine": 331,
+        "endChar": 21
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e12c4d_2a485025",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 865,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "I really like how this function reads now.",
+      "range": {
+        "startLine": 865,
+        "startChar": 16,
+        "endLine": 865,
+        "endChar": 29
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23fedad4_2040bca6",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "DCHECK(success || make_readers.empty())",
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8029d222_06203b9c",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "You\u0027ve now fixed things such that CurrentWritersDoneWritingToEntry is only called after the state machine has exited. I believe it\u0027s now safe to:\n\n1) Delete Writers in CurrentWritersDoneWritingToEntry and create a new one\n2) Rename CurrentWritersDoneWritingToEntry back to WritersDoneWritingToEntry since it\u0027s only called once per Writers object\n\nThen we don\u0027t have to worry about resetting state and reusing the object at all. Should make for a nice cleanup.",
+      "range": {
+        "startLine": 439,
+        "startChar": 15,
+        "endLine": 439,
+        "endChar": 47
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18f7f39_64084e54",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 55
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "transaction is only used for dcheck, remove argument.",
+      "range": {
+        "startLine": 90,
+        "startChar": 50,
+        "endLine": 90,
+        "endChar": 61
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa7cb0ec_3088aa8b",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 55
@@ -18,6 +173,29 @@
         "startChar": 6,
         "endLine": 176,
         "endChar": 12
+      },
+      "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28e0eb91_31f5d57a",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 55
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "I believe this is only called by DCHECKs. Safe to remove.",
+      "range": {
+        "startLine": 149,
+        "startChar": 6,
+        "endLine": 149,
+        "endChar": 26
       },
       "revId": "8f17c6d3907e6ab8aeac2fb30651f01a60e71bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

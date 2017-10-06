@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "398cb272_fd349ceb",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "We only need one function, and I favor the name StopCaching to SetNetworkReadOnly.\n\nE.g.,\n\n// Returns true if writers will no longer write data to the cache entry.\nbool HttpCache::Writers::StopCaching(bool keep_entry) {\n  if (all_writers_.size() !\u003d 1)\n    return false;\n\n  network_read_only_ \u003d true;\n\n  if (!keep_entry) {\n    should_keep_entry_ \u003d false;\n    cache_-\u003eWritersDoomEntryRestartTransactions(entry_);   \n  }\n\n  return true;\n}\n\nOld callers of StopCaching(transaction) become StopCaching(false).\n\nOld callers of SetNetworkReadOnly(value) become bool stopped \u003d StopCaching(bool); DCHECK(stopped);",
+      "parentUuid": "fb3245c6_6376bcac",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69690beb_0e794569",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 52
@@ -242,6 +260,24 @@
       "side": 1,
       "message": "But we will still need to check the return value of InitiateTruncateEntry to see if it was able to initiate truncation. If we invoke doloop before returning it would be tricky because that could actually invoke cache_callback_ at doloop\u0027s end and cause this object to be deleted.",
       "parentUuid": "44ed8c67_b2e0b468",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e4b15f7_441800d6",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "You either run the doloop here or in InitiateTruncateEntry. Either way you need to not touch any members after. It makes no difference. So just add a comment (to the function header and here):\n\nif (!success \u0026\u0026 InitiateTruncateEntry()) { \n  // |this| may have been deleted after truncation, so don\u0027t touch any members.\n  return;\n}\n\ncache_-\u003eCurrentWritersDoneWritingToEntry(entry_, success, TransactionSet());",
+      "parentUuid": "8dcfee8b_0a67bacd",
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1062,6 +1098,23 @@
       "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bbb484c_c0d90f29",
+        "filename": "net/http/http_cache_writers_unittest.cc",
+        "patchSetId": 52
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-10-06T17:48:41Z",
+      "side": 1,
+      "message": "This class is particularly tricky because it allows public methods to change the object while the state machine is executing. That needs to be well tested.\n\nI\u0027d like to see tests that show that we properly handle all of the public methods that can be invoked while the state machine is running, e.g., (AddTransaction, RemoveTransaction, StopCaching, UpdatePriority, Clear). Those should be checked against the various async states the machine can be in (NETWORK_READ_COMPLETE, CACHE_WRITE_DATA_COMPLETE, ASYNC_OP_COMPLETE_PRE_TRUNCATE, and CACHE_WRITE_TRUNCATED_RESPONSE_COMPLETE).",
+      "revId": "caacf778da99745d21f96e64dfbceee02e99c9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
