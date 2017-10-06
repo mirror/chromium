@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0d020f8_1e74250f",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "It sounds to me like this\u003dtask runner NotifyAlive is called on.\nMaybe \"lives on |task_runner|, all methods except NotifyAlive must be called on it. NotifyAlive can be called on any task runner\"?",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c2c1015_766d9f58",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "It stops at... if |stop_at_first_alive_notification| is specified at construction time.\n\"Supports\" is not quite clear.",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011c3db8_d5cd8a47",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "I don\u0027t think adding \"Callback\" to a callback type is a must, and here I read the name as \"create a callback\", which is confusing, taking into account all the callbacks used in the class. PowerObserverHelperFactory maybe? Or PowerObserverHelperFactoryCallback, if you find adding \"callback\" important?",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f034ab6b_adc5b038",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "It sounds like we should stop checking the flag :) \"If true, checking stops after..., otherwise...\"",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab45af78_70faf197",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "Would help to have more verbal descriptions of tests.",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b4b286_b9a6914b",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "Would help reading to have everywhere comments what CreateAliveChecker() parameters (false/true) mean.\nAlso, why no tests for true/true case? At least it requires a comment.",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f83488_270a6a98",
+        "filename": "media/audio/alive_checker_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "Test that it detects death if no NotifyAlive call received?",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efd30d8_9dbd4dbe",
+        "filename": "media/audio/audio_input_device.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "This also is created and deleted on IO thread, right? (the comment below)",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fee1a1_1fbf3b1a",
+        "filename": "media/audio/power_observer_helper_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-06T08:05:03Z",
+      "side": 1,
+      "message": "It\u0027s a nit-pick: would be cleaner to move both to private and provide a protected accessor to the helper.",
+      "revId": "66c95a4eede168b299707053da2c07e6204e8be7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
