@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f2b4f87_ef22a310",
+        "filename": "chrome/browser/ui/ash/tablet_mode_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "Done. (And found that one of the calls collapses down to just auto_hide_title_bars().)",
+      "parentUuid": "ff4ad4eb_6887fdb5",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd63000f_62586340",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e7b45e_2e715f75",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd63000f_62586340",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "122574e9_1857f333",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90dd8bf3_35722289",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d0a80b_1a7839cb",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df7df48_432b35c0",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98d0a80b_1a7839cb",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "793088b4_fed113cf",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "Did both.",
+      "parentUuid": "b0a8289f_653a933f",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d9181fa_a092b6f5",
         "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bff272d_2b5f121b",
+        "filename": "chrome/browser/ui/views/frame/immersive_mode_controller_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-10-06T18:21:07Z",
+      "side": 1,
+      "message": "moved comment",
+      "parentUuid": "6d9181fa_a092b6f5",
+      "revId": "962e4e5450f6553d3933e1c3f0c70c5d6e681c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
