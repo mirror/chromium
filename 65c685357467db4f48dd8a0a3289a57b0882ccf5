@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d36143ec_98d943ca",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1035,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T11:05:58Z",
+      "side": 1,
+      "message": "Yup, it\u0027s intentional, so that the histogram has the same semantics as on Android. And Android does it like that for...historic reasons, I guess?",
+      "parentUuid": "38782311_12968443",
+      "revId": "65c685357467db4f48dd8a0a3289a57b0882ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "174da5dd_2ac0a283",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-06T10:05:30Z",
       "side": 1,
       "message": "Is LogoClick just for CTA -\u003e animated/interactive? If not, might want to check histograms for clicking on static, or a second time on animated.",
+      "revId": "65c685357467db4f48dd8a0a3289a57b0882ccf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa89ed57_6c1d9527",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T11:05:58Z",
+      "side": 1,
+      "message": "No, it\u0027s for all clicks. But since we don\u0027t have testing coverage for Doodle clicks at all so far, I was planning to do that separately.\nI\u0027ve added ExpectBucketCount checks though.",
+      "parentUuid": "174da5dd_2ac0a283",
       "revId": "65c685357467db4f48dd8a0a3289a57b0882ccf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
