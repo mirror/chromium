@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d285b531_4ad428a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-06T20:58:08Z",
+      "side": 1,
+      "message": "This creates a new bridge every time and doesn\u0027t ever call .destroy() to free the native memory!  Can we put this somewhere where we only ever build one?  In the future we should do the hookup as part of the OfflineContentAggregator/OfflinePage system initialization.  Maybe also make the startDownload() a static method on the bridge since we don\u0027t actually need the class once we build this as part of the offline page initialization flow.",
+      "range": {
+        "startLine": 192,
+        "startChar": 12,
+        "endLine": 192,
+        "endChar": 93
+      },
+      "revId": "e6034f952f1ac8c00b02f0bbb3a34f7be3d6e46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
