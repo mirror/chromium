@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77e51655_4cf18678",
+        "filename": "media/mojo/services/media_capabilities.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T17:13:35Z",
+      "side": 1,
+      "message": "Maybe remove this, and then use has_frames_decoded() etc., instead?",
+      "revId": "22c274bd46b424d96e3feb63e7986c04115aeb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c413311d_f2e303d6",
+        "filename": "media/mojo/services/media_capabilities.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-10-06T17:13:35Z",
+      "side": 1,
+      "message": "Could you instead add\n\n  // Required.\n\nabove each of these lines, instead of using the keyword required? It makes it easier to deal with version upgrades.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 10
+      },
+      "revId": "22c274bd46b424d96e3feb63e7986c04115aeb54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
