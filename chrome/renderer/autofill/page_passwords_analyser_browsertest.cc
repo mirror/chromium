@@ -11,6 +11,8 @@
 #include "third_party/WebKit/public/web/WebElementCollection.h"
 #include "third_party/WebKit/public/web/WebFormElement.h"
 
+using testing::HasSubstr;
+
 namespace autofill {
 
 namespace {
@@ -129,7 +131,8 @@ class PagePasswordsAnalyserTest : public ChromeRenderViewTest {
     std::vector<blink::WebNode> nodes;
     for (size_t index : element_indices)
       nodes.push_back(elements_[index]);
-    EXPECT_CALL(mock_logger, Send(message, level, nodes)).RetiresOnSaturation();
+    EXPECT_CALL(mock_logger, Send(HasSubstr(message), level, nodes))
+        .RetiresOnSaturation();
   }
 
   void RunTestCase() {
