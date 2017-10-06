@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efa63abf_fe926f93",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Note that I turfed original_length.  I think we can trust ourselves to call with the right args.",
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0f709b_3ed5b169",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Note here that I\u0027m now resorting to a simple elision if there\u0027s no host, as well.  This simplifies a lot of what\u0027s below.",
+      "range": {
+        "startLine": 518,
+        "startChar": 63,
+        "endLine": 518,
+        "endChar": 74
+      },
+      "revId": "c5299a79799c8c294cd1eedb11af212ce4597b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

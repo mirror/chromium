@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dbf7cd4_85c19f98",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6b96ea00_fde94815",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d57e4bd1_0adf1e16",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-05T00:38:37Z",
       "side": 1,
       "message": "I\u0027m not sure I understand this function (or perhaps its usage)... Why does it decrement the beginning of *every* component by offset? Shouldn\u0027t it take into account the order of the components? ie. If we shorten the URL\u0027s path, that shouldn\u0027t affect the position of the scheme.",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831505df_fc0b4a05",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "This doesn\u0027t handle shortening of individual components in the way I think you meant.  Just think of it as adjusting Parsed for some arbitrary substring of the URL.  If your substring happened to be all but the first character, your components are all still there, but their positions decrease by one.  The first component\u0027s start position is clamped to 0, but its length decreased by one.  Does that make sense?",
+      "parentUuid": "d57e4bd1_0adf1e16",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a3e7ee5f_29e2427e",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc97939a_cb6cf0c6",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56a3ccfe_6afbe3c6",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d289c20_25217ce6",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56a3ccfe_6afbe3c6",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "08a32122_14af99a7",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "I realized that ElideText() needs work too, as it uses GetStringWidthF().  So rather than the local custom measurement method we discussed, we probably have to augment GetStringWidthF and ElideText to accept an optional directionality mode (or similar), right?",
+      "parentUuid": "b28148a5_5af95b39",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91b3938d_fecec2b5",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -137,6 +227,24 @@
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8058ae9_967e2f27",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91b3938d_fecec2b5",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "922817a3_bc4f79f7",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9a90c6f_a1bf54de",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "878e19c4_d7205a73",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -186,6 +312,24 @@
       "writtenOn": "2017-10-05T00:38:37Z",
       "side": 1,
       "message": "What does \"without worry about scheme or host\" mean?",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bb11c5_709e8530",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "It means I can\u0027t type.  :)",
+      "parentUuid": "878e19c4_d7205a73",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -209,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "903252f5_de3913eb",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done (and refactored).",
+      "parentUuid": "a7099d7e_aa34328b",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2fffadb7_2f47b6ac",
         "filename": "components/url_formatter/elide_url.cc",
         "patchSetId": 7
@@ -223,6 +385,24 @@
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40beb1f6_ef2311df",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fffadb7_2f47b6ac",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +435,24 @@
       "side": 1,
       "message": "I\u0027ll play with that.",
       "parentUuid": "5293df5c_67509893",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec04b168_b0721c5d",
+        "filename": "components/url_formatter/elide_url.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "I added a helper for the \"elide after host\" use case, and I think it helps a lot.  I think generalizing further would grow the size and complexity of the code.  Let me know what you think.\n\nAlso, the early-exit if no host, and removal of a needless AdjustParsed argument, also shrunk this a lot.",
+      "parentUuid": "29b6e586_3ce24f1c",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -314,6 +512,24 @@
     },
     {
       "key": {
+        "uuid": "47dd3967_031af48c",
+        "filename": "components/url_formatter/elide_url.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Bug filed; please feel free to augment it\u0027s description.  However, the bug is jealous it doesn\u0027t have a 4-digit number like the one above it.\n\nShould we change the name to something like \"SimpleElideUrl()\" or something to be less presumptuous about it\u0027s security capabilities?  I really just meant \"be more simple and more like the enamel guidance\".",
+      "parentUuid": "b0f33310_a881c404",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2236a0_482225fe",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 7
@@ -331,6 +547,24 @@
     },
     {
       "key": {
+        "uuid": "d247f4e7_4fae07dc",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d2236a0_482225fe",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "362ab2a6_fbbed435",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 7
@@ -345,6 +579,24 @@
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d105210d_afa15bd6",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "362ab2a6_fbbed435",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +623,30 @@
     },
     {
       "key": {
+        "uuid": "f8ace60d_c7a56859",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b328482e_c210d3e4",
+      "range": {
+        "startLine": 171,
+        "startChar": 13,
+        "endLine": 171,
+        "endChar": 28
+      },
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19336c14_49870e0b",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 7
@@ -388,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "0ab9909e_3100e33d",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Done.  Please double check it\u0027s what you were expecting.",
+      "parentUuid": "19336c14_49870e0b",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ae0f29f_f764209d",
         "filename": "components/url_formatter/elide_url_unittest.cc",
         "patchSetId": 7
@@ -399,6 +693,24 @@
       "writtenOn": "2017-10-05T00:38:37Z",
       "side": 1,
       "message": "Is it intentional that this resolves to the path component? (will it be gray? should it be host/black?)",
+      "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e377278_33567299",
+        "filename": "components/url_formatter/elide_url_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 848,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-10-06T19:27:56Z",
+      "side": 1,
+      "message": "Intentional.  I didn\u0027t want to special case this, as we\u0027d probably need special handling for scheme and host, at least.  Fortunately, I believe the emphasis code will make this black.  When there\u0027s no host, we don\u0027t de-emphasize anything:\n\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/omnibox_view.cc?type\u003dcs\u0026q\u003dALL_BUT_HOST\u0026l\u003d230",
+      "parentUuid": "4ae0f29f_f764209d",
       "revId": "8b584c9c26f8b380d36f7eedacd2b78fe56b2bbe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
