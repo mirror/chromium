@@ -1,0 +1,47 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<title>Test for crbug.com/771573: Make links draggable despite 'user-select: text' styling</title>
+
+<div style="user-select: text">
+<p>Here comes <a href="www" id="draggable">a draggable link</a> in the middle of <i>user-select: text</i>.</p>
+
+<p>This test would change if the CSS spec starts to say that <i>user-select: text</i> forces selectability.</p>
+</div>
+
+<script>
+function compareResults(id, expectedResult, actualResult) {
+  assert_equals(actualResult.length, expectedResult.length, 'results length');
+  for (var i = 0; i < expectedResult.length; i++) {
+    assert_equals(actualResult[i], expectedResult[i]);
+  }
+}
+
+function registerEventListenersWithResults(resultArray) {
+  document.ondragstart = function() {
+    resultArray.push('dragstart');
+  }
+
+  document.onmousedown = function(event) {
+    resultArray.push('mousedown');
+  }
+}
+
+function dragFromTopOfElement(element) {
+  var startX = Math.round(element.offsetLeft + element.offsetWidth / 2);
+  var startY = Math.round(element.offsetTop + 1.0);
+
+  eventSender.mouseMoveTo(startX, startY);
+  eventSender.mouseDown();
+  eventSender.mouseMoveTo(startX, startY + element.offsetHeight / 2);
+  eventSender.mouseUp();
+}
+
+test(function () {
+  getSelection().removeAllRanges();
+  var draggableResults = [];
+  registerEventListenersWithResults(draggableResults);
+  dragFromTopOfElement(document.getElementById('draggable'));
+  compareResults('draggable', ['mousedown', 'dragstart'], draggableResults);
+});
+</script>
