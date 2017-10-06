@@ -46,6 +46,30 @@
       "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a68902c6_906e6c29",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-06T18:41:35Z",
+      "side": 1,
+      "message": "Actually, I\u0027m not sure if presence of a header declaration in ndk/platforms/android-18/ actually means the symbol is linkable. Is the intent that clients should dynamically load the symbol and treat its presence as meaning the feature works? But that seems to be different from how Chrome does it, and I\u0027m not sure how the framework\u0027s eglApi.cpp wraps the low-level driver (or if it even does so).",
+      "parentUuid": "9fc43bcf_74b76011",
+      "range": {
+        "startLine": 1940,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 71
+      },
+      "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
