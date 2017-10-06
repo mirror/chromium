@@ -16,6 +16,24 @@
       "revId": "a5f0ee2bac8285c5921c91704fd7f2623a990939",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad9db46_9fba6fbd",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-10-06T16:17:26Z",
+      "side": 1,
+      "message": "Yes, good idea. Done.",
+      "parentUuid": "d5aa5714_94d666d3",
+      "revId": "a5f0ee2bac8285c5921c91704fd7f2623a990939",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
