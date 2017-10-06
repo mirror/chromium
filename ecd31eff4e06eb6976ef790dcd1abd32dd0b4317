@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3fc11d8_4dbcda24",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-06T21:21:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dfe7fd79_97d1d238",
+      "range": {
+        "startLine": 213,
+        "startChar": 34,
+        "endLine": 213,
+        "endChar": 46
+      },
+      "revId": "ecd31eff4e06eb6976ef790dcd1abd32dd0b4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44814454_e6f96281",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ecd31eff4e06eb6976ef790dcd1abd32dd0b4317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237041ce_0f6c6284",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-10-06T21:21:36Z",
+      "side": 1,
+      "message": "i think that we would always shut down the pipeline if we lose an L1 / L3 overlay.\n\nin general, i\u0027ve been trying to simplify the cases where we can\u0027t SetSurfaces.  they\u0027re small and getting smaller.",
+      "parentUuid": "44814454_e6f96281",
+      "range": {
+        "startLine": 273,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 71
+      },
+      "revId": "ecd31eff4e06eb6976ef790dcd1abd32dd0b4317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
