@@ -81,6 +81,18 @@ fuzzer_test("renderer_proto_tree_fuzzer") {
   additional_configs = [ "//testing/libfuzzer:no_clusterfuzz" ]
 }
 
+fuzzer_test("origin_manifest_parser_fuzzer") {
+  sources = [
+    "origin_manifest_parser.cc",
+  ]
+  deps = [
+    ":fuzzer_support",
+    "//content/browser:for_content_tests",
+    "//url",
+  ]
+  dict = "//testing/libfuzzer/fuzzers/dicts/json.dict"
+}
+
 proto_library("html_tree_proto") {
   sources = [
     "html_tree.proto",
