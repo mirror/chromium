@@ -66,6 +66,29 @@
     },
     {
       "key": {
+        "uuid": "b791098a_4e8883f4",
+        "filename": "content/network/network_change_manager_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-06T20:16:47Z",
+      "side": 1,
+      "message": "Think I made this comment on an earlier CL, not sure if you saw it:\n\nShould we send the current state of the connection to the new client here?",
+      "range": {
+        "startLine": 55,
+        "startChar": 41,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "3fcaecf35086c8fa4bdfa8cc48ee35347f31ab0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0a13e37_aeeced5b",
         "filename": "content/network/network_service_impl.h",
         "patchSetId": 16
