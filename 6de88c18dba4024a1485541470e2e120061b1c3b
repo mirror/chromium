@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "704ce41e_5c4d8d37",
+        "filename": "content/browser/background_fetch/background_fetch_registration_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db53b9d5_2108e467",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "589dc7a4_69afeb78",
         "filename": "content/browser/background_fetch/mock_background_fetch_delegate.cc",
         "patchSetId": 5
@@ -67,6 +85,24 @@
       "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e0a700_94fd6b7e",
+        "filename": "content/browser/background_fetch/mock_background_fetch_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "In the long run (i.e. once you want to test progress events), we should store requests that lack responses in a map, and allow responses to be registered after the request is made (firing the response when it is registered).\n\nI started writing code for that, but stashed it since it didn\u0027t make sense to complicate this patch. I\u0027ll upload it somewhere.",
+      "parentUuid": "589dc7a4_69afeb78",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +123,24 @@
     },
     {
       "key": {
+        "uuid": "692427ac_fcc57439",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "Ah, I see. I added \"|developer_id| and |unique_id| are documented in content::BackgroundFetchRegistrationId.\", and also beefed up some of\nthe comments elsewhere.\n\n(I put the primary documentation in content::BackgroundFetchRegistrationId\nsince it\u0027s very important that consumers of that class use the right one;\nthough I also put secondary documentation in:\n- content/common/background_fetch/background_fetch_types.h\n- public/platform/modules/background_fetch/background_fetch.mojom\n- Source/modules/background_fetch/BackgroundFetchRegistration.h\n- Source/modules/background_fetch/BackgroundFetchEvent.h\n- Source/modules/background_fetch/BackgroundFetchedEvent.h\nsince those are the main other places people will need to refer to it.\n\nConversely, I guess I see service_worker_event_dispatcher.mojom as\nplumbing between content and blink that ideally doesn\u0027t need to\ncontain business logic; the right kind of ids will get plumbed based\non how they need to be used at the other end, for example I currently\nplumb a |unique_id| into BackgroundFetchedEvent because it needs to\ncall |abort| in background_fetch.mojom, which is documented as taking\na |unique_id| along with an explanation of the difference between the\nids; the other events don\u0027t need a |unique_id| because you can\u0027t\ncurrently call |abort| or |updateUI| from them.)",
+      "parentUuid": "2430ae25_b068f821",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25e59e16_19348559",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.cpp",
         "patchSetId": 5
@@ -101,6 +155,24 @@
       "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2990d496_9112a7a0",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25e59e16_19348559",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "8455374d_e02f6b87",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchRegistration.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2338c711_92f14fde",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e785c927_abc2759f",
         "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
         "patchSetId": 5
@@ -135,6 +225,24 @@
       "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b72d56_c88c4fe7",
+        "filename": "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-06T14:33:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e785c927_abc2759f",
+      "revId": "6de88c18dba4024a1485541470e2e120061b1c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
