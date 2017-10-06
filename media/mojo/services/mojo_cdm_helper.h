@@ -9,7 +9,9 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "media/cdm/cdm_auxiliary_helper.h"
+#include "media/mojo/interfaces/cdm_storage.mojom.h"
 #include "media/mojo/interfaces/output_protection.mojom.h"
 #include "media/mojo/interfaces/platform_verification.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
@@ -32,8 +34,7 @@ class MEDIA_MOJO_EXPORT MojoCdmHelper final : public CdmAuxiliaryHelper {
   ~MojoCdmHelper() final;
 
   // CdmAuxiliaryHelper implementation.
-  std::unique_ptr<media::CdmFileIO> CreateCdmFileIO(
-      cdm::FileIOClient* client) final;
+  std::unique_ptr<CdmFileIO> CreateCdmFileIO(cdm::FileIOClient* client) final;
   cdm::Buffer* CreateCdmBuffer(size_t capacity) final;
   std::unique_ptr<VideoFrameImpl> CreateCdmVideoFrame() final;
   void QueryStatus(QueryStatusCB callback) final;
@@ -46,21 +47,31 @@ class MEDIA_MOJO_EXPORT MojoCdmHelper final : public CdmAuxiliaryHelper {
 
  private:
   // All services are created lazily.
+  bool ConnectToCdmStorage();
   CdmAllocator* GetAllocator();
   bool ConnectToOutputProtection();
   bool ConnectToPlatformVerification();
+
+  // Open a file on CdmStorage.
+  void OpenFile(const std::string& file_name,
+                mojom::CdmStorage::OpenCallback callback);
 
   // Provides interfaces when needed.
   service_manager::mojom::InterfaceProvider* interface_provider_;
 
   // Keep track if connection to the Mojo service has been attempted once.
   // The service may not exist, or may fail later.
+  bool cdm_storage_attempted_ = false;
   bool output_protection_attempted_ = false;
   bool platform_verification_attempted_ = false;
 
-  std::unique_ptr<media::CdmAllocator> allocator_;
-  media::mojom::OutputProtectionPtr output_protection_;
-  media::mojom::PlatformVerificationPtr platform_verification_;
+  mojom::CdmStoragePtr cdm_storage_;
+  std::unique_ptr<CdmAllocator> allocator_;
+  mojom::OutputProtectionPtr output_protection_;
+  mojom::PlatformVerificationPtr platform_verification_;
+
+  base::WeakPtrFactory<MojoCdmHelper> weak_factory_;
+  DISALLOW_COPY_AND_ASSIGN(MojoCdmHelper);
 };
 
 }  // namespace media
