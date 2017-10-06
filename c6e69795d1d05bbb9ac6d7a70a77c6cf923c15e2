@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab8fdb0_f0536d62",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87719,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-10-06T02:26:38Z",
+      "side": 1,
+      "message": "Ignore this. Picked from prev CL",
+      "range": {
+        "startLine": 87719,
+        "startChar": 0,
+        "endLine": 87719,
+        "endChar": 1
+      },
+      "revId": "c6e69795d1d05bbb9ac6d7a70a77c6cf923c15e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ababf208_45411d64",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 87733,
+      "author": {
+        "id": 1131655
+      },
+      "writtenOn": "2017-10-06T02:26:38Z",
+      "side": 1,
+      "message": "Ignore this. Picked from prev CL",
+      "range": {
+        "startLine": 87733,
+        "startChar": 1,
+        "endLine": 87733,
+        "endChar": 10
+      },
+      "revId": "c6e69795d1d05bbb9ac6d7a70a77c6cf923c15e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
