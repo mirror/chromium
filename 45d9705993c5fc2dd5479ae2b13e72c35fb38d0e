@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee5f98e5_1f01bb3b",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T21:48:40Z",
+      "side": 1,
+      "message": "nit: to ensure that this behaves the same way as before, i\u0027d do this instead:\n\n  button_type_ \u003d cl-\u003eHasSwitch(switches::kAuraLegacyPowerButton)\n      ? ButtonType::LEGACY\n      : ButtonType::NORMAL;",
+      "revId": "45d9705993c5fc2dd5479ae2b13e72c35fb38d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
