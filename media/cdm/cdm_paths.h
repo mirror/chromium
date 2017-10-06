@@ -33,6 +33,11 @@ extern const char kClearKeyCdmDifferentGuid[];
 // TODO(xhwang): Remove after switching to mojo CDM.
 extern const char kClearKeyCdmPepperMimeType[];
 
+// Identifier used by the PluginPrivateFileSystem to identify the files stored
+// for the Clear Key CDM.  As the files were initially used by the CDM running
+// as a pepper plugin, the ID is based on the pepper plugin MIME type.
+extern const char kClearKeyCdmFileSystemId[];
+
 // Returns the path of a CDM relative to DIR_COMPONENTS.
 // On platforms where a platform specific path is used, returns
 //   |cdm_base_path|/_platform_specific/<platform>_<arch>
