@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb84cddb_f8ebe1a8",
+        "filename": "content/shell/test_runner/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-06T22:28:00Z",
+      "side": 0,
+      "message": "mock_webrtc_[data_channel/dtmf_sender]_handler is no longer used (was only used by mock pc handler), remove these too.",
+      "revId": "22de7321b3f8376d5eb4aa4c2827dbf460ed249a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

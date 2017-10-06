@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d353af7a_7953c963",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-06T22:28:00Z",
+      "side": 1,
+      "message": "Reference https://crbug.com/706359",
+      "revId": "59d0f43f71b00c0710e3c9b7769d12d20c93174b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87f25bb_9bd47b13",
+        "filename": "third_party/WebKit/LayoutTests/fast/peerconnection/RTCPeerConnection-ice-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-10-06T22:28:00Z",
+      "side": 1,
+      "message": "An empty expected file?",
+      "revId": "59d0f43f71b00c0710e3c9b7769d12d20c93174b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
