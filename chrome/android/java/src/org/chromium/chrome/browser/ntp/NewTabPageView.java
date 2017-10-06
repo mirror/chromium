@@ -31,6 +31,7 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -420,6 +421,9 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         NoUnderlineClickableSpan link = new NoUnderlineClickableSpan() {
             @Override
             public void onClick(View view) {
+                RecordHistogram.recordEnumeratedHistogram("Android.ChromeHome.Promo.ShowReason",
+                        ChromeHomePromoDialog.ShowReason.NTP,
+                        ChromeHomePromoDialog.ShowReason.BOUNDARY);
                 new ChromeHomePromoDialog(mActivity).show();
             }
         };
