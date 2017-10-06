@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e552dc3_9d5541bf",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T03:35:15Z",
+      "side": 1,
+      "message": "Could we have some scoper struct to make this look nicer?\n\nScopedDelegateCall scoper(loader_);\n\nor something like that...",
+      "revId": "1a4bef42bab6ca96f11263e3ef544ee5a4f4cff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e2e5b8_f5517dfd",
+        "filename": "content/common/throttling_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-10-06T03:35:15Z",
+      "side": 1,
+      "message": "Wonder if we can simply always do this, which actually makes things slightly more deterministic.",
+      "revId": "1a4bef42bab6ca96f11263e3ef544ee5a4f4cff6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
