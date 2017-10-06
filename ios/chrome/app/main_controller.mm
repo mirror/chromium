@@ -846,7 +846,6 @@ const int kExternalFilesCleanupDelaySeconds = 60;
           hasPendingRemovalOperations:self.currentBrowserState]) {
     [self.mainBVC setActive:YES];
     [self.otrBVC setActive:YES];
-
     [self.currentBVC setPrimary:YES];
   }
 }
