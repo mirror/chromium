@@ -22,6 +22,30 @@
       "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242f8fb9_68c4182e",
+        "filename": "components/policy/core/common/policy_loader_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001069
+      },
+      "writtenOn": "2017-10-06T15:25:07Z",
+      "side": 1,
+      "message": "I thought the rule of thumb in Chrome was to NOT use the W suffix, that we could assume Chrome was always built UNICODE. I saw a few cases where the W is added, but there are much more cases of the same calls (e.g., ShellExecuteEx) that are without the W.\n\nIs there a reason why you would like to add it here, and not in all other calls (e.g., GetComputerNameEx below)?",
+      "parentUuid": "6a8f4dc6_2befb72c",
+      "range": {
+        "startLine": 317,
+        "startChar": 11,
+        "endLine": 317,
+        "endChar": 24
+      },
+      "revId": "b0b678e908417a9e34bd3cefe96642ce5319014d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
