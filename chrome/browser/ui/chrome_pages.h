@@ -114,6 +114,11 @@ void ShowBrowserSignin(Browser* browser,
 // otherwise initiates signin in a new browser tab.
 void ShowBrowserSigninOrSettings(Browser* browser,
                                  signin_metrics::AccessPoint access_point);
+
+// Opens the Gaia sign-in webpage in a new browser tab and and automatically
+// start the browser sign-in flow after the user signs in to Gaia.
+void ShowBrowserSigninForDice(Browser* browser);
+
 #endif
 
 }  // namespace chrome
