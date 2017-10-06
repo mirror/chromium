@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42f178ed_d574309f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-10-06T11:18:54Z",
+      "side": 1,
+      "message": "What do you think about calling [super drawTextInRect:rect] on 11.1 and returning early, instead of making the change in rectForDrawTextInRect?",
+      "revId": "1423388ca141d946f392425a1396c2f5fca1333c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
