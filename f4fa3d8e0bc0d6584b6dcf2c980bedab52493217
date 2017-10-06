@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d75d43b0_1490939b",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2656,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-10-06T19:02:09Z",
+      "side": 1,
+      "message": "we must have suggestions_container_ and all_apps_indicator_ if we reach here.",
+      "revId": "f4fa3d8e0bc0d6584b6dcf2c980bedab52493217",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
