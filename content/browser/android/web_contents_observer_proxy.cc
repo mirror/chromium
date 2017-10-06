@@ -136,6 +136,9 @@ void WebContentsObserverProxy::DidStartNavigation(
 
 void WebContentsObserverProxy::DidFinishNavigation(
     NavigationHandle* navigation_handle) {
+  if (navigation_handle->IsIgnoredByWebView())
+    return;
+
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jstring> jstring_url(
       ConvertUTF8ToJavaString(env, navigation_handle->GetURL().spec()));
