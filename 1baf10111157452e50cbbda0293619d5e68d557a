@@ -22,6 +22,30 @@
       "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc43bcf_74b76011",
+        "filename": "ui/gl/generate_bindings.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1187745
+      },
+      "writtenOn": "2017-10-06T17:28:52Z",
+      "side": 1,
+      "message": "Sigh, this is complicated. Short version is that this conditional may be the least-bad way to do this to check for low-level support, though I agree that this should have a cleaner workaround to expose just one extension.\n\n*** Extension not being reported\n\nThe extension not being reported unfortunately appears to be an Android bug. I thought that the \"Hardware Buffer\" documentation at https://developer.android.com/ndk/guides/stable_apis.html was referring to using it, but I don\u0027t see it there after all, so the \"implied by\" part was wrong. Also, it seems to be a lot older than I thought it was, I thought it was introduced in Android O but apparently the symbol has been present since Jelly Bean, though it may not actually work.\n\nApparently the code intentionally does not export the extension to userspace:\n\nhttps://android.googlesource.com/platform/frameworks/native/+/master/opengl/libs/EGL/eglApi.cpp#127\n// extensions not exposed to applications but used by the ANDROID system\n[...]\n//      \"EGL_ANDROID_native_fence_sync \"        // strongly recommended\n\nHowever, the implementation in that file seems to make the function available unconditionally, returning EGL_NO_NATIVE_FENCE_FD_ANDROID if it\u0027s not present? Also, it\u0027s not included in the FILTER_EXTENSIONS list which is used to hide internal functions from applications.\n\nhttps://android.googlesource.com/platform/frameworks/native/+/master/opengl/libs/EGL/eglApi.cpp#1850\nEGLint eglDupNativeFenceFDANDROID(EGLDisplay dpy, EGLSyncKHR sync)\n{\n[...]\n    EGLint result \u003d EGL_NO_NATIVE_FENCE_FD_ANDROID;\n    egl_connection_t* const cnx \u003d \u0026gEGLImpl;\n    if (cnx-\u003edso \u0026\u0026 cnx-\u003eegl.eglDupNativeFenceFDANDROID) {\n        result \u003d cnx-\u003eegl.eglDupNativeFenceFDANDROID(dp-\u003edisp.dpy, sync);\n    }\n    return result;\n}\n\nThe EGL header in third_party/android_tools/ndk/platforms/android-18/ exports a prototype for eglDupNativeFenceFDANDROID , so it is assumed to be present from API level 18 and up. Apparently we\u0027re using API level 16 for 32bit and\n21 for 64bit (see https://cs.chromium.org/chromium/src/build/config/android/config.gni?type\u003dcs\u0026l\u003d242) so we won\u0027t have the symbol available unconditionally.  \n\nAPI level 18 is Jelly Bean 4.3.x according to https://source.android.com/source/build-numbers, so would it be appropriate to expose this extension if a runtime OS version check shows it\u0027s that version or newer?\n\nConsidering that Jelly Bean 4.3.x was released in 2013, and the EGL_ANDROID_get_native_client_buffer is new for Android O, I think this would indirectly meet the \"\u003e\u003d 4.3.x\" requirement.\n\n*** Function available but not working?\n\nI think there\u0027s still a problem that the function may be present but would always return EGL_NO_NATIVE_FENCE_FD_ANDROID due to lack of the underlying extension, so code that wants to depend on this feature would need to check if it actually works, and that would be messy. As far as I know it\u0027s implicitly assumed to be present by GVR, so code that depends on GVR should be able to use it, but I don\u0027t know a clean way to check other than making a test native fence and checking the return value. Does any other GL code do this kind of thing, or would this be more appropriate to handle via driver blacklist or similar?\n\n*** How to report presence of the extension / function\n\nAs far as reporting the extension is concerned, I think the workaround would need to happen at the ui/gl/ level. AFAIK the gpu/command_buffer/service/feature_info.cc controls what features the command buffer GL API supports, but we need the function to be available for native context GL calls without command buffer also.\n\nIn the ui/gl/ code, the function pointer for the GL call only gets filled in if the extension is set:\n\nui/gl/gl_bindings_autogen_egl.cc\n+  if (ext.b_EGL_ANDROID_native_fence_sync ||\n+      ext.b_EGL_ANDROID_get_native_client_buffer) {\n+    fn.eglDupNativeFenceFDANDROIDFn \u003d\n+        reinterpret_cast\u003ceglDupNativeFenceFDANDROIDProc\u003e(\n+            GetGLProcAddress(\"eglDupNativeFenceFDANDROID\"));\n+  }\n\nI think this may be a better fit for https://cs.chromium.org/chromium/src/ui/gl/gl_bindings.cc?type\u003dcs\u0026q\u003dUpdateConditionalExtensionBindings+file:%5Esrc/+package:%5Echromium$\u0026l\u003d50 to conditionally export the extension, this would also simplify client code since that could then just check ext.b_EGL_ANDROID_native_fence_sync instead of having to know about this distinction.",
+      "parentUuid": "01779aa4_83ede825",
+      "range": {
+        "startLine": 1940,
+        "startChar": 2,
+        "endLine": 1943,
+        "endChar": 71
+      },
+      "revId": "1baf10111157452e50cbbda0293619d5e68d557a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
