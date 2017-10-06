@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "880a021e_d029584e",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5994,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T17:38:59Z",
+      "side": 1,
+      "message": "Hmm, I guess it\u0027s still useful to have the big comment.  It\u0027s also worth mentioning that we can\u0027t use GetTreeNode here because the FrameTreeNode has been deleted.",
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a31255_3278ae82",
+        "filename": "content/browser/frame_host/navigation_controller_impl_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6030,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T17:38:59Z",
+      "side": 1,
+      "message": "Let\u0027s re-enable this as well.  (I\u0027m almost certain it was disabled by accident, because the logs linked from https://crbug.com/765107 all point to failures in the earlier test.)",
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2feeb15_7c68aa87",
+        "filename": "content/browser/frame_host/navigation_entry_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T17:38:59Z",
+      "side": 1,
+      "message": "Not sure we need to move this to keep it ordered.  Maybe we should just leave this where it was to make source code archaeology easier?  (I don\u0027t feel strongly, though.)",
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ef4778_0ed22e4b",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-10-06T17:38:59Z",
+      "side": 1,
+      "message": "Please rename to GetTreeNode, to distinguish from GetFrameEntry below.  (That was my mistake from early on.)",
+      "range": {
+        "startLine": 215,
+        "startChar": 33,
+        "endLine": 215,
+        "endChar": 47
+      },
+      "revId": "1c810c66ea61a27f62c84d0ba3e2c8f8fe55d126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
