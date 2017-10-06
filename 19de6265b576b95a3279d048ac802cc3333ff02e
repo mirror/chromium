@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6e74ae49_d0ed1073",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:43:53Z",
+      "side": 1,
+      "message": "Aaaah :)\nWorth a comment maybe, since I totally misunderstood? (Fine to do in another CL, if you don\u0027t want to go through another CQ run here)",
+      "parentUuid": "bb2bfef2_406f7211",
+      "range": {
+        "startLine": 75,
+        "startChar": 76,
+        "endLine": 75,
+        "endChar": 0
+      },
+      "revId": "19de6265b576b95a3279d048ac802cc3333ff02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab57407a_f72831fc",
         "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e optional: This block might be worth a helper function, something like SetupLogoService(cached_logo, fresh_logo). WDYT?\n\nCould go back to a fake instead of a mock, but for a mock, I want the EXPECT_CALLs to be in the test body proper.",
       "parentUuid": "ab57407a_f72831fc",
+      "range": {
+        "startLine": 986,
+        "startChar": 76,
+        "endLine": 986,
+        "endChar": 0
+      },
+      "revId": "19de6265b576b95a3279d048ac802cc3333ff02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcc2989a_33041ff3",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-10-06T08:43:53Z",
+      "side": 1,
+      "message": "Fair enough.\nIt does seem like a fake might be more appropriate, but I don\u0027t really mind either way.",
+      "parentUuid": "aab9a023_6cd52685",
       "range": {
         "startLine": 986,
         "startChar": 76,
