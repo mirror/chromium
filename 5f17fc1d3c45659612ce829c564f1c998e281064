@@ -46,6 +46,30 @@
       "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723421db_8e1f23de",
+        "filename": "media/gpu/media_foundation_video_encode_accelerator_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-10-06T21:45:59Z",
+      "side": 1,
+      "message": "You should still use GetSupportedProfiles() to decide before creating an instance. Just checking DLLs is not enough to know that we can create one with all the requirements. GetSupportedProfiles() is already called once when GPU process starts and copied into renderer instances in gpu_info() struct, see below. So reading from that struct wouldn\u0027t be any extra work.\nhttps://cs.chromium.org/chromium/src/content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc?rcl\u003d981d33cf1aa08ef10e63cb707d85149d01c887c7\u0026l\u003d360\n\nSome important methods are only available For Win 8+ according to MSDN, i.e. eAVEncCommonRateControlMode_CBR, so Win8 check is good for early return.  \nhttps://msdn.microsoft.com/en-us/library/windows/desktop/dd797816(v\u003dvs.85).aspx",
+      "parentUuid": "d941f35f_757ffb60",
+      "range": {
+        "startLine": 325,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 72
+      },
+      "revId": "5f17fc1d3c45659612ce829c564f1c998e281064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
