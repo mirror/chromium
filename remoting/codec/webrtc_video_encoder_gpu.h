@@ -72,6 +72,7 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
   std::unique_ptr<media::VideoEncodeAccelerator> video_encode_accelerator_;
 
   base::TimeDelta previous_timestamp_;
+  base::TimeDelta previous_keyframe_timestamp_;
 
   media::VideoCodecProfile codec_profile_;
 

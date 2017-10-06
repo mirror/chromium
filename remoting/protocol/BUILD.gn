@@ -240,7 +240,9 @@ static_library("protocol") {
       ]
     }
 
-    deps += [ "//third_party/webrtc_overrides:init_webrtc" ]
+    deps += [
+      "//third_party/webrtc_overrides:init_webrtc",
+    ]
   }
 
   if (enable_remoting_host) {
@@ -257,6 +259,12 @@ static_library("protocol") {
       "video_frame_pump.h",
     ]
     deps += [ "//remoting/codec:encoder" ]
+  }
+
+  # On Windows, we use //media/gpu/MediaFoundationVideoEncodeAcceleratorWin to
+  # detect whether HW encoder is supported by the system.
+  if (is_win) {
+    deps += [ "//media" ]
   }
 }
 
