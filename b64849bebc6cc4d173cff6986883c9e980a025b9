@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6921cdb9_cfa11ce0",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-06T22:32:14Z",
+      "side": 1,
+      "message": "Did the same as L267.",
+      "revId": "b64849bebc6cc4d173cff6986883c9e980a025b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
