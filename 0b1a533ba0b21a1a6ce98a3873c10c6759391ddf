@@ -304,6 +304,24 @@
     },
     {
       "key": {
+        "uuid": "11af6f20_fb0a8770",
+        "filename": "extensions/browser/extension_registrar.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-06T03:07:25Z",
+      "side": 1,
+      "message": "Ah, you are correct. Except when you said that you agree with what I just said -- I said \"currently ExtensionPrefs::SetExtensionEnabled is called\", but that\u0027s not true... in ToT we return early if IsExtensionEnabled() is true. So this is an unintended change on my part, I was intending to keep the original behavior.",
+      "parentUuid": "2c177412_6f7d67b3",
+      "revId": "0b1a533ba0b21a1a6ce98a3873c10c6759391ddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a45fcd32_df87bf15",
         "filename": "extensions/browser/extension_registrar.cc",
         "patchSetId": 17
