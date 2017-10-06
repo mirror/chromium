@@ -31,6 +31,12 @@ class PrefetchRequestTestBase : public testing::Test {
 
   void PumpLoop();
 
+ protected:
+  // Derived classes may need these to construct other members.
+  scoped_refptr<base::TestSimpleTaskRunner> task_runner() {
+    return task_runner_;
+  }
+
  private:
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
