@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2921089e_e61495c4",
+        "filename": "chrome/browser/resources/interventions_internals/index.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "This might be better to surface as a table (or similar) that way the date/times will be aligned, the descriptions will be aligned and the types will be aligned. I think that will make for a much easier log to read.",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0bc670_9b74e2ec",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_page_handler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "Can this be a const ref arg",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b1b272_f91fc76e",
+        "filename": "chrome/browser/ui/webui/interventions_internals/interventions_internals_ui.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "Add something like \"guaranteed to outlive |this|.\"",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a16f7c2_a1769b67",
+        "filename": "components/previews/core/previews_logger.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "for (message : messages) observer-\u003eOnNewMessageLogAdded;",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7438bb_21d5920e",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "Can you rename this AddAndNotifyObserver(...) so the method name is even more clear that it will immediately notify the observer.",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81eeba5_02f27a96",
+        "filename": "components/previews/core/previews_logger.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-10-06T18:46:10Z",
+      "side": 1,
+      "message": "Move this comment to AddAndNotifyObserver and change it to just \"Observers must remove themselves with RemoveObserver.\"",
+      "revId": "061040e5b5d9d64e0e756a804e4d42191e432406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
