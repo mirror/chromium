@@ -46,6 +46,30 @@
       "revId": "f1d71f6e1eaf9f7e8ba5c777e433a6f7722010f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baac56ff_c978a0ec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-06T18:14:23Z",
+      "side": 1,
+      "message": "The non-null check is only for TabDelegate.createFrozenTab because it passes null for WindowAndroid. And if we only check getActivity() \u003d\u003d null, then if getWindowAndroid() \u003d\u003d null, the mIsDetached \u003d true, so TabDelegate.createFrozenTab will create a detached Tab. After exploring, I think it might only be used by DocumentTabModelImpl (https://codesearch.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tabmodel/document/DocumentTabModelImpl.java?rcl\u003d0523405f96626a4b7991507d7decb5f63f769e25\u0026l\u003d221)? And it looks like this line will cause nullpointerexception?\n\nAlso offline discussed with Ted, the TabDelegate.createFrozenTab is ok to create a detached Tab.",
+      "parentUuid": "cad0c714_47c1180c",
+      "range": {
+        "startLine": 515,
+        "startChar": 23,
+        "endLine": 515,
+        "endChar": 39
+      },
+      "revId": "f1d71f6e1eaf9f7e8ba5c777e433a6f7722010f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
