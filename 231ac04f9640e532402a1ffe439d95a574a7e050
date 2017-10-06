@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4627754c_356c5662",
+        "filename": "chrome/browser/task_manager/sampling/task_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-06T23:06:45Z",
+      "side": 1,
+      "message": "Is this the part of the change that actually fixed the ASAN test?\n\nThe Refresh() calls would be expected to keep occuring at 1/sec, and if gathering this data took longer than 1sec wall-clock on ASAN, I can easily see this resulting in a death spiral...",
+      "revId": "231ac04f9640e532402a1ffe439d95a574a7e050",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
