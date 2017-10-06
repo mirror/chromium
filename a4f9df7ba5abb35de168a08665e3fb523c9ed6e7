@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "963f5321_0d29d56a",
+        "filename": "net/quic/core/crypto/aes_128_gcm_decrypter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-06T22:17:04Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a4f9df7ba5abb35de168a08665e3fb523c9ed6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf8de92_a8d7c2c5",
+        "filename": "net/quic/core/crypto/aes_128_gcm_decrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-06T22:17:04Z",
+      "side": 1,
+      "message": "nit: %s/2013/2017",
+      "revId": "a4f9df7ba5abb35de168a08665e3fb523c9ed6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ee6f64_3da80827",
+        "filename": "net/quic/core/crypto/chacha20_poly1305_tls_decrypter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-10-06T22:17:04Z",
+      "side": 1,
+      "message": "nit: %s/2014/2017",
+      "revId": "a4f9df7ba5abb35de168a08665e3fb523c9ed6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
