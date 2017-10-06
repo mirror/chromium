@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89488203_818dba23",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-06T21:18:35Z",
+      "side": 1,
+      "message": "can you move this above the \"EmulatingRGB\" hack and make it pure abstract as other functions of this class that are not temporary workarounds?",
+      "revId": "ba89cdafc0f1ee3802f605f07e5495ef1aebc816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9559b34_fb2b77ca",
+        "filename": "ui/gl/gl_image.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-06T21:18:35Z",
+      "side": 1,
+      "message": "can we remove this and |color_space_| below now?",
+      "range": {
+        "startLine": 104,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 69
+      },
+      "revId": "ba89cdafc0f1ee3802f605f07e5495ef1aebc816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd1b2e0e_2f8f27c1",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-06T21:18:35Z",
+      "side": 1,
+      "message": "I\u0027m fine with these changes but not clear from the description how they are related?",
+      "revId": "ba89cdafc0f1ee3802f605f07e5495ef1aebc816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
