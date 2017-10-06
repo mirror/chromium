@@ -4,7 +4,7 @@
 
 #include "components/offline_pages/core/model/temporary_pages_consistency_check_task.h"
 
-#include "stdint.h"
+#include <stdint.h>
 
 #include <memory>
 #include <string>
@@ -78,7 +78,8 @@ bool DeletePagesByOfflineIds(const std::vector<int64_t>& offline_ids,
   for (const auto& offline_id : offline_ids) {
     sql::Statement statement(db->GetCachedStatement(SQL_FROM_HERE, kSql));
     statement.BindInt64(0, offline_id);
-    result = statement.Run() && result;
+    if (!statement.Run())
+      result = false;
   }
   return result;
 }
@@ -86,7 +87,8 @@ bool DeletePagesByOfflineIds(const std::vector<int64_t>& offline_ids,
 bool DeleteFiles(const std::vector<base::FilePath>& file_paths) {
   bool result = true;
   for (const auto& file_path : file_paths)
-    result = base::DeleteFile(file_path, false) && result;
+    if (!base::DeleteFile(file_path, false))
+      result = false;
   return result;
 }
 
@@ -98,8 +100,7 @@ bool CheckConsistencySync(const base::FilePath& archives_dir,
                           const base::FilePath& abandoned_dir,
                           const std::vector<std::string>& namespaces,
                           sql::Connection* db) {
-  if (!db)
-    return false;
+  bool result = true;
   std::vector<int64_t> offline_ids_to_delete;
   std::vector<base::FilePath> files_to_delete;
 
@@ -126,12 +127,7 @@ bool CheckConsistencySync(const base::FilePath& archives_dir,
       continue;
     }
   }
-  // Try to delete the pages by offline ids collected above.
-  // If there's any database related errors, the function will return false,
-  // and the database operations will be rolled back since the transaction will
-  // not be committed.
-  if (!DeletePagesByOfflineIds(offline_ids_to_delete, db))
-    return false;
+  result = DeletePagesByOfflineIds(offline_ids_to_delete, db);
 
   if (!transaction.Commit())
     return false;
@@ -147,8 +143,9 @@ bool CheckConsistencySync(const base::FilePath& archives_dir,
       files_to_delete.push_back(archive_path);
     }
   }
-
-  return DeleteFiles(files_to_delete);
+  // Make sure DeleteFiles always runs.
+  result = DeleteFiles(files_to_delete) && result;
+  return result;
 }
 
 }  // namespace
@@ -178,10 +175,6 @@ void TemporaryPagesConsistencyCheckTask::Run() {
 }
 
 void TemporaryPagesConsistencyCheckTask::OnCheckConsistencyDone(bool result) {
-  // TODO(romax): https://crbug.com/772204. Replace the DVLOG with UMA
-  // collecting. If there's a need, introduce more detailed local enums
-  // indicating which part failed.
-  DVLOG(1) << "TemporaryPagesConsistencyCheck returns with result: " << result;
   TaskComplete();
 }
 

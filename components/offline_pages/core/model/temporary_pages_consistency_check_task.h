@@ -28,8 +28,6 @@ class OfflinePageMetadataStoreSQL;
 // ones that do not have associated DB entries.
 // NOTE: if the temporary archives directory is empty, only step 1 will be
 // executed.
-// TODO(romax): https://crbug.com/772171. This also needs to be revised during
-// P2P sharing implementation.
 class TemporaryPagesConsistencyCheckTask : public Task {
  public:
   TemporaryPagesConsistencyCheckTask(OfflinePageMetadataStoreSQL* store,

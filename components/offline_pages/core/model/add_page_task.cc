@@ -6,12 +6,12 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
-#include "components/offline_pages/core/model/offline_store_utils.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/offline_page_metadata_store_sql.h"
+#include "components/offline_pages/core/offline_page_model_utils.h"
+#include "components/offline_pages/core/offline_page_store_utils.h"
 #include "components/offline_pages/core/offline_page_types.h"
 #include "components/offline_pages/core/offline_store_types.h"
-#include "components/offline_pages/core/offline_time_utils.h"
 #include "components/offline_pages/core/task.h"
 #include "sql/connection.h"
 #include "sql/statement.h"
@@ -39,16 +39,16 @@ ItemActionStatus AddOfflinePageSync(const OfflinePageItem& item,
   statement.BindString(1, item.url.spec());
   statement.BindString(2, item.client_id.name_space);
   statement.BindString(3, item.client_id.id);
-  statement.BindString(4, item.file_path.AsUTF8Unsafe());
+  statement.BindString(4, store_utils::ToDatabaseFilePath(item.file_path));
   statement.BindInt64(5, item.file_size);
-  statement.BindInt64(6, ToDatabaseTime(item.creation_time));
-  statement.BindInt64(7, ToDatabaseTime(item.last_access_time));
+  statement.BindInt64(6, store_utils::ToDatabaseTime(item.creation_time));
+  statement.BindInt64(7, store_utils::ToDatabaseTime(item.last_access_time));
   statement.BindInt(8, item.access_count);
   statement.BindString16(9, item.title);
   statement.BindString(10, item.original_url.spec());
   statement.BindString(11, item.request_origin);
   statement.BindInt64(12, item.system_download_id);
-  statement.BindInt64(13, ToDatabaseTime(item.file_missing_time));
+  statement.BindInt64(13, store_utils::ToDatabaseTime(item.file_missing_time));
   statement.BindInt(14, item.upgrade_attempt);
   statement.BindString(15, item.digest);
 
@@ -82,8 +82,7 @@ void AddPageTask::Run() {
 }
 
 void AddPageTask::OnAddPageDone(ItemActionStatus status) {
-  AddPageResult result =
-      OfflineStoreUtils::ItemActionStatusToAddPageResult(status);
+  AddPageResult result = model_utils::ItemActionStatusToAddPageResult(status);
   InformAddPageDone(result);
 }
 
