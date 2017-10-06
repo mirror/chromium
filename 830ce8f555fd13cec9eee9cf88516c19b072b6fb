@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bf8be74_72a60494",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T05:22:11Z",
+      "side": 1,
+      "message": "please add comments documenting what all of these do.",
+      "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bf02ec_f7771193",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T05:22:11Z",
+      "side": 1,
+      "message": "nit: it\u0027d probably be better to use an enum here, e.g.\n\n  enum class ButtonType {\n    NORMAL,\n    LEGACY,\n  };",
+      "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69a6c3aa_b9a7be1c",
+        "filename": "ash/system/power/power_button_test_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-10-06T05:22:11Z",
+      "side": 1,
+      "message": "nit: SetTabletModeEnabled? (since this also disables if false is passed)",
+      "revId": "830ce8f555fd13cec9eee9cf88516c19b072b6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
