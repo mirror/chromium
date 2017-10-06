@@ -11,6 +11,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_clock.h"
+#include "build/build_config.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
@@ -168,23 +169,29 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, RemoveEmbargoByUrl) {
   GURL url2("https://www.example.com");
 
   // Record dismissals for location and notifications in |url1|.
+#if !defined(OS_ANDROID)
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#if !defined(OS_ANDROID)
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+#endif
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
   // Record dismissals for location in |url2|.
+#if !defined(OS_ANDROID)
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
 
@@ -248,10 +255,12 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest,
   GURL url("https://www.example.com");
 
   // Record dismissals for location.
+#if !defined(OS_ANDROID)
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
 
@@ -282,6 +291,22 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, RemoveCountsByUrl) {
   GURL url2("https://www.example.com");
 
   // Record some dismissals.
+#if defined(OS_ANDROID)
+  EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
+      url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(1, autoblocker()->GetDismissCount(
+                   url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+
+  EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
+      url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(1, autoblocker()->GetDismissCount(
+                   url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+
+  EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
+      url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+  EXPECT_EQ(1, autoblocker()->GetDismissCount(
+                   url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+#else
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_EQ(1, autoblocker()->GetDismissCount(
@@ -306,6 +331,7 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, RemoveCountsByUrl) {
       url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
   EXPECT_EQ(1, autoblocker()->GetDismissCount(
                    url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+#endif
 
   // Record some ignores.
   EXPECT_FALSE(autoblocker()->RecordIgnoreAndEmbargo(
@@ -341,6 +367,17 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, RemoveCountsByUrl) {
                    url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
 
   // Add some more actions.
+#if defined(OS_ANDROID)
+  EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
+      url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_EQ(1, autoblocker()->GetDismissCount(
+                   url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+
+  EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
+      url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+  EXPECT_EQ(1, autoblocker()->GetDismissCount(
+                   url1, CONTENT_SETTINGS_TYPE_NOTIFICATIONS));
+#else
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_EQ(1, autoblocker()->GetDismissCount(
@@ -355,6 +392,7 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, RemoveCountsByUrl) {
       url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_EQ(2, autoblocker()->GetDismissCount(
                    url2, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
 
   EXPECT_FALSE(autoblocker()->RecordIgnoreAndEmbargo(
       url1, CONTENT_SETTINGS_TYPE_GEOLOCATION));
@@ -580,19 +618,21 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, TestDismissEmbargoBackoff) {
   clock()->SetNow(base::Time::Now());
   base::HistogramTester histograms;
 
-  // Record some dismisses.
-  EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
-      url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
-  EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
-      url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
-
+// Android embargoes after 1 dismiss, so skip the first two dismisses.
+#if !defined(OS_ANDROID)
   // A request with < 3 prior dismisses should not be automatically blocked.
+  // After the 3rd dismiss subsequent permission requests should be autoblocked.
+  EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
+      url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+  EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
+      url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
+
   PermissionResult result =
       autoblocker()->GetEmbargoResult(url, CONTENT_SETTINGS_TYPE_GEOLOCATION);
   EXPECT_EQ(CONTENT_SETTING_ASK, result.content_setting);
   EXPECT_EQ(PermissionStatusSource::UNSPECIFIED, result.source);
 
-  // After the 3rd dismiss subsequent permission requests should be autoblocked.
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   result =
@@ -724,10 +764,12 @@ TEST_F(PermissionDecisionAutoBlockerUnitTest, TestExpiringOverlappingEmbargo) {
   EXPECT_EQ(PermissionStatusSource::SAFE_BROWSING_BLACKLIST, result.source);
 
   // Record dismisses to place it under dismissal embargo.
+#if !defined(OS_ANDROID)
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
   EXPECT_FALSE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
+#endif
   EXPECT_TRUE(autoblocker()->RecordDismissAndEmbargo(
       url, CONTENT_SETTINGS_TYPE_GEOLOCATION));
 

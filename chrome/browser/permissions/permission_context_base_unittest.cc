@@ -293,17 +293,32 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
     histograms.ExpectUniqueSample(
         "Permissions.AutoBlocker.EmbargoPromptSuppression",
         static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), 1);
-    histograms.ExpectUniqueSample(
-        "Permissions.AutoBlocker.EmbargoStatus",
-        static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), 1);
+
+#if defined(OS_ANDROID)
+    if (decision == CONTENT_SETTING_ASK) {
+#else
+    if (false) {
+#endif
+      histograms.ExpectUniqueSample(
+          "Permissions.AutoBlocker.EmbargoStatus",
+          static_cast<int>(PermissionEmbargoStatus::REPEATED_DISMISSALS), 1);
+    } else {
+      histograms.ExpectUniqueSample(
+          "Permissions.AutoBlocker.EmbargoStatus",
+          static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), 1);
+    }
   }
 
   void DismissMultipleTimesAndExpectBlock(
       const GURL& url,
-      ContentSettingsType content_settings_type,
-      uint32_t iterations) {
+      ContentSettingsType content_settings_type) {
     base::HistogramTester histograms;
 
+#if defined(OS_ANDROID)
+    const uint32_t iterations = 1;
+#else
+    const uint32_t iterations = 3;
+#endif
     // Dismiss |iterations| times. The final dismiss should change the decision
     // from dismiss to block, and hence change the persisted content setting.
     for (uint32_t i = 0; i < iterations; ++i) {
@@ -340,7 +355,7 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
       histograms.ExpectUniqueSample(
           "Permissions.AutoBlocker.EmbargoPromptSuppression",
           static_cast<int>(PermissionEmbargoStatus::NOT_EMBARGOED), i + 1);
-      if (i < 2) {
+      if (i < iterations - 1) {
         EXPECT_EQ(PermissionStatusSource::UNSPECIFIED, result.source);
         EXPECT_EQ(CONTENT_SETTING_ASK, result.content_setting);
         histograms.ExpectUniqueSample(
@@ -440,10 +455,9 @@ class PermissionContextBaseTests : public ChromeRenderViewHostTestHarness {
         base::FeatureList::IsEnabled(features::kBlockPromptsIfDismissedOften));
 
     // Sanity check independence per permission type by checking two of them.
-    DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_GEOLOCATION,
-                                       3);
-    DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_NOTIFICATIONS,
-                                       3);
+    DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_GEOLOCATION);
+    DismissMultipleTimesAndExpectBlock(url,
+                                       CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
   }
 
   void TestVariationBlockOnSeveralDismissals_TestContent() {
@@ -785,8 +799,7 @@ TEST_F(PermissionContextBaseTests, TestDismissVariations) {
 TEST_F(PermissionContextBaseTests, PushMessagingEmbargoEmbargoesNotifications) {
   GURL url("https://www.google.com");
   SetUpUrl(url);
-  DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_PUSH_MESSAGING,
-                                     3);
+  DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_PUSH_MESSAGING);
   PermissionManager* permission_manager = PermissionManager::Get(profile());
 
   // Check push messaging is now embargoed.

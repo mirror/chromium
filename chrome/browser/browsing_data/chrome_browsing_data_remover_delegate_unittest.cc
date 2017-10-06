@@ -2015,6 +2015,13 @@ TEST_F(ChromeBrowsingDataRemoverDelegateTest,
 TEST_F(ChromeBrowsingDataRemoverDelegateTest, ClearPermissionPromptCounts) {
   RemovePermissionPromptCountsTest tester(GetProfile());
 
+  // Desktop and Android embargo after a differing number of dismissals, just
+  // set it to 3 for ease of testing.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeatureWithParameters(
+      features::kBlockPromptsIfDismissedOften, {{"dismiss_count", "3"}});
+  PermissionDecisionAutoBlocker::UpdateFromVariations();
+
   std::unique_ptr<BrowsingDataFilterBuilder> filter_builder_1(
       BrowsingDataFilterBuilder::Create(BrowsingDataFilterBuilder::WHITELIST));
   filter_builder_1->AddRegisterableDomain(kTestRegisterableDomain1);
