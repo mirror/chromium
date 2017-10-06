@@ -88,6 +88,24 @@
       "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d29df8b_cd5cfb59",
+        "filename": "chromeos/dbus/system_clock_client.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-10-06T15:48:18Z",
+      "side": 1,
+      "message": "Yes!\nI did exactly it this morning and it didn\u0027t compile\n\n    base::BindOnce(\u0026SystemClockClientImpl::OnGotLastSyncInfo, weak_ptr_factory_.GetWeakPtr(), callback)) \n\n\nand forgot about partial application\n\n    system_clock_proxy_-\u003eCallMethod(\n        \u0026method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,\n        base::BindOnce(OnGotLastSyncInfo, callback));\n\nIt perfect works!\n\nThank you so much! And sorry for this mistake!",
+      "parentUuid": "93625c64_4638813c",
+      "revId": "19bb5866742d93e737a632b7e9311e0006c20133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
