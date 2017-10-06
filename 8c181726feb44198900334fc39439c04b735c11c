@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c9c36d6_5c9c9b18",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T20:27:10Z",
+      "side": 1,
+      "message": "Comment to mention the CopyOutputResult will auto-send an empty result?",
+      "revId": "8c181726feb44198900334fc39439c04b735c11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35517026_f3ff4b6f",
+        "filename": "components/viz/service/display/gl_renderer_copier.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T20:27:10Z",
+      "side": 1,
+      "message": "There\u0027s no need for this in a .cc",
+      "revId": "8c181726feb44198900334fc39439c04b735c11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3061be5_8ab2fead",
+        "filename": "components/viz/service/display/gl_renderer_copier.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T20:27:10Z",
+      "side": 1,
+      "message": "it\u0027s implied already but let\u0027s DISALLOW_COPY_AND_ASSIGN",
+      "revId": "8c181726feb44198900334fc39439c04b735c11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad6e9a6_5d2f817c",
+        "filename": "components/viz/service/display/gl_renderer_copier_pixeltest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-10-06T20:27:10Z",
+      "side": 1,
+      "message": "This is going to make it harder for future tests if they want a different image. I think you should just do this per test and we can live with loading the file a few times, personally.",
+      "revId": "8c181726feb44198900334fc39439c04b735c11c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
