@@ -185,11 +185,15 @@ void OnSessionStorageUsageInfo(
     const std::vector<SessionStorageUsageInfo>& infos) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  LOG(ERROR) << "DELETING SESSION STORAGE: " << infos.size();
+
   for (size_t i = 0; i < infos.size(); ++i) {
     if (!origin_matcher.is_null() &&
         !origin_matcher.Run(infos[i].origin, special_storage_policy.get())) {
+      LOG(ERROR) << "skip: " << infos[i].origin;
       continue;
     }
+    LOG(ERROR) << "delete: " << infos[i].origin;
     dom_storage_context->DeleteSessionStorage(infos[i]);
   }
 
