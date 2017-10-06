@@ -130,8 +130,8 @@ bool StyleSheetContents::IsCacheableForResource() const {
   // differently depending on the context of the parent CSSStyleSheet (e.g.
   // if they are in differently sized iframes). Once RuleSets are media query
   // agnostic, we can restore sharing of StyleSheetContents with medea queries.
-  if (has_media_queries_)
-    return false;
+  // if (has_media_queries_)
+  // return false;
   // FIXME: Support copying import rules.
   if (!import_rules_.IsEmpty())
     return false;
