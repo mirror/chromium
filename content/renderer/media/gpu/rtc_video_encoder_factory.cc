@@ -5,6 +5,7 @@
 #include "content/renderer/media/gpu/rtc_video_encoder_factory.h"
 
 #include "base/command_line.h"
+#include "build/build_config.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/feature_h264_with_openh264_ffmpeg.h"
@@ -44,7 +45,12 @@ base::Optional<cricket::VideoCodec> VEAToWebRTCCodec(
       webrtc::H264::Profile h264_profile;
       switch (profile.profile) {
         case media::H264PROFILE_BASELINE:
+#if defined(OS_ANDROID)
+          // ContrainedBaseline is equivalent to Baseline for Android.
+          h264_profile = webrtc::H264::kProfileConstrainedBaseline;
+#else
           h264_profile = webrtc::H264::kProfileBaseline;
+#endif
           break;
         case media::H264PROFILE_MAIN:
           h264_profile = webrtc::H264::kProfileMain;
