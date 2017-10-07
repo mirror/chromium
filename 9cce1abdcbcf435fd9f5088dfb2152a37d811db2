@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5095e97f_935c4c0c",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-07T00:42:06Z",
+      "side": 1,
+      "message": "Uh, oh, maybe I should change the whole file then.\nCan do in a follow-up CL.",
+      "parentUuid": "95712075_4f377435",
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a789e1d2_bedf811c",
         "filename": "ui/display/util/edid_parser.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4c7eec_78b8fd8b",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-07T00:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a789e1d2_bedf811c",
+      "range": {
+        "startLine": 350,
+        "startChar": 19,
+        "endLine": 350,
+        "endChar": 22
+      },
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "23f1474d_4173a4db",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-07T00:42:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea424be5_6a3c2966",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 15
+      },
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8bc2641_bdb235de",
         "filename": "ui/display/util/edid_parser.cc",
         "patchSetId": 4
@@ -79,6 +145,24 @@
       "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860aa948_4cfae5c0",
+        "filename": "ui/display/util/edid_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-10-07T00:42:06Z",
+      "side": 1,
+      "message": "Correct, index 7 is \"Reserved\", good catch.",
+      "parentUuid": "c8bc2641_bdb235de",
+      "revId": "9cce1abdcbcf435fd9f5088dfb2152a37d811db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
