@@ -180,6 +180,10 @@ function endTest()
     resultElement.innerHTML = result;
 
     if (window.testRunner) {
+        if (useResultElement) {
+            testRunner.notifyDone();
+            return;
+        }
         waitForCompositor().then(() => {
             testRunner.notifyDone();
         });
@@ -246,7 +250,7 @@ function waitForAnimationsToStart(callback)
     if (document.getAnimations().length > 0) {
         callback();
     } else {
-        setTimeout(waitForAnimationsToStart.bind(this, callback), 0);
+        requestAnimationFrame(waitForAnimationsToStart.bind(this, callback));
     }
 }
 
