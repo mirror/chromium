@@ -16,6 +16,24 @@
       "revId": "19995bfdc020a0edb2d2c0d57c89a60f496d28e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087d31fc_5b77380e",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T01:50:13Z",
+      "side": 1,
+      "message": "OK, also I think this TODO makes more sense within the WillRedirectRequest(), moving.",
+      "parentUuid": "d5bcc2fe_ad468d35",
+      "revId": "19995bfdc020a0edb2d2c0d57c89a60f496d28e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
