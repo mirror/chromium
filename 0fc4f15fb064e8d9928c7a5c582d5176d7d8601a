@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c066eae_1e08ce5e",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-07T00:37:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you need anything here - Shutdown() will suffice.",
+      "revId": "0fc4f15fb064e8d9928c7a5c582d5176d7d8601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761cdddb_4080544d",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-07T00:37:06Z",
+      "side": 1,
+      "message": "You can call this task_observer_added_ for clarity now.",
+      "revId": "0fc4f15fb064e8d9928c7a5c582d5176d7d8601a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
