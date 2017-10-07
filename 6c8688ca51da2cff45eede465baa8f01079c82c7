@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "4e3ee756_2b21b96d",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "Got it. I\u0027m adding another comment to the current location of the code to make it easier to track.",
+      "parentUuid": "30ef4279_65eee9b5",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 11
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea83aa88_0261b1bd",
         "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
         "patchSetId": 5
@@ -486,6 +510,30 @@
       "side": 1,
       "message": "I\u0027ve moved ItemActionStatusToAddPageResult back to the anonymous namespace of the file which is its only consumer. and the file was left in the model_utils.",
       "parentUuid": "881f2741_4e4f02a7",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "6c8688ca51da2cff45eede465baa8f01079c82c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb3ca9de_db941f94",
+        "filename": "components/offline_pages/core/model/offline_page_model_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "Moving ItemActionStatusToAddPageResult there looks good as it\u0027s the only user.\n\nI\u0027m adding another comment to the current location of this file to make it easier to track.",
+      "parentUuid": "0baeadcc_61ec23a1",
       "range": {
         "startLine": 25,
         "startChar": 8,

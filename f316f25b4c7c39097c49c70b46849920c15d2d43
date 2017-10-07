@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86a72b9a_ed6f0816",
+        "filename": "components/offline_pages/core/model/add_page_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "now this is not needed anymore.",
+      "range": {
+        "startLine": 11,
+        "startChar": 40,
+        "endLine": 11,
+        "endChar": 64
+      },
+      "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80474413_51378595",
+        "filename": "components/offline_pages/core/model/add_page_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "We still have to eliminate |case default:| to get those build time checks. Let\u0027s let the NOT_FOUND fall through to the end of the case statement and move the error case handling out of it:\n```\t\n    case ItemActionStatus::NOT_FOUND:;  //Fall-through.\n  }\n  NOTREACHED();\n  return AddPageResult::STORE_FAILURE;\n```\nTIL: that semi-colon in the end of the case clause is actually needed for this to compile.",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 3
+      },
+      "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ccf89f_aaa2817d",
+        "filename": "components/offline_pages/core/offline_page_model_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "now unneeded.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 62
+      },
+      "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe140e7_be2d22c6",
+        "filename": "components/offline_pages/core/offline_page_model_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-10-07T00:54:49Z",
+      "side": 1,
+      "message": "This file and its namespace, both named after |model_utils|, are still out of place. As we already have a model/ folder, if a |model_utils| file and/or namespace should exist they should live there.\n\nThe solutions I can think that solve this are:\n- Move GenerateOfflineId to the |store_utils| file and namespace (and then delete this file that will become empty).\n- Move this file in its current form back into the model/ folder and have their users include it from there (IDK if DEPS will complain about that).",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 21
+      },
+      "revId": "f316f25b4c7c39097c49c70b46849920c15d2d43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
