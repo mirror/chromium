@@ -463,13 +463,6 @@ void ProfileMetrics::LogProfileNewAvatarMenuSignin(
                             NUM_PROFILE_AVATAR_MENU_SIGNIN_METRICS);
 }
 
-void ProfileMetrics::LogProfileNewAvatarMenuUpgrade(
-    ProfileNewAvatarMenuUpgrade metric) {
-  DCHECK_LT(metric, NUM_PROFILE_AVATAR_MENU_UPGRADE_METRICS);
-  UMA_HISTOGRAM_ENUMERATION("Profile.NewAvatarMenu.Upgrade", metric,
-                            NUM_PROFILE_AVATAR_MENU_UPGRADE_METRICS);
-}
-
 void ProfileMetrics::LogTimeToOpenUserManager(
     const base::TimeDelta& time_to_open) {
   UMA_HISTOGRAM_TIMES("Profile.TimeToOpenUserManager", time_to_open);

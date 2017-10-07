@@ -186,20 +186,6 @@ class ProfileMetrics {
     NUM_PROFILE_AVATAR_MENU_SIGNIN_METRICS,
   };
 
-  // Enum for tracking user interactions with the bubble that appears for all
-  // users in the new avatar menu after upgrading.
-  enum ProfileNewAvatarMenuUpgrade {
-    // User views the upgrade bubble.
-    PROFILE_AVATAR_MENU_UPGRADE_VIEW = 0,
-    // User dismissed the upgrade bubble.
-    PROFILE_AVATAR_MENU_UPGRADE_DISMISS,
-    // User selects 'What's New' in the upgrade bubble.
-    PROFILE_AVATAR_MENU_UPGRADE_WHATS_NEW,
-    // User selects 'Not You?' in the upgrade bubble.
-    PROFILE_AVATAR_MENU_UPGRADE_NOT_YOU,
-    NUM_PROFILE_AVATAR_MENU_UPGRADE_METRICS,
-  };
-
   static void UpdateReportedProfilesStatistics(ProfileManager* manager);
   // Count and return summary information about the profiles currently in the
   // |manager|. This information is returned in the output variable |counts|.
@@ -233,8 +219,6 @@ class ProfileMetrics {
   static void LogProfileDelete(bool profile_was_signed_in);
   static void LogProfileNewAvatarMenuNotYou(ProfileNewAvatarMenuNotYou metric);
   static void LogProfileNewAvatarMenuSignin(ProfileNewAvatarMenuSignin metric);
-  static void LogProfileNewAvatarMenuUpgrade(
-      ProfileNewAvatarMenuUpgrade metric);
   static void LogTimeToOpenUserManager(const base::TimeDelta& time_to_open);
 
 #if defined(OS_ANDROID)

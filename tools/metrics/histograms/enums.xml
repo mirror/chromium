@@ -32237,19 +32237,6 @@ from previous Chrome versions.
   </int>
 </enum>
 
-<enum name="ProfileNewAvatarMenuUpgrade">
-  <int value="0" label="View Upgrade Bubble">
-    User views the upgrade bubble.
-  </int>
-  <int value="1" label="Dismiss">User dismissed the upgrade bubble.</int>
-  <int value="2" label="What's New">
-    User selects 'What's New' in the upgrade bubble.
-  </int>
-  <int value="3" label="Not You?">
-    User selects 'Not You?' in the upgrade bubble.
-  </int>
-</enum>
-
 <enum name="ProfileOpen">
   <int value="0" label="Add new user"/>
   <int value="1" label="Add new user from icon menu"/>
