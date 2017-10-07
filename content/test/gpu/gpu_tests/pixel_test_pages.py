@@ -148,6 +148,21 @@ def DefaultPages(base_name):
       base_name + '_Video_VP9',
       test_rect=[0, 0, 300, 300],
       revision=7),
+
+    PixelTestPage(
+      'pixel_webgl2_blitframebuffer_result_displayed.html',
+      base_name + '_WebGL2_BlitFramebuffer_Result_Displayed',
+      test_rect=[0, 0, 200, 200],
+      revision=0, # This is not used.
+      expected_colors=[
+        {
+          'comment': 'green',
+          'location': [1, 1],
+          'size': [180, 180],
+          'color': [0, 255, 0],
+          'tolerance': 3
+        },
+      ]),
   ]
 
 
