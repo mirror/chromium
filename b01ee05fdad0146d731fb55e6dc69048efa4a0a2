@@ -664,6 +664,24 @@
     },
     {
       "key": {
+        "uuid": "24c7b1de_9d1e69b8",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-07T02:38:55Z",
+      "side": 1,
+      "message": "With \u0027arc::IntentPickerController intent_picker_controller_;\u0027, you can reduce one operator new call. Instead, you need to #include intent_picker_controller.h in the header side.",
+      "parentUuid": "551ad842_6b8e6a56",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d91f071f_1498e03d",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
         "patchSetId": 18
