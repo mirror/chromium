@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e1129c3_50e2629e",
+        "filename": "sandbox/fuzzer/fuzzer_types.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-07T00:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b324460_bf03e2fb",
+      "revId": "ba0b74758e42758a788bcce3553cea9d1611978b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e52be1_060a19e7",
         "filename": "sandbox/win/src/crosscall_server.cc",
         "patchSetId": 9
@@ -39,6 +57,30 @@
       "revId": "ba0b74758e42758a788bcce3553cea9d1611978b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b750fc2_1e34f038",
+        "filename": "sandbox/win/src/crosscall_server.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1160859
+      },
+      "writtenOn": "2017-10-07T00:02:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e52be1_060a19e7",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 29
+      },
+      "revId": "ba0b74758e42758a788bcce3553cea9d1611978b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
