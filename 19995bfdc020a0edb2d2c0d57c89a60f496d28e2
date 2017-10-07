@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5bcc2fe_ad468d35",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-07T01:19:50Z",
+      "side": 1,
+      "message": "Thanks. Let\u0027s move this to L138 (at the beginning of the function) since this is a precondition of the function now.",
+      "revId": "19995bfdc020a0edb2d2c0d57c89a60f496d28e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

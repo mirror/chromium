@@ -259,6 +259,24 @@
     },
     {
       "key": {
+        "uuid": "f5c6dbfd_d89ee920",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-07T01:19:50Z",
+      "side": 1,
+      "message": "ah yes you\u0027re right.",
+      "parentUuid": "c9a2ba64_d34735f5",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f4ad3ff_c6e06123",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 18
@@ -604,6 +622,24 @@
       "side": 1,
       "message": "Why do we have base::MakeUnique then? D:. I thought having unique_ptr here would be good so IntentPickerView owns the controller for his entire life cycle, wdyt?",
       "parentUuid": "ccf8ff9a_42a5cc53",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46dbfee0_e6a4714f",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-10-07T01:19:50Z",
+      "side": 1,
+      "message": "base::MakeUnique is a C++11 version of std::make_unique (which is C++14 only.) Recently Chromium has migrated to C++14, so we no longer have to the compatibility wrapper in base/.\n\nAlso, you can also own the object just with\n\n arc::IntentPickerController intent_picker_controller_;\n\nThat\u0027s what I meant by \u0027as a value\u0027. I don\u0027t have a strong opinion on this though.",
+      "parentUuid": "f7f63564_9d9e243f",
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
