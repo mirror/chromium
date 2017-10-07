@@ -23,15 +23,12 @@ namespace content {
 
 class ResourceFetcher;
 class MojoMainRunner;
-enum class MojoBindingsType;
 
 // MojoContextState manages the modules needed for mojo bindings. It does this
 // by way of gin. Non-builtin modules are downloaded by way of ResourceFetchers.
 class MojoContextState : public gin::ModuleRegistryObserver {
  public:
-  MojoContextState(blink::WebLocalFrame* frame,
-                   v8::Local<v8::Context> context,
-                   MojoBindingsType bindings_type);
+  MojoContextState(blink::WebLocalFrame* frame, v8::Local<v8::Context> context);
   ~MojoContextState() override;
 
   void Run();

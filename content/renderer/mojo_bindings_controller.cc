@@ -28,11 +28,9 @@ struct MojoContextStateData : public base::SupportsUserData::Data {
 
 }  // namespace
 
-MojoBindingsController::MojoBindingsController(RenderFrame* render_frame,
-                                               MojoBindingsType bindings_type)
+MojoBindingsController::MojoBindingsController(RenderFrame* render_frame)
     : RenderFrameObserver(render_frame),
-      RenderFrameObserverTracker<MojoBindingsController>(render_frame),
-      bindings_type_(bindings_type) {}
+      RenderFrameObserverTracker<MojoBindingsController>(render_frame) {}
 
 MojoBindingsController::~MojoBindingsController() {
 }
@@ -43,7 +41,7 @@ void MojoBindingsController::CreateContextState() {
   v8::Local<v8::Context> context = frame->MainWorldScriptContext();
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   auto data = base::MakeUnique<MojoContextStateData>();
-  data->state.reset(new MojoContextState(frame, context, bindings_type_));
+  data->state.reset(new MojoContextState(frame, context));
   context_data->SetUserData(kMojoContextStateKey, std::move(data));
 }
 
@@ -70,16 +68,8 @@ MojoContextState* MojoBindingsController::GetContextState() {
 void MojoBindingsController::DidCreateScriptContext(
     v8::Local<v8::Context> context,
     int world_id) {
-  // NOTE: Layout tests already get this turned on by the RuntimeEnabled feature
-  // setting. We avoid manually installing them here for layout tests, because
-  // some layout tests (namely at
-  // least virtual/stable/webexposed/global-interface-listing.html) may be run
-  // with such features explicitly disabled. We do not want to unconditionally
-  // install Mojo bindings in such environments.
-  //
-  // We also only allow these bindings to be installed when creating the main
-  // world context.
-  if (bindings_type_ != MojoBindingsType::FOR_LAYOUT_TESTS && world_id == 0)
+  // Install the new style bindings when creating the main world context.
+  if (world_id == 0)
     blink::WebContextFeatures::EnableMojoJS(context, true);
 }
 

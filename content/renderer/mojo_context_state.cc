@@ -109,26 +109,13 @@ scoped_refptr<base::RefCountedMemory> GetBuiltinModuleData(
   return source_iter->second;
 }
 
-std::string GetModulePrefixForBindingsType(MojoBindingsType bindings_type,
-                                           blink::WebLocalFrame* frame) {
-  switch (bindings_type) {
-    case MojoBindingsType::FOR_WEB_UI:
-      return frame->GetSecurityOrigin().ToString().Utf8() + "/";
-    case MojoBindingsType::FOR_LAYOUT_TESTS:
-      return "layout-test-mojom://";
-  }
-  NOTREACHED();
-  return "";
-}
-
 }  // namespace
 
 MojoContextState::MojoContextState(blink::WebLocalFrame* frame,
-                                   v8::Local<v8::Context> context,
-                                   MojoBindingsType bindings_type)
+                                   v8::Local<v8::Context> context)
     : frame_(frame),
       module_added_(false),
-      module_prefix_(GetModulePrefixForBindingsType(bindings_type, frame)) {
+      module_prefix_(frame->GetSecurityOrigin().ToString().Utf8() + "/") {
   gin::PerContextData* context_data = gin::PerContextData::From(context);
   gin::ContextHolder* context_holder = context_data->context_holder();
   runner_.reset(new MojoMainRunner(frame_, context_holder));
@@ -136,20 +123,7 @@ MojoContextState::MojoContextState(blink::WebLocalFrame* frame,
   gin::ModuleRegistry::From(context)->AddObserver(this);
   content::RenderFrame::FromWebFrame(frame)
       ->EnsureMojoBuiltinsAreAvailable(context_holder->isolate(), context);
-  v8::Local<v8::Object> install_target;
-  if (bindings_type == MojoBindingsType::FOR_LAYOUT_TESTS) {
-    // In layout tests we install the module system under 'gin.define'
-    // for now to avoid globally exposing something as generic as 'define'.
-    //
-    // TODO(rockot): Remove this if/when we can integrate gin + ES6 modules.
-    install_target = v8::Object::New(context->GetIsolate());
-    gin::SetProperty(context->GetIsolate(), context->Global(),
-                     gin::StringToSymbol(context->GetIsolate(), "gin"),
-                     install_target);
-  } else {
-    // Otherwise we're fine installing a global 'define'.
-    install_target = context->Global();
-  }
+  v8::Local<v8::Object> install_target = context->Global();
   gin::ModuleRegistry::InstallGlobals(context->GetIsolate(), install_target);
   // Warning |frame| may be destroyed.
   // TODO(sky): add test for this.
