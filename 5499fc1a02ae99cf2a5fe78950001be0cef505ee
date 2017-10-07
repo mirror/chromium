@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56c574a5_8d5edaa6",
+        "filename": "components/payments/content/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-10-07T21:58:25Z",
+      "side": 1,
+      "message": "This directory no longer exists, so you can remove this line.",
+      "range": {
+        "startLine": 4,
+        "startChar": 3,
+        "endLine": 4,
+        "endChar": 34
+      },
+      "revId": "5499fc1a02ae99cf2a5fe78950001be0cef505ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
