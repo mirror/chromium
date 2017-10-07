@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22f46ef8_56c32b7e",
+        "filename": "chrome/browser/extensions/api/declarative_net_request/declarative_net_request_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "Not currently sure how to test \"object\", \"ping\", \"other\", \"font\" resource types yet. Will add unit tests for them.",
+      "range": {
+        "startLine": 548,
+        "startChar": 5,
+        "endLine": 548,
+        "endChar": 12
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62523731_c86dafb3",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "Should we refresh the webkit cache here? Existing renderers might have some cached resources which might need to be blocked due to the new ruleset.",
+      "range": {
+        "startLine": 118,
+        "startChar": 5,
+        "endLine": 118,
+        "endChar": 12
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575518cd_7f4316c9",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "Still need to implement a permission model. We reach here from ExtensionWebRequestEventRouter::OnBeforeRequest, hence it is at least not a sensitive request (We have checked ShouldHideEvent in web_request_api.cc already).",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 14
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4588ec55_460d4eeb",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "Should we iterate the rulesets from the most recently installed extension to last (like we do in web request api) or from most recently enabled (which might makes more sense).",
+      "range": {
+        "startLine": 78,
+        "startChar": 5,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c450ad_bd5c76a5",
+        "filename": "extensions/browser/api/declarative_net_request/ruleset_matcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "MemoryMappedFile needs to be deleted on a sequence which supports blocking calls, but is owned by an object on IO thread (RulesetMatcher). What\u0027s the difference between OnTaskRunnerDeleter and just posting a task to delete from the destructor? If this task fails, the file won\u0027t be unmapped?",
+      "range": {
+        "startLine": 72,
+        "startChar": 5,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c51f9e_03db5af0",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T05:46:58Z",
+      "side": 1,
+      "message": "Is checking only the on before request stage fine?",
+      "range": {
+        "startLine": 640,
+        "startChar": 7,
+        "endLine": 640,
+        "endChar": 14
+      },
+      "revId": "2fcf8924164575166df853976e13fb6ca381695b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
