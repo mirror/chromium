@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47dda488_bfdeedc5",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "Yes, it queries twice, I leave some explanations on PS3, but seems not enough.\nI just uploaded PS10 in which there is only one query, please see the explanations in PS10.",
+      "parentUuid": "f4a4ecea_941507bc",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59a45a11_cde3344b",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "187662106d89d678b23c76887f1f455d739d39ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98f9024_99aed09b",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "Yes, thanks!\nDone",
+      "parentUuid": "59a45a11_cde3344b",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9c66ce14_b917d0a4",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32ebc9e_6ccc365d",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e357d36_e8d80dcc",
         "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-10-06T20:58:30Z",
       "side": 1,
       "message": "I didn\u0027t see where you removed the observer?",
+      "revId": "187662106d89d678b23c76887f1f455d739d39ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645e6565_81ae7724",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "It is removed in destructor.",
+      "parentUuid": "1e357d36_e8d80dcc",
       "revId": "187662106d89d678b23c76887f1f455d739d39ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

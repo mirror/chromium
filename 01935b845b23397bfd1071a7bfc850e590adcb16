@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff38e909_dd1ca5d5",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "Save the callback, will run it after the device enumeration is done.",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 42
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d10f2f_3c19633f",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-07T04:24:00Z",
+      "side": 1,
+      "message": "We have to run the UpdateDevices in Async way.\n\nSome browsertest(at least in BluetoothHostPairingBrowsertest), they depends on the logic that the GetInputDeviceListForCheck() never synchronously call the TryInitateBTDeviceUpdate().\n\nWith this change, we merged the GetInputDeviceListForCheck() and GetInputDeviceList(). When it arrives here, if it is in the logic of original GetInputDeviceListForCheck(), the TryInitateBTDeviceUpdate() will be called synchronously, then the BluetoothHostPairingBrowsertest will fail.\n\nI also feel that the GetInputDeviceListForCheck is only used by WizardController to check whether needs to show screen, while the GetInputDeviceList needs to addObserver and maintains the device list. That\u0027s why I decide to not merge them. Although there will be 2 mojo connections, the code is more clear, one more mojo connection is not expensive.",
+      "range": {
+        "startLine": 147,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 63
+      },
+      "revId": "01935b845b23397bfd1071a7bfc850e590adcb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
