@@ -1075,9 +1075,6 @@ bool PrintRenderFrameHelper::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(PrintMsg_PrintPages, OnPrintPages)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintForSystemDialog, OnPrintForSystemDialog)
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
-#if BUILDFLAG(ENABLE_BASIC_PRINTING) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
-    IPC_MESSAGE_HANDLER(PrintMsg_PrintForPrintPreview, OnPrintForPrintPreview)
-#endif
 #if BUILDFLAG(ENABLE_PRINT_PREVIEW)
     IPC_MESSAGE_HANDLER(PrintMsg_InitiatePrintPreview, OnInitiatePrintPreview)
     IPC_MESSAGE_HANDLER(PrintMsg_PrintPreview, OnPrintPreview)
@@ -1140,68 +1137,6 @@ void PrintRenderFrameHelper::OnPrintForSystemDialog() {
   // just return.
 }
 #endif  // BUILDFLAG(ENABLE_BASIC_PRINTING)
-
-#if BUILDFLAG(ENABLE_BASIC_PRINTING) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
-void PrintRenderFrameHelper::OnPrintForPrintPreview(
-    const base::DictionaryValue& job_settings) {
-  CHECK_LE(ipc_nesting_level_, 1);
-  // If still not finished with earlier print request simply ignore.
-  if (prep_frame_view_)
-    return;
-
-  blink::WebDocument document = render_frame()->GetWebFrame()->GetDocument();
-  // <object>/<iframe> with id="pdf-viewer" is created in
-  // chrome/browser/resources/print_preview/print_preview.js
-  blink::WebElement pdf_element = document.GetElementById("pdf-viewer");
-  if (pdf_element.IsNull()) {
-    NOTREACHED();
-    return;
-  }
-
-  // The out-of-process plugin element is nested within a frame. In tests, there
-  // may not be an iframe containing the out-of-process plugin, so continue with
-  // the element with ID "pdf-viewer" if it isn't an iframe.
-  blink::WebLocalFrame* plugin_frame = pdf_element.GetDocument().GetFrame();
-  blink::WebElement plugin_element = pdf_element;
-  if (pdf_element.HasHTMLTagName("iframe")) {
-    plugin_frame = blink::WebLocalFrame::FromFrameOwnerElement(pdf_element);
-    plugin_element = delegate_->GetPdfElement(plugin_frame);
-    if (plugin_element.IsNull()) {
-      NOTREACHED();
-      return;
-    }
-  }
-
-  // Set |print_for_preview_| flag and autoreset it to back to original
-  // on return.
-  base::AutoReset<bool> set_printing_flag(&print_for_preview_, true);
-
-  if (!UpdatePrintSettings(plugin_frame, plugin_element, job_settings)) {
-    LOG(ERROR) << "UpdatePrintSettings failed";
-    DidFinishPrinting(FAIL_PRINT);
-    return;
-  }
-
-  // Print page onto entire page not just printable area. Preview PDF already
-  // has content in correct position taking into account page size and printable
-  // area.
-  // TODO(vitalybuka) : Make this consistent on all platform. This change
-  // affects Windows only. On Linux and OSX RenderPagesForPrint does not use
-  // printable_area. Also we can't change printable_area deeper inside
-  // RenderPagesForPrint for Windows, because it's used also by native
-  // printing and it expects real printable_area value.
-  // See http://crbug.com/123408
-  PrintMsg_Print_Params& print_params = print_pages_params_->params;
-  printer_printable_area_ = print_params.printable_area;
-  print_params.printable_area = gfx::Rect(print_params.page_size);
-
-  // Render Pages for printing.
-  if (!RenderPagesForPrint(plugin_frame, plugin_element)) {
-    LOG(ERROR) << "RenderPagesForPrint failed";
-    DidFinishPrinting(FAIL_PRINT);
-  }
-}
-#endif  // BUILDFLAG(ENABLE_BASIC_PRINTING) && BUILDFLAG(ENABLE_PRINT_PREVIEW)
 
 void PrintRenderFrameHelper::GetPageSizeAndContentAreaFromPageLayout(
     const PageSizeMargins& page_layout_in_points,
