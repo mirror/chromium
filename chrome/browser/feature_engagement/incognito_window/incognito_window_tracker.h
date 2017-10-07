@@ -11,6 +11,7 @@
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "ui/views/widget/widget_observer.h"
 
+class AppMenuButton;
 class IncognitoWindowPromoBubbleView;
 
 namespace feature_engagement {
@@ -56,6 +57,9 @@ class IncognitoWindowTracker : public FeatureTracker,
 
   // views::WidgetObserver:
   void OnWidgetDestroying(views::Widget* widget) override;
+
+  // // Gets the app menu button from the last active browser.
+  // AppMenuButton* GetAppMenuButton();
 
   IncognitoWindowPromoBubbleView* incognito_promo() { return incognito_promo_; }
 
