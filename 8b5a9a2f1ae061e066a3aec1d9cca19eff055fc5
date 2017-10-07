@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94dcec80_5f66db31",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-07T03:03:03Z",
+      "side": 1,
+      "message": "Not only that, but I can\u0027t remember what it was supposed to do, so I just removed the whole thing for now (maybe it was based on an older model of the SmartSelectionManager).",
+      "parentUuid": "f8a1f36b_c849847f",
+      "range": {
+        "startLine": 30,
+        "startChar": 20,
+        "endLine": 30,
+        "endChar": 67
+      },
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea9acc6b_e1c26d8b",
         "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f242e3_1c29dc99",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-07T03:03:03Z",
+      "side": 1,
+      "message": "Removed that check since I think it was obsolete.",
+      "parentUuid": "ea9acc6b_e1c26d8b",
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53d725a_b2d74f72",
+        "filename": "content/public/android/junit/src/org/chromium/content/browser/SelectionClientManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1107894
+      },
+      "writtenOn": "2017-10-07T03:03:03Z",
+      "side": 1,
+      "message": "We no longer support set since that\u0027s done by the constructor, and construct \u0026 add is a valid combination, so I think we\u0027ve covered that.",
+      "parentUuid": "3e2ffab7_26b72f4d",
+      "range": {
+        "startLine": 162,
+        "startChar": 15,
+        "endLine": 162,
+        "endChar": 36
+      },
+      "revId": "8b5a9a2f1ae061e066a3aec1d9cca19eff055fc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
