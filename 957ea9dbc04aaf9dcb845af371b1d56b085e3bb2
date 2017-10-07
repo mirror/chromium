@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcbe82c2_07f86d26",
+        "filename": "chrome/browser/resources/policy_tool.css",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-07T02:35:12Z",
+      "side": 1,
+      "message": "nit: Add blank line please.",
+      "revId": "957ea9dbc04aaf9dcb845af371b1d56b085e3bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6cc16b_175887fc",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-07T02:35:12Z",
+      "side": 1,
+      "message": "It looks like is_saving_enabled_ is managed on the c++ side -- is this JS call needed? i.e. can all the decision making be done on the c++ side?",
+      "revId": "957ea9dbc04aaf9dcb845af371b1d56b085e3bb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
