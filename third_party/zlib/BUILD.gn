@@ -122,6 +122,10 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  defines = []
+  deps = []
+
+  # Here we pick the best performance implementation matching the build target.
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
       # TODO: handle InflateBack case, see crbug.com/769880.
@@ -135,10 +139,9 @@ static_library("zlib") {
         "contrib/arm/inflate.c",
       ]
     }
+  } else if (current_cpu == "x64") {
+    defines += [ "TRY_INFLATE_FAST64" ]
   }
-
-  defines = []
-  deps = []
 
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
