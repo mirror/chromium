@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7512e7df_102d11d2",
+        "filename": "chrome_elf/whitelist/whitelist.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-07T21:30:34Z",
+      "side": 1,
+      "message": "You know, you\u0027re right. I just took another look at the spec and it does say that an unnamed namespace has internal linkage and that names at namespace scope take on the scope\u0027s linkage. So, nevermind, go ahead and remove that static. My apologies for the back-and-forth.",
+      "parentUuid": "092edfa9_540fd41f",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54300975_d2e440bc",
         "filename": "chrome_elf/whitelist/whitelist.cc",
         "patchSetId": 3
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "3293c4d2_1ead137b",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-07T21:30:34Z",
+      "side": 1,
+      "message": "std::move can be used with any \"movable\" type. any type that has Foo(Foo\u0026\u0026) ctor and an operator\u003d(Foo\u0026\u0026) assignment operator is \"movable\". fun!",
+      "parentUuid": "27e94f2b_4115d601",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2cabe36_dbd38431",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "437aa435_058ea3d6",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-07T21:30:34Z",
+      "side": 1,
+      "message": "sorry for being cheeky -- i meant to make the methods \"const\" like so:\n  DWORD image_size() const { return image_size_; }",
+      "parentUuid": "09793abe_f0af59ce",
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "858fc649_a6061929",
         "filename": "chrome_elf/whitelist/whitelist_ime.cc",
         "patchSetId": 3
@@ -258,6 +312,30 @@
       "writtenOn": "2017-10-06T00:12:51Z",
       "side": 1,
       "message": "Question Greg: I had to delete this line due to compile failure:\n\"\n../../chrome_elf/whitelist/whitelist_ime.cc(67,3):  note: \u0027IME\u0027 has been explicitly marked deleted here\n  IME(const IME\u0026) \u003d delete;\n\"\n\nSo I\u0027ve just removed the whole \"disallow_copy_and_assign\" part.  I don\u0027t 100% understand why though.  Any insight?",
+      "range": {
+        "startLine": 71,
+        "startChar": 20,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "154b74630bb28d58beab4e7de46f439eb7f9beab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28077b23_553085dc",
+        "filename": "chrome_elf/whitelist/whitelist_ime.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-10-07T21:30:34Z",
+      "side": 1,
+      "message": "was there more to that error, like something pointing to the place that is counting on the copy ctor? i think you do want do explicitly delete the copy ctor and copy assignment operators. you may need to make the move ctor and move assignment yourself, though. try putting these deletes back in and adding these in the public: section:\n  IME(IME\u0026\u0026) noexcept \u003d default;\n  IME\u0026 operator\u003d(IME\u0026\u0026) noexcept \u003d default;\nif those don\u0027t work, you may need to spell them out:\n  IME(IME\u0026\u0026 other) noexcept : image_size_(other.image_size_), date_time_stamp_(other.date_time_stamp_), guid_(std::move(other.guid_)), path_(std::move(other.path_)) {}\n  IME\u0026 operator\u003d(IME\u0026\u0026 other) noexcept {\n    image_size_ \u003d other.image_size_;\n    date_time_stamp_ \u003d other.date_time_stamp_;\n    guid_ \u003d std::move(other.guid_);\n    path_ \u003d std::move(other.path_);\n  }\n\nnote the use of \"noexcept\", which tells std::vector that it\u0027s okay to move instances of IME when resizing the vector rather than copy them. this is likely the missing piece that resulted in the compile error you mentioned.",
+      "parentUuid": "858fc649_a6061929",
       "range": {
         "startLine": 71,
         "startChar": 20,
