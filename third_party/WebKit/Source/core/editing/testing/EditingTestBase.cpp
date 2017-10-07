@@ -83,6 +83,14 @@ std::string EditingTestBase::GetSelectionTextFromBody(
   return SelectionSample::GetSelectionText(*GetDocument().body(), selection);
 }
 
+std::string EditingTestBase::GetCaretTextFromBody(
+    const Position& position) const {
+  DCHECK(position.IsValidFor(GetDocument()))
+      << "A valid position must be provided";
+  return GetSelectionTextFromBody(
+      SelectionInDOMTree::Builder().Collapse(position).Build());
+}
+
 void EditingTestBase::SetUp() {
   dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
 }

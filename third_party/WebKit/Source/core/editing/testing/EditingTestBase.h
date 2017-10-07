@@ -56,6 +56,9 @@ class EditingTestBase : public ::testing::Test {
   // |SelectionInDOMTree|.
   std::string GetSelectionTextFromBody(const SelectionInDOMTree&) const;
 
+  // Returns selection text for child nodes of BODY with specific |Position|.
+  std::string GetCaretTextFromBody(const Position&) const;
+
   void SetUp() override;
 
   void SetupPageWithClients(Page::PageClients*);
