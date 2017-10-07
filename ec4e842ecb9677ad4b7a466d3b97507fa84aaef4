@@ -68,6 +68,24 @@
       "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d376ed18_4d3e3455",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-10-07T00:09:43Z",
+      "side": 1,
+      "message": "\u003e does |developer_id| absolutely have to be a string?\n\nYes, it\u0027s a arbitrary DOMString (not necessarily Unicode) provided by the web developer.\n\n\u003e I wonder if we can use base::UnguessableToken for |unique_id|? Strong guarantee of uniqueness, plus not a string.\n\nThat was my first thought too. I agree it would be slightly more explicit about its purpose, and it\u0027d be nice to use different types for the two. But there are some problems too:\n\n- We need these values to round-trip opaquely to and from Blink, but Blink doesn\u0027t use UnguessableToken. There\u0027s out/Debug/gen/mojo/common/unguessable_token.mojom-blink.h, but it\u0027s never used, and new DEPS rules would need to be agreed as nothing non-generated in Blink ever imports anything from mojo/common.\n\n- We need these values to be serializable to and from strings so they can form keys in a leveldb database. But UnguessableToken only serializes to and from a pair of uint64_t. I could potentially take a base::UnguessableToken, call ToString, and then forever pass it around as a string, but that loses the benefit of having an explicit type...\n\nSo for these reasons base::GenerateGUID seemed more practical. And as of https://chromium-review.googlesource.com/c/chromium/src/+/678731, it provides equally strong guarantees of randomness (and hence uniqueness), give or take 2 bits of entropy (though I did make sure to recommend UnguessableToken in the comments for GenerateGUID!).",
+      "parentUuid": "2767cb20_8c5016f3",
+      "revId": "ec4e842ecb9677ad4b7a466d3b97507fa84aaef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
