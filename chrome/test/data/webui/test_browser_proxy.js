@@ -38,7 +38,9 @@ class TestBrowserProxy {
   constructor(methodNames) {
     /** @private {!Map<string, !PromiseResolver>} */
     this.resolverMap_ = new Map();
-    methodNames.forEach(this.resetResolver, this);
+    methodNames.forEach((methodName) => {
+      this.resolverMap_.set(methodName, new PromiseResolver());
+    });
   }
 
   /**
@@ -51,7 +53,12 @@ class TestBrowserProxy {
    * @protected
    */
   methodCalled(methodName, opt_arg) {
-    this.resolverMap_.get(methodName).resolve(opt_arg);
+    let method = this.resolverMap_.get(methodName);
+    // Tip: check that the |methodName| is being passed to |this.constructor|.
+    assert(
+        !!method,
+        `Method name not found in methodCalled('${methodName}', ...);`);
+    method.resolve(opt_arg);
   }
 
   /**
@@ -60,7 +67,10 @@ class TestBrowserProxy {
    *     is called.
    */
   whenCalled(methodName) {
-    return this.resolverMap_.get(methodName).promise;
+    let method = this.resolverMap_.get(methodName);
+    // Tip: check that the |methodName| is being passed to |this.constructor|.
+    assert(!!method, `Method name not found in whenCalled('${methodName}');`);
+    return method.promise;
   }
 
   /**
@@ -68,6 +78,10 @@ class TestBrowserProxy {
    * @param {string} methodName
    */
   resetResolver(methodName) {
+    let method = this.resolverMap_.get(methodName);
+    // Tip: check that the |methodName| is being passed to |this.constructor|.
+    assert(
+        !!method, `Method name not found in resetResolver('${methodName}');`);
     this.resolverMap_.set(methodName, new PromiseResolver());
   }
 
@@ -75,8 +89,8 @@ class TestBrowserProxy {
    * Resets all PromiseResolvers.
    */
   reset() {
-    this.resolverMap_.forEach(function(value, methodName) {
+    this.resolverMap_.forEach((value, methodName) => {
       this.resolverMap_.set(methodName, new PromiseResolver());
-    }.bind(this));
+    });
   }
 }
