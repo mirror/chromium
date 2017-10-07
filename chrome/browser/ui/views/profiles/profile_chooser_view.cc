@@ -720,12 +720,6 @@ void ProfileChooserView::ShowView(profiles::BubbleViewMode view_to_display,
       layout = CreateSingleColumnLayout(this, kFixedAccountRemovalViewWidth);
       sub_view = CreateAccountRemovalView();
       break;
-    case profiles::BUBBLE_VIEW_MODE_SWITCH_USER:
-      layout = CreateSingleColumnLayout(this, kFixedSwitchUserViewWidth);
-      sub_view = CreateSwitchUserView();
-      ProfileMetrics::LogProfileNewAvatarMenuNotYou(
-          ProfileMetrics::PROFILE_AVATAR_MENU_NOT_YOU_VIEW);
-      break;
     case profiles::BUBBLE_VIEW_MODE_ACCOUNT_MANAGEMENT:
     case profiles::BUBBLE_VIEW_MODE_PROFILE_CHOOSER:
       layout = CreateSingleColumnLayout(this, kFixedMenuWidth);
