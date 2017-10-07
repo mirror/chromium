@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f2f0b0c_627c9d5a",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-10-07T02:20:50Z",
+      "side": 1,
+      "message": "This seems wrong. Shouldn\u0027t all DeferredPaintObservers be owned observers of the layer that is kept alive by the ScopedLayerAnimationSettings? That way they will also be kept alive until ScopedLayerAnimationSettings is deleted.",
+      "revId": "c69ef20a90378a77f56a4b8d8c0c0946611105c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
