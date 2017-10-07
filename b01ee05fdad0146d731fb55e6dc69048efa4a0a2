@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee1d317e_1dba01d5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09f2f1ad_1565c27a",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29801251_d65f053f",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 18
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4e3d3723_e84d5add",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29801251_d65f053f",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 3
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3f07184_f61fd44d",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 18
@@ -56,6 +98,24 @@
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2388446d_4e1a2432",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3f07184_f61fd44d",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "159bc9b5_177c71c2",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2e637d2_83720d2f",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ce1b46d_ce9379fe",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 18
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-06T23:35:36Z",
       "side": 1,
       "message": "nit: I think you can call Resume() unconditionally at L231 which I think is less error-prone.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100de6c7_e415f185",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "I disagree, let\u0027s say ui_displayed_ remains \u003d true  when it shouldn\u0027t. This would mean in a successive redirection (called thru WillRedirectRequest) we would not trigger HandleRequest() since we think we actually triggered the UI (but we didn\u0027t). WDYT?",
+      "parentUuid": "9ce1b46d_ce9379fe",
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "3c494c87_86987e25",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55c56fe5_34ab8f77",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92327bf3_77e988b9",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
         "patchSetId": 18
@@ -121,6 +235,24 @@
       "writtenOn": "2017-10-06T23:35:36Z",
       "side": 1,
       "message": "Unlike L236, ui_displayed_ is not reset here. Is that okay? No in-flight IPC at this point, I guess.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9a2ba64_d34735f5",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "I assumed that if we are not able to establish communication with ARC here, it wouldn\u0027t be worthy to allow the throttle to check again (with a possible redirection) in a few milliseconds, then again I am open to ideas here.",
+      "parentUuid": "92327bf3_77e988b9",
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -141,6 +273,24 @@
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb60bda_54fbd6b1",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f4ad3ff_c6e06123",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "1ac3b910_c5114e3c",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afc3d586_ed17827d",
+      "range": {
+        "startLine": 54,
+        "startChar": 11,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e52703cc_3859a2e1",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 18
@@ -190,6 +364,30 @@
     },
     {
       "key": {
+        "uuid": "09d0146e_7b525d64",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e52703cc_3859a2e1",
+      "range": {
+        "startLine": 178,
+        "startChar": 0,
+        "endLine": 182,
+        "endChar": 36
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21fa92ed_c358d47f",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 18
@@ -201,6 +399,24 @@
       "writtenOn": "2017-10-06T23:35:36Z",
       "side": 1,
       "message": "This additional boolean is necessary because the picker UI no longer blocks the navigation, and therefore WillRedirectRequest() may issue the mojo IPC again, correct? If this is correct, can you mention that here? It was not obvious to me why this boolean is necessary.",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778a42f4_b38040d0",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Yes, certainly keeping many different states doesn\u0027t makes much sense anymore, let me try to reduce the code here and document this variable usage.",
+      "parentUuid": "21fa92ed_c358d47f",
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -221,6 +437,24 @@
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49878790_357a4bf6",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0c6947_b0001606",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +481,30 @@
     },
     {
       "key": {
+        "uuid": "caab4ecb_9cc908cc",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "284c2d72_a3d23987",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 25
+      },
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5084f674_12d8df76",
         "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
         "patchSetId": 18
@@ -261,6 +519,24 @@
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2646c221_99e1c5c3",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5084f674_12d8df76",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +557,24 @@
     },
     {
       "key": {
+        "uuid": "30783ef7_6e53b638",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/intent_picker_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc072375_6918afb5",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf8ff9a_42a5cc53",
         "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
         "patchSetId": 18
@@ -292,6 +586,24 @@
       "writtenOn": "2017-10-06T23:35:36Z",
       "side": 1,
       "message": "nit: std::make_unique\n\nbut it might be simpler to have the object as a value (without unique_ptr).",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f63564_9d9e243f",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Why do we have base::MakeUnique then? D:. I thought having unique_ptr here would be good so IntentPickerView owns the controller for his entire life cycle, wdyt?",
+      "parentUuid": "ccf8ff9a_42a5cc53",
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -312,6 +624,24 @@
       "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91083d85_8e368c8a",
+        "filename": "chrome/browser/ui/views/location_bar/intent_picker_view.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91f071f_1498e03d",
+      "revId": "b01ee05fdad0146d731fb55e6dc69048efa4a0a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

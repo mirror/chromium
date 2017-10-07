@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f24f4b17_dae103c8",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "chrome::FindBrowserWithWebContents requires browser_finder.h, tab_strip_model needed by L486",
+      "parentUuid": "322330b7_3a13a80a",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 51
+      },
+      "revId": "231ada8f5569969b9300cb3e9972285438983dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "653c24b1_c340c5fe",
         "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "231ada8f5569969b9300cb3e9972285438983dff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8562c6af_e116eba7",
+        "filename": "chrome/browser/chromeos/arc/intent_helper/arc_navigation_throttle.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1175549
+      },
+      "writtenOn": "2017-10-07T00:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653c24b1_c340c5fe",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 60
+      },
+      "revId": "231ada8f5569969b9300cb3e9972285438983dff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
