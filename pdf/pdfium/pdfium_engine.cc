@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <algorithm>
+#include <limits>
 #include <memory>
 #include <set>
 
@@ -18,7 +19,6 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
@@ -679,7 +679,7 @@ void ShutdownSDK() {
 }
 
 std::unique_ptr<PDFEngine> PDFEngine::Create(PDFEngine::Client* client) {
-  return base::MakeUnique<PDFiumEngine>(client);
+  return std::make_unique<PDFiumEngine>(client);
 }
 
 PDFiumEngine::PDFiumEngine(PDFEngine::Client* client)
@@ -1119,10 +1119,10 @@ bool PDFiumEngine::HandleDocumentLoad(const pp::URLLoader& loader) {
   password_tries_remaining_ = kMaxPasswordTries;
   process_when_pending_request_complete_ = true;
   auto loader_wrapper =
-      base::MakeUnique<URLLoaderWrapperImpl>(GetPluginInstance(), loader);
+      std::make_unique<URLLoaderWrapperImpl>(GetPluginInstance(), loader);
   loader_wrapper->SetResponseHeaders(headers_);
 
-  doc_loader_ = base::MakeUnique<DocumentLoader>(this);
+  doc_loader_ = std::make_unique<DocumentLoader>(this);
   if (doc_loader_->Init(std::move(loader_wrapper), url_)) {
     // request initial data.
     doc_loader_->RequestData(0, 1);
@@ -1136,7 +1136,7 @@ pp::Instance* PDFiumEngine::GetPluginInstance() {
 }
 
 std::unique_ptr<URLLoaderWrapper> PDFiumEngine::CreateURLLoader() {
-  return base::MakeUnique<URLLoaderWrapperImpl>(GetPluginInstance(),
+  return std::make_unique<URLLoaderWrapperImpl>(GetPluginInstance(),
                                                 client_->CreateURLLoader());
 }
 
@@ -1772,7 +1772,7 @@ bool PDFiumEngine::OnLeftMouseDown(const pp::MouseInputEvent& event) {
   SetMouseLeftButtonDown(true);
 
   auto selection_invalidator =
-      base::MakeUnique<SelectionChangeInvalidator>(this);
+      std::make_unique<SelectionChangeInvalidator>(this);
   selection_.clear();
 
   int page_index = -1;
@@ -2489,7 +2489,7 @@ std::string PDFiumEngine::GetSelectedText() {
     return std::string();
 
   base::string16 result;
-  base::string16 new_line_char = base::UTF8ToUTF16("\n");
+  base::string16 new_line_char = base::ASCIIToUTF16("\n");
   for (size_t i = 0; i < selection_.size(); ++i) {
     if (i > 0 && selection_[i - 1].page_index() > selection_[i].page_index()) {
       result = selection_[i].GetText() + new_line_char + result;
@@ -2831,7 +2831,7 @@ void PDFiumEngine::AppendBlankPages(int num_pages) {
     double height_in_points =
         ConvertUnitDouble(page_rect.height(), kPixelsPerInch, kPointsPerInch);
     FPDFPage_New(doc_, i, width_in_points, height_in_points);
-    pages_.push_back(base::MakeUnique<PDFiumPage>(this, i, page_rect, true));
+    pages_.push_back(std::make_unique<PDFiumPage>(this, i, page_rect, true));
   }
 
   CalculateVisiblePages();
@@ -3002,7 +3002,7 @@ void PDFiumEngine::LoadPageInfo(bool reload) {
       // The page is marked as not being available even if |doc_complete| is
       // true because FPDFAvail_IsPageAvail() still has to be called for this
       // page, which will be done in FinishLoadingDocument().
-      pages_.push_back(base::MakeUnique<PDFiumPage>(this, i, page_rect, false));
+      pages_.push_back(std::make_unique<PDFiumPage>(this, i, page_rect, false));
     }
   }
 
@@ -3784,7 +3784,7 @@ void PDFiumEngine::DrawPageShadow(const pp::Rect& page_rc,
 
   // We need to check depth only to verify our copy of shadow matrix is correct.
   if (!page_shadow_.get() || page_shadow_->depth() != depth) {
-    page_shadow_ = base::MakeUnique<ShadowMatrix>(
+    page_shadow_ = std::make_unique<ShadowMatrix>(
         depth, factor, client_->GetBackgroundColor());
   }
 
