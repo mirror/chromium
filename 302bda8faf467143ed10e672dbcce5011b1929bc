@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf384b4c_d604dac9",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "I can\u0027t do it :(\n\nI initially peppered the file with DCHECKs, but this code can\u0027t depend on BrowserThread.",
+      "parentUuid": "b84083bd_9ba08c16",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1442071_a354d8eb",
         "filename": "content/network/restricted_cookie_manager_impl.cc",
         "patchSetId": 34
@@ -33,6 +51,24 @@
       "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9b18fc_f77018c1",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "TL;DR: The \"checks\" include logic that reports blocked cookies, which requires the net::CookieStore result.\n\nThe code path below uses the net::CookieList.\n\nRenderFrameMessageFilter::CheckPolicyForCookies\n-\u003e ContentBrowserClient::AllowGetCookie\n\u003d\u003e ChromeContentBrowserClient::AllowGetCookie (override)\n-\u003e TabSpecificContentSettings::CookiesRead (on UI thread)\n-\u003e TabSpecificContentSettings::OnCookiesRead\n-\u003e CannedBrowsingDataCookieHelper::AddReadCookies\n\nI imagine that we can refactor the code to do the checks before fetching the cookies, and notify the UI on the way back. I suspect we\u0027ll need some refactoring for the network service anyway. Until that happens, this comment shows the most likely path forward.\n\nDoes this sound reasonable?",
+      "parentUuid": "a1442071_a354d8eb",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f07f619f_142a4c67",
+        "filename": "content/network/restricted_cookie_manager_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Yes.\n\nIf it\u0027s OK, I\u0027d like to use these in future patches, and not disturb the code in content/browser.",
+      "parentUuid": "8993ab24_eb75eb7e",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ef77a06_3703f083",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 34
@@ -67,6 +121,24 @@
       "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6eec9fe_0807fe6e",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ef77a06_3703f083",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e30754d9_be86cbe5",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8817fad_e218e5b9",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45e6625d_06671db1",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 34
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "1b4953a4_c4212631",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "45e6625d_06671db1",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a503cddb_08176c3a",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
         "patchSetId": 34
@@ -118,6 +226,24 @@
       "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25408bba_6f51a2f6",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a503cddb_08176c3a",
+      "revId": "302bda8faf467143ed10e672dbcce5011b1929bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

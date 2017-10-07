@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "144866a7_3513b368",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 3099,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaad8cb9_44a05f84",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32041fe1_95dd200c",
         "filename": "content/network/restricted_cookie_manager_impl.h",
         "patchSetId": 33
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "96aee8eb_9aca5320",
+        "filename": "content/network/restricted_cookie_manager_impl.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "GetAllForUrl and SetCanonicalCookie follow similar flows to RenderFrameMessageFilter::GetCookies RenderFrameMessageFilter::SetCookie, which (still) use net::URLRequestContextGetter to get to a net::CookieStore.\n\nI couldn\u0027t quickly figure out how to get to net::CookieStore from RenderFrameHostImpl::RegisterMojoInterfaces, which is where I\u0027d need it in order to have RestrictedCookieManager only take that as a dependency.\n\nIs it OK if I figure this out in a follow-up?",
+      "parentUuid": "32041fe1_95dd200c",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f7830b5_a80770b2",
         "filename": "content/public/app/mojo/content_browser_manifest.json",
         "patchSetId": 33
@@ -56,6 +98,24 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252f6609_ad1acb55",
+        "filename": "content/public/app/mojo/content_browser_manifest.json",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "I removed this line.\n\n\nThe interface will be exposed to workers, but I pushed the rest of the code exposing it to a future patch, so this line can go too. Thank you!",
+      "parentUuid": "9f7830b5_a80770b2",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "78080f3a_106925af",
+        "filename": "services/network/public/interfaces/restricted_cookie_manager.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "The url and site_for_cookies arguments are populated by the renderer, and represent the page making the request. The URL here is populated by the Web application. This will be used to let apps fetch path-scoped cookies (that they\u0027d be able to see via document.cookie).",
+      "parentUuid": "37b2faf9_d4262534",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 12
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57583c2a_caa1c4da",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 33
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "cca25b36_edade918",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done.\n\nThank you for catching this!",
+      "parentUuid": "57583c2a_caa1c4da",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "198d9ddc_845b4782",
         "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
         "patchSetId": 33
@@ -113,6 +215,24 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbad246_1ad53815",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Nit: Done.\n\nTypeConverter: I hollowed out this function to keep this CL small. It will eventually do fairly non-trivial checking and throw exceptions. About a million years ago, we agreed that TypeConverter isn\u0027t the right answer for this case: -- https://chromium-review.googlesource.com/c/chromium/src/+/602673/24/third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp#31\n\nSorry this CL has been up for so long!",
+      "parentUuid": "198d9ddc_845b4782",
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9905f70b_18016923",
+        "filename": "third_party/WebKit/Source/modules/cookie_store/CookieStore.cpp",
+        "patchSetId": 33
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-07T02:52:52Z",
+      "side": 1,
+      "message": "Done.\n\nThank you!",
+      "parentUuid": "ee923f26_e8729453",
+      "range": {
+        "startLine": 169,
+        "startChar": 13,
+        "endLine": 169,
+        "endChar": 54
+      },
+      "revId": "983d82dcc499024b33b434cb20dc3779274a6c7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
