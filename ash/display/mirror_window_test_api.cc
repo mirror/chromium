@@ -55,4 +55,10 @@ gfx::Point MirrorWindowTestApi::GetCursorLocation() const {
   return point;
 }
 
+void MirrorWindowTestApi::SetCursorCompositingEnabled(bool enabled) {
+  CursorWindowController* cursor_window_controller =
+      Shell::Get()->window_tree_host_manager()->cursor_window_controller();
+  cursor_window_controller->SetCursorCompositingEnabled(enabled);
+}
+
 }  // namespace ash

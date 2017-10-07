@@ -470,15 +470,6 @@ void Shell::SetLargeCursorSizeInDip(int large_cursor_size_in_dip) {
       ->SetLargeCursorSizeInDip(large_cursor_size_in_dip);
 }
 
-void Shell::SetCursorCompositingEnabled(bool enabled) {
-  if (GetAshConfig() != Config::MASH) {
-    // TODO: needs to work in mash. http://crbug.com/705592.
-    window_tree_host_manager_->cursor_window_controller()
-        ->SetCursorCompositingEnabled(enabled);
-    native_cursor_manager_->SetNativeCursorEnabled(!enabled);
-  }
-}
-
 void Shell::DoInitialWorkspaceAnimation() {
   return GetPrimaryRootWindowController()
       ->workspace_controller()
@@ -786,6 +777,7 @@ Shell::~Shell() {
   shelf_controller_.reset();
 
   shell_port_->Shutdown();
+  window_tree_host_manager_->cursor_window_controller()->Shutdown();
   window_tree_host_manager_->Shutdown();
 
   // Depends on |focus_controller_|, so must be destroyed before.
@@ -969,6 +961,7 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   screen_position_controller_.reset(new ScreenPositionController);
 
+  window_tree_host_manager_->cursor_window_controller()->Start();
   window_tree_host_manager_->Start();
   AshWindowTreeHostInitParams ash_init_params;
   window_tree_host_manager_->CreatePrimaryHost(ash_init_params);

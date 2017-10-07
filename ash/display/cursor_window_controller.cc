@@ -7,9 +7,15 @@
 #include "ash/ash_constants.h"
 #include "ash/display/mirror_window_controller.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/public/cpp/ash_pref_names.h"
+#include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
+#include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/wm/native_cursor_manager_ash.h"
+#include "components/prefs/pref_change_registrar.h"
+#include "components/prefs/pref_service.h"
 #include "services/ui/public/interfaces/window_tree_constants.mojom.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
@@ -96,7 +102,14 @@ CursorWindowController::CursorWindowController()
       large_cursor_size_in_dip_(ash::kDefaultLargeCursorSize),
       delegate_(new CursorWindowDelegate()) {}
 
-CursorWindowController::~CursorWindowController() {
+CursorWindowController::~CursorWindowController() {}
+
+void CursorWindowController::Start() {
+  Shell::Get()->session_controller()->AddObserver(this);
+}
+
+void CursorWindowController::Shutdown() {
+  Shell::Get()->session_controller()->RemoveObserver(this);
   SetContainer(NULL);
 }
 
@@ -114,15 +127,6 @@ void CursorWindowController::SetLargeCursorSizeInDip(
 
   if (display_.is_valid())
     UpdateCursorImage();
-}
-
-void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {
-  if (is_cursor_compositing_enabled_ != enabled) {
-    is_cursor_compositing_enabled_ = enabled;
-    if (display_.is_valid())
-      UpdateCursorImage();
-    UpdateContainer();
-  }
 }
 
 void CursorWindowController::UpdateContainer() {
@@ -200,6 +204,16 @@ void CursorWindowController::SetCursorSize(ui::CursorSize cursor_size) {
 void CursorWindowController::SetVisibility(bool visible) {
   visible_ = visible;
   UpdateCursorVisibility();
+}
+
+void CursorWindowController::OnSigninScreenPrefServiceInitialized(
+    PrefService* prefs) {
+  ObservePrefs(prefs);
+}
+
+void CursorWindowController::OnActiveUserPrefServiceChanged(
+    PrefService* prefs) {
+  ObservePrefs(prefs);
 }
 
 void CursorWindowController::SetContainer(aura::Window* container) {
@@ -329,6 +343,59 @@ void CursorWindowController::UpdateCursorVisibility() {
 
 const gfx::ImageSkia& CursorWindowController::GetCursorImageForTest() const {
   return delegate_->cursor_image();
+}
+
+void CursorWindowController::ObservePrefs(PrefService* prefs) {
+  // Watch for pref updates.
+  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_->Init(prefs);
+  pref_change_registrar_->Add(
+      prefs::kAccessibilityLargeCursorEnabled,
+      base::Bind(&CursorWindowController::UpdateCursorCompositingEnabled,
+                 base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kAccessibilityHighContrastEnabled,
+      base::Bind(&CursorWindowController::UpdateCursorCompositingEnabled,
+                 base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kAccessibilityScreenMagnifierEnabled,
+      base::Bind(&CursorWindowController::UpdateCursorCompositingEnabled,
+                 base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kNightLightEnabled,
+      base::Bind(&CursorWindowController::UpdateCursorCompositingEnabled,
+                 base::Unretained(this)));
+
+  UpdateCursorCompositingEnabled();
+}
+
+void CursorWindowController::UpdateCursorCompositingEnabled() {
+  PrefService* prefs =
+      Shell::Get()->session_controller()->GetActivePrefService();
+
+  // If at least one of the features that uses cursor compositing is enabled, it
+  // should not be disabled. Future features that require cursor compositing
+  // should be added in this function and ObservePrefs().
+  bool should_enable =
+      prefs->GetBoolean(prefs::kAccessibilityLargeCursorEnabled) ||
+      prefs->GetBoolean(prefs::kAccessibilityHighContrastEnabled) ||
+      prefs->GetBoolean(prefs::kAccessibilityScreenMagnifierEnabled) ||
+      prefs->GetBoolean(prefs::kNightLightEnabled);
+
+  if (is_cursor_compositing_enabled_ != should_enable)
+    SetCursorCompositingEnabled(should_enable);
+}
+
+void CursorWindowController::SetCursorCompositingEnabled(bool enabled) {
+  if (Shell::Get()->GetAshConfig() == Config::MASH) {
+    // TODO: needs to work in mash. http://crbug.com/705592.
+    return;
+  }
+  is_cursor_compositing_enabled_ = enabled;
+  Shell::Get()->native_cursor_manager()->SetNativeCursorEnabled(!enabled);
+  if (display_.is_valid())
+    UpdateCursorImage();
+  UpdateContainer();
 }
 
 }  // namespace ash

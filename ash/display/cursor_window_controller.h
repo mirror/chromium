@@ -8,10 +8,14 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/session/session_observer.h"
 #include "base/macros.h"
 #include "ui/aura/window.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/display/display.h"
+
+class PrefChangeRegistrar;
+class PrefService;
 
 namespace ash {
 
@@ -23,19 +27,19 @@ class CursorWindowDelegate;
 // to scale and rotate the mouse cursor bitmap to match settings of the
 // primary display.
 // When cursor compositing is enabled, just draw the cursor as-is.
-class ASH_EXPORT CursorWindowController {
+class ASH_EXPORT CursorWindowController : public SessionObserver {
  public:
   CursorWindowController();
-  ~CursorWindowController();
+  ~CursorWindowController() override;
+
+  void Start();
+  void Shutdown();
 
   bool is_cursor_compositing_enabled() const {
     return is_cursor_compositing_enabled_;
   }
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
-
-  // Sets cursor compositing mode on/off.
-  void SetCursorCompositingEnabled(bool enabled);
 
   // Updates the container window for the cursor window controller.
   void UpdateContainer();
@@ -49,6 +53,10 @@ class ASH_EXPORT CursorWindowController {
   void SetCursor(gfx::NativeCursor cursor);
   void SetCursorSize(ui::CursorSize cursor_size);
   void SetVisibility(bool visible);
+
+  // SessionObserver:
+  void OnSigninScreenPrefServiceInitialized(PrefService* prefs) override;
+  void OnActiveUserPrefServiceChanged(PrefService* prefs) override;
 
  private:
   friend class CursorWindowControllerTest;
@@ -68,6 +76,16 @@ class ASH_EXPORT CursorWindowController {
   void UpdateCursorVisibility();
 
   const gfx::ImageSkia& GetCursorImageForTest() const;
+
+  // Observes either the signin screen prefs or active user prefs.
+  void ObservePrefs(PrefService* prefs);
+
+  // Updates cursor compositing mode.
+  void UpdateCursorCompositingEnabled();
+
+  // Toggles cursor compositing on/off. Native cursor is disabled when cursor
+  // compositing is enabled, and vice versa.
+  void SetCursorCompositingEnabled(bool enabled);
 
   bool is_cursor_compositing_enabled_;
   aura::Window* container_;
@@ -92,6 +110,8 @@ class ASH_EXPORT CursorWindowController {
 
   std::unique_ptr<aura::Window> cursor_window_;
   std::unique_ptr<CursorWindowDelegate> delegate_;
+
+  std::unique_ptr<PrefChangeRegistrar> pref_change_registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(CursorWindowController);
 };

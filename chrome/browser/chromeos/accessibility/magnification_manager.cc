@@ -174,13 +174,8 @@ class MagnificationManagerImpl
         ACCESSIBILITY_TOGGLE_SCREEN_MAGNIFIER, enabled_,
         ash::A11Y_NOTIFICATION_NONE);
 
-    if (AccessibilityManager::Get()) {
+    if (AccessibilityManager::Get())
       AccessibilityManager::Get()->NotifyAccessibilityStatusChanged(details);
-      if (ash::Shell::Get()) {
-        ash::Shell::Get()->SetCursorCompositingEnabled(
-            ash::AccessibilityController::RequiresCursorCompositing(prefs));
-      }
-    }
   }
 
   void MonitorFocusInPageChange() {

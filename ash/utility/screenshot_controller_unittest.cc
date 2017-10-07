@@ -297,13 +297,10 @@ TEST_F(PartialScreenshotControllerTest, VisibilityTest) {
 // cursor. See http://crbug.com/459214
 TEST_F(PartialScreenshotControllerTest, LargeCursor) {
   Shell::Get()->cursor_manager()->SetCursorSize(ui::CursorSize::kLarge);
-  Shell::Get()
-      ->window_tree_host_manager()
-      ->cursor_window_controller()
-      ->SetCursorCompositingEnabled(true);
 
   // Large cursor is represented as cursor window.
   MirrorWindowTestApi test_api;
+  test_api.SetCursorCompositingEnabled(true);
   ASSERT_NE(nullptr, test_api.GetCursorWindow());
 
   ui::test::EventGenerator event_generator(Shell::GetPrimaryRootWindow());

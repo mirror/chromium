@@ -2268,7 +2268,7 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   aura::Window::Windows root_windows = Shell::GetAllRootWindows();
   EXPECT_FALSE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
-  Shell::Get()->SetCursorCompositingEnabled(true);
+  test_api.SetCursorCompositingEnabled(true);
 
   EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
@@ -2281,7 +2281,7 @@ TEST_F(DisplayManagerTest, SoftwareMirroringWithCompositingCursor) {
   root_windows = Shell::GetAllRootWindows();
   EXPECT_TRUE(root_windows[0]->Contains(test_api.GetCursorWindow()));
 
-  Shell::Get()->SetCursorCompositingEnabled(false);
+  test_api.SetCursorCompositingEnabled(false);
 }
 
 TEST_F(DisplayManagerTest, MirroredLayout) {

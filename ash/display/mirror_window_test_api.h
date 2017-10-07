@@ -42,6 +42,8 @@ class MirrorWindowTestApi {
   const aura::Window* GetCursorWindow() const;
   gfx::Point GetCursorLocation() const;
 
+  void SetCursorCompositingEnabled(bool enabled);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(MirrorWindowTestApi);
 };
