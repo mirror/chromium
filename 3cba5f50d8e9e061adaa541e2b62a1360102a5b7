@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0497ad9_bdd4a149",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-07T00:29:28Z",
+      "side": 1,
+      "message": "Nit: How about we create a private helper method as follows?\n\nassertMethodExists_(methodName) {\n  // Tip: check that the |methodName| is being passed to |this.constructor|.\n  assert(\n      this.resolverMap_.has(methodName);,\n      `Method name not found in methodCalled(\u0027${methodName}\u0027, ...);`);\n}\n\nAnd then call it from all 3 places, instead of replicating code, as follows?\n\nmethodCalled(methodName, opt_arg) {\n  this.assertMethodExists_(methodName);\n  this.resolverMap_.get(methodName).resolve(opt_arg);\n}\n\nIMO, mentioning exactly which of whenCalled, methodCalled or resetResolver threw the error is not as important. But if you want to keep this, you can pass an extra message prefix as a 2nd param.\n\nassertMethodExists_(methodName, messagePrefix) {\n ...\n `${messagePrefix} failed to find name.....`\n ...\n}",
+      "revId": "3cba5f50d8e9e061adaa541e2b62a1360102a5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837401dd_eaab0741",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-07T00:29:28Z",
+      "side": 1,
+      "message": "Nit (optional): Putting the class name TestBrowserProxy in the assertion message increases the chances of the reader of finding the problem quicker (as opposed to mentioning the method name but not the class name).",
+      "revId": "3cba5f50d8e9e061adaa541e2b62a1360102a5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
