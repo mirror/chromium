@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "61fe3bf5_8c09733b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-07T01:13:57Z",
+      "side": 1,
+      "message": "Move the check to sidebar.",
+      "parentUuid": "5bee962f_1974ca8a",
+      "revId": "79f9675cc3d788bfb6fbf7fd4b3651678fe5bd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9d8ce37_0a0316fa",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 2

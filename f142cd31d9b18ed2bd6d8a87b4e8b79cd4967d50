@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e33c1c90_7c0fbd3b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1069,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-07T01:13:57Z",
+      "side": 1,
+      "message": "Emit _filterChanged from here, and remove logic from ConsoleView.",
+      "revId": "f142cd31d9b18ed2bd6d8a87b4e8b79cd4967d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8070386b_be0e1918",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-10-07T01:13:57Z",
+      "side": 1,
+      "message": "But be careful to not trigger filterChanged from here.",
+      "revId": "f142cd31d9b18ed2bd6d8a87b4e8b79cd4967d50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
