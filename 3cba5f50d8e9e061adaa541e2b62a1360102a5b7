@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4ebd99d_4b346cd1",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-07T00:45:16Z",
+      "side": 1,
+      "message": "This feels like wrapping a single function in a function*. I\u0027m also a bit concerned that the error string will become generic (hindering search) or made up of variables (hindering search). Thoughts? Is it okay to keep it as-is?\n\n*which hinders my readability, but I understand that\u0027s a preference that varies reader-to-reader.",
+      "parentUuid": "f0497ad9_bdd4a149",
+      "revId": "3cba5f50d8e9e061adaa541e2b62a1360102a5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "837401dd_eaab0741",
         "filename": "chrome/test/data/webui/test_browser_proxy.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-07T00:29:28Z",
       "side": 1,
       "message": "Nit (optional): Putting the class name TestBrowserProxy in the assertion message increases the chances of the reader of finding the problem quicker (as opposed to mentioning the method name but not the class name).",
+      "revId": "3cba5f50d8e9e061adaa541e2b62a1360102a5b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59e746a_2d05d1f4",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-07T00:45:16Z",
+      "side": 1,
+      "message": "My prediction is that someone will search (code search or git grep) for \"Method name not found in whenCalled\" or similar and locate the code that way. I believe that is a common track-down-an-error-message behavior :).",
+      "parentUuid": "837401dd_eaab0741",
       "revId": "3cba5f50d8e9e061adaa541e2b62a1360102a5b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
