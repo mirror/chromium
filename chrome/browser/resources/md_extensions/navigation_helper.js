@@ -51,6 +51,16 @@ cr.define('extensions', function() {
       });
     }
 
+    /** @return {boolean} */
+    isRouteSupported() {
+      let validPathnames = ['/'];
+      if (!loadTimeData.getBoolean('isGuest')) {
+        validPathnames.push('/shortcuts', '/apps');
+      }
+
+      return validPathnames.indexOf(location.pathname) !== -1;
+    }
+
     /**
      * @return {!PageState} The page that should be displayed for the current
      *     URL.
