@@ -16,6 +16,24 @@
       "revId": "11f133aea3b6cf74f4355784f02067894a179b45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3438c4e1_54c48887",
+        "filename": "content/renderer/pepper/plugin_module.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-07T00:19:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f84dca12_78544c45",
+      "revId": "11f133aea3b6cf74f4355784f02067894a179b45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
