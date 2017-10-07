@@ -36,6 +36,15 @@
   ],
   "file_handlers": {
     "open": {
+      "types": [
+        "image/bmp",
+        "image/gif",
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "image/x-icon"
+        // FIXME
+      ],
       "extensions": [
         // Image
         "bmp",
