@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "157ca697_0bc7f19e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-07T17:04:29Z",
+      "side": 1,
+      "message": "I think that this sort of assumes that the failures that we care about are mostly text mismatch failures, since the -pretty-diff.html file won\u0027t be useful for pixel mismatch failures or timeouts or crashes.\n\nMaybe that\u0027s true, although it might be good to print failure type, e.g. something like\n\n    failures \u003d initial_results.failures_by_name[name]\n    self._printer.writeln(\u0027%s %s\u0027 % (failures, name))",
+      "revId": "0316191530bd106ff6b4aea7f743137bce40bb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2820fa85_2ad85b38",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-10-07T17:04:29Z",
+      "side": 1,
+      "message": "If you get user input via self._port.host.user.prompt() rather than raw_input, then that would make it easier to replace in unit tests. It would be more like:\n\n    user_input \u003d self._port.host.user.prompt(\n        \u0027Interactive watch mode: (q)uit (r)etry\u0027)\n\nLooking at MockUser right now (https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/system/user_mock.py), it looks like to add tests you might want to modify MockUser to allow you to set the raw_input_func or canned user response.",
+      "revId": "0316191530bd106ff6b4aea7f743137bce40bb33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
