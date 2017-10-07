@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd2037cc_6eac1dd3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55aa540d_098263cc",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fad19415_5f9149ae",
         "filename": "/COMMIT_MSG",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-07T01:04:51Z",
       "side": 1,
       "message": "Q: at what point(s) in extension/browser lifetime do you plan to verify this? I would imagine verifying too frequently would be slower. Do we need to run this on every browser startup? It\u0027s tricky because we might be slowing down the very first navigation after browser startup. Some thing to keep in mind.\n\nOr it could be that (re)calculating hash to verify wouldn\u0027t be slow, lmk.",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03824fba_cc83d6cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "I plan to do this in OnExtensionLoaded (each time before loading the extension ruleset in browser process). It will be asynchronous though and we won\u0027t be blocking anything on it (Some initial requests will hence incorrectly not be blocked/redirected, but that should be fine).",
+      "parentUuid": "fad19415_5f9149ae",
       "range": {
         "startLine": 13,
         "startChar": 17,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "79bfe078_1e63af84",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8c0bda1_6a681dbf",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c359523_fce084ad",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 13
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "83fd1d64_414db7eb",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c359523_fce084ad",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4085ba6b_8d52d67b",
         "filename": "extensions/browser/api/declarative_net_request/utils.cc",
         "patchSetId": 13
@@ -99,6 +189,30 @@
       "writtenOn": "2017-10-07T01:04:51Z",
       "side": 1,
       "message": "Q: when can this be null?",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c06de3_d903dda3",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "It isn\u0027t null anywhere. Can document this in the header and add a DCHECK, though I think it\u0027s quite common and also safer to just null check the pointer output parameters.",
+      "parentUuid": "4085ba6b_8d52d67b",
       "range": {
         "startLine": 63,
         "startChar": 17,
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "1ca0de17_59f3bdff",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "The rest of the file uses std::string for the extension id.",
+      "parentUuid": "f76cf860_879cec7b",
+      "range": {
+        "startLine": 1712,
+        "startChar": 49,
+        "endLine": 1712,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d341764_e766a3e0",
         "filename": "extensions/browser/extension_prefs.h",
         "patchSetId": 13
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "afe083ca_4e01848e",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d341764_e766a3e0",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a2fcc21_f2c57a3b",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 13
@@ -165,6 +321,24 @@
       "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31842f15_00f90e4c",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a2fcc21_f2c57a3b",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -188,6 +362,30 @@
       "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5028166_942db03e",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-10-07T04:16:17Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "c74a1b90_38ff4f86",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 47
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
