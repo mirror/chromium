@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "73007353_9fd4a9fe",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-07T01:45:35Z",
+      "side": 1,
+      "message": "After moving it into icon-wrapper, I still have to do bottom/right: -5px to place it where it\u0027s wanted, so we still have some magical numbers.\n\nAnother thing is I\u0027ll have to add position:absolute back on the source-indicator-text, otherwise when hovering it\u0027ll be added into the layout flow and mess with the bottom/right-ness of the whole source-indicator. And if we do that, there\u0027s no way to make it as wide as the text content (because it\u0027ll be constrained to its parent\u0027s width and height, which is the size of the small icon).\n\nBased on offline discussion, we\u0027ll leave it as is.",
+      "parentUuid": "b4ec644a_8a49f36d",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e807aef_88ab28ca",
         "filename": "chrome/browser/resources/md_extensions/item_list.html",
         "patchSetId": 5
@@ -50,6 +68,24 @@
       "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d6942b_f3af8dae",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-07T01:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e807aef_88ab28ca",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "40824226_9990fd55",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-07T01:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b82b437a_d3fd540d",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f132c9c_68c3155d",
         "filename": "chrome/browser/resources/md_extensions/item_list.html",
         "patchSetId": 5
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "0af8f651_83323517",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-07T01:45:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f132c9c_68c3155d",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c1d4c1_1e35f8d4",
         "filename": "chrome/browser/resources/md_extensions/item_list.html",
         "patchSetId": 5
@@ -101,6 +173,24 @@
       "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd277c63_8e445312",
+        "filename": "chrome/browser/resources/md_extensions/item_list.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-10-07T01:45:35Z",
+      "side": 1,
+      "message": "nope, removing.",
+      "parentUuid": "31c1d4c1_1e35f8d4",
+      "revId": "a1b88157989773cb66c9c3bf7cda246b694e9080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
