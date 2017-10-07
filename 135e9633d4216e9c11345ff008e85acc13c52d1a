@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "992e7d4e_e363c9cc",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T01:55:20Z",
+      "side": 1,
+      "message": "I\u0027ve changed the implementation to have this session duration updater as the base class and have a duration updater for each feature because of what we said offline which is that we need multiple prefs for each feature. I have a check where if the current session is only not active, then reset it. GetActiveSessionElapsedTime is only called when session is active since it\u0027s called when there is a user action and whether or not to trigger a promo so I do not think the DCHECK will fail.",
+      "parentUuid": "13ab5f46_87e0c7cf",
+      "revId": "135e9633d4216e9c11345ff008e85acc13c52d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc51295f_0f644ffd",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "135e9633d4216e9c11345ff008e85acc13c52d1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba40107_cae36c4e",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T01:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc51295f_0f644ffd",
+      "range": {
+        "startLine": 58,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "135e9633d4216e9c11345ff008e85acc13c52d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
