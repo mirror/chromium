@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32103211_180c22c9",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-10-07T07:25:53Z",
+      "side": 1,
+      "message": "I\u0027d prefer you instead add this check to ComputeTrackedIntersectionObservations:\n\n void IntersectionObserverController::ComputeTrackedIntersectionObservations() {\n+  if (!GetExecutionContext())\n+    return;\n   TRACE_EVENT0(...);\n   ...\n\nThere\u0027s no point in doing the work of computing observations if the notifications can never be sent.",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 18
+      },
+      "revId": "563b1af02793ec962e9375db834786cc5b55a916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
