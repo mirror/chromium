@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f28ed849_15956cd4",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2610,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-10-07T06:19:19Z",
+      "side": 1,
+      "message": "pp:Var only has an int32_t ctor for integers.",
+      "range": {
+        "startLine": 2610,
+        "startChar": 43,
+        "endLine": 2610,
+        "endChar": 50
+      },
+      "revId": "4662bd94ca6b0128d3aa62f758f5da429fbc6d2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
