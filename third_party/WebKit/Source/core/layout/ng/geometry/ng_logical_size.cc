@@ -22,4 +22,8 @@ std::ostream& operator<<(std::ostream& stream, const NGLogicalSize& value) {
   return stream << value.inline_size << "x" << value.block_size;
 }
 
+NGLogicalDelta::operator NGLogicalOffset() const {
+  return {inline_size, block_size};
+}
+
 }  // namespace blink
