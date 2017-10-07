@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "a0224496_b533fe07",
+        "filename": "chrome/browser/resource_coordinator/chrome_browser_main_extra_parts_resource_coordinator.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-07T00:38:32Z",
+      "side": 1,
+      "message": "ah I see, thanks for pointing this out.",
+      "parentUuid": "db1705e5_2d9db1b0",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 99
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3abe4572_9769d271",
         "filename": "content/browser/browser_child_process_host_impl.cc",
         "patchSetId": 9
@@ -128,6 +152,30 @@
       "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14481723_db4ce843",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-10-07T00:38:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd4ef5ce_268de338",
+      "range": {
+        "startLine": 298,
+        "startChar": 2,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "5c01c3fd6ae6b0b00ee6422202decf77db557cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
