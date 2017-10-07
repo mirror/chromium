@@ -15,8 +15,8 @@
       animation-name: anim;
     }
     @keyframes anim {
-        from { transform: rotate(0) scale(1,1); }
-        to   { transform: rotate(360deg) scale(2,4); }
+        from { transform: rotate(0) scale(1,1); transform-origin: 100% 100%; }
+        to   { transform: rotate(360deg) scale(2,4); transform-origin: 100% 100%; }
     }
   </style>
   <script src="resources/animation-test-helpers.js" type="text/javascript" charset="utf-8"></script>
@@ -24,8 +24,8 @@
     
     const expectedValues = [
       // [time, element-id, property, expected-value, tolerance]
-      [0.5, "box", "transform", [0,1.25,-1.7,0,0,0], 0.2],
-      [1.0, "box", "transform", [-1.5,0,0,-2.5,0,0], 0.2],
+      [0.5, "box", "transform", [0,1.25,-1.75,0,0,0], 0.001],
+      [1.0, "box", "transform", [-1.5,0,0,-2.5,0,0], 0.001],
     ];
     
     runAnimationTest(expectedValues);
