@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46e70c86_0dfd3f13",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "114c87fe_0770cd6b",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f52469c4_296a9e27",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6940adf1_5ebd7a84",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52469c4_296a9e27",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "28692173_0cdd7380",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b660cc56_ad5e9f9f",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7d33c25_62b63166",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2f933562_3967e4f9",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7d33c25_62b63166",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e6d4e81_64158379",
         "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
         "patchSetId": 8
@@ -84,6 +156,24 @@
       "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc890f8_448d940b",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Responded to the bug with a screenshot. The background is orange for linux(developing on a linux machine), since I believe that the prominent color is platform based. All the highlighting such as in the app menu button is orange in Linux.",
+      "parentUuid": "9e6d4e81_64158379",
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128dc140_76f0c7f3",
+        "filename": "chrome/browser/ui/views/toolbar/app_menu_button.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-07T02:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a98c5c_20d493fc",
+      "range": {
+        "startLine": 42,
+        "startChar": 34,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "b4908f616badfed8da2ff22ccc7b24563c8a1008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
