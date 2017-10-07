@@ -222,6 +222,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca3e213_010d6dac",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T00:35:56Z",
+      "side": 1,
+      "message": "Yes, we need it for WillFailRequest() in order to call `render_frame_host-\u003eFailedNavigation()`.\n\nWe don\u0027t know we\u0027ll *always* need it, because we don\u0027t commit a navigation if the result from a throttle has an error code of net::ERR_ABORTED. But we\u0027ll need it otherwise.\n\nAnyhow, I\u0027ll try to avoid passing it to the handle, and you can let me know how that looks.",
+      "parentUuid": "3ff425a8_fdabc114",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
