@@ -255,12 +255,31 @@ class ExtensionRegistrarTest : public ExtensionsTest {
     VerifyMock();
   }
 
-  void DisableExtension() {
-    SCOPED_TRACE("DisableExtension");
+  void DisableEnabledExtension() {
+    SCOPED_TRACE("DisableEnabledExtension");
     EXPECT_CALL(delegate_, PostDeactivateExtension(extension_));
     registrar_->DisableExtension(extension_->id(),
                                  disable_reason::DISABLE_USER_ACTION);
     ExpectInSet(ExtensionRegistry::DISABLED);
+    EXPECT_FALSE(IsExtensionReady());
+
+    VerifyMock();
+  }
+
+  void DisableTerminatedExtension() {
+    SCOPED_TRACE("DisableTerminatedExtension");
+    // PostDeactivateExtension should not be called.
+    registrar_->DisableExtension(extension_->id(),
+                                 disable_reason::DISABLE_USER_ACTION);
+    ExpectInSet(ExtensionRegistry::DISABLED);
+    EXPECT_FALSE(IsExtensionReady());
+  }
+
+  void TerminateExtension() {
+    SCOPED_TRACE("TerminateExtension");
+    EXPECT_CALL(delegate_, PostDeactivateExtension(extension_));
+    registrar_->TerminateExtension(extension_->id());
+    ExpectInSet(ExtensionRegistry::TERMINATED);
     EXPECT_FALSE(IsExtensionReady());
 
     VerifyMock();
@@ -325,7 +344,7 @@ TEST_F(ExtensionRegistrarTest, DisableAndRemove) {
   AddEnabledExtension();
 
   // Disable the extension before removing it.
-  DisableExtension();
+  DisableEnabledExtension();
   RemoveDisabledExtension();
 }
 
@@ -334,7 +353,7 @@ TEST_F(ExtensionRegistrarTest, DisableAndEnable) {
   AddEnabledExtension();
 
   // Disable then enable the extension.
-  DisableExtension();
+  DisableEnabledExtension();
   EnableExtension();
 
   RemoveEnabledExtension();
@@ -397,6 +416,30 @@ TEST_F(ExtensionRegistrarTest, AddBlocked) {
   ExpectInSet(ExtensionRegistry::BLOCKED);
 
   RemoveBlockedExtension();
+}
+
+// Tests terminating an extension.
+TEST_F(ExtensionRegistrarTest, TerminateExtension) {
+  SCOPED_TRACE("Test TerminateExtension");
+  AddEnabledExtension();
+  TerminateExtension();
+}
+
+// Tests disabling a terminated extension.
+TEST_F(ExtensionRegistrarTest, DisableTerminatedExtension) {
+  AddEnabledExtension();
+  TerminateExtension();
+  DisableTerminatedExtension();
+}
+
+// Tests re-adding a terminated extension.
+TEST_F(ExtensionRegistrarTest, ReloadTerminatedExtension) {
+  AddEnabledExtension();
+  TerminateExtension();
+
+  // Enable the terminated extension.
+  registrar()->UntrackTerminatedExtension(extension()->id());
+  AddEnabledExtension();
 }
 
 }  // namespace extensions

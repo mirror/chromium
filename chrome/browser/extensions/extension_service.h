@@ -345,7 +345,7 @@ class ExtensionService
   static void RecordPermissionMessagesHistogram(
       const extensions::Extension* extension, const char* histogram);
 
-  // Unloads the given extension and mark the extension as terminated. This
+  // Unloads the given extension and marks the extension as terminated. This
   // doesn't notify the user that the extension was terminated, if such a
   // notification is desired the calling code is responsible for doing that.
   void TerminateExtension(const std::string& extension_id);
@@ -420,10 +420,6 @@ class ExtensionService
   void BlacklistExtensionForTest(const std::string& extension_id);
 
 #if defined(UNIT_TEST)
-  void TrackTerminatedExtensionForTest(const extensions::Extension* extension) {
-    TrackTerminatedExtension(extension->id());
-  }
-
   void FinishInstallationForTest(const extensions::Extension* extension) {
     FinishInstallation(extension);
   }
@@ -504,14 +500,6 @@ class ExtensionService
   // Called once all external providers are ready. Checks for unclaimed
   // external extensions.
   void OnAllExternalProvidersReady();
-
-  // Adds the given extension id to the list of terminated extensions if
-  // it is not already there and unloads it.
-  void TrackTerminatedExtension(const std::string& extension_id);
-
-  // Removes the extension with the given id from the list of
-  // terminated extensions if it is there.
-  void UntrackTerminatedExtension(const std::string& extension_id);
 
   // Update preferences for a new or updated extension; notify observers that
   // the extension is installed, e.g., to update event handlers on background
@@ -595,6 +583,10 @@ class ExtensionService
 
   // Uninstall extensions that have been migrated to component extensions.
   void UninstallMigratedExtensions();
+
+  // Updates reloading_extensions_ and unloaded_extension_paths_ before the
+  // extension is unloaded.
+  void UpdateForUnloadingExtension(const extensions::ExtensionId& extension_id);
 
   const base::CommandLine* command_line_ = nullptr;
 
@@ -698,10 +690,6 @@ class ExtensionService
   // Store the ids of reloading extensions. We use this to re-enable extensions
   // which were disabled for a reload.
   std::set<std::string> reloading_extensions_;
-
-  // A set of the extension ids currently being terminated. We use this to
-  // avoid trying to unload the same extension twice.
-  std::set<std::string> extensions_being_terminated_;
 
   // The controller for the UI that alerts the user about any blacklisted
   // extensions.
