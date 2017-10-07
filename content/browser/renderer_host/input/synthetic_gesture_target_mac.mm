@@ -80,7 +80,7 @@ SyntheticGestureTargetMac::SyntheticGestureTargetMac(
     RenderWidgetHostViewCocoa* cocoa_view)
     : SyntheticGestureTargetBase(host), cocoa_view_(cocoa_view) {}
 
-void SyntheticGestureTargetMac::DispatchInputEventToPlatform(
+void SyntheticGestureTargetMac::InjectSyntheticInputEvent(
     const WebInputEvent& event) {
   if (WebInputEvent::IsGestureEventType(event.GetType())) {
     // Create an autorelease pool so that we clean up any synthetic events we
@@ -124,7 +124,7 @@ void SyntheticGestureTargetMac::DispatchInputEventToPlatform(
   }
 
   // This event wasn't handled yet, forward to the base class.
-  SyntheticGestureTargetBase::DispatchInputEventToPlatform(event);
+  SyntheticGestureTargetBase::InjectSyntheticInputEvent(event);
 }
 
 }  // namespace content

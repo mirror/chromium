@@ -1074,10 +1074,86 @@ void RenderWidgetHostViewAura::ProcessAckedTouchEvent(
   }
 }
 
-std::unique_ptr<SyntheticGestureTarget>
-RenderWidgetHostViewAura::CreateSyntheticGestureTarget() {
-  return std::unique_ptr<SyntheticGestureTarget>(
-      new SyntheticGestureTargetAura(host_));
+void RenderWidgetHostViewAura::InjectSyntheticTouchEvent(
+    const blink::WebTouchEvent& web_touch,
+    const ui::LatencyInfo& latency_info) {
+  TouchEventWithLatencyInfo touch_with_latency(web_touch, latency_info);
+  for (size_t i = 0; i < touch_with_latency.event.touches_length; i++) {
+    touch_with_latency.event.touches[i].radius_x *= device_scale_factor_;
+    touch_with_latency.event.touches[i].radius_y *= device_scale_factor_;
+  }
+  std::vector<std::unique_ptr<ui::TouchEvent>> events;
+  bool conversion_success = MakeUITouchEventsFromWebTouchEvents(
+      touch_with_latency, &events, LOCAL_COORDINATES);
+  DCHECK(conversion_success);
+
+  aura::WindowTreeHost* host = window_->GetHost();
+  aura::EventInjector injector;
+
+  for (const auto& event : events) {
+    event->ConvertLocationToTarget(window_, host->window());
+    // Apply the screen scale factor to the event location after it has been
+    // transformed to the target.
+    gfx::PointF device_location =
+        gfx::ScalePoint(event->location_f(), device_scale_factor_);
+    gfx::PointF device_root_location =
+        gfx::ScalePoint(event->root_location_f(), device_scale_factor_);
+    event->set_location_f(device_location);
+    event->set_root_location_f(device_root_location);
+    ui::EventDispatchDetails details = injector.Inject(host, event.get());
+    if (details.dispatcher_destroyed)
+      break;
+  }
+}
+
+void RenderWidgetHostViewAura::InjectSyntheticMouseWheelEvent(
+      const blink::WebMouseWheelEvent& web_wheel,
+      const ui::LatencyInfo&) {
+  if (web_wheel.phase == blink::WebMouseWheelEvent::kPhaseEnded) {
+    event_handler()->mouse_wheel_phase_handler().DispatchPendingWheelEndEvent();
+    return;
+  }
+  base::TimeTicks timestamp =
+      ui::EventTimeStampFromSeconds(web_wheel.TimeStampSeconds());
+  ui::MouseWheelEvent wheel_event(
+      gfx::Vector2d(web_wheel.delta_x, web_wheel.delta_y), gfx::Point(),
+      gfx::Point(), timestamp, ui::EF_NONE, ui::EF_NONE);
+  gfx::PointF location(web_wheel.PositionInWidget().x * device_scale_factor_,
+                       web_wheel.PositionInWidget().y * device_scale_factor_);
+  wheel_event.set_location_f(location);
+  wheel_event.set_root_location_f(location);
+
+  wheel_event.ConvertLocationToTarget(window_, window_->GetRootWindow());
+  aura::EventInjector injector;
+  ui::EventDispatchDetails details =
+      injector.Inject(window_->GetHost(), &wheel_event);
+  if (details.dispatcher_destroyed)
+    return;
+}
+
+void RenderWidgetHostViewAura::InjectSyntheticMouseEvent(
+    const blink::WebMouseEvent& web_mouse_event,
+    const ui::LatencyInfo& latency_info) {
+  ui::EventType event_type =
+      WebMouseEventTypeToEventType(web_mouse_event.GetType());
+  int flags = WebEventModifiersToEventFlags(web_mouse_event.GetModifiers());
+  ui::PointerDetails pointer_details(
+      WebMousePointerTypeToEventPointerType(web_mouse_event.pointer_type));
+  ui::MouseEvent mouse_event(event_type, gfx::Point(), gfx::Point(),
+                             ui::EventTimeForNow(), flags, flags,
+                             pointer_details);
+  gfx::PointF location(
+      web_mouse_event.PositionInWidget().x * device_scale_factor_,
+      web_mouse_event.PositionInWidget().y * device_scale_factor_);
+  mouse_event.set_location_f(location);
+  mouse_event.set_root_location_f(location);
+
+  mouse_event.ConvertLocationToTarget(window_, window_->GetRootWindow());
+  aura::EventInjector injector;
+  ui::EventDispatchDetails details =
+      injector.Inject(window_->GetHost(), &mouse_event);
+  if (details.dispatcher_destroyed)
+    return;
 }
 
 InputEventAckState RenderWidgetHostViewAura::FilterInputEvent(
@@ -1838,6 +1914,27 @@ void RenderWidgetHostViewAura::OnHostMovedInPixels(
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// RenderWidgetHostViewAura, SyntheticGestureTarget implementation:
+
+SyntheticGestureParams::GestureSourceType
+RenderWidgetHostViewAura::GetDefaultSyntheticGestureSourceType() const {
+  return SyntheticGestureParams::TOUCH_INPUT;
+}
+
+float RenderWidgetHostViewAura::GetTouchSlopInDips() const {
+  // - 1 because Aura considers a pointer to be moving if it has moved at least
+  // 'max_touch_move_in_pixels_for_click' pixels.
+  return ui::GestureConfiguration::GetInstance()
+             ->max_touch_move_in_pixels_for_click() -
+         1;
+}
+
+float RenderWidgetHostViewAura::GetMinScalingSpanInDips() const {
+  return ui::GestureConfiguration::GetInstance()
+      ->min_distance_for_pinch_scroll_in_pixels();
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, private:
 
 RenderWidgetHostViewAura::~RenderWidgetHostViewAura() {
@@ -2419,3 +2516,10 @@ void RenderWidgetHostViewAura::ScrollFocusedEditableNodeIntoRect(
 }
 
 }  // namespace content
+
+
+  // Synthetic located event's location and touch event's radius are in DIP and
+  // aura event dispatcher assumes input event is in device pixel and will apply
+  // device scale factor to convert the input to DIP. So we need to use
+  // device_scale_factor to convert the input event from DIP to device pixel
+  // before dispatching it into platform.

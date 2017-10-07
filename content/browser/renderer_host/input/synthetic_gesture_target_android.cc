@@ -65,7 +65,7 @@ void SyntheticGestureTargetAndroid::TouchInject(MotionEventAction action,
                                      time_in_ms);
 }
 
-void SyntheticGestureTargetAndroid::DispatchWebTouchEventToPlatform(
+void SyntheticGestureTargetAndroid::InjectSyntheticTouchEvent(
     const WebTouchEvent& web_touch,
     const ui::LatencyInfo&) {
   MotionEventAction action = MOTION_EVENT_ACTION_INVALID;
@@ -96,7 +96,7 @@ void SyntheticGestureTargetAndroid::DispatchWebTouchEventToPlatform(
               static_cast<int64_t>(web_touch.TimeStampSeconds() * 1000.0));
 }
 
-void SyntheticGestureTargetAndroid::DispatchWebMouseWheelEventToPlatform(
+void SyntheticGestureTargetAndroid::InjectSyntheticMouseWheelEvent(
     const WebMouseWheelEvent& web_wheel,
     const ui::LatencyInfo&) {
   TouchSetScrollDeltas(web_wheel.PositionInWidget().x,
@@ -106,7 +106,7 @@ void SyntheticGestureTargetAndroid::DispatchWebMouseWheelEventToPlatform(
               static_cast<int64_t>(web_wheel.TimeStampSeconds() * 1000.0));
 }
 
-void SyntheticGestureTargetAndroid::DispatchWebMouseEventToPlatform(
+void SyntheticGestureTargetAndroid::InjectSyntheticMouseEvent(
     const WebMouseEvent& web_mouse,
     const ui::LatencyInfo&) {
   CHECK(false);

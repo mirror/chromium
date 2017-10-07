@@ -64,7 +64,7 @@ void SyntheticTouchpadPinchGesture::ForwardGestureEvents(
       CalculateEndTime(target);
 
       // Send the start event.
-      target->DispatchInputEventToPlatform(
+      target->InjectSyntheticInputEvent(
           SyntheticWebGestureEventBuilder::Build(
               blink::WebGestureEvent::kGesturePinchBegin,
               blink::kWebGestureDeviceTouchpad));
@@ -78,13 +78,13 @@ void SyntheticTouchpadPinchGesture::ForwardGestureEvents(
       current_scale_ = target_scale;
 
       // Send the incremental scale event.
-      target->DispatchInputEventToPlatform(
+      target->InjectSyntheticInputEvent(
           SyntheticWebGestureEventBuilder::BuildPinchUpdate(
               incremental_scale, params_.anchor.x(), params_.anchor.y(),
               0 /* modifierFlags */, blink::kWebGestureDeviceTouchpad));
 
       if (HasReachedTarget(event_timestamp)) {
-        target->DispatchInputEventToPlatform(
+        target->InjectSyntheticInputEvent(
             SyntheticWebGestureEventBuilder::Build(
                 blink::WebGestureEvent::kGesturePinchEnd,
                 blink::kWebGestureDeviceTouchpad));

@@ -34,6 +34,17 @@
 
 namespace content {
 
+namespace {
+// This value was determined experimentally. It was sufficient to not cause a
+// fling on Android and Aura.
+const int kPointerAssumedStoppedTimeMs = 100;
+
+// SyntheticGestureTargetBase passes input events straight on to the renderer
+// without going through a gesture recognition framework. There is thus no touch
+// slop.
+const float kTouchSlopInDips = 0.0f;
+}
+
 RenderWidgetHostViewBase::RenderWidgetHostViewBase()
     : is_fullscreen_(false),
       popup_type_(blink::kWebPopupTypeNone),
@@ -87,6 +98,67 @@ void RenderWidgetHostViewBase::NotifyObserversAboutShutdown() {
 
 bool RenderWidgetHostViewBase::OnMessageReceived(const IPC::Message& msg){
   return false;
+}
+
+void RenderWidgetHostViewBase::InjectSyntheticInputEvent(
+    const WebInputEvent& event) {
+  TRACE_EVENT1("input", "SyntheticGestureTarget::InjectSyntheticInputEvent",
+               "type", WebInputEvent::GetName(event.GetType()));
+
+  ui::LatencyInfo latency_info;
+  latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+
+  if (WebInputEvent::IsTouchEventType(event.GetType())) {
+    const WebTouchEvent& web_touch =
+        static_cast<const WebTouchEvent&>(event);
+
+    // Check that all touch pointers are within the content bounds.
+    for (unsigned i = 0; i < web_touch.touches_length; i++)
+      CHECK(web_touch.touches[i].state != WebTouchPoint::kStatePressed ||
+            PointIsWithinContents(web_touch.touches[i].PositionInWidget().x,
+                                  web_touch.touches[i].PositionInWidget().y))
+          << "Touch coordinates are not within content bounds on TouchStart.";
+
+    InjectSyntheticTouchEvent(web_touch, latency_info);
+  } else if (event.GetType() == WebInputEvent::kMouseWheel) {
+    const WebMouseWheelEvent& web_wheel =
+        static_cast<const WebMouseWheelEvent&>(event);
+    CHECK(PointIsWithinContents(web_wheel.PositionInWidget().x,
+                                web_wheel.PositionInWidget().y))
+        << "Mouse wheel position is not within content bounds.";
+    InjectSyntheticMouseWheelEvent(web_wheel, latency_info);
+  } else if (WebInputEvent::IsMouseEventType(event.GetType())) {
+    const WebMouseEvent& web_mouse =
+        static_cast<const WebMouseEvent&>(event);
+    CHECK(event.GetType() != WebInputEvent::kMouseDown ||
+          PointIsWithinContents(web_mouse.PositionInWidget().x,
+                                web_mouse.PositionInWidget().y))
+        << "Mouse pointer is not within content bounds on MouseDown.";
+    InjectSyntheticMouseEvent(web_mouse, latency_info);
+  } else {
+    NOTREACHED();
+  }
+}
+
+SyntheticGestureParams::GestureSourceType
+RenderWidgetHostViewBase::GetDefaultSyntheticGestureSourceType() const {
+  return SyntheticGestureParams::MOUSE_INPUT;
+}
+
+base::TimeDelta RenderWidgetHostViewBase::PointerAssumedStoppedTime()
+    const {
+  return base::TimeDelta::FromMilliseconds(kPointerAssumedStoppedTimeMs);
+}
+
+float RenderWidgetHostViewBase::GetTouchSlopInDips() const {
+  return kTouchSlopInDips;
+}
+
+float RenderWidgetHostViewBase::GetMinScalingSpanInDips() const {
+  // The minimum scaling distance is only relevant for touch gestures and the
+  // base target doesn't support touch.
+  NOTREACHED();
+  return 0.0f;
 }
 
 void RenderWidgetHostViewBase::SetBackgroundColorToDefault() {
@@ -196,6 +268,33 @@ void RenderWidgetHostViewBase::WheelEventAck(
 void RenderWidgetHostViewBase::GestureEventAck(
     const blink::WebGestureEvent& event,
     InputEventAckState ack_result) {
+}
+
+void RenderWidgetHostViewBase::InjectSyntheticTouchEvent(
+      const blink::WebTouchEvent& web_touch,
+      const ui::LatencyInfo& latency_info) {
+  // We assume that platforms supporting touch have their own implementation of
+  // SyntheticGestureTarget to route the events through their respective input
+  // stack.
+  CHECK(false) << "Touch events not supported for this browser.";
+}
+
+void RenderWidgetHostViewBase::InjectSyntheticMouseWheelEvent(
+      const blink::WebMouseWheelEvent& web_wheel,
+      const ui::LatencyInfo& latency_info) {
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  if (host)
+    host->ForwardWheelEventWithLatencyInfo(web_wheel, latency_info);
+}
+
+void RenderWidgetHostViewBase::InjectSyntheticMouseEvent(
+      const blink::WebMouseEvent& web_mouse,
+      const ui::LatencyInfo& latency_info) {
+  RenderWidgetHostImpl* host =
+      RenderWidgetHostImpl::From(GetRenderWidgetHost());
+  if (host)
+    host->ForwardMouseEventWithLatencyInfo(web_mouse, latency_info);
 }
 
 void RenderWidgetHostViewBase::SetPopupType(blink::WebPopupType popup_type) {
@@ -563,5 +662,11 @@ RenderWidgetHostViewBase::GetWindowTreeClientFromRenderer() {
 }
 
 #endif
+
+bool RenderWidgetHostViewBase::PointIsWithinContents(int x, int y) const {
+  gfx::Rect bounds = GetViewBounds();
+  bounds -= bounds.OffsetFromOrigin();  // Translate the bounds to (0,0).
+  return bounds.Contains(x, y);
+}
 
 }  // namespace content

@@ -134,7 +134,7 @@ class MockSyntheticGestureTarget : public SyntheticGestureTarget {
   ~MockSyntheticGestureTarget() override {}
 
   // SyntheticGestureTarget:
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {}
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {}
 
   SyntheticGestureParams::GestureSourceType
   GetDefaultSyntheticGestureSourceType() const override {
@@ -186,7 +186,7 @@ class MockScrollMouseTarget : public MockMoveGestureTarget {
   MockScrollMouseTarget() {}
   ~MockScrollMouseTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_EQ(event.GetType(), WebInputEvent::kMouseWheel);
     const WebMouseWheelEvent& mouse_wheel_event =
         static_cast<const WebMouseWheelEvent&>(event);
@@ -201,7 +201,7 @@ class MockMoveTouchTarget : public MockMoveGestureTarget {
   MockMoveTouchTarget() : started_(false) {}
   ~MockMoveTouchTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsTouchEventType(event.GetType()));
     const WebTouchEvent& touch_event = static_cast<const WebTouchEvent&>(event);
     ASSERT_EQ(touch_event.touches_length, 1U);
@@ -239,7 +239,7 @@ class MockDragMouseTarget : public MockMoveGestureTarget {
   MockDragMouseTarget() : started_(false) {}
   ~MockDragMouseTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsMouseEventType(event.GetType()));
     const WebMouseEvent& mouse_event = static_cast<const WebMouseEvent&>(event);
     if (!started_) {
@@ -284,7 +284,7 @@ class MockSyntheticTouchscreenPinchTouchTarget
         started_(false) {}
   ~MockSyntheticTouchscreenPinchTouchTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsTouchEventType(event.GetType()));
     const WebTouchEvent& touch_event = static_cast<const WebTouchEvent&>(event);
     ASSERT_EQ(touch_event.touches_length, 2U);
@@ -375,7 +375,7 @@ class MockSyntheticTouchpadPinchTouchTarget
         scale_factor_(1.0f) {}
   ~MockSyntheticTouchpadPinchTouchTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     EXPECT_TRUE(WebInputEvent::IsGestureEventType(event.GetType()));
     const blink::WebGestureEvent& gesture_event =
         static_cast<const blink::WebGestureEvent&>(event);
@@ -451,7 +451,7 @@ class MockSyntheticTapTouchTarget : public MockSyntheticTapGestureTarget {
   MockSyntheticTapTouchTarget() {}
   ~MockSyntheticTapTouchTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsTouchEventType(event.GetType()));
     const WebTouchEvent& touch_event = static_cast<const WebTouchEvent&>(event);
     ASSERT_EQ(touch_event.touches_length, 1U);
@@ -484,7 +484,7 @@ class MockSyntheticTapMouseTarget : public MockSyntheticTapGestureTarget {
   MockSyntheticTapMouseTarget() {}
   ~MockSyntheticTapMouseTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsMouseEventType(event.GetType()));
     const WebMouseEvent& mouse_event = static_cast<const WebMouseEvent&>(event);
 
@@ -534,7 +534,7 @@ class MockSyntheticPointerTouchActionTarget
   MockSyntheticPointerTouchActionTarget() {}
   ~MockSyntheticPointerTouchActionTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     DCHECK(WebInputEvent::IsTouchEventType(event.GetType()));
     const WebTouchEvent& touch_event = static_cast<const WebTouchEvent&>(event);
     type_ = touch_event.GetType();
@@ -608,7 +608,7 @@ class MockSyntheticPointerMouseActionTarget
   MockSyntheticPointerMouseActionTarget() {}
   ~MockSyntheticPointerMouseActionTarget() override {}
 
-  void DispatchInputEventToPlatform(const WebInputEvent& event) override {
+  void InjectSyntheticInputEvent(const WebInputEvent& event) override {
     ASSERT_TRUE(WebInputEvent::IsMouseEventType(event.GetType()));
     const WebMouseEvent& mouse_event = static_cast<const WebMouseEvent&>(event);
     type_ = mouse_event.GetType();

@@ -32,7 +32,7 @@ SyntheticGestureTargetAura::SyntheticGestureTargetAura(
   device_scale_factor_ = screen_info.device_scale_factor;
 }
 
-void SyntheticGestureTargetAura::DispatchWebTouchEventToPlatform(
+void SyntheticGestureTargetAura::InjectSyntheticTouchEvent(
     const WebTouchEvent& web_touch,
     const ui::LatencyInfo& latency_info) {
   TouchEventWithLatencyInfo touch_with_latency(web_touch, latency_info);
@@ -65,7 +65,7 @@ void SyntheticGestureTargetAura::DispatchWebTouchEventToPlatform(
   }
 }
 
-void SyntheticGestureTargetAura::DispatchWebMouseWheelEventToPlatform(
+void SyntheticGestureTargetAura::InjectSyntheticMouseWheelEvent(
       const blink::WebMouseWheelEvent& web_wheel,
       const ui::LatencyInfo&) {
   if (web_wheel.phase == blink::WebMouseWheelEvent::kPhaseEnded) {
@@ -158,7 +158,7 @@ ui::EventPointerType WebMousePointerTypeToEventPointerType(
 
 }  // namespace
 
-void SyntheticGestureTargetAura::DispatchWebMouseEventToPlatform(
+void SyntheticGestureTargetAura::InjectSyntheticMouseEvent(
     const blink::WebMouseEvent& web_mouse_event,
     const ui::LatencyInfo& latency_info) {
   ui::EventType event_type =

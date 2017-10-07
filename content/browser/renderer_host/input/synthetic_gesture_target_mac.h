@@ -19,7 +19,7 @@ class SyntheticGestureTargetMac : public SyntheticGestureTargetBase {
                             RenderWidgetHostViewCocoa* cocoa_view);
 
   // SyntheticGestureTarget:
-  void DispatchInputEventToPlatform(const blink::WebInputEvent& event) override;
+  void InjectSyntheticInputEvent(const blink::WebInputEvent& event) override;
 
  private:
   RenderWidgetHostViewCocoa* cocoa_view_;

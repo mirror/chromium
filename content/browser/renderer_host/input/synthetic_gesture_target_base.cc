@@ -42,9 +42,9 @@ SyntheticGestureTargetBase::SyntheticGestureTargetBase(
 SyntheticGestureTargetBase::~SyntheticGestureTargetBase() {
 }
 
-void SyntheticGestureTargetBase::DispatchInputEventToPlatform(
+void SyntheticGestureTargetBase::InjectSyntheticInputEvent(
     const WebInputEvent& event) {
-  TRACE_EVENT1("input", "SyntheticGestureTarget::DispatchInputEventToPlatform",
+  TRACE_EVENT1("input", "SyntheticGestureTarget::InjectSyntheticInputEvent",
                "type", WebInputEvent::GetName(event.GetType()));
 
   ui::LatencyInfo latency_info;
@@ -61,14 +61,14 @@ void SyntheticGestureTargetBase::DispatchInputEventToPlatform(
                                   web_touch.touches[i].PositionInWidget().y))
           << "Touch coordinates are not within content bounds on TouchStart.";
 
-    DispatchWebTouchEventToPlatform(web_touch, latency_info);
+    InjectSyntheticTouchEvent(web_touch, latency_info);
   } else if (event.GetType() == WebInputEvent::kMouseWheel) {
     const WebMouseWheelEvent& web_wheel =
         static_cast<const WebMouseWheelEvent&>(event);
     CHECK(PointIsWithinContents(web_wheel.PositionInWidget().x,
                                 web_wheel.PositionInWidget().y))
         << "Mouse wheel position is not within content bounds.";
-    DispatchWebMouseWheelEventToPlatform(web_wheel, latency_info);
+    InjectSyntheticMouseWheelEvent(web_wheel, latency_info);
   } else if (WebInputEvent::IsMouseEventType(event.GetType())) {
     const WebMouseEvent& web_mouse =
         static_cast<const WebMouseEvent&>(event);
@@ -76,13 +76,13 @@ void SyntheticGestureTargetBase::DispatchInputEventToPlatform(
           PointIsWithinContents(web_mouse.PositionInWidget().x,
                                 web_mouse.PositionInWidget().y))
         << "Mouse pointer is not within content bounds on MouseDown.";
-    DispatchWebMouseEventToPlatform(web_mouse, latency_info);
+    InjectSyntheticMouseEvent(web_mouse, latency_info);
   } else {
     NOTREACHED();
   }
 }
 
-void SyntheticGestureTargetBase::DispatchWebTouchEventToPlatform(
+void SyntheticGestureTargetBase::InjectSyntheticTouchEvent(
       const blink::WebTouchEvent& web_touch,
       const ui::LatencyInfo& latency_info) {
   // We assume that platforms supporting touch have their own implementation of
@@ -91,13 +91,13 @@ void SyntheticGestureTargetBase::DispatchWebTouchEventToPlatform(
   CHECK(false) << "Touch events not supported for this browser.";
 }
 
-void SyntheticGestureTargetBase::DispatchWebMouseWheelEventToPlatform(
+void SyntheticGestureTargetBase::InjectSyntheticMouseWheelEvent(
       const blink::WebMouseWheelEvent& web_wheel,
       const ui::LatencyInfo& latency_info) {
   host_->ForwardWheelEventWithLatencyInfo(web_wheel, latency_info);
 }
 
-void SyntheticGestureTargetBase::DispatchWebMouseEventToPlatform(
+void SyntheticGestureTargetBase::InjectSyntheticMouseEvent(
       const blink::WebMouseEvent& web_mouse,
       const ui::LatencyInfo& latency_info) {
   host_->ForwardMouseEventWithLatencyInfo(web_mouse, latency_info);

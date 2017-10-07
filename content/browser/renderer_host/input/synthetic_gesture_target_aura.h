@@ -22,13 +22,13 @@ class SyntheticGestureTargetAura : public SyntheticGestureTargetBase {
   explicit SyntheticGestureTargetAura(RenderWidgetHostImpl* host);
 
   // SyntheticGestureTargetBase:
-  void DispatchWebTouchEventToPlatform(
+  void InjectSyntheticTouchEvent(
       const blink::WebTouchEvent& web_touch,
       const ui::LatencyInfo& latency_info) override;
-  void DispatchWebMouseWheelEventToPlatform(
+  void InjectSyntheticMouseWheelEvent(
       const blink::WebMouseWheelEvent& web_wheel,
       const ui::LatencyInfo& latency_info) override;
-  void DispatchWebMouseEventToPlatform(
+  void InjectSyntheticMouseEvent(
       const blink::WebMouseEvent& web_mouse,
       const ui::LatencyInfo& latency_info) override;
 

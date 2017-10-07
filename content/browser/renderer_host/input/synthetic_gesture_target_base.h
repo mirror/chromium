@@ -28,15 +28,15 @@ class SyntheticGestureTargetBase : public SyntheticGestureTarget {
   explicit SyntheticGestureTargetBase(RenderWidgetHostImpl* host);
   ~SyntheticGestureTargetBase() override;
 
-  virtual void DispatchWebTouchEventToPlatform(
+  virtual void InjectSyntheticTouchEvent(
       const blink::WebTouchEvent& web_touch,
       const ui::LatencyInfo& latency_info);
 
-  virtual void DispatchWebMouseWheelEventToPlatform(
+  virtual void InjectSyntheticMouseWheelEvent(
       const blink::WebMouseWheelEvent& web_wheel,
       const ui::LatencyInfo& latency_info);
 
-  virtual void DispatchWebMouseEventToPlatform(
+  virtual void InjectSyntheticMouseEvent(
       const blink::WebMouseEvent& web_mouse,
       const ui::LatencyInfo& latency_info);
 
