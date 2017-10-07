@@ -16,6 +16,24 @@
       "revId": "bb86a24c87db546a9f5bc7073d85a784b6768bf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13466af2_94d3f666",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ContentViewCoreSelectionTest.java",
+        "patchSetId": 19
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-10-07T00:02:18Z",
+      "side": 1,
+      "message": "Yeah, I was just trying to see if presubmits check will catch this, but it just passed and uploaded this patch.. (☉_☉)\n\nNext time I guess I\u0027ll run git cl presubmits locally to find it out..\n\nI have updated it in the following patch.\n\nDone",
+      "parentUuid": "b96a4391_d9fb1812",
+      "revId": "bb86a24c87db546a9f5bc7073d85a784b6768bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
