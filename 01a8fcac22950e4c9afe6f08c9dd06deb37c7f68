@@ -176,6 +176,24 @@
       "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07beb52_51c1dbfb",
+        "filename": "extensions/browser/extension_registrar_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-10-07T01:04:41Z",
+      "side": 1,
+      "message": "I switched to NiceMock because:\n\n* I want to verify expectations right when I expect the functions to be called, not at the end of the test -- otherwise I don\u0027t get useful stack traces for the failures\n* Verifying expectations has the side effect of clearing them\n* Marking functions like CanEnableExtension as uninteresting in a StrictMock requires an EXPECT_CALL(...).Times(0), which gets reset after verifying expectations. Using ON_CALL(...) to instead specify defaults prevents these from being cleared when verifying expectations.\n\nNiceMock lets us explicitly disallow calls to the two functions we care about without erroring when the functions we don\u0027t care about are called.",
+      "parentUuid": "087b9f37_177cdfac",
+      "revId": "01a8fcac22950e4c9afe6f08c9dd06deb37c7f68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
