@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_FEATURE_ENGAGEMENT_SESSION_DURATION_UPDATER_H_
 
 #include "base/scoped_observer.h"
+#include "base/timer/elapsed_timer.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/prefs/pref_service.h"
@@ -51,14 +52,28 @@ class SessionDurationUpdater
   explicit SessionDurationUpdater(PrefService* pref_service);
   ~SessionDurationUpdater() override;
 
-  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+  static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry,
+                                   const char* observed_session_time_perf);
+
+  // Returns the total amount of observed active session time of the current
+  // session plus the |observed_session_time_pref| perf value. The resulting
+  // value should be cumulative session time across all Chrome restarts until
+  // the |observed_session_time_perf| stops recording.
+  base::TimeDelta GetActiveSessionElapsedTime(
+      const char* observed_session_time_pref);
 
   // For observing the status of the session tracker.
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
   // metrics::DesktopSessionDurationtracker::Observer:
+  void OnSessionStarted(base::TimeTicks delta) override;
+
+  // metrics::DesktopSessionDurationtracker::Observer:
   void OnSessionEnded(base::TimeDelta delta) override;
+
+  void OnSessionEndedForPerf(base::TimeDelta delta,
+                             const char* observed_session_time_pref);
 
  private:
   // Adds the DesktopSessionDurationTracker observer.
@@ -77,7 +92,11 @@ class SessionDurationUpdater
   // Owned by Profile manager.
   PrefService* const pref_service_;
 
+  std::unique_ptr<base::ElapsedTimer> elapsed_timer_;
+
   base::ObserverList<Observer> observer_list_;
+
+  bool is_session_active_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(SessionDurationUpdater);
 };
