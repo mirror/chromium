@@ -61,11 +61,6 @@ const char kStatsPasswordsKeyDeprecated[] = "stats_passwords";
 const char kStatsBookmarksKeyDeprecated[] = "stats_bookmarks";
 const char kStatsSettingsKeyDeprecated[] = "stats_settings";
 
-void DeleteBitmap(const base::FilePath& image_path) {
-  base::ThreadRestrictions::AssertIOAllowed();
-  base::DeleteFile(image_path, false);
-}
-
 }  // namespace
 
 ProfileInfoCache::ProfileInfoCache(PrefService* prefs,
@@ -342,11 +337,6 @@ bool ProfileInfoCache::ProfileIsUsingDefaultAvatarAtIndex(size_t index) const {
   return value;
 }
 
-bool ProfileInfoCache::IsGAIAPictureOfProfileAtIndexLoaded(size_t index) const {
-  return cached_avatar_images_.count(
-      CacheKeyFromProfilePath(GetPathOfProfileAtIndex(index)));
-}
-
 size_t ProfileInfoCache::GetAvatarIconIndexOfProfileAtIndex(size_t index)
     const {
   std::string icon_url;
@@ -487,77 +477,6 @@ void ProfileInfoCache::SetGAIANameOfProfileAtIndex(size_t index,
   }
 }
 
-void ProfileInfoCache::SetGAIAGivenNameOfProfileAtIndex(
-    size_t index,
-    const base::string16& name) {
-  if (name == GetGAIAGivenNameOfProfileAtIndex(index))
-    return;
-
-  base::string16 old_display_name = GetNameOfProfileAtIndex(index);
-  std::unique_ptr<base::DictionaryValue> info(
-      GetInfoForProfileAtIndex(index)->DeepCopy());
-  info->SetString(kGAIAGivenNameKey, name);
-  SetInfoForProfileAtIndex(index, std::move(info));
-  base::string16 new_display_name = GetNameOfProfileAtIndex(index);
-  base::FilePath profile_path = GetPathOfProfileAtIndex(index);
-  UpdateSortForProfileIndex(index);
-
-  if (old_display_name != new_display_name) {
-    for (auto& observer : observer_list_)
-      observer.OnProfileNameChanged(profile_path, old_display_name);
-  }
-}
-
-void ProfileInfoCache::SetGAIAPictureOfProfileAtIndex(size_t index,
-                                                      const gfx::Image* image) {
-  base::FilePath path = GetPathOfProfileAtIndex(index);
-  std::string key = CacheKeyFromProfilePath(path);
-
-  // Delete the old bitmap from cache.
-  cached_avatar_images_.erase(key);
-
-  std::string old_file_name;
-  GetInfoForProfileAtIndex(index)->GetString(
-      kGAIAPictureFileNameKey, &old_file_name);
-  std::string new_file_name;
-
-  if (!image) {
-    // Delete the old bitmap from disk.
-    if (!old_file_name.empty()) {
-      base::FilePath image_path = path.AppendASCII(old_file_name);
-      file_task_runner_->PostTask(FROM_HERE,
-                                  base::BindOnce(&DeleteBitmap, image_path));
-    }
-  } else {
-    // Save the new bitmap to disk.
-    new_file_name =
-        old_file_name.empty() ? profiles::kGAIAPictureFileName : old_file_name;
-    base::FilePath image_path = path.AppendASCII(new_file_name);
-    SaveAvatarImageAtPath(
-        GetPathOfProfileAtIndex(index), image, key, image_path);
-  }
-
-  std::unique_ptr<base::DictionaryValue> info(
-      GetInfoForProfileAtIndex(index)->DeepCopy());
-  info->SetString(kGAIAPictureFileNameKey, new_file_name);
-  SetInfoForProfileAtIndex(index, std::move(info));
-
-  for (auto& observer : observer_list_)
-    observer.OnProfileAvatarChanged(path);
-}
-
-void ProfileInfoCache::SetIsUsingGAIAPictureOfProfileAtIndex(size_t index,
-                                                             bool value) {
-  std::unique_ptr<base::DictionaryValue> info(
-      GetInfoForProfileAtIndex(index)->DeepCopy());
-  info->SetBoolean(kUseGAIAPictureKey, value);
-  SetInfoForProfileAtIndex(index, std::move(info));
-
-  base::FilePath profile_path = GetPathOfProfileAtIndex(index);
-  for (auto& observer : observer_list_)
-    observer.OnProfileAvatarChanged(profile_path);
-}
-
 void ProfileInfoCache::SetProfileSigninRequiredAtIndex(size_t index,
                                                        bool value) {
   if (value == ProfileIsSigninRequiredAtIndex(index))
@@ -589,17 +508,6 @@ void ProfileInfoCache::SetProfileIsUsingDefaultNameAtIndex(
     for (auto& observer : observer_list_)
       observer.OnProfileNameChanged(profile_path, old_display_name);
   }
-}
-
-void ProfileInfoCache::SetProfileIsUsingDefaultAvatarAtIndex(
-    size_t index, bool value) {
-  if (value == ProfileIsUsingDefaultAvatarAtIndex(index))
-    return;
-
-  std::unique_ptr<base::DictionaryValue> info(
-      GetInfoForProfileAtIndex(index)->DeepCopy());
-  info->SetBoolean(kIsUsingDefaultAvatarKey, value);
-  SetInfoForProfileAtIndex(index, std::move(info));
 }
 
 void ProfileInfoCache::NotifyIsSigninRequiredChanged(
