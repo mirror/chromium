@@ -16,6 +16,24 @@
       "revId": "059ad451543210e99c64e2c186a025d85e1a4e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4115c6_5043f409",
+        "filename": "third_party/WebKit/Source/core/html/HTMLImageFallbackHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115755
+      },
+      "writtenOn": "2017-10-07T10:13:07Z",
+      "side": 1,
+      "message": "It would but I think the reader would have to scratch their head to match it back to the relevant part of the spec, at least I would. :) So although it\u0027s probably not compact I think this way is easier to grasp.",
+      "parentUuid": "a62749b6_111d54ee",
+      "revId": "059ad451543210e99c64e2c186a025d85e1a4e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
