@@ -70,7 +70,6 @@
 #include "net/cert/multi_log_ct_verifier.h"
 #include "net/cert/signed_certificate_timestamp_and_status.h"
 #include "net/cert/test_root_certs.h"
-#include "net/cert_net/nss_ocsp.h"
 #include "net/cookies/cookie_monster.h"
 #include "net/cookies/cookie_store_test_helpers.h"
 #include "net/disk_cache/disk_cache.h"
@@ -126,6 +125,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 
+#if defined(OS_FUCHSIA)
+#define USE_BUILTIN_CERT_VERIFIER
+#endif
+
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
 #include "net/base/filename_util.h"
 #include "net/url_request/file_protocol_handler.h"
@@ -145,6 +148,15 @@
 #if BUILDFLAG(ENABLE_REPORTING)
 #include "net/reporting/reporting_service.h"
 #endif  // BUILDFLAG(ENABLE_REPORTING)
+
+#if defined(USE_BUILTIN_CERT_VERIFIER)
+#include "net/cert/cert_net_fetcher.h"
+#include "net/cert_net/cert_net_fetcher_impl.h"
+#endif
+
+#if defined(USE_NSS_CERTS)
+#include "net/cert_net/nss_ocsp.h"
+#endif
 
 using net::test::IsError;
 using net::test::IsOk;
@@ -10252,6 +10264,10 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
     CHECK_NE(static_cast<X509Certificate*>(NULL), root_cert.get());
     test_root_.reset(new ScopedTestRoot(root_cert.get()));
 
+#if defined(USE_BUILTIN_CERT_VERIFIER)
+    SetGlobalCertNetFetcherForTesting(net::CreateCertNetFetcher(&context_));
+#endif
+
 #if defined(USE_NSS_CERTS)
     SetURLRequestContextForNSSHttpIO(&context_);
     EnsureNSSHttpIOInit();
@@ -10297,7 +10313,9 @@ class HTTPSOCSPTest : public HTTPSRequestTest {
   }
 
   ~HTTPSOCSPTest() override {
-#if defined(USE_NSS_CERTS)
+#if defined(USE_BUILTIN_CERT_VERIFIER)
+    ShutdownGlobalCertNetFetcher();
+#elif defined(USE_NSS_CERTS)
     ShutdownNSSHttpIO();
 #endif
   }
@@ -10349,7 +10367,8 @@ static CertStatus ExpectedCertStatusForFailedOnlineRevocationCheck() {
 // If it does not, then tests which rely on 'hard fail' behaviour should be
 // skipped.
 static bool SystemSupportsHardFailRevocationChecking() {
-#if defined(OS_WIN) || defined(USE_NSS_CERTS)
+#if defined(OS_WIN) || defined(USE_NSS_CERTS) || \
+    defined(USE_BUILTIN_CERT_VERIFIER)
   return true;
 #else
   return false;
@@ -10384,7 +10403,7 @@ static CertStatus ExpectedCertStatusForFailedOnlineEVRevocationCheck() {
 }
 
 static bool SystemSupportsOCSP() {
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
   // TODO(jnd): http://crbug.com/117478 - EV verification is not yet supported.
   // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return false;
@@ -11031,7 +11050,7 @@ INSTANTIATE_TEST_CASE_P(OCSPVerify,
                         testing::ValuesIn(kOCSPVerifyData));
 
 static bool SystemSupportsAIA() {
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
   // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   return false;
 #else
@@ -11342,7 +11361,7 @@ TEST_F(HTTPSCRLSetTest, ExpiredCRLSet) {
 }
 
 TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
-#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
+#if defined(OS_ANDROID) || defined(USE_BUILTIN_CERT_VERIFIER)
   // TODO(crbug.com/762380): Enable on Fuchsia once it's implemented.
   LOG(WARNING) << "Skipping test because system doesn't support CRLSets";
   return;
