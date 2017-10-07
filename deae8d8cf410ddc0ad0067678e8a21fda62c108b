@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e0ed74f_57bbcfb2",
+        "filename": "chrome/browser/ui/webui/policy_tool_ui_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-10-07T00:31:13Z",
+      "side": 1,
+      "message": "consider constexpr here.",
+      "revId": "deae8d8cf410ddc0ad0067678e8a21fda62c108b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
