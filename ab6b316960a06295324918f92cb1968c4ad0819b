@@ -312,6 +312,30 @@
     },
     {
       "key": {
+        "uuid": "8337753b_9cfe6b9a",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-10-07T01:10:06Z",
+      "side": 1,
+      "message": "Actually, this call to std::move() is incorrect. The task_runner is used in a loop and needs to be copied for each connection.",
+      "parentUuid": "fcf49ac4_1585ab03",
+      "range": {
+        "startLine": 191,
+        "startChar": 20,
+        "endLine": 191,
+        "endChar": 31
+      },
+      "revId": "ab6b316960a06295324918f92cb1968c4ad0819b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93087e5c_9726723c",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 16
