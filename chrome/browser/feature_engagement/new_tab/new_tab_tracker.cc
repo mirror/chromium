@@ -7,6 +7,7 @@
 #include "base/time/time.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/ui/views/tabs/new_tab_button.h"
+#include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -19,15 +20,18 @@ const int kDefaultPromoShowTimeInHours = 2;
 
 namespace feature_engagement {
 
-NewTabTracker::NewTabTracker(Profile* profile,
-                             SessionDurationUpdater* session_duration_updater)
+NewTabTracker::NewTabTracker(
+    Profile* profile,
+    NewTabInProductHelpSessionDurationUpdater* session_duration_updater)
     : FeatureTracker(profile,
                      session_duration_updater,
                      &kIPHNewTabFeature,
+                     prefs::kNewTabInProductHelpObservedSessionTime,
                      base::TimeDelta::FromHours(kDefaultPromoShowTimeInHours)) {
 }
 
-NewTabTracker::NewTabTracker(SessionDurationUpdater* session_duration_updater)
+NewTabTracker::NewTabTracker(
+    NewTabInProductHelpSessionDurationUpdater* session_duration_updater)
     : NewTabTracker(nullptr, session_duration_updater) {}
 
 NewTabTracker::~NewTabTracker() = default;

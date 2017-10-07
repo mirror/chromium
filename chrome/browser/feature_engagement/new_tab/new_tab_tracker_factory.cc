@@ -5,6 +5,7 @@
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 
 #include "base/memory/singleton.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_in_product_help_session_duration_updater_factory.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
@@ -30,7 +31,7 @@ NewTabTrackerFactory::NewTabTrackerFactory()
     : BrowserContextKeyedServiceFactory(
           "NewTabTracker",
           BrowserContextDependencyManager::GetInstance()) {
-  DependsOn(SessionDurationUpdaterFactory::GetInstance());
+  DependsOn(NewTabInProductHelpSessionDurationUpdaterFactory::GetInstance());
   DependsOn(TrackerFactory::GetInstance());
 }
 
@@ -40,13 +41,19 @@ KeyedService* NewTabTrackerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   return new NewTabTracker(
       Profile::FromBrowserContext(context),
-      feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-          ->GetForProfile(Profile::FromBrowserContext(context)));
+      feature_engagement::NewTabInProductHelpSessionDurationUpdaterFactory::
+          GetInstance()
+              ->GetForProfile(Profile::FromBrowserContext(context)));
 }
 
 content::BrowserContext* NewTabTrackerFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {
   return chrome::GetBrowserContextRedirectedInIncognito(context);
+}
+
+bool NewTabTrackerFactory::ServiceIsCreatedWithBrowserContext() const {
+  // Start NewTabTracker early so the new tab in product help starts tracking.
+  return true;
 }
 
 }  // namespace feature_engagement
