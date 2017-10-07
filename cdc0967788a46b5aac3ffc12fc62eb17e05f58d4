@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23e37276_2d26407b",
+        "filename": "chrome/test/data/webui/test_browser_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-07T01:58:52Z",
+      "side": 1,
+      "message": "+1 on not passing extra parameter for designating the function that threw the error. The stack trace attached to the error thrown already shows that information.",
+      "revId": "cdc0967788a46b5aac3ffc12fc62eb17e05f58d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
