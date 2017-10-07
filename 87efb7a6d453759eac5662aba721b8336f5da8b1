@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14ad266e_ed828886",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 51
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f511bbdc_6643e6fd",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16465f54_e88dcdce",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 51
@@ -33,6 +51,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8d9f86_a9c113d0",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16465f54_e88dcdce",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7a639990_4b0af166",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Sanity checking that the values actually changed. Looks like most other test don\u0027t check this, so I\u0027ve removed them.",
+      "parentUuid": "310ef80d_e301ba7d",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4aedd66_c0e9a19e",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 51
@@ -67,6 +121,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c754186_d6adab3b",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4aedd66_c0e9a19e",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0089883a_2673a4de",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10eb3c18_88450a7d",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27b50ddf_1651a47b",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 51
@@ -101,6 +191,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60724a2_39076736",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27b50ddf_1651a47b",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3dd3f455_1e9e5702",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bd003a_d743a971",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c09cc521_6ee7509b",
         "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
         "patchSetId": 51
@@ -135,6 +261,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7e475d_9567c4d5",
+        "filename": "content/browser/frame_host/navigation_handle_impl_browsertest.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c09cc521_6ee7509b",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -166,6 +310,24 @@
       "writtenOn": "2017-10-06T22:58:12Z",
       "side": 1,
       "message": "This DCHECK isn\u0027t very useful as if render_frame_host is nullptr, it will crash a few lines later when it is dereferenced.",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d501ece_6fa09fe9",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "clamy@ asked for it, albeit in the context of changes to store it on the request rather than passing it around: https://chromium-review.googlesource.com/c/chromium/src/+/621873/18/content/browser/frame_host/navigation_request.cc#791\n\nWould you like me to take it out?",
+      "parentUuid": "f0f6e5ef_37976c4c",
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +402,24 @@
       "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f218c7c_1479ba36",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 51
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-10-07T01:22:49Z",
+      "side": 1,
+      "message": "Latest patch modifies OnFailureChecksComplete() and CommitErrorPage() to take render_frame_host as an argument.",
+      "parentUuid": "7ca3e213_010d6dac",
+      "revId": "87efb7a6d453759eac5662aba721b8336f5da8b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
