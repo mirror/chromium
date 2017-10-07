@@ -49,7 +49,7 @@ class CORE_EXPORT IdlenessDetector
   void WillProcessTask(double start_time) override;
   void DidProcessTask(double start_time, double end_time) override;
 
-  void ShutdownIfPossible();
+  void Stop();
   void NetworkQuietTimerFired(TimerBase*);
 
   Member<LocalFrame> local_frame_;
