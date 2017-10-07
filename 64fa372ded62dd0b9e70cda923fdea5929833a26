@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf4a2bf_cc688e0d",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-07T05:29:11Z",
+      "side": 1,
+      "message": "I wonder why we don\u0027t do a process kill here.\n\nAlso, is this the primary mechanism now by which webui bindings for subframes are denied?",
+      "revId": "64fa372ded62dd0b9e70cda923fdea5929833a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
