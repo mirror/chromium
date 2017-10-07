@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b818881_a2c0e8dd",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-07T02:39:53Z",
+      "side": 1,
+      "message": "Please add a brief comment.",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 6
+      },
+      "revId": "059cd27b88a9df83c3af01c8af3ffef8a06c65f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d72093f_de634511",
+        "filename": "chrome/browser/chromeos/printing/synced_printers_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-07T02:39:53Z",
+      "side": 1,
+      "message": "Please add comment\n// PrintersSynceBridge::Observer override",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 24
+      },
+      "revId": "059cd27b88a9df83c3af01c8af3ffef8a06c65f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
