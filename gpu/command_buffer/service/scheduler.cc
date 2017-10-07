@@ -51,6 +51,9 @@ class Scheduler::Sequence {
   // Enables or disables the sequence.
   void SetEnabled(bool enabled);
 
+  // Set priority.
+  void SetPriority(SchedulingPriority priority);
+
   // Sets running state to SCHEDULED. Returns scheduling state for this sequence
   // used for inserting in the scheduling queue.
   SchedulingState SetScheduled();
@@ -116,7 +119,7 @@ class Scheduler::Sequence {
 
   const SequenceId sequence_id_;
 
-  const SchedulingPriority priority_;
+  SchedulingPriority priority_;
 
   scoped_refptr<SyncPointOrderData> order_data_;
 
@@ -202,6 +205,12 @@ void Scheduler::Sequence::SetEnabled(bool enabled) {
     return;
   DCHECK_EQ(running_state_, enabled ? IDLE : RUNNING);
   enabled_ = enabled;
+}
+
+void Scheduler::Sequence::SetPriority(SchedulingPriority priority) {
+  if (priority_ == priority)
+    return;
+  priority_ = priority;
 }
 
 Scheduler::SchedulingState Scheduler::Sequence::SetScheduled() {
@@ -333,6 +342,16 @@ void Scheduler::DisableSequence(SequenceId sequence_id) {
   Sequence* sequence = GetSequence(sequence_id);
   DCHECK(sequence);
   sequence->SetEnabled(false);
+}
+
+void Scheduler::SetSequencePriority(SequenceId sequence_id,
+                                    SchedulingPriority priority) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  base::AutoLock auto_lock(lock_);
+  Sequence* sequence = GetSequence(sequence_id);
+  DCHECK(sequence);
+  sequence->SetPriority(priority);
+  TryScheduleSequence(sequence);
 }
 
 void Scheduler::ScheduleTask(Task task) {

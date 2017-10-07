@@ -1146,8 +1146,8 @@ std::unique_ptr<GpuCommandBufferStub> GpuChannel::CreateCommandBuffer(
   }
 
   std::unique_ptr<GpuCommandBufferStub> stub(GpuCommandBufferStub::Create(
-      this, share_group, init_params, command_buffer_id, sequence_id, stream_id,
-      route_id, std::move(shared_state_shm)));
+      this, share_group, init_params, command_buffer_id, sequence_id,
+      stream_priority, stream_id, route_id, std::move(shared_state_shm)));
 
   if (!AddRoute(route_id, sequence_id, stub.get())) {
     DLOG(ERROR) << "GpuChannel::CreateCommandBuffer(): failed to add route";

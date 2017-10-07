@@ -19,6 +19,7 @@
 #include "gpu/command_buffer/common/command_buffer_id.h"
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/common/gpu_memory_allocation.h"
+#include "gpu/command_buffer/common/scheduling_priority.h"
 #include "gpu/command_buffer/service/command_buffer_service.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
@@ -80,6 +81,7 @@ class GPU_EXPORT GpuCommandBufferStub
       const GPUCreateCommandBufferConfig& init_params,
       CommandBufferId command_buffer_id,
       SequenceId sequence_id,
+      SchedulingPriority priority,
       int32_t stream_id,
       int32_t route_id,
       std::unique_ptr<base::SharedMemory> shared_state_shm);
@@ -150,6 +152,7 @@ class GPU_EXPORT GpuCommandBufferStub
                        const GPUCreateCommandBufferConfig& init_params,
                        CommandBufferId command_buffer_id,
                        SequenceId sequence_id,
+                       SchedulingPriority priority,
                        int32_t stream_id,
                        int32_t route_id);
 
@@ -230,6 +233,7 @@ class GPU_EXPORT GpuCommandBufferStub
   bool use_virtualized_gl_context_;
   const CommandBufferId command_buffer_id_;
   const SequenceId sequence_id_;
+  const SchedulingPriority priority_;
   const int32_t stream_id_;
   const int32_t route_id_;
   uint32_t last_flush_id_;
