@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6199b58_e164a2b7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1583,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-07T00:27:46Z",
+      "side": 1,
+      "message": "Pass url_string, complete it on the receiver side.",
+      "revId": "787afda80ed7e9adfcee60a70fb18472f7682446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c00144_ccb1332e",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1584,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-07T00:27:46Z",
+      "side": 1,
+      "message": "Instrument as AtomicString, minimize side-effect.",
+      "revId": "787afda80ed7e9adfcee60a70fb18472f7682446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
