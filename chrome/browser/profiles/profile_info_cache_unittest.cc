@@ -33,8 +33,6 @@
 #include "content/public/test/test_utils.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/image/image.h"
-#include "ui/gfx/image/image_unittest_util.h"
 
 using base::ASCIIToUTF16;
 using base::UTF8ToUTF16;
@@ -305,140 +303,6 @@ TEST_F(ProfileInfoCacheTest, BackgroundModeStatus) {
   EXPECT_FALSE(GetCache()->GetBackgroundStatusOfProfileAtIndex(1));
 }
 
-TEST_F(ProfileInfoCacheTest, GAIAName) {
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_1"), ASCIIToUTF16("Person 1"),
-      std::string(), base::string16(), 0, std::string());
-  base::string16 profile_name(ASCIIToUTF16("Person 2"));
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_2"), profile_name, std::string(), base::string16(),
-      0, std::string());
-
-  int index1 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_1"));
-  int index2 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_2"));
-
-  // Sanity check.
-  EXPECT_TRUE(GetCache()->GetGAIANameOfProfileAtIndex(index1).empty());
-  EXPECT_TRUE(GetCache()->GetGAIANameOfProfileAtIndex(index2).empty());
-
-  // Set GAIA name. This re-sorts the cache.
-  base::string16 gaia_name(ASCIIToUTF16("Pat Smith"));
-  GetCache()->SetGAIANameOfProfileAtIndex(index2, gaia_name);
-  index1 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_1"));
-  index2 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_2"));
-
-  // Since there is a GAIA name, we use that as a display name.
-  EXPECT_TRUE(GetCache()->GetGAIANameOfProfileAtIndex(index1).empty());
-  EXPECT_EQ(gaia_name, GetCache()->GetGAIANameOfProfileAtIndex(index2));
-  EXPECT_EQ(gaia_name, GetCache()->GetNameOfProfileAtIndex(index2));
-
-  // Don't use GAIA name as profile name. This re-sorts the cache.
-  base::string16 custom_name(ASCIIToUTF16("Custom name"));
-  GetCache()->SetNameOfProfileAtIndex(index2, custom_name);
-  GetCache()->SetProfileIsUsingDefaultNameAtIndex(index2, false);
-
-  index1 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_1"));
-  index2 = GetCache()->GetIndexOfProfileWithPath(GetProfilePath("path_2"));
-
-  EXPECT_EQ(custom_name, GetCache()->GetNameOfProfileAtIndex(index2));
-  EXPECT_EQ(gaia_name, GetCache()->GetGAIANameOfProfileAtIndex(index2));
-}
-
-TEST_F(ProfileInfoCacheTest, GAIAPicture) {
-  const int kDefaultAvatarIndex = 0;
-  const int kOtherAvatarIndex = 1;
-  const int kGaiaPictureSize = 256;  // Standard size of a Gaia account picture.
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_1"), ASCIIToUTF16("name_1"),
-      std::string(), base::string16(), kDefaultAvatarIndex, std::string());
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_2"), ASCIIToUTF16("name_2"),
-      std::string(), base::string16(), kDefaultAvatarIndex, std::string());
-
-  // Sanity check.
-  EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(0));
-  EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(1));
-  EXPECT_FALSE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(0));
-  EXPECT_FALSE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(1));
-
-  // The profile icon should be the default one.
-  EXPECT_TRUE(GetCache()->ProfileIsUsingDefaultAvatarAtIndex(0));
-  EXPECT_TRUE(GetCache()->ProfileIsUsingDefaultAvatarAtIndex(1));
-  int default_avatar_id =
-      profiles::GetDefaultAvatarIconResourceIDAtIndex(kDefaultAvatarIndex);
-  const gfx::Image& default_avatar_image(
-      ResourceBundle::GetSharedInstance().GetImageNamed(default_avatar_id));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      default_avatar_image, GetCache()->GetAvatarIconOfProfileAtIndex(1)));
-
-  // Set GAIA picture.
-  gfx::Image gaia_image(gfx::test::CreateImage(
-      kGaiaPictureSize, kGaiaPictureSize));
-  GetCache()->SetGAIAPictureOfProfileAtIndex(1, &gaia_image);
-  EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(0));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(1)));
-  // Since we're still using the default avatar, the GAIA image should be
-  // preferred over the generic avatar image.
-  EXPECT_TRUE(GetCache()->ProfileIsUsingDefaultAvatarAtIndex(1));
-  EXPECT_TRUE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(1));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, GetCache()->GetAvatarIconOfProfileAtIndex(1)));
-
-  // Set a non-default avatar. This should be preferred over the GAIA image.
-  GetCache()->SetAvatarIconOfProfileAtIndex(1, kOtherAvatarIndex);
-  GetCache()->SetProfileIsUsingDefaultAvatarAtIndex(1, false);
-  EXPECT_FALSE(GetCache()->ProfileIsUsingDefaultAvatarAtIndex(1));
-  EXPECT_FALSE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(1));
-  int other_avatar_id =
-      profiles::GetDefaultAvatarIconResourceIDAtIndex(kOtherAvatarIndex);
-  const gfx::Image& other_avatar_image(
-      ResourceBundle::GetSharedInstance().GetImageNamed(other_avatar_id));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      other_avatar_image, GetCache()->GetAvatarIconOfProfileAtIndex(1)));
-
-  // Explicitly setting the GAIA picture should make it preferred again.
-  GetCache()->SetIsUsingGAIAPictureOfProfileAtIndex(1, true);
-  EXPECT_TRUE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(1));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(1)));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, GetCache()->GetAvatarIconOfProfileAtIndex(1)));
-
-  // Clearing the IsUsingGAIAPicture flag should result in the generic image
-  // being used again.
-  GetCache()->SetIsUsingGAIAPictureOfProfileAtIndex(1, false);
-  EXPECT_FALSE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(1));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(1)));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      other_avatar_image, GetCache()->GetAvatarIconOfProfileAtIndex(1)));
-}
-
-TEST_F(ProfileInfoCacheTest, PersistGAIAPicture) {
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_1"), ASCIIToUTF16("name_1"),
-      std::string(), base::string16(), 0, std::string());
-  gfx::Image gaia_image(gfx::test::CreateImage());
-
-  GetCache()->SetGAIAPictureOfProfileAtIndex(0, &gaia_image);
-
-  // Make sure everything has completed, and the file has been written to disk.
-  content::RunAllTasksUntilIdle();
-
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(0)));
-
-  ResetCache();
-  // Try to get the GAIA picture. This should return NULL until the read from
-  // disk is done.
-  EXPECT_EQ(NULL, GetCache()->GetGAIAPictureOfProfileAtIndex(0));
-  content::RunAllTasksUntilIdle();
-
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-    gaia_image, *GetCache()->GetGAIAPictureOfProfileAtIndex(0)));
-}
-
 TEST_F(ProfileInfoCacheTest, SetSupervisedUserId) {
   GetCache()->AddProfileToCache(
       GetProfilePath("test"), ASCIIToUTF16("Test"),
@@ -455,27 +319,6 @@ TEST_F(ProfileInfoCacheTest, SetSupervisedUserId) {
   GetCache()->SetSupervisedUserIdOfProfileAtIndex(0, std::string());
   EXPECT_FALSE(GetCache()->ProfileIsSupervisedAtIndex(0));
   EXPECT_EQ("", GetCache()->GetSupervisedUserIdOfProfileAtIndex(0));
-}
-
-TEST_F(ProfileInfoCacheTest, EmptyGAIAInfo) {
-  base::string16 profile_name = ASCIIToUTF16("name_1");
-  int id = profiles::GetDefaultAvatarIconResourceIDAtIndex(0);
-  const gfx::Image& profile_image(
-      ResourceBundle::GetSharedInstance().GetImageNamed(id));
-
-  GetCache()->AddProfileToCache(
-      GetProfilePath("path_1"), profile_name, std::string(), base::string16(),
-                     0, std::string());
-
-  // Set empty GAIA info.
-  GetCache()->SetGAIANameOfProfileAtIndex(0, base::string16());
-  GetCache()->SetGAIAPictureOfProfileAtIndex(0, NULL);
-  GetCache()->SetIsUsingGAIAPictureOfProfileAtIndex(0, true);
-
-  // Verify that the profile name and picture are not empty.
-  EXPECT_EQ(profile_name, GetCache()->GetNameOfProfileAtIndex(0));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(
-      profile_image, GetCache()->GetAvatarIconOfProfileAtIndex(0)));
 }
 
 TEST_F(ProfileInfoCacheTest, CreateSupervisedTestingProfile) {
@@ -680,50 +523,6 @@ TEST_F(ProfileInfoCacheTest, MigrateLegacyProfileNamesWithNewAvatarMenu) {
       GetCache()->GetIndexOfProfileWithPath(path_4)));
   EXPECT_EQ(name_5, GetCache()->GetNameOfProfileAtIndex(
       GetCache()->GetIndexOfProfileWithPath(path_5)));
-}
-
-TEST_F(ProfileInfoCacheTest, GetGaiaImageForAvatarMenu) {
-  // The TestingProfileManager's ProfileInfoCache doesn't download avatars.
-  ProfileInfoCache profile_info_cache(
-      g_browser_process->local_state(),
-      testing_profile_manager_.profile_manager()->user_data_dir());
-
-  base::FilePath profile_path = GetProfilePath("path_1");
-
-  GetCache()->AddProfileToCache(profile_path, ASCIIToUTF16("name_1"),
-                                std::string(), base::string16(), 0,
-                                std::string());
-
-  gfx::Image gaia_image(gfx::test::CreateImage());
-  GetCache()->SetGAIAPictureOfProfileAtIndex(0, &gaia_image);
-
-  // Make sure everything has completed, and the file has been written to disk.
-  content::RunAllTasksUntilIdle();
-
-  // Make sure this profile is using GAIA picture.
-  EXPECT_TRUE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(0));
-
-  ResetCache();
-
-  // We need to explicitly set the GAIA usage flag after resetting the cache.
-  GetCache()->SetIsUsingGAIAPictureOfProfileAtIndex(0, true);
-  EXPECT_TRUE(GetCache()->IsUsingGAIAPictureOfProfileAtIndex(0));
-
-  gfx::Image image_loaded;
-
-  // Try to get the GAIA image. For the first time, it triggers an async image
-  // load from disk. The load status indicates the image is still being loaded.
-  EXPECT_EQ(AvatarMenu::ImageLoadStatus::LOADING,
-            AvatarMenu::GetImageForMenuButton(profile_path, &image_loaded));
-  EXPECT_FALSE(gfx::test::AreImagesEqual(gaia_image, image_loaded));
-
-  // Wait until the async image load finishes.
-  content::RunAllTasksUntilIdle();
-
-  // Since the GAIA image is loaded now, we can get it this time.
-  EXPECT_EQ(AvatarMenu::ImageLoadStatus::LOADED,
-            AvatarMenu::GetImageForMenuButton(profile_path, &image_loaded));
-  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, image_loaded));
 }
 #endif
 

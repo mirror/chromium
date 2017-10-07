@@ -11,6 +11,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "chrome/browser/profiles/avatar_menu.h"
 #include "chrome/browser/profiles/profile_avatar_downloader.h"
 #include "chrome/browser/profiles/profile_avatar_icon_util.h"
 #include "chrome/browser/profiles/profile_info_cache.h"
@@ -24,6 +25,9 @@
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
+#include "ui/base/resource/resource_bundle.h"
+#include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_unittest_util.h"
 
 using ::testing::Mock;
 using ::testing::_;
@@ -172,6 +176,14 @@ class ProfileAttributesStorageTest : public testing::Test {
         number_of_profiles, std::string(""));
 
     EXPECT_EQ(number_of_profiles + 1, storage()->GetNumberOfProfiles());
+  }
+
+  // Replace profile attributes storage with a new one to test persistence.
+  void DeleteAndRecreateProfileAttributesStorage() {
+    testing_profile_manager_.DeleteProfileInfoCache();
+    // Create another profile attributes storage by calling |storage()|.
+    storage()->set_disable_avatar_download_for_testing(true);
+    EnableObserver();
   }
 
   TestingProfileManager testing_profile_manager_;
@@ -448,6 +460,206 @@ TEST_F(ProfileAttributesStorageTest, ProfileActiveTime) {
   EXPECT_EQ(stored_time, entry->GetActiveTime());
 }
 
+TEST_F(ProfileAttributesStorageTest, GAIAName) {
+  AddTestingProfile();
+
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(
+      GetProfilePath("testing_profile_path0"), &entry));
+
+  // Check initial conditions.
+  EXPECT_TRUE(entry->GetGAIAName().empty());
+  EXPECT_FALSE(entry->IsUsingDefaultName());
+
+  // Set GAIA name.
+  base::FilePath profile_path = entry->GetPath();
+  entry->SetIsUsingDefaultName(true);
+  base::string16 gaia_name(base::ASCIIToUTF16("Pat Smith"));
+  EXPECT_CALL(observer(),
+              OnProfileNameChanged(profile_path,
+                                   base::ASCIIToUTF16("testing_profile_name0")))
+      .Times(1);
+  entry->SetGAIAName(gaia_name);
+  VerifyAndResetCallExpectations();
+
+  // Since there is a GAIA name, we use that as a display name.
+  EXPECT_EQ(gaia_name, entry->GetGAIAName());
+  EXPECT_EQ(gaia_name, entry->GetName());
+
+  // Don't use GAIA name as profile name.
+  base::string16 custom_name(base::ASCIIToUTF16("Custom name"));
+  entry->SetName(custom_name);
+  EXPECT_CALL(observer(), OnProfileNameChanged(profile_path, gaia_name))
+      .Times(1);
+  entry->SetIsUsingDefaultName(false);
+  VerifyAndResetCallExpectations();
+
+  EXPECT_EQ(custom_name, entry->GetName());
+  EXPECT_EQ(gaia_name, entry->GetGAIAName());
+}
+
+TEST_F(ProfileAttributesStorageTest, GAIANameOfProfileWithDefaultName) {
+  EXPECT_CALL(observer(), OnProfileAdded(GetProfilePath("path_1"))).Times(1);
+  storage()->AddProfile(GetProfilePath("path_1"),
+                        base::ASCIIToUTF16("Person 1"), std::string(),
+                        base::string16(), 0, std::string());
+  VerifyAndResetCallExpectations();
+
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(GetProfilePath("path_1"),
+                                                      &entry));
+
+  EXPECT_TRUE(entry->GetGAIAName().empty());
+  EXPECT_TRUE(entry->IsUsingDefaultName());
+}
+
+TEST_F(ProfileAttributesStorageTest, GAIAPicture) {
+  const int kStartingAvatarIndex = 0;
+  const int kOtherAvatarIndex = 10;
+  const int kGaiaPictureSize = 256;  // Standard size of a Gaia account picture.
+
+  // Create the testing profile.
+  AddTestingProfile();
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+  ASSERT_EQ(kStartingAvatarIndex, entry->GetAvatarIconIndex());
+
+  // Create another testing profile. Nothing will be written to it, but its data
+  // must not be modified during the test.
+  AddTestingProfile();
+  ProfileAttributesEntry* other_entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(
+      GetProfilePath("testing_profile_path1"), &other_entry));
+
+  // Check initial conditions.
+  EXPECT_EQ(nullptr, entry->GetGAIAPicture());
+  EXPECT_FALSE(entry->IsUsingGAIAPicture());
+
+  EXPECT_EQ(nullptr, other_entry->GetGAIAPicture());
+  EXPECT_FALSE(other_entry->IsUsingGAIAPicture());
+
+  // The profile icon should be the default one.
+  EXPECT_TRUE(other_entry->IsUsingDefaultAvatar());
+  EXPECT_TRUE(entry->IsUsingDefaultAvatar());
+  int starting_avatar_id =
+      profiles::GetDefaultAvatarIconResourceIDAtIndex(kStartingAvatarIndex);
+  const gfx::Image& starting_avatar_image(
+      ResourceBundle::GetSharedInstance().GetImageNamed(starting_avatar_id));
+  EXPECT_TRUE(
+      gfx::test::AreImagesEqual(starting_avatar_image, entry->GetAvatarIcon()));
+
+  // Set GAIA picture.
+  gfx::Image gaia_image(
+      gfx::test::CreateImage(kGaiaPictureSize, kGaiaPictureSize));
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetGAIAPicture(&gaia_image);
+  VerifyAndResetCallExpectations();
+
+  EXPECT_EQ(nullptr, other_entry->GetGAIAPicture());
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, *entry->GetGAIAPicture()));
+  // Since we're still using the default avatar, the GAIA image should be
+  // preferred over the generic avatar image.
+  EXPECT_TRUE(entry->IsUsingDefaultAvatar());
+  EXPECT_TRUE(entry->IsUsingGAIAPicture());
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, entry->GetAvatarIcon()));
+
+  // Set a non-default avatar. This should be preferred over the GAIA image.
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetAvatarIconIndex(kOtherAvatarIndex);
+  VerifyAndResetCallExpectations();
+  entry->SetIsUsingDefaultAvatar(false);
+
+  EXPECT_FALSE(entry->IsUsingDefaultAvatar());
+  EXPECT_FALSE(entry->IsUsingGAIAPicture());
+  int other_avatar_id =
+      profiles::GetDefaultAvatarIconResourceIDAtIndex(kOtherAvatarIndex);
+  const gfx::Image& other_avatar_image(
+      ResourceBundle::GetSharedInstance().GetImageNamed(other_avatar_id));
+  EXPECT_TRUE(
+      gfx::test::AreImagesEqual(other_avatar_image, entry->GetAvatarIcon()));
+
+  // Explicitly setting the GAIA picture should make it preferred again.
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetIsUsingGAIAPicture(true);
+  VerifyAndResetCallExpectations();
+
+  EXPECT_TRUE(entry->IsUsingGAIAPicture());
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, *entry->GetGAIAPicture()));
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, entry->GetAvatarIcon()));
+
+  // Clearing the IsUsingGAIAPicture flag should result in the generic image
+  // being used again.
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetIsUsingGAIAPicture(false);
+  VerifyAndResetCallExpectations();
+
+  EXPECT_FALSE(entry->IsUsingGAIAPicture());
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, *entry->GetGAIAPicture()));
+  EXPECT_TRUE(
+      gfx::test::AreImagesEqual(other_avatar_image, entry->GetAvatarIcon()));
+}
+
+TEST_F(ProfileAttributesStorageTest, PersistGAIAPicture) {
+  AddTestingProfile();
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+
+  gfx::Image gaia_image(gfx::test::CreateImage());
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetGAIAPicture(&gaia_image);
+  VerifyAndResetCallExpectations();
+
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, *entry->GetGAIAPicture()));
+
+  // Finish the pending disk write.
+  EXPECT_CALL(observer(), OnProfileHighResAvatarLoaded(profile_path)).Times(1);
+  content::RunAllTasksUntilIdle();
+  VerifyAndResetCallExpectations();
+
+  DeleteAndRecreateProfileAttributesStorage();
+  storage()->set_disable_avatar_download_for_testing(false);
+
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(
+      GetProfilePath("testing_profile_path0"), &entry));
+
+  // Try to get the GAIA picture. This should return NULL until the read from
+  // disk is done.
+  EXPECT_EQ(nullptr, entry->GetGAIAPicture());
+
+  // Finish the disk read.
+  EXPECT_CALL(observer(), OnProfileHighResAvatarLoaded(profile_path)).Times(1);
+  content::RunAllTasksUntilIdle();
+  VerifyAndResetCallExpectations();
+
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, *entry->GetGAIAPicture()));
+}
+
+TEST_F(ProfileAttributesStorageTest, EmptyGAIAInfo) {
+  AddTestingProfile();
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+
+  // Set empty GAIA info.
+  entry->SetGAIAName(base::string16());
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetGAIAPicture(nullptr);
+  VerifyAndResetCallExpectations();
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetIsUsingGAIAPicture(true);
+  VerifyAndResetCallExpectations();
+
+  // Verify that the profile name and picture are not empty.
+  EXPECT_EQ(base::ASCIIToUTF16("testing_profile_name0"), entry->GetName());
+
+  int id = profiles::GetDefaultAvatarIconResourceIDAtIndex(0);
+  const gfx::Image& profile_image(
+      ResourceBundle::GetSharedInstance().GetImageNamed(id));
+  EXPECT_TRUE(gfx::test::AreImagesEqual(profile_image, entry->GetAvatarIcon()));
+}
+
 TEST_F(ProfileAttributesStorageTest, AuthInfo) {
   AddTestingProfile();
 
@@ -670,7 +882,6 @@ TEST_F(ProfileAttributesStorageTest, AvatarIconIndex) {
   AddTestingProfile();
 
   base::FilePath profile_path = GetProfilePath("testing_profile_path0");
-
   ProfileAttributesEntry* entry;
   ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
   ASSERT_EQ(0U, entry->GetAvatarIconIndex());
@@ -678,12 +889,12 @@ TEST_F(ProfileAttributesStorageTest, AvatarIconIndex) {
   EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
   entry->SetAvatarIconIndex(2U);
   VerifyAndResetCallExpectations();
-  ASSERT_EQ(2U, entry->GetAvatarIconIndex());
+  EXPECT_EQ(2U, entry->GetAvatarIconIndex());
 
   EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
   entry->SetAvatarIconIndex(3U);
   VerifyAndResetCallExpectations();
-  ASSERT_EQ(3U, entry->GetAvatarIconIndex());
+  EXPECT_EQ(3U, entry->GetAvatarIconIndex());
 }
 
 // High res avatar downloading is only supported on desktop.
@@ -695,14 +906,16 @@ TEST_F(ProfileAttributesStorageTest, DownloadHighResAvatarTest) {
   base::FilePath icon_path =
       profiles::GetPathOfHighResAvatarAtIndex(kIconIndex);
 
+  // Add a new profile. Make sure this is the only profile so other profiles can
+  // possibly load an avatar from disk.
   ASSERT_EQ(0U, storage()->GetNumberOfProfiles());
-  base::FilePath profile_path = GetProfilePath("path_1");
-  EXPECT_CALL(observer(), OnProfileAdded(profile_path)).Times(1);
-  storage()->AddProfile(profile_path, base::ASCIIToUTF16("name_1"),
-                        std::string(), base::string16(), kIconIndex,
-                        std::string());
+  AddTestingProfile();
   ASSERT_EQ(1U, storage()->GetNumberOfProfiles());
-  VerifyAndResetCallExpectations();
+
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+  ASSERT_EQ(kIconIndex, entry->GetAvatarIconIndex());
 
   // Make sure there are no avatars already on disk.
   content::RunAllTasksUntilIdle();
@@ -717,8 +930,6 @@ TEST_F(ProfileAttributesStorageTest, DownloadHighResAvatarTest) {
 
   // |GetHighResAvater| does not contain a cached avatar, so it should return
   // null.
-  ProfileAttributesEntry* entry;
-  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
   EXPECT_FALSE(entry->GetHighResAvatar());
 
   // The previous |GetHighResAvater| starts |LoadAvatarPictureFromPath| async.
@@ -807,20 +1018,19 @@ TEST_F(ProfileAttributesStorageTest, LoadAvatarFromDiskTest) {
   base::WriteFile(icon_path, bitmap, sizeof(bitmap));
   ASSERT_TRUE(base::PathExists(icon_path));
 
-  // Add a new profile.
+  // Add a new profile. Make sure this is the only profile so other profiles can
+  // possibly load an avatar from disk.
   ASSERT_EQ(0U, storage()->GetNumberOfProfiles());
-  base::FilePath profile_path = GetProfilePath("path_1");
-  EXPECT_CALL(observer(), OnProfileAdded(profile_path)).Times(1);
-  storage()->AddProfile(profile_path, base::ASCIIToUTF16("name_1"),
-                        std::string(), base::string16(), kIconIndex,
-                        std::string());
-  EXPECT_EQ(1U, storage()->GetNumberOfProfiles());
-  VerifyAndResetCallExpectations();
+  AddTestingProfile();
+  ASSERT_EQ(1U, storage()->GetNumberOfProfiles());
+
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+  ASSERT_EQ(kIconIndex, entry->GetAvatarIconIndex());
 
   // Load the avatar image.
   storage()->set_disable_avatar_download_for_testing(false);
-  ProfileAttributesEntry* entry;
-  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
   ASSERT_FALSE(entry->IsUsingGAIAPicture());
   EXPECT_CALL(observer(), OnProfileHighResAvatarLoaded(profile_path)).Times(1);
   entry->GetAvatarIcon();
@@ -833,4 +1043,56 @@ TEST_F(ProfileAttributesStorageTest, LoadAvatarFromDiskTest) {
   EXPECT_TRUE(base::DeleteFile(icon_path, false));
   EXPECT_FALSE(base::PathExists(icon_path));
 }
-#endif
+
+TEST_F(ProfileAttributesStorageTest, GetGaiaImageForAvatarMenu) {
+  // Add a new profile. Make sure this is the only profile so other profiles can
+  // possibly load an avatar from disk.
+  ASSERT_EQ(0U, storage()->GetNumberOfProfiles());
+  AddTestingProfile();
+  ASSERT_EQ(1U, storage()->GetNumberOfProfiles());
+
+  base::FilePath profile_path = GetProfilePath("testing_profile_path0");
+  ProfileAttributesEntry* entry;
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+
+  gfx::Image gaia_image(gfx::test::CreateImage());
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetGAIAPicture(&gaia_image);
+  VerifyAndResetCallExpectations();
+
+  // Make sure this profile is using GAIA picture.
+  EXPECT_TRUE(entry->IsUsingGAIAPicture());
+
+  // Make sure everything has completed, and the file has been written to disk.
+  EXPECT_CALL(observer(), OnProfileHighResAvatarLoaded(profile_path)).Times(1);
+  content::RunAllTasksUntilIdle();
+  VerifyAndResetCallExpectations();
+
+  DeleteAndRecreateProfileAttributesStorage();
+  storage()->set_disable_avatar_download_for_testing(false);
+
+  // We need to explicitly set the GAIA usage flag after resetting the cache.
+  ASSERT_TRUE(storage()->GetProfileAttributesWithPath(profile_path, &entry));
+  EXPECT_CALL(observer(), OnProfileAvatarChanged(profile_path)).Times(1);
+  entry->SetIsUsingGAIAPicture(true);
+  VerifyAndResetCallExpectations();
+  ASSERT_TRUE(entry->IsUsingGAIAPicture());
+
+  // Try to get the GAIA image. For the first time, it triggers an async image
+  // load from disk. The load status indicates the image is still being loaded.
+  gfx::Image image_loaded;
+  EXPECT_EQ(AvatarMenu::ImageLoadStatus::LOADING,
+            AvatarMenu::GetImageForMenuButton(profile_path, &image_loaded));
+  EXPECT_FALSE(gfx::test::AreImagesEqual(gaia_image, image_loaded));
+
+  // Wait until the async image load finishes.
+  EXPECT_CALL(observer(), OnProfileHighResAvatarLoaded(profile_path)).Times(1);
+  content::RunAllTasksUntilIdle();
+  VerifyAndResetCallExpectations();
+
+  // Since the GAIA image is loaded now, we can get it this time.
+  EXPECT_EQ(AvatarMenu::ImageLoadStatus::LOADED,
+            AvatarMenu::GetImageForMenuButton(profile_path, &image_loaded));
+  EXPECT_TRUE(gfx::test::AreImagesEqual(gaia_image, image_loaded));
+}
+#endif  // !defined(OS_ANDROID) && !defined(OS_CHROMEOS)

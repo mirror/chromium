@@ -71,6 +71,7 @@ class ProfileInfoCache : public ProfileInfoInterface,
   // directly referring to this implementation.
   size_t GetIndexOfProfileWithPath(
       const base::FilePath& profile_path) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::string16 GetNameOfProfileAtIndex(size_t index) const override;
   // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::FilePath GetPathOfProfileAtIndex(size_t index) const override;
@@ -83,13 +84,16 @@ class ProfileInfoCache : public ProfileInfoInterface,
   // which results is the same in both cases (thus far).
   // Will be removed SOON with ProfileInfoCache tests. Do not use!
   bool GetBackgroundStatusOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::string16 GetGAIANameOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   base::string16 GetGAIAGivenNameOfProfileAtIndex(size_t index) const override;
   std::string GetGAIAIdOfProfileAtIndex(size_t index) const override;
   // Returns the GAIA picture for the given profile. This may return NULL
   // if the profile does not have a GAIA picture or if the picture must be
   // loaded from disk.
   const gfx::Image* GetGAIAPictureOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   bool IsUsingGAIAPictureOfProfileAtIndex(size_t index) const override;
   bool ProfileIsSupervisedAtIndex(size_t index) const override;
   bool ProfileIsChildAtIndex(size_t index) const override;
@@ -97,12 +101,11 @@ class ProfileInfoCache : public ProfileInfoInterface,
   bool IsOmittedProfileAtIndex(size_t index) const override;
   bool ProfileIsSigninRequiredAtIndex(size_t index) const override;
   std::string GetSupervisedUserIdOfProfileAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   bool ProfileIsUsingDefaultNameAtIndex(size_t index) const override;
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   bool ProfileIsUsingDefaultAvatarAtIndex(size_t index) const override;
 
-  // Returns true if a GAIA picture has been loaded or has failed to load for
-  // profile at |index|.
-  bool IsGAIAPictureOfProfileAtIndexLoaded(size_t index) const;
   // Will be removed SOON with ProfileInfoCache tests. Do not use!
   size_t GetAvatarIconIndexOfProfileAtIndex(size_t index) const;
 
@@ -119,15 +122,11 @@ class ProfileInfoCache : public ProfileInfoInterface,
   void SetBackgroundStatusOfProfileAtIndex(size_t index,
                                            bool running_background_apps);
   // Warning: This will re-sort profiles and thus may change indices!
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   void SetGAIANameOfProfileAtIndex(size_t index, const base::string16& name);
-  // Warning: This will re-sort profiles and thus may change indices!
-  void SetGAIAGivenNameOfProfileAtIndex(size_t index,
-                                        const base::string16& name);
-  void SetGAIAPictureOfProfileAtIndex(size_t index, const gfx::Image* image);
-  void SetIsUsingGAIAPictureOfProfileAtIndex(size_t index, bool value);
   void SetProfileSigninRequiredAtIndex(size_t index, bool value);
+  // Will be removed SOON with ProfileInfoCache tests. Do not use!
   void SetProfileIsUsingDefaultNameAtIndex(size_t index, bool value);
-  void SetProfileIsUsingDefaultAvatarAtIndex(size_t index, bool value);
 
   // Notify IsSignedInRequired to all observer
   void NotifyIsSigninRequiredChanged(const base::FilePath& profile_path);
@@ -149,6 +148,10 @@ class ProfileInfoCache : public ProfileInfoInterface,
   bool GetProfileAttributesWithPath(const base::FilePath& path,
                                     ProfileAttributesEntry** entry) override;
 
+  // Updates the position of the profile at the given index so that the list
+  // of profiles is still sorted.
+  void UpdateSortForProfileIndex(size_t index);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ProfileAttributesStorageTest,
                            DownloadHighResAvatarTest);
@@ -161,10 +164,6 @@ class ProfileInfoCache : public ProfileInfoInterface,
   std::vector<std::string>::iterator FindPositionForProfile(
       const std::string& search_key,
       const base::string16& search_name);
-
-  // Updates the position of the profile at the given index so that the list
-  // of profiles is still sorted.
-  void UpdateSortForProfileIndex(size_t index);
 
   // Will be removed SOON with ProfileInfoCache tests. Do not use!
   // Loads or uses an already loaded high resolution image of the
