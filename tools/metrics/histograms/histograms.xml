@@ -88488,6 +88488,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="V8.WasmLazyCompilationThroughput" units="KB/s">
+  <owner>bradnelson@chromium.org</owner>
+  <owner>titzer@chromium.org</owner>
+  <owner>aseemgarg@chromium.org</owner>
+  <summary>
+    Throughput of compilation of lazily compiled WebAssembly functions in KB/s.
+  </summary>
+</histogram>
+
 <histogram name="V8.WasmMaxMemPagesCount" units="pages">
   <owner>bradnelson@chromium.org</owner>
   <owner>titzer@chromium.org</owner>
