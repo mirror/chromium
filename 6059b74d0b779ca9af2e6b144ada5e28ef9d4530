@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "4d3f6b0b_120488c6",
+        "filename": "cc/input/scroll_customization.h",
+        "patchSetId": 32
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-10-07T00:03:28Z",
+      "side": 1,
+      "message": "Is this used?",
+      "revId": "6059b74d0b779ca9af2e6b144ada5e28ef9d4530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ff0542a_72433745",
         "filename": "third_party/WebKit/LayoutTests/fast/scroll-behavior/scroll-customization/scrollstate-distribute-to-scroll-chain-descendant.html",
         "patchSetId": 32
