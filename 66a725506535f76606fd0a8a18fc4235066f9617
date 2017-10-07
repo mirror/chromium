@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "422f41d3_0def6d1a",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1196,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-10-07T02:11:55Z",
+      "side": 1,
+      "message": "IMO, this kind of entangles the logic.\n\nI think we need to observe ALL the prefs that affect the cursor compositing behavior in one place (say cursor_window_controller) and respond to changes in them by enabling / disabling compositing as needed. Then we can remove the code that enables/disable cursor compositing from Night Light as well as accessibility stuff, and rely completely on prefs changes.",
+      "range": {
+        "startLine": 1196,
+        "startChar": 34,
+        "endLine": 1196,
+        "endChar": 59
+      },
+      "revId": "66a725506535f76606fd0a8a18fc4235066f9617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
