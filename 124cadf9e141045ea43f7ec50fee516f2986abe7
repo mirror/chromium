@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ff9ce38_bdec68de",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1934,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-10-07T00:33:09Z",
+      "side": 1,
+      "message": "WebGL only falls back to swiftshader at GPU process start/restart time, not in the middle of GPU process\u0027s lifetime. As I mentioned in the crbug, you just need to query GpuFeatureInfo from GPU process (sent over to browser/renderer) to decide gpu compositing or software compositing (once that decision is added in GPU process)",
+      "parentUuid": "0e822197_a2b29a06",
+      "revId": "124cadf9e141045ea43f7ec50fee516f2986abe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "724a5be8_7e44431a",
         "filename": "content/renderer/render_thread_impl.h",
         "patchSetId": 5
