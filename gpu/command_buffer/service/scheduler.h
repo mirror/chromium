@@ -63,6 +63,9 @@ class GPU_EXPORT Scheduler {
   // Disables the sequence.
   void DisableSequence(SequenceId sequence_id);
 
+  // Set priority for sequence.
+  void SetSequencePriority(SequenceId sequence_id, SchedulingPriority priority);
+
   // Schedules task (closure) to run on the sequence. The task is blocked until
   // the sync token fences are released or determined to be invalid. Tasks are
   // run in the order in which they are submitted.

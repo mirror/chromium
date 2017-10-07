@@ -225,12 +225,13 @@ std::unique_ptr<GpuCommandBufferStub> GpuCommandBufferStub::Create(
     const GPUCreateCommandBufferConfig& init_params,
     CommandBufferId command_buffer_id,
     SequenceId sequence_id,
+    SchedulingPriority priority,
     int32_t stream_id,
     int32_t route_id,
     std::unique_ptr<base::SharedMemory> shared_state_shm) {
   std::unique_ptr<GpuCommandBufferStub> stub(
       new GpuCommandBufferStub(channel, init_params, command_buffer_id,
-                               sequence_id, stream_id, route_id));
+                               sequence_id, priority, stream_id, route_id));
   if (!stub->Initialize(share_command_buffer_stub, init_params,
                         std::move(shared_state_shm)))
     return nullptr;
@@ -242,6 +243,7 @@ GpuCommandBufferStub::GpuCommandBufferStub(
     const GPUCreateCommandBufferConfig& init_params,
     CommandBufferId command_buffer_id,
     SequenceId sequence_id,
+    SchedulingPriority priority,
     int32_t stream_id,
     int32_t route_id)
     : channel_(channel),
@@ -250,6 +252,7 @@ GpuCommandBufferStub::GpuCommandBufferStub(
       use_virtualized_gl_context_(false),
       command_buffer_id_(command_buffer_id),
       sequence_id_(sequence_id),
+      priority_(priority),
       stream_id_(stream_id),
       route_id_(route_id),
       last_flush_id_(0),
@@ -967,6 +970,14 @@ void GpuCommandBufferStub::CheckCompleteWaits() {
       Send(wait_for_get_offset_->reply.release());
       wait_for_get_offset_.reset();
     }
+  }
+  if (!channel_->scheduler())
+    return;
+  if (wait_for_token_ || wait_for_get_offset_) {
+    channel_->scheduler()->SetSequencePriority(sequence_id_,
+                                               SchedulingPriority::kHighest);
+  } else {
+    channel_->scheduler()->SetSequencePriority(sequence_id_, priority_);
   }
 }
 
