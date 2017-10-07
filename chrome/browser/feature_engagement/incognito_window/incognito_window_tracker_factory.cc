@@ -5,6 +5,7 @@
 #include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
 
 #include "base/memory/singleton.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_in_product_help_session_duration_updater_factory.h"
 #include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
@@ -31,7 +32,8 @@ IncognitoWindowTrackerFactory::IncognitoWindowTrackerFactory()
     : BrowserContextKeyedServiceFactory(
           "IncognitoWindowTracker",
           BrowserContextDependencyManager::GetInstance()) {
-  DependsOn(SessionDurationUpdaterFactory::GetInstance());
+  DependsOn(
+      IncognitoWindowInProductHelpSessionDurationUpdaterFactory::GetInstance());
   DependsOn(TrackerFactory::GetInstance());
 }
 
@@ -41,13 +43,21 @@ KeyedService* IncognitoWindowTrackerFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
   return new IncognitoWindowTracker(
       Profile::FromBrowserContext(context),
-      feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-          ->GetForProfile(Profile::FromBrowserContext(context)));
+      feature_engagement::
+          IncognitoWindowInProductHelpSessionDurationUpdaterFactory::
+              GetInstance()
+                  ->GetForProfile(Profile::FromBrowserContext(context)));
 }
 
 content::BrowserContext* IncognitoWindowTrackerFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {
   return chrome::GetBrowserContextRedirectedInIncognito(context);
+}
+
+bool IncognitoWindowTrackerFactory::ServiceIsCreatedWithBrowserContext() const {
+  // Start IncognitoWindowTracker early so the incognito window in product help
+  // starts tracking.
+  return true;
 }
 
 }  // namespace feature_engagement

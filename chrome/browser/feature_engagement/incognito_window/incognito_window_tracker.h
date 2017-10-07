@@ -7,6 +7,7 @@
 
 #include "chrome/browser/feature_engagement/feature_tracker.h"
 
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_in_product_help_session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "ui/views/widget/widget_observer.h"
@@ -30,7 +31,8 @@ class IncognitoWindowTracker : public FeatureTracker,
                                public views::WidgetObserver {
  public:
   IncognitoWindowTracker(Profile* profile,
-                         SessionDurationUpdater* session_duration_updater);
+                         IncognitoWindowInProductHelpSessionDurationUpdater*
+                             session_duration_updater);
 
   // Alerts the incognito window tracker that an incognito window was opened.
   void OnIncognitoWindowOpened();
@@ -44,7 +46,8 @@ class IncognitoWindowTracker : public FeatureTracker,
  protected:
   // Alternate constructor to support unit testing.
   explicit IncognitoWindowTracker(
-      SessionDurationUpdater* session_duration_updater);
+      IncognitoWindowInProductHelpSessionDurationUpdater*
+          session_duration_updater);
   ~IncognitoWindowTracker() override;
 
  private:

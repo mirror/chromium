@@ -16,6 +16,7 @@
 #include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile_manager.h"
 #include "components/feature_engagement/public/event_constants.h"
@@ -45,10 +46,13 @@ class TestFeatureTracker : public FeatureTracker {
             feature_engagement::SessionDurationUpdaterFactory::GetInstance()
                 ->GetForProfile(profile),
             &kIPHNewTabFeature,
+            prefs::kNewTabInProductHelpObservedSessionTime,
             base::TimeDelta::FromMinutes(kTestTimeDeltaInMinutes)),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    SessionDurationUpdater::RegisterProfilePrefs(
+        pref_service_->registry(),
+        prefs::kNewTabInProductHelpObservedSessionTime);
   }
 
   base::TimeDelta GetSessionTimeRequiredToShowWrapper() {
@@ -87,9 +91,9 @@ class FeatureTrackerTest : public testing::Test {
   }
 
   void TearDown() override {
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     // Need to invoke the reset method as TearDown is on the UI thread.
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:
@@ -165,9 +169,9 @@ class FeatureTrackerMinutesTest : public testing::Test {
 
   void TearDown() override {
     mock_feature_tracker_.get()->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     // Need to invoke the rest method as TearDown is on the UI thread.
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
   void SetFeatureParams(const base::Feature& feature,

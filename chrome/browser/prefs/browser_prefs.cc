@@ -167,7 +167,8 @@
 #endif
 
 #if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-#include "chrome/browser/feature_engagement/session_duration_updater.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_in_product_help_session_duration_updater.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_in_product_help_session_duration_updater.h"
 #endif
 
 #if defined(OS_ANDROID)
@@ -522,7 +523,10 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-  feature_engagement::SessionDurationUpdater::RegisterProfilePrefs(registry);
+  feature_engagement::IncognitoWindowInProductHelpSessionDurationUpdater::
+      RegisterProfilePrefs(registry);
+  feature_engagement::NewTabInProductHelpSessionDurationUpdater::
+      RegisterProfilePrefs(registry);
 #endif
 
 #if BUILDFLAG(ENABLE_PLUGINS)

@@ -36,6 +36,7 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   FeatureTracker(Profile* profile,
                  SessionDurationUpdater* session_duration_updater,
                  const base::Feature* feature,
+                 const char* observed_session_time_perf,
                  base::TimeDelta defaultTimeRequiredToShowPromo);
 
   // Adds the SessionDurationUpdater observer.
@@ -66,6 +67,11 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   base::TimeDelta GetSessionTimeRequiredToShow();
 
  private:
+  // Notifies In-Product Help and removes the session duration obverser if the
+  // session time requirement has been met for the feature.
+  void NotifyAndRemoveSessionDurationObserverIfSessionTimeMet(
+      base::TimeDelta total_session_time);
+
   // Returns whether the active session time of a user has elapsed more than the
   // required active session time for the feature.
   bool HasEnoughSessionTimeElapsed(base::TimeDelta total_session_time);
@@ -84,12 +90,18 @@ class FeatureTracker : public SessionDurationUpdater::Observer,
   // IPH Feature that the tracker is tracking.
   const base::Feature* const feature_;
 
+  // The profile perf that tracks the observed session time for |feature_|.
+  const char* observed_session_time_perf_;
+
   // "x_minutes" param value from the field trial.
   base::TimeDelta field_trial_time_delta_;
 
   // Whether the "x_minutes" param value has already been retrieved to prevent
   // reading from the field trial multiple times for the same param.
   bool has_retrieved_field_trial_minutes_ = false;
+
+  // Whether the "x_session_time" requirement has already been met.
+  bool has_session_time_been_met_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(FeatureTracker);
 };
