@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55aa540d_098263cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Mention the preference name (dnr_ruleset_checksum) here.",
+      "range": {
+        "startLine": 9,
+        "startChar": 15,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad19415_5f9149ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Q: at what point(s) in extension/browser lifetime do you plan to verify this? I would imagine verifying too frequently would be slower. Do we need to run this on every browser startup? It\u0027s tricky because we might be slowing down the very first navigation after browser startup. Some thing to keep in mind.\n\nOr it could be that (re)calculating hash to verify wouldn\u0027t be slow, lmk.",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c0bda1_6a681dbf",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1546,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Component extensions have some special cases afaik, let\u0027s make it a todo to revisit if a component extension wants to use DNR.",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c359523_fce084ad",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "nit: Retrieves the ..., or Returns the ...",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 35,
+        "endChar": 25
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4085ba6b_8d52d67b",
+        "filename": "extensions/browser/api/declarative_net_request/utils.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Q: when can this be null?",
+      "range": {
+        "startLine": 63,
+        "startChar": 17,
+        "endLine": 63,
+        "endChar": 33
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f76cf860_879cec7b",
+        "filename": "extensions/browser/extension_prefs.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1712,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "ExtensionId",
+      "range": {
+        "startLine": 1712,
+        "startChar": 49,
+        "endLine": 1712,
+        "endChar": 60
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d341764_e766a3e0",
+        "filename": "extensions/browser/extension_prefs.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "can you move this function above the static method on line 561?",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a2fcc21_f2c57a3b",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Also say why this is Optional",
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c74a1b90_38ff4f86",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-07T01:04:51Z",
+      "side": 1,
+      "message": "Since we only use this in case of the method succeeding, this doesn\u0027t require base::Optional, would int* work?",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 47
+      },
+      "revId": "435d12afc3bdc6af246358986dc3aa5777ade51d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
