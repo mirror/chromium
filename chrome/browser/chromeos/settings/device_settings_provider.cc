@@ -108,6 +108,7 @@ const char* const kKnownSettings[] = {
     kDeviceLoginScreenInputMethods,
     kDeviceOffHours,
     kTPMFirmwareUpdateSettings,
+    kAllowUserAvatarVideos,
 };
 
 void DecodeLoginPolicies(
@@ -585,6 +586,15 @@ void DecodeGenericPolicies(
     new_values_cache->SetValue(kTPMFirmwareUpdateSettings,
                                tpm_firmware_update::DecodeSettingsProto(
                                    policy.tpm_firmware_update_settings()));
+  }
+
+  if (policy.has_allow_user_avatar_videos() &&
+      policy.allow_user_avatar_videos().has_allow_user_avatar_videos()) {
+    new_values_cache->SetBoolean(
+        kAllowUserAvatarVideos,
+        policy.allow_user_avatar_videos().allow_user_avatar_videos());
+  } else {
+    new_values_cache->SetBoolean(kAllowUserAvatarVideos, true);
   }
 }
 
