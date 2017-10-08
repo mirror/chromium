@@ -19,6 +19,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
+#include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/login/user_flow.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
@@ -195,6 +196,13 @@ bool IsArcAllowedForProfile(const Profile* profile) {
       chromeos::ChromeUserManager::Get()->GetUserFlow(user->GetAccountId());
   if (!user_flow || !user_flow->CanStartArc()) {
     VLOG(1) << "ARC is not allowed in the current user flow.";
+    return false;
+  }
+
+  if (chromeos::UserSessionManager::NeedRestartToApplyPerSessionFlagsForProfile(
+          profile)) {
+    // Quickly restarting ARC instance can cause black screen. crbug.com/758820.
+    VLOG(1) << "Do not start ARC because chrome will restart";
     return false;
   }
 
