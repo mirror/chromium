@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "85ec45b5_39d45cf8",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827a8828_e8413ca7",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "557ce9bb_e4d17d4c",
         "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-02T06:24:29Z",
       "side": 1,
       "message": "I feel it\u0027s a bit strange because host:client relationship gets unbalanced.\n\nHmm, IIUC, info-\u003ehost_ptr_info is also discarded at SWDispatcher::GetOrAdoptRegistration if the same |handle_id| has already existed?\nhttps://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_dispatcher.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d266\n\nIf so, we might not need to set other members than |handle_id| at second time or later.\n\n// Feel free to correct me if something wrong! :)",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9faa15f2_26c8a863",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "It\u0027s true that at one moment |this| maps to only one WebServiceWorkerRegistrationImpl instance, then why we\u0027re using a binding set in |this| instead of just a binding? It\u0027s the same question why we were using IncreRefCount/DecreRefCount legacy IPCs before. I think it\u0027s for the scenario like following, as renderer-side needs to re-construct WebSWRegistrationImpl, host_ptr_info_2 MUST also be valid.\n  browser                                         renderer\n                  \u003c---Register SW\ncreate SWRegistrationHandle\nget host_ptr_info_1\n            pass host_ptr_info_1---\u003e     create WebSWRegistrationImpl_1(host_ptr_info_1)\n                  \u003c---GetRegistration\nget host_ptr_info_2                       GC WebSWRegistrationImpl_1\n            pass host_ptr_info_2---\u003e\n                  \u003c---host_ptr_info_1 broken\nremove host_ptr_info_1                   create WebSWRegistrationImpl_2(host_ptr_info_2)\n        \nWhen writing above, I realized I missed rebinding |remote_registration_| against WebSWRegistrationImpl_2 after it has disconnected with WebSWRegistrationImpl_1. PTAnL at ps#6 for this, thanks! \n\nThis CL is step 1 to make mojofication work possible, we need more refinement with following steps.\n\nNext step 2:\nFor a specific browser-side content::SWRegistration in a specific context(SW itself or its\u0027 clients), we expect ONE SWRegistrationHandle in browser side corresponds with ONE WebSWRegistrationImpl in renderer side. So, after we mojofied those legacy IPCs relying on registration handle id, we can eliminate handle id and just use registration id to identify both content::SWRegistration and content::WebSWRegistrationImpl, at that time we can refine more about lifetime control for all these classes.\n\nNext step 3:\nEventually I suppose we\u0027ll eliminate WebSWRegistrationImpl layer, and just let blink::SWRegistration talk directly with content::SWRegistration, being part of Onion Soup efforts. \nFor a given context and a given url scope, currently we\u0027re reusing blink::SWRegistration instance for the SWRegistration JavaScript objects returned by SWContainer#register() and SWContainer#getRegistration(), but at last we\u0027d better discard such reuse mechanism to make code logic clearer? Or is there any reason we must reuse it?",
+      "parentUuid": "557ce9bb_e4d17d4c",
       "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bf92ba19_72895023",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "129b7ff9_9a20ffcb",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5f58797_8708cf78",
         "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629b0d61_53463cc1",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5f58797_8708cf78",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3ec5dfe7_48e7523e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa088fbf_5cf70fbb",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c2c9b6_214610aa",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cf760432_7cd7c8a8",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c2c9b6_214610aa",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41dad8bf_0d90d837",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f794f02a_46b0de18",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T11:24:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41dad8bf_0d90d837",
+      "revId": "798cd9cd4bd753096c2f3f7744c844d524da8c45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
