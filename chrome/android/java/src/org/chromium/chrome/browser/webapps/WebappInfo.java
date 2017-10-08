@@ -60,7 +60,7 @@ public class WebappInfo {
     private Uri mScopeUri;
     private String mName;
     private String mShortName;
-    private int mDisplayMode;
+    private @WebDisplayMode int mDisplayMode;
     private int mOrientation;
     private int mSource;
     private long mThemeColor;
@@ -154,8 +154,9 @@ public class WebappInfo {
      *                        webapp is already open.
      */
     public static WebappInfo create(String id, String url, String scope, Icon icon, String name,
-            String shortName, int displayMode, int orientation, int source, long themeColor,
-            long backgroundColor, boolean isIconGenerated, boolean forceNavigation) {
+            String shortName, @WebDisplayMode int displayMode, int orientation, int source,
+            long themeColor, long backgroundColor, boolean isIconGenerated,
+            boolean forceNavigation) {
         if (id == null || url == null) {
             Log.e(TAG, "Incomplete data provided: " + id + ", " + url);
             return null;
@@ -166,8 +167,9 @@ public class WebappInfo {
     }
 
     protected WebappInfo(String id, String url, String scope, Icon icon, String name,
-            String shortName, int displayMode, int orientation, int source, long themeColor,
-            long backgroundColor, boolean isIconGenerated, boolean forceNavigation) {
+            String shortName, @WebDisplayMode int displayMode, int orientation, int source,
+            long themeColor, long backgroundColor, boolean isIconGenerated,
+            boolean forceNavigation) {
         Uri uri = Uri.parse(url);
         if (TextUtils.isEmpty(scope)) {
             scope = ShortcutHelper.getScopeFromUrl(url);
@@ -225,7 +227,7 @@ public class WebappInfo {
         return mShortName;
     }
 
-    public int displayMode() {
+    public @WebDisplayMode int displayMode() {
         return mDisplayMode;
     }
 
