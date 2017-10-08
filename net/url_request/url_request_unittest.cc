@@ -157,8 +157,8 @@ namespace net {
 
 namespace {
 
-namespace test0 {
-#include "net/http/transport_security_state_static_unittest0.h"
+namespace test_default {
+#include "net/http/transport_security_state_static_unittest_default.h"
 }
 
 const base::string16 kChrome(ASCIIToUTF16("chrome"));
@@ -801,6 +801,8 @@ class URLRequestTest : public PlatformTest {
   ~URLRequestTest() override {
     // URLRequestJobs may post clean-up tasks on destruction.
     base::RunLoop().RunUntilIdle();
+
+    SetTransportSecurityStateSourceForTesting(nullptr);
   }
 
   void SetUp() override {
@@ -6339,9 +6341,10 @@ TEST_F(URLRequestTestHTTP, STSNotProcessedOnIP) {
 }
 
 namespace {
-const char kExpectCTStaticHostname[] = "preloaded-expect-ct.badssl.com";
-const char kExpectStapleStaticHostname[] = "preloaded-expect-staple.badssl.com";
-const char kExpectStapleReportURI[] = "https://report.badssl.com/expect-staple";
+const char kExpectCTStaticHostname[] = "expect-ct.preloaded.test";
+const char kExpectStapleStaticHostname[] = "expect-staple.preloaded.test";
+const char kExpectStapleReportURI[] =
+    "http://report-uri.preloaded.test/expect-staple";
 const char kHPKPReportUri[] = "https://hpkp-report.test";
 }  // namespace
 
@@ -6808,9 +6811,8 @@ class MockCTPolicyEnforcer : public CTPolicyEnforcer {
 
 // Tests that Expect CT headers for the preload list are processed correctly.
 TEST_F(URLRequestTestHTTP, PreloadExpectCTHeader) {
-#if !BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
-  SetTransportSecurityStateSourceForTesting(&test0::kHSTSSource);
-#endif
+  SetTransportSecurityStateSourceForTesting(&test_default::kHSTSSource);
+
   EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_test_server.SetSSLConfig(
       net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
@@ -9431,7 +9433,9 @@ class HTTPSRequestTest : public testing::Test {
     default_context_.set_network_delegate(&default_network_delegate_);
     default_context_.Init();
   }
-  ~HTTPSRequestTest() override {}
+  ~HTTPSRequestTest() override {
+    SetTransportSecurityStateSourceForTesting(nullptr);
+  }
 
  protected:
   TestNetworkDelegate default_network_delegate_;  // Must outlive URLRequest.
@@ -9538,22 +9542,22 @@ TEST_F(HTTPSRequestTest, HTTPSExpiredTest) {
 // TODO(svaldez): iOS tests are flaky with EmbeddedTestServer and transport
 // security state. (see http://crbug.com/550977).
 #if !defined(OS_IOS)
-// This tests that a load of www.google.com with a certificate error sets
-// the |certificate_errors_are_fatal| flag correctly. This flag will cause
-// the interstitial to be fatal.
+// This tests that a load of a domain with preloaded HSTS and HPKP with a
+// certificate error sets the |certificate_errors_are_fatal| flag correctly.
+// This flag will cause the interstitial to be fatal.
 TEST_F(HTTPSRequestTest, HTTPSPreloadedHSTSTest) {
-#if !BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
-  SetTransportSecurityStateSourceForTesting(&test0::kHSTSSource);
-#endif
+  SetTransportSecurityStateSourceForTesting(&test_default::kHSTSSource);
+
   EmbeddedTestServer test_server(net::EmbeddedTestServer::TYPE_HTTPS);
   test_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   test_server.ServeFilesFromSourceDirectory("net/data/ssl");
   ASSERT_TRUE(test_server.Start());
 
-  // We require that the URL be www.google.com in order to pick up the
-  // preloaded HSTS entries in the TransportSecurityState. This means that we
-  // have to use a MockHostResolver in order to direct www.google.com to the
-  // testserver. By default, MockHostResolver maps all hosts to 127.0.0.1.
+  // We require that the URL be hsts-hpkp-preloaded.test. This is a test domain
+  // that has a preloaded HSTS+HPKP entry in the TransportSecurityState. This
+  // means that we have to use a MockHostResolver in order to direct
+  // hsts-hpkp-preloaded.test to the testserver. By default, MockHostResolver
+  // maps all hosts to 127.0.0.1.
 
   MockHostResolver host_resolver;
   TestNetworkDelegate network_delegate;  // Must outlive URLRequest.
@@ -9566,7 +9570,7 @@ TEST_F(HTTPSRequestTest, HTTPSPreloadedHSTSTest) {
 
   TestDelegate d;
   std::unique_ptr<URLRequest> r(context.CreateRequest(
-      GURL(base::StringPrintf("https://www.google.com:%d",
+      GURL(base::StringPrintf("https://hsts-hpkp-preloaded.test:%d",
                               test_server.host_port_pair().port())),
       DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
 
@@ -9584,9 +9588,8 @@ TEST_F(HTTPSRequestTest, HTTPSPreloadedHSTSTest) {
 // This tests that cached HTTPS page loads do not cause any updates to the
 // TransportSecurityState.
 TEST_F(HTTPSRequestTest, HTTPSErrorsNoClobberTSSTest) {
-#if !BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
-  SetTransportSecurityStateSourceForTesting(&test0::kHSTSSource);
-#endif
+  SetTransportSecurityStateSourceForTesting(&test_default::kHSTSSource);
+
   // The actual problem -- CERT_MISMATCHED_NAME in this case -- doesn't
   // matter. It just has to be any error.
   EmbeddedTestServer test_server(net::EmbeddedTestServer::TYPE_HTTPS);
@@ -9594,10 +9597,11 @@ TEST_F(HTTPSRequestTest, HTTPSErrorsNoClobberTSSTest) {
   test_server.ServeFilesFromSourceDirectory("net/data/ssl");
   ASSERT_TRUE(test_server.Start());
 
-  // We require that the URL be www.google.com in order to pick up the static
-  // and dynamic STS and PKP entries in the TransportSecurityState. This means
-  // that we have to use a MockHostResolver in order to direct www.google.com to
-  // the testserver. By default, MockHostResolver maps all hosts to 127.0.0.1.
+  // We require that the URL be hsts-hpkp-preloaded.test. This is a test domain
+  // that has a preloaded HSTS+HPKP entry in the TransportSecurityState. This
+  // means that we have to use a MockHostResolver in order to direct
+  // hsts-hpkp-preloaded.test to the testserver. By default, MockHostResolver
+  // maps all hosts to 127.0.0.1.
 
   MockHostResolver host_resolver;
   TestNetworkDelegate network_delegate;  // Must outlive URLRequest.
@@ -9609,20 +9613,20 @@ TEST_F(HTTPSRequestTest, HTTPSErrorsNoClobberTSSTest) {
   TransportSecurityState::STSState static_sts_state;
   TransportSecurityState::PKPState static_pkp_state;
   EXPECT_TRUE(transport_security_state.GetStaticDomainState(
-      "www.google.com", &static_sts_state, &static_pkp_state));
+      "hsts-hpkp-preloaded.test", &static_sts_state, &static_pkp_state));
   context.set_transport_security_state(&transport_security_state);
   context.Init();
 
   TransportSecurityState::STSState dynamic_sts_state;
   TransportSecurityState::PKPState dynamic_pkp_state;
-  EXPECT_FALSE(transport_security_state.GetDynamicSTSState("www.google.com",
-                                                           &dynamic_sts_state));
-  EXPECT_FALSE(transport_security_state.GetDynamicPKPState("www.google.com",
-                                                           &dynamic_pkp_state));
+  EXPECT_FALSE(transport_security_state.GetDynamicSTSState(
+      "hsts-hpkp-preloaded.test", &dynamic_sts_state));
+  EXPECT_FALSE(transport_security_state.GetDynamicPKPState(
+      "hsts-hpkp-preloaded.test", &dynamic_pkp_state));
 
   TestDelegate d;
   std::unique_ptr<URLRequest> r(context.CreateRequest(
-      GURL(base::StringPrintf("https://www.google.com:%d",
+      GURL(base::StringPrintf("https://hsts-hpkp-preloaded.test:%d",
                               test_server.host_port_pair().port())),
       DEFAULT_PRIORITY, &d, TRAFFIC_ANNOTATION_FOR_TESTS));
 
@@ -9640,13 +9644,14 @@ TEST_F(HTTPSRequestTest, HTTPSErrorsNoClobberTSSTest) {
   TransportSecurityState::STSState new_static_sts_state;
   TransportSecurityState::PKPState new_static_pkp_state;
   EXPECT_TRUE(transport_security_state.GetStaticDomainState(
-      "www.google.com", &new_static_sts_state, &new_static_pkp_state));
+      "hsts-hpkp-preloaded.test", &new_static_sts_state,
+      &new_static_pkp_state));
   TransportSecurityState::STSState new_dynamic_sts_state;
   TransportSecurityState::PKPState new_dynamic_pkp_state;
   EXPECT_FALSE(transport_security_state.GetDynamicSTSState(
-      "www.google.com", &new_dynamic_sts_state));
+      "hsts-hpkp-preloaded.test", &new_dynamic_sts_state));
   EXPECT_FALSE(transport_security_state.GetDynamicPKPState(
-      "www.google.com", &new_dynamic_pkp_state));
+      "hsts-hpkp-preloaded.test", &new_dynamic_pkp_state));
 
   EXPECT_EQ(new_static_sts_state.upgrade_mode, static_sts_state.upgrade_mode);
   EXPECT_EQ(new_static_sts_state.include_subdomains,
@@ -10492,9 +10497,8 @@ TEST_F(HTTPSOCSPTest, MAYBE_RevokedStapled) {
 }
 
 TEST_F(HTTPSOCSPTest, ExpectStapleReportSentOnMissing) {
-#if !BUILDFLAG(INCLUDE_TRANSPORT_SECURITY_STATE_PRELOAD_LIST)
-  SetTransportSecurityStateSourceForTesting(&test0::kHSTSSource);
-#endif
+  SetTransportSecurityStateSourceForTesting(&test_default::kHSTSSource);
+
   EmbeddedTestServer https_test_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_test_server.SetSSLConfig(
       net::EmbeddedTestServer::CERT_COMMON_NAME_IS_DOMAIN);
