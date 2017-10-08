@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ee203a3_ef3435a3",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-08T17:15:33Z",
+      "side": 0,
+      "message": "Pawel made the flag a no-op in https://chromium-review.googlesource.com/#/c/677286/ so let\u0027s stop passing it.",
+      "range": {
+        "startLine": 746,
+        "startChar": 62,
+        "endLine": 746,
+        "endChar": 75
+      },
+      "revId": "9ffb4350f06f045c4ae096d97079a654be70b352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
