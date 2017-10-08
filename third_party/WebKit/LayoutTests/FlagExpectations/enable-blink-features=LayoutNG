@@ -109,7 +109,6 @@ crbug.com/591099 accessibility/inline-text-word-boundary-causes-crash.html [ Fai
 crbug.com/591099 accessibility/input-type-password-value-and-selection.html [ Crash Failure Pass Timeout ]
 crbug.com/591099 accessibility/input-type-range-aria-value.html [ Failure ]
 crbug.com/591099 accessibility/input-type-text-selection.html [ Crash Failure Pass Timeout ]
-crbug.com/591099 accessibility/misspellings.html [ Timeout ]
 crbug.com/591099 accessibility/name-calc-img.html [ Crash Failure ]
 crbug.com/591099 accessibility/presentation-owned-elements.html [ Crash Failure ]
 crbug.com/591099 accessibility/radio-button-title-label.html [ Failure ]
