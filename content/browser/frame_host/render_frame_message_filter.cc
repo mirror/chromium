@@ -344,9 +344,10 @@ void RenderFrameMessageFilter::OnCreateChildFrame(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&CreateChildFrameOnUI, render_process_id_,
                      params.parent_routing_id, params.scope, params.frame_name,
-                     params.frame_unique_name, params.sandbox_flags,
-                     params.container_policy, params.frame_owner_properties,
-                     *new_routing_id));
+                     params.frame_unique_name,
+                     params.frame_policy.sandbox_flags,
+                     params.frame_policy.container_policy,
+                     params.frame_owner_properties, *new_routing_id));
 }
 
 void RenderFrameMessageFilter::OnCookiesEnabled(int render_frame_id,
