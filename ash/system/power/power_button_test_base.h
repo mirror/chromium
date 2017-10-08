@@ -29,6 +29,7 @@ namespace ash {
 
 class LockStateController;
 class LockStateControllerTestApi;
+class PowerButtonScreenshotController;
 enum class LoginStatus;
 
 // Base test fixture and utils for testing power button related functions.
@@ -61,7 +62,8 @@ class PowerButtonTestBase : public AshTestBase {
 
   // Initializes |power_button_controller_| and other members that point at
   // objects owned by it. If |send_accelerometer_update| is true, an
-  // accelerometer update is sent to create TabletPowerButtonController.
+  // accelerometer update is sent to create TabletPowerButtonController and
+  // PowerButtonScreenshotController.
   void InitPowerButtonControllerMembers(bool send_accelerometer_update);
 
   // Sends an update with screen and keyboard accelerometer readings to
@@ -108,6 +110,8 @@ class PowerButtonTestBase : public AshTestBase {
   PowerButtonController* power_button_controller_ = nullptr;  // Not owned.
   LockStateController* lock_state_controller_ = nullptr;      // Not owned.
   TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
+  PowerButtonScreenshotController* screenshot_controller_ =
+      nullptr;  // Not owned.
   std::unique_ptr<TabletPowerButtonController::TestApi> tablet_test_api_;
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
