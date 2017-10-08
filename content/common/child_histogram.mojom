@@ -1,0 +1,17 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+interface ChildHistogramFactory {
+  // Creates a ChildHistogram interface that uses shared memory buffer to
+  // store histograms that are to be reported by the browser process to UMA.
+  CreateChildHistogram(handle<shared_buffer>? shm_handle,
+                       ChildHistogram& child_histogram);
+};
+
+interface ChildHistogram{
+  // Send to all the child processes to send back histogram data.
+  GetChildNonPersistentHistogramData() => (array<string> deltas);
+};
