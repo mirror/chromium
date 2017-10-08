@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77cc46c5_8c22cd51",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T22:51:12Z",
+      "side": 1,
+      "message": "Remove? I don\u0027t think anything calls this.",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1023d575_7eb46a06",
+        "filename": "chrome/common/extensions/manifest_handlers/app_theme_color_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T22:51:12Z",
+      "side": 1,
+      "message": "What about using extensions::image_util::ParseCssColorString ?",
+      "revId": "0f9194a414fec23dfd932131beaf29a2fb435d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
