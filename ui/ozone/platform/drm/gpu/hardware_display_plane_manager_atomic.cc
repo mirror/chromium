@@ -89,6 +89,30 @@ bool HardwareDisplayPlaneManagerAtomic::Commit(
   return true;
 }
 
+bool HardwareDisplayPlaneManagerAtomic::DisableOverlayPlanes(
+    HardwareDisplayPlaneList* plane_list) {
+  for (HardwareDisplayPlane* plane : plane_list->old_plane_list) {
+    if (plane->type() != HardwareDisplayPlane::kOverlay)
+      continue;
+    plane->set_in_use(false);
+    plane->set_owning_crtc(0);
+
+    HardwareDisplayPlaneAtomic* atomic_plane =
+        static_cast<HardwareDisplayPlaneAtomic*>(plane);
+    atomic_plane->SetPlaneData(plane_list->atomic_property_set.get(), 0, 0,
+                               gfx::Rect(), gfx::Rect(),
+                               gfx::OVERLAY_TRANSFORM_NONE);
+  }
+  std::vector<base::WeakPtr<CrtcController>> crtcs;
+  bool ret = drm_->CommitProperties(plane_list->atomic_property_set.get(),
+                                    DRM_MODE_ATOMIC_NONBLOCK, crtcs.size(),
+                                    base::Bind(&AtomicPageFlipCallback, crtcs));
+  PLOG_IF(ERROR, !ret) << "Failed to commit properties for page flip.";
+
+  plane_list->atomic_property_set.reset(drmModeAtomicAlloc());
+  return ret;
+}
+
 bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
     HardwareDisplayPlaneList* plane_list,
     HardwareDisplayPlane* hw_plane,
