@@ -37,11 +37,18 @@ class MockServiceWorkerRegistrationObjectHost
     bindings_.AddBinding(this, std::move(request));
   }
 
+  blink::mojom::ServiceWorkerRegistrationObjectAssociatedRequest
+  CreateRegistrationObjectRequest() {
+    return mojo::MakeRequest(&remote_registration_);
+  }
+
   int GetBindingCount() const { return bindings_.size(); }
 
  private:
   mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationObjectHost>
       bindings_;
+  blink::mojom::ServiceWorkerRegistrationObjectAssociatedPtr
+      remote_registration_;
 };
 
 class ServiceWorkerTestSender : public ThreadSafeSender {
@@ -81,6 +88,8 @@ class ServiceWorkerDispatcherTest : public testing::Test {
     (*info)->registration_id = 20;
     remote_registration_object_host_.AddBinding(
         mojo::MakeRequest(&(*info)->host_ptr_info));
+    (*info)->request =
+        remote_registration_object_host_.CreateRegistrationObjectRequest();
 
     attrs->active.handle_id = 100;
     attrs->active.version_id = 200;

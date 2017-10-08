@@ -147,7 +147,8 @@ void ServiceWorkerProviderContext::TakeRegistrationForServiceWorkerGlobalScope(
   *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New(
       state->registration->registration_id, state->registration->handle_id,
       state->registration->options->Clone(),
-      std::move(state->registration->host_ptr_info));
+      std::move(state->registration->host_ptr_info),
+      std::move(state->registration->request));
 
   if (state->installing)
     attrs->installing = state->installing->info();

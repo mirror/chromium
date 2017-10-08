@@ -79,6 +79,10 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandle
   const int handle_id_;
   mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationObjectHost>
       bindings_;
+  // Mojo connection to the ServiceWorkerRegistrationObject in the renderer,
+  // which corresponds to the ServiceWorkerRegistration JavaScript object.
+  blink::mojom::ServiceWorkerRegistrationObjectAssociatedPtr
+      remote_registration_;
 
   // This handle is the primary owner of this registration.
   scoped_refptr<ServiceWorkerRegistration> registration_;
