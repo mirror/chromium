@@ -1,0 +1,375 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eb32f87_f099342c",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "enum class?\n\n(otherwise these should be STATUS_FOO",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61282ef_2dfd69ae",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "devices \u003d {}? Then you don\u0027t need the default constructor",
+      "range": {
+        "startLine": 41,
+        "startChar": 66,
+        "endLine": 41,
+        "endChar": 73
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735ea76c_52443017",
+        "filename": "chrome/browser/chooser_controller/fake_bluetooth_chooser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "blank line before",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cca8304_7efe78b6",
+        "filename": "chrome/browser/chooser_controller/mock_chooser_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "looks like there\u0027s still a chooser_dialog_cocoa_controller_unittest.mm that wants this :/",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ca102fa_ea844681",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "I\u0027d probably just merge this with the stuff below and have \u003cstring\u003e at the top. Otherwise, call this\n\ndevice_chooser_content_view_browsertest.cc, and just #include c/b/ui/views/device_chooser_content_view.h at the top",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0d552f_09f15f93",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "these should take in a std::unique_ptr\u003cChooserController\u003e since they\u0027re transferring ownership",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 70
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e752f3e7_c28fe0a0",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 28
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5236d3ce_0eef56ed",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "I think \n\n`controller` -\u003e `MakeUnique\u003cFakeUsbChooserController\u003e(option_count_)`\n\nwill work",
+      "range": {
+        "startLine": 53,
+        "startChar": 33,
+        "endLine": 53,
+        "endChar": 43
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1aa9c4_62a28d67",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "comment about option_count_? (Would device_count_ be a better name?)\n\n(I\u0027d just initialize here too, rather than at the constructor)",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4af67ef_b764a1b6",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "nit: noDevices -\u003e NoDevices? (same for the others), that brings the casing styles down from 3 to to 2 :)",
+      "range": {
+        "startLine": 64,
+        "startChar": 46,
+        "endLine": 64,
+        "endChar": 75
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eeac154_153a3774",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "MakeUnique",
+      "range": {
+        "startLine": 91,
+        "startChar": 23,
+        "endLine": 91,
+        "endChar": 57
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026eec22_de76fa11",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "AddDevice() .. or expose\n\nstd::vector\u003cFakeBluetoothChooserController::FakeDevice\u003e\u0026 devices() { return devices(); }\n\nor..",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bea821_5fdd68f5",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": ".. or just declare the data members `protected:` -- that\u0027s perfectly fine for test harnesses",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f3acae_46fcbd6b",
+        "filename": "chrome/browser/ui/views/device_chooser_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "i.e., here, I\u0027d just do\n\ndevices_.push_back(\n    {false, false, FakeBluetoothChooserController::kSignalStrengthLevel0});\n\n\n(I think that even works if you leave a constructor on FakeDevice, now that we can use C++11 uniform initialization)\n\nYou could also do\n\nconstexpr FakeBluetoothChooserController::FakeDevice kFakeDevices[] \u003d {\n    {false, false, 0}, {false, false, 1}, ...};\ndevices_.insert(begin(kFakeDevices), end(kFakeDevices), devices_.end());",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d556c394_5c72f507",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "accessing views::Views via reference feels peculiar - can these all return a pointer?  (I appreciate that a reference is good intrinsic documentation to say `this won\u0027t be null`, but that\u0027s just never really been adopted around views :/)",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45df7382_1495b281",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "ExpectNoDevices?",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 22
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04917a4e_41a184c8",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "WrapUnique(controller_) ? or\n\n  auto controller \u003d MakeUnique\u003cFakeBluetoothChooserController\u003e();\n  controller_ \u003d controller.get();  // Keep a weak ref.\n  dialog_ \u003d new ChooserDialogView(std::move(controller));",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9d3393_c0dddc7b",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "I think having these protected is fine",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c00079_4ea4a6ef",
+        "filename": "chrome/browser/ui/views/extensions/chooser_dialog_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-10-08T23:52:32Z",
+      "side": 1,
+      "message": "(but private: before this)",
+      "revId": "e68056dc6b19206bee54477fa0773ec79a5f8776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
