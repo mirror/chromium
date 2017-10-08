@@ -132,6 +132,8 @@ class AutocompleteProviderClient {
   // Called after creation of |keyword_provider| to allow the client to
   // configure the provider if desired.
   virtual void ConfigureKeywordProvider(KeywordProvider* keyword_provider) {}
+
+  virtual bool TabIsOpen(const GURL& url) = 0;
 };
 
 #endif  // COMPONENTS_OMNIBOX_BROWSER_AUTOCOMPLETE_PROVIDER_CLIENT_H_

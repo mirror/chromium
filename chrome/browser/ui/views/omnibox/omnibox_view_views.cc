@@ -16,7 +16,10 @@
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/omnibox/clipboard_utils.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
@@ -229,6 +232,39 @@ void OmniboxViewViews::Update() {
       SelectAll(true);
   } else if (old_security_level != security_level_) {
     EmphasizeURLComponents();
+  }
+}
+
+void OmniboxViewViews::SwitchToTabWithURL(const std::string& url,
+                                          bool incognito,
+                                          bool close_this) {
+  // TODO: Can we put this loop somewhere in common with TabSearchProvider ?
+  BrowserList* browser_list = BrowserList::GetInstance();
+  for (BrowserList::const_iterator b = browser_list->begin();
+       b != browser_list->end(); ++b) {
+    Browser* browser = *b;
+    if (browser->profile()->IsOffTheRecord() == incognito) {
+      for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
+        content::WebContents* web_contents =
+            browser->tab_strip_model()->GetWebContentsAt(i);
+        if (web_contents->GetURL() == url) {
+          // If not "us"
+          if (location_bar_view_->GetWebContents() != web_contents) {
+            if (close_this)
+              location_bar_view_->GetWebContents()->Close();
+            else
+              // Transfer focus, from the Omnibox, to the tab so that when
+              // focus comes back to the tab, it's focused on the content.
+              // TODO: No idea how appropriate this approach is.
+              // I have this feeling that we should add another command to
+              // BrowserCommandController::ExecuteCommandWithDisposition().
+              location_bar_view_->GetWebContents()->Focus();
+            web_contents->GetDelegate()->ActivateContents(web_contents);
+          }
+          return;
+        }
+      }
+    }
   }
 }
 

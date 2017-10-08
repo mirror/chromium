@@ -2102,6 +2102,10 @@ const char kOmniboxTailSuggestionsDescription[] =
     "Enable receiving tail suggestions, a type of search suggestion based on "
     "the last few words in the query, for the Omnibox.";
 
+const char kOmniboxTabSearchesName[] = "Omnibox tab searches";
+const char kOmniboxTabSearchesDescription[] =
+    "Enabled searching open tabs for URLs suggested by the Omnibox.";
+
 const char kOneGoogleBarOnLocalNtpName[] =
     "Enable the OneGoogleBar on the local NTP";
 const char kOneGoogleBarOnLocalNtpDescription[] =
