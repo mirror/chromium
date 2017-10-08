@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/child/child_histogram_message_filter.h"
+#include "content/child/child_histogram_impl.h"
 
 #include <ctype.h>
 
@@ -15,56 +15,54 @@
 #include "content/child/child_process.h"
 #include "content/common/child_process_messages.h"
 #include "ipc/ipc_sender.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 
 namespace content {
 
-ChildHistogramMessageFilter::ChildHistogramMessageFilter()
-    : sender_(NULL),
-      io_task_runner_(ChildProcess::current()->io_task_runner()) {
+ChildHistogramFactoryImpl::ChildHistogramFactoryImpl() {}
+
+ChildHistogramFactoryImpl::~ChildHistogramFactoryImpl() {}
+
+void ChildHistogramFactoryImpl::Create(
+    content::mojom::ChildHistogramFactoryRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<ChildHistogramFactoryImpl>(),
+                          std::move(request));
 }
 
-ChildHistogramMessageFilter::~ChildHistogramMessageFilter() {
-}
+void ChildHistogramFactoryImpl::CreateChildHistogram(
+    mojo::ScopedSharedBufferHandle buffer_handle,
+    content::mojom::ChildHistogramRequest child_histogram_request) {
+  base::SharedMemoryHandle memory_handle;
+  size_t memory_size;
+  const MojoResult result = mojo::UnwrapSharedMemoryHandle(
+      std::move(buffer_handle), &memory_handle, &memory_size, nullptr);
 
-void ChildHistogramMessageFilter::OnFilterAdded(IPC::Channel* channel) {
-  sender_ = channel;
-}
-
-void ChildHistogramMessageFilter::OnFilterRemoved() {
-}
-
-bool ChildHistogramMessageFilter::OnMessageReceived(
-    const IPC::Message& message) {
-  bool handled = true;
-  IPC_BEGIN_MESSAGE_MAP(ChildHistogramMessageFilter, message)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_SetHistogramMemory,
-                        OnSetHistogramMemory)
-    IPC_MESSAGE_HANDLER(ChildProcessMsg_GetChildNonPersistentHistogramData,
-                        OnGetChildHistogramData)
-    IPC_MESSAGE_UNHANDLED(handled = false)
-  IPC_END_MESSAGE_MAP()
-  return handled;
-}
-
-void ChildHistogramMessageFilter::OnSetHistogramMemory(
-    const base::SharedMemoryHandle& memory_handle,
-    int memory_size) {
-  // This message must be received only once. Multiple calls to create a global
-  // allocator will cause a CHECK() failure.
-  base::GlobalHistogramAllocator::CreateWithSharedMemoryHandle(memory_handle,
-                                                               memory_size);
+  if (result == MOJO_RESULT_OK) {
+    // This message must be received only once. Multiple calls to create a
+    // global allocator will cause a CHECK() failure.
+    base::GlobalHistogramAllocator::CreateWithSharedMemoryHandle(memory_handle,
+                                                                 memory_size);
+  }
 
   base::PersistentHistogramAllocator* global_allocator =
       base::GlobalHistogramAllocator::Get();
   if (global_allocator)
     global_allocator->CreateTrackingHistograms(global_allocator->Name());
+
+  content::mojom::ChildHistogramPtr child_histogram_interface;
+  mojo::MakeStrongBinding(base::MakeUnique<ChildHistogramImpl>(),
+                          std::move(child_histogram_request));
 }
 
-void ChildHistogramMessageFilter::OnGetChildHistogramData(int sequence_number) {
-  UploadAllHistograms(sequence_number);
-}
+ChildHistogramImpl::ChildHistogramImpl() {}
 
-void ChildHistogramMessageFilter::UploadAllHistograms(int sequence_number) {
+ChildHistogramImpl::~ChildHistogramImpl() {}
+
+// Extract snapshot data and then send it off to the Browser process.
+// Send only a delta to what we have already sent.
+void ChildHistogramImpl::GetChildNonPersistentHistogramData(
+    HistogramDataCallback callback) {
   // If a persistent allocator is in use, it needs to occasionally update
   // some internal histograms. An upload is happening so this is a good time.
   base::PersistentHistogramAllocator* global_allocator =
@@ -82,8 +80,8 @@ void ChildHistogramMessageFilter::UploadAllHistograms(int sequence_number) {
   // histograms held in persistent storage on the assumption that they will be
   // visible to the recipient through other means.
   histogram_delta_serialization_->PrepareAndSerializeDeltas(&deltas, false);
-  sender_->Send(
-      new ChildProcessHostMsg_ChildHistogramData(sequence_number, deltas));
+
+  std::move(callback).Run(deltas);
 
 #ifndef NDEBUG
   static int count = 0;
