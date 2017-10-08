@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "093b1fb4_caa32d39",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c05bb957_84667731",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b819d87e_5d25b4aa",
         "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d208551c_bab27937",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b819d87e_5d25b4aa",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "53033bbe_29171331",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc6dd261_f9b257ee",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04ae691f_59f40a69",
         "filename": "content/child/service_worker/service_worker_dispatcher.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "22b7ae0d_9b0d7858",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04ae691f_59f40a69",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f686729_65556f61",
         "filename": "content/child/service_worker/service_worker_dispatcher.h",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-10-02T06:38:59Z",
       "side": 1,
       "message": "Can you help me understand why Controller vs Controllee has different behavior about whether it adopts or creates?",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e683fba4_a4346379",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "After CL https://chromium-review.googlesource.com/c/chromium/src/+/665097, currently Controller and Controllee have the same behavior against SW registration object, but SW object still has \u0027Adopt\u0027 concept(https://cs.chromium.org/chromium/src/content/child/service_worker/service_worker_handle_reference.h?l\u003d34\u0026gs\u003dcpp%253Acontent%253A%253Aclass-ServiceWorkerHandleReference%253A%253AAdopt(const%2Bcontent%253A%253AServiceWorkerObjectInfo%2B%2526%252C%2Bcontent%253A%253AThreadSafeSender%2B*)%2540chromium%252F..%252F..%252Fcontent%252Fchild%252Fservice_worker%252Fservice_worker_handle_reference.h%257Cdecl\u0026gsn\u003dAdopt\u0026ct\u003dxref_usages).\n\nNext step I\u0027ll use the similar method to eliminate ServiceWorkerHandleReference class, after that \u0027Adopt\u0027 concept will disappear and we can merge these 2 functions to 1 function GetOrCreateRegistration().",
+      "parentUuid": "3f686729_65556f61",
       "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "06c04540_506e9d73",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f268c69f_e199f9e6",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ccbfdd2_875d1830",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
         "patchSetId": 4
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "ac31e60e_f158c44a",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ccbfdd2_875d1830",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3449cf13_8e7d494c",
         "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
         "patchSetId": 4
@@ -132,6 +258,24 @@
       "writtenOn": "2017-10-02T06:38:59Z",
       "side": 1,
       "message": "why is the default arg needed?",
+      "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa6d581_9e5f72ad",
+        "filename": "content/child/service_worker/web_service_worker_registration_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-10-08T10:04:55Z",
+      "side": 1,
+      "message": "For service worker client contexts, |this| is created/bound/used on the main thread, so no need to pass such a |binding_task_runner| to its ctor, which will use current thread task runner if |binding_task_runner| is nullptr.",
+      "parentUuid": "3449cf13_8e7d494c",
       "revId": "3cf1107afc9175f13298beddec3c5f851e21e0d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
