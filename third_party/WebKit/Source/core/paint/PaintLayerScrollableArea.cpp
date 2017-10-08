@@ -1323,21 +1323,33 @@ void PaintLayerScrollableArea::ComputeScrollbarExistence(
   needs_horizontal_scrollbar = Box().ScrollsOverflowX();
   needs_vertical_scrollbar = Box().ScrollsOverflowY();
 
+  IntSize visible_size_with_scrollbars =
+      VisibleContentRect(kIncludeScrollbars).Size();
+
+  // Avoid adding auto scrollbars in the first layout pass if the content is
+  // entirely inside the scroll area.
+  bool remove_auto_scrollbars =
+      !in_overflow_relayout_ &&
+      ScrollWidth() <= visible_size_with_scrollbars.Width() &&
+      ScrollHeight() <= visible_size_with_scrollbars.Height();
+
   // Don't add auto scrollbars if the box contents aren't visible.
   if (Box().HasAutoHorizontalScrollbar()) {
+    if (remove_auto_scrollbars)
+      needs_horizontal_scrollbar = false;
     if (option == kForbidAddingAutoBars)
       needs_horizontal_scrollbar &= HasHorizontalScrollbar();
-    needs_horizontal_scrollbar &=
-        Box().IsRooted() && this->HasHorizontalOverflow() &&
-        VisibleContentRect(kIncludeScrollbars).Height();
+    needs_horizontal_scrollbar &= Box().IsRooted() && HasHorizontalOverflow() &&
+                                  visible_size_with_scrollbars.Height();
   }
 
   if (Box().HasAutoVerticalScrollbar()) {
+    if (remove_auto_scrollbars)
+      needs_vertical_scrollbar = false;
     if (option == kForbidAddingAutoBars)
       needs_vertical_scrollbar &= HasVerticalScrollbar();
-    needs_vertical_scrollbar &= Box().IsRooted() &&
-                                this->HasVerticalOverflow() &&
-                                VisibleContentRect(kIncludeScrollbars).Width();
+    needs_vertical_scrollbar &= Box().IsRooted() && HasVerticalOverflow() &&
+                                visible_size_with_scrollbars.Width();
   }
 
   // Look for the scrollbarModes and reset the needs Horizontal & vertical
