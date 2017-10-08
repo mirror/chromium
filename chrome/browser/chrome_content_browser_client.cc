@@ -59,6 +59,7 @@
 #include "chrome/browser/nacl_host/nacl_browser_delegate_impl.h"
 #include "chrome/browser/net_benchmarking.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
+#include "chrome/browser/origin_manifest/origin_manifest_url_loader_throttle.h"
 #include "chrome/browser/page_load_metrics/experiments/delay_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/metrics_navigation_throttle.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
@@ -3483,6 +3484,7 @@ base::FilePath ChromeContentBrowserClient::GetLoggingFileName(
 
 std::vector<std::unique_ptr<content::URLLoaderThrottle>>
 ChromeContentBrowserClient::CreateURLLoaderThrottles(
+    content::ResourceContext* resource_context,
     const base::Callback<content::WebContents*()>& wc_getter) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
@@ -3494,6 +3496,8 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
           GetSafeBrowsingUrlCheckerDelegate(), wc_getter);
   if (safe_browsing_throttle)
     result.push_back(std::move(safe_browsing_throttle));
+
+  result.push_back(OriginManifestURLLoaderThrottle::Create(resource_context));
 
   return result;
 }

@@ -155,7 +155,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           webui_factory_ptr_.get(),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
-              web_contents_getter_),
+              resource_context_, web_contents_getter_),
           0 /* routing_id? */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
           *resource_request_, this, kTrafficAnnotation);
       return;
@@ -213,7 +213,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
-              web_contents_getter_),
+              resource_context_, web_contents_getter_),
           *resource_request_, this, kTrafficAnnotation);
 
       DCHECK_GT(handler_index_, 0U);
@@ -252,7 +252,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         factory,
         GetContentClient()->browser()->CreateURLLoaderThrottles(
-            web_contents_getter_),
+            resource_context_, web_contents_getter_),
         0 /* routing_id? */, 0 /* request_id? */,
         mojom::kURLLoadOptionSendSSLInfo | mojom::kURLLoadOptionSniffMimeType,
         *resource_request_, this, kTrafficAnnotation);

@@ -855,7 +855,8 @@ class CONTENT_EXPORT ContentBrowserClient {
   // URL request. This is used only when --enable-network-service is in effect.
   // This is called on the IO thread.
   virtual std::vector<std::unique_ptr<URLLoaderThrottle>>
-  CreateURLLoaderThrottles(const base::Callback<WebContents*()>& wc_getter);
+  CreateURLLoaderThrottles(ResourceContext* resource_context,
+                           const base::Callback<WebContents*()>& wc_getter);
 
   // Creates a NetworkContext for a BrowserContext's StoragePartition. If the
   // network service is enabled, it must return a NetworkContext using the

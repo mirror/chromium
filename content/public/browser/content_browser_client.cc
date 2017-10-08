@@ -503,6 +503,7 @@ ContentBrowserClient::GetTaskSchedulerInitParams() {
 
 std::vector<std::unique_ptr<URLLoaderThrottle>>
 ContentBrowserClient::CreateURLLoaderThrottles(
+    ResourceContext* resource_context,
     const base::Callback<WebContents*()>& wc_getter) {
   return std::vector<std::unique_ptr<URLLoaderThrottle>>();
 }
