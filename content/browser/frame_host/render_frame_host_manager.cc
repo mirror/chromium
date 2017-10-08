@@ -434,6 +434,8 @@ void RenderFrameHostManager::OnCrossSiteResponse(
 void RenderFrameHostManager::DidNavigateFrame(
     RenderFrameHostImpl* render_frame_host,
     bool was_caused_by_user_gesture) {
+  frame_tree_node_->SetTotalCombinedSandboxFlags(
+      blink::WebSandboxFlags::kNone);  // NO no
   CommitPendingIfNecessary(render_frame_host, was_caused_by_user_gesture);
 
   // Make sure any dynamic changes to this frame's sandbox flags and feature
@@ -555,8 +557,7 @@ void RenderFrameHostManager::CommitPendingFramePolicy() {
     if (pair.second->GetSiteInstance() != parent_site_instance) {
       pair.second->Send(new FrameMsg_DidUpdateFramePolicy(
           pair.second->GetRoutingID(),
-          frame_tree_node_->current_replication_state().sandbox_flags,
-          frame_tree_node_->current_replication_state().container_policy));
+          frame_tree_node_->current_replication_state().frame_policy));
     }
   }
 }

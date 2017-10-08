@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "content/common/content_export.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
+#include "third_party/WebKit/public/web/WebSandboxFlags.h"
 #include "url/origin.h"
 
 namespace content {
@@ -102,6 +103,16 @@ struct CONTENT_EXPORT ParsedFeaturePolicyDeclaration {
 };
 
 using ParsedFeaturePolicyHeader = std::vector<ParsedFeaturePolicyDeclaration>;
+
+struct CONTENT_EXPORT FramePolicy {
+  FramePolicy();
+  FramePolicy(blink::WebSandboxFlags sandbox_flags,
+              const ParsedFeaturePolicyHeader& container_policy);
+  FramePolicy(const FramePolicy& lhs);
+  ~FramePolicy();
+  blink::WebSandboxFlags sandbox_flags;
+  ParsedFeaturePolicyHeader container_policy;
+};
 
 bool CONTENT_EXPORT operator==(const ParsedFeaturePolicyDeclaration& lhs,
                                const ParsedFeaturePolicyDeclaration& rhs);

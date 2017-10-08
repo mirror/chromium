@@ -1006,7 +1006,7 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       // This conversion is a little sad, as this often comes from a
       // WebString...
       WebString::FromUTF8(replicated_state.name),
-      replicated_state.sandbox_flags);
+      replicated_state.frame_policy.sandbox_flags);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
       widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
@@ -1059,10 +1059,11 @@ void RenderFrameImpl::CreateFrame(
         replicated_state.unique_name);
     web_frame = parent_web_frame->CreateLocalChild(
         replicated_state.scope, WebString::FromUTF8(replicated_state.name),
-        replicated_state.sandbox_flags, render_frame,
+        replicated_state.frame_policy.sandbox_flags, render_frame,
         render_frame->blink_interface_registry_.get(),
         previous_sibling_web_frame,
-        FeaturePolicyHeaderToWeb(replicated_state.container_policy),
+        FeaturePolicyHeaderToWeb(
+            replicated_state.frame_policy.container_policy),
         ConvertFrameOwnerPropertiesToWebFrameOwnerProperties(
             frame_owner_properties),
         ResolveOpener(opener_routing_id));
@@ -1086,8 +1087,9 @@ void RenderFrameImpl::CreateFrame(
     proxy->set_provisional_frame_routing_id(routing_id);
     web_frame = blink::WebLocalFrame::CreateProvisional(
         render_frame, render_frame->blink_interface_registry_.get(),
-        proxy->web_frame(), replicated_state.sandbox_flags,
-        FeaturePolicyHeaderToWeb(replicated_state.container_policy));
+        proxy->web_frame(), replicated_state.frame_policy.sandbox_flags,
+        FeaturePolicyHeaderToWeb(
+            replicated_state.frame_policy.container_policy));
   }
   CHECK(parent_routing_id != MSG_ROUTING_NONE || !web_frame->Parent());
 
@@ -2303,11 +2305,10 @@ void RenderFrameImpl::OnUpdateOpener(int opener_routing_id) {
   frame_->SetOpener(opener);
 }
 
-void RenderFrameImpl::OnDidUpdateFramePolicy(
-    blink::WebSandboxFlags flags,
-    const ParsedFeaturePolicyHeader& container_policy) {
-  frame_->SetFrameOwnerPolicy(flags,
-                              FeaturePolicyHeaderToWeb(container_policy));
+void RenderFrameImpl::OnDidUpdateFramePolicy(const FramePolicy& frame_policy) {
+  frame_->SetFrameOwnerPolicy(
+      frame_policy.sandbox_flags,
+      FeaturePolicyHeaderToWeb(frame_policy.container_policy));
 }
 
 void RenderFrameImpl::OnSetFrameOwnerProperties(
@@ -3171,8 +3172,8 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   // browsing context name, only unique name generation.
   params.frame_unique_name = unique_name_helper_.GenerateNameForNewChildFrame(
       params.frame_name.empty() ? fallback_name.Utf8() : params.frame_name);
-  params.sandbox_flags = sandbox_flags;
-  params.container_policy = FeaturePolicyHeaderFromWeb(container_policy);
+  params.frame_policy = {sandbox_flags,
+                         FeaturePolicyHeaderFromWeb(container_policy)};
   params.frame_owner_properties =
       ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
           frame_owner_properties);
@@ -3310,14 +3311,15 @@ void RenderFrameImpl::DidChangeFramePolicy(
     blink::WebSandboxFlags flags,
     const blink::WebParsedFeaturePolicy& container_policy) {
   Send(new FrameHostMsg_DidChangeFramePolicy(
-      routing_id_, RenderFrame::GetRoutingIdForWebFrame(child_frame), flags,
-      FeaturePolicyHeaderFromWeb(container_policy)));
+      routing_id_, RenderFrame::GetRoutingIdForWebFrame(child_frame),
+      {flags, FeaturePolicyHeaderFromWeb(container_policy)}));
 }
 
 void RenderFrameImpl::DidSetFeaturePolicyHeader(
+    blink::WebSandboxFlags flags,
     const blink::WebParsedFeaturePolicy& parsed_header) {
   Send(new FrameHostMsg_DidSetFeaturePolicyHeader(
-      routing_id_, FeaturePolicyHeaderFromWeb(parsed_header)));
+      routing_id_, flags, FeaturePolicyHeaderFromWeb(parsed_header)));
 }
 
 void RenderFrameImpl::DidAddContentSecurityPolicies(
