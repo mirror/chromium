@@ -624,16 +624,20 @@ config("compiler_cpu_abi") {
         ]
       }
     } else if (current_cpu == "arm") {
-      if (is_clang && !is_android && !is_nacl) {
-        cflags += [ "--target=arm-linux-gnueabihf" ]
-        ldflags += [ "--target=arm-linux-gnueabihf" ]
-      }
       if (!is_nacl) {
-        cflags += [
-          "-march=$arm_arch",
-          "-mfloat-abi=$arm_float_abi",
-        ]
+        if (is_clang && !is_android) {
+          cflags += [
+            "--target=arm-linux-gnueabihf",
+            "-mfloat-abi=hard",
+          ]
+          ldflags += [ "--target=arm-linux-gnueabihf" ]
+        } else {
+          cflags += [ "-mfloat-abi=$arm_float_abi" ]
+        }
+
+        cflags += [ "-march=$arm_arch" ]
       }
+
       if (arm_tune != "") {
         cflags += [ "-mtune=$arm_tune" ]
       }

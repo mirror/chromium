@@ -10,6 +10,7 @@ group("forwarder2") {
   data_deps = [
     ":host_forwarder",
     ":host_forwarder_unittests",
+    ":host_forwarder_arm",
     ":device_forwarder_prepare_dist($default_toolchain)",
   ]
 }
@@ -121,5 +122,9 @@ if (current_toolchain != default_toolchain) {
   binary_symlink("host_forwarder_unittests") {
     testonly = true
     binary_label = ":$target_name($host_toolchain)"
+  }
+  binary_symlink("host_forwarder_arm") {
+    binary_label = ":host_forwarder(//build/toolchain/linux:clang_arm)"
+    output_name = "host_forwarder_arm"
   }
 }
