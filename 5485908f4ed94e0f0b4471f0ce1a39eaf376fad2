@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fd4055a_fb47a641",
+        "filename": "DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-10-08T23:10:58Z",
+      "side": 1,
+      "message": "We want to use the `checkout_$os` variables for stuff you need to build for platform $os, so, `checkout_linux` here, and `checkout_win` and `checkout_mac` below.\n\nWe only want `host_os \u003d\u003d \"linux\"` for binaries that can only run on that host, e.g., GN, or the syzygy binaries, below.",
+      "revId": "5485908f4ed94e0f0b4471f0ce1a39eaf376fad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
