@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2166180_60604ffe",
+        "filename": "chrome/browser/ui/cocoa/profiles/profile_chooser_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-10-08T18:43:21Z",
+      "side": 1,
+      "message": "Since this is a style change: \"setup\" is the noun, \"to set up\" is the verb. Methods contain verbs, so this should be \"setUpMenuCon...\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 11,
+        "endLine": 82,
+        "endChar": 13
+      },
+      "revId": "95983a3e6a76720c5e69f6695fc713cd32a5a4ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
