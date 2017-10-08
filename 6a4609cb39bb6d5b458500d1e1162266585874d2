@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "90ca6849_93cbf985",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-10-08T23:53:03Z",
+      "side": 1,
+      "message": "Hmm, actually I don\u0027t see any reason not to wrap the call to GetContentClient()-\u003ebrowser() in a local helper. This will get the latest value upon each invocation.\n\nFor now the helper can also check if GetContentClient() and GetContentClient-\u003ebrowser() and non-null, but these can be removed with confirmation from jam@.\n\nPTAL at the diff between patchset 10 and patchset 11.",
+      "parentUuid": "c2f4df83_1a0e0d35",
+      "revId": "6a4609cb39bb6d5b458500d1e1162266585874d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7a47558_6a5b1bb5",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 7
