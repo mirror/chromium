@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89421b26_4dbe6680",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-08T21:16:41Z",
+      "side": 1,
+      "message": "I\u0027m not against it. I\u0027m just wondering when we prefer this than std::pair\u003cLayoutObject*, int\u003e, and when the other way around...",
+      "range": {
+        "startLine": 444,
+        "startChar": 7,
+        "endLine": 444,
+        "endChar": 28
+      },
+      "revId": "a3fc51eaf92c2fca648f451d0b9310c4a127180a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3428aa04_82d2617c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-08T21:16:41Z",
+      "side": 1,
+      "message": "Seems that we can simplify the branches into:\n\nif (start_offset \u003e\u003d ToLayoutText(start_layout_object)-\u003eTextStartOffset()) {\n  MarkSelected(invalidation_set, start_layout_object, SelectionState::kStart);\n  return {start_layout_object, start_offset};\n}\n\nDCHECK(FirstLetterPartFor(start_layout_object));\n// First letter handling",
+      "range": {
+        "startLine": 471,
+        "startChar": 0,
+        "endLine": 487,
+        "endChar": 71
+      },
+      "revId": "a3fc51eaf92c2fca648f451d0b9310c4a127180a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7c19c7_b8274a54",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-08T21:16:41Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 500,
+        "startChar": 0,
+        "endLine": 516,
+        "endChar": 71
+      },
+      "revId": "a3fc51eaf92c2fca648f451d0b9310c4a127180a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
