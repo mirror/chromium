@@ -8,8 +8,10 @@
 #include "base/macros.h"
 #include "base/scoped_observer.h"
 #include "chrome/browser/chromeos/camera_presence_notifier.h"
+#include "chrome/browser/chromeos/settings/cros_settings.h"
 #include "chrome/browser/image_decoder.h"
 #include "chrome/browser/ui/webui/settings/settings_page_ui_handler.h"
+#include "components/prefs/pref_change_registrar.h"
 #include "components/user_manager/user_manager.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/native_widget_types.h"
@@ -118,6 +120,8 @@ class ChangePictureHandler : public ::settings::SettingsPageUIHandler,
   // returns active user.
   const user_manager::User* GetUser() const;
 
+  void UpdateAllowVideoMode();
+
   scoped_refptr<ui::SelectFileDialog> select_file_dialog_;
 
   // Previous user image from camera/file and its data URL.
@@ -138,6 +142,8 @@ class ChangePictureHandler : public ::settings::SettingsPageUIHandler,
   ScopedObserver<user_manager::UserManager, ChangePictureHandler>
       user_manager_observer_;
   ScopedObserver<CameraPresenceNotifier, ChangePictureHandler> camera_observer_;
+
+  std::unique_ptr<CrosSettings::ObserverSubscription> device_settings_observer_;
 
   DISALLOW_COPY_AND_ASSIGN(ChangePictureHandler);
 };
