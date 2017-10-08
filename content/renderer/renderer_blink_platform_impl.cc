@@ -292,8 +292,6 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
     web_idb_factory_.reset(new WebIDBFactoryImpl(
         sync_message_filter_,
         RenderThreadImpl::current()->GetIOTaskRunner().get()));
-    web_database_observer_impl_.reset(
-        new WebDatabaseObserverImpl(sync_message_filter_.get()));
   } else {
     service_manager::mojom::ConnectorRequest request;
     connector_ = service_manager::Connector::Create(&request);
@@ -735,6 +733,10 @@ unsigned RendererBlinkPlatformImpl::AudioHardwareOutputChannels() {
 }
 
 WebDatabaseObserver* RendererBlinkPlatformImpl::DatabaseObserver() {
+  if (!web_database_observer_impl_) {
+    web_database_observer_impl_.reset(
+        new WebDatabaseObserverImpl(GetWebDatabaseHost()));
+  }
   return web_database_observer_impl_.get();
 }
 
