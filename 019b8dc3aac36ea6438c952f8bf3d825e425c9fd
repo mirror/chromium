@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5e86e8_14dae961",
+        "filename": "BUILD.gn",
+        "patchSetId": 17
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-08T18:54:26Z",
+      "side": 1,
+      "message": "Do we need to end the comment with a period?",
+      "revId": "019b8dc3aac36ea6438c952f8bf3d825e425c9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a4d1bfb_66579e96",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_browser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-08T18:54:26Z",
+      "side": 1,
+      "message": "Could we return an empty dictionary instead of using unique_ptr and nullptr?",
+      "revId": "019b8dc3aac36ea6438c952f8bf3d825e425c9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f374f891_51c063c4",
+        "filename": "content/browser/accessibility/accessibility_tree_formatter_browser.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1139279
+      },
+      "writtenOn": "2017-10-08T18:54:26Z",
+      "side": 1,
+      "message": "Same here?",
+      "revId": "019b8dc3aac36ea6438c952f8bf3d825e425c9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
