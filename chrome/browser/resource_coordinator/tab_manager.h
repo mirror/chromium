@@ -226,6 +226,17 @@ class TabManager : public TabStripModelObserver,
   // foreground.
   bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
 
+  // Returns the number of background tabs that are loading in a background tab
+  // opening session.
+  size_t GetBackgroundTabLoadingCount() const;
+
+  // Returns the number of background tabs that are pending in a background tab
+  // opening session.
+  size_t GetBackgroundTabPendingCount() const;
+
+  // Returns the number of tabs open in all browser instances.
+  int GetTabCount() const;
+
  private:
   friend class TabManagerStatsCollectorTest;
 
@@ -324,9 +335,6 @@ class TabManager : public TabStripModelObserver,
 
   // Purges data structures in the browser that can be easily recomputed.
   void PurgeBrowserMemory();
-
-  // Returns the number of tabs open in all browser instances.
-  int GetTabCount() const;
 
   // Adds all the stats of the tabs in |browser_info| into |stats_list|.
   // |window_is_active| indicates whether |browser_info|'s window is active.
