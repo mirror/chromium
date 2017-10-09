@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d2405ab_e7a0e873",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "nit: This comment needs to be updated.",
+      "range": {
+        "startLine": 157,
+        "startChar": 9,
+        "endLine": 157,
+        "endChar": 97
+      },
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126e9ffd_3860b547",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "Can we check the count from all models instead of just the normal model?",
+      "range": {
+        "startLine": 172,
+        "startChar": 36,
+        "endLine": 172,
+        "endChar": 94
+      },
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5879bc1c_02c97928",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowIntegrationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "I think it\u0027d be a bit more readable to break this into two CriteriaHelper\u0027s that wait for the count and expected ID match expectations, e.g.\n\nCriteriaHelper.pollUiThread(Criteria.equals(expectedTabCount,\n                    new Callable\u003cInteger\u003e() {\n                        @Override\n                        public Integer call() throws Exception {\n                            updateFailureReas(tag + \": Tab count is wrong\");\n                            return activity.getTabModelSelector().getModel(false).getCount();\n                        }\n                    }));\n\n// Criteria helper to check active tab if necessary",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 176,
+        "endChar": 79
+      },
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd420f0_f751d7d2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "Will you please add a call to ChromeTabbedActivity#onMultiInstanceModeStarted(), e.g.\n\n        // Tell ChromeTabbedActivity multi-instance mode has started so that ChromeTabbedActivity2\n        // is allowed to start up.\n        ChromeTabbedActivity.onMultiInstanceModeStarted();",
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa061c1a_251b8da0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "I think this will likely fix the failing MutlitWindowIntegrationTest#testIncognitoNtpHandledCorrectly() (crbug.com/772948) -- is that passing for you now?",
+      "range": {
+        "startLine": 207,
+        "startChar": 7,
+        "endLine": 208,
+        "endChar": 80
+      },
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7790fc_1ba2b487",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/multiwindow/MultiWindowUtilsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:11:31Z",
+      "side": 1,
+      "message": "nit: waitForActivityToResume or waitUntilActivityResumed?",
+      "range": {
+        "startLine": 233,
+        "startChar": 24,
+        "endLine": 233,
+        "endChar": 43
+      },
+      "revId": "7f4013bfb2c7b48a5527c77bc7181305b5ec593f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
