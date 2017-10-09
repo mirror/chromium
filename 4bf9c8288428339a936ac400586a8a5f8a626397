@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a6d9fc66_7cfd178b",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-09T14:53:37Z",
+      "side": 1,
+      "message": "nit: Can we make this void(bool) as well? And merge the 2 callbacks into a SuccessCallback \u003d base::Callback\u003cvoid(bool)\u003e. The reason is that BLE discovery stop can fail with errors.",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d33836c_f1ff749d",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 6
