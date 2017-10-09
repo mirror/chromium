@@ -118,6 +118,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/dom_storage_context.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/permission_type.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/url_data_source.h"
@@ -132,6 +133,7 @@
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/preferences/public/interfaces/tracked_preference_validation_delegate.mojom.h"
 #include "services/service_manager/public/cpp/service.h"
+#include "third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if defined(OS_CHROMEOS)
@@ -1365,6 +1367,47 @@ PrefProxyConfigTracker* ProfileImpl::CreateProxyConfigTracker() {
       GetPrefs(), g_browser_process->local_state());
 }
 
+// TODO(juliatuttle): Need test coverage for this.
+void CheckDomainReliabilityUploadAllowedOnUIThread(
+    content::PermissionManager* permission_manager,
+    const GURL& origin,
+    const base::Callback<void(bool)>& callback) {
+  bool allowed = false;
+
+  if (!permission_manager) {
+    LOG(WARNING) << "PermissionManager disappeared, prohibiting Domain "
+                    "Reliability upload to "
+                 << origin.spec();
+    allowed = false;
+  } else {
+    // TODO(juliatuttle): Can we pass something useful for embedding_origin?
+    blink::mojom::PermissionStatus status =
+        permission_manager->GetPermissionStatus(
+            content::PermissionType::BACKGROUND_SYNC,
+            /* requesting_origin= */ origin,
+            /* embedding_origin= */ GURL());
+    allowed = status == blink::mojom::PermissionStatus::GRANTED;
+    if (!allowed)
+      LOG(WARNING) << "PermissionManager denied background sync, prohibiting "
+                      "Domain Reliability upload to "
+                   << origin.spec();
+  }
+
+  BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)
+      ->PostTask(FROM_HERE, base::Bind(callback, allowed));
+}
+
+void CheckDomainReliabilityUploadAllowedOnIOThread(
+    content::PermissionManager* permission_manager,
+    const GURL& origin,
+    const base::Callback<void(bool)>& callback) {
+  BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)
+      ->PostTask(
+          FROM_HERE,
+          base::Bind(&CheckDomainReliabilityUploadAllowedOnUIThread,
+                     base::Unretained(permission_manager), origin, callback));
+}
+
 std::unique_ptr<domain_reliability::DomainReliabilityMonitor>
 ProfileImpl::CreateDomainReliabilityMonitor(PrefService* local_state) {
   domain_reliability::DomainReliabilityService* service =
@@ -1373,8 +1416,11 @@ ProfileImpl::CreateDomainReliabilityMonitor(PrefService* local_state) {
   if (!service)
     return std::unique_ptr<domain_reliability::DomainReliabilityMonitor>();
 
+  // TODO(juliatuttle): Unretained isn't good enough here.
   return service->CreateMonitor(
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+      base::Bind(&CheckDomainReliabilityUploadAllowedOnIOThread,
+                 base::Unretained(GetPermissionManager())));
 }
 
 std::unique_ptr<service_manager::Service> ProfileImpl::CreateIdentityService() {

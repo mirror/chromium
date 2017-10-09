@@ -101,7 +101,11 @@ class DomainReliabilityContextTest : public testing::Test {
         uploader_(base::Bind(&DomainReliabilityContextTest::OnUploadRequest,
                              base::Unretained(this))),
         upload_reporter_string_("test-reporter"),
-        upload_pending_(false) {
+        upload_allowed_callback_(
+            base::Bind(&DomainReliabilityContextTest::UploadAllowedCallback,
+                       base::Unretained(this))),
+        upload_pending_(false),
+        upload_allowed_result_(true) {
     // Make sure that the last network change does not overlap requests
     // made in test cases, which start 250ms in the past (see |MakeBeacon|).
     last_network_change_time_ = time_.NowTicks();
@@ -111,7 +115,7 @@ class DomainReliabilityContextTest : public testing::Test {
   void InitContext(std::unique_ptr<const DomainReliabilityConfig> config) {
     context_.reset(new DomainReliabilityContext(
         &time_, params_, upload_reporter_string_, &last_network_change_time_,
-        &dispatcher_, &uploader_, std::move(config)));
+        upload_allowed_callback_, &dispatcher_, &uploader_, std::move(config)));
   }
 
   TimeDelta min_delay() const { return params_.minimum_upload_delay; }
@@ -148,12 +152,19 @@ class DomainReliabilityContextTest : public testing::Test {
     return beacons.empty();
   }
 
+  void set_upload_allowed_result(bool allowed) {
+    upload_allowed_result_ = allowed;
+  }
+
+  const GURL& upload_allowed_origin() { return upload_allowed_origin_; }
+
   MockTime time_;
   base::TimeTicks last_network_change_time_;
   DomainReliabilityDispatcher dispatcher_;
   DomainReliabilityScheduler::Params params_;
   MockUploader uploader_;
   std::string upload_reporter_string_;
+  DomainReliabilityContext::UploadAllowedCallback upload_allowed_callback_;
   std::unique_ptr<DomainReliabilityContext> context_;
 
  private:
@@ -170,11 +181,19 @@ class DomainReliabilityContextTest : public testing::Test {
     upload_pending_ = true;
   }
 
+  void UploadAllowedCallback(const GURL& origin,
+                             const base::Callback<void(bool)>& callback) {
+    upload_allowed_origin_ = origin;
+    callback.Run(upload_allowed_result_);
+  }
+
   bool upload_pending_;
   std::string upload_report_;
   int upload_max_depth_;
   GURL upload_url_;
   DomainReliabilityUploader::UploadCallback upload_callback_;
+  GURL upload_allowed_origin_;
+  bool upload_allowed_result_;
 };
 
 TEST_F(DomainReliabilityContextTest, Create) {
@@ -295,6 +314,21 @@ TEST_F(DomainReliabilityContextTest, ReportUpload) {
   CallUploadCallback(result);
 
   EXPECT_TRUE(CheckNoBeacons());
+}
+
+TEST_F(DomainReliabilityContextTest, UploadForbidden) {
+  InitContext(MakeTestConfig());
+  context_->OnBeacon(
+      MakeCustomizedBeacon(&time_, "tcp.connection_reset", "", true));
+
+  BeaconVector beacons;
+  context_->GetQueuedBeaconsForTesting(&beacons);
+  EXPECT_EQ(1u, beacons.size());
+
+  set_upload_allowed_result(/* allowed= */ false);
+
+  time_.Advance(max_delay());
+  EXPECT_FALSE(upload_pending());
 }
 
 TEST_F(DomainReliabilityContextTest, NetworkChanged) {

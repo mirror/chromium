@@ -10,6 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/task_runner_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "components/domain_reliability/context.h"
 #include "components/domain_reliability/monitor.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
@@ -51,14 +52,15 @@ class DomainReliabilityServiceImpl : public DomainReliabilityService {
   // DomainReliabilityService implementation:
 
   std::unique_ptr<DomainReliabilityMonitor> CreateMonitor(
-      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner)
-      override {
+      scoped_refptr<base::SingleThreadTaskRunner> network_task_runner,
+      const DomainReliabilityContext::UploadAllowedCallback&
+          upload_allowed_callback) override {
     DCHECK(!network_task_runner_.get());
 
     std::unique_ptr<DomainReliabilityMonitor> monitor(
-        new DomainReliabilityMonitor(upload_reporter_string_,
-                                     base::ThreadTaskRunnerHandle::Get(),
-                                     network_task_runner));
+        new DomainReliabilityMonitor(
+            upload_reporter_string_, upload_allowed_callback,
+            base::ThreadTaskRunnerHandle::Get(), network_task_runner));
 
     monitor_ = monitor->MakeWeakPtr();
     network_task_runner_ = network_task_runner;
