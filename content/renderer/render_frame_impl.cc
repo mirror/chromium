@@ -1733,6 +1733,7 @@ void RenderFrameImpl::OnNavigate(
     const CommonNavigationParams& common_params,
     const StartNavigationParams& start_params,
     const RequestNavigationParams& request_params) {
+  LOG(ERROR) << "RenderFrameImpl::OnNavigate" <<  common_params.url.possibly_invalid_spec();
   DCHECK(!IsBrowserSideNavigationEnabled());
   TRACE_EVENT2("navigation,rail", "RenderFrameImpl::OnNavigate", "id",
                routing_id_, "url", common_params.url.possibly_invalid_spec());
@@ -5242,6 +5243,8 @@ void RenderFrameImpl::OnCommitNavigation(
     const FrameMsg_CommitDataNetworkService_Params& commit_data,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params) {
+  LOG(ERROR) << "====== RenderFrameImpl::OnCommitNavigation " <<  common_params.url.possibly_invalid_spec().substr(0, 100);
+
   CHECK(IsBrowserSideNavigationEnabled());
   // If this was a renderer-initiated navigation (nav_entry_id == 0) from this
   // frame, but it was aborted, then ignore it.

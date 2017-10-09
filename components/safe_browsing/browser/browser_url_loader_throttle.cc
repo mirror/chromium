@@ -45,6 +45,7 @@ BrowserURLLoaderThrottle::~BrowserURLLoaderThrottle() {
 void BrowserURLLoaderThrottle::WillStartRequest(
     const content::ResourceRequest& request,
     bool* defer) {
+  LOG(ERROR) << " ----------------- Throttle WillStartRequest in ";
   DCHECK_EQ(0u, pending_checks_);
   DCHECK(!blocked_);
   DCHECK(!url_checker_);
@@ -61,6 +62,7 @@ void BrowserURLLoaderThrottle::WillStartRequest(
       request.url, request.method,
       base::BindOnce(&BrowserURLLoaderThrottle::OnCheckUrlResult,
                      base::Unretained(this)));
+  LOG(ERROR) << " ----------------- Throttle WillStartRequest out ";
 }
 
 void BrowserURLLoaderThrottle::WillRedirectRequest(
@@ -87,11 +89,13 @@ void BrowserURLLoaderThrottle::WillProcessResponse(bool* defer) {
     // |delegate_->CancelWithError|, but this method is called before the
     // request is actually cancelled. In that case, simply defer the request.
     *defer = true;
+    LOG(ERROR) << "xxxxxxxxxxxx WillProcessResponse 1";
     return;
   }
 
   if (pending_checks_ == 0) {
     LogDelay(base::TimeDelta());
+    LOG(ERROR) << "xxxxxxxxxxxx WillProcessResponse 2";
     return;
   }
 
@@ -99,6 +103,8 @@ void BrowserURLLoaderThrottle::WillProcessResponse(bool* defer) {
   deferred_ = true;
   defer_start_time_ = base::TimeTicks::Now();
   *defer = true;
+
+  LOG(ERROR) << "xxxxxxxxxxxx WillProcessResponse 3";
   if (net_event_logger_) {
     net_event_logger_->BeginNetLogEvent(
         net::NetLogEventType::SAFE_BROWSING_DEFERRED,
@@ -117,6 +123,8 @@ void BrowserURLLoaderThrottle::OnCompleteCheck(bool slow_check,
                                                bool proceed,
                                                bool showed_interstitial) {
   DCHECK(!blocked_);
+
+  LOG(ERROR) << "------------ Throttle OnCompleteCheck ";
 
   DCHECK_LT(0u, pending_checks_);
   pending_checks_--;

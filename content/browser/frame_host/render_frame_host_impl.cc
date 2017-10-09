@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/containers/hash_tables.h"
@@ -3300,6 +3301,9 @@ void RenderFrameHostImpl::CommitNavigation(
     const RequestNavigationParams& request_params,
     bool is_view_source,
     mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) {
+  LOG(ERROR) << "======== RenderFrameHostImpl::CommonNavigation " <<
+      common_params.url.possibly_invalid_spec().substr(0, 100);
+  //base::debug::StackTrace().Print();
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
