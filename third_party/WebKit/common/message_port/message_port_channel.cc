@@ -62,7 +62,7 @@ void MessagePortChannel::PostMessage(const uint8_t* encoded_message,
                                      std::vector<MessagePortChannel> ports) {
   MessagePortMessage msg;
   msg.encoded_message = base::make_span(encoded_message, encoded_message_size);
-  msg.ports = ReleaseHandles(ports);
+  msg.ports = std::move(ports);
   PostMojoMessage(mojom::MessagePortMessage::SerializeAsMessage(&msg));
 }
 
@@ -89,7 +89,7 @@ bool MessagePortChannel::GetMessage(std::vector<uint8_t>* encoded_message,
     return false;
 
   *encoded_message = std::move(msg.owned_encoded_message);
-  *ports = CreateFromHandles(std::move(msg.ports));
+  *ports = std::move(msg.ports);
 
   return true;
 }
