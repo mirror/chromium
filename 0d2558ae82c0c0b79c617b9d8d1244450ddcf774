@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8fb9a83_b78b2664",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "Is it possible to forward declare any of these instead of #including them?",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1549187d_a3689015",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "nit: parameter name \"direction\" is unused so it can be omitted. Likewise \"writing_mode\" below.",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01ba4a65_e9d49f05",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 14
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "nit: \"direction\" and \"writing_mode\" can be omitted here too.",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22d10bb_b65def9c",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2231,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "Can we tidy this up a bit since you\u0027re here - at the start of the function let\u0027s just do\n\nif (property_id \u003d\u003d CSSPropertyInvalid)\n  return nullptr;\n\nOnce you\u0027ve done ResolveDirectionAwareProperty, this can\u0027t be Invalid any more right? Then this case statement can be replaced with a DCHECK_NE(property_id, CSSPropertyInvalid).",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077b450d_b13f2fb3",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "Nit: Previously this was called CSSPropertyAPIBaseCustom.cpp.",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8f7a2d_e30228b9",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollSnapMarginBlockStart.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T02:26:03Z",
+      "side": 1,
+      "message": "This is very repetitive - so we should be able to generate it - perhaps a TODO somewhere to figure out how to specify the shorthand for ResolveDirectionAwareProperty?",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
