@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<style>
+[id^="target"] {
+  width: 60px;
+  height: 40px;
+  margin: 10px;
+  background: rgb(160, 0, 0);
+}
+</style>
+<div id="target1"></div>
+<div id="target2" style="will-change: transform"></div>
+<div style="will-change: transform; width: 150px; height: 150px; background: yellow">
+  <div id="target3" style="position: relative; top: 70px; left: 30px"></div>
+</div>
