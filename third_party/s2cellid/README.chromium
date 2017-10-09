@@ -50,10 +50,12 @@ Local Modifications:
   - Remove Encode declaration and implementation.
   - Remove Decode declaration and implementation.
   - Remove util/coding/coder.h dependency.
-  - Change StringPrintf format from "Invalid: %016llx" to "Invalid: %016lx".
+  - Change StringPrintf format from "Invalid: %016llx" to "Invalid: %016" PRIu64.
 - Under s2point.h
   - Remove s2/util/math/vector3_hash.h
   - Remove S2PointHash and comments.
+- Under s1angle.h
+  - Add _USE_MATH_DEFINES macro for _WIN32
 - Add BUILD.gn file.
 - Add DEPS file.
 - Remove CMakeList.txt file.

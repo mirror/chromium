@@ -103,7 +103,7 @@ inline int Bits::FindLSBSetNonZero64(uint64_t n) {
 
 #elif defined(_MSC_VER)
 
-inline int Bits::FindLSBSetNonZero(uint64_t n) {
+inline int Bits::FindLSBSetNonZero(uint32_t n) {
   return Bits::FindLSBSetNonZero_Portable(n);
 }
 
