@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8697864_8c4c9bd5",
+        "filename": "extensions/renderer/bindings/api_binding_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T16:29:19Z",
+      "side": 1,
+      "message": "nit: since we only care about null-ness here:\nreturn per_context_data-\u003eGetUserData(k...) !\u003d nullptr;",
+      "revId": "9ad9a1ae46dd7b3d2e80309bddca0b44b2f5e494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d0fb90_45db660a",
+        "filename": "extensions/renderer/bindings/api_binding_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T16:29:19Z",
+      "side": 1,
+      "message": "Wouldn\u0027t using make_unique\u003cbase::SupportsUserData::Data\u003e() work? Then we don\u0027t need InvalidateContextFlag.",
+      "range": {
+        "startLine": 40,
+        "startChar": 32,
+        "endLine": 40,
+        "endChar": 74
+      },
+      "revId": "9ad9a1ae46dd7b3d2e80309bddca0b44b2f5e494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
