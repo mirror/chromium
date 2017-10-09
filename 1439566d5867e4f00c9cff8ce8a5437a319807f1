@@ -16,6 +16,24 @@
       "revId": "1439566d5867e4f00c9cff8ce8a5437a319807f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938d9ef6_93cfd957",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-10-09T10:46:17Z",
+      "side": 1,
+      "message": "They\u0027re mutually exclusive (new picker and Android picker) and we should see from the feature flag which is which. If all goes well, this will only be measuring the Photo Picker because it replaces the Android picker. We just wanted to see (while we ramp up) how the new Photo Picker affects this metric before replacing the Android picker fully.",
+      "parentUuid": "5a6cc10d_7db5f151",
+      "revId": "1439566d5867e4f00c9cff8ce8a5437a319807f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
