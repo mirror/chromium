@@ -293,9 +293,9 @@ VideoResourceUpdater::CreateExternalResourcesFromVideoFrame(
   if (video_frame->format() == media::PIXEL_FORMAT_UNKNOWN)
     return VideoFrameExternalResources();
   DCHECK(video_frame->HasTextures() || video_frame->IsMappable());
-  if (video_frame->HasTextures())
+  if (video_frame->HasTextures()) {
     return CreateForHardwarePlanes(std::move(video_frame));
-  else
+  } else
     return CreateForSoftwarePlanes(std::move(video_frame));
 }
 
@@ -660,12 +660,15 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
     scoped_refptr<media::VideoFrame> video_frame) {
   TRACE_EVENT0("cc", "VideoResourceUpdater::CreateForHardwarePlanes");
   DCHECK(video_frame->HasTextures());
-  if (!context_provider_)
+  if (!context_provider_) {
+    VLOG(0) << "NO CONTEXT PROVIDER";
     return VideoFrameExternalResources();
+  }
 
   VideoFrameExternalResources external_resources;
   if (video_frame->metadata()->IsTrue(
           media::VideoFrameMetadata::READ_LOCK_FENCES_ENABLED)) {
+    VLOG(0) << "READ LOCK FENCE ENABLED";
     external_resources.read_lock_fences_enabled = true;
   }
   gfx::ColorSpace resource_color_space = video_frame->ColorSpace();
@@ -689,6 +692,7 @@ VideoFrameExternalResources VideoResourceUpdater::CreateForHardwarePlanes(
 
     if (video_frame->metadata()->IsTrue(
             media::VideoFrameMetadata::COPY_REQUIRED)) {
+      VLOG(0) << "COPY REQUIRED";
       CopyPlaneTexture(video_frame.get(), resource_color_space, mailbox_holder,
                        &external_resources);
     } else {

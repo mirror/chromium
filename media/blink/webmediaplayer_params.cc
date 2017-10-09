@@ -31,7 +31,9 @@ WebMediaPlayerParams::WebMediaPlayerParams(
     base::Callback<std::unique_ptr<blink::WebSurfaceLayerBridge>(
         blink::WebSurfaceLayerBridgeObserver*)> create_bridge_callback,
     blink::WebContextProviderCallback context_provider_callback,
-    scoped_refptr<viz::ContextProvider> context_provider)
+    scoped_refptr<viz::ContextProvider> context_provider,
+    viz::SharedBitmapManager* shared_bitmap_manager,
+    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager)
     : defer_load_cb_(defer_load_cb),
       audio_renderer_sink_(audio_renderer_sink),
       media_log_(std::move(media_log)),
@@ -54,7 +56,9 @@ WebMediaPlayerParams::WebMediaPlayerParams(
           std::move(create_capabilities_recorder_cb)),
       create_bridge_callback_(create_bridge_callback),
       context_provider_callback_(std::move(context_provider_callback)),
-      context_provider_(std::move(context_provider)) {}
+      context_provider_(std::move(context_provider)),
+      shared_bitmap_manager_(shared_bitmap_manager),
+      gpu_memory_buffer_manager_(gpu_memory_buffer_manager) {}
 
 WebMediaPlayerParams::~WebMediaPlayerParams() {}
 
