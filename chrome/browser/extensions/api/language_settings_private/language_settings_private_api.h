@@ -70,6 +70,27 @@ class LanguageSettingsPrivateDisableLanguageFunction
   DISALLOW_COPY_AND_ASSIGN(LanguageSettingsPrivateDisableLanguageFunction);
 };
 
+// Implements the languageSettingsPrivate.setTranslateForLanguage method.
+class LanguageSettingsPrivateSetEnableTranslationForLanguageFunction
+    : public UIThreadExtensionFunction {
+ public:
+  LanguageSettingsPrivateSetEnableTranslationForLanguageFunction();
+  DECLARE_EXTENSION_FUNCTION("languageSettingsPrivate.setTranslateForLanguage",
+                             LANGUAGESETTINGSPRIVATE_SETTRANSLATEFORLANGUAGE)
+
+ protected:
+  ~LanguageSettingsPrivateSetEnableTranslationForLanguageFunction() override;
+
+  // ExtensionFunction overrides.
+  ResponseAction Run() override;
+
+ private:
+  ChromeExtensionFunctionDetails chrome_details_;
+
+  DISALLOW_COPY_AND_ASSIGN(
+      LanguageSettingsPrivateSetEnableTranslationForLanguageFunction);
+};
+
 // Implements the languageSettingsPrivate.getSpellcheckDictionaryStatuses
 // method.
 class LanguageSettingsPrivateGetSpellcheckDictionaryStatusesFunction
