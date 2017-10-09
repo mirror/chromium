@@ -750,35 +750,48 @@ void AutofillMetrics::LogUserHappinessMetric(
 // static
 void AutofillMetrics::LogFormFillDurationFromLoadWithAutofill(
     const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES("Autofill.FillDuration.FromLoad.WithAutofill",
-                             duration, base::TimeDelta::FromMilliseconds(100),
-                             base::TimeDelta::FromMinutes(10), 50);
+  LogFormFillDuration("Autofill.FillDuration.FromLoad.WithAutofill", duration);
 }
 
 // static
 void AutofillMetrics::LogFormFillDurationFromLoadWithoutAutofill(
     const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES("Autofill.FillDuration.FromLoad.WithoutAutofill",
-                             duration, base::TimeDelta::FromMilliseconds(100),
+  LogFormFillDuration("Autofill.FillDuration.FromLoad.WithoutAutofill",
+                      duration);
+}
+
+// static
+void AutofillMetrics::LogFormFillDurationFromInteraction(
+    const std::set<FormType>& form_types,
+    bool used_autofill,
+    const base::TimeDelta& duration) {
+  std::string parent_metric;
+  if (used_autofill) {
+    parent_metric = "Autofill.FillDuration.FromInteraction.WithAutofill";
+  } else {
+    parent_metric = "Autofill.FillDuration.FromInteraction.WithoutAutofill";
+  }
+  LogFormFillDuration(parent_metric, duration);
+  if (base::ContainsKey(form_types, CREDIT_CARD_FORM)) {
+    LogFormFillDuration(parent_metric + ".CreditCard", duration);
+  }
+  if (base::ContainsKey(form_types, ADDRESS_FORM)) {
+    LogFormFillDuration(parent_metric + ".Address", duration);
+  }
+  if (base::ContainsKey(form_types, PASSWORD_FORM)) {
+    LogFormFillDuration(parent_metric + ".Password", duration);
+  }
+  if (base::ContainsKey(form_types, UNKNOWN_FORM_TYPE)) {
+    LogFormFillDuration(parent_metric + ".UnknownFormType", duration);
+  }
+}
+
+// static
+void AutofillMetrics::LogFormFillDuration(const std::string& metric,
+                                          const base::TimeDelta& duration) {
+  UMA_HISTOGRAM_CUSTOM_TIMES(metric, duration,
+                             base::TimeDelta::FromMilliseconds(100),
                              base::TimeDelta::FromMinutes(10), 50);
-}
-
-// static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithAutofill(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
-}
-
-// static
-void AutofillMetrics::LogFormFillDurationFromInteractionWithoutAutofill(
-    const base::TimeDelta& duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Autofill.FillDuration.FromInteraction.WithoutAutofill", duration,
-      base::TimeDelta::FromMilliseconds(100), base::TimeDelta::FromMinutes(10),
-      50);
 }
 
 // static

@@ -5474,7 +5474,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
   second_form.fields[1].value = ASCIIToUTF16("theking@gmail.com");
   second_form.fields[2].value = ASCIIToUTF16("12345678901");
   second_form.fields[3].value = ASCIIToUTF16("51512345678");
-
+  DLOG(WARNING) << "A1";
   // Expect only form load metrics to be logged if the form is submitted without
   // user interaction.
   {
@@ -5494,6 +5494,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->Reset();
   }
 
+  DLOG(WARNING) << "A2";
   // Expect metric to be logged if the user manually edited a form field.
   {
     base::HistogramTester histogram_tester;
@@ -5518,6 +5519,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->RunRunLoop();
   }
 
+  DLOG(WARNING) << "A3";
   // Expect metric to be logged if the user autofilled the form.
   form.fields[0].is_autofilled = true;
   {
@@ -5542,6 +5544,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->RunRunLoop();
   }
 
+  DLOG(WARNING) << "A4";
   // Expect metric to be logged if the user both manually filled some fields
   // and autofilled others.  Messages can arrive out of order, so make sure they
   // take precedence appropriately.
@@ -5571,6 +5574,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->RunRunLoop();
   }
 
+  DLOG(WARNING) << "A5";
   // Make sure that loading another form doesn't affect metrics from the first
   // form.
   {
@@ -5600,6 +5604,7 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->RunRunLoop();
   }
 
+  DLOG(WARNING) << "A6";
   // Make sure that submitting a form that was loaded later will report the
   // later loading time.
   {
@@ -5621,6 +5626,36 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
 
     autofill_manager_->Reset();
   }
+}
+
+TEST_F(AutofillMetricsTest,
+       FormFillDurationFromInteraction_CreditCardForm_Fail) {
+  base::HistogramTester histogram_tester;
+
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, true, base::TimeDelta::FromMilliseconds(2000));
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, false, base::TimeDelta::FromMilliseconds(2000));
+}
+
+TEST_F(AutofillMetricsTest,
+       FormFillDurationFromInteraction_CreditCardForm_Pass1) {
+  base::HistogramTester histogram_tester;
+
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, true, base::TimeDelta::FromMilliseconds(2000));
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, true, base::TimeDelta::FromMilliseconds(2000));
+}
+
+TEST_F(AutofillMetricsTest,
+       FormFillDurationFromInteraction_CreditCardForm_Pass2) {
+  base::HistogramTester histogram_tester;
+
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, false, base::TimeDelta::FromMilliseconds(2000));
+  AutofillMetrics::LogFormFillDurationFromInteraction(
+      {}, false, base::TimeDelta::FromMilliseconds(2000));
 }
 
 // Verify that we correctly log metrics for profile action on form submission.
