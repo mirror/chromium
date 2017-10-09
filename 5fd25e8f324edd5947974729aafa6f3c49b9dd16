@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e25fa89_266e7a81",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-09T18:20:18Z",
+      "side": 1,
+      "message": "Could you make the commit message more descriptive? This CL contains:\n\n1. Convert fast/dom/HTMLAnchorElement/anchor-ismap-crash.html with test-harness\n\n2. Defer test code to after \u0027load\u0027 event to make the test behavior more natural",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 69
+      },
+      "revId": "5fd25e8f324edd5947974729aafa6f3c49b9dd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93178b3d_6db13459",
+        "filename": "third_party/WebKit/LayoutTests/fast/dom/HTMLAnchorElement/anchor-ismap-crash.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-10-09T18:20:18Z",
+      "side": 1,
+      "message": "Could you delay the test code after \u0027load\u0027 event:\n\nlet t \u003d async_test(\u0027\u0027); // Whatever test title, maybe \"Pass if no crash\"?\nwindow.onload \u003d t.step_func(function() {\n  try {\n    document.getElementsByTagName(\u0027img\u0027)[0].click();\n  } cache (e) {\n    // Pass if it\u0027s a SyntaxError, throw all other errors\n  }\n  t.done();\n});",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 3
+      },
+      "revId": "5fd25e8f324edd5947974729aafa6f3c49b9dd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
