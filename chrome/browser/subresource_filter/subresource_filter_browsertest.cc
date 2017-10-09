@@ -170,19 +170,6 @@ class SubresourceFilterDisabledByDefaultBrowserTest
   DISALLOW_COPY_AND_ASSIGN(SubresourceFilterDisabledByDefaultBrowserTest);
 };
 
-// This browser test automatically syncs the SubresourceFilter SafeBrowsing list
-// without needing a chrome branded build.
-class SubresourceFilterListInsertingBrowserTest
-    : public SubresourceFilterBrowserTest {
-  std::unique_ptr<TestSafeBrowsingDatabaseHelper> CreateTestDatabase()
-      override {
-    std::vector<safe_browsing::ListIdentifier> list_ids = {
-        safe_browsing::GetUrlSubresourceFilterId()};
-    return base::MakeUnique<TestSafeBrowsingDatabaseHelper>(
-        std::move(list_ids));
-  }
-};
-
 // Tests -----------------------------------------------------------------------
 
 // The RulesetService should not even be instantiated when the feature is
@@ -216,12 +203,42 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
   ui_test_utils::NavigateToURL(browser(), url);
   EXPECT_FALSE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
 
-  EXPECT_EQ(console_observer.message(), kActivationConsoleMessage);
+  EXPECT_EQ(kActivationConsoleMessage, console_observer.message());
 
   // The main frame document should never be filtered.
   SetRulesetToDisallowURLsWithPathSuffix("frame_with_included_script.html");
   ui_test_utils::NavigateToURL(browser(), url);
   EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
+}
+
+IN_PROC_BROWSER_TEST_F(SubresourceFilterListInsertingBrowserTest,
+                       MainFrameActivationWithWarning_SubresourceFilterList) {
+  content::ConsoleObserverDelegate console_observer1(web_contents(),
+                                                     "*show ads*");
+  web_contents()->SetDelegate(&console_observer1);
+  GURL url(GetTestUrl("subresource_filter/frame_with_included_script.html"));
+  ConfigureAsSubresourceFilterOnlyURLWithWarning(url);
+  ASSERT_NO_FATAL_FAILURE(SetRulesetToDisallowURLsWithPathSuffix(
+      "suffix-that-does-not-match-anything"));
+
+  Configuration config(subresource_filter::ActivationLevel::ENABLED,
+                       subresource_filter::ActivationScope::ACTIVATION_LIST,
+                       subresource_filter::ActivationList::SUBRESOURCE_FILTER);
+  ResetConfiguration(std::move(config));
+
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
+  EXPECT_EQ(kActivationWarningConsoleMessage, console_observer1.message());
+
+  content::ConsoleObserverDelegate console_observer2(web_contents(),
+                                                     "*show ads*");
+  web_contents()->SetDelegate(&console_observer2);
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+  ui_test_utils::NavigateToURL(browser(), url);
+  EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
+
+  EXPECT_EQ(kActivationWarningConsoleMessage, console_observer2.message());
 }
 
 IN_PROC_BROWSER_TEST_F(

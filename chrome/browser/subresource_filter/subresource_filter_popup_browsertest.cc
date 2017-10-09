@@ -54,10 +54,14 @@ bool LogHandler(int severity,
 const char kSubresourceFilterActionsHistogram[] = "SubresourceFilter.Actions";
 
 // Tests for the subresource_filter popup blocker.
-class SubresourceFilterPopupBrowserTest : public SubresourceFilterBrowserTest {
+class SubresourceFilterPopupBrowserTest
+    : public SubresourceFilterListInsertingBrowserTest {
   void SetUpOnMainThread() override {
     SubresourceFilterBrowserTest::SetUpOnMainThread();
-    Configuration config = Configuration::MakePresetForLiveRunOnPhishingSites();
+    Configuration config(
+        subresource_filter::ActivationLevel::ENABLED,
+        subresource_filter::ActivationScope::ACTIVATION_LIST,
+        subresource_filter::ActivationList::SUBRESOURCE_FILTER);
     config.activation_options.should_strengthen_popup_blocker = true;
     ResetConfiguration(std::move(config));
     // Only necessary so we have a valid ruleset.
@@ -72,7 +76,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
   // Only configure |a_url| as a phishing URL.
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Navigate to a_url, should not trigger the popup blocker.
   ui_test_utils::NavigateToURL(browser(), a_url);
@@ -103,7 +107,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
   GURL b_url(embedded_test_server()->GetURL("b.com", kWindowOpenPath));
   // Only configure |a_url| as a phishing URL.
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Navigate to a_url, should trigger the popup blocker.
   ui_test_utils::NavigateToURL(browser(), a_url);
@@ -145,7 +149,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   web_contents()->SetDelegate(&console_observer);
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Navigate to a_url, should trigger the popup blocker.
   ui_test_utils::NavigateToURL(browser(), a_url);
@@ -157,13 +161,79 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   EXPECT_EQ(kDisallowNewWindowMessage, console_observer.message());
 }
 
+IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+                       WarningDoNotBlockCreatingNewWindows_LogsToConsole) {
+  logging::SetLogMessageHandler(&LogHandler);
+  const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+  ConfigureAsSubresourceFilterOnlyURLWithWarning(a_url);
+
+  // Navigate to a_url, should log a warning and not trigger the popup blocker.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+
+  bool opened_window = false;
+  content::WebContents* web_contents =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
+                                                   &opened_window));
+  EXPECT_TRUE(opened_window);
+
+  // Round trip to the renderer to ensure the message would have gotten sent.
+  EXPECT_TRUE(content::ExecuteScript(web_contents, "var a = 1;"));
+  bool has_activation_warning_ipc = false;
+  bool has_popups_warning_ipc = false;
+  for (const auto& message : error_messages_.Get()) {
+    has_activation_warning_ipc |=
+        (message.find(kActivationWarningConsoleMessage) != std::string::npos);
+    has_popups_warning_ipc |=
+        (message.find(kDisallowNewWindowWarningMessage) != std::string::npos);
+    EXPECT_EQ(std::string::npos, message.find(kDisallowNewWindowMessage));
+  }
+  EXPECT_TRUE(has_activation_warning_ipc);
+  EXPECT_TRUE(has_popups_warning_ipc);
+}
+
+IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
+                       WarningAllowCreatingNewWindows_LogsToConsole) {
+  logging::SetLogMessageHandler(&LogHandler);
+  const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
+  GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
+  ConfigureAsSubresourceFilterOnlyURLWithWarning(a_url);
+
+  // Allow popups on |a_url|.
+  HostContentSettingsMap* settings_map =
+      HostContentSettingsMapFactory::GetForProfile(browser()->profile());
+  settings_map->SetContentSettingDefaultScope(
+      a_url, a_url, ContentSettingsType::CONTENT_SETTINGS_TYPE_POPUPS,
+      std::string(), CONTENT_SETTING_ALLOW);
+
+  // Navigate to a_url, should not trigger the popup blocker.
+  ui_test_utils::NavigateToURL(browser(), a_url);
+  bool opened_window = false;
+  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
+      web_contents(), "openWindow()", &opened_window));
+  EXPECT_TRUE(opened_window);
+  // Round trip to the renderer to ensure the message would have gotten sent.
+  EXPECT_TRUE(content::ExecuteScript(web_contents(), "var a = 1;"));
+  bool has_disallow_new_window_warning_ipc = false;
+  bool has_activation_warning_ipc = false;
+  for (const auto& message : error_messages_.Get()) {
+    has_disallow_new_window_warning_ipc |=
+        (message.find(kDisallowNewWindowWarningMessage) != std::string::npos);
+    has_activation_warning_ipc |=
+        (message.find(kActivationWarningConsoleMessage) != std::string::npos);
+  }
+  EXPECT_TRUE(has_disallow_new_window_warning_ipc);
+  EXPECT_TRUE(has_activation_warning_ipc);
+}
+
 // Whitelisted sites should not have console logging.
 IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
                        AllowCreatingNewWindows_NoLogToConsole) {
   logging::SetLogMessageHandler(&LogHandler);
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Allow popups on |a_url|.
   HostContentSettingsMap* settings_map =
@@ -196,7 +266,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest, BlockOpenURLFromTab) {
   GURL a_url(embedded_test_server()->GetURL("a.com", kWindowOpenPath));
   GURL b_url(embedded_test_server()->GetURL("b.com", kWindowOpenPath));
   // Only configure |a_url| as a phishing URL.
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Navigate to a_url, should trigger the popup blocker.
   ui_test_utils::NavigateToURL(browser(), a_url);
@@ -231,7 +301,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
   const char popup_path[] = "/subresource_filter/iframe_spoof_click_popup.html";
   GURL a_url(embedded_test_server()->GetURL("a.com", popup_path));
   // Only configure |a_url| as a phishing URL.
-  ConfigureAsPhishingURL(a_url);
+  ConfigureAsSubresourceFilterOnlyURL(a_url);
 
   // Navigate to a_url, should not trigger the popup blocker.
   ui_test_utils::NavigateToURL(browser(), a_url);
@@ -248,7 +318,7 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
 IN_PROC_BROWSER_TEST_F(SubresourceFilterPopupBrowserTest,
                        TraditionalWindowOpen_NotBlocked) {
   GURL url(GetTestUrl("/title2.html"));
-  ConfigureAsPhishingURL(url);
+  ConfigureAsSubresourceFilterOnlyURL(url);
   ui_test_utils::NavigateToURL(browser(), GetTestUrl("/title1.html"));
 
   // Should not trigger the popup blocker because internally opens the tab with

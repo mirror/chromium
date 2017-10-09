@@ -69,7 +69,8 @@ ContentSubresourceFilterDriverFactory::
 void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
-    const Configuration& matched_configuration) {
+    const Configuration& matched_configuration,
+    bool warning) {
   DCHECK(navigation_handle->IsInMainFrame());
   DCHECK(!navigation_handle->IsSameDocument());
   if (navigation_handle->GetNetErrorCode() != net::OK)
@@ -78,6 +79,7 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
   activation_decision_ = activation_decision;
   matched_configuration_ = matched_configuration;
   DCHECK_NE(activation_decision_, ActivationDecision::UNKNOWN);
+  on_commit_warning_messages_.clear();
 
   // ACTIVATION_DISABLED implies DISABLED activation level.
   DCHECK(activation_decision_ != ActivationDecision::ACTIVATION_DISABLED ||
@@ -95,13 +97,20 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
   state.measure_performance = ShouldMeasurePerformanceForPageLoad(
       activation_options().performance_measurement_rate);
 
-  // TODO(csharrison): Also use metadata returned from the safe browsing filter,
-  // when it is available to set enable_logging. Add tests for this behavior.
   state.enable_logging =
       activation_options().activation_level == ActivationLevel::ENABLED &&
       !activation_options().should_suppress_notifications &&
       base::FeatureList::IsEnabled(
           kSafeBrowsingSubresourceFilterExperimentalUI);
+
+  if (warning &&
+      activation_options().activation_level == ActivationLevel::ENABLED) {
+    activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
+    state.activation_level = ActivationLevel::DISABLED;
+    matched_configuration_.activation_options.activation_level =
+        ActivationLevel::DISABLED;
+    SetOnCommitWarningMessages();
+  }
 
   SubresourceFilterObserverManager::FromWebContents(web_contents())
       ->NotifyPageActivationComputed(navigation_handle, activation_decision_,
@@ -113,8 +122,9 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
 bool ContentSubresourceFilterDriverFactory::ShouldDisallowNewWindow(
     const content::OpenURLParams* open_url_params) {
   if (activation_options().activation_level != ActivationLevel::ENABLED ||
-      !activation_options().should_strengthen_popup_blocker)
+      !activation_options().should_strengthen_popup_blocker) {
     return false;
+  }
 
   // Block new windows from navigations whose triggering JS Event has an
   // isTrusted bit set to false. This bit is set to true if the event is
@@ -163,13 +173,40 @@ void ContentSubresourceFilterDriverFactory::DidStartNavigation(
 
 void ContentSubresourceFilterDriverFactory::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
-  if (navigation_handle->IsInMainFrame() &&
-      !navigation_handle->IsSameDocument() &&
-      activation_decision_ == ActivationDecision::UNKNOWN &&
-      navigation_handle->HasCommitted()) {
+  if (!navigation_handle->IsInMainFrame() ||
+      navigation_handle->IsSameDocument() ||
+      !navigation_handle->HasCommitted()) {
+    return;
+  }
+
+  if (activation_decision_ == ActivationDecision::UNKNOWN) {
     activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
     matched_configuration_ = Configuration();
+    return;
   }
+
+  content::RenderFrameHost* frame_host =
+      navigation_handle->GetRenderFrameHost();
+  for (auto& warning_message : on_commit_warning_messages_) {
+    DCHECK_EQ(ActivationDecision::ACTIVATION_DISABLED, activation_decision_);
+    frame_host->AddMessageToConsole(content::CONSOLE_MESSAGE_LEVEL_WARNING,
+                                    warning_message);
+  }
+  on_commit_warning_messages_.clear();
+}
+
+void ContentSubresourceFilterDriverFactory::SetOnCommitWarningMessages() {
+  // If the matched configuration *would have* triggered resource blocking,
+  // log a warning.
+  if (!activation_options().should_disable_ruleset_rules &&
+      !activation_options().should_suppress_notifications) {
+    on_commit_warning_messages_.push_back(kActivationWarningConsoleMessage);
+  }
+
+  // If the matched configuration *would have* triggered new tab/window
+  // blocking, log a warning.
+  if (activation_options().should_strengthen_popup_blocker)
+    on_commit_warning_messages_.push_back(kDisallowNewWindowWarningMessage);
 }
 
 }  // namespace subresource_filter
