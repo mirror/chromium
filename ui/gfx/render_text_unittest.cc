@@ -81,6 +81,11 @@ class RenderTextTestApi {
     render_text_->DrawVisualText(renderer);
   }
 
+  void DrawSelection(Canvas* canvas) {
+    render_text_->EnsureLayout();
+    render_text_->DrawSelection(canvas);
+  }
+
   const BreakList<SkColor>& colors() const { return render_text_->colors(); }
 
   const BreakList<BaselineStyle>& baselines() const {
@@ -457,6 +462,7 @@ class RenderTextTest : public testing::Test,
   }
 
   void DrawVisualText() { test_api_->DrawVisualText(renderer()); }
+  void DrawSelection() { test_api_->DrawSelection(canvas()); }
 
   const internal::TextRunList* GetHarfBuzzRunList() const {
     DCHECK_EQ(RENDER_TEXT_HARFBUZZ, GetParam());
@@ -4703,6 +4709,32 @@ TEST_P(RenderTextHarfBuzzTest, BaselineWithLineHeight) {
   EXPECT_EQ(font_height + kDelta, current_selection_bounds.height());
   EXPECT_EQ(normal_selection_bounds.width(), current_selection_bounds.width());
   EXPECT_EQ(gfx::Vector2d(), current_selection_bounds.OffsetFromOrigin());
+}
+
+TEST_P(RenderTextHarfBuzzTest, TeleguGraphemeBoundaries) {
+  RenderText* render_text = GetRenderText();
+  render_text->SetDisplayRect(Rect(50, 1000));
+  // This is the string for "New Folder" in Chrome. It might look like 16
+  // characters in a text editor, but a lot of the glyphs combine. With a proper
+  // font, it should be rendered as two runs with {2, 3} glyphs. The exact
+  // number depends on how sophisticated the available fonts on the system are.
+  render_text->SetText(UTF8ToUTF16("క్రొత్త  ఫోల్డర్"));
+  size_t cursor_position = render_text->cursor_position();
+  int iterations = 0;
+  while (true) {
+    render_text->MoveCursor(CHARACTER_BREAK, CURSOR_RIGHT, SELECTION_RETAIN);
+    if (cursor_position == render_text->cursor_position())
+      break;
+
+    ++iterations;
+    cursor_position = render_text->cursor_position();
+    SCOPED_TRACE(testing::Message("Cursor Position: ") << cursor_position);
+    // DrawSelection();
+  }
+  // Typical value: 10 on Mac.
+  EXPECT_LE(6, iterations);
+  EXPECT_GE(16, iterations);
+  EXPECT_EQ(0, iterations);
 }
 
 // Prefix for test instantiations intentionally left blank since each test
