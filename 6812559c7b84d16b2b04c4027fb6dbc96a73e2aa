@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "684e6910_a428ae11",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f709ef2b_407a8724",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ece07889_32d7d6e5",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-10-09T21:00:45Z",
       "side": 1,
       "message": "Do we know why this is failing on ASAN/MSAN? Something we can fix, rather than adding a new test with that pre-disabled?",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c996cc_16798bda",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Filed http://crbug.com/773065 to track the issue and re-enable it, also to involve original authors in the discussion.",
+      "parentUuid": "ece07889_32d7d6e5",
       "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a1b25b0d_bfa96d26",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66eff04f_c89a8934",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d6ee2fb_0942cce1",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
         "patchSetId": 10
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a234287f_694cf406",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d6ee2fb_0942cce1",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bec346e2_7d4b41b8",
         "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
         "patchSetId": 10
@@ -84,6 +156,24 @@
       "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0abb30_cfac3c8e",
+        "filename": "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bec346e2_7d4b41b8",
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +197,30 @@
       "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4272741b_a689cd6f",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 10
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-10-09T23:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "671e1284_1818705d",
+      "range": {
+        "startLine": 774,
+        "startChar": 65,
+        "endLine": 774,
+        "endChar": 73
+      },
+      "revId": "6812559c7b84d16b2b04c4027fb6dbc96a73e2aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
