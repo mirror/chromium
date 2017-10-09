@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4047daa9_bc17d19c",
+        "filename": "ash/public/interfaces/shelf.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-10-09T17:25:46Z",
+      "side": 1,
+      "message": "nit: Document, like above, that null image means \"no change\" and not empty image.",
+      "revId": "1007fe4e80b1581ee0391e458080bec7a9f864f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
