@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "161b1f01_87a2125d",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-10-09T15:04:54Z",
+      "side": 1,
+      "message": "nit: I don\u0027t really like comparing \"bool\" to \"BOOL\" as there is no unique way to represent \"true\" and \"YES\" and thus they may not be equal (that is it would be valid to have \"true !\u003d YES\").\n\nInstead I suggest converting the \"BOOL\" to \"bool\" using \"!!inIncognito\", i.e.:\n\n  if (newTab || ((!!inIncognito) !\u003d _currentBrowserState-\u003eIsOffTheRecord())) {\n    ...\n  }",
+      "range": {
+        "startLine": 282,
+        "startChar": 20,
+        "endLine": 282,
+        "endChar": 73
+      },
+      "revId": "d295981e9b99805e8d0a47d2ba5dc1e234ebb2b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
