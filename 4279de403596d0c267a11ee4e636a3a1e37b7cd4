@@ -130,6 +130,24 @@
     },
     {
       "key": {
+        "uuid": "9ce07a9f_37f8a513",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-09T22:05:53Z",
+      "side": 1,
+      "message": "I agree that GetExtensionOrAppByURL should probably be doing this (as well as GetExtensionOrAppIDByURL, and maybe other similar ones?).  This would prevent someone from shooting themselves in the foot with these APIs in the future.  It\u0027d be good to explore this in a separate CL.  It won\u0027t help ShouldAllowOpenURL though, as that one uses a lower-level GetByID, right?  There might be other places that rely on url::Origin to handle blob/filesystem URLs, which could benefit from this.  I think ExtensionNavigationThrottle::WillStartOrRedirectRequest is one, and there may be others.",
+      "parentUuid": "2886ba06_0efca9d6",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebfc0973_72fd9014",
         "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
         "patchSetId": 7
@@ -159,6 +177,24 @@
       "side": 1,
       "message": "Yes - good point.  I am trying to flip this to |return false| in https://chromium-review.googlesource.com/c/chromium/src/+/696270.  It still needs more work / it is failing lots of test right now.",
       "parentUuid": "ebfc0973_72fd9014",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2586413_0d89fcdc",
+        "filename": "chrome/browser/extensions/chrome_content_browser_client_extensions_part.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-09T22:05:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a91e42eb_a5f6e321",
       "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -376,6 +412,24 @@
     },
     {
       "key": {
+        "uuid": "4c7902cd_1bb9e4b7",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1564,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-09T22:05:53Z",
+      "side": 1,
+      "message": "Yeah, good point about layering being a pain for this.  Not sure either how to maintain such an enum for a finer-grained bad message reason.  I was thinking more about just logging an UMA in //extensions at the points where we return false from CCBCEP::CanCommitURL, and another UMA for any kill decisions made inside //content (such as blocked navigations violating the unique origin requirement), and keeping just one bad message reason.  Regardless, it\u0027s fine to think about it in a followup, when we add more ways to get to the kill.",
+      "parentUuid": "10d6d464_c0dbba3a",
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f0879ba_f17d9177",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 7
@@ -446,6 +500,30 @@
       "side": 1,
       "message": "I wonder if we still want to somehow do the CWS check here though?  Seems like we previously didn\u0027t allow CWS to commit inside webview guests, but now we do.\n\nThere\u0027s a similar question about allowing blocked navigations to CWS commit anywhere.  We should be very careful that it doesn\u0027t let us later avoid a process swap to a real CWS page - I *think* it\u0027s ok because we\u0027ll catch it on next commit, but still wanted to mention it.",
       "parentUuid": "90635948_37047133",
+      "range": {
+        "startLine": 3671,
+        "startChar": 4,
+        "endLine": 3671,
+        "endChar": 16
+      },
+      "revId": "4279de403596d0c267a11ee4e636a3a1e37b7cd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19227fbc_b38087f2",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3671,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-10-09T22:05:53Z",
+      "side": 1,
+      "message": "ping on this question :)",
+      "parentUuid": "8765cc4c_ca83f4a7",
       "range": {
         "startLine": 3671,
         "startChar": 4,
