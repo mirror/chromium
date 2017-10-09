@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "a9443536_e3ef40d6",
+        "filename": "device/u2f/u2f_discovery.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-09T12:44:42Z",
+      "side": 1,
+      "message": "Yes, but even more simple. Instead of a container of Observers I propose to have just one Delegate (yes, with 3 methods: OnStarted, OnStopped, OnDeviceAdded; plus, we could add a method for device removal by its ID, i.e., OnDeviceRemoved(string id) ).\n\nThe problem, however, is that U2fRequest would be Delegate, and is created using a list of U2fDiscovery objects which would be created with supplied Delegate. So there would be a loop in initialization. One way to work around is to pass the Delegate to the Start method instead of ctor.",
+      "parentUuid": "d00d2914_8e850035",
+      "revId": "6b54d40424fbeff5c513e4483b9f8679cb1749a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24328bf5_6fc822cb",
         "filename": "device/u2f/u2f_hid_discovery.cc",
         "patchSetId": 3

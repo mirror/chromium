@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "57631b4e_5a194790",
+        "filename": "device/u2f/u2f_register.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-09T12:44:42Z",
+      "side": 1,
+      "message": "nit: Please include u2f_discovery.h",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "191353b2_e186c12a",
+        "filename": "device/u2f/u2f_register.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-09T12:44:42Z",
+      "side": 1,
+      "message": "nit: Please forward declare U2fDiscovery.",
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36a29269_a8b54f43",
         "filename": "device/u2f/u2f_register_unittest.cc",
         "patchSetId": 6
@@ -36,6 +70,23 @@
         "endLine": 73,
         "endChar": 70
       },
+      "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cdc237_333a9810",
+        "filename": "device/u2f/u2f_sign.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-10-09T12:44:42Z",
+      "side": 1,
+      "message": "Same here with forward declaring U2fDiscovery and including it from .cc",
       "revId": "4bf9c8288428339a936ac400586a8a5f8a626397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
