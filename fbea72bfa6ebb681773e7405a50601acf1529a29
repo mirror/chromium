@@ -22,6 +22,30 @@
       "revId": "fbea72bfa6ebb681773e7405a50601acf1529a29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b8eedd_65f36070",
+        "filename": "chrome/browser/media/webrtc/webrtc_apprtc_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002301
+      },
+      "writtenOn": "2017-10-09T11:12:27Z",
+      "side": 1,
+      "message": "Allows blocking operations in the test. The test will fail otherwise. Allowing this appears entirely normal for tests, so I just added it.",
+      "parentUuid": "d33ae0cf_e56447ed",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 53
+      },
+      "revId": "fbea72bfa6ebb681773e7405a50601acf1529a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
