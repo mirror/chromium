@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b9d3528d_4144ad78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-10-09T17:49:37Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "7d123af1_78bee32e",
+      "range": {
+        "startLine": 824,
+        "startChar": 19,
+        "endLine": 826,
+        "endChar": 22
+      },
+      "revId": "ec2038a5c1a49cb12338632e40daec14b920825a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21a12cbf_68c03b45",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 1
