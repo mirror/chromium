@@ -16,6 +16,24 @@
       "revId": "868fd8736b6dd30e55a83e6906b3e3550d3052ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c68701_31e170e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1146976
+      },
+      "writtenOn": "2017-10-09T22:48:25Z",
+      "side": 1,
+      "message": "I was meaning quick settings. Sorry for confusing.",
+      "parentUuid": "9b11cdd4_bbbd4d5c",
+      "revId": "868fd8736b6dd30e55a83e6906b3e3550d3052ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
