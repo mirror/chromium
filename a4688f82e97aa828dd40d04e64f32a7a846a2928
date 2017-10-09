@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ac11e4_319b88e7",
+        "filename": "components/history/core/browser/history_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T18:57:25Z",
+      "side": 1,
+      "message": "You should delete this commented out section and replace it with a comment like:\n  // This originally contained an autoincrement migration which was abandoned and\n  // added back in version 36 (see https://crbug.com/736136)",
+      "revId": "a4688f82e97aa828dd40d04e64f32a7a846a2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b56169b_aafc406f",
+        "filename": "components/history/core/browser/history_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T18:57:25Z",
+      "side": 1,
+      "message": "Can you add at the top of this block:\n  // Version 34 added AUTOINCREMENT but was reverted. Since some users will have been\n  // migrated and others not, explicitly check for the AUTOINCREMENT annotation rather\n  // than the version number.",
+      "revId": "a4688f82e97aa828dd40d04e64f32a7a846a2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275423fe_85b40dcc",
+        "filename": "components/history/core/browser/history_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T18:57:25Z",
+      "side": 1,
+      "message": "Can you call this function \"URLTableContainsAutoincrement\" instead? (not all caps)",
+      "revId": "a4688f82e97aa828dd40d04e64f32a7a846a2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85ab5c9_f91fc964",
+        "filename": "components/history/core/browser/url_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T18:57:25Z",
+      "side": 1,
+      "message": "Use a \"Unique\" statement rather than a \"Cached\" one since this will be a one-time operation.",
+      "revId": "a4688f82e97aa828dd40d04e64f32a7a846a2928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
