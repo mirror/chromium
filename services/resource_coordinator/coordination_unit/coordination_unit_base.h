@@ -11,7 +11,6 @@
 #include "base/callback.h"
 #include "base/observer_list.h"
 #include "base/optional.h"
-#include "base/values.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -121,6 +120,8 @@ class CoordinationUnitBase : public mojom::CoordinationUnit {
   bool HasAncestor(CoordinationUnitBase* unit);
   bool HasDescendant(CoordinationUnitBase* unit);
 
+  // TODO(crbug.com/691886) When CoordinationUnit is reused,
+  // properties should be reset.
   std::map<mojom::PropertyType, int64_t> properties_;
 
   std::unique_ptr<service_manager::ServiceContextRef> service_ref_;

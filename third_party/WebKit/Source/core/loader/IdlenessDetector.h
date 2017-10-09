@@ -38,17 +38,19 @@ class CORE_EXPORT IdlenessDetector
  private:
   friend class IdlenessDetectorTest;
 
+  static constexpr double kIdlenessWindowSeconds = 0.5;
   // The page is quiet if there are no more than 2 active network requests for
   // this duration of time.
-  static constexpr double kNetworkQuietWindowSeconds = 0.5;
   static constexpr double kNetworkQuietWatchdogSeconds = 2;
   static constexpr int kNetworkQuietMaximumConnections = 2;
+  static constexpr double kLongTaskThresholdSeconds = 0.05;
 
   // scheduler::TaskTimeObserver implementation
   void WillProcessTask(double start_time) override;
   void DidProcessTask(double start_time, double end_time) override;
 
   void Stop();
+  void EmitLongTaskIdlenessSignal();
   void NetworkQuietTimerFired(TimerBase*);
 
   Member<LocalFrame> local_frame_;
@@ -59,6 +61,9 @@ class CORE_EXPORT IdlenessDetector
   // Record the actual start time of network quiet.
   double network_0_quiet_start_time_;
   double network_2_quiet_start_time_;
+  // Used as an indicator to report long task idle signal if
+  // there's no long task being processed in 0.5 second.
+  double long_task_idle_ = -1;
   TaskRunnerTimer<IdlenessDetector> network_quiet_timer_;
 };
 
