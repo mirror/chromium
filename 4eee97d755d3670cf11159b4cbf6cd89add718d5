@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "2fc1595f_5de80dd8",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Good to know going down the line.",
+      "parentUuid": "878ff181_6f3d89cf",
+      "range": {
+        "startLine": 785,
+        "startChar": 43,
+        "endLine": 785,
+        "endChar": 64
+      },
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1af6bcf1_8a5f4955",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "This makes sense. Was initially using a map since I thought we would want to make it a global variable. As a local variable, it makes more sense to binary search for the field since the results are sorted.",
+      "parentUuid": "a5dd7581_7cfc2d2f",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e1ff3a_f4a94a9d",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 3
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "f789229f_3180d6e3",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 795,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "I see your point. That makes sense.",
+      "parentUuid": "20e1ff3a_f4a94a9d",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26783ace_bb37b739",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b078b5f_3bb7a1b9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Yes. Good catch.",
+      "parentUuid": "26783ace_bb37b739",
+      "revId": "4eee97d755d3670cf11159b4cbf6cd89add718d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

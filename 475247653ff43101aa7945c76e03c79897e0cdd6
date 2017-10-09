@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d87772d5_c7d4ce23",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "resolved.",
+      "parentUuid": "27fd32ad_862de086",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59a55842_971caa27",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -195,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "acd082f0_9ae964a8",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "resolved",
+      "parentUuid": "eb6199b6_d656a796",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a55fe8_fb9206c7",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -230,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "f99107a8_a19dd535",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "5b9df800_0e242832",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf55de76_f4617b2f",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -244,6 +298,24 @@
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7825c25c_1344da03",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "cf55de76_f4617b2f",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -264,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "9142586a_a57a84b7",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "decacf95_e9787c11",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f3b5bad_dce37160",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -278,6 +368,24 @@
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b46f51f_93961cba",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1064,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "4f3b5bad_dce37160",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +424,24 @@
     },
     {
       "key": {
+        "uuid": "e269a5ce_b2725ad7",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Hmmm - gotcha. To prevent this err in the future: Are we doing this because if a DCHECK fails, that is not considered failing gracefully?",
+      "parentUuid": "82f343f1_980dc895",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08278a8c_393cc8b5",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 2
@@ -330,6 +456,24 @@
       "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60cd3ce5_27909f69",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1244126
+      },
+      "writtenOn": "2017-10-09T17:51:04Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "08278a8c_393cc8b5",
+      "revId": "475247653ff43101aa7945c76e03c79897e0cdd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
