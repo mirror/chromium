@@ -16,6 +16,24 @@
       "revId": "e00a195f2f2b01805cb0d95c719ec90e0025a4e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4939e3c4_2534091d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/geometry/ng_logical_size.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-10-09T16:35:30Z",
+      "side": 1,
+      "message": "Done by including ng_logical_offset.h. Separated but that needs to include it whenever subtraction is used, which didn\u0027t look very intuitive. I hope you like this better?",
+      "parentUuid": "0f17c77c_9a4dd9d0",
+      "revId": "e00a195f2f2b01805cb0d95c719ec90e0025a4e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
