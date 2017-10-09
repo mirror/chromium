@@ -42,8 +42,8 @@ bool WebNotificationDelegate::ShouldDisplayOverFullscreen() const {
   NotificationDisplayService* display_service =
       NotificationDisplayServiceFactory::GetForProfile(profile_);
 
-  return display_service->ShouldDisplayOverFullscreen(origin_,
-                                                      notification_type_);
+  return display_service->ShouldDisplayOverFullscreen(
+      origin_, notification_type_, notification_id_);
 }
 
 void WebNotificationDelegate::Close(bool by_user) {

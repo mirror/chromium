@@ -8,6 +8,7 @@
 
 #include "base/strings/nullable_string16.h"
 #include "chrome/browser/notifications/non_persistent_notification_handler.h"
+#include "chrome/browser/notifications/notification.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/persistent_notification_handler.h"
 #include "extensions/features/features.h"
@@ -32,6 +33,14 @@ NotificationDisplayService::NotificationDisplayService(Profile* profile)
 
 NotificationDisplayService::~NotificationDisplayService() = default;
 
+void NotificationDisplayService::DisplaySimpleNotification(
+    const Notification& notification,
+    NotificationHandler* handler) {
+  DCHECK(simple_handlers_.find(notification.id()) == simple_handlers_.end());
+  simple_handlers_[notification.id()] = handler;
+  Display(NotificationCommon::SIMPLE, notification.id(), notification);
+}
+
 void NotificationDisplayService::AddNotificationHandler(
     NotificationCommon::Type notification_type,
     std::unique_ptr<NotificationHandler> handler) {
@@ -40,6 +49,8 @@ void NotificationDisplayService::AddNotificationHandler(
   notification_handlers_[notification_type] = std::move(handler);
 }
 
+void AddGenericNotificationHandler(NotificationHandler* handler);
+
 void NotificationDisplayService::RemoveNotificationHandler(
     NotificationCommon::Type notification_type) {
   auto iter = notification_handlers_.find(notification_type);
@@ -47,8 +58,24 @@ void NotificationDisplayService::RemoveNotificationHandler(
   notification_handlers_.erase(iter);
 }
 
+void NotificationDisplayService::SimpleHandlerGone(
+    const std::string& id,
+    NotificationHandler* handler) {
+  auto found = simple_handlers_.find(id);
+  DCHECK(found != simple_handlers_.end());
+  DCHECK_EQ(found->second, handler);
+  simple_handlers_.erase(found);
+}
+
 NotificationHandler* NotificationDisplayService::GetNotificationHandler(
-    NotificationCommon::Type notification_type) {
+    NotificationCommon::Type notification_type,
+    const std::string& id) {
+  if (notification_type == NotificationCommon::SIMPLE) {
+    auto found = simple_handlers_.find(id);
+    DCHECK(found != simple_handlers_.end());
+    return found->second;
+  }
+
   auto found = notification_handlers_.find(notification_type);
   if (found != notification_handlers_.end())
     return found->second.get();
@@ -63,7 +90,8 @@ void NotificationDisplayService::ProcessNotificationOperation(
     const base::Optional<int>& action_index,
     const base::Optional<base::string16>& reply,
     const base::Optional<bool>& by_user) {
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
+  NotificationHandler* handler =
+      GetNotificationHandler(notification_type, notification_id);
   DCHECK(handler);
   if (!handler) {
     LOG(ERROR) << "Unable to find a handler for " << notification_type;
@@ -85,8 +113,9 @@ void NotificationDisplayService::ProcessNotificationOperation(
 
 bool NotificationDisplayService::ShouldDisplayOverFullscreen(
     const GURL& origin,
-    NotificationCommon::Type notification_type) {
-  NotificationHandler* handler = GetNotificationHandler(notification_type);
+    NotificationCommon::Type notification_type,
+    const std::string& id) {
+  NotificationHandler* handler = GetNotificationHandler(notification_type, id);
   DCHECK(handler);
   return handler->ShouldDisplayOnFullScreen(profile_, origin.spec());
 }

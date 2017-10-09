@@ -37,12 +37,13 @@ class NotificationCommon {
   // Possible kinds of notifications
   // TODO(peter): Prefix these options with TYPE_.
   enum Type {
-    PERSISTENT = 0,
-    NON_PERSISTENT = 1,
-    EXTENSION = 2,
-    PRODUCT_EOL = 3,
+    SIMPLE = 0,
+    PERSISTENT = 1,
+    NON_PERSISTENT = 2,
+    EXTENSION = 3,
     DOWNLOAD = 4,
-    TYPE_MAX = DOWNLOAD,
+    FILE_SYSTEM_PROVIDER = 5,
+    TYPE_MAX = FILE_SYSTEM_PROVIDER,
   };
 
   // A struct that contains extra data about a notification specific to one of
