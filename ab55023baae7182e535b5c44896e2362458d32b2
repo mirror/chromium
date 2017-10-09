@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "f8fa250b_6a5b494e",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-09T20:33:20Z",
+      "side": 1,
+      "message": "Just noting that this wasn\u0027t the same before. If we are just walking nested buffers, top_level_op_rect would remain null. That was only set if we are iterating over a record from a PaintRecord backed shader.",
+      "parentUuid": "2c7e466a_24413e68",
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19544a90_faeff3c2",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 2

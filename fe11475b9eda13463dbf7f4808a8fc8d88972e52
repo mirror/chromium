@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57c16d95_f2604001",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-10-09T20:33:20Z",
+      "side": 1,
+      "message": "nit: Do we need this in a separate function anymore?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 40
+      },
+      "revId": "fe11475b9eda13463dbf7f4808a8fc8d88972e52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
