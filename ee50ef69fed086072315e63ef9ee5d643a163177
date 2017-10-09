@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0efbe13_fe947a40",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-compile-and-run.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "Nit: we can include this reference to test description.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898965cd_c2d4503a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-cyclic-reference.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ff2c0c_5a7a4471",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-proto-property.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58908d7_4c326b5a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-reload-on-pause.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "remove it.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f68fb7f_44c10fcc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-scripts.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365b8ff8_ab7b46dc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-scripts.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "Please put all functions back to script tags and load them with loadHTML. This test checks script offsets for inline scripts.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fab622c_b9eff50b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/debugger-suspend-active-dom-objects.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "nuke it!",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2719c1e2_97fd7224",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/live-edit-breakpoints.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "please merge link only to test description.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c2bedb_6738ea61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/sources/debugger/mutation-observer-suspend-while-paused.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d090f48_b4507d99",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/startup/open-close-open.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T17:45:29Z",
+      "side": 1,
+      "message": "hm? Should this one be migrated as well?",
+      "revId": "ee50ef69fed086072315e63ef9ee5d643a163177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
