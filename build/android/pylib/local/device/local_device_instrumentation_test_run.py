@@ -828,6 +828,7 @@ class LocalDeviceInstrumentationTestRun(
             content_type='text/html')
         for result in results:
           result.SetLink(failure_filename, html_results_link)
+          result.SetLink("Direct-" + failure_filename, failure_link)
 
   #override
   def _ShouldRetry(self, test, result):
