@@ -58,7 +58,9 @@ class FakeBookmarkTracker : public BookmarkTracker {
         feature_tracker_(feature_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    SessionDurationUpdater::RegisterProfilePrefs(
+        pref_service_->registry(),
+        prefs::kBookmarkInProductHelpObservedSessionTime);
   }
 
   PrefService* GetPrefs() { return pref_service_.get(); }
@@ -91,8 +93,8 @@ class BookmarkTrackerEventTest : public testing::Test {
 
   void TearDown() override {
     bookmark_tracker_->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:

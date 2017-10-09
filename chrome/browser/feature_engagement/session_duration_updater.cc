@@ -6,10 +6,8 @@
 
 #include "base/observer_list.h"
 #include "base/time/time.h"
-#include "chrome/browser/feature_engagement/tracker_factory.h"
+#include "base/timer/elapsed_timer.h"
 #include "chrome/common/pref_names.h"
-#include "components/feature_engagement/public/event_constants.h"
-#include "components/feature_engagement/public/feature_constants.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "components/prefs/pref_service.h"
 
@@ -24,8 +22,18 @@ SessionDurationUpdater::~SessionDurationUpdater() = default;
 
 // static
 void SessionDurationUpdater::RegisterProfilePrefs(
-    user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterIntegerPref(prefs::kObservedSessionTime, 0);
+    user_prefs::PrefRegistrySyncable* registry,
+    const char* observed_session_time_perf) {
+  registry->RegisterInt64Pref(observed_session_time_perf, 0);
+}
+
+base::TimeDelta SessionDurationUpdater::GetActiveSessionElapsedTime(
+    const char* observed_session_time_perf) {
+  base::TimeDelta elapsed_time = base::TimeDelta::FromSeconds(
+      pref_service_->GetInt64(observed_session_time_perf));
+  return !elapsed_timer_ || !is_session_active_
+             ? elapsed_time
+             : elapsed_time + elapsed_timer_->Elapsed();
 }
 
 void SessionDurationUpdater::AddObserver(Observer* observer) {
@@ -35,8 +43,13 @@ void SessionDurationUpdater::AddObserver(Observer* observer) {
   // DesktopSessionDurationTracker if another feature is added after
   // SessionDurationUpdater was removed.
   if (!duration_tracker_observer_.IsObserving(
-          metrics::DesktopSessionDurationTracker::Get()))
+          metrics::DesktopSessionDurationTracker::Get())) {
+    if (!is_session_active_) {
+      elapsed_timer_.reset(new base::ElapsedTimer());
+      is_session_active_ = true;
+    }
     AddDurationTrackerObserver();
+}
 }
 
 void SessionDurationUpdater::RemoveObserver(Observer* observer) {
@@ -44,8 +57,16 @@ void SessionDurationUpdater::RemoveObserver(Observer* observer) {
   // If all the observer Features have removed themselves due to their active
   // time limits have been reached, the SessionDurationUpdater removes itself
   // as an observer of DesktopSessionDurationTracker.
-  if (!observer_list_.might_have_observers())
+  if (!observer_list_.might_have_observers()) {
+    elapsed_timer_.reset();
+    is_session_active_ = false;
     RemoveDurationTrackerObserver();
+  }
+}
+
+void SessionDurationUpdater::OnSessionStarted(base::TimeTicks session_start) {
+  elapsed_timer_.reset(new base::ElapsedTimer());
+  is_session_active_ = true;
 }
 
 void SessionDurationUpdater::OnSessionEnded(base::TimeDelta elapsed) {
@@ -55,18 +76,32 @@ void SessionDurationUpdater::OnSessionEnded(base::TimeDelta elapsed) {
           metrics::DesktopSessionDurationTracker::Get())) {
     return;
   }
+}
 
-  base::TimeDelta elapsed_session_time;
+void SessionDurationUpdater::OnSessionEndedForPerf(
+    base::TimeDelta elapsed,
+    const char* observed_session_time_perf) {
+  // This case is only used during testing as that is the only case that
+  // DesktopSessionDurationTracker isn't calling this on its observer.
+  if (!duration_tracker_observer_.IsObserving(
+          metrics::DesktopSessionDurationTracker::Get())) {
+    return;
+  }
 
-  elapsed_session_time +=
-      base::TimeDelta::FromMinutes(
-          pref_service_->GetInteger(prefs::kObservedSessionTime)) +
+  base::TimeDelta elapsed_incognito_session_time;
+
+  elapsed_incognito_session_time +=
+      base::TimeDelta::FromSeconds(
+          pref_service_->GetInt64(observed_session_time_perf)) +
       elapsed;
-  pref_service_->SetInteger(prefs::kObservedSessionTime,
-                            elapsed_session_time.InMinutes());
+  pref_service_->SetInt64(observed_session_time_perf,
+                          elapsed_incognito_session_time.InSeconds());
+
+  elapsed_timer_.reset();
+  is_session_active_ = false;
 
   for (Observer& observer : observer_list_)
-    observer.OnSessionEnded(elapsed_session_time);
+    observer.OnSessionEnded(elapsed_incognito_session_time);
 }
 
 void SessionDurationUpdater::AddDurationTrackerObserver() {

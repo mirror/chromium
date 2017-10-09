@@ -12,8 +12,8 @@
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
 #include "chrome/browser/feature_engagement/feature_tracker.h"
-#include "chrome/browser/feature_engagement/session_duration_updater.h"
-#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_in_product_help_session_duration_updater.h"
+#include "chrome/browser/feature_engagement/new_tab/new_tab_in_product_help_session_duration_updater_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/pref_names.h"
@@ -53,12 +53,14 @@ class FakeNewTabTracker : public NewTabTracker {
  public:
   FakeNewTabTracker(Tracker* feature_tracker, Profile* profile)
       : NewTabTracker(
-            feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-                ->GetForProfile(profile)),
+            feature_engagement::
+                NewTabInProductHelpSessionDurationUpdaterFactory::GetInstance()
+                    ->GetForProfile(profile)),
         feature_tracker_(feature_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
+    NewTabInProductHelpSessionDurationUpdater::RegisterProfilePrefs(
+        pref_service_->registry());
   }
 
   PrefService* GetPrefs() { return pref_service_.get(); }
@@ -92,8 +94,8 @@ class NewTabTrackerEventTest : public testing::Test {
 
   void TearDown() override {
     new_tab_tracker_->RemoveSessionDurationObserver();
-    metrics::DesktopSessionDurationTracker::CleanupForTesting();
     testing_profile_manager_.reset();
+    metrics::DesktopSessionDurationTracker::CleanupForTesting();
   }
 
  protected:
