@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "d593d586_05b13c21",
+        "filename": "services/network/public/cpp/cookie_manager.typemap",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-10-09T17:46:51Z",
+      "side": 1,
+      "message": "Reading the code, I think the current approach should be fine.\n\nThat being said, if in the future multiple mojom targets refer to types below (network.mojom.CookiePriority, etc.), then we could run into the issue of duplicate definitions, because cookie_manager_struct_traits.cc will be listed in multiple source sets. In that case, we could move it to a separate target.\n\n\nLGTM for the current patch",
+      "parentUuid": "ae62f7a2_2fab2797",
+      "range": {
+        "startLine": 11,
+        "startChar": 14,
+        "endLine": 11,
+        "endChar": 21
+      },
+      "revId": "1d913c6cbf10e4987222fffa818928c4f74e9513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5066ef94_737ba30a",
         "filename": "services/network/public/cpp/cookie_manager_struct_traits.h",
         "patchSetId": 14
