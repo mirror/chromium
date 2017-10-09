@@ -33,23 +33,17 @@
 #include "platform/fonts/FontCustomPlatformData.h"
 
 #include "build/build_config.h"
-#include "platform/Histogram.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/SharedBuffer.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/fonts/FontPlatformData.h"
 #include "platform/fonts/WebFontDecoder.h"
-#if defined(OS_MACOSX)
-#include "platform/fonts/mac/CoreTextVariationsSupport.h"
-#endif
+#include "platform/fonts/WebFontTypefaceFactory.h"
+#include "platform/fonts/opentype/FontFormatCheck.h"
 #include "platform/fonts/opentype/FontSettings.h"
-#include "platform/fonts/opentype/VariableFontCheck.h"
+#include "platform/wtf/PtrUtil.h"
 #include "third_party/skia/include/core/SkStream.h"
 #include "third_party/skia/include/core/SkTypeface.h"
-#if defined(OS_WIN) || defined(OS_MACOSX)
-#include "third_party/skia/include/ports/SkFontMgr_empty.h"
-#endif
-#include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
@@ -79,18 +73,7 @@ FontPlatformData FontCustomPlatformData::GetFontPlatformData(
   // now, going with a reasonable upper limit. Deduplication is
   // handled by Skia with priority given to the last occuring
   // assignment.
-  if (VariableFontCheck::IsVariableFont(base_typeface_.get())) {
-#if defined(OS_WIN)
-    sk_sp<SkFontMgr> fm(SkFontMgr_New_Custom_Empty());
-#elif defined(OS_MACOSX)
-    sk_sp<SkFontMgr> fm;
-    if (CoreTextVersionSupportsVariations())
-      fm = SkFontMgr::RefDefault();
-    else
-      fm = SkFontMgr_New_Custom_Empty();
-#else
-    sk_sp<SkFontMgr> fm(SkFontMgr::RefDefault());
-#endif
+  if (FontFormatCheck(base_typeface_).IsVariableFont()) {
     Vector<SkFontArguments::Axis, 0> axes;
 
     SkFontArguments::Axis weight_axis = {
@@ -120,25 +103,21 @@ FontPlatformData FontCustomPlatformData::GetFontPlatformData(
       }
     }
 
-    sk_sp<SkTypeface> sk_variation_font(fm->makeFromStream(
-        base_typeface_->openStream(nullptr)->duplicate(),
-        SkFontArguments().setAxes(axes.data(), axes.size())));
+    sk_sp<SkTypeface> sk_variation_font(
+        WebFontTypefaceFactory::FontManagerForVariations()->makeFromStream(
+            base_typeface_->openStream(nullptr)->duplicate(),
+            SkFontArguments().setAxes(axes.data(), axes.size())));
 
     if (sk_variation_font) {
-      ReportWebFontInstantiationResult(kSuccessVariableWebFont);
       return_typeface = sk_variation_font;
     } else {
-      ReportWebFontInstantiationResult(kErrorInstantiatingVariableFont);
       SkString family_name;
       base_typeface_->getFamilyName(&family_name);
       // TODO: Surface this as a console message?
       LOG(ERROR) << "Unable for apply variation axis properties for font: "
                  << family_name.c_str();
     }
-  } else {
-    ReportWebFontInstantiationResult(kSuccessConventionalWebFont);
   }
-
   return FontPlatformData(return_typeface, "", size,
                           bold && !base_typeface_->isBold(),
                           italic && !base_typeface_->isItalic(), orientation);
@@ -156,14 +135,6 @@ RefPtr<FontCustomPlatformData> FontCustomPlatformData::Create(
   }
   return WTF::AdoptRef(
       new FontCustomPlatformData(std::move(typeface), decoder.DecodedSize()));
-}
-
-void FontCustomPlatformData::ReportWebFontInstantiationResult(
-    WebFontInstantiationResult result) {
-  DEFINE_THREAD_SAFE_STATIC_LOCAL(
-      EnumerationHistogram, web_font_variable_fonts_ratio,
-      ("Blink.Fonts.VariableFontsRatio", kMaxWebFontInstantiationResult));
-  web_font_variable_fonts_ratio.Count(result);
 }
 
 bool FontCustomPlatformData::SupportsFormat(const String& format) {

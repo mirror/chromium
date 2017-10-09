@@ -1,0 +1,10 @@
+Noto Color Emoji
+
+1. Source Origin
+https://android.googlesource.com/platform/external/noto-fonts/+/master/emoji/
+
+2. License
+For license information, see the MODULE_LICENSE_OFL and NOTICE files.
+
+3. Reason
+Used for LayoutTest'ing cross platform CBDT/CBLC color font format support.

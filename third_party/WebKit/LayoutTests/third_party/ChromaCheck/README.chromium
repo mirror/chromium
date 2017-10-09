@@ -1,0 +1,10 @@
+ChromaCheck Sbix
+
+1. Source Origin
+https://github.com/RoelN/ChromaCheck
+
+2. License
+For license information, see the LICENSE.md file.
+
+3. Reason
+Used for LayoutTest'ing cross platform Sbix bitmap font support.
