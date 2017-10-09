@@ -8,6 +8,7 @@
 #include "platform/loader/fetch/ResourceError.h"
 #include "platform/loader/testing/MockFetchContext.h"
 #include "platform/testing/weburl_loader_mock_factory_impl.h"
+#include "platform/loader/testing/WebURLLoaderFactoryWithMock.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLLoader.h"
@@ -38,10 +39,8 @@ FetchTestingPlatformSupport::GetURLLoaderMockFactory() {
   return url_loader_mock_factory_.get();
 }
 
-std::unique_ptr<WebURLLoader> FetchTestingPlatformSupport::CreateURLLoader(
-    const blink::WebURLRequest& request,
-    SingleThreadTaskRunnerRefPtr task_runner) {
-  return url_loader_mock_factory_->CreateURLLoader(nullptr);
+std::unique_ptr<WebURLLoaderFactory> FetchTestingPlatformSupport::CreateDefaultURLLoaderFactory() {
+  return std::make_unique<WebURLLoaderFactoryWithMock>(url_loader_mock_factory_.get());
 }
 
 }  // namespace blink
