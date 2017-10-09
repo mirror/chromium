@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "690f635c_a8625eff",
+        "filename": "third_party/WebKit/Source/platform/testing/RuntimeEnabledFeaturesTestHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-09T16:04:47Z",
+      "side": 1,
+      "message": "How about auto generating this file for all features with Source/build/scripts/make_runtime_features.py?",
+      "revId": "5eb7f508027dab7b6012d6bd95e872d555241189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
