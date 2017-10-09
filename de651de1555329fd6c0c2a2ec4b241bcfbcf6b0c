@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e4265cd6_83fb2e83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/BreakpointManager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b50433b9_ed344a31",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f4ff05_96803978",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7a2430_23e38f47",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f4ff05_96803978",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "fe318dc4_4d81fbe2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba71187c_9bbc4cea",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f44b70b6_81642c6b",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 5
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "516b652f_6db78b6d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f44b70b6_81642c6b",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1554d73b_4be9fd83",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
         "patchSetId": 5
@@ -101,6 +173,24 @@
       "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc447d8_b45e1aae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1125920
+      },
+      "writtenOn": "2017-10-09T20:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1554d73b_4be9fd83",
+      "revId": "de651de1555329fd6c0c2a2ec4b241bcfbcf6b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
