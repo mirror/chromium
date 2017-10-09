@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "409fad1e_d8e14aed",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-09T22:45:33Z",
+      "side": 1,
+      "message": "I found I couldn\u0027t put mac/sandbox_mac.mm into mac/BUILD.gn without geting a cycle in dependencies, so having put that file here, it seemed weird that some files under us would be built by this BUILD.gn and others by mac/BUILD.gn, so unified all here and removed the other.",
+      "parentUuid": "81c997c1_dd8cca0f",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f3d875a_06c04308",
         "filename": "services/service_manager/sandbox/BUILD.gn",
         "patchSetId": 14
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "53ea61ff_f2bc4e3c",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-09T22:45:33Z",
+      "side": 1,
+      "message": "Done.  Stray import copied from other .GN file when I was trying to fix build",
+      "parentUuid": "5f3d875a_06c04308",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75f40b38_cb3dea17",
         "filename": "services/service_manager/sandbox/BUILD.gn",
         "patchSetId": 14
@@ -47,6 +83,24 @@
       "writtenOn": "2017-10-09T22:09:51Z",
       "side": 1,
       "message": "This should go on the :sandbox component. I don\u0027t think this is doing anything here?",
+      "revId": "958d378f5ddf1f24479d721db64b64396d642315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a6a19ed_da90efba",
+        "filename": "services/service_manager/sandbox/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-10-09T22:45:33Z",
+      "side": 1,
+      "message": "Seems to work but I\u0027ll move it",
+      "parentUuid": "75f40b38_cb3dea17",
       "revId": "958d378f5ddf1f24479d721db64b64396d642315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
