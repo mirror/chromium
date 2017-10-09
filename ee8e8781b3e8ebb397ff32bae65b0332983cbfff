@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c73aad45_008b2c87",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T11:59:13Z",
+      "side": 1,
+      "message": "you need t move this entire block before line 760.\n\nAfter the  std::move(pmd_async_state-\u003eprocess_memory_dump) of line 763, the PMD you have here is empty\n\nAlso remember to add a comment to explain this special path",
+      "range": {
+        "startLine": 767,
+        "startChar": 2,
+        "endLine": 767,
+        "endChar": 47
+      },
+      "revId": "ee8e8781b3e8ebb397ff32bae65b0332983cbfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a63c05_bf0bc013",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T11:59:13Z",
+      "side": 1,
+      "message": "I think this is DETAILED only, we don\u0027t emit heap profier dumps neither in BACKGROUND nor LIGHT",
+      "range": {
+        "startLine": 768,
+        "startChar": 59,
+        "endLine": 768,
+        "endChar": 71
+      },
+      "revId": "ee8e8781b3e8ebb397ff32bae65b0332983cbfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28394c02_ab002858",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T11:59:13Z",
+      "side": 1,
+      "message": "nit: just early return now that you have only this, i.e.:\n\nif (heap_dumps_.empty())\n  return;\n\nvalue-\u003eBeginDictionary(\"heaps\");\n...",
+      "range": {
+        "startLine": 367,
+        "startChar": 2,
+        "endLine": 367,
+        "endChar": 29
+      },
+      "revId": "ee8e8781b3e8ebb397ff32bae65b0332983cbfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc63307_23ec6f58",
+        "filename": "base/trace_event/process_memory_dump.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-10-09T11:59:13Z",
+      "side": 1,
+      "message": "perfect",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 230,
+        "endChar": 64
+      },
+      "revId": "ee8e8781b3e8ebb397ff32bae65b0332983cbfff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
