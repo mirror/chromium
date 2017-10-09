@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029d6b1c_63f6d262",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 3346,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-10-09T19:55:06Z",
+      "side": 0,
+      "message": "Now I let PaintController set up raster under-invalidation checking by itself. This avoids adding the above call elsewhere for SPv175.",
+      "revId": "7cb2dd7e7173d84d0ec47db00fa010cb04d938ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
