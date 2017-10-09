@@ -16,6 +16,24 @@
       "revId": "6d7bc07311d388f676f3869090779a45b379d495",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fedde5e_7431497a",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T23:04:21Z",
+      "side": 1,
+      "message": "actually, I think we might have to use createNetwork for any network that\u0027s not in a network profile :/ (setProperties will fail for non-cofigured networks here: https://cs.chromium.org/chromium/src/chromeos/network/managed_network_configuration_handler_impl.cc?rcl\u003d227a7f3a571f2b5dc5feddf76fdd41a8df9f7395\u0026l\u003d245)\n\nThough, that one is probably out of scope for this cl",
+      "parentUuid": "9cbcd004_b15a75d5",
+      "revId": "6d7bc07311d388f676f3869090779a45b379d495",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
