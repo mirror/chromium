@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9aef47cf_b2b69cd1",
+        "filename": "media/audio/audio_output_resampler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-09T13:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb3c78f5_0627e81b",
+      "revId": "78ea169a03c0d28279aaa64c319a28214f92958f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41362b7b_ab9b61ce",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-10-09T09:27:39Z",
       "side": 1,
       "message": "Is escaping the quotes necessary?",
+      "range": {
+        "startLine": 31314,
+        "startChar": 53,
+        "endLine": 31314,
+        "endChar": 59
+      },
+      "revId": "78ea169a03c0d28279aaa64c319a28214f92958f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9664bfd0_0ac1a251",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31314,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-10-09T13:42:24Z",
+      "side": 1,
+      "message": "I just used \"\", it was auto-formatted - I guess because it is used as-is on the UMA page.",
+      "parentUuid": "41362b7b_ab9b61ce",
       "range": {
         "startLine": 31314,
         "startChar": 53,
