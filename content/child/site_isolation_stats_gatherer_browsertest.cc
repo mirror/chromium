@@ -63,8 +63,17 @@ class SiteIsolationStatsGathererBrowserTest
 
   void InspectHistograms(const base::HistogramTester& histograms,
                          bool should_be_blocked,
-                         const std::string& resource_name) {
+                         const std::string& resource_name,
+                         bool from_isolated_world = false) {
     std::string bucket;
+
+    if (from_isolated_world) {
+      // Requests that originate from isolated worlds (instead of the main page)
+      // are probably due to the extension system, which might have abnormal
+      // cross-origin permissions. Thus, they're bucketed separately.
+      bucket += "FromContentScript.";
+    }
+
     int mime_type = 0;  // Hardcoded because histogram enums mustn't change.
     if (base::MatchPattern(resource_name, "*.html")) {
       bucket = "HTML";
@@ -149,17 +158,10 @@ IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest,
   // The following are files under content/test/data/site_isolation. All
   // should be disallowed for cross site XHR under the document blocking policy.
   const char* blocked_resources[] = {
-      "comment_valid.html",
-      "html.txt",
-      "html4_dtd.html",
-      "html4_dtd.txt",
-      "html5_dtd.html",
-      "html5_dtd.txt",
-      "json.txt",
-      "valid.html",
-      "valid.json",
-      "valid.xml",
-      "xml.txt",
+      "comment_valid.html", "html.txt",      "html4_dtd.html", "html4_dtd.txt",
+      "html5_dtd.html",     "html5_dtd.txt", "xml.html",       "json.html",
+      "json.txt",           "json.xml",      "valid.html",     "valid.json",
+      "valid.xml",          "xml.txt",
   };
 
   for (const char* resource : blocked_resources) {
@@ -198,6 +200,48 @@ IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest,
 
     InspectHistograms(histograms, false, resource);
   }
+}
+
+IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest,
+                       DataURLSchemeNeverBlocked) {
+  // 1. Test that simple / non-preflighted CORS-enabled, CORS-allowed requests
+  // for resources that would normally be blocked are not recorded as XSD
+  // blocks.
+
+  // 2. Test that preflighted CORS-enabled, CORS-allowed requests for resources
+  // that would normally be blocked are not recorded as XSD blocks. Also, verify
+  // that the preflight request doesn't affect the total counter.
+  GURL foo("http://foo.com/cross_site_document_request.html");
+
+  // 3. Test that non-preflighted, CORS-enabled, CORS-DENIED requests for
+  //    resources that would normally be blocked are not recorded as XSD blocks.
+  //    Also, verify that the preflight request doesn't affect the total
+  //    counter.
+
+  // 4. 3 w/ preflight
+
+  // 5. CORS request for server that doesn't speak CORS.
+}
+
+
+IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest, CORSNotBlocked) {
+  // 1. Test that simple / non-preflighted CORS-enabled, CORS-allowed requests
+  // for resources that would normally be blocked are not recorded as XSD
+  // blocks.
+
+  // 2. Test that preflighted CORS-enabled, CORS-allowed requests for resources
+  // that would normally be blocked are not recorded as XSD blocks. Also, verify
+  // that the preflight request doesn't affect the total counter.
+  GURL foo("http://foo.com/cross_site_document_request.html");
+
+  // 3. Test that non-preflighted, CORS-enabled, CORS-DENIED requests for
+  //    resources that would normally be blocked are not recorded as XSD blocks.
+  //    Also, verify that the preflight request doesn't affect the total
+  //    counter.
+
+  // 4. 3 w/ preflight
+
+  // 5. CORS request for server that doesn't speak CORS.
 }
 
 IN_PROC_BROWSER_TEST_P(SiteIsolationStatsGathererBrowserTest,

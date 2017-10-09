@@ -113,6 +113,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
       int routing_id,
       scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner,
       const url::Origin& frame_origin,
+      bool frame_origin_access_whitelisted,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
       bool is_sync,
       std::unique_ptr<RequestPeer> peer,
@@ -179,6 +180,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
                        ResourceType resource_type,
                        int origin_pid,
                        const url::Origin& frame_origin,
+                       bool frame_origin_access_whitelisted,
                        const GURL& request_url,
                        bool download_to_file);
 
@@ -192,6 +194,9 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
     int origin_pid;
     MessageQueue deferred_message_queue;
     bool is_deferred = false;
+    // True if |frame_origin| is allowed to see the bits of |request_url|, as if
+    // they were same-origin.
+    bool frame_origin_access_whitelisted;
     // Original requested url.
     GURL url;
     // The security origin of the frame that initiates this request.
