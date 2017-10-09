@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f596cb4_348999ec",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-10-09T15:46:06Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to take into account devicePixelRatio?",
+      "range": {
+        "startLine": 866,
+        "startChar": 29,
+        "endLine": 866,
+        "endChar": 33
+      },
+      "revId": "8bb867f25bfb173e0ee4136eb4ecec9b212656f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
