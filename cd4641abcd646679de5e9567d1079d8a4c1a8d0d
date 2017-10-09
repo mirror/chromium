@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "dcf70e98_f00b4de5",
+        "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-10-09T18:46:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be in a requirements/ subdirectory since it is not an external requirement. Am I misunderstanding the purpose of the requirements/ subdirectory?",
+      "parentUuid": "9c61625e_75e1f697",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 81
+      },
+      "revId": "cd4641abcd646679de5e9567d1079d8a4c1a8d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35ec6efb_67a0b893",
         "filename": "ios/chrome/browser/ui/signin_interaction/signin_interaction_presenting.h",
         "patchSetId": 5
