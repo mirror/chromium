@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b784bc7_9e0705f2",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-10-09T12:30:34Z",
+      "side": 1,
+      "message": "IIRC, we talked about the contract of this method being that it was guaranteed that the callback was always invoked. Should we have an else here invoking the callback immediately with nullptr?",
+      "range": {
+        "startLine": 203,
+        "startChar": 4,
+        "endLine": 203,
+        "endChar": 5
+      },
+      "revId": "ddcc2114c075498edbb3f355773844a47fd8adca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
