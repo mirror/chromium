@@ -33,6 +33,10 @@ constexpr base::TimeDelta kDelayedStart = base::TimeDelta::FromSeconds(5);
 // Media Remoting to deliver the media contents.
 constexpr double kMaxMediaBitrateCapacityFraction = 0.9;
 
+// The minimum media element duration that is allowed to start media remoting.
+// The media that has shorter duration is likely to be a commercial ads.
+constexpr double kMinRemotingMediaDurationInSec = 60;
+
 }  // namespace
 
 RendererController::RendererController(scoped_refptr<SharedSession> session)
@@ -335,6 +339,9 @@ bool RendererController::CanBeRemoting() const {
     return false;
 
   if (is_remote_playback_disabled_)
+    return false;
+
+  if (client_->Duration() <= kMinRemotingMediaDurationInSec)
     return false;
 
   return true;
