@@ -1,0 +1,26 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module device.mojom;
+
+import "device/geolocation/public/interfaces/geoposition.mojom";
+
+// Coarse-grained geolocator which, subject to case-by-case privacy review, may
+// be able operate without explicit user consent.
+// (Do not use without privacy review.)
+interface PublicIpAddressGeolocator {
+  // When first called:
+  //   Returns an approximate geographic location inferred from the device's
+  //   publicly visible IP address.
+  // When subsequently called:
+  //   Waits until the inferred location changes, and returns the updated
+  //   location. Updates happen when the user's network changes.
+  //
+  // Use this method to get notified of future position updates, by calling
+  // QueryNextPosition once, and then calling it again each time it returns.
+  //
+  // Overlapping calls to this method are prohibited and will be treated as a
+  // connection error.
+  QueryNextPosition() => (Geoposition geoposition);
+};
