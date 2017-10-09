@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "9317419b_b144de50",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "It\u0027s a little weird that we\u0027re creating a SelectionModel with a logical cursor direction affinity, but saying that the selection is undirected... Should the undirected notion be built into SelectionModel or LogicalCursorDirection or VisualCursorDirection?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa33cf06_571c1ef2",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "nit: match definition ordering with header decl ordering",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eefbb4a_d860cf76",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this function always yield a direction? (it\u0027s moving the cursor in a specified direction for an arrow key). Why does it matter if the selection was collapsed? If that does matter, shouldn\u0027t it matter when the outcome of a Shift+Arrow happens to yield a collapsed selection, and not just when the selection_behavior is none? (ie. when cursor is on the right side of a one-char selection and you do Shift+Left). On the flip side, should UpdateCursor just clear |has_directed_selection_| when the selection range is empty? Sorry, this isn\u0027t super straightforward to me.",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c806c4_b3d2ef1c",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Why is it not valid to pass a directed selection here when the existing selection is not directed?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34389743_4be35179",
         "filename": "ui/gfx/render_text.cc",
         "patchSetId": 7
@@ -13,6 +81,143 @@
       "writtenOn": "2017-10-06T05:54:51Z",
       "side": 1,
       "message": "note this is basically the old `MoveCursorTo(const SelectionModel\u0026)` overload, but with an added |directed| argument.",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20196f45_ec9ba14e",
+        "filename": "ui/gfx/render_text.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1355,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "34389743_4be35179",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f1de477_e661d35e",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Heh, it\u0027s been a while and this isn\u0027t clicking in my head. Can you give an example?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea6f2c3_75116658",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t mouse inputs pass true on non-Mac platforms?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7cbe4ba_e5acd8f2",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Should |directed| have a default value?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08a7b25_fb54d278",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "nit: Since this function also *establishes* the direction when there is no established direction (ie. it sets |has_directed_selection_| to true), maybe it should be called something like ResolveDirectedCursor? I don\u0027t feel too strongly about the name, but the comment should mention that behavior.",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69468f0d_56e78d53",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Does passing SELECTION_NONE make sense as a flag for \"ignore current selection direction\"? Maybe use a bool flag instead?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f6439f_096df0b5",
+        "filename": "ui/gfx/render_text.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "Should |directed| have a default value?",
+      "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a2775c_92caa6db",
+        "filename": "ui/gfx/render_text_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2271,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-10-09T22:41:42Z",
+      "side": 1,
+      "message": "nit: it might please readers if the first block was a simpler one (same behavior).",
       "revId": "dbf5e33b1140d4d76a1c612ad6707b4ad1ae4194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
