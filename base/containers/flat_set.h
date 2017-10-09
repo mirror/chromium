@@ -46,11 +46,15 @@ namespace base {
 //
 // Constructors (inputs need not be sorted):
 //   flat_set(InputIterator first, InputIterator last,
-//            FlatContainerDupes, const Compare& compare = Compare());
+//            FlatContainerDupes = KEEP_FIRST_OF_DUPES,
+//            const Compare& compare = Compare());
 //   flat_set(const flat_set&);
 //   flat_set(flat_set&&);
-//   flat_set(std::vector<Key>, FlatContainerDupes);  // Re-use storage.
-//   flat_set(std::initializer_list<value_type> ilist, FlatContainerDupes,
+//   flat_set(std::vector<Key>,
+//            FlatContainerDupes = KEEP_FIRST_OF_DUPES,
+//            const Compare& compare = Compare());  // Re-use storage.
+//   flat_set(std::initializer_list<value_type> ilist,
+//            FlatContainerDupes = KEEP_FIRST_OF_DUPES,
 //            const Compare& comp = Compare());
 //
 // Assignment functions:
@@ -87,7 +91,7 @@ namespace base {
 //   pair<iterator, bool> insert(const key_type&);
 //   pair<iterator, bool> insert(key_type&&);
 //   void                 insert(InputIterator first, InputIterator last,
-//                               FlatContainerDupes);
+//                               FlatContainerDupes = KEEP_FIRST_OF_DUPES);
 //   iterator             insert(const_iterator hint, const key_type&);
 //   iterator             insert(const_iterator hint, key_type&&);
 //   pair<iterator, bool> emplace(Args&&...);
