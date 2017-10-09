@@ -182,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "a6170f30_bd22889e",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-10-09T22:17:55Z",
+      "side": 1,
+      "message": "In your example, what are Feature_1, Feature_2, and Feature_3 concretely? What is Observer? I understand how the observer pattern works, but I don\u0027t see its relationship to my suggestion of using RenderWidgetHostView as a technique for dispatching to a platform-specific implementation.\n\nRenderWidgetHostViewMac and RenderWidgetHostViewAura share a base class (RenderWidgetHostViewBase), so that\u0027s the natural place to put code that is shared between platforms. RenderWidgetHostImpl is another somewhat natural place. All of these classes represent a window (unlike RenderFrameHost, which represents an HTML document).",
+      "parentUuid": "9b549c1d_85f11fcc",
+      "revId": "26dcda03a7040871e16f648c9607af78f8796690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6935ea9_742c49c0",
         "filename": "ui/aura/keyboard_lock/special_key_detector.h",
         "patchSetId": 18
