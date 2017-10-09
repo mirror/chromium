@@ -59,6 +59,11 @@ constexpr int kLongInitialDelayBetweenAttemptsMs = 30 * 1000;
 // ONLINE transition.
 constexpr int kLongMaximumDelayBetweenAttemptsMs = 5 * 60 * 1000;
 
+// The delay from default network reports captive portal, used to record
+// detection attempt result.
+constexpr base::TimeDelta kDelaySincePortalNetworkForUMA =
+    base::TimeDelta::FromSeconds(60);
+
 // Get randomized test url by rotating through alternate hostnames on each
 // portal check, to defeat IP-based blocking.
 GURL GetRandomizedTestURL() {
@@ -209,6 +214,9 @@ const char NetworkPortalDetectorImpl::kSessionShillOfflineHistogram[] =
 const char NetworkPortalDetectorImpl::kSessionPortalToOnlineHistogram[] =
     "CaptivePortal.Session.PortalToOnlineTransition";
 
+constexpr char
+    NetworkPortalDetectorImpl::kDetectionResultSincePortalNetworkHistogram[];
+
 NetworkPortalDetectorImpl::NetworkPortalDetectorImpl(
     const scoped_refptr<net::URLRequestContextGetter>& request_context,
     bool create_notification_controller)
@@ -354,6 +362,9 @@ void NetworkPortalDetectorImpl::DefaultNetworkChanged(
   bool connection_state_changed =
       (default_connection_state_ != default_network->connection_state());
   default_connection_state_ = default_network->connection_state();
+
+  if (default_network->is_captive_portal())
+    last_shill_reports_portal_time_ = NowTicks();
 
   NET_LOG(EVENT) << "Default network changed:"
                  << " name=" << default_network_name_
@@ -564,6 +575,12 @@ void NetworkPortalDetectorImpl::OnAttemptCompleted(
   // Observers (via OnDetectionCompleted) may already schedule new attempt.
   if (is_idle())
     ScheduleAttempt(results.retry_after_delta);
+
+  if (NowTicks() - last_shill_reports_portal_time_ <=
+      kDelaySincePortalNetworkForUMA) {
+    UMA_HISTOGRAM_ENUMERATION(kDetectionResultSincePortalNetworkHistogram,
+                              state.status, CAPTIVE_PORTAL_STATUS_COUNT);
+  }
 }
 
 void NetworkPortalDetectorImpl::Observe(

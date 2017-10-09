@@ -60,6 +60,9 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
   static const char kSessionShillOfflineHistogram[];
   static const char kSessionPortalToOnlineHistogram[];
 
+  static constexpr char kDetectionResultSincePortalNetworkHistogram[] =
+      "CaptivePortal.DetectionResultSincePortalNetwork";
+
   NetworkPortalDetectorImpl(
       const scoped_refptr<net::URLRequestContextGetter>& request_context,
       bool create_notification_controller);
@@ -251,6 +254,10 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
 
   // Delay before next portal detection.
   base::TimeDelta next_attempt_delay_;
+
+  // Saves the most recent timestamp that shill reprots |default_network_id_|
+  // network is captive portal.
+  base::TimeTicks last_shill_reports_portal_time_;
 
   // Current detection strategy.
   std::unique_ptr<PortalDetectorStrategy> strategy_;
