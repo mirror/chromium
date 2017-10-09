@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca0c26c6_abaf5171",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-10-09T17:02:51Z",
+      "side": 1,
+      "message": "Can you post these to a task runner?  That\u0027ll help to ensure we don\u0027t end up in a bad Add-\u003eNotify-\u003eUpdate sequence",
+      "range": {
+        "startLine": 436,
+        "startChar": 4,
+        "endLine": 436,
+        "endChar": 33
+      },
+      "revId": "5059eda23792c069550c70f6753c399d071407e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
