@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75fd3c35_37625f1a",
+        "filename": "components/offline_pages/core/model/mark_page_accessed_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-10-09T18:41:53Z",
+      "side": 1,
+      "message": "or even better, use the OfflineEventLogger framework.",
+      "parentUuid": "f97b6b7c_fe82b42a",
+      "range": {
+        "startLine": 51,
+        "startChar": 50,
+        "endLine": 51,
+        "endChar": 61
+      },
+      "revId": "f5a96f4c8b2a16e4dcf771f52a163da795b6c96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2f8fe56_2ebd6b22",
         "filename": "components/offline_pages/core/model/temporary_pages_consistency_check_task.cc",
         "patchSetId": 7
