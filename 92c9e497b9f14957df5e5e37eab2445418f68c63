@@ -19,6 +19,121 @@
     },
     {
       "key": {
+        "uuid": "961b443c_f136ad93",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:54:38Z",
+      "side": 1,
+      "message": "Stored in OfflineItemVisuals.  too heavy weight for this class.",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 23
+      },
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fa1a2b_1b3c724f",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:54:38Z",
+      "side": 1,
+      "message": "This should be encoded in the title/description by the owner?",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe2350a_50188d81",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:54:38Z",
+      "side": 1,
+      "message": "Do we need these from native?",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd150ae_f663121d",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:54:38Z",
+      "side": 1,
+      "message": "Don\u0027t add this.  The point of the item is to abstract away the caller.  Do we need this for some reason in particular?",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 33
+      },
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd0c9493_7945b38d",
+        "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-10-09T23:54:38Z",
+      "side": 1,
+      "message": "I don\u0027t know if these make sense from the standpoint of a generic item.  Is this additional state we need to build the notifications?  If so we should wrap this.",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 28
+      },
+      "revId": "92c9e497b9f14957df5e5e37eab2445418f68c63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc72c34b_af0e56fa",
         "filename": "components/offline_items_collection/core/android/java/src/org/chromium/components/offline_items_collection/OfflineItem.java",
         "patchSetId": 9
