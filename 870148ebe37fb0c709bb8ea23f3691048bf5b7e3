@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cf837ec_fe77d4ce",
+        "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-09T17:38:32Z",
+      "side": 1,
+      "message": "Is /deep/ necessary here? extensions-item is within extensions-item-list\u0027s DOM so I think is not necessary, no?",
+      "revId": "870148ebe37fb0c709bb8ea23f3691048bf5b7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52146c7_d8695ee4",
+        "filename": "chrome/test/data/webui/extensions/extension_item_list_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-10-09T17:38:32Z",
+      "side": 1,
+      "message": "We should also add a test with leading and trailing whitespace, and ensure it still finds the time (suggesting separate CL, if that is not working already).",
+      "revId": "870148ebe37fb0c709bb8ea23f3691048bf5b7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
