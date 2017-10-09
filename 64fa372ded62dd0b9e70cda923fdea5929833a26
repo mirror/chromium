@@ -16,6 +16,24 @@
       "revId": "64fa372ded62dd0b9e70cda923fdea5929833a26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2316d4_2defdf0b",
+        "filename": "content/browser/webui/web_ui_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-10-09T15:53:57Z",
+      "side": 1,
+      "message": "\u003e I wonder why we don\u0027t do a process kill here.\n\nI think that there is no good reason :-(\n\nBad reasons:\n1. I wanted to create a CL with minimal change in behavior\n2. I was afraid of adding a kill (mostly worried about potential impact to untested WebUI scenarios on CrOS).\n\nFWIW, I have a CL that adds a kill at https://chromium-review.googlesource.com/c/chromium/src/+/702635\n \n\u003e Also, is this the primary mechanism now by which webui bindings for subframes are denied?\n\nI believe so.",
+      "parentUuid": "cdf4a2bf_cc688e0d",
+      "revId": "64fa372ded62dd0b9e70cda923fdea5929833a26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
