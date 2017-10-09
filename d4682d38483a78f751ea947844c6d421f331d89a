@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a8c7777_123550d4",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T22:17:02Z",
+      "side": 1,
+      "message": "update the param names",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 48
+      },
+      "revId": "d4682d38483a78f751ea947844c6d421f331d89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fbb30aa_8fa003ad",
+        "filename": "chrome/browser/ui/webui/chromeos/internet_config_dialog.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T22:17:02Z",
+      "side": 1,
+      "message": "the name could be read as \"network can be shared\", rather \"network\u0027s shared status can change\".\n\nThough, I can\u0027t really think of a much better name (and naming matches js side), so feel free to keep it as is.\nMaybe canChangeShareNetwork, or shareNetwokToggleEnabled?",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 46
+      },
+      "revId": "d4682d38483a78f751ea947844c6d421f331d89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc016e4_62d6d230",
+        "filename": "ui/webui/resources/cr_components/chromeos/network/network_config.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-10-09T22:17:02Z",
+      "side": 1,
+      "message": "nit: value",
+      "range": {
+        "startLine": 601,
+        "startChar": 21,
+        "endLine": 601,
+        "endChar": 26
+      },
+      "revId": "d4682d38483a78f751ea947844c6d421f331d89a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
