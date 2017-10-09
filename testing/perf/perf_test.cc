@@ -9,6 +9,11 @@
 #include "base/logging.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "build/build_config.h"
+
+#if defined(OS_ANDROID)
+#include <android/log.h>
+#endif
 
 namespace {
 
@@ -37,10 +42,15 @@ void PrintResultsImpl(const std::string& measurement,
                       const std::string& suffix,
                       const std::string& units,
                       bool important) {
+  std::string results = ResultsToString(measurement, modifier, trace, values,
+                                        prefix, suffix, units, important);
+#if defined(OS_ANDROID)
+  __android_log_print(ANDROID_LOG_INFO, "perf_test", "%s", results.c_str());
+#else
   fflush(stdout);
-  printf("%s", ResultsToString(measurement, modifier, trace, values,
-                               prefix, suffix, units, important).c_str());
+  printf("%s", results.c_str());
   fflush(stdout);
+#endif
 }
 
 }  // namespace
