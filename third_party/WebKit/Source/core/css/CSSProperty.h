@@ -30,13 +30,13 @@ namespace blink {
 
 struct StylePropertyMetadata {
   DISALLOW_NEW();
-  StylePropertyMetadata(CSSPropertyID property_id,
+  StylePropertyMetadata(const CSSPropertyAPI& property_api,
                         bool is_set_from_shorthand,
                         int index_in_shorthands_vector,
                         bool important,
                         bool implicit,
                         bool inherited)
-      : property_id_(property_id),
+      : property_api_(&property_api),
         is_set_from_shorthand_(is_set_from_shorthand),
         index_in_shorthands_vector_(index_in_shorthands_vector),
         important_(important),
@@ -44,8 +44,10 @@ struct StylePropertyMetadata {
         inherited_(inherited) {}
 
   CSSPropertyID ShorthandID() const;
+  const CSSPropertyAPI& PropertyAPI() const { return *property_api_; }
 
-  unsigned property_id_ : 10;
+  const CSSPropertyAPI* property_api_;
+
   unsigned is_set_from_shorthand_ : 1;
   // If this property was set as part of an ambiguous shorthand, gives the index
   // in the shorthands vector.
@@ -61,18 +63,18 @@ class CSSProperty {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  CSSProperty(CSSPropertyID property_id,
+  CSSProperty(const CSSPropertyAPI& property_api,
               const CSSValue& value,
               bool important = false,
               bool is_set_from_shorthand = false,
               int index_in_shorthands_vector = 0,
               bool implicit = false)
-      : metadata_(property_id,
+      : metadata_(property_api,
                   is_set_from_shorthand,
                   index_in_shorthands_vector,
                   important,
                   implicit,
-                  CSSPropertyAPI::Get(property_id).IsInherited()),
+                  property_api.IsInherited()),
         value_(value) {}
 
   // FIXME: Remove this.
@@ -80,7 +82,7 @@ class CSSProperty {
       : metadata_(metadata), value_(value) {}
 
   CSSPropertyID Id() const {
-    return static_cast<CSSPropertyID>(metadata_.property_id_);
+    return static_cast<CSSPropertyID>(metadata_.PropertyAPI().PropertyID());
   }
   bool IsSetFromShorthand() const { return metadata_.is_set_from_shorthand_; }
   CSSPropertyID ShorthandID() const { return metadata_.ShorthandID(); }
