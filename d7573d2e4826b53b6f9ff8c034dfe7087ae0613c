@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74ac80e6_aefaa46d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T22:05:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf39ec73_7668e432",
+      "range": {
+        "startLine": 736,
+        "startChar": 13,
+        "endLine": 736,
+        "endChar": 0
+      },
+      "revId": "d7573d2e4826b53b6f9ff8c034dfe7087ae0613c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58f8650a_20e615ee",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-10-09T18:29:27Z",
       "side": 1,
       "message": "Same comment with try/finally here.",
+      "range": {
+        "startLine": 739,
+        "startChar": 8,
+        "endLine": 759,
+        "endChar": 9
+      },
+      "revId": "d7573d2e4826b53b6f9ff8c034dfe7087ae0613c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d50b700_1624622b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/omnibox/OmniboxTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-10-09T22:05:18Z",
+      "side": 1,
+      "message": "The problem for this class is it uses both http and https for tests while Android only allows one EmbeddedTestServer for each test, so we cannot initialize and shutdown the test server in setUp() and tearDown().",
+      "parentUuid": "58f8650a_20e615ee",
       "range": {
         "startLine": 739,
         "startChar": 8,
