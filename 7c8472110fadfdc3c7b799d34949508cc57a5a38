@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b69df8_4099f1ba",
+        "filename": "ash/system/tray/tray_details_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-10-09T13:45:51Z",
+      "side": 1,
+      "message": "I reverted this file because ScokedMockTimeMessageLoopTaskRunner is deprecated and blocked by presubmit check. I tried to replace with TestMockTimeTaskRunner , but it wasn\u0027t trivial because it conflict with MessageLoop hat test harness is using.\n\nI\u0027ll address it in a separate CL.",
+      "revId": "7c8472110fadfdc3c7b799d34949508cc57a5a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
