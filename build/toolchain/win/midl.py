@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import array
 import difflib
 import distutils.dir_util
 import filecmp
@@ -12,6 +13,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import uuid
 
 
 def ZapTimestamp(filename):
@@ -87,12 +89,7 @@ def ZapTimestamp(filename):
   open(filename, 'wb').write(contents)
 
 
-def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
-  # chromoting_lib.idl uses a uuid that's hashed of chrome's version string,
-  # i.e. it changes every few compiles.  So a checked-in file does not work
-  # for chromoting_lib.idl.  For now, call midl.exe for remoting instead of
-  # using checked-in artifacts for it.
-  is_chromoting = os.path.basename(idl) == 'chromoting_lib.idl'
+def main(arch, outdir, dynamic_guid, tlb, h, dlldata, iid, proxy, idl, *flags):
 
   # Copy checked-in outputs to final location.
   THIS_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -102,21 +99,52 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
     source = os.path.join(source, os.path.basename(idl))
   source = os.path.join(source, arch.split('.')[1])  # Append 'x86' or 'x64'.
   source = os.path.normpath(source)
-  if not is_chromoting:
-    distutils.dir_util.copy_tree(source, outdir, preserve_times=False)
+  distutils.dir_util.copy_tree(source, outdir, preserve_times=False)
+  if dynamic_guid:
+    # Fix up GUID in .h, _i.c, and .tlb.  This currently assumes that there's
+    # only one coclass in the idl file, and that that's the type with the
+    # dynamic type.
+    # Fix up GUID in .h
+    contents = open(os.path.join(outdir, h), 'rb').read()
+    contents = re.sub('class DECLSPEC_UUID\("[^"]*"\)',
+                      'class DECLSPEC_UUID("%s")' % dynamic_guid, contents)
+    open(os.path.join(outdir, h), 'wb').write(contents)
+    # Fix up GUID in _i.c
+    uu = uuid.UUID(dynamic_guid)
+    hexuuid = '0x%08x,0x%04x,0x%04x,' % uu.fields[0:3]
+    hexuuid += ','.join('0x%02x' % ord(b) for b in uu.bytes[8:])
+    contents = open(os.path.join(outdir, iid), 'rb').read()
+    contents = re.sub(r'MIDL_DEFINE_GUID\(CLSID, ([^,]*),[^)]*\)',
+                      r'MIDL_DEFINE_GUID(CLSID, \1,%s)' % hexuuid, contents)
+    open(os.path.join(outdir, iid), 'wb').write(contents)
+    # Fix up GUID in .tlb
+    # See ZapTimestamp() for a short overview of the .tlb format.  The 1st
+    # section contains type descriptions, and the first type should be our
+    # coclass.  It points to the type's GUID in section 6, the GUID section.
+    contents = open(os.path.join(outdir, tlb), 'rb').read()
+    assert contents[0:8] == 'MSFT\x02\x00\x01\x00'
+    ntypes, = struct.unpack_from('<I', contents, 0x20)
+    type_off, type_len = struct.unpack_from('<II', contents, 0x54 + 4*ntypes)
+    assert ord(contents[type_off]) == 0x25, "expected coclass"
+    guidind = struct.unpack_from('<I', contents, type_off + 0x2c)[0]
+    guid_off, guid_len = struct.unpack_from(
+        '<II', contents, 0x54 + 4*ntypes + 5*16)
+    assert guidind + 14 <= guid_len
+    contents = array.array('c', contents)
+    struct.pack_into('<IHH8s', contents, guid_off + guidind,
+                     *(uu.fields[0:3] + (uu.bytes[8:],)))
+    open(os.path.join(outdir, tlb), 'wb').write(contents)
+    # The GUID is correct now, but there's also a GUID hashtable in section 5.
+    # Need to recreate that too.
 
   # On non-Windows, that's all we can do.
   if sys.platform != 'win32':
-    return 0 if not is_chromoting else 1
+    return 0
 
   # On Windows, run midl.exe on the input and check that its outputs are
   # identical to the checked-in outputs.
-  if not is_chromoting:
-    tmp_dir = tempfile.mkdtemp()
-    delete_tmp_dir = True
-  else:
-    tmp_dir = outdir
-    delete_tmp_dir = False
+  tmp_dir = tempfile.mkdtemp()
+  delete_tmp_dir = True
 
   # Read the environment block from the file. This is stored in the format used
   # by CreateProcess. Drop last 2 NULs, one for list terminator, one for
@@ -149,21 +177,19 @@ def main(arch, outdir, tlb, h, dlldata, iid, proxy, idl, *flags):
         print line
     if popen.returncode != 0:
       return popen.returncode
-    if is_chromoting:
-      return 0
 
     for f in os.listdir(tmp_dir):
       ZapTimestamp(os.path.join(tmp_dir, f))
 
-    # Now compare the output in tmp_dir to the checked-in outputs.
-    diff = filecmp.dircmp(tmp_dir, source)
+    # Now compare the output in tmp_dir to the copied-over outputs.
+    diff = filecmp.dircmp(tmp_dir, outdir)
     if diff.diff_files or set(diff.left_list) != set(diff.right_list):
       print 'midl.exe output different from files in %s, see %s' \
-          % (source, tmp_dir)
+          % (outdir, tmp_dir)
       diff.report()
       for f in diff.diff_files:
         if f.endswith('.tlb'): continue
-        fromfile = os.path.join(source, f)
+        fromfile = os.path.join(outdir, f)
         tofile = os.path.join(tmp_dir, f)
         print ''.join(difflib.unified_diff(open(fromfile, 'U').readlines(),
                                            open(tofile, 'U').readlines(),
