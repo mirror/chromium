@@ -191,6 +191,24 @@
       "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94722f2b_08481284",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIScrollSnapMarginBlockStart.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-10-09T06:27:55Z",
+      "side": 1,
+      "message": "The last option sounds promising - maybe in a followup CL?",
+      "parentUuid": "27ea3716_f145741f",
+      "revId": "0d2558ae82c0c0b79c617b9d8d1244450ddcf774",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
