@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d29477b8_a8ad8830",
+        "filename": "tools/perf/benchmarks/benchmark_smoke_unittest.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-10-09T18:25:18Z",
+      "side": 1,
+      "message": "max_values isn\u0027t meant to be overriden by the caller, so I would just set it a constant.",
+      "revId": "0e5990f7e2046e865a63e45bf8b20e8e0064924a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
