@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "360e5c17_2f19088d",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8389f908_c83668b4",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e520d7f0_113cd74a",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "1c632258_2878cd30",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33360466_ab4b9694",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "203b0924_6eb05a47",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -160,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "97eb39ed_1aa53859",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f89df200_24c138ac",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d81f425_93e1ffdb",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -192,6 +246,24 @@
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e948f2f8_2cb2f5bb",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b6036c7_14df3ef9",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "53823ee3_7bd7e467",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Ah, yes. Forgot to remove that check.",
+      "parentUuid": "1cd19aad_21272193",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a635487_fc0d8710",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -241,6 +331,24 @@
       "writtenOn": "2017-10-06T16:45:11Z",
       "side": 1,
       "message": "Can you resolve the caller addresses at initialization time instead, to avoid the use of atomics?",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90cc254_6b96b317",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth the extra code; since the two functions aren\u0027t external, I can\u0027t just look them up using dlsym. I\u0027d have to do some Mach file parsing for it (either in memory or from disk) and then I\u0027d still only have the start addresses - not the actual callsites - so I\u0027d have to somehow figure out the extent of the functions as well. Finding the symbol with the next higher address should probably do it. Regardless, I fear it\u0027ll add a lot of brittleness to the solution.\n\nI will have a quick look to see if I can come up with something that doesn\u0027t seem too horrible, to avoid the atomics.",
+      "parentUuid": "1a635487_fc0d8710",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -282,6 +390,24 @@
     },
     {
       "key": {
+        "uuid": "ab7af8c9_6911cdf5",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0228c81_3924e2a1",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b16b905c_8a5a57ab",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -296,6 +422,24 @@
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfdaa650_60d02ec7",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b16b905c_8a5a57ab",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "6718b6e8_f455f9cc",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Oh, so it\u0027s one of those weak symbols?\nI\u0027ll fix!",
+      "parentUuid": "2c7685f5_91bea097",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9478a85_acb37ae1",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -333,6 +495,24 @@
     },
     {
       "key": {
+        "uuid": "b694b6d3_1866fbdd",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b9478a85_acb37ae1",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6109c411_08baf6c8",
         "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
         "patchSetId": 4
@@ -344,6 +524,24 @@
       "writtenOn": "2017-10-06T16:45:11Z",
       "side": 1,
       "message": "Do you need to register an image func? Is it not possible to know when CoreAudio is loaded, or to do it deterministically?",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ebd923b_8fd5a4f8",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "I\u0027ve done a dlopen here instead, and dig out the header from that. There seems to be an interface that could do this a bit more cleanly (NSAddImage) but it\u0027s been deprecated since 10.5. PTAL.",
+      "parentUuid": "6109c411_08baf6c8",
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -382,6 +580,24 @@
       "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0508a48d_d7a3a1fd",
+        "filename": "media/audio/mac/coreaudio_dispatch_override.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-10-09T14:35:38Z",
+      "side": 1,
+      "message": "Will do stats etc. in a separate CL, to try and give this one some extra time in Canary. I\u0027ve kept the \"not supported\" message as a warning, since it\u0027s fine for the user to run an old version of OS X. The errors that can happen when this should be supported are ERRORS, though.",
+      "parentUuid": "93845377_62986ab2",
+      "revId": "d29d0ebf3a58cbd836ef26608f87441c34e21e46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
