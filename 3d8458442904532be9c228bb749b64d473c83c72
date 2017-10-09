@@ -16,6 +16,24 @@
       "revId": "3d8458442904532be9c228bb749b64d473c83c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a669d16a_6f8ac329",
+        "filename": "chrome/browser/chromeos/login/screens/hid_detection_screen.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-10-09T06:56:21Z",
+      "side": 1,
+      "message": "It is just a mechanical translation from the prepared CL (https://chromium-review.googlesource.com/c/chromium/src/+/680500), in which I feel that it\u0027s better to have two mojo connections instead of one.\n\nNow the CL 680500 are still in reviewing, I left some explanation there. I also upload a draft patch(Patch set 10 of CL 680500) which only has one connection. Please help take a look and give some suggestions in CL 680500.\n\nThanks!",
+      "parentUuid": "5afa96a3_5938f583",
+      "revId": "3d8458442904532be9c228bb749b64d473c83c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
