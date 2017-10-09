@@ -8,9 +8,11 @@
 
 namespace chromeos {
 
-OAuth2TokenInitializer::OAuth2TokenInitializer() {}
+OAuth2TokenInitializer::OAuth2TokenInitializer() {
+}
 
-OAuth2TokenInitializer::~OAuth2TokenInitializer() {}
+OAuth2TokenInitializer::~OAuth2TokenInitializer() {
+}
 
 void OAuth2TokenInitializer::Start(const UserContext& user_context,
                                    const FetchOAuth2TokensCallback& callback) {

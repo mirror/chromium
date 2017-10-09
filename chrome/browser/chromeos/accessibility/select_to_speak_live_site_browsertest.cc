@@ -25,6 +25,7 @@ namespace chromeos {
 class SelectToSpeakLiveSiteTest : public InProcessBrowserTest {
  protected:
   void SetUpOnMainThread() override {
+
     ASSERT_FALSE(AccessibilityManager::Get()->IsSelectToSpeakEnabled());
 
     content::WindowedNotificationObserver extension_load_waiter(

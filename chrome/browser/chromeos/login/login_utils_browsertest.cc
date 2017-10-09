@@ -54,9 +54,13 @@ class LoginUtilsTest : public OobeBaseTest {
  public:
   LoginUtilsTest() {}
 
-  void RunUntilIdle() { base::RunLoop().RunUntilIdle(); }
+  void RunUntilIdle() {
+    base::RunLoop().RunUntilIdle();
+  }
 
-  PrefService* local_state() { return g_browser_process->local_state(); }
+  PrefService* local_state() {
+    return g_browser_process->local_state();
+  }
 
   void Login(const std::string& username) {
     content::WindowedNotificationObserver session_started_observer(

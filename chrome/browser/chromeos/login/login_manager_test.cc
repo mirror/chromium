@@ -139,8 +139,7 @@ void LoginManagerTest::SetUpOnMainThread() {
 
   content::WindowedNotificationObserver(
       chrome::NOTIFICATION_LOGIN_OR_LOCK_WEBUI_VISIBLE,
-      content::NotificationService::AllSources())
-      .Wait();
+      content::NotificationService::AllSources()).Wait();
   InitializeWebContents();
   test::UserSessionManagerTestApi session_manager_test_api(
       UserSessionManager::GetInstance());
@@ -186,7 +185,8 @@ bool LoginManagerTest::AddUserToSession(const UserContext& user_context) {
   const user_manager::UserList& logged_users =
       user_manager::UserManager::Get()->GetLoggedInUsers();
   for (user_manager::UserList::const_iterator it = logged_users.begin();
-       it != logged_users.end(); ++it) {
+       it != logged_users.end();
+       ++it) {
     if ((*it)->GetAccountId() == user_context.GetAccountId())
       return true;
   }

@@ -184,7 +184,7 @@ std::unique_ptr<ShellSurface> Display::CreatePopupShellSurface(
 std::unique_ptr<ShellSurface> Display::CreateRemoteShellSurface(
     Surface* surface,
     int container,
-    double default_device_scale_factor) {
+    bool scale_by_defult_device_scale_factor) {
   TRACE_EVENT2("exo", "Display::CreateRemoteShellSurface", "surface",
                surface->AsTracedValue(), "container", container);
 
@@ -199,8 +199,10 @@ std::unique_ptr<ShellSurface> Display::CreateRemoteShellSurface(
   std::unique_ptr<ShellSurface> shell_surface(std::make_unique<ShellSurface>(
       surface, nullptr, ShellSurface::BoundsMode::CLIENT, gfx::Point(),
       true /* activatable */, can_minimize, container));
-  DCHECK_GE(default_device_scale_factor, 1.0);
-  shell_surface->SetScale(default_device_scale_factor);
+  if (scale_by_defult_device_scale_factor) {
+    shell_surface->SetScale(
+        WMHelper::GetInstance()->GetDefaultDeviceScaleFactor());
+  }
   return shell_surface;
 }
 

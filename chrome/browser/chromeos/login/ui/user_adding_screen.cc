@@ -32,7 +32,6 @@ class UserAddingScreenImpl : public UserAddingScreen {
   void RemoveObserver(Observer* observer) override;
 
   static UserAddingScreenImpl* GetInstance();
-
  private:
   friend struct base::DefaultSingletonTraits<UserAddingScreenImpl>;
 
@@ -102,9 +101,11 @@ UserAddingScreenImpl* UserAddingScreenImpl::GetInstance() {
 }
 
 UserAddingScreenImpl::UserAddingScreenImpl()
-    : display_host_(NULL), im_controller_(this) {}
+    : display_host_(NULL), im_controller_(this) {
+}
 
-UserAddingScreenImpl::~UserAddingScreenImpl() {}
+UserAddingScreenImpl::~UserAddingScreenImpl() {
+}
 
 }  // anonymous namespace
 

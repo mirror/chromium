@@ -72,9 +72,11 @@ void HandleKeyPairResult(
 }  // namespace
 
 SecureMessageDelegateChromeOS::SecureMessageDelegateChromeOS()
-    : dbus_client_(chromeos::DBusThreadManager::Get()->GetEasyUnlockClient()) {}
+    : dbus_client_(chromeos::DBusThreadManager::Get()->GetEasyUnlockClient()) {
+}
 
-SecureMessageDelegateChromeOS::~SecureMessageDelegateChromeOS() {}
+SecureMessageDelegateChromeOS::~SecureMessageDelegateChromeOS() {
+}
 
 void SecureMessageDelegateChromeOS::GenerateKeyPair(
     const GenerateKeyPairCallback& callback) {

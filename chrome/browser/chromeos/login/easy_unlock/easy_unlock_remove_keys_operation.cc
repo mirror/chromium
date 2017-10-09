@@ -25,7 +25,8 @@ EasyUnlockRemoveKeysOperation::EasyUnlockRemoveKeysOperation(
   DCHECK(!callback_.is_null());
 }
 
-EasyUnlockRemoveKeysOperation::~EasyUnlockRemoveKeysOperation() {}
+EasyUnlockRemoveKeysOperation::~EasyUnlockRemoveKeysOperation() {
+}
 
 void EasyUnlockRemoveKeysOperation::Start() {
   if (user_context_.GetKey()->GetKeyType() == Key::KEY_TYPE_PASSWORD_PLAIN) {
@@ -52,7 +53,9 @@ void EasyUnlockRemoveKeysOperation::RemoveKey() {
 
   // TODO(xiyuan): Use ListKeyEx and delete by label instead of by index.
   cryptohome::HomedirMethods::GetInstance()->RemoveKeyEx(
-      id, auth, EasyUnlockKeyManager::GetKeyLabel(key_index_),
+      id,
+      auth,
+      EasyUnlockKeyManager::GetKeyLabel(key_index_),
       base::Bind(&EasyUnlockRemoveKeysOperation::OnKeyRemoved,
                  weak_ptr_factory_.GetWeakPtr()));
 }

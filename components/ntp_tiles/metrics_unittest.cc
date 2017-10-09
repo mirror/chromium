@@ -31,43 +31,6 @@ constexpr int kInferredTitleSource =
 using testing::ElementsAre;
 using testing::IsEmpty;
 
-// Builder for instances of NTPTileImpression that uses sensible defaults.
-class Builder {
- public:
-  Builder()
-      : impression_(/*index=*/0,
-                    TileSource::TOP_SITES,
-                    TileTitleSource::UNKNOWN,
-                    TileVisualType::UNKNOWN_TILE_TYPE,
-                    GURL()) {}
-
-  Builder& WithIndex(int index) {
-    impression_.index = index;
-    return *this;
-  }
-  Builder& WithSource(TileSource source) {
-    impression_.source = source;
-    return *this;
-  }
-  Builder& WithTitleSource(TileTitleSource title_source) {
-    impression_.title_source = title_source;
-    return *this;
-  }
-  Builder& WithVisualType(TileVisualType visual_type) {
-    impression_.visual_type = visual_type;
-    return *this;
-  }
-  Builder& WithUrl(const GURL& url) {
-    impression_.url_for_rappor = url;
-    return *this;
-  }
-
-  NTPTileImpression Build() { return impression_; }
-
- private:
-  NTPTileImpression impression_;
-};
-
 TEST(RecordPageImpressionTest, ShouldRecordNumberOfTiles) {
   base::HistogramTester histogram_tester;
   RecordPageImpression(5);
@@ -78,54 +41,24 @@ TEST(RecordPageImpressionTest, ShouldRecordNumberOfTiles) {
 TEST(RecordTileImpressionTest, ShouldRecordUmaForIcons) {
   base::HistogramTester histogram_tester;
 
-  RecordTileImpression(Builder()
-                           .WithIndex(0)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(ICON_REAL)
-                           .Build(),
+  RecordTileImpression(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(1, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(2, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(3, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_COLOR, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(4, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_COLOR, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(5, TileTitleSource::UNKNOWN,
+                       TileSource::SUGGESTIONS_SERVICE, ICON_REAL, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(1)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(ICON_REAL)
-                           .Build(),
+  RecordTileImpression(6, TileTitleSource::UNKNOWN,
+                       TileSource::SUGGESTIONS_SERVICE, ICON_DEFAULT, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(2)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(ICON_REAL)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(3)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(ICON_COLOR)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(4)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(ICON_COLOR)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(5)
-                           .WithSource(TileSource::SUGGESTIONS_SERVICE)
-                           .WithVisualType(ICON_REAL)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(6)
-                           .WithSource(TileSource::SUGGESTIONS_SERVICE)
-                           .WithVisualType(ICON_DEFAULT)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(7)
-                           .WithSource(TileSource::POPULAR)
-                           .WithVisualType(ICON_COLOR)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
+  RecordTileImpression(7, TileTitleSource::TITLE_TAG, TileSource::POPULAR,
+                       ICON_COLOR, GURL(), /*rappor_service=*/nullptr);
 
   EXPECT_THAT(
       histogram_tester.GetAllSamples("NewTabPage.SuggestionsImpression"),
@@ -184,24 +117,13 @@ TEST(RecordTileImpressionTest, ShouldRecordUmaForIcons) {
 TEST(RecordTileImpressionTest, ShouldRecordUmaForThumbnails) {
   base::HistogramTester histogram_tester;
 
-  RecordTileImpression(Builder()
-                           .WithIndex(0)
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithVisualType(THUMBNAIL_FAILED)
-                           .Build(),
+  RecordTileImpression(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       THUMBNAIL_FAILED, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(1, TileTitleSource::UNKNOWN,
+                       TileSource::SUGGESTIONS_SERVICE, THUMBNAIL, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(1)
-                           .WithSource(TileSource::SUGGESTIONS_SERVICE)
-                           .WithVisualType(THUMBNAIL)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithIndex(2)
-                           .WithSource(TileSource::POPULAR)
-                           .WithVisualType(THUMBNAIL)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
+  RecordTileImpression(2, TileTitleSource::TITLE_TAG, TileSource::POPULAR,
+                       THUMBNAIL, GURL(), /*rappor_service=*/nullptr);
 
   EXPECT_THAT(
       histogram_tester.GetAllSamples("NewTabPage.SuggestionsImpression"),
@@ -240,35 +162,20 @@ TEST(RecordTileImpressionTest, ShouldRecordUmaForThumbnails) {
 
 TEST(RecordTileImpressionTest, ShouldRecordImpressionsForTileTitleSource) {
   base::HistogramTester histogram_tester;
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::TOP_SITES)
-                           .WithTitleSource(TileTitleSource::UNKNOWN)
-                           .Build(),
+  RecordTileImpression(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(1, TileTitleSource::INFERRED,
+                       TileSource::SUGGESTIONS_SERVICE, ICON_REAL, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::SUGGESTIONS_SERVICE)
-                           .WithTitleSource(TileTitleSource::INFERRED)
-                           .Build(),
+  RecordTileImpression(2, TileTitleSource::TITLE_TAG, TileSource::POPULAR,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(3, TileTitleSource::MANIFEST, TileSource::POPULAR,
+                       ICON_REAL, GURL(), /*rappor_service=*/nullptr);
+  RecordTileImpression(4, TileTitleSource::TITLE_TAG,
+                       TileSource::POPULAR_BAKED_IN, ICON_REAL, GURL(),
                        /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::POPULAR)
-                           .WithTitleSource(TileTitleSource::TITLE_TAG)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::POPULAR)
-                           .WithTitleSource(TileTitleSource::MANIFEST)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::POPULAR_BAKED_IN)
-                           .WithTitleSource(TileTitleSource::TITLE_TAG)
-                           .Build(),
-                       /*rappor_service=*/nullptr);
-  RecordTileImpression(Builder()
-                           .WithSource(TileSource::POPULAR_BAKED_IN)
-                           .WithTitleSource(TileTitleSource::META_TAG)
-                           .Build(),
+  RecordTileImpression(5, TileTitleSource::META_TAG,
+                       TileSource::POPULAR_BAKED_IN, ICON_REAL, GURL(),
                        /*rappor_service=*/nullptr);
 
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.TileTitle.client"),
@@ -293,12 +200,8 @@ TEST(RecordTileImpressionTest, ShouldRecordImpressionsForTileTitleSource) {
 
 TEST(RecordTileClickTest, ShouldRecordUmaForIcon) {
   base::HistogramTester histogram_tester;
-  RecordTileClick(Builder()
-                      .WithIndex(3)
-                      .WithSource(TileSource::TOP_SITES)
-                      .WithVisualType(ICON_REAL)
-                      .Build());
-
+  RecordTileClick(3, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                  ICON_REAL);
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.MostVisited"),
               ElementsAre(base::Bucket(/*min=*/3, /*count=*/1)));
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.MostVisited.client"),
@@ -327,12 +230,8 @@ TEST(RecordTileClickTest, ShouldRecordUmaForIcon) {
 
 TEST(RecordTileClickTest, ShouldRecordUmaForThumbnail) {
   base::HistogramTester histogram_tester;
-  RecordTileClick(Builder()
-                      .WithIndex(3)
-                      .WithSource(TileSource::TOP_SITES)
-                      .WithVisualType(THUMBNAIL)
-                      .Build());
-
+  RecordTileClick(3, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                  THUMBNAIL);
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.MostVisited"),
               ElementsAre(base::Bucket(/*min=*/3, /*count=*/1)));
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.MostVisited.client"),
@@ -361,12 +260,8 @@ TEST(RecordTileClickTest, ShouldRecordUmaForThumbnail) {
 
 TEST(RecordTileClickTest, ShouldNotRecordUnknownTileType) {
   base::HistogramTester histogram_tester;
-  RecordTileClick(Builder()
-                      .WithIndex(3)
-                      .WithSource(TileSource::TOP_SITES)
-                      .WithVisualType(UNKNOWN_TILE_TYPE)
-                      .Build());
-
+  RecordTileClick(3, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                  UNKNOWN_TILE_TYPE);
   // The click should still get recorded.
   EXPECT_THAT(histogram_tester.GetAllSamples("NewTabPage.MostVisited"),
               ElementsAre(base::Bucket(/*min=*/3, /*count=*/1)));
@@ -398,20 +293,14 @@ TEST(RecordTileClickTest, ShouldNotRecordUnknownTileType) {
 TEST(RecordTileImpressionTest, ShouldRecordRappor) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordTileImpression(Builder()
-                           .WithVisualType(ICON_REAL)
-                           .WithUrl(GURL("http://www.site1.com/"))
-                           .Build(),
+  RecordTileImpression(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL("http://www.site1.com/"),
                        &rappor_service);
-  RecordTileImpression(Builder()
-                           .WithVisualType(ICON_COLOR)
-                           .WithUrl(GURL("http://www.site2.com/"))
-                           .Build(),
+  RecordTileImpression(1, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_COLOR, GURL("http://www.site2.com/"),
                        &rappor_service);
-  RecordTileImpression(Builder()
-                           .WithVisualType(ICON_DEFAULT)
-                           .WithUrl(GURL("http://www.site3.com/"))
-                           .Build(),
+  RecordTileImpression(2, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_DEFAULT, GURL("http://www.site3.com/"),
                        &rappor_service);
 
   EXPECT_EQ(3, rappor_service.GetReportsCount());
@@ -447,43 +336,29 @@ TEST(RecordTileImpressionTest, ShouldRecordRappor) {
 TEST(RecordTileImpressionTest, ShouldNotRecordRapporForUnknownTileType) {
   rappor::TestRapporServiceImpl rappor_service;
 
-  RecordTileImpression(Builder()
-                           .WithVisualType(UNKNOWN_TILE_TYPE)
-                           .WithUrl(GURL("http://www.s1.com/"))
-                           .Build(),
+  RecordTileImpression(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       ICON_REAL, GURL("http://www.s1.com/"), &rappor_service);
+  RecordTileImpression(1, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                       UNKNOWN_TILE_TYPE, GURL("http://www.s2.com/"),
                        &rappor_service);
 
   // Unknown tile type shouldn't get reported.
-  EXPECT_EQ(0, rappor_service.GetReportsCount());
+  EXPECT_EQ(1, rappor_service.GetReportsCount());
 }
 
 TEST(RecordTileClickTest, ShouldRecordClicksForTileTitleSource) {
   base::HistogramTester histogram_tester;
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::TOP_SITES)
-                      .WithTitleSource(TileTitleSource::UNKNOWN)
-                      .Build());
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::SUGGESTIONS_SERVICE)
-                      .WithTitleSource(TileTitleSource::UNKNOWN)
-                      .Build());
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::POPULAR)
-                      .WithTitleSource(TileTitleSource::TITLE_TAG)
-                      .Build());
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::POPULAR)
-                      .WithTitleSource(TileTitleSource::MANIFEST)
-                      .Build());
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::POPULAR_BAKED_IN)
-                      .WithTitleSource(TileTitleSource::TITLE_TAG)
-                      .Build());
-  RecordTileClick(Builder()
-                      .WithSource(TileSource::POPULAR_BAKED_IN)
-                      .WithTitleSource(TileTitleSource::META_TAG)
-                      .Build());
-
+  RecordTileClick(0, TileTitleSource::UNKNOWN, TileSource::TOP_SITES,
+                  ICON_REAL);
+  RecordTileClick(1, TileTitleSource::UNKNOWN, TileSource::SUGGESTIONS_SERVICE,
+                  ICON_REAL);
+  RecordTileClick(2, TileTitleSource::TITLE_TAG, TileSource::POPULAR,
+                  ICON_REAL);
+  RecordTileClick(3, TileTitleSource::MANIFEST, TileSource::POPULAR, ICON_REAL);
+  RecordTileClick(4, TileTitleSource::TITLE_TAG, TileSource::POPULAR_BAKED_IN,
+                  ICON_REAL);
+  RecordTileClick(5, TileTitleSource::META_TAG, TileSource::POPULAR_BAKED_IN,
+                  ICON_REAL);
   EXPECT_THAT(
       histogram_tester.GetAllSamples("NewTabPage.TileTitleClicked.client"),
       ElementsAre(base::Bucket(kUnknownTitleSource, /*count=*/1)));

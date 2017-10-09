@@ -202,7 +202,10 @@ void SearchIPCRouter::LogEvent(int page_seq_no,
 
 void SearchIPCRouter::LogMostVisitedImpression(
     int page_seq_no,
-    const ntp_tiles::NTPTileImpression& impression) {
+    int position,
+    ntp_tiles::TileTitleSource tile_title_source,
+    ntp_tiles::TileSource tile_source,
+    ntp_tiles::TileVisualType tile_type) {
   if (page_seq_no != commit_counter_)
     return;
 
@@ -210,12 +213,16 @@ void SearchIPCRouter::LogMostVisitedImpression(
   if (!policy_->ShouldProcessLogEvent())
     return;
 
-  delegate_->OnLogMostVisitedImpression(impression);
+  delegate_->OnLogMostVisitedImpression(position, tile_title_source,
+                                        tile_source, tile_type);
 }
 
 void SearchIPCRouter::LogMostVisitedNavigation(
     int page_seq_no,
-    const ntp_tiles::NTPTileImpression& impression) {
+    int position,
+    ntp_tiles::TileTitleSource tile_title_source,
+    ntp_tiles::TileSource tile_source,
+    ntp_tiles::TileVisualType tile_type) {
   if (page_seq_no != commit_counter_)
     return;
 
@@ -223,7 +230,8 @@ void SearchIPCRouter::LogMostVisitedNavigation(
   if (!policy_->ShouldProcessLogEvent())
     return;
 
-  delegate_->OnLogMostVisitedNavigation(impression);
+  delegate_->OnLogMostVisitedNavigation(position, tile_title_source,
+                                        tile_source, tile_type);
 }
 
 void SearchIPCRouter::PasteAndOpenDropdown(int page_seq_no,
@@ -241,24 +249,24 @@ void SearchIPCRouter::ChromeIdentityCheck(
     int page_seq_no,
     const base::string16& identity,
     ChromeIdentityCheckCallback callback) {
-  bool result = false;
-  if (page_seq_no == commit_counter_ &&
-      policy_->ShouldProcessChromeIdentityCheck()) {
-    result = delegate_->ChromeIdentityCheck(identity);
-  }
+  if (page_seq_no != commit_counter_)
+    return;
 
-  std::move(callback).Run(result);
+  if (!policy_->ShouldProcessChromeIdentityCheck())
+    return;
+
+  std::move(callback).Run(delegate_->ChromeIdentityCheck(identity));
 }
 
 void SearchIPCRouter::HistorySyncCheck(int page_seq_no,
                                        HistorySyncCheckCallback callback) {
-  bool result = false;
-  if (page_seq_no == commit_counter_ &&
-      policy_->ShouldProcessHistorySyncCheck()) {
-    result = delegate_->HistorySyncCheck();
-  }
+  if (page_seq_no != commit_counter_)
+    return;
 
-  std::move(callback).Run(result);
+  if (!policy_->ShouldProcessHistorySyncCheck())
+    return;
+
+  std::move(callback).Run(delegate_->HistorySyncCheck());
 }
 
 void SearchIPCRouter::set_delegate_for_testing(Delegate* delegate) {

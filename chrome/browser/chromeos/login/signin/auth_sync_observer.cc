@@ -103,12 +103,13 @@ void AuthSyncObserver::HandleAuthError(
 
     if (user->GetType() == user_manager::USER_TYPE_SUPERVISED &&
         old_status != user_manager::User::OAUTH2_TOKEN_STATUS_INVALID) {
-      // Attempt to restore token from file.
+       // Attempt to restore token from file.
       ChromeUserManager::Get()
           ->GetSupervisedUserManager()
           ->LoadSupervisedUserToken(
-              profile_, base::Bind(&AuthSyncObserver::OnSupervisedTokenLoaded,
-                                   base::Unretained(this)));
+              profile_,
+              base::Bind(&AuthSyncObserver::OnSupervisedTokenLoaded,
+                         base::Unretained(this)));
       base::RecordAction(
           base::UserMetricsAction("ManagedUsers_Chromeos_Sync_Invalidated"));
     }
@@ -116,8 +117,8 @@ void AuthSyncObserver::HandleAuthError(
     if (user->GetType() == user_manager::USER_TYPE_SUPERVISED &&
         user->oauth_token_status() ==
             user_manager::User::OAUTH2_TOKEN_STATUS_INVALID) {
-      LOG(ERROR) << "Got an incorrectly invalidated token case, restoring "
-                    "token status.";
+      LOG(ERROR) <<
+          "Got an incorrectly invalidated token case, restoring token status.";
       user_manager::UserManager::Get()->SaveUserOAuthStatus(
           user->GetAccountId(), user_manager::User::OAUTH2_TOKEN_STATUS_VALID);
       base::RecordAction(

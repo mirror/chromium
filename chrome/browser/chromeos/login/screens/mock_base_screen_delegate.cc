@@ -6,8 +6,10 @@
 
 namespace chromeos {
 
-MockBaseScreenDelegate::MockBaseScreenDelegate() {}
+MockBaseScreenDelegate::MockBaseScreenDelegate() {
+}
 
-MockBaseScreenDelegate::~MockBaseScreenDelegate() {}
+MockBaseScreenDelegate::~MockBaseScreenDelegate() {
+}
 
 }  // namespace chromeos

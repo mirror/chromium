@@ -15,9 +15,11 @@
 namespace chromeos {
 
 ScreenshotTestingMixin::ScreenshotTestingMixin()
-    : enable_test_screenshots_(false) {}
+    : enable_test_screenshots_(false) {
+}
 
-ScreenshotTestingMixin::~ScreenshotTestingMixin() {}
+ScreenshotTestingMixin::~ScreenshotTestingMixin() {
+}
 
 void ScreenshotTestingMixin::SetUpInProcessBrowserTestFixture() {
   enable_test_screenshots_ = screenshot_tester_.TryInitialize();
@@ -49,15 +51,17 @@ void ScreenshotTestingMixin::IgnoreArea(const SkIRect& area) {
 void ScreenshotTestingMixin::SynchronizeAnimationLoadWithCompositor() {
   base::RunLoop waiter;
   animation_waiter_quitter_ = waiter.QuitClosure();
-  timer_.Start(FROM_HERE, base::TimeDelta::FromSeconds(2), this,
+  timer_.Start(FROM_HERE,
+               base::TimeDelta::FromSeconds(2),
+               this,
                &ScreenshotTestingMixin::HandleAnimationLoad);
   waiter.Run();
 }
 
 void ScreenshotTestingMixin::HandleAnimationLoad() {
   timer_.Stop();
-  content::BrowserThread::PostTask(content::BrowserThread::UI, FROM_HERE,
-                                   animation_waiter_quitter_);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE, animation_waiter_quitter_);
 }
 
 }  // namespace chromeos

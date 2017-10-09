@@ -510,9 +510,7 @@ String CSSComputedStyleDeclaration::getPropertyValue(
       return value->CssText();
     return String();
   }
-#if DCHECK_IS_ON
   DCHECK(CSSPropertyAPI::Get(property_id).IsEnabled());
-#endif
   return GetPropertyValue(property_id);
 }
 

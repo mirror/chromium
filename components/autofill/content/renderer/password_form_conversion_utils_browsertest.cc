@@ -1446,12 +1446,9 @@ TEST_F(MAYBE_PasswordFormConversionUtilsTest,
   EXPECT_EQ(base::ASCIIToUTF16("John"), password_form->username_value);
   EXPECT_EQ(base::ASCIIToUTF16("alpha1"), password_form->password_value);
   EXPECT_THAT(password_form->all_possible_passwords,
-              testing::ElementsAre(
+              testing::UnorderedElementsAre(
                   base::ASCIIToUTF16("alpha1"), base::ASCIIToUTF16("alpha2"),
                   base::ASCIIToUTF16("alpha3"), base::ASCIIToUTF16("alpha4")));
-  EXPECT_EQ(
-      base::ASCIIToUTF16("alpha1, alpha2, alpha3, alpha4"),
-      AllPossiblePasswordsToString(password_form->all_possible_passwords));
 }
 
 TEST_F(MAYBE_PasswordFormConversionUtilsTest,

@@ -12,7 +12,8 @@ ChromeUserManager::ChromeUserManager(
     scoped_refptr<base::TaskRunner> task_runner)
     : UserManagerBase(task_runner) {}
 
-ChromeUserManager::~ChromeUserManager() {}
+ChromeUserManager::~ChromeUserManager() {
+}
 
 // static
 ChromeUserManager* ChromeUserManager::Get() {

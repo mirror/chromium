@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import org.chromium.base.VisibleForTesting;
 
@@ -29,7 +30,7 @@ import org.chromium.base.VisibleForTesting;
  * ClickableSpan, we activate it. If there's more than one, we pop up a
  * PopupMenu to disambiguate.
  */
-public class TextViewWithClickableSpans extends TextViewWithLeading {
+public class TextViewWithClickableSpans extends TextView {
     private AccessibilityManager mAccessibilityManager;
     private PopupMenu mDisambiguationMenu;
 
@@ -40,6 +41,11 @@ public class TextViewWithClickableSpans extends TextViewWithLeading {
 
     public TextViewWithClickableSpans(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    public TextViewWithClickableSpans(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init();
     }
 

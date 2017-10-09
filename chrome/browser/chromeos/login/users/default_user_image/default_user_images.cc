@@ -26,7 +26,6 @@ namespace chromeos {
 namespace default_user_image {
 
 // Resource IDs of default user images.
-// clang-format off
 const int kDefaultImageResourceIDs[] = {
     IDR_LOGIN_DEFAULT_USER,
 
@@ -101,7 +100,6 @@ const int kDefaultImageResourceIDs[] = {
     IDR_LOGIN_DEFAULT_USER_64,
     IDR_LOGIN_DEFAULT_USER_65,
 };
-// clang-format on
 
 const int kDefaultImagesCount = arraysize(kDefaultImageResourceIDs);
 
@@ -127,7 +125,6 @@ namespace {
 const char kDefaultUrlPrefix[] = "chrome://theme/IDR_LOGIN_DEFAULT_USER_";
 const char kZeroDefaultUrl[] = "chrome://theme/IDR_LOGIN_DEFAULT_USER";
 
-// clang-format off
 const int kDefaultImageAuthorIDs[] = {
     IDS_LOGIN_DEFAULT_USER_AUTHOR,
     IDS_LOGIN_DEFAULT_USER_AUTHOR_1,
@@ -164,11 +161,9 @@ const int kDefaultImageAuthorIDs[] = {
     IDS_LOGIN_DEFAULT_USER_AUTHOR_32,
     IDS_LOGIN_DEFAULT_USER_AUTHOR_33,
 };
-// clang-format on
 
 const int kDefaultImageAuthorMaxID = arraysize(kDefaultImageAuthorIDs);
 
-// clang-format off
 const int kDefaultImageWebsiteIDs[] = {
     IDS_LOGIN_DEFAULT_USER_WEBSITE,
     IDS_LOGIN_DEFAULT_USER_WEBSITE_1,
@@ -207,7 +202,6 @@ const int kDefaultImageWebsiteIDs[] = {
 };
 
 const int kDefaultImageWebsiteMaxID = arraysize(kDefaultImageWebsiteIDs);
-// clang-format on
 
 // IDs of default user image descriptions.
 const int kDefaultImageDescriptions[] = {

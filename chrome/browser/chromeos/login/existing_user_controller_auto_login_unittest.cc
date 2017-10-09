@@ -55,7 +55,8 @@ class ExistingUserControllerAutoLoginTest : public ::testing::Test {
         .WillOnce(Return(mock_login_display_));
 
     EXPECT_CALL(*mock_user_manager_, Shutdown()).Times(AnyNumber());
-    EXPECT_CALL(*mock_user_manager_, FindUser(_)).WillRepeatedly(ReturnNull());
+    EXPECT_CALL(*mock_user_manager_, FindUser(_))
+        .WillRepeatedly(ReturnNull());
     EXPECT_CALL(*mock_user_manager_, FindUser(auto_login_account_id_))
         .WillRepeatedly(Return(mock_user_manager_->CreatePublicAccountUser(
             auto_login_account_id_)));
@@ -74,10 +75,10 @@ class ExistingUserControllerAutoLoginTest : public ::testing::Test {
     CrosSettings::Get()->Set(kAccountsPrefDeviceLocalAccounts, accounts);
 
     // Prevent settings changes from auto-starting the timer.
-    existing_user_controller_->local_account_auto_login_id_subscription_
-        .reset();
-    existing_user_controller_->local_account_auto_login_delay_subscription_
-        .reset();
+    existing_user_controller_->
+        local_account_auto_login_id_subscription_.reset();
+    existing_user_controller_->
+        local_account_auto_login_delay_subscription_.reset();
   }
 
   const ExistingUserController* existing_user_controller() const {
@@ -92,7 +93,8 @@ class ExistingUserControllerAutoLoginTest : public ::testing::Test {
     CrosSettings::Get()->SetString(kAccountsPrefDeviceLocalAccountAutoLoginId,
                                    user_id);
     CrosSettings::Get()->SetInteger(
-        kAccountsPrefDeviceLocalAccountAutoLoginDelay, delay);
+        kAccountsPrefDeviceLocalAccountAutoLoginDelay,
+        delay);
   }
 
   // ExistingUserController private member accessors.

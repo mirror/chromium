@@ -8,9 +8,10 @@
 
 namespace chromeos {
 
-FakeSupervisedUserManager::FakeSupervisedUserManager() {}
+FakeSupervisedUserManager::FakeSupervisedUserManager()  {}
 
-FakeSupervisedUserManager::~FakeSupervisedUserManager() {}
+FakeSupervisedUserManager::~FakeSupervisedUserManager() {
+}
 
 bool FakeSupervisedUserManager::HasSupervisedUsers(
     const std::string& manager_id) const {
@@ -64,7 +65,7 @@ SupervisedUserAuthentication* FakeSupervisedUserManager::GetAuthentication() {
 }
 
 void FakeSupervisedUserManager::LoadSupervisedUserToken(
-    Profile* profile,
+    Profile * profile,
     const LoadTokenCallback& callback) {
   callback.Run("token");
 }

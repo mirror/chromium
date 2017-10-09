@@ -10,9 +10,7 @@
 #define CSSPropertyAPI_h
 
 #include "core/CSSPropertyNames.h"
-#include "platform/heap/HeapAllocator.h"
-#include "platform/text/TextDirection.h"
-#include "platform/text/WritingMode.h"
+#include "core/css/parser/CSSParserTokenRange.h"
 
 namespace blink {
 
@@ -21,23 +19,14 @@ class CSSParserLocalContext;
 class CSSProperty;
 class CSSValue;
 class StyleResolverState;
-class StylePropertyShorthand;
-class CSSParserTokenRange;
-
-enum LogicalBoxSide { kBeforeSide, kEndSide, kAfterSide, kStartSide };
-enum LogicalExtent { kLogicalWidth, kLogicalHeight };
-enum PhysicalBoxSide { kTopSide, kRightSide, kBottomSide, kLeftSide };
 
 class CSSPropertyAPI {
  public:
   CORE_EXPORT static const CSSPropertyAPI& Get(CSSPropertyID);
 
-  constexpr CSSPropertyAPI(CSSPropertyID id) : id_(id) {}
-
-  // For backwards compatibility when passing around CSSPropertyAPI references.
-  // in case we need to call a function that hasn't been converted to using APIs
-  // yet.
-  CSSPropertyID PropertyID() const { return id_; }
+#if !defined(OS_WIN) || !defined(COMPILER_MSVC)
+  constexpr CSSPropertyAPI() {}
+#endif
 
   // Parses and consumes a longhand property value from the token range.
   // Returns nullptr if the input is invalid.
@@ -74,26 +63,6 @@ class CSSPropertyAPI {
     NOTREACHED();
   }
   virtual bool IsAffectedByAll() const { return IsEnabled() && IsProperty(); }
-  virtual const CSSPropertyAPI& ResolveDirectionAwareProperty(
-      TextDirection,
-      WritingMode) const {
-    return *this;
-  }
-
- protected:
-  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
-      TextDirection,
-      WritingMode,
-      LogicalBoxSide,
-      const StylePropertyShorthand&);
-  static const CSSPropertyAPI& ResolveToPhysicalPropertyAPI(
-      WritingMode,
-      LogicalExtent,
-      const CSSPropertyID*);
-  static const StylePropertyShorthand& BorderDirections();
-
- private:
-  const CSSPropertyID id_;
 };
 
 {% for api_class_data in api_classes_by_property_id %}

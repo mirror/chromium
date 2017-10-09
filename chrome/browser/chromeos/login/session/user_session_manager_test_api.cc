@@ -9,7 +9,8 @@ namespace test {
 
 UserSessionManagerTestApi::UserSessionManagerTestApi(
     UserSessionManager* session_manager)
-    : session_manager_(session_manager) {}
+    : session_manager_(session_manager) {
+}
 
 void UserSessionManagerTestApi::InjectStubUserContext(
     const UserContext& user_context) {

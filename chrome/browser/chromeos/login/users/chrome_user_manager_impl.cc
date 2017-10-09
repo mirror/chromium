@@ -209,11 +209,14 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
   if (base::ThreadTaskRunnerHandle::IsSet())
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  registrar_.Add(this, chrome::NOTIFICATION_OWNERSHIP_STATUS_CHANGED,
+  registrar_.Add(this,
+                 chrome::NOTIFICATION_OWNERSHIP_STATUS_CHANGED,
                  content::NotificationService::AllSources());
-  registrar_.Add(this, chrome::NOTIFICATION_LOGIN_USER_PROFILE_PREPARED,
+  registrar_.Add(this,
+                 chrome::NOTIFICATION_LOGIN_USER_PROFILE_PREPARED,
                  content::NotificationService::AllSources());
-  registrar_.Add(this, chrome::NOTIFICATION_PROFILE_CREATED,
+  registrar_.Add(this,
+                 chrome::NOTIFICATION_PROFILE_CREATED,
                  content::NotificationService::AllSources());
 
   // Since we're in ctor postpone any actions till this is fully created.
@@ -255,7 +258,8 @@ ChromeUserManagerImpl::ChromeUserManagerImpl()
     enterprise_user_session_metrics::RecordStoredSessionLength();
 }
 
-ChromeUserManagerImpl::~ChromeUserManagerImpl() {}
+ChromeUserManagerImpl::~ChromeUserManagerImpl() {
+}
 
 void ChromeUserManagerImpl::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -282,7 +286,8 @@ void ChromeUserManagerImpl::Shutdown() {
 
   for (UserImageManagerMap::iterator it = user_image_managers_.begin(),
                                      ie = user_image_managers_.end();
-       it != ie; ++it) {
+       it != ie;
+       ++it) {
     it->second->Shutdown();
   }
   multi_profile_user_controller_.reset();
@@ -328,7 +333,8 @@ user_manager::UserList ChromeUserManagerImpl::GetUsersAllowedForMultiProfile()
   user_manager::UserList result;
   const user_manager::UserList& users = GetUsers();
   for (user_manager::UserList::const_iterator it = users.begin();
-       it != users.end(); ++it) {
+       it != users.end();
+       ++it) {
     if ((*it)->GetType() == user_manager::USER_TYPE_REGULAR &&
         !(*it)->is_logged_in()) {
       MultiProfileUserController::UserAllowedInSessionReason check;
@@ -664,7 +670,8 @@ void ChromeUserManagerImpl::PerformPreUserListLoadingActions() {
 
 void ChromeUserManagerImpl::PerformPostUserListLoadingActions() {
   for (user_manager::UserList::iterator ui = users_.begin(), ue = users_.end();
-       ui != ue; ++ui) {
+       ui != ue;
+       ++ui) {
     GetUserImageManager((*ui)->GetAccountId())->LoadUserImage();
   }
 }
@@ -873,7 +880,8 @@ void ChromeUserManagerImpl::KioskAppLoggedIn(user_manager::User* user) {
   const policy::DeviceLocalAccount* account = NULL;
   for (std::vector<policy::DeviceLocalAccount>::const_iterator it =
            device_local_accounts.begin();
-       it != device_local_accounts.end(); ++it) {
+       it != device_local_accounts.end();
+       ++it) {
     if (it->user_id == kiosk_app_account_id.GetUserEmail()) {
       account = &*it;
       break;
@@ -999,7 +1007,8 @@ void ChromeUserManagerImpl::CleanUpDeviceLocalAccountNonCryptohomeData(
     const std::vector<std::string>& old_device_local_accounts) {
   std::set<std::string> users;
   for (user_manager::UserList::const_iterator it = users_.begin();
-       it != users_.end(); ++it)
+       it != users_.end();
+       ++it)
     users.insert((*it)->GetAccountId().GetUserEmail());
 
   // If the user is logged into a device local account that has been removed

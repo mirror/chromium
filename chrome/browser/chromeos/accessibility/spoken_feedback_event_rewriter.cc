@@ -28,6 +28,7 @@ bool SpokenFeedbackEventRewriterDelegate::IsSpokenFeedbackEnabled() const {
 bool SpokenFeedbackEventRewriterDelegate::DispatchKeyEventToChromeVox(
     const ui::KeyEvent& key_event,
     bool capture) {
+
   // Always capture the Search key.
   capture |= key_event.IsCommandDown();
 
@@ -82,7 +83,8 @@ SpokenFeedbackEventRewriter::SpokenFeedbackEventRewriter() {
   delegate_.reset(new SpokenFeedbackEventRewriterDelegate());
 }
 
-SpokenFeedbackEventRewriter::~SpokenFeedbackEventRewriter() {}
+SpokenFeedbackEventRewriter::~SpokenFeedbackEventRewriter() {
+}
 
 void SpokenFeedbackEventRewriter::SetDelegateForTest(
     std::unique_ptr<SpokenFeedbackEventRewriterDelegate> delegate) {

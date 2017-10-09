@@ -107,7 +107,9 @@ class ScreenLocker : public AuthStatusConsumer,
   explicit ScreenLocker(const user_manager::UserList& users);
 
   // Returns the default instance if it has been created.
-  static ScreenLocker* default_screen_locker() { return screen_locker_; }
+  static ScreenLocker* default_screen_locker() {
+    return screen_locker_;
+  }
 
   bool locked() const { return locked_; }
 

@@ -798,6 +798,16 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                            }];
 }
 
+- (void)setControlsHidden:(BOOL)hidden {
+  [self setStandardControlsVisible:!hidden];
+  [_webToolbar setHidden:hidden];
+}
+
+- (void)setControlsAlpha:(CGFloat)alpha {
+  [self setStandardControlsAlpha:alpha];
+  [_webToolbar setAlpha:alpha];
+}
+
 - (void)currentPageLoadStarted {
   [self startProgressBar];
 }
@@ -812,6 +822,14 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
                                   fromView:[_omniboxBackground superview]];
   // Account for the omnibox background image transparent sides.
   return CGRectInset(frame, -kBackgroundImageVisibleRectOffset, 0);
+}
+
+- (UIImage*)snapshotWithWidth:(CGFloat)width {
+  if (IsIPadIdiom())
+    return nil;
+  // Below call will be no-op if cached snapshot is valid.
+  [self updateSnapshotWithWidth:width forced:YES];
+  return _snapshot;
 }
 
 - (BOOL)isOmniboxFirstResponder {

@@ -18,7 +18,8 @@ class AuthSyncObserver;
 // Singleton that owns all AuthSyncObserver and associates them with
 // Profiles. Listens for the Profile's destruction notification and cleans up
 // the associated AuthSyncObserver.
-class AuthSyncObserverFactory : public BrowserContextKeyedServiceFactory {
+class AuthSyncObserverFactory
+    : public BrowserContextKeyedServiceFactory {
  public:
   // Returns the instance of AuthSyncObserver associated with this
   // |profile| (creates one if none exists).

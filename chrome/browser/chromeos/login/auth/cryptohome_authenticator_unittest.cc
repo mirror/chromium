@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+
 #include <stdint.h>
 
 #include <memory>
@@ -267,9 +268,8 @@ class CryptohomeAuthenticatorTest : public testing::Test {
   // Allow test to fail and exit gracefully, even if
   // OnOffTheRecordAuthSuccess() wasn't supposed to happen.
   void FailOnGuestLoginSuccess() {
-    ON_CALL(consumer_, OnOffTheRecordAuthSuccess())
-        .WillByDefault(
-            Invoke(MockAuthStatusConsumer::OnGuestSuccessQuitAndFail));
+    ON_CALL(consumer_, OnOffTheRecordAuthSuccess()).WillByDefault(
+        Invoke(MockAuthStatusConsumer::OnGuestSuccessQuitAndFail));
   }
 
   void ExpectLoginFailure(const AuthFailure& failure) {

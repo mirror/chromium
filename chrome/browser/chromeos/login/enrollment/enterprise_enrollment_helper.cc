@@ -13,7 +13,8 @@ namespace chromeos {
 EnterpriseEnrollmentHelper::CreateMockEnrollmentHelper
     EnterpriseEnrollmentHelper::create_mock_enrollment_helper_ = nullptr;
 
-EnterpriseEnrollmentHelper::~EnterpriseEnrollmentHelper() {}
+EnterpriseEnrollmentHelper::~EnterpriseEnrollmentHelper() {
+}
 
 // static
 void EnterpriseEnrollmentHelper::SetupEnrollmentHelperMock(

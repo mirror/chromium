@@ -19,7 +19,8 @@ class CrosSettings;
 class SupervisedUserTestBase;
 
 // Implementation of the UserManager.
-class SupervisedUserManagerImpl : public SupervisedUserManager {
+class SupervisedUserManagerImpl
+    : public SupervisedUserManager {
  public:
   ~SupervisedUserManagerImpl() override;
 
@@ -98,7 +99,8 @@ class SupervisedUserManagerImpl : public SupervisedUserManager {
                            const char* key,
                            const bool value);
 
-  void CleanPref(const std::string& user_id, const char* key);
+  void CleanPref(const std::string& user_id,
+                 const char* key);
 
   ChromeUserManagerImpl* owner_;
 

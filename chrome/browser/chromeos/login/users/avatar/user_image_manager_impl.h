@@ -27,19 +27,20 @@ class ProfileDownloader;
 namespace base {
 class FilePath;
 class SequencedTaskRunner;
-}  // namespace base
+}
 
 namespace user_manager {
 class UserImage;
 class UserManager;
-}  // namespace user_manager
+}
 
 namespace chromeos {
 
 class UserImageSyncObserver;
 
-class UserImageManagerImpl : public UserImageManager,
-                             public ProfileDownloaderDelegate {
+class UserImageManagerImpl
+    : public UserImageManager,
+      public ProfileDownloaderDelegate {
  public:
   // UserImageManager:
   UserImageManagerImpl(const std::string& user_id,

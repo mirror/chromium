@@ -108,7 +108,6 @@ class LoginTest : public LoginManagerTest {
 
   void StartGaiaAuthOffline() {
     content::DOMMessageQueue message_queue;
-    // clang-format off
     const std::string js = "(function() {"
       "var authenticator = $('gaia-signin').gaiaAuthHost_;"
       "authenticator.addEventListener('ready',"
@@ -118,7 +117,6 @@ class LoginTest : public LoginManagerTest {
         "});"
       "$('error-offline-login-link').onclick();"
     "})();";
-    // clang-format on
     ASSERT_TRUE(content::ExecuteScript(web_contents(), js));
 
     std::string message;
@@ -266,6 +264,7 @@ IN_PROC_BROWSER_TEST_F(LoginSigninTest, WebUIVisible) {
       content::NotificationService::AllSources())
       .Wait();
 }
+
 
 IN_PROC_BROWSER_TEST_F(LoginTest, PRE_GaiaAuthOffline) {
   RegisterUser(kTestUser);

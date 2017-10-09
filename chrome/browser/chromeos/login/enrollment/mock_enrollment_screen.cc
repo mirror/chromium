@@ -11,7 +11,8 @@ MockEnrollmentScreen::MockEnrollmentScreen(
     EnrollmentScreenView* view)
     : EnrollmentScreen(base_screen_delegate, view) {}
 
-MockEnrollmentScreen::~MockEnrollmentScreen() {}
+MockEnrollmentScreen::~MockEnrollmentScreen() {
+}
 
 MockEnrollmentScreenView::MockEnrollmentScreenView() {}
 

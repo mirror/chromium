@@ -52,10 +52,8 @@ bool DOMWindowCSS::supports(const String& property, const String& value) {
         .did_parse;
   }
 
-#if DCHECK_IS_ON()
   DCHECK(CSSPropertyAPI::Get(resolveCSSPropertyID(unresolved_property))
              .IsEnabled());
-#endif
 
   // This will return false when !important is present
   MutableStylePropertySet* dummy_style =

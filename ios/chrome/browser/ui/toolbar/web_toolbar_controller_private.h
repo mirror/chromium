@@ -23,6 +23,7 @@
 - (std::string)getLocationText;
 - (BOOL)isLoading;
 - (BOOL)isPrerenderAnimationRunning;
+- (OmniboxTextFieldIOS*)omnibox;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_TOOLBAR_WEB_TOOLBAR_CONTROLLER_PRIVATE_H_

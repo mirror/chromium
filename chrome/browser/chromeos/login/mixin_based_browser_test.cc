@@ -10,9 +10,11 @@
 
 namespace chromeos {
 
-MixinBasedBrowserTest::MixinBasedBrowserTest() : setup_was_launched_(false) {}
+MixinBasedBrowserTest::MixinBasedBrowserTest() : setup_was_launched_(false) {
+}
 
-MixinBasedBrowserTest::~MixinBasedBrowserTest() {}
+MixinBasedBrowserTest::~MixinBasedBrowserTest() {
+}
 
 void MixinBasedBrowserTest::SetUpCommandLine(base::CommandLine* command_line) {
   setup_was_launched_ = true;

@@ -27,7 +27,8 @@ ChromeLoginPerformer::ChromeLoginPerformer(Delegate* delegate)
     : LoginPerformer(base::ThreadTaskRunnerHandle::Get(), delegate),
       weak_factory_(this) {}
 
-ChromeLoginPerformer::~ChromeLoginPerformer() {}
+ChromeLoginPerformer::~ChromeLoginPerformer() {
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // ChromeLoginPerformer, public:
@@ -38,7 +39,8 @@ bool ChromeLoginPerformer::RunTrustedCheck(const base::Closure& callback) {
   CrosSettingsProvider::TrustedStatus status =
       cros_settings->PrepareTrustedValues(
           base::Bind(&ChromeLoginPerformer::DidRunTrustedCheck,
-                     weak_factory_.GetWeakPtr(), callback));
+                     weak_factory_.GetWeakPtr(),
+                     callback));
   // Must not proceed without signature verification.
   if (status == CrosSettingsProvider::PERMANENTLY_UNTRUSTED) {
     if (delegate_)
@@ -64,7 +66,8 @@ void ChromeLoginPerformer::DidRunTrustedCheck(const base::Closure& callback) {
   CrosSettingsProvider::TrustedStatus status =
       cros_settings->PrepareTrustedValues(
           base::Bind(&ChromeLoginPerformer::DidRunTrustedCheck,
-                     weak_factory_.GetWeakPtr(), callback));
+                     weak_factory_.GetWeakPtr(),
+                     callback));
   // Must not proceed without signature verification.
   if (status == CrosSettingsProvider::PERMANENTLY_UNTRUSTED) {
     if (delegate_)

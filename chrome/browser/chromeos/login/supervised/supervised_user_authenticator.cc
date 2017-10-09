@@ -118,7 +118,8 @@ void SupervisedUserAuthenticator::AuthenticateToMount(
       canonicalized, password, false));
 
   SystemSaltGetter::Get()->GetSystemSalt(
-      base::Bind(&Mount, current_state_.get(),
+      base::Bind(&Mount,
+                 current_state_.get(),
                  scoped_refptr<SupervisedUserAuthenticator>(this),
                  cryptohome::MOUNT_FLAGS_NONE));
 }
@@ -132,22 +133,26 @@ void SupervisedUserAuthenticator::AuthenticateToCreate(
       canonicalized, password, false));
 
   SystemSaltGetter::Get()->GetSystemSalt(
-      base::Bind(&Mount, current_state_.get(),
+      base::Bind(&Mount,
+                 current_state_.get(),
                  scoped_refptr<SupervisedUserAuthenticator>(this),
                  cryptohome::CREATE_IF_MISSING));
 }
 
-void SupervisedUserAuthenticator::AddMasterKey(const std::string& username,
-                                               const std::string& password,
-                                               const std::string& master_key) {
+void SupervisedUserAuthenticator::AddMasterKey(
+    const std::string& username,
+    const std::string& password,
+    const std::string& master_key) {
   std::string canonicalized = gaia::CanonicalizeEmail(username);
 
   current_state_.reset(new SupervisedUserAuthenticator::AuthAttempt(
       canonicalized, password, true));
 
   SystemSaltGetter::Get()->GetSystemSalt(
-      base::Bind(&AddKey, current_state_.get(),
-                 scoped_refptr<SupervisedUserAuthenticator>(this), master_key));
+      base::Bind(&AddKey,
+                 current_state_.get(),
+                 scoped_refptr<SupervisedUserAuthenticator>(this),
+                 master_key));
 }
 
 void SupervisedUserAuthenticator::OnAuthenticationSuccess(
@@ -247,7 +252,7 @@ SupervisedUserAuthenticator::ResolveState() {
 }
 
 SupervisedUserAuthenticator::AuthState
-SupervisedUserAuthenticator::ResolveCryptohomeFailureState() {
+    SupervisedUserAuthenticator::ResolveCryptohomeFailureState() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   LOG(ERROR) << "Failed to authenticate supervised user, code: "
              << current_state_->cryptohome_code();
@@ -268,7 +273,7 @@ SupervisedUserAuthenticator::ResolveCryptohomeFailureState() {
 }
 
 SupervisedUserAuthenticator::AuthState
-SupervisedUserAuthenticator::ResolveCryptohomeSuccessState() {
+    SupervisedUserAuthenticator::ResolveCryptohomeSuccessState() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return SUCCESS;
 }
@@ -314,7 +319,7 @@ bool SupervisedUserAuthenticator::AuthAttempt::cryptohome_outcome() {
 }
 
 cryptohome::MountError
-SupervisedUserAuthenticator::AuthAttempt::cryptohome_code() {
+    SupervisedUserAuthenticator::AuthAttempt::cryptohome_code() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   return cryptohome_code_;
 }

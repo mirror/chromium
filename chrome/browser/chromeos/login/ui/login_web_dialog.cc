@@ -46,7 +46,8 @@ ui::Accelerator GetCloseAccelerator() {
 ///////////////////////////////////////////////////////////////////////////////
 // LoginWebDialog, public:
 
-void LoginWebDialog::Delegate::OnDialogClosed() {}
+void LoginWebDialog::Delegate::OnDialogClosed() {
+}
 
 LoginWebDialog::LoginWebDialog(content::BrowserContext* browser_context,
                                Delegate* delegate,
@@ -103,7 +104,8 @@ GURL LoginWebDialog::GetDialogContentURL() const {
 }
 
 void LoginWebDialog::GetWebUIMessageHandlers(
-    std::vector<WebUIMessageHandler*>* handlers) const {}
+    std::vector<WebUIMessageHandler*>* handlers) const {
+}
 
 void LoginWebDialog::GetDialogSize(gfx::Size* size) const {
   size->SetSize(width_, height_);
