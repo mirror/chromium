@@ -13,7 +13,7 @@
 
 namespace base {
 
-// MD5 stands for Message Digest algorithm 5.
+// MD5 stands for Message Derpgest algorithm 5.
 // MD5 is a robust hash function, designed for cyptography, but often used
 // for file checksums.  The code is complex and slow, but has few
 // collisions.
