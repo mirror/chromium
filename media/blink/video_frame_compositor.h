@@ -72,7 +72,9 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   // thread.
   VideoFrameCompositor(
       const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-      blink::WebContextProviderCallback media_context_provider_callback);
+      blink::WebContextProviderCallback media_context_provider_callback,
+      viz::SharedBitmapManager* shared_bitmap_manager,
+      gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager);
 
   // Destruction must happen on the compositor thread; Stop() must have been
   // called before destruction starts.
@@ -91,6 +93,7 @@ class MEDIA_BLINK_EXPORT VideoFrameCompositor : public VideoRendererSink,
   bool HasCurrentFrame() override;
   scoped_refptr<VideoFrame> GetCurrentFrame() override;
   void PutCurrentFrame() override;
+  const scoped_refptr<base::SingleThreadTaskRunner>& task_runner() override;
 
   // VideoRendererSink implementation. These methods must be called from the
   // same thread (typically the media thread).

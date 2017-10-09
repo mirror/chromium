@@ -335,8 +335,7 @@ void VideoLayerImpl::DidDraw(LayerTreeResourceProvider* resource_provider) {
 
   DCHECK(frame_.get());
 
-  if (frame_resource_type_ ==
-      VideoFrameExternalResources::SOFTWARE_RESOURCE) {
+  if (frame_resource_type_ == VideoFrameExternalResources::SOFTWARE_RESOURCE) {
     for (size_t i = 0; i < software_resources_.size(); ++i) {
       software_release_callback_.Run(gpu::SyncToken(), false);
     }
