@@ -28,14 +28,24 @@ class ASH_EXPORT CursorWindowController {
   CursorWindowController();
   ~CursorWindowController();
 
+  // Features that are using cursor compositing should inherit this class.
+  class CursorCompositingDelegate {
+   public:
+    // Whether cursor compositing should be enabled.
+    virtual bool ShouldEnableCursorCompositing() = 0;
+  };
+
+  void AddCursorCompositingDelegate(CursorCompositingDelegate* delegate);
+  void RemoveCursorCompositingDelegate(CursorCompositingDelegate* delegate);
+
+  // Updates cursor compositing on/off.
+  void UpdateCursorCompositingEnabled();
+
   bool is_cursor_compositing_enabled() const {
     return is_cursor_compositing_enabled_;
   }
 
   void SetLargeCursorSizeInDip(int large_cursor_size_in_dip);
-
-  // Sets cursor compositing mode on/off.
-  void SetCursorCompositingEnabled(bool enabled);
 
   // Updates the container window for the cursor window controller.
   void UpdateContainer();
@@ -92,6 +102,8 @@ class ASH_EXPORT CursorWindowController {
 
   std::unique_ptr<aura::Window> cursor_window_;
   std::unique_ptr<CursorWindowDelegate> delegate_;
+
+  std::vector<CursorCompositingDelegate*> cursor_compositing_delegates_;
 
   DISALLOW_COPY_AND_ASSIGN(CursorWindowController);
 };

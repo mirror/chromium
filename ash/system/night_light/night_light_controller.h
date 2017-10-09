@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "ash/ash_export.h"
+#include "ash/display/cursor_window_controller.h"
 #include "ash/public/interfaces/night_light_controller.mojom.h"
 #include "ash/session/session_observer.h"
 #include "ash/system/night_light/time_of_day.h"
@@ -24,8 +25,10 @@ namespace ash {
 
 // Controls the NightLight feature that adjusts the color temperature of the
 // screen.
-class ASH_EXPORT NightLightController : public mojom::NightLightController,
-                                        public SessionObserver {
+class ASH_EXPORT NightLightController
+    : public mojom::NightLightController,
+      public SessionObserver,
+      public CursorWindowController::CursorCompositingDelegate {
  public:
   using ScheduleType = mojom::NightLightController::ScheduleType;
 
@@ -114,6 +117,9 @@ class ASH_EXPORT NightLightController : public mojom::NightLightController,
   void SetClient(mojom::NightLightClientPtr client) override;
 
   void SetDelegateForTesting(std::unique_ptr<Delegate> delegate);
+
+  // CursorWindowController::CursorCompositingDelegate:
+  bool ShouldEnableCursorCompositing() override;
 
  private:
   void RefreshLayersTemperature();

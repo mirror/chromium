@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/high_contrast/high_contrast_controller.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
@@ -39,9 +40,17 @@ AccessibilityController::AccessibilityController(
     service_manager::Connector* connector)
     : connector_(connector) {
   Shell::Get()->session_controller()->AddObserver(this);
+  Shell::Get()
+      ->window_tree_host_manager()
+      ->cursor_window_controller()
+      ->AddCursorCompositingDelegate(this);
 }
 
 AccessibilityController::~AccessibilityController() {
+  Shell::Get()
+      ->window_tree_host_manager()
+      ->cursor_window_controller()
+      ->RemoveCursorCompositingDelegate(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
@@ -115,6 +124,10 @@ void AccessibilityController::SetPrefServiceForTest(PrefService* prefs) {
   ObservePrefs(prefs);
 }
 
+bool AccessibilityController::ShouldEnableCursorCompositing() {
+  return RequiresCursorCompositing(GetActivePrefService());
+}
+
 void AccessibilityController::ObservePrefs(PrefService* prefs) {
   // Watch for pref updates from webui settings and policy.
   pref_change_registrar_ = std::make_unique<PrefChangeRegistrar>();
@@ -163,7 +176,7 @@ void AccessibilityController::UpdateLargeCursorFromPref() {
   ShellPort::Get()->SetCursorSize(
       large_cursor_enabled_ ? ui::CursorSize::kLarge : ui::CursorSize::kNormal);
   Shell::Get()->SetLargeCursorSizeInDip(large_cursor_size_in_dip_);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
+  Shell::Get()->UpdateCursorCompositingEnabled();
 }
 
 void AccessibilityController::UpdateHighContrastFromPref() {
@@ -190,7 +203,6 @@ void AccessibilityController::UpdateHighContrastFromPref() {
 
   // Under classic ash high contrast mode is handled internally.
   Shell::Get()->high_contrast_controller()->SetEnabled(enabled);
-  Shell::Get()->SetCursorCompositingEnabled(RequiresCursorCompositing(prefs));
 }
 
 }  // namespace ash
