@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46d9d379_784d09c2",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-10-09T23:17:23Z",
+      "side": 1,
+      "message": "I wonder if moving this to a private RenderViewContextMenu::GetLanguageModel() method would be good idea to avoid repeated code... WDYT?",
+      "range": {
+        "startLine": 1296,
+        "startChar": 4,
+        "endLine": 1298,
+        "endChar": 30
+      },
+      "revId": "6128795de772fed5b7d2283f7dcfdd87eaf1ad35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
