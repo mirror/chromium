@@ -319,6 +319,7 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
   SSLStatus ssl_status_;
   bool is_download_;
 
+  std::string urlurl_;
   base::Closure on_start_checks_complete_closure_;
 
   // Used in the network service world to pass the subressource loader factory

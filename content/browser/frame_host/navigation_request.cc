@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/strings/string_util.h"
@@ -349,6 +350,9 @@ NavigationRequest::NavigationRequest(
       associated_site_instance_type_(AssociatedSiteInstanceType::NONE),
       from_begin_navigation_(from_begin_navigation),
       weak_factory_(this) {
+  urlurl_ =
+      common_params.url.possibly_invalid_spec().substr(0, 100);
+  LOG(ERROR) << "============= NavigationRequest constructed " << urlurl_;
   DCHECK(!browser_initiated || (entry != nullptr && frame_entry != nullptr));
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationRequest", this,
                            "frame_tree_node",
@@ -416,10 +420,12 @@ NavigationRequest::NavigationRequest(
 }
 
 NavigationRequest::~NavigationRequest() {
+  LOG(ERROR) << "============= NavigationRequest destructed" << urlurl_;
   TRACE_EVENT_ASYNC_END0("navigation", "NavigationRequest", this);
 }
 
 void NavigationRequest::BeginNavigation() {
+  LOG(ERROR) << "============= NavigationRequest BeginNavigation" << urlurl_;
   DCHECK(!loader_);
   DCHECK(state_ == NOT_STARTED || state_ == WAITING_FOR_RENDERER_RESPONSE);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
@@ -493,6 +499,7 @@ void NavigationRequest::BeginNavigation() {
     return;
   }
 
+  LOG(ERROR) << "======= NavigationRequest no need for network request, ResponseStarted";
   // There is no need to make a network request for this navigation, so commit
   // it immediately.
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
@@ -701,6 +708,7 @@ void NavigationRequest::OnResponseStarted(
     bool is_download,
     bool is_stream,
     mojom::URLLoaderFactoryPtrInfo subresource_loader_factory_info) {
+  LOG(ERROR) << "============= NavigationRequest destructed" << urlurl_;
   DCHECK(state_ == STARTED);
   DCHECK(response);
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationRequest", this,
