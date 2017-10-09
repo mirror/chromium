@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25173715_17ba7a8c",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_popup_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T13:42:19Z",
+      "side": 1,
+      "message": "Previously adding a WebContentsDelegate here was causing crashes when opening popups, which is why we moved to the logging::SetLogMessageHandler(\u0026LogHandler) pattern.",
+      "revId": "a7fc91858266b3f78b48039285a6c8deee474627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85127f20_e973b499",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-10-09T13:42:19Z",
+      "side": 1,
+      "message": "I thought for m63 the plan is to launch abusive with should_suppress_notifications \u003d true, to avoid accidental bugs logging ads blocking messages. I think to log abusive warnings we just ned\n\nActivationState \u003d enabled \u0026\u0026 options().should_strengthen_popup_blocker. There\u0027s no plan to use dryrun with the popup blocker.\n\n\nI also don\u0027t think we should log these messages in DRYRUN mode, so gating both these messages on ActivationState \u003d enabled seems better to me.",
+      "revId": "a7fc91858266b3f78b48039285a6c8deee474627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
