@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "578263b1_3f7e796b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-10-09T20:16:05Z",
+      "side": 1,
+      "message": "It looks like this is failing to compile:\n../../chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java:463: error: incompatible types: int cannot be converted to boolean\n                        \u0026 InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {\n                        ^\n1 error",
+      "range": {
+        "startLine": 463,
+        "startChar": 24,
+        "endLine": 463,
+        "endChar": 25
+      },
+      "revId": "d35c7001cf18561aec24d2c7baa0d09628b5ec5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
