@@ -28,6 +28,7 @@ extern const base::Feature kEnableManualSaving;
 extern const base::Feature kEnablePasswordForceSaving;
 extern const base::Feature kEnablePasswordSelection;
 extern const base::Feature kEnableUsernameCorrection;
+extern const base::Feature kExpandedPopupViews;
 extern const base::Feature kProtectSyncCredential;
 extern const base::Feature kProtectSyncCredentialOnReauth;
 extern const base::Feature kPasswordImportExport;
