@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7839d12a_ef0708ea",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-09T18:24:49Z",
+      "side": 1,
+      "message": "Uh, not really? They\u0027re both pointers, so !\u003d could be true even if they\u0027re both valid.  I\u0027m trying to say \"exactly one of them is a valid pointer\".  Changed to use !\u003d but negate them both first.",
+      "parentUuid": "5a0ad446_02ed9ffb",
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53c23724_933135f9",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7069d213_08057061",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-09T18:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c23724_933135f9",
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ef6952d9_af669ae6",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-09T18:24:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fd583f6_537d1708",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 17
+      },
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffe9b4f7_a392ab01",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "2c7e466a_24413e68",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-09T18:24:49Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "ffe9b4f7_a392ab01",
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19544a90_faeff3c2",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-10-06T23:48:29Z",
       "side": 1,
       "message": "I\u0027m  squinting trying to understand if this is still applicable with visual rects. Since we would only rasterize ops that intersect the visual rect anyway so skia might not even see the op that we try to send? Sorry, I know I wrote this but memory fails.\n\nShould we have a test where we try to rasterize content where only an edge of the tile touches the visual rect that has the image? I would expect that the image is discovered but the op is never drawn with this, no?",
+      "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f45ae01e_6e23df24",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-10-09T18:24:49Z",
+      "side": 1,
+      "message": "I think that if you assume that we needed this before, then it\u0027s still true that we need it now.  I don\u0027t think this patch changes anything semantically here.  Aligned images are exact, and misaligned images have an enclosing visual rect, whether or not Blink is producing that visual rect or this discardable image map doing an enclosing rect operation.\n\nWhether we needed this before is its own question that I\u0027m less sure about.",
+      "parentUuid": "19544a90_faeff3c2",
       "revId": "ab55023baae7182e535b5c44896e2362458d32b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
