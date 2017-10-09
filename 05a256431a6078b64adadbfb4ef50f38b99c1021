@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16eb1efc_271342e5",
+        "filename": "media/mojo/services/video_decode_stats_db_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-10-09T21:59:36Z",
+      "side": 1,
+      "message": "If I understand correctly, Web APIs don\u0027t control the LevelDB keys involved in the queries, and don\u0027t control the values. In this case, the database should use the browser cache.\n\nThe Web cache lets us isolate databases where the Web application has considerable control over the query pattern. Canonical examples are IndexedDB and LocalStorage, where the application controls a large part of the LevelDB keys and values.\n\nSorry for the ambiguity in the source-level comments!",
+      "revId": "05a256431a6078b64adadbfb4ef50f38b99c1021",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
