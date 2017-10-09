@@ -19,6 +19,120 @@
     },
     {
       "key": {
+        "uuid": "59d3da65_8b9023b2",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t it exist?",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458ea145_87d8c0bd",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "How does fsid different from file_system_id_? It\u0027s kind of confusing, because we pass both below to OpenPluginPrivateFileSystem.",
+      "range": {
+        "startLine": 217,
+        "startChar": 14,
+        "endLine": 217,
+        "endChar": 18
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec02872_1be02f3e",
+        "filename": "content/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Nit: it\u0027s generally acceptable to write auto here, since the RHS specifies the type.",
+      "range": {
+        "startLine": 266,
+        "startChar": 2,
+        "endLine": 266,
+        "endChar": 54
+      },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f56071_50fa8fa0",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Nit: please just use a named struct rather than a tuple? This makes the meaning of the two strnig fields clear.",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10925f13_b5ad248e",
+        "filename": "content/browser/media/cdm_storage_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Nit: consider marking this const.",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b302336_507cf8ea",
+        "filename": "content/browser/media/media_interface_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Just wondering: shouldn\u0027t all this be statically known at compile time? So this should basically never happen.",
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5094ef52_b802c0f3",
         "filename": "media/cdm/cdm_paths.h",
         "patchSetId": 10
@@ -36,6 +150,23 @@
         "endLine": 38,
         "endChar": 70
       },
+      "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01134a29_ae75c410",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-10-09T20:10:39Z",
+      "side": 1,
+      "message": "Nit: consider naming these kSuccess, kInUse, etc to avoid potential macro collisions in the future (this is the direction we\u0027re generally moving with enum names)",
       "revId": "97ed1ee3eff11d230b73cb1c5b1f2ab96e4775b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
