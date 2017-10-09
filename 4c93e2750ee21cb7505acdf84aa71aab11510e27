@@ -22,6 +22,30 @@
       "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "707b4044_b2a74b21",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-10-09T23:52:40Z",
+      "side": 1,
+      "message": "I think the biggest change is 2. Which unfortunately is why this CL is so large. For each IPH feature, I have to create a separate observed session time perf. The current implementation of the session time duration broke once there are more than one feature (which I didn\u0027t realize until testing this recently). Because of this, I had to create a factory and an updater for the new tab and incognito window (because at that time I was still trying to make it to m63 since we had some leeway, although I don\u0027t think this will make it anymore). I kept bookmarks as much as I could out of this. The extra files are all implementations of the session duration updater for new tab and incognito window and wanted to keep everything together without breaking existing functionality. I\u0027m extremely sorry for how large this change is :[",
+      "parentUuid": "f9375ad9_2e80d8fb",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "4c93e2750ee21cb7505acdf84aa71aab11510e27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
