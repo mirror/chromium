@@ -106,8 +106,11 @@ enum class ConfigParsingEvent {
   // Fails to parse the session rate impact.
   FAILURE_SESSION_RATE_IMPACT_UNKNOWN_FEATURE = 12,
 
+  // Fails to parse the tracking only flag.
+  FAILURE_TRACKING_ONLY_PARSE = 13,
+
   // Last entry for the enum.
-  COUNT = 13,
+  COUNT = 14,
 };
 
 // Used in metrics to track database states. Each type will match to a suffix
