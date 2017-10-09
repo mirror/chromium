@@ -111,7 +111,7 @@ static bool IsPropertyMatch(const StylePropertyMetadata& metadata,
                             uint16_t id,
                             CSSPropertyID property_id) {
   DCHECK_EQ(id, property_id);
-  bool result = metadata.property_id_ == id;
+  bool result = metadata.PropertyAPI().PropertyID() == id;
   // Only enabled properties should be part of the style.
   DCHECK(!result ||
          CSSPropertyAPI::Get(resolveCSSPropertyID(property_id)).IsEnabled());
@@ -123,7 +123,7 @@ static bool IsPropertyMatch(const StylePropertyMetadata& metadata,
                             uint16_t id,
                             const AtomicString& custom_property_name) {
   DCHECK_EQ(id, CSSPropertyVariable);
-  return metadata.property_id_ == id &&
+  return metadata.PropertyAPI().PropertyID() == id &&
          ToCSSCustomPropertyDeclaration(value).GetName() ==
              custom_property_name;
 }
@@ -344,15 +344,17 @@ void MutableStylePropertySet::SetProperty(CSSPropertyID property_id,
                                           bool important) {
   StylePropertyShorthand shorthand = shorthandForProperty(property_id);
   if (!shorthand.length()) {
-    SetProperty(CSSProperty(property_id, value, important));
+    SetProperty(
+        CSSProperty(CSSPropertyAPI::Get(property_id), value, important));
     return;
   }
 
   RemovePropertiesInSet(shorthand.properties(), shorthand.length());
 
-  for (unsigned i = 0; i < shorthand.length(); ++i)
-    property_vector_.push_back(
-        CSSProperty(shorthand.properties()[i], value, important));
+  for (unsigned i = 0; i < shorthand.length(); ++i) {
+    property_vector_.push_back(CSSProperty(
+        CSSPropertyAPI::Get(shorthand.properties()[i]), value, important));
+  }
 }
 
 bool MutableStylePropertySet::SetProperty(const CSSProperty& property,
@@ -376,8 +378,8 @@ bool MutableStylePropertySet::SetProperty(const CSSProperty& property,
 bool MutableStylePropertySet::SetProperty(CSSPropertyID property_id,
                                           CSSValueID identifier,
                                           bool important) {
-  SetProperty(CSSProperty(property_id, *CSSIdentifierValue::Create(identifier),
-                          important));
+  SetProperty(CSSProperty(CSSPropertyAPI::Get(property_id),
+                          *CSSIdentifierValue::Create(identifier), important));
   return true;
 }
 
@@ -542,8 +544,10 @@ MutableStylePropertySet* StylePropertySet::CopyPropertiesInSet(
   list.ReserveInitialCapacity(properties.size());
   for (unsigned i = 0; i < properties.size(); ++i) {
     const CSSValue* value = GetPropertyCSSValue(properties[i]);
-    if (value)
-      list.push_back(CSSProperty(properties[i], *value, false));
+    if (value) {
+      list.push_back(
+          CSSProperty(CSSPropertyAPI::Get(properties[i]), *value, false));
+    }
   }
   return MutableStylePropertySet::Create(list.data(), list.size());
 }
