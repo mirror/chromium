@@ -117,6 +117,30 @@
       "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41843485_2ef517bb",
+        "filename": "chrome/app/profiler/stack_sampling_profiler_launcher.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-10-09T15:20:30Z",
+      "side": 1,
+      "message": "We need the destructor to run to synchronize the stopping of profiling before application shutdown. Otherwise on Windows there\u0027s a race between termination of the main thread and the profiler thread, resulting in crashes when the profiler attempts to profile the destroyed main thread.\n\nAlso, unless there are layering reasons to avoid it I think it\u0027s reasonable to just allocate the object on the stack.",
+      "parentUuid": "745911e7_2cbe5645",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 36
+      },
+      "revId": "cc0f9d6bfbeb0b7b413eda1d5ec89599ada92d40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
