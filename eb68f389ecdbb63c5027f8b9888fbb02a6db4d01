@@ -93,6 +93,30 @@
       "revId": "eb68f389ecdbb63c5027f8b9888fbb02a6db4d01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59dec60d_7baf5063",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_metrics_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-10-09T11:51:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6824f7b9_5c00dac5",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 10
+      },
+      "revId": "eb68f389ecdbb63c5027f8b9888fbb02a6db4d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
