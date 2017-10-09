@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6932eef9_075fb747",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-10-09T10:51:06Z",
+      "side": 1,
+      "message": "Sorry if I was unclear, I meant this could be an std::vector\u003cOverflowData\u003e, and in that case you have to keep the move constructor (and you also need a move assignment operator I think). This would save us an indirection.",
+      "revId": "404ebb910de578712773036c1cc6e63536c2d848",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
