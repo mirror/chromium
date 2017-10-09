@@ -859,8 +859,7 @@ class CORE_EXPORT Element : public ContainerNode {
   // However, it must not retrieve layout information like position and size.
   // This method cannot be moved to LayoutObject because some focusable nodes
   // don't have layoutObjects. e.g., HTMLOptionElement.
-  // TODO(tkent): Rename this to isFocusableStyle.
-  virtual bool LayoutObjectIsFocusable() const;
+  virtual bool IsFocusableStyle() const;
 
   // classAttributeChanged() exists to share code between
   // parseAttribute (called via setAttribute()) and
