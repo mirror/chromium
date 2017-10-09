@@ -53,6 +53,40 @@
     },
     {
       "key": {
+        "uuid": "d1a57235_de22f736",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T23:55:39Z",
+      "side": 1,
+      "message": "If you make the protected memory system different from the CFI system, you hopefully don\u0027t even need this flag.\n\n\nPrevious version of the comment for reference:\n\nCan you flip this to ..._ENABLED? Having #ifndef ...DISABLED starts to get impossible to read.\n\nFor the rest of the name, I feel like this is a CFI feature rather than a protected memory feature, so should be named accordingly.\n\nIf the definition of this is platform-specific, I would prefer this to use the BUILDFLAG system to define this flag in a header. The syntax around that makes it more difficult to screw up (it will error-out on typos). Base already defines a \"debugging_flags\" header, maybe we should add a general \"base_features\" one.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f99ae44_623e238c",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T23:55:39Z",
+      "side": 1,
+      "message": "Might it be better to call this \"AssertMemoryReadOnly\". Then you can have the DCHECK internal to it and not have to worry about people accidentally calling it from non-debug code.\n\nIf you\u0027re worried about call overhead, we can wrap it in a DCHECK_IS_ON block and define the non-on-dcheck arm to an empty inline function.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2548137_3297c4f8",
         "filename": "base/memory/protected_memory.h",
         "patchSetId": 2
@@ -81,6 +115,57 @@
       "writtenOn": "2017-10-09T23:44:57Z",
       "side": 1,
       "message": "Identifiers beginning with __ are reserved to the implementation. I\u0027d move this into a namespace named \"internal\".\n\nAlso, I wonder what you think about changing the API so that instead of using macro wrappers, we make ProtectedCall part of the API, and use a dynamic check to make sure that the function pointer is protected. Something like:\n\nauto ProtectedCall(const Func \u0026f, Args\u0026\u0026... args) {\n  CHECK(\u0026f \u003e\u003d ProtectedMemoryStart() \u0026\u0026 \u0026f \u003c\u003d ProtectedMemoryEnd());\n  return f(std::forward\u003cArgs\u003e(args)...);\n}",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5cf048_a2d013b2",
+        "filename": "base/memory/protected_memory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T23:55:39Z",
+      "side": 1,
+      "message": "A number of things like this function use two underscores at the beginning. Is this some built-in Clang-CFI thing? If it is, can you explain this explicitly in a comment for each one? If not, we shouldn\u0027t be using the compiler-reserved prefix on our symbols.",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5969fb01_9a355eea",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T23:55:39Z",
+      "side": 1,
+      "message": "This should use the BUILDFLAG system rather than setting defines (unless this is built in to the compiler). See //build/buildflag_header.gni",
+      "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "279ce987_1656e264",
+        "filename": "build/config/sanitizers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-10-09T23:55:39Z",
+      "side": 1,
+      "message": "Same here.",
       "revId": "c295dd6c0e008d6e9c73b9ac6d3c0e7f7d1a131e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
