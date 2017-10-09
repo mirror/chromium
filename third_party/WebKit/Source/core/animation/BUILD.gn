@@ -164,6 +164,8 @@ blink_core_sources("animation") {
     "PairwiseInterpolationValue.h",
     "PathInterpolationFunctions.cpp",
     "PathInterpolationFunctions.h",
+    "PathPropertyFunctions.cpp",
+    "PathPropertyFunctions.h",
     "PendingAnimations.cpp",
     "PendingAnimations.h",
     "PrimitiveInterpolation.h",
