@@ -139,6 +139,24 @@
       "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50de1200_e904cef8",
+        "filename": "third_party/WebKit/Source/core/loader/IdlenessDetector.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-10-09T18:26:29Z",
+      "side": 1,
+      "message": "Well, it is a little fishy: the signal will emit when all the pages in the current process become idle. If you are after this kind of a signal, you should instrument the task manager instead.",
+      "parentUuid": "211ed10f_1f47c1d6",
+      "revId": "bfbb2131b749ee27a7714c3cf8fd47c593dad444",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
