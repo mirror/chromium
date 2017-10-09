@@ -9,9 +9,91 @@
 
 #include "base/callback.h"
 #include "base/files/file_path.h"
+#include "base/files/platform_file.h"
 #include "build/build_config.h"
 
+namespace base {
+class File;
+}
+
 namespace zip {
+
+// Abstraction for file access operation required by Zip().
+// Can be passed to the ZipParams for providing custom access to the files,
+// for example over IPC.
+// If none is provided, the files are accessed directly.
+class FileAccessor {
+ public:
+  virtual ~FileAccessor() = default;
+
+  using DirectoryEntry = std::pair<base::FilePath, bool /* is directory */>;
+  virtual base::File OpenFileForReading(const base::FilePath& file) = 0;
+  virtual bool DirectoryExists(const base::FilePath& file) = 0;
+  virtual std::vector<DirectoryEntry> ListDirectoryContent(
+      const base::FilePath& dir) = 0;
+};
+
+class ZipParams {
+ public:
+  ZipParams(const base::FilePath& src_dir, const base::FilePath& dest_file);
+#if defined(OS_POSIX)
+  // Does not take ownership of |fd|.
+  ZipParams(const base::FilePath& src_dir, int dest_fd);
+
+  int dest_fd() const { return dest_fd_; }
+#endif
+
+  const base::FilePath& src_dir() const { return src_dir_; }
+
+  const base::FilePath& dest_file() const { return dest_file_; }
+
+  // Restricts the files actually zipped to the paths listed  in
+  // |src_relative_paths|. They must be relative to the |src_dir| passed in the
+  // constructor and will be used as the file names in the created zip file. All
+  // source paths must be under |src_dir| in the file system hierarchy.
+  void set_files_to_zip(const std::vector<base::FilePath>& src_relative_paths) {
+    src_files_ = src_relative_paths;
+  }
+  const std::vector<base::FilePath>& files_to_zip() const { return src_files_; }
+
+  typedef base::Callback<bool(const base::FilePath&)> FilterCallback;
+  void set_filter_callback(FilterCallback filter_callback) {
+    filter_callback_ = filter_callback;
+  }
+  const FilterCallback& filter_callback() const { return filter_callback_; }
+
+  void set_include_hidden_files(bool include_hidden_files) {
+    include_hidden_files_ = include_hidden_files;
+  }
+  bool include_hidden_files() const { return include_hidden_files_; }
+
+  // Sets a custom file accessor for file operations. Default is to directly
+  // access the files (with fopen and the rest).
+  // Useful in cases where runnin in a sandbox process and file access has to go
+  // through IPC for example.
+  void set_file_accessor(std::unique_ptr<FileAccessor> file_accessor) {
+    file_accessor_ = std::move(file_accessor);
+  }
+  FileAccessor* file_accessor() const { return file_accessor_.get(); }
+
+ private:
+  base::FilePath src_dir_;
+
+  base::FilePath dest_file_;
+  int dest_fd_ = base::kInvalidPlatformFile;
+
+  // Only the files whose relative path to |src_dir_| are included in the zip
+  // file. If this is empty, all files are included.
+  std::vector<base::FilePath> src_files_;
+
+  FilterCallback filter_callback_;
+
+  bool include_hidden_files_ = true;
+
+  std::unique_ptr<FileAccessor> file_accessor_;
+};
+
+bool Zip(const ZipParams& params);
 
 // Zip the contents of src_dir into dest_file. src_path must be a directory.
 // An entry will *not* be created in the zip for the root folder -- children
