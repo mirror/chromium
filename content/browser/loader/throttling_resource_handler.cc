@@ -12,6 +12,36 @@
 
 namespace content {
 
+ThrottlingResourceHandler::ForwardingThrottleDelegate::
+    ForwardingThrottleDelegate(ThrottlingResourceHandler* handler,
+                               size_t throttle_index)
+    : handler_(handler), throttle_index_(throttle_index) {}
+ThrottlingResourceHandler::ForwardingThrottleDelegate::
+    ~ForwardingThrottleDelegate() = default;
+
+void ThrottlingResourceHandler::ForwardingThrottleDelegate::Cancel() {
+  handler_->Cancel();
+}
+
+void ThrottlingResourceHandler::ForwardingThrottleDelegate::CancelWithError(
+    int error_code) {
+  handler_->CancelWithError(error_code);
+}
+
+void ThrottlingResourceHandler::ForwardingThrottleDelegate::Resume() {
+  handler_->Resume();
+}
+
+void ThrottlingResourceHandler::ForwardingThrottleDelegate::
+    PauseReadingBodyFromNet() {
+  handler_->RequestToPauseReadingBodyFromNet(throttle_index_);
+}
+
+void ThrottlingResourceHandler::ForwardingThrottleDelegate::
+    ResumeReadingBodyFromNet() {
+  handler_->RequestToResumeReadingBodyFromNet(throttle_index_);
+}
+
 ThrottlingResourceHandler::ThrottlingResourceHandler(
     std::unique_ptr<ResourceHandler> next_handler,
     net::URLRequest* request,
@@ -21,8 +51,12 @@ ThrottlingResourceHandler::ThrottlingResourceHandler(
       throttles_(std::move(throttles)),
       next_index_(0),
       cancelled_by_resource_throttle_(false) {
-  for (const auto& throttle : throttles_) {
-    throttle->set_delegate(this);
+  throttling_delegates_.reserve(throttles_.size());
+  for (size_t i = 0; i < throttles_.size(); ++i) {
+    const auto& throttle = throttles_[i];
+
+    throttling_delegates_.push_back(ForwardingThrottleDelegate(this, i));
+    throttle->set_delegate(&throttling_delegates_.back());
     // Throttles must have a name, as otherwise, bugs where a throttle fails
     // to resume a request can be very difficult to debug.
     DCHECK(throttle->GetNameForLogging());
@@ -163,6 +197,26 @@ void ThrottlingResourceHandler::Resume() {
       ResumeResponse();
       break;
   }
+}
+
+void ThrottlingResourceHandler::RequestToPauseReadingBodyFromNet(
+    size_t throttle_index) {
+  bool should_call_pause = pausing_reading_body_from_net_throttles_.empty();
+  pausing_reading_body_from_net_throttles_.insert(throttle_index);
+
+  if (should_call_pause)
+    PauseReadingBodyFromNet();
+}
+
+void ThrottlingResourceHandler::RequestToResumeReadingBodyFromNet(
+    size_t throttle_index) {
+  auto iter = pausing_reading_body_from_net_throttles_.find(throttle_index);
+  if (iter == pausing_reading_body_from_net_throttles_.end())
+    return;
+
+  pausing_reading_body_from_net_throttles_.erase(iter);
+  if (pausing_reading_body_from_net_throttles_.empty())
+    ResumeReadingBodyFromNet();
 }
 
 void ThrottlingResourceHandler::ResumeStart() {

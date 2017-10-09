@@ -36,6 +36,15 @@ class CONTENT_EXPORT ResourceThrottle {
     // Tells the delegate to resume the deferred resource load.
     virtual void Resume() = 0;
 
+    // Pauses/resumes reading response body if the resource is fetched from
+    // network. They could be no-ops if the resource is not fetched from
+    // network.
+    //
+    // It is allowed to call these methods before response body is available, or
+    // while the request is deferred.
+    virtual void PauseReadingBodyFromNet();
+    virtual void ResumeReadingBodyFromNet();
+
    protected:
     virtual ~Delegate() {}
   };
@@ -77,6 +86,8 @@ class CONTENT_EXPORT ResourceThrottle {
   void Cancel();
   void CancelWithError(int error_code);
   void Resume();
+  void PauseReadingBodyFromNet();
+  void ResumeReadingBodyFromNet();
 
  private:
   friend class AsyncRevalidationDriver;
