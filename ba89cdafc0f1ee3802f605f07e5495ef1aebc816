@@ -56,6 +56,24 @@
       "revId": "ba89cdafc0f1ee3802f605f07e5495ef1aebc816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280226f9_8153122c",
+        "filename": "ui/gl/gl_image_io_surface.mm",
+        "patchSetId": 27
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-10-09T20:24:47Z",
+      "side": 1,
+      "message": "Same here -- I\u0027d leave this part in a separate change.",
+      "parentUuid": "dd1b2e0e_2f8f27c1",
+      "revId": "ba89cdafc0f1ee3802f605f07e5495ef1aebc816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
